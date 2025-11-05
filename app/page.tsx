@@ -303,6 +303,54 @@ export default function LandingPage() {
             </div>
           </section>
 
+      {/* Platform Feature Matrix */}
+      <section className="bg-white py-24 dark:bg-slate-950">
+        <div className="mx-auto w-full max-w-6xl px-6">
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Platform support</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-300 mb-6">
+            One API across cloud, desktop, mobile, and browser. AgentOS uses the SQL Storage Adapter to select the right backend at runtime.
+          </p>
+          <div className="overflow-x-auto rounded-2xl border border-slate-200/40 dark:border-white/5">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-slate-50/60 dark:bg-slate-900/60">
+                <tr>
+                  <th className="p-3">Feature</th>
+                  <th className="p-3">Cloud (Postgres)</th>
+                  <th className="p-3">Desktop (Electron)</th>
+                  <th className="p-3">Mobile (Capacitor)</th>
+                  <th className="p-3">Browser (sql.js)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { f: 'Persistence', cloud: '✅ durable', desk: '✅ local file', mob: '✅ on-device', web: '⚠️ export/import' },
+                  { f: 'Concurrency', cloud: '✅ pooled', desk: '❌ single-writer', mob: '❌ single-connection', web: '❌ single-threaded' },
+                  { f: 'Transactions', cloud: '✅', desk: '✅', mob: '✅', web: '✅' },
+                  { f: 'WAL/Locks', cloud: '❌', desk: '✅', mob: '✅', web: '❌' },
+                  { f: 'JSON/Arrays', cloud: '✅', desk: '❌', mob: '❌', web: '❌' },
+                  { f: 'Prepared statements', cloud: '✅', desk: '✅', mob: '❌', web: '❌' },
+                  { f: 'Cloud backups', cloud: '✅ S3/R2', desk: '✅ optional', mob: '✅ optional', web: '⚠️ export only' },
+                  { f: 'Multi-tenant orgs', cloud: '✅', desk: '❌', mob: '❌', web: '❌' },
+                  { f: 'Marketplace (server)', cloud: '✅', desk: '⚠️ read-only', mob: '⚠️ read-only', web: '⚠️ disabled' },
+                  { f: 'Billing', cloud: '✅', desk: '❌', mob: '❌', web: '❌' },
+                ].map((row) => (
+                  <tr key={row.f} className="border-t border-slate-200/40 dark:border-white/5">
+                    <td className="p-3 font-medium text-slate-900 dark:text-slate-100">{row.f}</td>
+                    <td className="p-3">{row.cloud}</td>
+                    <td className="p-3">{row.desk}</td>
+                    <td className="p-3">{row.mob}</td>
+                    <td className="p-3">{row.web}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 text-xs text-slate-500 dark:text-slate-400">
+            See docs for details: Platform Feature Matrix and SQL Storage Adapter architecture.
+          </p>
+        </div>
+      </section>
+
           {/* Architecture Overview */}
           <section id="architecture" className="mt-20 space-y-12">
             <div className="flex flex-col items-center gap-6 text-center">
