@@ -401,11 +401,11 @@ export default function LandingPage() {
             <span className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-brand dark:bg-brand/20 dark:text-brand-foreground">
               Licensing
             </span>
-            <h3 className="text-2xl font-semibold text-slate-900 dark:text-white">Apache-friendly, builder-owned</h3>
+            <h3 className="text-2xl font-semibold text-slate-900 dark:text-white">Apache engine, MIT surfaces</h3>
             <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-              AgentOS is moving from MIT to Apache&nbsp;2.0 so you get explicit patent grants and clear attribution requirements. You
-              control your personas, tool packs, and marketplace listingsâ€”export them as JSON or load them into your own deployments at
-              any time.
+              AgentOS core (\`@agentos/core\`) is Apache 2.0 licensed, providing explicit patent grants and clear attribution. The
+              surrounding product surfaces— including the vca.chat marketplace and this site — are MIT licensed. You control your
+              personas, tool packs, and marketplace listings — export them as JSON or load them into your own deployments at any time.
             </p>
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
               <li>Export personas, workflows, and artifacts without leaving the platform</li>
@@ -741,7 +741,7 @@ for await (const chunk of agentos.processRequest(input)) {
         <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-6 text-center">
           <h2 id="cta-heading" className="text-3xl font-semibold">Ready to make AgentOS your runtime?</h2>
           <p className="max-w-2xl text-sm opacity-90">
-            AgentOS is open source and MIT licensed. Join the early access list to collaborate with the Frame team, migrate your existing assistant, and shape the roadmap.
+            AgentOS core is open source under Apache 2.0. Marketplace and site components are MIT. Join the early access list to collaborate with the Frame team, migrate your existing assistant, and shape the roadmap.
           </p>
           <EmailSignupForm />
           <p className="text-xs opacity-70">
