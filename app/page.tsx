@@ -28,10 +28,16 @@ import ScrollToTopButton from "../components/ScrollToTopButton";
 
 const featureCards = [
   {
+    icon: Shield,
+    title: "Guardrails & Safety Marketplace",
+    body: "Agents 'change their mind' mid-stream via keyword filters, LLM-powered policy checks, cost ceilings, and human escalation queues. Install from curated or community registries with free CI/CD.",
+    pill: "Safety first"
+  },
+  {
     icon: Cpu,
-    title: "Tool & guardrail packs",
-    body: "Register tools, guardrails, and workflows through extension manifests. Permission tags, rate budgets, and retries are built in.",
-    pill: "Extension ecosystem"
+    title: "Extension Registry & Auto-Loading",
+    body: "Install tools (web search, Telegram, code execution) via npm. AgentOS auto-discovers and loads extensions from the community registry. Tree-shakable, lazy-loaded, fully typed.",
+    pill: "Community-driven"
   },
   {
     icon: Radio,
@@ -165,10 +171,10 @@ export default function LandingPage() {
                 Generalised Mind Instances for builders
               </span>
               <h1 id="hero-heading" className="font-display text-4xl leading-tight text-slate-900 sm:text-5xl sm:leading-tight dark:text-white">
-                Orchestrate personas, tools, and guardrails with AgentOS.
+                Build AI agents with safety, extensions, and real-time guardrails.
               </h1>
               <p className="text-lg text-slate-600 dark:text-slate-300">
-                AgentOS powers Frame.dev&apos;s voice-first assistants. Now the modular runtimeâ€”complete with GMIs, workflow engine, guardrail APIs, and streaming orchestrationâ€”is available for teams who want to ship adaptive agents under Apache-friendly terms.
+                AgentOS is the cognitive runtime powering Frame.dev&apos;s voice assistants. Deploy adaptive agents with built-in safety (guardrails that let agents "change their mind"), community extensions (search, Telegram, code execution), and free CI/CD for contributors. Apache-licensed for teams.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <a
@@ -356,9 +362,8 @@ export default function LandingPage() {
             <div className="flex flex-col items-center gap-6 text-center">
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Composable runtime architecture</h2>
               <p className="max-w-3xl text-base text-slate-600 dark:text-slate-300">
-                AgentOS brings the GMI manager, conversation memory, tool orchestrator, guardrail dispatcher, streaming manager,
-                and workflow engine together behind a single facade. Configure providers, packs, and guardrails with TypeScript
-                instead of glue code.
+                AgentOS brings the GMI manager, conversation memory, tool orchestrator, guardrail dispatcher, extension loader, streaming manager,
+                and workflow engine together behind a single facade. Extensions and guardrails are community-driven with free CI/CD—install via npm or browse the registry at runtime.
               </p>
               <div className="w-full max-w-4xl">
                 <picture>
@@ -378,10 +383,14 @@ export default function LandingPage() {
 {`const config: AgentOSConfig = {
   gmiManagerConfig: { personaLoaderConfig: { loaderType: "file_system" } },
   toolOrchestratorConfig: { orchestratorId: "default" },
-  guardrailService,
+  guardrailService: composeGuardrails([
+    new KeywordGuardrail({ patterns: [...] }),
+    new CostCeilingGuardrail({ maxCostUsd: 0.05 })
+  ]),
+  guardrailConfig: { loadCurated: true, loadCommunity: false },
+  extensionConfig: { loadCurated: true, autoInstall: true },
   languageConfig: { defaultLanguage: "en", autoDetect: true },
-  workflowEngineConfig: { maxConcurrentWorkflows: 32 },
-  extensionManifest: { packs: ["@framers/agentos-pack-defaults"] }
+  workflowEngineConfig: { maxConcurrentWorkflows: 32 }
 };`}
                 </pre>
               </div>
