@@ -4,7 +4,11 @@ import Link from "next/link";
 
 const updated = "November 6, 2025";
 
-export const metadata = {\n  title: "AgentOS Privacy Guidance",\n  description: "How the open-source AgentOS runtime approaches privacy and where self-hosted operators should focus."\n};
+export const metadata = {
+  title: "AgentOS Privacy Guidance",
+  description:
+    "How the open-source AgentOS runtime approaches privacy and where self-hosted operators should focus."
+};
 
 const Sections = [
   {

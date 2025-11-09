@@ -4,7 +4,11 @@ import Link from "next/link";
 
 const updated = "November 6, 2025";
 
-export const metadata = {\n  title: "AgentOS Terms Guidance",\n  description: "Summary of licensing and expectations for using the open-source AgentOS runtime."\n};
+export const metadata = {
+  title: "AgentOS Terms Guidance",
+  description:
+    "Summary of licensing and expectations for using the open-source AgentOS runtime."
+};
 
 const Sections = [
   {
