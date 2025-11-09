@@ -22,9 +22,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: true
+      - name: Enable corepack (use pnpm from packageManager)
+        run: corepack enable
       - name: Build and export
         run: |
           pnpm run build
