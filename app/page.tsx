@@ -44,6 +44,12 @@ const featureCards = [
     title: "Storage & deployment adapters",
     body: "Swap between Postgres, better-sqlite3, sql.js, or custom stores. Use the reference server template to deploy anywhere.",
     pill: "Deploy anywhere"
+  },
+  {
+    icon: Zap,
+    title: "Local-first workbench",
+    body: "Run the full AgentOS runtime inside the browser with SQL-backed persistence, workflow telemetry, and marketplace personas—perfect for offline prototyping.",
+    pill: "Offline capable"
   }
 ];
 
