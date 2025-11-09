@@ -11,9 +11,10 @@ const Sections = [
     title: "License",
     body: (
       <p className="text-slate-700 dark:text-slate-200">
-        AgentOS core is distributed under the Apache 2.0 license, granting explicit patent rights and clear
-        attribution terms. Marketplace and site components are MIT-licensed. Review the LICENSE files in the
-        repositories for details.
+        AgentOS is distributed under the MIT license. You may use, copy, modify, merge, publish, distribute,
+        sublicense, and/or sell copies of the software, subject to including the copyright notice and license
+        text in your distributions. As the MIT license states, the software is provided “as is” without warranty
+        of any kind.
       </p>
     )
   },
@@ -72,7 +73,7 @@ export default function TermsPage() {
       <footer className="space-y-4 text-sm text-slate-500 dark:text-slate-300">
         <p>
           Want to contribute back? Check the repository on
-          <a href="https://github.com/framersai/voice-chat-assistant" className="ml-1 font-semibold text-brand hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a>.
+          <a href="https://github.com/wearetheframers/voice-chat-assistant" className="ml-1 font-semibold text-brand hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a>.
         </p>
       </footer>
     </article>

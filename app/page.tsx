@@ -28,16 +28,10 @@ import ScrollToTopButton from "../components/ScrollToTopButton";
 
 const featureCards = [
   {
-    icon: Shield,
-    title: "Guardrails & Safety Marketplace",
-    body: "Agents 'change their mind' mid-stream via keyword filters, LLM-powered policy checks, cost ceilings, and human escalation queues. Install from curated or community registries with free CI/CD.",
-    pill: "Safety first"
-  },
-  {
     icon: Cpu,
-    title: "Extension Registry & Auto-Loading",
-    body: "Install tools (web search, Telegram, code execution) via npm. AgentOS auto-discovers and loads extensions from the community registry. Tree-shakable, lazy-loaded, fully typed.",
-    pill: "Community-driven"
+    title: "Tool & guardrail packs",
+    body: "Register tools, guardrails, and workflows through extension manifests. Permission tags, rate budgets, and retries are built in.",
+    pill: "Extension ecosystem"
   },
   {
     icon: Radio,
@@ -48,7 +42,7 @@ const featureCards = [
   {
     icon: Code2,
     title: "Storage & deployment adapters",
-    body: "One API across cloud, desktop, mobile, and browser. IndexedDB (sql.js + browser persistence) for PWAs, better-sqlite3 for Electron, PostgreSQL for cloud, Capacitor for mobile. Full SQLite feature parity including JSON functions, BLOBs, and transactions. Auto-detects platform and selects the best adapter.",
+    body: "Swap between Postgres, better-sqlite3, sql.js, or custom stores. Use the reference server template to deploy anywhere.",
     pill: "Deploy anywhere"
   }
 ];
@@ -171,10 +165,10 @@ export default function LandingPage() {
                 Generalised Mind Instances for builders
               </span>
               <h1 id="hero-heading" className="font-display text-4xl leading-tight text-slate-900 sm:text-5xl sm:leading-tight dark:text-white">
-                Build AI agents with safety, extensions, and real-time guardrails.
+                Orchestrate personas, tools, and guardrails with AgentOS.
               </h1>
               <p className="text-lg text-slate-600 dark:text-slate-300">
-                AgentOS is the cognitive runtime powering Frame.dev&apos;s voice assistants. Deploy adaptive agents with built-in safety (guardrails that let agents "change their mind"), community extensions (search, Telegram, code execution), and free CI/CD for contributors. Apache-licensed for teams.
+                AgentOS powers Frame.dev&apos;s voice-first assistants. Now the modular runtimeâ€”complete with GMIs, workflow engine, guardrail APIs, and streaming orchestrationâ€”is available for teams who want to ship adaptive agents under Apache-friendly terms.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <a
@@ -309,61 +303,14 @@ export default function LandingPage() {
             </div>
           </section>
 
-      {/* Platform Feature Matrix */}
-      <section className="bg-white py-24 dark:bg-slate-950">
-        <div className="mx-auto w-full max-w-6xl px-6">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Platform support</h2>
-          <p className="text-sm text-slate-600 dark:text-slate-300 mb-6">
-            One API across cloud, desktop, mobile, and browser. AgentOS uses the SQL Storage Adapter to select the right backend at runtime. IndexedDB adapter (sql.js + browser persistence) provides full SQLite feature parity including JSON functions, BLOBs, and transactions—perfect for offline-first PWAs.
-          </p>
-          <div className="overflow-x-auto rounded-2xl border border-slate-200/40 dark:border-white/5">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50/60 dark:bg-slate-900/60">
-                <tr>
-                  <th className="p-3">Feature</th>
-                  <th className="p-3">Cloud (Postgres)</th>
-                  <th className="p-3">Desktop (Electron)</th>
-                  <th className="p-3">Mobile (Capacitor)</th>
-                  <th className="p-3">Browser (sql.js)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { f: 'Persistence', cloud: '✅ durable', desk: '✅ local file', mob: '✅ on-device', web: '✅ IndexedDB (auto-save)' },
-                  { f: 'Concurrency', cloud: '✅ pooled', desk: '❌ single-writer', mob: '❌ single-connection', web: '❌ single-threaded' },
-                  { f: 'Transactions', cloud: '✅', desk: '✅', mob: '✅', web: '✅' },
-                  { f: 'WAL/Locks', cloud: '❌', desk: '✅', mob: '✅', web: '❌' },
-                  { f: 'JSON/Arrays', cloud: '✅ JSONB', desk: '✅ JSON1', mob: '✅ JSON1', web: '✅ JSON1' },
-                  { f: 'Prepared statements', cloud: '✅', desk: '✅', mob: '❌', web: '✅' },
-                  { f: 'Cloud backups', cloud: '✅ S3/R2', desk: '✅ optional', mob: '✅ optional', web: '✅ export/import' },
-                  { f: 'Multi-tenant orgs', cloud: '✅', desk: '❌', mob: '❌', web: '❌' },
-                  { f: 'Marketplace (server)', cloud: '✅', desk: '⚠️ read-only', mob: '⚠️ read-only', web: '⚠️ disabled' },
-                  { f: 'Billing', cloud: '✅', desk: '❌', mob: '❌', web: '❌' },
-                ].map((row) => (
-                  <tr key={row.f} className="border-t border-slate-200/40 dark:border-white/5">
-                    <td className="p-3 font-medium text-slate-900 dark:text-slate-100">{row.f}</td>
-                    <td className="p-3">{row.cloud}</td>
-                    <td className="p-3">{row.desk}</td>
-                    <td className="p-3">{row.mob}</td>
-                    <td className="p-3">{row.web}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-4 text-xs text-slate-500 dark:text-slate-400">
-            See docs for details: Platform Feature Matrix and SQL Storage Adapter architecture.
-          </p>
-        </div>
-      </section>
-
           {/* Architecture Overview */}
           <section id="architecture" className="mt-20 space-y-12">
             <div className="flex flex-col items-center gap-6 text-center">
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Composable runtime architecture</h2>
               <p className="max-w-3xl text-base text-slate-600 dark:text-slate-300">
-                AgentOS brings the GMI manager, conversation memory, tool orchestrator, guardrail dispatcher, extension loader, streaming manager,
-                and workflow engine together behind a single facade. Extensions and guardrails are community-driven with free CI/CD—install via npm or browse the registry at runtime.
+                AgentOS brings the GMI manager, conversation memory, tool orchestrator, guardrail dispatcher, streaming manager,
+                and workflow engine together behind a single facade. Configure providers, packs, and guardrails with TypeScript
+                instead of glue code.
               </p>
               <div className="w-full max-w-4xl">
                 <picture>
@@ -383,14 +330,10 @@ export default function LandingPage() {
 {`const config: AgentOSConfig = {
   gmiManagerConfig: { personaLoaderConfig: { loaderType: "file_system" } },
   toolOrchestratorConfig: { orchestratorId: "default" },
-  guardrailService: composeGuardrails([
-    new KeywordGuardrail({ patterns: [...] }),
-    new CostCeilingGuardrail({ maxCostUsd: 0.05 })
-  ]),
-  guardrailConfig: { loadCurated: true, loadCommunity: false },
-  extensionConfig: { loadCurated: true, autoInstall: true },
+  guardrailService,
   languageConfig: { defaultLanguage: "en", autoDetect: true },
-  workflowEngineConfig: { maxConcurrentWorkflows: 32 }
+  workflowEngineConfig: { maxConcurrentWorkflows: 32 },
+  extensionManifest: { packs: ["@framers/agentos-pack-defaults"] }
 };`}
                 </pre>
               </div>
@@ -410,11 +353,11 @@ export default function LandingPage() {
             <span className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-brand dark:bg-brand/20 dark:text-brand-foreground">
               Licensing
             </span>
-            <h3 className="text-2xl font-semibold text-slate-900 dark:text-white">Apache engine, MIT surfaces</h3>
+            <h3 className="text-2xl font-semibold text-slate-900 dark:text-white">Apache-friendly, builder-owned</h3>
             <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-              AgentOS core (\`@agentos/core\`) is Apache 2.0 licensed, providing explicit patent grants and clear attribution. The
-              surrounding product surfaces— including the vca.chat marketplace and this site — are MIT licensed. You control your
-              personas, tool packs, and marketplace listings — export them as JSON or load them into your own deployments at any time.
+              AgentOS is moving from MIT to Apache&nbsp;2.0 so you get explicit patent grants and clear attribution requirements. You
+              control your personas, tool packs, and marketplace listingsâ€”export them as JSON or load them into your own deployments at
+              any time.
             </p>
             <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
               <li>Export personas, workflows, and artifacts without leaving the platform</li>
@@ -750,7 +693,7 @@ for await (const chunk of agentos.processRequest(input)) {
         <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-6 text-center">
           <h2 id="cta-heading" className="text-3xl font-semibold">Ready to make AgentOS your runtime?</h2>
           <p className="max-w-2xl text-sm opacity-90">
-            AgentOS core is open source under Apache 2.0. Marketplace and site components are MIT. Join the early access list to collaborate with the Frame team, migrate your existing assistant, and shape the roadmap.
+            AgentOS is open source and MIT licensed. Join the early access list to collaborate with the Frame team, migrate your existing assistant, and shape the roadmap.
           </p>
           <EmailSignupForm />
           <p className="text-xs opacity-70">
