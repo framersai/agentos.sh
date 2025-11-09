@@ -20,7 +20,7 @@ export default function DocsPage() {
               <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">API Reference</h2>
             </div>
             <p className="mt-4 text-slate-600 dark:text-slate-300">
-              Complete TypeDoc-generated API documentation for @agentos/core package. Explore all classes,
+              Complete TypeDoc-generated API documentation for @framers/agentos package. Explore all classes,
               interfaces, types, and methods.
             </p>
             <div className="mt-6 flex flex-col gap-3">

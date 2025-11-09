@@ -5,13 +5,13 @@
   "description": "Marketing site for AgentOS (agentos.sh) built with Next.js, React, and Tailwind CSS.",
   "scripts": {
     "dev": "next dev",
-    "dev:full": "concurrently \"pnpm --filter @agentos/core run docs:watch\" \"next dev\"",
+    "dev:full": "concurrently \"pnpm --filter @framers/agentos run docs:watch\" \"next dev\"",
     "build": "npm run copy:docs || true && next build",
     "copy:docs": "node scripts/copy-docs.js",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "docs:watch": "pnpm --filter @agentos/core run docs:watch",
+    "docs:watch": "pnpm --filter @framers/agentos run docs:watch",
     "export": "next build && next export -o out"
   },
   "dependencies": {

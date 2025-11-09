@@ -181,7 +181,7 @@ export default function LandingPage() {
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
               <a
-                href="https://www.npmjs.com/package/@agentos/core"
+                href="https://www.npmjs.com/package/@framers/agentos"
                 className="inline-flex items-center justify-center rounded-full border border-slate-200/70 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-brand hover:text-brand dark:border-slate-700 dark:text-slate-100 dark:hover:border-brand"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -363,7 +363,7 @@ export default function LandingPage() {
               <li>Export personas, workflows, and artifacts without leaving the platform</li>
             <li>Approve or reject bundle submissions before they hit production</li>
               <li>Ship private, unlisted, org-only, or invite-only listings while keeping compliance guardrails intact</li>
-              <li>Release automation mirrors `@agentos/core`, landing sites, and docs to public repos</li>
+              <li>Release automation mirrors `@framers/agentos`, landing sites, and docs to public repos</li>
             </ul>
             <nav className="flex flex-wrap gap-3 text-sm" aria-label="Licensing links">
               <a
@@ -497,7 +497,7 @@ export default function LandingPage() {
               <li className="flex items-start gap-3">
                 <Code2 className="mt-0.5 h-4 w-4 text-brand" aria-hidden="true" />
                 <span>
-                  <strong>@agentos/core</strong> &mdash; TypeScript package exporting the orchestrator, workflow runtime, streaming bridge, and guardrail APIs.
+                  <strong>@framers/agentos</strong> &mdash; TypeScript package exporting the orchestrator, workflow runtime, streaming bridge, and guardrail APIs.
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -599,9 +599,9 @@ export default function LandingPage() {
               with rich TSDoc annotations covering streaming invariants, guardrail semantics, and error contracts.
             </p>
             <pre className="overflow-x-auto rounded-2xl border border-slate-200/30 bg-slate-900/90 p-4 text-xs text-slate-100 shadow-lg shadow-slate-900/40 dark:border-slate-700/60">
-{`pnpm add @agentos/core
+{`pnpm add @framers/agentos
 
-import { AgentOS } from "@agentos/core";
+import { AgentOS } from "@framers/agentos";
 
 const agentos = new AgentOS();
 await agentos.initialize(config);

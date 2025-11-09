@@ -44,7 +44,7 @@ The hero includes a documentation search trigger (keyboard `/` or `Ctrl/⌘ + K`
 
 1. Run `pnpm dev:full` whenever you want live doc search; it launches `next dev` + the TypeDoc watcher so `public/docs/docs.json` stays fresh while you work.  
 2. The bundle writes `apps/agentos.sh/public/docs/docs.json`; if it's missing you'll see a reminder banner instead of results.  
-3. For non-interactive generation (CI, etc.) run `pnpm --filter @agentos/core run docs` before `pnpm build`—the build script already does this automatically.
+3. For non-interactive generation (CI, etc.) run `pnpm --filter @framers/agentos run docs` before `pnpm build`—the build script already does this automatically.
 
 `components/docs/DocSearch.tsx` assumes docs live under `/docs`. Update `DOCS_BASE_PATH` in that file if you host documentation elsewhere.
 

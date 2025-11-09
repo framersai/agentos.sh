@@ -70,7 +70,7 @@ export function DocSearch({ triggerClassName, triggerLabel = "Search docs" }: Do
       setError(null);
       const response = await fetch(`${DOCS_BASE_PATH}/docs.json`);
       if (!response.ok) {
-        throw new Error(`Docs index missing (status ${response.status}). Generate via pnpm --filter @agentos/core run docs.`);
+        throw new Error(`Docs index missing (status ${response.status}). Generate via pnpm --filter @framers/agentos run docs.`);
       }
       const data: TypeDocNode = await response.json();
       const collected: DocSearchItem[] = [];
@@ -169,7 +169,7 @@ export function DocSearch({ triggerClassName, triggerLabel = "Search docs" }: Do
                   <p className="text-sm text-slate-500 dark:text-slate-400">Loading documentation index…</p>
                 ) : query.trim().length < MIN_QUERY_LENGTH ? (
                   <p className="text-sm text-slate-500 dark:text-slate-400">
-                    Type at least {MIN_QUERY_LENGTH} characters to search the docs. Ensure <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-900">docs/docs.json</code> is generated via <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-900">pnpm --filter @agentos/core run docs</code>.
+                    Type at least {MIN_QUERY_LENGTH} characters to search the docs. Ensure <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-900">docs/docs.json</code> is generated via <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-900">pnpm --filter @framers/agentos run docs</code>.
                   </p>
                 ) : filteredItems.length === 0 ? (
                   <p className="text-sm text-slate-500 dark:text-slate-400">No matches. Try a different keyword.</p>
