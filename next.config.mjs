@@ -5,6 +5,11 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
+  // Enable static export for GitHub Pages
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
