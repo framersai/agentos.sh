@@ -48,7 +48,7 @@ const featureCards = [
   {
     icon: Code2,
     title: "Storage & deployment adapters",
-    body: "Swap between Postgres, better-sqlite3, sql.js, or custom stores. Use the reference server template to deploy anywhere.",
+    body: "One API across cloud, desktop, mobile, and browser. IndexedDB (sql.js + browser persistence) for PWAs, better-sqlite3 for Electron, PostgreSQL for cloud, Capacitor for mobile. Full SQLite feature parity including JSON functions, BLOBs, and transactions. Auto-detects platform and selects the best adapter.",
     pill: "Deploy anywhere"
   }
 ];
@@ -314,7 +314,7 @@ export default function LandingPage() {
         <div className="mx-auto w-full max-w-6xl px-6">
           <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">Platform support</h2>
           <p className="text-sm text-slate-600 dark:text-slate-300 mb-6">
-            One API across cloud, desktop, mobile, and browser. AgentOS uses the SQL Storage Adapter to select the right backend at runtime.
+            One API across cloud, desktop, mobile, and browser. AgentOS uses the SQL Storage Adapter to select the right backend at runtime. IndexedDB adapter (sql.js + browser persistence) provides full SQLite feature parity including JSON functions, BLOBs, and transactions—perfect for offline-first PWAs.
           </p>
           <div className="overflow-x-auto rounded-2xl border border-slate-200/40 dark:border-white/5">
             <table className="w-full text-left text-sm">
@@ -329,13 +329,13 @@ export default function LandingPage() {
               </thead>
               <tbody>
                 {[
-                  { f: 'Persistence', cloud: '✅ durable', desk: '✅ local file', mob: '✅ on-device', web: '⚠️ export/import' },
+                  { f: 'Persistence', cloud: '✅ durable', desk: '✅ local file', mob: '✅ on-device', web: '✅ IndexedDB (auto-save)' },
                   { f: 'Concurrency', cloud: '✅ pooled', desk: '❌ single-writer', mob: '❌ single-connection', web: '❌ single-threaded' },
                   { f: 'Transactions', cloud: '✅', desk: '✅', mob: '✅', web: '✅' },
                   { f: 'WAL/Locks', cloud: '❌', desk: '✅', mob: '✅', web: '❌' },
-                  { f: 'JSON/Arrays', cloud: '✅', desk: '❌', mob: '❌', web: '❌' },
-                  { f: 'Prepared statements', cloud: '✅', desk: '✅', mob: '❌', web: '❌' },
-                  { f: 'Cloud backups', cloud: '✅ S3/R2', desk: '✅ optional', mob: '✅ optional', web: '⚠️ export only' },
+                  { f: 'JSON/Arrays', cloud: '✅ JSONB', desk: '✅ JSON1', mob: '✅ JSON1', web: '✅ JSON1' },
+                  { f: 'Prepared statements', cloud: '✅', desk: '✅', mob: '❌', web: '✅' },
+                  { f: 'Cloud backups', cloud: '✅ S3/R2', desk: '✅ optional', mob: '✅ optional', web: '✅ export/import' },
                   { f: 'Multi-tenant orgs', cloud: '✅', desk: '❌', mob: '❌', web: '❌' },
                   { f: 'Marketplace (server)', cloud: '✅', desk: '⚠️ read-only', mob: '⚠️ read-only', web: '⚠️ disabled' },
                   { f: 'Billing', cloud: '✅', desk: '❌', mob: '❌', web: '❌' },
