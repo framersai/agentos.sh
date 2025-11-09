@@ -1,10 +1,9 @@
-﻿"use client";
-
-import Link from "next/link";
+﻿import Link from "next/link";
+import type { Metadata } from "next";
 
 const updated = "November 6, 2025";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "AgentOS Terms Guidance",
   description:
     "Summary of licensing and expectations for using the open-source AgentOS runtime."

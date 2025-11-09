@@ -22,11 +22,9 @@ jobs:
           else
             echo "pm=npm" >> $GITHUB_OUTPUT
           fi
-      - name: Setup pnpm
+      - name: Enable corepack (use packageManager version)
         if: steps.pm.outputs.pm == 'pnpm'
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+        run: corepack enable
       - name: Install
         run: |
           if [ "${{ steps.pm.outputs.pm }}" = "pnpm" ]; then

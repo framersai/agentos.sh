@@ -1,10 +1,9 @@
-﻿"use client";
-
-import Link from "next/link";
+﻿import Link from "next/link";
+import type { Metadata } from "next";
 
 const updated = "November 6, 2025";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "AgentOS Privacy Guidance",
   description:
     "How the open-source AgentOS runtime approaches privacy and where self-hosted operators should focus."
