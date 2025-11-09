@@ -37,8 +37,7 @@ const Sections = [
         <li>Document what you log (e.g., agency launches, persona submissions) and why.</li>
         <li>Implement opt-in analytics and give end users a way to delete or export their data.</li>
         <li>Review marketplace submissions before publishing to avoid unlicensed content or personal data.</li>
-        <li>Mirror the guidance in <Link href="/docs/MARKETPLACE" className="text-brand font-semibold hover:underline">docs/MARKETPLACE.md</Link>
-            if you enable the optional marketplace module.</li>
+        <li>Mirror the guidance in the docs/MARKETPLACE.md file if you enable the optional marketplace module.</li>
       </ul>
     )
   },
