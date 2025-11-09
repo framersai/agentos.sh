@@ -8,12 +8,12 @@ import { ModeToggle } from './mode-toggle';
 import { ThemeSelector } from './theme-selector';
 
 const NAV_LINKS = [
-  { href: '/#gmis', label: 'GMIs' },
-  { href: '/#architecture', label: 'Architecture' },
-  { href: '/#features', label: 'Features' },
-  { href: '/docs', label: 'Docs' },
-  { href: '/#cta', label: 'Get AgentOS' },
-];
+  { href: '/#gmis' as const, label: 'GMIs' },
+  { href: '/#architecture' as const, label: 'Architecture' },
+  { href: '/#features' as const, label: 'Features' },
+  { href: '/docs' as const, label: 'Docs' },
+  { href: '/#cta' as const, label: 'Get AgentOS' },
+] as const;
 
 /**
  * SiteHeader renders the marketing navigation bar with desktop and mobile variants.
