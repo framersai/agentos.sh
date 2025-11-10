@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { href: '/#architecture' as const, label: 'Architecture' },
   { href: '/#features' as const, label: 'Features' },
   { href: '/docs' as const, label: 'Docs' },
+  { href: '/faq' as const, label: 'FAQ' },
   { href: '/#cta' as const, label: 'Get AgentOS' },
 ] as const;
 
