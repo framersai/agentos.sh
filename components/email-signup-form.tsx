@@ -6,11 +6,10 @@ import { FormEvent } from "react";
 export function EmailSignupForm() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: Add email signup logic here
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
-    console.log("Email signup:", email);
-    // You can add your actual signup logic here
+    void email; // collected for submission
+    // TODO: wire up signup endpoint
   };
 
   return (

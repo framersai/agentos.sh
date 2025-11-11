@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Github, Book, Code2, Sparkles, Terminal, Layers, Cpu, Box, GitBranch } from 'lucide-react'
+import { ArrowRight, Github, Book, Sparkles, Terminal, Layers, Cpu, Box, GitBranch } from 'lucide-react'
 
 export function HeroSection() {
   return (

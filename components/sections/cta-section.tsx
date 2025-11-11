@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Mail, Github, MessageCircle, Sparkles } from 'lucide-react'
+import { ArrowRight, Github, MessageCircle, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
 export function CTASection() {
@@ -109,7 +109,7 @@ export function CTASection() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-sm text-green-500"
                 >
-                  Thank you! We'll be in touch soon.
+                  Thank you! We&apos;ll be in touch soon.
                 </motion.p>
               )}
 

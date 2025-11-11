@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Brain, Layers, Cpu, Network, Database, Shield, Zap, GitBranch } from 'lucide-react'
+import { Brain, Layers, Network, Database, Shield, Zap, GitBranch } from 'lucide-react'
 
 export function GMISection() {
   return (

@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Play, Maximize2, X, Monitor, Smartphone, Code2 } from 'lucide-react'
+import { Play, Maximize2, X, Monitor } from 'lucide-react'
+import Image from 'next/image'
 
 interface Demo {
   id: string
@@ -68,7 +69,15 @@ const demos: Demo[] = [
 
 export function VideoDemoSection() {
   const [selectedDemo, setSelectedDemo] = useState<Demo | null>(null)
-  const [activeCategory, setActiveCategory] = useState<'all' | Demo['category']>('all')
+  const categoryTabs = [
+    { value: 'all' as const, label: 'All Demos' },
+    { value: 'getting-started' as const, label: 'Getting Started' },
+    { value: 'features' as const, label: 'Features' },
+    { value: 'integrations' as const, label: 'Integrations' }
+  ]
+
+  type CategoryTabValue = typeof categoryTabs[number]['value']
+  const [activeCategory, setActiveCategory] = useState<CategoryTabValue>('all')
   const [isFullscreen, setIsFullscreen] = useState(false)
 
   const filteredDemos = activeCategory === 'all'
@@ -95,15 +104,10 @@ export function VideoDemoSection() {
         {/* Category Tabs */}
         <div className="flex justify-center mb-10">
           <div className="inline-flex gap-2 p-1 bg-background-glass backdrop-blur-md rounded-xl border border-border-subtle">
-            {[
-              { value: 'all', label: 'All Demos' },
-              { value: 'getting-started', label: 'Getting Started' },
-              { value: 'features', label: 'Features' },
-              { value: 'integrations', label: 'Integrations' }
-            ].map((tab) => (
+            {categoryTabs.map((tab) => (
               <button
                 key={tab.value}
-                onClick={() => setActiveCategory(tab.value as any)}
+                onClick={() => setActiveCategory(tab.value)}
                 className={`px-6 py-2 rounded-lg font-medium transition-all ${
                   activeCategory === tab.value
                     ? 'bg-gradient-to-r from-accent-primary to-accent-secondary text-white shadow-lg'
@@ -130,10 +134,12 @@ export function VideoDemoSection() {
               {/* Thumbnail */}
               <div className="relative aspect-video bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10">
                 {demo.thumbnail ? (
-                  <img
+                  <Image
                     src={demo.thumbnail}
                     alt={demo.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
@@ -271,10 +277,12 @@ export function VideoDemoSection() {
                   className="w-full h-full"
                 />
               ) : selectedDemo.gifUrl ? (
-                <img
+                <Image
                   src={selectedDemo.gifUrl}
                   alt={selectedDemo.title}
-                  className="w-full h-full object-contain"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 1200px) 100vw, 1200px"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-text-muted">

@@ -2,9 +2,9 @@
 
 import { motion } from 'framer-motion'
 import {
-  Github, ExternalLink, Package, Shield, Mic, Store, FileCode2,
-  Puzzle, Database, Globe, Users, BookOpen, Zap, Lock, Cloud,
-  Terminal, Layers, Settings, Brain, Code2, GitBranch
+  Github, ExternalLink, Package, Shield, Mic,
+  Puzzle, Database, Globe, Users, BookOpen,
+  Terminal, Settings, Brain, Code2, GitBranch
 } from 'lucide-react'
 
 interface Repository {

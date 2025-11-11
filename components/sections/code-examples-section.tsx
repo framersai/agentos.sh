@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Copy, Check, Terminal, Code2, FileCode2, Cpu, Database, GitBranch } from 'lucide-react'
+import { Copy, Check, Terminal, Code2, Cpu, Database, GitBranch } from 'lucide-react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
@@ -390,12 +390,22 @@ spec:
 
 export function CodeExamplesSection() {
   const [activeExample, setActiveExample] = useState(codeExamples[0])
-  const [activeCategory, setActiveCategory] = useState<'all' | CodeExample['category']>('all')
+
+  const categories = [
+    { value: 'all' as const, label: 'All Examples' },
+    { value: 'basic' as const, label: 'Basic' },
+    { value: 'advanced' as const, label: 'Advanced' },
+    { value: 'integration' as const, label: 'Integration' },
+    { value: 'deployment' as const, label: 'Deployment' }
+  ]
+
+  type CategoryValue = typeof categories[number]['value']
+  const [activeCategory, setActiveCategory] = useState<CategoryValue>('all')
   const [copied, setCopied] = useState<string | null>(null)
 
   const filteredExamples = activeCategory === 'all'
     ? codeExamples
-    : codeExamples.filter(ex => ex.category === activeCategory)
+    : codeExamples.filter((ex) => ex.category === activeCategory)
 
   const copyCode = (code: string, id: string) => {
     navigator.clipboard.writeText(code)
@@ -430,23 +440,17 @@ export function CodeExamplesSection() {
         {/* Category Filter */}
         <div className="flex justify-center mb-8">
           <div className="inline-flex gap-2 p-1 bg-background-glass backdrop-blur-md rounded-xl border border-border-subtle">
-            {[
-              { value: 'all', label: 'All Examples', icon: <Code2 className="w-4 h-4" /> },
-              { value: 'basic', label: 'Basic', icon: categoryIcons.basic },
-              { value: 'advanced', label: 'Advanced', icon: categoryIcons.advanced },
-              { value: 'integration', label: 'Integration', icon: categoryIcons.integration },
-              { value: 'deployment', label: 'Deployment', icon: categoryIcons.deployment }
-            ].map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat.value}
-                onClick={() => setActiveCategory(cat.value as any)}
+                onClick={() => setActiveCategory(cat.value)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
                   activeCategory === cat.value
                     ? 'bg-gradient-to-r from-accent-primary to-accent-secondary text-white'
                     : 'text-text-secondary hover:text-text-primary hover:bg-background-tertiary'
                 }`}
               >
-                {cat.icon}
+                {cat.value === 'all' ? <Code2 className="w-4 h-4" /> : categoryIcons[cat.value]}
                 {cat.label}
               </button>
             ))}

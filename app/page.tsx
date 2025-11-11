@@ -12,8 +12,7 @@ import { MarketplacePreview } from '../components/marketplace/marketplace-previe
 import ScrollToTopButton from '../components/ScrollToTopButton'
 import { motion } from 'framer-motion'
 import {
-  Shield, Zap, Code2, Users, TrendingUp, Brain,
-  Layers, Workflow, GitBranch, Sparkles, Globe,
+  Zap, Users, Sparkles, Globe,
   Package, Database, Terminal, Lock
 } from 'lucide-react'
 
@@ -46,35 +45,6 @@ const featureCards = [
     body: 'Run the full AgentOS runtime in-browser with SQL persistence, workflow telemetry, and marketplace personas for offline prototyping.',
     pill: 'Offline Capable',
     gradient: 'from-orange-500 to-red-500'
-  }
-]
-
-// Enhanced GMI highlights with clearer descriptions
-const gmiHighlights = [
-  {
-    icon: Brain,
-    title: 'Cognitive Intelligence Layer',
-    description: 'Bundle persona prompts, context memory, and linguistic preferences into reusable minds that work across all your products.'
-  },
-  {
-    icon: Shield,
-    title: 'Policy-Aware by Design',
-    description: 'Every GMI enforces guardrail hooks, subscription limits, and rate budgets—controlling what agents can say or do.'
-  },
-  {
-    icon: Workflow,
-    title: 'Agency Orchestration',
-    description: 'Deploy GMIs into multi-role workflows. They collaborate, delegate tasks, and stream telemetry without custom glue code.'
-  },
-  {
-    icon: Layers,
-    title: 'Adaptive Multilingual Support',
-    description: 'Auto-detect language from context, pivot content dynamically, and respond in the persona\'s preferred voice automatically.'
-  },
-  {
-    icon: GitBranch,
-    title: 'Version Control & Export',
-    description: 'Track changes, capture lineage, and export minds as JSON for auditing, rollback, or deployment in other environments.'
   }
 ]
 
@@ -354,7 +324,7 @@ export default function LandingPage() {
                     ))}
                   </div>
                   <p className="text-sm text-text-secondary italic">
-                    "{testimonial.content}"
+                    &ldquo;{testimonial.content}&rdquo;
                   </p>
                 </motion.div>
               ))}

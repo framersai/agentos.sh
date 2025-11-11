@@ -497,7 +497,6 @@ export function applyTheme(themeName: ThemeName, isDark?: boolean) {
     root.style.setProperty('--neu-ambient', colors.neumorphic.ambient);
 
     // Calculate shadow colors based on theme
-    const shadowIntensity = useDarkMode ? '0.5' : '0.15';
     root.style.setProperty('--neu-shadow-light', colors.neumorphic.light);
     root.style.setProperty('--neu-shadow-dark', colors.neumorphic.dark);
     root.style.setProperty('--neu-bg', colors.background.secondary);
