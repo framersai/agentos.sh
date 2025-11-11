@@ -181,21 +181,20 @@ export function HeroSection() {
             <p className="text-sm text-text-muted mb-4">Explore the AgentOS Ecosystem</p>
             <div className="flex flex-wrap justify-center gap-6">
               {[
-                { name: 'AgentOS Core', href: 'https://github.com/framersai/agentos', icon: '🧠' },
-                { name: 'Extensions', href: 'https://github.com/framersai/agentos-extensions', icon: '🔌' },
-                { name: 'Client', href: 'https://github.com/framersai/agentos-client', icon: '💻' },
-                { name: 'Guardrails', href: 'https://github.com/framersai/agentos-guardrails', icon: '🛡️' },
-                { name: 'VCA Marketplace', href: 'https://github.com/framersai/voice-chat-assistants', icon: '🎙️' },
+                { name: 'Core', href: 'https://github.com/framersai/agentos' },
+                { name: 'Extensions', href: 'https://github.com/framersai/agentos-extensions' },
+                { name: 'Client', href: 'https://github.com/framersai/agentos-client' },
+                { name: 'Guardrails', href: 'https://github.com/framersai/agentos-guardrails' },
+                { name: 'VCA', href: 'https://vca.chat' },
               ].map((repo) => (
                 <a
                   key={repo.name}
                   href={repo.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-text-secondary hover:text-accent-primary transition-colors"
+                  className="text-sm text-text-secondary hover:text-accent-primary transition-colors underline-offset-2 hover:underline"
                 >
-                  <span className="text-lg">{repo.icon}</span>
-                  <span className="underline-offset-2 hover:underline">{repo.name}</span>
+                  {repo.name}
                 </a>
               ))}
             </div>

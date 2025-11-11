@@ -9,6 +9,7 @@ import { CTASection } from '../components/sections/cta-section'
 import { AnimatedBackground, FloatingElements } from '../components/ui/animated-background'
 import { MediaShowcase } from '../components/media/media-showcase'
 import { MarketplacePreview } from '../components/marketplace/marketplace-preview'
+import { RealStats } from '../components/real-stats'
 import ScrollToTopButton from '../components/ScrollToTopButton'
 import { motion } from 'framer-motion'
 import {
@@ -104,14 +105,6 @@ const testimonials = [
   }
 ]
 
-// Real stats for social proof
-const stats = [
-  { value: '25k/week', label: 'NPM Downloads', icon: '📦' },
-  { value: '150+', label: 'Contributors', icon: '👥' },
-  { value: '5.2k', label: 'GitHub Stars', icon: '⭐' },
-  { value: '2.5k', label: 'Discord Members', icon: '💬' },
-  { value: 'MIT', label: 'Open Source', icon: '✨' }
-]
 
 export default function LandingPage() {
   return (
@@ -332,27 +325,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className="text-center"
-                >
-                  <div className="text-3xl mb-2">{stat.icon}</div>
-                  <div className="text-3xl font-bold text-text-primary">{stat.value}</div>
-                  <div className="text-sm text-text-muted">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Real Stats Section */}
+        <RealStats />
 
         {/* CTA Section */}
         <CTASection />

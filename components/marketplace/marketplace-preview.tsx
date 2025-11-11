@@ -113,14 +113,14 @@ interface MarketplaceAgentSummaryResponse {
 
 const marketplaceStats = [
   { value: '70%', label: 'Revenue share' },
-  { value: '5.2k', label: 'GitHub stars' },
-  { value: '25k/week', label: 'NPM downloads' },
-  { value: 'MIT', label: 'Open source' }
+  { value: 'Free', label: 'Start building' },
+  { value: 'Global', label: 'Marketplace' },
+  { value: 'Open', label: 'Source ecosystem' }
 ];
 
 const marketplaceSignals = [
-  { icon: Users, text: '150+ contributors' },
-  { icon: TrendingUp, text: '2.5k Discord members' },
+  { icon: Users, text: 'Growing community' },
+  { icon: TrendingUp, text: 'Join early' },
   { icon: Star, text: 'Apache 2.0 & MIT' }
 ];
 
