@@ -2,55 +2,13 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Github, Book, Sparkles, Terminal, Layers, Cpu, Box, GitBranch } from 'lucide-react'
+import { ArrowRight, Github, Book, Sparkles, Terminal, Layers, Cpu, GitBranch } from 'lucide-react'
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Neural Network Background */}
-      <div className="absolute inset-0 opacity-20">
-        <svg className="w-full h-full" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <linearGradient id="neural-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="var(--color-accent-primary)" stopOpacity="0.4">
-                <animate attributeName="stop-color" values="var(--color-accent-primary);var(--color-accent-secondary);var(--color-accent-primary)" dur="8s" repeatCount="indefinite" />
-              </stop>
-              <stop offset="100%" stopColor="var(--color-accent-secondary)" stopOpacity="0.2">
-                <animate attributeName="stop-color" values="var(--color-accent-secondary);var(--color-accent-primary);var(--color-accent-secondary)" dur="8s" repeatCount="indefinite" />
-              </stop>
-            </linearGradient>
-          </defs>
-
-          {/* Neural Network Nodes */}
-          {[...Array(15)].map((_, i) => {
-            const x = Math.random() * 1200
-            const y = Math.random() * 800
-            const delay = Math.random() * 5
-            return (
-              <g key={i}>
-                <circle cx={x} cy={y} r="4" fill="url(#neural-gradient)">
-                  <animate attributeName="r" values="4;8;4" dur="3s" begin={`${delay}s`} repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" begin={`${delay}s`} repeatCount="indefinite" />
-                </circle>
-                {/* Connection lines */}
-                {i > 0 && (
-                  <line
-                    x1={x}
-                    y1={y}
-                    x2={Math.random() * 1200}
-                    y2={Math.random() * 800}
-                    stroke="url(#neural-gradient)"
-                    strokeWidth="0.5"
-                    opacity="0.3"
-                  >
-                    <animate attributeName="opacity" values="0;0.5;0" dur="4s" begin={`${delay}s`} repeatCount="indefinite" />
-                  </line>
-                )}
-              </g>
-            )
-          })}
-        </svg>
-      </div>
+      {/* Minimal gradient background - much cleaner */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background-primary via-background-secondary/30 to-background-primary" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -72,15 +30,59 @@ export function HeroSection() {
             </span>
           </motion.div>
 
-          {/* Main Headline */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
-            <span className="block bg-gradient-to-r from-text-primary to-text-secondary bg-clip-text text-transparent">
-              AgentOS
-            </span>
-            <span className="block text-3xl sm:text-4xl lg:text-5xl mt-2 text-text-secondary">
-              TypeScript Runtime for AI Agents
-            </span>
-          </h1>
+          {/* Animated AgentOS Logo SVG */}
+          <div className="mb-8 flex justify-center">
+            <svg
+              width="300"
+              height="120"
+              viewBox="0 0 300 120"
+              className="w-48 sm:w-64 md:w-72 lg:w-80"
+            >
+              <defs>
+                <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="var(--color-accent-primary)">
+                    <animate attributeName="stop-color" values="var(--color-accent-primary);var(--color-accent-secondary);var(--color-accent-primary)" dur="4s" repeatCount="indefinite" />
+                  </stop>
+                  <stop offset="100%" stopColor="var(--color-accent-secondary)">
+                    <animate attributeName="stop-color" values="var(--color-accent-secondary);var(--color-accent-primary);var(--color-accent-secondary)" dur="4s" repeatCount="indefinite" />
+                  </stop>
+                </linearGradient>
+              </defs>
+
+              {/* Living dots animation around logo */}
+              {[...Array(6)].map((_, i) => (
+                <motion.circle
+                  key={i}
+                  r="2"
+                  fill="url(#logo-gradient)"
+                  opacity="0.6"
+                  initial={{ cx: 50 + i * 40, cy: 60 }}
+                  animate={{
+                    cx: [50 + i * 40, 50 + i * 40 + 10, 50 + i * 40],
+                    cy: [60, 50, 60],
+                    opacity: [0.3, 0.8, 0.3]
+                  }}
+                  transition={{
+                    duration: 3,
+                    delay: i * 0.3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+
+              {/* AgentOS Text */}
+              <text x="150" y="65" textAnchor="middle" className="text-5xl font-bold">
+                <tspan fill="var(--color-text-primary)">Agent</tspan>
+                <tspan fill="url(#logo-gradient)">OS</tspan>
+              </text>
+            </svg>
+          </div>
+
+          {/* Subtitle */}
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-text-secondary">
+            TypeScript Runtime for AI Agents
+          </h2>
 
           {/* Better Description */}
           <p className="max-w-3xl mx-auto text-lg sm:text-xl text-text-muted mb-8">
@@ -111,15 +113,16 @@ export function HeroSection() {
             ))}
           </div>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - Better visibility */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link
               href="https://vca.chat"
-              className="group px-8 py-4 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl font-semibold text-white shadow-neumorphic hover:shadow-neumorphic-hover transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+              className="group px-8 py-4 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2 relative overflow-hidden"
             >
-              <Box className="w-5 h-5" />
-              Try Voice Chat Assistant
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
+              <Sparkles className="w-5 h-5" />
+              <span className="relative z-10">Try Voice Chat Assistant</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10" />
             </Link>
 
             <Link
@@ -140,6 +143,33 @@ export function HeroSection() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
+
+          {/* NPM Install Command */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="mb-8"
+          >
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-background-tertiary/50 backdrop-blur-sm border border-border-subtle">
+              <Terminal className="w-5 h-5 text-accent-primary" />
+              <code className="text-sm font-mono text-text-primary select-all">
+                npm install @framersai/agentos
+              </code>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText('npm install @framersai/agentos')
+                  // Optional: Add toast notification here
+                }}
+                className="p-2 rounded-lg hover:bg-background-primary/50 transition-colors"
+                aria-label="Copy command"
+              >
+                <svg className="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+              </button>
+            </div>
+          </motion.div>
 
           {/* Quick Links to Repos */}
           <motion.div
@@ -173,13 +203,6 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 animate-float">
-        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20 backdrop-blur-md" />
-      </div>
-      <div className="absolute bottom-20 right-10 animate-float-reverse">
-        <div className="w-32 h-32 rounded-3xl bg-gradient-to-tr from-accent-secondary/20 to-accent-primary/20 backdrop-blur-md" />
-      </div>
     </section>
   )
 }

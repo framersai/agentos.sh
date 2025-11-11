@@ -35,7 +35,7 @@ export function SiteHeader() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b theme-header theme-header-gradient backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border-subtle/50 bg-background-primary/70 backdrop-blur-xl backdrop-saturate-150">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex flex-col gap-1 transition-opacity hover:opacity-95" onClick={closeMenu}>
           <span className="text-[0.65rem] font-semibold uppercase tracking-[0.45em] text-slate-400/80 dark:text-slate-500/75">
@@ -44,9 +44,13 @@ export function SiteHeader() {
           <AgentOSWordmark className="h-10" size="md" />
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm font-medium md:flex theme-nav" aria-label="Main navigation">
+        <nav className="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Main navigation">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} className="theme-nav-link" href={link.href}>
+            <Link
+              key={link.href}
+              className="relative text-text-secondary hover:text-accent-primary transition-colors duration-200 after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px] after:bg-accent-primary after:transition-all after:duration-300 hover:after:w-full"
+              href={link.href}
+            >
               {link.label}
             </Link>
           ))}

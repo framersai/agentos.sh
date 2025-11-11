@@ -104,13 +104,13 @@ const testimonials = [
   }
 ]
 
-// Stats for social proof
+// Real stats for social proof
 const stats = [
-  { value: '25K+', label: 'Weekly Downloads', icon: '📦' },
+  { value: '25k/week', label: 'NPM Downloads', icon: '📦' },
   { value: '150+', label: 'Contributors', icon: '👥' },
-  { value: '5K+', label: 'GitHub Stars', icon: '⭐' },
-  { value: '2.5K+', label: 'Discord Members', icon: '💬' },
-  { value: '99.9%', label: 'Uptime SLA', icon: '🚀' }
+  { value: '5.2k', label: 'GitHub Stars', icon: '⭐' },
+  { value: '2.5k', label: 'Discord Members', icon: '💬' },
+  { value: 'MIT', label: 'Open Source', icon: '✨' }
 ]
 
 export default function LandingPage() {
@@ -365,39 +365,42 @@ export default function LandingPage() {
                 <h3 className="font-bold mb-4 text-text-primary">AgentOS</h3>
                 <p className="text-sm text-text-muted">
                   TypeScript runtime for adaptive AI agent intelligence.
-                  Open-source and MIT licensed.
                 </p>
+                <div className="mt-3 text-xs text-text-muted">
+                  <p>Core: Apache 2.0</p>
+                  <p>Extensions & Guardrails: MIT</p>
+                </div>
               </div>
               <div>
                 <h4 className="font-semibold mb-3 text-text-primary">Resources</h4>
                 <ul className="space-y-2 text-sm">
                   <li><a href="https://docs.agentos.sh" className="text-text-secondary hover:text-accent-primary">Documentation</a></li>
                   <li><a href="https://github.com/framersai/agentos" className="text-text-secondary hover:text-accent-primary">GitHub</a></li>
-                  <li><a href="https://discord.gg/agentos" className="text-text-secondary hover:text-accent-primary">Discord</a></li>
+                  <li><a href="https://discord.gg/framersai" className="text-text-secondary hover:text-accent-primary">Discord</a></li>
                   <li><a href="https://vca.chat" className="text-text-secondary hover:text-accent-primary">Marketplace</a></li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold mb-3 text-text-primary">Company</h4>
+                <h4 className="font-semibold mb-3 text-text-primary">FramersAI</h4>
                 <ul className="space-y-2 text-sm">
-                  <li><a href="https://frame.dev" className="text-text-secondary hover:text-accent-primary">Frame.dev</a></li>
-                  <li><a href="https://frame.dev/about" className="text-text-secondary hover:text-accent-primary">About</a></li>
-                  <li><a href="https://frame.dev/careers" className="text-text-secondary hover:text-accent-primary">Careers</a></li>
+                  <li><a href="https://github.com/framersai" className="text-text-secondary hover:text-accent-primary">GitHub Org</a></li>
+                  <li><a href="https://twitter.com/framersai" className="text-text-secondary hover:text-accent-primary">Twitter</a></li>
+                  <li><a href="https://www.linkedin.com/company/framersai" className="text-text-secondary hover:text-accent-primary">LinkedIn</a></li>
                   <li><a href="mailto:hello@frame.dev" className="text-text-secondary hover:text-accent-primary">Contact</a></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold mb-3 text-text-primary">Legal</h4>
                 <ul className="space-y-2 text-sm">
-                  <li><a href="/privacy" className="text-text-secondary hover:text-accent-primary">Privacy Policy</a></li>
-                  <li><a href="/terms" className="text-text-secondary hover:text-accent-primary">Terms of Service</a></li>
-                  <li><a href="/license" className="text-text-secondary hover:text-accent-primary">License</a></li>
+                  <li><a href="/legal/privacy" className="text-text-secondary hover:text-accent-primary">Privacy Policy</a></li>
+                  <li><a href="/legal/terms" className="text-text-secondary hover:text-accent-primary">Terms of Service</a></li>
+                  <li><a href="https://github.com/framersai/agentos/blob/main/LICENSE" className="text-text-secondary hover:text-accent-primary">License</a></li>
                 </ul>
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-border-subtle text-center">
               <p className="text-sm text-text-muted">
-                © 2024 Frame.dev. All rights reserved. Built with AgentOS.
+                © 2024 FramersAI / Frame.dev. All rights reserved. Built with AgentOS.
               </p>
             </div>
           </div>

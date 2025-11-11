@@ -6,18 +6,8 @@ import { Brain, Layers, Network, Database, Shield, Zap, GitBranch } from 'lucide
 export function GMISection() {
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-secondary relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0">
-        <svg className="w-full h-full opacity-5" viewBox="0 0 1200 800">
-          <defs>
-            <pattern id="gmi-grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-              <rect x="0" y="0" width="40" height="40" fill="none" stroke="var(--color-accent-primary)" strokeWidth="0.5" opacity="0.5" />
-              <circle cx="20" cy="20" r="2" fill="var(--color-accent-primary)" opacity="0.3" />
-            </pattern>
-          </defs>
-          <rect width="1200" height="800" fill="url(#gmi-grid)" />
-        </svg>
-      </div>
+      {/* Minimal gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background-secondary/50 to-background-primary/50" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
@@ -45,12 +35,16 @@ export function GMISection() {
           className="mb-16"
         >
           <div className="bg-background-glass backdrop-blur-md rounded-3xl p-8 border border-border-subtle shadow-neumorphic">
-            {/* SVG Architecture Diagram */}
-            <svg viewBox="0 0 800 400" className="w-full h-auto">
+            {/* Improved GMI Architecture Diagram */}
+            <svg viewBox="0 0 800 500" className="w-full h-auto">
               <defs>
                 <linearGradient id="gmi-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="var(--color-accent-primary)" stopOpacity="0.8" />
                   <stop offset="100%" stopColor="var(--color-accent-secondary)" stopOpacity="0.8" />
+                </linearGradient>
+                <linearGradient id="gmi-gradient-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="var(--color-accent-secondary)" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="var(--color-accent-primary)" stopOpacity="0.6" />
                 </linearGradient>
                 <filter id="gmi-glow">
                   <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -61,70 +55,112 @@ export function GMISection() {
                 </filter>
               </defs>
 
-              {/* Central Agency Hub */}
-              <g transform="translate(400, 200)">
-                <circle r="60" fill="url(#gmi-gradient-1)" opacity="0.1" />
-                <circle r="50" fill="none" stroke="url(#gmi-gradient-1)" strokeWidth="2" />
+              {/* Core Layers */}
+              <g transform="translate(400, 250)">
+                {/* GMI Core Layer */}
+                <rect x="-100" y="-150" width="200" height="80" fill="url(#gmi-gradient-1)" opacity="0.1" rx="10" />
+                <text x="0" y="-100" textAnchor="middle" className="fill-text-primary font-bold text-sm">
+                  GMI Core Layer
+                </text>
+
+                {/* Working Memory */}
+                <rect x="-80" y="-50" width="60" height="40" fill="var(--color-background-glass)" stroke="var(--color-accent-primary)" strokeWidth="1.5" rx="5" />
+                <text x="-50" y="-25" textAnchor="middle" className="fill-text-secondary text-xs">
+                  Working
+                </text>
+                <text x="-50" y="-10" textAnchor="middle" className="fill-text-secondary text-xs">
+                  Memory
+                </text>
+
+                {/* Context Manager */}
+                <rect x="-10" y="-50" width="60" height="40" fill="var(--color-background-glass)" stroke="var(--color-accent-primary)" strokeWidth="1.5" rx="5" />
+                <text x="20" y="-25" textAnchor="middle" className="fill-text-secondary text-xs">
+                  Context
+                </text>
+                <text x="20" y="-10" textAnchor="middle" className="fill-text-secondary text-xs">
+                  Manager
+                </text>
+
+                {/* Agency Core */}
+                <circle r="50" fill="url(#gmi-gradient-2)" opacity="0.15" />
+                <circle r="45" fill="none" stroke="url(#gmi-gradient-1)" strokeWidth="2" />
                 <text y="5" textAnchor="middle" className="fill-text-primary font-semibold text-sm">
-                  Agency Core
+                  Multi-Agent
+                </text>
+                <text y="20" textAnchor="middle" className="fill-text-primary font-semibold text-sm">
+                  Coordinator
                 </text>
               </g>
 
-              {/* GMI Instances */}
+              {/* GMI Agent Instances */}
               {[
-                { x: 200, y: 100, label: 'Researcher', icon: '🔍' },
-                { x: 600, y: 100, label: 'Analyst', icon: '📊' },
-                { x: 200, y: 300, label: 'Creator', icon: '✨' },
-                { x: 600, y: 300, label: 'Executor', icon: '⚡' },
-                { x: 100, y: 200, label: 'Monitor', icon: '👁️' },
-                { x: 700, y: 200, label: 'Optimizer', icon: '🎯' }
+                { x: 150, y: 100, label: 'Researcher', role: 'Discovery', color: '#3B82F6' },
+                { x: 650, y: 100, label: 'Analyst', role: 'Processing', color: '#8B5CF6' },
+                { x: 150, y: 400, label: 'Creator', role: 'Generation', color: '#EC4899' },
+                { x: 650, y: 400, label: 'Executor', role: 'Action', color: '#10B981' },
+                { x: 400, y: 50, label: 'Orchestrator', role: 'Coordination', color: '#F59E0B' },
               ].map((gmi, i) => (
                 <g key={i} transform={`translate(${gmi.x}, ${gmi.y})`}>
-                  <motion.circle
-                    r="35"
-                    fill="var(--color-background-glass)"
-                    stroke="var(--color-accent-primary)"
-                    strokeWidth="2"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
-                  />
-                  <text y="-5" textAnchor="middle" className="text-2xl">
-                    {gmi.icon}
-                  </text>
-                  <text y="20" textAnchor="middle" className="fill-text-secondary text-xs">
-                    {gmi.label}
-                  </text>
-                  {/* Connection to center */}
-                  <line
+                  <motion.g
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: i * 0.15, duration: 0.5 }}
+                  >
+                    <rect
+                      x="-45"
+                      y="-30"
+                      width="90"
+                      height="60"
+                      fill="var(--color-background-glass)"
+                      stroke={gmi.color}
+                      strokeWidth="2"
+                      rx="8"
+                      opacity="0.9"
+                    />
+                    <text y="-5" textAnchor="middle" className="fill-text-primary font-semibold text-xs">
+                      {gmi.label}
+                    </text>
+                    <text y="10" textAnchor="middle" className="fill-text-muted text-xs">
+                      {gmi.role}
+                    </text>
+                  </motion.g>
+
+                  {/* Connection lines to center */}
+                  <motion.line
                     x1="0"
                     y1="0"
                     x2={400 - gmi.x}
-                    y2={200 - gmi.y}
-                    stroke="var(--color-border-subtle)"
-                    strokeWidth="1"
+                    y2={250 - gmi.y}
+                    stroke={gmi.color}
+                    strokeWidth="1.5"
                     strokeDasharray="5,5"
-                    opacity="0.5"
+                    opacity="0"
+                    animate={{ opacity: 0.3 }}
+                    transition={{ delay: i * 0.15 + 0.5, duration: 0.5 }}
                   />
                 </g>
               ))}
 
-              {/* Data Flow Indicators */}
+              {/* Data Flow Animation */}
               <motion.circle
-                r="3"
+                r="4"
                 fill="var(--color-accent-primary)"
                 filter="url(#gmi-glow)"
-                initial={{ x: 200, y: 100 }}
                 animate={{
-                  x: [200, 400, 600, 400, 200],
-                  y: [100, 200, 100, 200, 100]
+                  x: [150, 400, 650, 400, 150],
+                  y: [100, 250, 100, 50, 100]
                 }}
                 transition={{
-                  duration: 8,
+                  duration: 10,
                   repeat: Infinity,
                   ease: "linear"
                 }}
               />
+
+              {/* Labels */}
+              <text x="400" y="480" textAnchor="middle" className="fill-text-muted text-xs">
+                Adaptive Multi-Agent Intelligence with Emergent Behaviors
+              </text>
             </svg>
           </div>
         </motion.div>
