@@ -2,9 +2,6 @@
 <p align="center">
   <a href="https://agentos.sh"><img src="public/logos/agentos-primary-no-tagline.svg" alt="AgentOS" height="64" /></a>
 </p>
-<p align="center">
-  <a href="https://frame.dev"><img src="public/logos/frame-wordmark.svg" alt="Frame" height="28" /></a>
-</p>
 
 # AgentOS Site (agentos.sh)
 
@@ -67,7 +64,16 @@ If you prefer different names, adjust the `heroVideoSources` / `pipelineImageSou
 - Marketplace: https://vca.chat
 - GitHub: https://github.com/framersai/agentos.sh
 - npm: https://www.npmjs.com/org/framers
+
 ## Contributing & Security
 - Contributing: ./\.github/CONTRIBUTING.md
 - Code of Conduct: ./\.github/CODE_OF_CONDUCT.md
 - Security Policy: ./\.github/SECURITY.md
+
+---
+
+<p align="center">
+  <a href="https://frame.dev">
+    <img src="public/logos/frame-logo-no-subtitle.svg" alt="Frame" height="40" />
+  </a>
+</p>
