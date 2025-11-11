@@ -8,10 +8,44 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" });
 
 export const metadata: Metadata = {
-  title: "AgentOS - Orchestrate adaptive AI systems",
+  title: "AgentOS - TypeScript Runtime for Adaptive AI Agent Intelligence",
   description:
-    "AgentOS is the orchestration substrate powering Frame.dev. Build, debug, and deploy adaptive AI agents with a runtime designed for audio, tools, and realtime feedback loops.",
+    "Build intelligent, adaptive AI agents with AgentOS. Open-source TypeScript runtime for creating autonomous AI systems with agency, memory, and multi-modal capabilities. Featuring GMI roles, tool orchestration, and enterprise-ready guardrails.",
   metadataBase: new URL("https://agentos.sh"),
+  keywords: [
+    "AgentOS",
+    "AI agents",
+    "artificial intelligence",
+    "machine learning",
+    "TypeScript AI",
+    "autonomous agents",
+    "agent runtime",
+    "AI framework",
+    "adaptive intelligence",
+    "agency AI",
+    "multi-agent systems",
+    "AI orchestration",
+    "GMI roles",
+    "generalised mind instances",
+    "Frame.dev",
+    "voice chat assistant",
+    "AI development",
+    "open source AI"
+  ],
+  authors: [{ name: "Frame.dev", url: "https://frame.dev" }],
+  creator: "Frame.dev",
+  publisher: "Frame.dev",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -24,20 +58,36 @@ export const metadata: Metadata = {
     ]
   },
   openGraph: {
-    title: "AgentOS by Frame",
+    title: "AgentOS - TypeScript Runtime for Adaptive AI Agent Intelligence",
     description:
-      "Adaptive agent runtime with battle-tested streaming, tooling, and observability. Built by Frame.dev.",
+      "Build intelligent AI agents with memory, tools, and agency. Open-source runtime featuring GMI roles, multi-agent orchestration, and enterprise guardrails. By Frame.dev.",
     url: "https://agentos.sh",
     siteName: "AgentOS",
-    images: [{ url: "/og-image.png", width: 1600, height: 1600 }],
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AgentOS - Adaptive AI Agent Intelligence Runtime"
+      }
+    ],
     locale: "en_US",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
+    title: "AgentOS - TypeScript Runtime for Adaptive AI Agents",
+    description: "Build intelligent AI agents with AgentOS. Open-source runtime with GMI roles, agency orchestration, and enterprise guardrails.",
     creator: "@frame_dev",
     site: "@frame_dev",
     images: ["/og-image.png"]
+  },
+  alternates: {
+    canonical: "https://agentos.sh"
+  },
+  verification: {
+    google: "google-site-verification-code",
+    yandex: "yandex-verification-code",
   }
 };
 
