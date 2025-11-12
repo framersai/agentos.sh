@@ -1,4 +1,4 @@
-Ôªøimport type { Metadata } from "next";
+import type { Metadata } from "next";
 
 const updated = "November 6, 2025";
 
@@ -15,7 +15,7 @@ const Sections = [
       <p className="text-slate-700 dark:text-slate-200">
         AgentOS is distributed under the MIT license. You may use, copy, modify, merge, publish, distribute,
         sublicense, and/or sell copies of the software, subject to including the copyright notice and license
-        text in your distributions. As the MIT license states, the software is provided ‚Äúas is‚Äù without warranty
+        text in your distributions. As the MIT license states, the software is provided ìas isî without warranty
         of any kind.
       </p>
     )
@@ -81,4 +81,5 @@ export default function TermsPage() {
     </article>
   );
 }
+
 

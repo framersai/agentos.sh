@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 const updated = "November 6, 2025";
 
@@ -82,4 +82,5 @@ export default function PrivacyPage() {
     </article>
   );
 }
+
 
