@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, Pause, Volume2, VolumeX, Maximize2, X, Monitor, Sparkles } from 'lucide-react'
+import { Play, Pause, Volume2, VolumeX, Maximize2, X, Sparkles } from 'lucide-react'
 
 // Sample captions for demo with times (in seconds)
 const demoVideoData = {
