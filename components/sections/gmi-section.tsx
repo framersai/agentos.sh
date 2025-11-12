@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Brain, Layers, Network, Database, Shield, Zap, GitBranch, Cpu, Activity, Cloud, Server, Code, ArrowRight } from 'lucide-react'
+import { Brain, Network, Database, Shield, Zap, GitBranch, Cpu, Activity, Cloud, Code, ArrowRight } from 'lucide-react'
 
 // Interactive diagram data
 const architectureLayers = [
