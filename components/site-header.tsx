@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import type { Route } from 'next';
-import { Menu, X, Globe, Sparkles, ArrowRight } from 'lucide-react';
+import { Menu, X, Globe, Sparkles, ArrowRight, Github } from 'lucide-react';
 import AgentOSWordmark from './branding/AgentOSWordmark';
 import { ModeToggle } from './mode-toggle';
 import { ThemeSelector } from './theme-selector';
@@ -64,7 +64,7 @@ export function SiteHeader() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="relative text-gray-700 hover:text-purple-600 dark:text-white/90 dark:hover:text-white transition-all duration-200 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-purple-600 after:to-pink-600 after:transition-all after:duration-300 hover:after:w-full font-semibold"
+                  className="group relative text-gray-700 hover:text-purple-700 dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-purple-600 after:to-pink-600 after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
                 >
                   {link.label}
                 </a>
@@ -76,7 +76,7 @@ export function SiteHeader() {
                 <Link
                   key={link.href}
                   href={'/about' as Route}
-                  className="relative text-gray-700 hover:text-purple-600 dark:text-white/90 dark:hover:text-white transition-all duration-200 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-purple-600 after:to-pink-600 after:transition-all after:duration-300 hover:after:w-full font-semibold"
+                  className="group relative text-gray-700 hover:text-purple-700 dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-purple-600 after:to-pink-600 after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
                 >
                   {link.label}
                 </Link>
@@ -88,6 +88,19 @@ export function SiteHeader() {
 
         {/* Right side actions */}
         <div className="flex items-center gap-3">
+          {/* GitHub repo CTA (prominent with subtle hover) */}
+          <a
+            href="https://github.com/framersai/agentos"
+            className="relative hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/20 bg-gradient-to-r from-purple-600/10 to-pink-600/10 text-purple-700 hover:text-purple-800 dark:text-white/90 hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300 hover:-translate-y-0.5 group"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open AgentOS on GitHub"
+            title="Open AgentOS on GitHub"
+          >
+            <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <Github className="w-4 h-4" />
+            <span className="font-semibold">GitHub</span>
+          </a>
           {/* Marketplace button */}
           <a
             href="https://app.vca.chat/marketplace"
@@ -180,6 +193,16 @@ export function SiteHeader() {
             >
               <Globe className="w-4 h-4" />
               Marketplace
+            </a>
+            <a
+              href="https://github.com/framersai/agentos"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMenu}
+              className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all flex items-center gap-2"
+            >
+              <Github className="w-4 h-4" />
+              GitHub
             </a>
             <a
               href="https://frame.dev"
