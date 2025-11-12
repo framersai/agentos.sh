@@ -15,7 +15,6 @@
     "export": "next build"
   },
   "dependencies": {
-    "@framers/theme-tokens": "workspace:*",
     "@types/react-syntax-highlighter": "^15.5.13",
     "clsx": "^2.1.1",
     "framer-motion": "^11.0.23",
