@@ -43,8 +43,18 @@ export function SiteHeader() {
       transition={{ duration: 0.5, ease: "easeOut" }}
       className="fixed top-0 z-50 w-full transition-all duration-300 transition-theme"
     >
-      {/* Glass panel with distinct gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-purple-50/60 to-pink-50/50 dark:from-black/90 dark:via-purple-950/80 dark:to-pink-950/70 backdrop-blur-xl border-b border-purple-200/30 dark:border-purple-500/20 shadow-lg" />
+      {/* Token-driven glass panel; darker than page bg in dark, subtle in light */}
+      <div
+        className="absolute inset-0 backdrop-blur-xl border-b border-border-subtle shadow-lg"
+        style={{
+          background:
+            'linear-gradient(135deg,' +
+            ' color-mix(in oklab, var(--color-background-primary) 88%, transparent),' +
+            ' color-mix(in oklab, var(--color-accent-primary) 14%, transparent) 50%,' +
+            ' color-mix(in oklab, var(--color-accent-secondary) 12%, transparent))',
+          backgroundColor: 'color-mix(in oklab, var(--color-background-primary) 92%, black)',
+        }}
+      />
       
       <div className="relative z-10 w-full">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
@@ -64,7 +74,7 @@ export function SiteHeader() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="group relative text-gray-700 hover:text-purple-700 dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-purple-600 after:to-pink-600 after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
+                  className="group relative text-gray-700 hover:text-accent-primary dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-[color:var(--color-accent-primary)] after:to-[color:var(--color-accent-secondary)] after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
                 >
                   {link.label}
                 </a>
@@ -76,7 +86,7 @@ export function SiteHeader() {
                 <Link
                   key={link.href}
                   href={'/about' as Route}
-                  className="group relative text-gray-700 hover:text-purple-700 dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-purple-600 after:to-pink-600 after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
+                  className="group relative text-gray-700 hover:text-accent-primary dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-[color:var(--color-accent-primary)] after:to-[color:var(--color-accent-secondary)] after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
                 >
                   {link.label}
                 </Link>
@@ -91,13 +101,15 @@ export function SiteHeader() {
           {/* GitHub repo CTA (prominent with subtle hover) */}
           <a
             href="https://github.com/framersai/agentos"
-            className="relative hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/20 bg-gradient-to-r from-purple-600/10 to-pink-600/10 text-purple-700 hover:text-purple-800 dark:text-white/90 hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300 hover:-translate-y-0.5 group"
+            className="relative hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle text-text-primary hover:text-accent-primary dark:text-white/90 transition-all duration-300 hover:-translate-y-0.5 group"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open AgentOS on GitHub"
             title="Open AgentOS on GitHub"
           >
-            <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{ background: 'linear-gradient(90deg, color-mix(in oklab, var(--color-accent-primary) 18%, transparent), color-mix(in oklab, var(--color-accent-secondary) 14%, transparent))' }}
+            />
             <Github className="w-4 h-4" />
             <span className="font-semibold">GitHub</span>
           </a>
@@ -116,9 +128,10 @@ export function SiteHeader() {
           {/* Frame.dev CTA - Better styled with high contrast */}
           <a
             href="https://frame.dev"
-            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary text-white text-sm font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 group border border-purple-500/20"
+            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white text-sm font-semibold transition-all duration-300 group border border-border-subtle"
             target="_blank"
             rel="noopener noreferrer"
+            style={{ background: 'linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary))' }}
           >
             <Sparkles className="w-4 h-4" />
             Frame.dev

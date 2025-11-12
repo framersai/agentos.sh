@@ -24,7 +24,7 @@ export function HeroSection() {
         isVisible={showToast} 
         onClose={() => setShowToast(false)} 
       />
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden transition-theme">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden transition-theme section-gradient">
       {/* Subtle organic gradient background */}
       <div className="absolute inset-0 organic-gradient" />
       <div className="absolute inset-0 bg-gradient-to-br from-background-primary/90 via-background-secondary/50 to-background-primary/90" />

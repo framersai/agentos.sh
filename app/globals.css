@@ -171,6 +171,24 @@
     box-shadow: 0 20px 60px -15px hsla(250, 100%, 75%, 0.3);
   }
 
+  /* Section gradient: subtle, token-driven vertical segmentation */
+  .section-gradient {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-background-primary) 98%, transparent),
+      color-mix(in oklab, var(--color-background-secondary) 96%, transparent) 45%,
+      color-mix(in oklab, var(--color-background-tertiary) 94%, transparent)
+    );
+  }
+  .dark .section-gradient {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-background-primary) 96%, black),
+      color-mix(in oklab, var(--color-background-secondary) 94%, black) 45%,
+      color-mix(in oklab, var(--color-background-tertiary) 92%, black)
+    );
+  }
+
   /* Organic gradient overlays */
   .organic-gradient {
     background-image: var(--gradient-organic-1), var(--gradient-organic-2), var(--gradient-organic-3);

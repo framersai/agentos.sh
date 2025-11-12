@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Brain, Network, Database, Shield, Zap, GitBranch, Cpu, Activity, Cloud, Code, ArrowRight } from 'lucide-react'
+import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight } from 'lucide-react'
 import { MermaidDiagram } from '../ui/mermaid-diagram'
 
 // Interactive diagram data
@@ -46,7 +46,7 @@ export function GMISection() {
   ]
 
   return (
-    <section id="gmis" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="gmi-heading">
+    <section id="gmis" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme section-gradient" aria-labelledby="gmi-heading">
       {/* Subtle organic gradient */}
       <div className="absolute inset-0 organic-gradient opacity-20" />
 
