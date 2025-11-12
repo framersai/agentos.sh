@@ -18,9 +18,7 @@ function resolveSqlAdapterVersion() {
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    typedRoutes: true,
-  },
+  // Disable typedRoutes to avoid strict Link route type errors
   // Enable static export for GitHub Pages
   output: 'export',
   images: {

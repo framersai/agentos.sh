@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check, Terminal, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 interface CodeExample {
   id: string
@@ -356,6 +358,14 @@ export function CodeExamplesSection() {
   const [activeExample, setActiveExample] = useState(codeExamples[0])
   const [activeCategory, setActiveCategory] = useState<'all' | 'basic' | 'advanced' | 'integration' | 'deployment'>('all')
   const [copied, setCopied] = useState<string | null>(null)
+  
+  // Auto-select first example when category changes
+  useEffect(() => {
+    const filtered = activeCategory === 'all' ? codeExamples : codeExamples.filter((ex) => ex.category === activeCategory)
+    if (filtered.length > 0) {
+      setActiveExample(filtered[0])
+    }
+  }, [activeCategory])
 
   const categories = [
     { value: 'all' as const, label: 'All Examples', icon: Code2, color: 'from-purple-500 to-pink-500' },
@@ -383,7 +393,7 @@ export function CodeExamplesSection() {
   }
 
   return (
-    <section id="code" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section id="code" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="code-examples-heading">
       {/* Subtle organic gradient background */}
       <div className="absolute inset-0 organic-gradient opacity-20" />
 
@@ -399,7 +409,7 @@ export function CodeExamplesSection() {
             <span className="text-sm font-semibold text-text-secondary">Code Examples</span>
           </div>
 
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <h2 id="code-examples-heading" className="text-4xl sm:text-5xl font-bold mb-4">
             <span className="gradient-text">Build with AgentOS</span>
           </h2>
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
@@ -407,23 +417,24 @@ export function CodeExamplesSection() {
           </p>
         </motion.div>
 
-        {/* Category Filter with better styling */}
-        <div className="flex justify-center mb-10">
-          <div className="inline-flex gap-2 p-1 glass-morphism rounded-2xl">
+        {/* Category Filter - Mobile Responsive */}
+        <div className="flex justify-center mb-10 overflow-x-auto">
+          <div className="inline-flex gap-2 p-1 glass-morphism rounded-2xl min-w-min">
             {categories.map((cat) => {
               const Icon = cat.icon
               return (
                 <button
                   key={cat.value}
                   onClick={() => setActiveCategory(cat.value)}
-                  className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all ${
+                  className={`flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-3 rounded-xl font-medium transition-all text-xs sm:text-sm whitespace-nowrap ${
                     activeCategory === cat.value
                       ? 'bg-gradient-to-r ' + cat.color + ' text-white shadow-modern'
                       : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
-                  {cat.label}
+                  <span className="hidden sm:inline">{cat.label}</span>
+                  <span className="sm:hidden">{cat.label.split(' ')[0]}</span>
                 </button>
               )
             })}
@@ -514,20 +525,27 @@ export function CodeExamplesSection() {
                   </div>
                 </div>
 
-                {/* Code Block - Clean, no harsh lines */}
-                <div className="flex-1 overflow-auto bg-gradient-to-br from-background-primary to-background-secondary">
-                  <pre className="p-6 text-sm font-mono leading-relaxed">
-                    <code className="language-typescript text-text-primary">
-                      {activeExample.code.split('\n').map((line, i) => (
-                        <div key={i} className="flex">
-                          <span className="select-none text-text-muted opacity-50 mr-6 text-right" style={{ minWidth: '2rem' }}>
-                            {i + 1}
-                          </span>
-                          <span className="flex-1">{line || ' '}</span>
-                        </div>
-                      ))}
-                    </code>
-                  </pre>
+                {/* Code Block with Syntax Highlighting */}
+                <div className="flex-1 overflow-auto bg-[#1e1e1e]">
+                  <SyntaxHighlighter
+                    language={activeExample.language}
+                    style={vscDarkPlus}
+                    showLineNumbers={true}
+                    customStyle={{
+                      margin: 0,
+                      padding: '1.5rem',
+                      background: 'transparent',
+                      fontSize: '0.875rem',
+                    }}
+                    lineNumberStyle={{
+                      minWidth: '2.5rem',
+                      paddingRight: '1rem',
+                      color: '#6b7280',
+                      userSelect: 'none',
+                    }}
+                  >
+                    {activeExample.code}
+                  </SyntaxHighlighter>
                 </div>
 
                 {/* Footer - Interactive */}
@@ -605,4 +623,3 @@ export function CodeExamplesSection() {
     </section>
   )
 }
-

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Brain, Network, Database, Shield, Zap, GitBranch, Cpu, Activity, Cloud, Code, ArrowRight } from 'lucide-react'
+import { MermaidDiagram } from '../ui/mermaid-diagram'
 
 // Interactive diagram data
 const architectureLayers = [
@@ -45,7 +46,7 @@ export function GMISection() {
   ]
 
   return (
-    <section id="gmis" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section id="gmis" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="gmi-heading">
       {/* Subtle organic gradient */}
       <div className="absolute inset-0 organic-gradient opacity-20" />
 
@@ -61,7 +62,7 @@ export function GMISection() {
             <span className="text-sm font-semibold text-text-secondary">GMI Architecture</span>
           </div>
 
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <h2 id="gmi-heading" className="text-4xl sm:text-5xl font-bold mb-4">
             <span className="gradient-text">Generalised Mind Instances</span>
           </h2>
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
@@ -304,8 +305,8 @@ export function GMISection() {
               GMI Workflow Architecture
             </h3>
             <div className="bg-background-primary rounded-2xl p-6 overflow-x-auto">
-              <pre className="text-sm text-text-secondary font-mono">
-{`graph TB
+              <MermaidDiagram 
+                diagram={`graph TB
     subgraph "User Interface"
         A[Voice Chat] --> B[API Gateway]
         C[Web App] --> B
@@ -342,7 +343,7 @@ export function GMISection() {
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style F fill:#bbf,stroke:#333,stroke-width:4px
     style L fill:#bfb,stroke:#333,stroke-width:2px`}
-              </pre>
+              />
             </div>
           </div>
         </motion.div>

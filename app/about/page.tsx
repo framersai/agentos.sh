@@ -49,7 +49,7 @@ export default function AboutPage() {
           >
             <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Our Mission</h2>
             <p className="text-lg text-gray-700 dark:text-text-secondary mb-4 leading-relaxed">
-              We're building the most advanced AI agent runtime for developers who want to create intelligent, 
+              We’re building the most advanced AI agent runtime for developers who want to create intelligent, 
               adaptive systems without compromising on control, safety, or performance.
             </p>
             <p className="text-lg text-gray-700 dark:text-text-secondary leading-relaxed">
@@ -73,7 +73,7 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">The Team</h2>
             <p className="text-lg text-gray-700 dark:text-text-secondary leading-relaxed">
               AgentOS is developed by the team at <Link href="https://frame.dev" className="text-purple-600 dark:text-accent-primary hover:underline font-semibold">Frame.dev</Link>, 
-              a company focused on building the future of AI-powered development tools. We're a distributed team of 
+              a company focused on building the future of AI-powered development tools. We’re a distributed team of 
               engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.
             </p>
           </motion.div>

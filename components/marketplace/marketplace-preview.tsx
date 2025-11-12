@@ -193,7 +193,7 @@ function AgentCard({ agent, index }: { agent: MarketplaceAgent; index: number })
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative glass-panel flex flex-col transition-all hover:-translate-y-1 hover:shadow-xl"
+      className="group relative glass-panel flex flex-col transition-all transition-theme hover:-translate-y-1 hover:shadow-xl"
     >
       {/* Header */}
       <div className="flex items-start justify-between">
@@ -325,7 +325,7 @@ export function MarketplacePreview() {
   const displayAgents = agents ?? FALLBACK_AGENTS;
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 transition-theme">
       {/* Build and Earn CTA */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -397,34 +397,37 @@ export function MarketplacePreview() {
           </p>
         </div>
 
-        {showSkeleton ? (
-          <div className="marketplace-card-grid marketplace-card-grid--skeleton">
-            {Array.from({ length: SKELETON_CARD_COUNT }).map((_, index) => (
-              <div key={`marketplace-skeleton-${index}`} className="marketplace-card-skeleton">
-                <div className="marketplace-card-skeleton__header">
-                  <div className="marketplace-card-skeleton__avatar marketplace-shimmer" />
-                  <div className="marketplace-card-skeleton__title">
-                    <div className="marketplace-card-skeleton__line marketplace-card-skeleton__line--short marketplace-shimmer" />
-                    <div className="marketplace-card-skeleton__line marketplace-card-skeleton__line--xs marketplace-shimmer" />
+        <div role="status" aria-live="polite" aria-busy={showSkeleton}>
+          {showSkeleton && <span className="sr-only">Loading featured agents…</span>}
+          {showSkeleton ? (
+            <div className="marketplace-card-grid marketplace-card-grid--skeleton" aria-hidden="true">
+              {Array.from({ length: SKELETON_CARD_COUNT }).map((_, index) => (
+                <div key={`marketplace-skeleton-${index}`} className="marketplace-card-skeleton">
+                  <div className="marketplace-card-skeleton__header">
+                    <div className="marketplace-card-skeleton__avatar marketplace-shimmer" />
+                    <div className="marketplace-card-skeleton__title">
+                      <div className="marketplace-card-skeleton__line marketplace-card-skeleton__line--short marketplace-shimmer" />
+                      <div className="marketplace-card-skeleton__line marketplace-card-skeleton__line--xs marketplace-shimmer" />
+                    </div>
+                  </div>
+                  <div className="marketplace-card-skeleton__line marketplace-card-skeleton__line--full marketplace-shimmer" />
+                  <div className="marketplace-card-skeleton__line marketplace-card-skeleton__line--medium marketplace-shimmer" />
+                  <div className="marketplace-card-skeleton__chips">
+                    <span className="marketplace-card-skeleton__chip marketplace-shimmer" />
+                    <span className="marketplace-card-skeleton__chip marketplace-shimmer" />
+                    <span className="marketplace-card-skeleton__chip marketplace-shimmer" />
                   </div>
                 </div>
-                <div className="marketplace-card-skeleton__line marketplace-card-skeleton__line--full marketplace-shimmer" />
-                <div className="marketplace-card-skeleton__line marketplace-card-skeleton__line--medium marketplace-shimmer" />
-                <div className="marketplace-card-skeleton__chips">
-                  <span className="marketplace-card-skeleton__chip marketplace-shimmer" />
-                  <span className="marketplace-card-skeleton__chip marketplace-shimmer" />
-                  <span className="marketplace-card-skeleton__chip marketplace-shimmer" />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {displayAgents.map((agent, index) => (
-              <AgentCard key={agent.id} agent={agent} index={index} />
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {displayAgents.map((agent, index) => (
+                <AgentCard key={agent.id} agent={agent} index={index} />
+              ))}
+            </div>
+          )}
+        </div>
 
         <div className="mt-8 text-center">
           <a

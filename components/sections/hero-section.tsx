@@ -1,13 +1,30 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Github, Terminal, GitBranch, Zap, Brain, Workflow, Database, Shield, Globe, Layers } from 'lucide-react'
+import { ArrowRight, Github, Terminal, Zap, Brain, Workflow, Database, Globe } from 'lucide-react'
 import { AnimatedAgentOSLogo } from '../icons/animated-logo'
+import { TypeScriptIcon, OpenSourceIcon, StreamingIcon, MemoryIcon } from '../icons/feature-icons'
+import { Toast } from '../ui/toast'
 
 export function HeroSection() {
+  const [showToast, setShowToast] = useState(false)
+  
+  const handleCopy = () => {
+    navigator.clipboard.writeText('npm install @framersai/agentos')
+    setShowToast(true)
+  }
+  
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <>
+      <Toast 
+        message="Copied to clipboard!" 
+        type="success" 
+        isVisible={showToast} 
+        onClose={() => setShowToast(false)} 
+      />
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden transition-theme">
       {/* Subtle organic gradient background */}
       <div className="absolute inset-0 organic-gradient" />
       <div className="absolute inset-0 bg-gradient-to-br from-background-primary/90 via-background-secondary/50 to-background-primary/90" />
@@ -160,10 +177,7 @@ export function HeroSection() {
                 npm install @framersai/agentos
               </code>
               <button
-                onClick={() => {
-                  navigator.clipboard.writeText('npm install @framersai/agentos')
-                  // Add toast notification
-                }}
+                onClick={handleCopy}
                 className="p-2 rounded-lg hover:bg-accent-primary/10 transition-colors group"
                 aria-label="Copy command"
               >
@@ -182,10 +196,10 @@ export function HeroSection() {
             className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto"
           >
             {[
-              { icon: Shield, label: 'Enterprise Ready', value: '99.9% SLA' },
-              { icon: Layers, label: 'GMI Agents', value: '50+ Built-in' },
-              { icon: GitBranch, label: 'Open Source', value: 'Apache 2.0' },
-              { icon: Globe, label: 'Global Scale', value: '10M+ Requests' },
+              { icon: TypeScriptIcon, label: 'TypeScript Native', value: 'Type-Safe' },
+              { icon: OpenSourceIcon, label: 'Open Source', value: 'Apache 2.0' },
+              { icon: StreamingIcon, label: 'Real-time Streaming', value: 'Async Ready' },
+              { icon: MemoryIcon, label: 'Persistent Memory', value: 'Built-in' },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -205,7 +219,6 @@ export function HeroSection() {
         </motion.div>
       </div>
     </section>
+    </>
   )
 }
-
-

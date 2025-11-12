@@ -199,7 +199,7 @@ const categoryInfo = {
 
 export function EcosystemSection() {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="ecosystem-heading">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -215,7 +215,7 @@ export function EcosystemSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary bg-clip-text text-transparent">
+          <h2 id="ecosystem-heading" className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary bg-clip-text text-transparent">
             The AgentOS Ecosystem
           </h2>
           <p className="text-lg text-text-muted max-w-3xl mx-auto">

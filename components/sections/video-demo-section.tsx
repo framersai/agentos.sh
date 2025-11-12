@@ -131,7 +131,7 @@ export function VideoDemoSection() {
   }, [showControls])
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="video-demo-heading">
       {/* Subtle organic gradient background */}
       <div className="absolute inset-0 organic-gradient opacity-30" />
 
@@ -147,7 +147,7 @@ export function VideoDemoSection() {
             <span className="text-sm font-semibold text-text-secondary">Live Demo</span>
           </div>
 
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+          <h2 id="video-demo-heading" className="text-4xl sm:text-5xl font-bold mb-4">
             <span className="gradient-text">Experience AgentOS</span>
           </h2>
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
@@ -234,6 +234,8 @@ export function VideoDemoSection() {
                     damping: 20
                   }}
                   className={`absolute ${captionPositions[currentCaption.position as keyof typeof captionPositions]} z-20 pointer-events-none`}
+                  role="status"
+                  aria-live="polite"
                 >
                   <div className="relative">
                     {/* Geometric background */}
