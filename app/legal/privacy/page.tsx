@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 
 const updated = "November 6, 2025";
 
@@ -13,9 +13,9 @@ const Sections = [
     title: "Open-source, self-hosted runtime",
     body: (
       <p className="text-slate-700 dark:text-slate-200">
-        AgentOS is released under the MIT license and ships as a TypeScript package you run on your own
-        infrastructure. The core project does not phone home, collect analytics, or transmit end-user data to
-        Frame.dev. Any information processed by AgentOS stays wherever you deploy it.
+        AgentOS Core is released under the Apache License 2.0, with extensions and community agents under the MIT license.
+        It ships as a TypeScript package you run on your own infrastructure. The core project does not phone home,
+        collect analytics, or transmit end-user data to Frame.dev. Any information processed by AgentOS stays wherever you deploy it.
       </p>
     )
   },
@@ -76,11 +76,9 @@ export default function PrivacyPage() {
         <p>
           Need additional compliance language for your deployment? Fork this site, update the copy for your
           jurisdiction, or reach out at
-          <a href="mailto:founders@frame.dev" className="ml-1 font-semibold text-brand hover:underline">founders@frame.dev</a>.
+          <a href="mailto:team@frame.dev" className="ml-1 font-semibold text-brand hover:underline">team@frame.dev</a>.
         </p>
       </footer>
     </article>
   );
 }
-
-

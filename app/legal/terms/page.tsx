@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+ï»¿import type { Metadata } from "next";
 
 const updated = "November 6, 2025";
 
@@ -12,12 +12,20 @@ const Sections = [
   {
     title: "License",
     body: (
-      <p className="text-slate-700 dark:text-slate-200">
-        AgentOS is distributed under the MIT license. You may use, copy, modify, merge, publish, distribute,
-        sublicense, and/or sell copies of the software, subject to including the copyright notice and license
-        text in your distributions. As the MIT license states, the software is provided “as is” without warranty
-        of any kind.
-      </p>
+      <div className="space-y-3 text-slate-700 dark:text-slate-200">
+        <p>
+          <strong>AgentOS Core Runtime</strong> is distributed under the <strong>Apache License 2.0</strong>.
+          You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software,
+          subject to including the copyright notice and license text in your distributions.
+        </p>
+        <p>
+          <strong>Extensions, Agents, and Guardrails</strong> built on top of AgentOS are distributed under the <strong>MIT License</strong>,
+          allowing maximum flexibility for community contributions.
+        </p>
+        <p>
+          As both licenses state, the software is provided "as is" without warranty of any kind.
+        </p>
+      </div>
     )
   },
   {
@@ -59,7 +67,7 @@ export default function TermsPage() {
         <p className="text-xs uppercase tracking-[0.4em] text-slate-500 dark:text-slate-400">Open-source guidance</p>
         <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">AgentOS usage notes</h1>
         <p className="mx-auto max-w-2xl text-lg text-slate-600 dark:text-slate-300">
-          This page summarises the practical implications of the MIT license and expectations for running the
+          This page summarises the practical implications of the Apache 2.0 and MIT licenses and expectations for running the
           AgentOS stack yourself.
         </p>
         <p className="text-sm text-slate-500 dark:text-slate-400">Last updated: {updated}</p>
@@ -81,5 +89,3 @@ export default function TermsPage() {
     </article>
   );
 }
-
-
