@@ -12,7 +12,7 @@ const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" }
 export const metadata: Metadata = {
   title: "AgentOS - TypeScript Runtime for Adaptive AI Agent Intelligence",
   description:
-    "Build intelligent, adaptive AI agents with AgentOS. Open-source TypeScript runtime for creating autonomous AI systems with agency, memory, and multi-modal capabilities. Featuring GMI roles, tool orchestration, and enterprise-ready guardrails.",
+    "AgentOS is an open-source TypeScript runtime for building intelligent, adaptive AI agents with agency, memory, and tooling. Built by Framers (frame.dev). Contact: team@frame.dev.",
   metadataBase: new URL("https://agentos.sh"),
   alternates: {
     canonical: "https://agentos.sh",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
     "AI development",
     "open source AI"
   ],
-  authors: [{ name: "Frame.dev", url: "https://frame.dev" }],
-  creator: "Frame.dev",
-  publisher: "Frame.dev",
+  authors: [{ name: "Framers", url: "https://frame.dev" }],
+  creator: "Framers",
+  publisher: "Framers",
   robots: {
     index: true,
     follow: true,
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AgentOS - TypeScript Runtime for Adaptive AI Agent Intelligence",
     description:
-      "Build intelligent AI agents with memory, tools, and agency. Open-source runtime featuring GMI roles, multi-agent orchestration, and enterprise guardrails. By Frame.dev.",
+      "Build intelligent AI agents with memory, tools, and agency. Open-source runtime featuring GMI roles, multi-agent orchestration, and enterprise guardrails. By Framers (frame.dev).",
     url: "https://agentos.sh",
     siteName: "AgentOS",
     images: [
@@ -82,9 +82,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AgentOS - TypeScript Runtime for Adaptive AI Agents",
-    description: "Build intelligent AI agents with AgentOS. Open-source runtime with GMI roles, agency orchestration, and enterprise guardrails.",
-    creator: "@frame_dev",
-    site: "@frame_dev",
+    description: "Build intelligent AI agents with AgentOS. Open-source runtime with GMI roles, agency orchestration, and enterprise guardrails. By Framers.",
+    creator: "@framersai",
+    site: "@framersai",
     images: ["/og-image.png"]
   },
   verification: {
