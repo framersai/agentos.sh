@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight } from 'lucide-react'
-import { MermaidDiagram } from '../ui/mermaid-diagram'
 
 // Interactive diagram data
 const architectureLayers = [
@@ -52,6 +51,10 @@ export function GMISection() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-10">
+          <h2 id="gmi-heading" className="text-4xl sm:text-5xl font-extrabold mb-4">
+            <span className="gradient-text">Parallel Agency</span>
+          </h2>
+          <p className="text-sm uppercase tracking-wide text-text-muted mb-3">Use case: Real‑time fact‑checked briefing</p>
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
             Build sophisticated AI systems with adaptive personas, emergent behaviors, and true multi-agent collaboration.
             GMIs enable autonomous agents that learn, adapt, and evolve.
@@ -144,7 +147,7 @@ export function GMISection() {
           </div>
         </motion.div>
 
-        {/* Interactive Agent Network Diagram */}
+        {/* Interactive Agent Network Diagram (slower, more detailed, visible popovers) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -152,9 +155,8 @@ export function GMISection() {
           className="mb-16"
         >
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
-            <h3 className="text-2xl font-bold text-center mb-8 text-text-primary">
-              Multi-Agent Collaboration Network
-            </h3>
+            <h3 className="text-2xl sm:text-3xl font-bold text-center mb-2 text-text-primary">Multi‑Agent Collaboration Network</h3>
+            <p className="text-center text-text-muted mb-8">Researcher, Analyst, Creator, Critic, Executor stream insights in parallel; Orchestrator routes, memory persists.</p>
 
             <div className="relative aspect-square max-w-2xl mx-auto">
               <svg viewBox="0 0 500 500" className="w-full h-full">
@@ -163,6 +165,10 @@ export function GMISection() {
                     <stop offset="0%" stopColor="var(--color-accent-primary)" stopOpacity="0.3" />
                     <stop offset="100%" stopColor="var(--color-accent-secondary)" stopOpacity="0.1" />
                   </radialGradient>
+                  <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="var(--color-accent-primary)" />
+                    <stop offset="100%" stopColor="var(--color-accent-secondary)" />
+                  </linearGradient>
                 </defs>
 
                 {/* Central hub */}
@@ -173,14 +179,17 @@ export function GMISection() {
                   fill="url(#agent-gradient)"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.8 }}
                 />
                 <text x="250" y="250" textAnchor="middle" className="fill-text-primary font-bold text-sm" dy="5">
                   Agency Core
                 </text>
 
                 {/* Agent nodes */}
-                {agents.map((agent, i) => {
+                {[
+                  ...agents,
+                  { id: 'critic', name: 'Critic', icon: Activity, description: 'Reviews outputs and flags issues' },
+                ].map((agent, i, arr) => {
                   const angle = (i / agents.length) * 2 * Math.PI
                   const x = 250 + 150 * Math.cos(angle)
                   const y = 250 + 150 * Math.sin(angle)
@@ -193,20 +202,20 @@ export function GMISection() {
                         y1="250"
                         x2={x}
                         y2={y}
-                        stroke="var(--color-accent-primary)"
+                        stroke="url(#flow-gradient)"
                         strokeWidth="1"
                         strokeDasharray="5,5"
-                        opacity="0.3"
+                        opacity="0.35"
                         initial={{ pathLength: 0 }}
                         animate={{ pathLength: 1 }}
-                        transition={{ duration: 1, delay: i * 0.1 }}
+                        transition={{ duration: 2.2, delay: i * 0.05 }}
                       />
 
                       {/* Agent node */}
                       <motion.g
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        transition={{ duration: 0.5, delay: i * 0.1 }}
+                        transition={{ duration: 0.7, delay: i * 0.05 }}
                         className="cursor-pointer"
                         onClick={() => setSelectedAgent(agent.id)}
                       >
@@ -236,8 +245,8 @@ export function GMISection() {
                           y: [250, y, 250]
                         }}
                         transition={{
-                          duration: 3,
-                          delay: i * 0.5,
+                          duration: 8,
+                          delay: i * 0.3,
                           repeat: Infinity,
                           ease: "linear"
                         }}
@@ -247,38 +256,36 @@ export function GMISection() {
                 })}
               </svg>
 
-              {/* Agent details */}
-              <AnimatePresence>
-                {selectedAgent && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="absolute top-4 left-4 p-4 rounded-xl glass-morphism max-w-xs"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      {(() => {
-                        const agent = agents.find(a => a.id === selectedAgent)
-                        const Icon = agent?.icon || Brain
-                        return (
-                          <>
-                            <Icon className="w-5 h-5 text-accent-primary" />
-                            <h4 className="font-bold text-text-primary">{agent?.name}</h4>
-                          </>
-                        )
-                      })()}
+              {/* Parallel popovers for all nodes (static for mobile visibility) */}
+              <div className="pointer-events-none absolute inset-0">
+                {[
+                  ...agents,
+                  { id: 'critic', name: 'Critic', icon: Activity, description: 'Reviews outputs and flags issues' },
+                ].map((agent, i) => {
+                  const angle = (i / agents.length) * 2 * Math.PI
+                  const x = 250 + 150 * Math.cos(angle)
+                  const y = 250 + 150 * Math.sin(angle)
+                  const left = `calc(${(x / 500) * 100}% - 80px)`
+                  const top = `calc(${(y / 500) * 100}% - 70px)`
+                  return (
+                    <div
+                      key={`popover-${agent.id}`}
+                      className="absolute w-40 rounded-xl glass-morphism p-2 shadow-modern text-xs"
+                      style={{ left, top }}
+                      role="note"
+                      aria-label={`${agent.name} role`}
+                    >
+                      <div className="font-semibold text-text-primary">{agent.name}</div>
+                      <div className="text-text-muted">{agent.description}</div>
                     </div>
-                    <p className="text-sm text-text-secondary">
-                      {agents.find(a => a.id === selectedAgent)?.description}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Mermaid Diagram */}
+        {/* Custom Architecture Diagram (SVG) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -286,47 +293,75 @@ export function GMISection() {
           className="mb-16"
         >
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
-            {/* Removed section header to consolidate visual flow */}
-            <div className="bg-background-primary rounded-2xl p-6 overflow-x-auto">
-              <MermaidDiagram 
-                diagram={`graph TB
-    subgraph "User Interface"
-        A[Voice Chat] --> B[API Gateway]
-        C[Web App] --> B
-        D[CLI] --> B
-    end
+            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-text-primary">AgentOS Architecture (streaming)</h3>
+            <div className="relative w-full overflow-x-auto">
+              <svg viewBox="0 0 900 280" className="min-w-[800px] w-full h-auto">
+                {/* Boxes */}
+                <g id="ui">
+                  <rect x="20" y="40" width="160" height="80" rx="16" fill="var(--color-background-primary)" stroke="var(--color-border-primary)" />
+                  <text x="100" y="85" textAnchor="middle" className="fill-text-primary font-semibold">User Interfaces</text>
+                  <text x="100" y="105" textAnchor="middle" className="fill-text-muted text-xs">Voice, Web, CLI</text>
+                </g>
+                <g id="gateway">
+                  <rect x="210" y="40" width="160" height="80" rx="16" fill="var(--color-background-primary)" stroke="var(--color-border-primary)" />
+                  <text x="290" y="80" textAnchor="middle" className="fill-text-primary font-semibold">API Gateway</text>
+                  <text x="290" y="100" textAnchor="middle" className="fill-text-muted text-xs">Auth, Rate‑limit</text>
+                </g>
+                <g id="orchestrator">
+                  <rect x="390" y="30" width="190" height="100" rx="16" fill="var(--color-background-primary)" stroke="var(--color-border-primary)" />
+                  <text x="485" y="70" textAnchor="middle" className="fill-text-primary font-semibold">GMI Orchestrator</text>
+                  <text x="485" y="92" textAnchor="middle" className="fill-text-muted text-xs">Routing, Tooling, Guardrails</text>
+                </g>
+                <g id="agents">
+                  <rect x="600" y="10" width="270" height="140" rx="16" fill="var(--color-background-primary)" stroke="var(--color-border-primary)" />
+                  <text x="735" y="35" textAnchor="middle" className="fill-text-primary font-semibold">Agent Pool</text>
+                  <text x="735" y="55" textAnchor="middle" className="fill-text-muted text-xs">Researcher • Analyst • Creator • Critic • Executor</text>
+                </g>
+                <g id="memory">
+                  <rect x="390" y="160" width="200" height="90" rx="16" fill="var(--color-background-primary)" stroke="var(--color-border-primary)" />
+                  <text x="490" y="198" textAnchor="middle" className="fill-text-primary font-semibold">Memory System</text>
+                  <text x="490" y="220" textAnchor="middle" className="fill-text-muted text-xs">Vector DB • Knowledge Graph</text>
+                </g>
+                <g id="events">
+                  <rect x="610" y="170" width="180" height="80" rx="16" fill="var(--color-background-primary)" stroke="var(--color-border-primary)" />
+                  <text x="700" y="206" textAnchor="middle" className="fill-text-primary font-semibold">Event Stream</text>
+                  <text x="700" y="228" textAnchor="middle" className="fill-text-muted text-xs">Monitoring • Analytics</text>
+                </g>
 
-    subgraph "AgentOS Core"
-        B --> E[Request Router]
-        E --> F[GMI Orchestrator]
+                {/* Flows */}
+                <defs>
+                  <marker id="arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 z" fill="var(--color-accent-primary)" />
+                  </marker>
+                </defs>
+                <g stroke="url(#flow-gradient)" strokeWidth="2" fill="none" markerEnd="url(#arrow)">
+                  <path d="M180,80 C195,80 205,80 210,80" />
+                  <path d="M370,80 C380,80 385,80 390,80" />
+                  <path d="M580,70 C590,70 595,70 600,70" />
+                  <path d="M485,130 C485,145 490,150 490,160" />
+                  <path d="M590,205 C600,205 606,205 610,205" />
+                  <path d="M780,150 C790,155 795,160 790,170" />
+                </g>
 
-        F --> G[Agent Pool]
-        G --> H[Researcher GMI]
-        G --> I[Analyst GMI]
-        G --> J[Creator GMI]
-        G --> K[Executor GMI]
-
-        H --> L[Memory System]
-        I --> L
-        J --> L
-        K --> L
-
-        L --> M[Vector DB]
-        L --> N[Knowledge Graph]
-    end
-
-    subgraph "Infrastructure"
-        F --> O[Event Stream]
-        O --> P[Monitoring]
-        O --> Q[Analytics]
-        M --> R[Persistent Storage]
-        N --> R
-    end
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style F fill:#bbf,stroke:#333,stroke-width:4px
-    style L fill:#bfb,stroke:#333,stroke-width:2px`}
-              />
+                {/* Streaming sparkle dots along flows */}
+                {[
+                  { x: [180, 210], y: [80, 80], delay: 0 },
+                  { x: [370, 390], y: [80, 80], delay: 0.4 },
+                  { x: [580, 600], y: [70, 70], delay: 0.8 },
+                  { x: [485, 490], y: [130, 160], delay: 1.2 },
+                  { x: [590, 610], y: [205, 205], delay: 1.6 },
+                  { x: [780, 790], y: [150, 170], delay: 2.0 },
+                ].map((seg, i) => (
+                  <motion.circle
+                    key={`spark-${i}`}
+                    r="3"
+                    fill="var(--color-accent-primary)"
+                    initial={{ cx: seg.x[0], cy: seg.y[0] }}
+                    animate={{ cx: seg.x[1], cy: seg.y[1] }}
+                    transition={{ duration: 3.5, repeat: Infinity, repeatType: 'loop', ease: 'linear', delay: seg.delay }}
+                  />
+                ))}
+              </svg>
             </div>
           </div>
         </motion.div>

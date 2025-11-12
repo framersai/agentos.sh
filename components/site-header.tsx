@@ -11,10 +11,8 @@ import { motion } from 'framer-motion';
 
 const NAV_LINKS: ReadonlyArray<{ href: string; label: string }> = [
   { href: '/#features', label: 'Features' },
-  { href: '/#code', label: 'Examples' },
   { href: 'https://docs.agentos.sh', label: 'Docs' }, // external docs
   { href: '/about', label: 'About' },
-  { href: '/#cta', label: 'Get Started' },
 ];
 
 /**
