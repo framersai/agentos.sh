@@ -129,7 +129,7 @@ const repositories: Repository[] = [
   // Infrastructure
   {
     name: 'SQL Storage Adapter',
-    description: 'Universal SQL storage for cross-platform builds with smart fallbacks and syncing.',
+    description: `Universal SQL storage for cross-platform builds with smart fallbacks and syncing.${process.env.NEXT_PUBLIC_SQL_ADAPTER_VERSION ? ` Latest: v${process.env.NEXT_PUBLIC_SQL_ADAPTER_VERSION}` : ''}`,
     url: 'https://github.com/framersai/sql-storage-adapter',
     category: 'infrastructure',
     icon: Database,
@@ -215,7 +215,7 @@ export function EcosystemSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary bg-clip-text text-transparent">
             The AgentOS Ecosystem
           </h2>
           <p className="text-lg text-text-muted max-w-3xl mx-auto">
@@ -349,7 +349,7 @@ export function EcosystemSection() {
             </a>
             <a
               href="https://discord.gg/agentos"
-              className="px-6 py-3 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl font-semibold text-white hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary rounded-xl font-semibold text-white hover:shadow-lg hover:shadow-purple-500/50 transition-all flex items-center justify-center gap-2 border border-purple-500/20"
             >
               <Users className="w-5 h-5" />
               Join Discord Community

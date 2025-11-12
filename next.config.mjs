@@ -1,3 +1,19 @@
+import { execSync } from 'node:child_process';
+
+function resolveSqlAdapterVersion() {
+  try {
+    if (process.env.NEXT_PUBLIC_SQL_ADAPTER_VERSION) {
+      return process.env.NEXT_PUBLIC_SQL_ADAPTER_VERSION;
+    }
+    const out = execSync('npm view @framers/sql-storage-adapter version', { stdio: 'pipe' })
+      .toString()
+      .trim();
+    return out || '';
+  } catch {
+    return '';
+  }
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -9,6 +25,9 @@ const nextConfig = {
   output: 'export',
   images: {
     unoptimized: true,
+  },
+  env: {
+    NEXT_PUBLIC_SQL_ADAPTER_VERSION: resolveSqlAdapterVersion(),
   },
 };
 
