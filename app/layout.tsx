@@ -4,7 +4,6 @@ import "../styles/tokens.css";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 import { SiteHeader } from "../components/site-header";
-import { BackgroundPattern } from "../components/ui/background-pattern";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" });
@@ -99,7 +98,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="grainy min-h-screen antialiased transition-theme">
         <ThemeProvider>
           <a href="#main-content" className="skip-to-content">Skip to content</a>
-          <BackgroundPattern />
           <SiteHeader />
           {/* JSON-LD: Organization */}
           <script
