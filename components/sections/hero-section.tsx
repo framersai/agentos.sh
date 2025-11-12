@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Github, Terminal, GitBranch, Zap, Brain, Workflow, Database, Shield, Globe } from 'lucide-react'
+import { ArrowRight, Github, Terminal, GitBranch, Zap, Brain, Workflow, Database, Shield, Globe, Layers } from 'lucide-react'
 import { AnimatedAgentOSLogo } from '../icons/animated-logo'
 
 export function HeroSection() {
