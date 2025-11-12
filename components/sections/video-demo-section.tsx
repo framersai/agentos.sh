@@ -131,7 +131,7 @@ export function VideoDemoSection() {
   }, [showControls])
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="video-demo-heading">
+    <section id="demo" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="video-demo-heading">
       {/* Subtle organic gradient background */}
       <div className="absolute inset-0 organic-gradient opacity-30" />
 

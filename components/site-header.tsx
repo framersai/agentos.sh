@@ -144,6 +144,18 @@ export function SiteHeader() {
             <ThemeSelector />
           </div>
 
+          {/* Mobile GitHub icon */}
+          <a
+            href="https://github.com/framersai/agentos"
+            className="md:hidden inline-flex items-center justify-center p-2 rounded-xl glass-morphism hover:bg-accent-primary/10 transition-all"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open AgentOS on GitHub"
+            title="Open AgentOS on GitHub"
+          >
+            <Github className="h-5 w-5" />
+          </a>
+
           {/* Mobile menu button */}
           <button
             type="button"

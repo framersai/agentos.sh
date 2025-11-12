@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Github, Terminal, Zap, Brain, Workflow, Database, Globe } from 'lucide-react'
+import { ArrowRight, Github, Terminal, Zap, Brain, Workflow, Database, Globe, Play } from 'lucide-react'
 import { AnimatedAgentOSLogo } from '../icons/animated-logo'
 import { TypeScriptIcon, OpenSourceIcon, StreamingIcon, MemoryIcon } from '../icons/feature-icons'
 import { Toast } from '../ui/toast'
@@ -66,7 +66,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="flex flex-wrap justify-center gap-2 mb-8"
+            className="hidden sm:flex flex-wrap justify-center gap-2 mb-8"
           >
             {[
               { icon: Brain, label: 'Adaptive Personas', color: 'from-purple-500 to-pink-500' },
@@ -151,6 +151,17 @@ export function HeroSection() {
                 </span>
               </span>
             </Link>
+
+            <a
+              href="#demo"
+              className="btn-secondary group"
+            >
+              <span className="flex items-center justify-center gap-2">
+                <Play className="w-5 h-5" />
+                See demo
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </a>
 
             <Link
               href="https://app.vca.chat/marketplace"

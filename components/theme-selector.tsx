@@ -58,11 +58,8 @@ export function ThemeSelector() {
         className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:shadow-md dark:border-slate-600 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-800"
         aria-label="Select theme"
       >
-        {renderIcon(currentTheme, 'h-4 w-4 text-brand')}
-        <span className="hidden sm:inline">{themes[currentTheme].name}</span>
-        <span className="sm:hidden text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-          {themes[currentTheme].descriptor}
-        </span>
+        {renderIcon(currentTheme, 'h-4 w-4 text-accent-primary')}
+        <span className="text-xs sm:text-sm font-semibold">{themes[currentTheme].name}</span>
       </button>
 
       <AnimatePresence>
@@ -86,43 +83,43 @@ export function ThemeSelector() {
                 {Object.entries(themes).map(([key, theme]) => {
                   const themeName = key as ThemeName;
                   const isActive = currentTheme === themeName;
+                  const actualMode = mode === 'system' ? systemTheme : mode;
+                  const isDark = actualMode === 'dark';
+                  const palette = isDark ? theme.dark : theme.light;
                   return (
                     <button
                       key={key}
                       onClick={() => handleThemeChange(themeName)}
                       className={`group flex w-full items-start gap-3 rounded-lg p-3 text-left transition ${
-                        isActive ? 'bg-brand/10 text-brand' : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+                        isActive ? 'bg-accent-primary/10 text-accent-primary' : 'hover:bg-slate-100 dark:hover:bg-slate-800'
                       }`}
                     >
                       {renderIcon(
                         themeName,
                         `h-5 w-5 ${
-                          isActive ? 'text-brand' : 'text-slate-400 dark:text-slate-500 group-hover:text-brand'
+                          isActive ? 'text-accent-primary' : 'text-slate-400 dark:text-slate-500 group-hover:text-accent-primary'
                         }`
                       )}
                       <div className="flex-1">
                         <div className="font-semibold text-slate-900 dark:text-white">{theme.name}</div>
                         <div className="text-xs text-slate-500 dark:text-slate-400">{theme.description}</div>
-                        <div className="mt-2 flex items-center gap-2">
-                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-                            {theme.descriptor}
-                          </span>
-                          {isActive && (
-                            <span className="rounded-full bg-brand/20 px-2 py-0.5 text-xs font-medium text-brand">
+                        {isActive && (
+                          <div className="mt-2">
+                            <span className="rounded-full bg-accent-primary/20 px-2 py-0.5 text-xs font-medium text-accent-primary">
                               Active
                             </span>
-                          )}
-                        </div>
+                          </div>
+                        )}
                       </div>
                       <div className="flex gap-1">
                         <div
                           className="h-3 w-3 rounded-full border border-slate-300 dark:border-slate-600"
-                          style={{ backgroundColor: theme.light.accent.primary }}
+                          style={{ backgroundColor: palette.accent.primary }}
                           aria-hidden="true"
                         />
                         <div
                           className="h-3 w-3 rounded-full border border-slate-300 dark:border-slate-600"
-                          style={{ backgroundColor: theme.light.accent.secondary }}
+                          style={{ backgroundColor: palette.accent.secondary }}
                           aria-hidden="true"
                         />
                       </div>
@@ -144,4 +141,3 @@ export function ThemeSelector() {
     </div>
   );
 }
-
