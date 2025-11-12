@@ -23,7 +23,7 @@ const Sections = [
           allowing maximum flexibility for community contributions.
         </p>
         <p>
-          As both licenses state, the software is provided "as is" without warranty of any kind.
+          As both licenses state, the software is provided &quot;as is&quot; without warranty of any kind.
         </p>
       </div>
     )
