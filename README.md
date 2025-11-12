@@ -66,9 +66,9 @@ If you prefer different names, adjust the `heroVideoSources` / `pipelineImageSou
 - npm: https://www.npmjs.com/org/framers
 
 ## Contributing & Security
-- Contributing: ./\.github/CONTRIBUTING.md
-- Code of Conduct: ./\.github/CODE_OF_CONDUCT.md
-- Security Policy: ./\.github/SECURITY.md
+- Contributing: https://github.com/manicinc/voice-chat-assistant/blob/master/.github/CONTRIBUTING.md
+- Code of Conduct: https://github.com/manicinc/voice-chat-assistant/blob/master/.github/CODE_OF_CONDUCT.md
+- Security Policy: https://github.com/manicinc/voice-chat-assistant/blob/master/.github/SECURITY.md
 
 ---
 

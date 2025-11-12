@@ -2,9 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Copy, Check, Terminal, Code2, Cpu, Database, GitBranch } from 'lucide-react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { Copy, Check, Terminal, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
 
 interface CodeExample {
   id: string
@@ -22,7 +20,7 @@ const codeExamples: CodeExample[] = [
     description: 'Basic agent setup with memory and tools',
     language: 'typescript',
     category: 'basic',
-    code: `import { Agent, Memory, Tool } from '@agentos/core'
+    code: `import { Agent, Memory, Tool } from '@framersai/agentos'
 
 // Define a simple calculator tool
 const calculatorTool = new Tool({
@@ -61,7 +59,7 @@ console.log(response)
     description: 'Implementing Generalised Mind Instance roles',
     language: 'typescript',
     category: 'advanced',
-    code: `import { GMI, Agency, Role } from '@agentos/core'
+    code: `import { GMI, Agency, Role } from '@framersai/agentos'
 
 // Define specialized roles
 const researcherRole = new Role({
@@ -117,7 +115,7 @@ console.log('References:', article.references)`
     description: 'Implementing persistent and contextual memory',
     language: 'typescript',
     category: 'advanced',
-    code: `import { Agent, VectorMemory, EpisodicMemory, WorkingMemory } from '@agentos/core'
+    code: `import { Agent, VectorMemory, EpisodicMemory, WorkingMemory } from '@framersai/agentos'
 
 // Configure multi-tier memory system
 const memorySystem = {
@@ -184,8 +182,8 @@ const response = await agent.run({
     description: 'Connect APIs and services as agent tools',
     language: 'typescript',
     category: 'integration',
-    code: `import { Agent, Tool, ToolRegistry } from '@agentos/core'
-import { WebBrowser, CodeInterpreter, DatabaseQuery } from '@agentos/tools'
+    code: `import { Agent, Tool, ToolRegistry } from '@framersai/agentos'
+import { WebBrowser, CodeInterpreter, DatabaseQuery } from '@framersai/agentos-tools'
 
 // Create custom API tool
 const weatherTool = new Tool({
@@ -243,7 +241,7 @@ const result = await agent.run({
     description: 'Stream agent responses for better UX',
     language: 'typescript',
     category: 'advanced',
-    code: `import { StreamingAgent, StreamProcessor } from '@agentos/streaming'
+    code: `import { StreamingAgent, StreamProcessor } from '@framersai/agentos-streaming'
 
 // Configure streaming agent
 const streamingAgent = new StreamingAgent({
@@ -350,58 +348,22 @@ services:
 volumes:
   postgres_data:
   redis_data:
-  qdrant_data:
-
-# Kubernetes deployment (agentos-deployment.yaml)
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: agentos
-spec:
-  replicas: 5
-  selector:
-    matchLabels:
-      app: agentos
-  template:
-    metadata:
-      labels:
-        app: agentos
-    spec:
-      containers:
-      - name: agentos
-        image: framersai/agentos:latest
-        resources:
-          requests:
-            memory: "1Gi"
-            cpu: "500m"
-          limits:
-            memory: "2Gi"
-            cpu: "1000m"
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: OPENAI_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: agentos-secrets
-              key: openai-api-key`
+  qdrant_data:`
   }
 ]
 
 export function CodeExamplesSection() {
   const [activeExample, setActiveExample] = useState(codeExamples[0])
+  const [activeCategory, setActiveCategory] = useState<'all' | 'basic' | 'advanced' | 'integration' | 'deployment'>('all')
+  const [copied, setCopied] = useState<string | null>(null)
 
   const categories = [
-    { value: 'all' as const, label: 'All Examples' },
-    { value: 'basic' as const, label: 'Basic' },
-    { value: 'advanced' as const, label: 'Advanced' },
-    { value: 'integration' as const, label: 'Integration' },
-    { value: 'deployment' as const, label: 'Deployment' }
+    { value: 'all' as const, label: 'All Examples', icon: Code2, color: 'from-purple-500 to-pink-500' },
+    { value: 'basic' as const, label: 'Basic', icon: Terminal, color: 'from-blue-500 to-cyan-500' },
+    { value: 'advanced' as const, label: 'Advanced', icon: Cpu, color: 'from-green-500 to-emerald-500' },
+    { value: 'integration' as const, label: 'Integration', icon: GitBranch, color: 'from-orange-500 to-red-500' },
+    { value: 'deployment' as const, label: 'Deployment', icon: Database, color: 'from-indigo-500 to-purple-500' }
   ]
-
-  type CategoryValue = typeof categories[number]['value']
-  const [activeCategory, setActiveCategory] = useState<CategoryValue>('all')
-  const [copied, setCopied] = useState<string | null>(null)
 
   const filteredExamples = activeCategory === 'all'
     ? codeExamples
@@ -414,186 +376,229 @@ export function CodeExamplesSection() {
   }
 
   const categoryIcons = {
-    basic: <Terminal className="w-4 h-4" />,
-    advanced: <Cpu className="w-4 h-4" />,
-    integration: <GitBranch className="w-4 h-4" />,
-    deployment: <Database className="w-4 h-4" />
+    basic: Terminal,
+    advanced: Cpu,
+    integration: GitBranch,
+    deployment: Database
   }
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-secondary">
-      <div className="max-w-7xl mx-auto">
+    <section id="code" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Subtle organic gradient background */}
+      <div className="absolute inset-0 organic-gradient opacity-20" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-            Code Examples & API Reference
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism mb-6">
+            <Code2 className="w-4 h-4 text-accent-primary" />
+            <span className="text-sm font-semibold text-text-secondary">Code Examples</span>
+          </div>
+
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+            <span className="gradient-text">Build with AgentOS</span>
           </h2>
-          <p className="text-lg text-text-muted max-w-2xl mx-auto">
-            Practical examples showing real-world AgentOS implementations
+          <p className="text-lg text-text-secondary max-w-3xl mx-auto">
+            Production-ready code examples and patterns for building intelligent agent systems
           </p>
         </motion.div>
 
-        {/* Category Filter */}
-        <div className="flex justify-center mb-8">
-          <div className="inline-flex gap-2 p-1 bg-background-glass backdrop-blur-md rounded-xl border border-border-subtle">
-            {categories.map((cat) => (
-              <button
-                key={cat.value}
-                onClick={() => setActiveCategory(cat.value)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
-                  activeCategory === cat.value
-                    ? 'bg-gradient-to-r from-accent-primary to-accent-secondary text-white'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-background-tertiary'
-                }`}
-              >
-                {cat.value === 'all' ? <Code2 className="w-4 h-4" /> : categoryIcons[cat.value]}
-                {cat.label}
-              </button>
-            ))}
+        {/* Category Filter with better styling */}
+        <div className="flex justify-center mb-10">
+          <div className="inline-flex gap-2 p-1 glass-morphism rounded-2xl">
+            {categories.map((cat) => {
+              const Icon = cat.icon
+              return (
+                <button
+                  key={cat.value}
+                  onClick={() => setActiveCategory(cat.value)}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all ${
+                    activeCategory === cat.value
+                      ? 'bg-gradient-to-r ' + cat.color + ' text-white shadow-modern'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {cat.label}
+                </button>
+              )
+            })}
           </div>
         </div>
 
         <div className="grid lg:grid-cols-4 gap-6">
-          {/* Example List */}
-          <div className="lg:col-span-1 space-y-2">
-            <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-3">
-              Examples
+          {/* Example List - Enhanced */}
+          <div className="lg:col-span-1">
+            <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-4 px-2">
+              Select Example
             </h3>
-            {filteredExamples.map((example) => (
-              <button
-                key={example.id}
-                onClick={() => setActiveExample(example)}
-                className={`w-full text-left p-3 rounded-xl transition-all ${
-                  activeExample.id === example.id
-                    ? 'bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 border border-accent-primary/30'
-                    : 'hover:bg-background-tertiary border border-transparent'
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5">
-                    {categoryIcons[example.category]}
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm text-text-primary">
-                      {example.title}
-                    </p>
-                    <p className="text-xs text-text-muted mt-1 line-clamp-2">
-                      {example.description}
-                    </p>
-                  </div>
-                </div>
-              </button>
-            ))}
+            <div className="space-y-2">
+              {filteredExamples.map((example) => {
+                const Icon = categoryIcons[example.category]
+                return (
+                  <motion.button
+                    key={example.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setActiveExample(example)}
+                    className={`w-full text-left p-4 rounded-2xl transition-all ${
+                      activeExample.id === example.id
+                        ? 'glass-morphism shadow-modern border-l-4 border-accent-primary'
+                        : 'hover:bg-background-primary/50 border-l-4 border-transparent'
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-lg ${
+                        activeExample.id === example.id
+                          ? 'bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20'
+                          : 'bg-background-tertiary'
+                      }`}>
+                        <Icon className="w-4 h-4 text-accent-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm text-text-primary mb-1">
+                          {example.title}
+                        </p>
+                        <p className="text-xs text-text-muted line-clamp-2">
+                          {example.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.button>
+                )
+              })}
+            </div>
           </div>
 
-          {/* Code Display */}
+          {/* Code Display - Much better styling */}
           <div className="lg:col-span-3">
             <motion.div
               key={activeExample.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="bg-background-primary rounded-2xl border border-border-subtle overflow-hidden shadow-neumorphic"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="h-full"
             >
-              {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-border-primary">
-                <div>
-                  <h3 className="text-lg font-semibold text-text-primary">
-                    {activeExample.title}
-                  </h3>
-                  <p className="text-sm text-text-muted mt-1">
-                    {activeExample.description}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 bg-background-tertiary rounded-lg text-xs font-medium">
-                    {activeExample.language}
-                  </span>
-                  <button
-                    onClick={() => copyCode(activeExample.code, activeExample.id)}
-                    className="p-2 hover:bg-background-tertiary rounded-lg transition-colors"
-                  >
-                    {copied === activeExample.id ? (
-                      <Check className="w-4 h-4 text-green-500" />
-                    ) : (
-                      <Copy className="w-4 h-4 text-text-secondary" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Code Block */}
-              <div className="overflow-x-auto">
-                <SyntaxHighlighter
-                  language={activeExample.language}
-                  style={vscDarkPlus}
-                  customStyle={{
-                    margin: 0,
-                    padding: '1.5rem',
-                    background: 'transparent',
-                    fontSize: '0.875rem',
-                    lineHeight: '1.5'
-                  }}
-                  showLineNumbers
-                >
-                  {activeExample.code}
-                </SyntaxHighlighter>
-              </div>
-
-              {/* Footer with Try It / Docs Links */}
-              <div className="p-4 border-t border-border-primary bg-background-secondary/50">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <a
-                      href={`https://playground.agentos.sh?example=${activeExample.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm font-medium text-accent-primary hover:text-accent-hover flex items-center gap-1"
-                    >
-                      Try in Playground →
-                    </a>
-                    <a
-                      href={`https://docs.agentos.sh/examples/${activeExample.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm font-medium text-text-secondary hover:text-text-primary flex items-center gap-1"
-                    >
-                      View Docs →
-                    </a>
+              <div className="glass-morphism rounded-3xl overflow-hidden shadow-modern-lg h-full flex flex-col">
+                {/* Header - Enhanced */}
+                <div className="p-6 border-b border-border-subtle">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h3 className="text-2xl font-bold text-text-primary mb-2">
+                        {activeExample.title}
+                      </h3>
+                      <p className="text-text-secondary">
+                        {activeExample.description}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 text-xs font-bold text-accent-primary">
+                        {activeExample.language}
+                      </span>
+                      <button
+                        onClick={() => copyCode(activeExample.code, activeExample.id)}
+                        className="p-2.5 rounded-lg hover:bg-accent-primary/10 transition-all group"
+                        aria-label="Copy code"
+                      >
+                        {copied === activeExample.id ? (
+                          <Check className="w-5 h-5 text-green-500" />
+                        ) : (
+                          <Copy className="w-5 h-5 text-text-secondary group-hover:text-accent-primary transition-colors" />
+                        )}
+                      </button>
+                    </div>
                   </div>
-                  <span className="text-xs text-text-muted">
-                    Category: {activeExample.category}
-                  </span>
+                </div>
+
+                {/* Code Block - Clean, no harsh lines */}
+                <div className="flex-1 overflow-auto bg-gradient-to-br from-background-primary to-background-secondary">
+                  <pre className="p-6 text-sm font-mono leading-relaxed">
+                    <code className="language-typescript text-text-primary">
+                      {activeExample.code.split('\n').map((line, i) => (
+                        <div key={i} className="flex">
+                          <span className="select-none text-text-muted opacity-50 mr-6 text-right" style={{ minWidth: '2rem' }}>
+                            {i + 1}
+                          </span>
+                          <span className="flex-1">{line || ' '}</span>
+                        </div>
+                      ))}
+                    </code>
+                  </pre>
+                </div>
+
+                {/* Footer - Interactive */}
+                <div className="p-4 border-t border-border-subtle bg-gradient-to-r from-accent-primary/5 to-accent-secondary/5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <a
+                        href={`https://playground.agentos.sh?example=${activeExample.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent-primary text-white font-semibold hover:bg-accent-hover transition-all group"
+                      >
+                        <Play className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                        Try in Playground
+                      </a>
+                      <a
+                        href={`https://docs.agentos.sh/examples/${activeExample.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-accent-primary text-accent-primary font-semibold hover:bg-accent-primary/10 transition-all"
+                      >
+                        <Book className="w-4 h-4" />
+                        View Docs
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-accent-primary animate-pulse" />
+                      <span className="text-xs font-semibold text-text-muted">
+                        {example.category.charAt(0).toUpperCase() + example.category.slice(1)}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </div>
         </div>
 
-        {/* Quick Start CTA */}
+        {/* Quick Start CTA - Enhanced */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 text-center p-8 rounded-2xl bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 border border-accent-primary/20"
+          className="mt-16"
         >
-          <h3 className="text-2xl font-bold mb-3">Ready to build?</h3>
-          <p className="text-text-secondary mb-6">
-            Install AgentOS and start building intelligent agents in minutes
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <code className="px-6 py-3 bg-background-primary rounded-xl font-mono text-sm border border-border-primary">
-              npm install @agentos/core
-            </code>
-            <a
-              href="https://docs.agentos.sh/quickstart"
-              className="px-6 py-3 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl font-semibold text-white hover:shadow-lg transition-all"
-            >
-              View Quick Start Guide
-            </a>
+          <div className="relative overflow-hidden rounded-3xl glass-morphism p-12">
+            <div className="absolute inset-0 bg-gradient-to-r from-accent-primary/10 via-accent-secondary/10 to-accent-tertiary/10" />
+
+            <div className="relative z-10 text-center">
+              <h3 className="text-3xl font-bold mb-4 gradient-text">
+                Ready to Build Your First Agent?
+              </h3>
+              <p className="text-lg text-text-secondary mb-8 max-w-2xl mx-auto">
+                Get started with AgentOS in less than 5 minutes. Install the SDK and follow our interactive tutorial.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <div className="px-8 py-4 bg-background-primary rounded-2xl font-mono text-sm border-2 border-accent-primary/30 shadow-modern">
+                  <span className="text-text-muted">$</span> npm install @framersai/agentos
+                </div>
+
+                <a
+                  href="https://docs.agentos.sh/quickstart"
+                  className="btn-primary inline-flex items-center gap-2"
+                >
+                  <Sparkles className="w-5 h-5" />
+                  Start Building
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-white/20">5 min</span>
+                </a>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
