@@ -116,7 +116,7 @@ export function HeroSection() {
             className="max-w-3xl mx-auto text-xl text-text-secondary mb-12 leading-relaxed"
           >
             Build production-ready AI systems with <span className="font-semibold text-accent-primary">TypeScript</span>.
-            Featuring adaptive personas, GMI orchestration, persistent memory,
+            Featuring adaptive personas, <a href="/#gmis" className="font-semibold text-accent-primary underline-offset-4 hover:underline">GMI orchestration</a>, persistent memory,
             and enterprise-grade guardrails for scalable multi-agent intelligence.
           </motion.p>
 

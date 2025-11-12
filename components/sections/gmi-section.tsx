@@ -51,25 +51,12 @@ export function GMISection() {
       <div className="absolute inset-0 organic-gradient opacity-20" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism mb-6">
-            <Brain className="w-4 h-4 text-accent-primary" />
-            <span className="text-sm font-semibold text-text-secondary">GMI Architecture</span>
-          </div>
-
-          <h2 id="gmi-heading" className="text-4xl sm:text-5xl font-bold mb-4">
-            <span className="gradient-text">Generalised Mind Instances</span>
-          </h2>
+        <div className="text-center mb-10">
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
             Build sophisticated AI systems with adaptive personas, emergent behaviors, and true multi-agent collaboration.
             GMIs enable autonomous agents that learn, adapt, and evolve.
           </p>
-        </motion.div>
+        </div>
 
         {/* Interactive Architecture Diagram */}
         <motion.div
@@ -79,9 +66,7 @@ export function GMISection() {
           className="mb-16"
         >
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
-            <h3 className="text-2xl font-bold text-center mb-8 text-text-primary">
-              Interactive System Architecture
-            </h3>
+            {/* Removed section header to reduce noise */}
 
             {/* Layered Architecture Visualization */}
             <div className="relative">
@@ -301,9 +286,7 @@ export function GMISection() {
           className="mb-16"
         >
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
-            <h3 className="text-2xl font-bold text-center mb-8 text-text-primary">
-              GMI Workflow Architecture
-            </h3>
+            {/* Removed section header to consolidate visual flow */}
             <div className="bg-background-primary rounded-2xl p-6 overflow-x-auto">
               <MermaidDiagram 
                 diagram={`graph TB
@@ -351,42 +334,12 @@ export function GMISection() {
         {/* Feature Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {[
-            {
-              icon: Brain,
-              title: 'Adaptive Intelligence',
-              description: 'Agents that learn and evolve from interactions, improving performance over time.',
-              gradient: 'from-purple-500 to-pink-500'
-            },
-            {
-              icon: Network,
-              title: 'Distributed Cognition',
-              description: 'Multiple agents working in parallel, sharing insights and coordinating actions.',
-              gradient: 'from-blue-500 to-cyan-500'
-            },
-            {
-              icon: Database,
-              title: 'Persistent Memory',
-              description: 'Long-term memory storage with semantic search and context retrieval.',
-              gradient: 'from-green-500 to-emerald-500'
-            },
-            {
-              icon: Shield,
-              title: 'Safety Guardrails',
-              description: 'Built-in protection against harmful outputs with customizable safety policies.',
-              gradient: 'from-orange-500 to-red-500'
-            },
-            {
-              icon: Zap,
-              title: 'Real-time Streaming',
-              description: 'Stream responses as they generate for instant user feedback.',
-              gradient: 'from-yellow-500 to-orange-500'
-            },
-            {
-              icon: Cloud,
-              title: 'Scalable Infrastructure',
-              description: 'Deploy anywhere from edge devices to cloud-scale distributed systems.',
-              gradient: 'from-indigo-500 to-purple-500'
-            }
+            { title: 'Adaptive Intelligence', description: 'Agents that learn and evolve from interactions, improving performance over time.', gradient: 'from-purple-500 to-pink-500' },
+            { title: 'Distributed Cognition', description: 'Multiple agents working in parallel, sharing insights and coordinating actions.', gradient: 'from-blue-500 to-cyan-500' },
+            { title: 'Persistent Memory', description: 'Long-term memory storage with semantic search and context retrieval.', gradient: 'from-green-500 to-emerald-500' },
+            { title: 'Safety Guardrails', description: 'Built-in protection against harmful outputs with customizable safety policies.', gradient: 'from-orange-500 to-red-500' },
+            { title: 'Real-time Streaming', description: 'Stream responses as they generate for instant user feedback.', gradient: 'from-yellow-500 to-orange-500' },
+            { title: 'Scalable Infrastructure', description: 'Deploy anywhere from edge devices to cloud-scale distributed systems.', gradient: 'from-indigo-500 to-purple-500' }
           ].map((feature, i) => (
             <motion.div
               key={feature.title}
@@ -397,8 +350,12 @@ export function GMISection() {
               className="group cursor-pointer"
             >
               <div className="h-full p-6 rounded-2xl glass-morphism hover:shadow-modern transition-all">
-                <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${feature.gradient} mb-4`}>
-                  <feature.icon className="w-6 h-6 text-white" />
+                {/* Silhouette blob instead of icon */}
+                <div className={`relative mb-4 h-12 w-12 rounded-xl overflow-hidden`}>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-90`} />
+                  <svg viewBox="0 0 100 100" className="relative h-full w-full">
+                    <path d="M50 10c18 0 36 14 36 32s-11 26-24 32-28 8-36-2-12-24-6-36 12-26 30-26z" fill="rgba(255,255,255,0.18)"/>
+                  </svg>
                 </div>
                 <h3 className="text-lg font-bold text-text-primary mb-2 group-hover:text-accent-primary transition-colors">
                   {feature.title}
