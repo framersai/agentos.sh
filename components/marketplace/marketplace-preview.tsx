@@ -326,68 +326,6 @@ export function MarketplacePreview() {
 
   return (
     <div className="space-y-12 transition-theme">
-      {/* Build and Earn CTA */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="marketplace-cta glass-panel p-8 md:p-10"
-      >
-        <div className="marketplace-cta__row">
-          <div className="marketplace-cta__eyebrow">
-            <span className="marketplace-cta__icon">
-              <DollarSign className="h-5 w-5" aria-hidden="true" />
-            </span>
-            <span className="marketplace-cta__badge">Monetize your expertise</span>
-          </div>
-          <div>
-            <h2 className="marketplace-cta__headline">Turn your AI expertise into revenue</h2>
-            <p className="marketplace-cta__subhead">
-              Create agents, set your price, and earn from every sale. Join thousands of developers building the future of AI.
-            </p>
-          </div>
-        </div>
-
-        <div className="marketplace-cta__stats">
-          {marketplaceStats.map((stat) => (
-            <div key={stat.label} className="marketplace-chip">
-              <span className="marketplace-chip__value">{stat.value}</span>
-              <span className="marketplace-chip__label">{stat.label}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="marketplace-cta__actions">
-          <a
-            href="https://vca.chat"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="marketplace-cta__button marketplace-cta__button--primary"
-          >
-            <Sparkle className="h-5 w-5" aria-hidden="true" />
-            Start selling on VCA.chat
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </a>
-          <a
-            href="https://app.vca.chat/en"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="marketplace-cta__button marketplace-cta__button--outline"
-          >
-            Try demo first
-          </a>
-        </div>
-
-        <div className="marketplace-cta__signals">
-          {marketplaceSignals.map((signal) => (
-            <div key={signal.text} className="marketplace-cta__signal">
-              <signal.icon className="h-4 w-4" aria-hidden="true" />
-              <span>{signal.text}</span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
       {/* Featured Agents Grid */}
       <div>
         <div className="marketplace-featured__intro text-center">

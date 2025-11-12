@@ -171,35 +171,18 @@ export function VideoDemoSection() {
             onMouseEnter={() => setShowControls(true)}
             onMouseMove={() => setShowControls(true)}
           >
-            {/* Video Placeholder with animated background */}
+            {/* Video Placeholder with organic background */}
             <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/5 to-accent-secondary/5">
-              {/* Animated mesh background */}
-              <svg className="absolute inset-0 w-full h-full opacity-20">
-                <defs>
-                  <pattern id="mesh-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-                    {[...Array(5)].map((_, i) => (
-                      <motion.circle
-                        key={i}
-                        cx={20 + i * 20}
-                        cy={50}
-                        r="2"
-                        fill="var(--color-accent-primary)"
-                        animate={{
-                          cy: [50, 30, 70, 50],
-                          opacity: [0.3, 1, 0.3]
-                        }}
-                        transition={{
-                          duration: 4,
-                          delay: i * 0.2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                    ))}
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#mesh-pattern)" />
-              </svg>
+              {/* Soft organic gradient blobs */}
+              <div className="pointer-events-none absolute -top-24 -left-16 h-[420px] w-[420px] rounded-full bg-gradient-to-br from-purple-500/20 via-pink-500/10 to-fuchsia-500/20 blur-3xl animate-pulse" />
+              <div className="pointer-events-none absolute -bottom-20 -right-20 h-[380px] w-[380px] rounded-full bg-gradient-to-tr from-violet-500/20 via-cyan-500/10 to-rose-500/20 blur-3xl animate-pulse [animation-delay:300ms]" />
+              {/* Subtle noise texture */}
+              <div
+                className="absolute inset-0 opacity-30"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`
+                }}
+              />
 
               {/* Placeholder content */}
               <div className="relative z-10 flex items-center justify-center h-full">
@@ -209,7 +192,7 @@ export function VideoDemoSection() {
                   className="text-center"
                 >
                   <div className="mb-6 relative inline-block">
-                    <div className="absolute inset-0 bg-accent-primary/30 blur-3xl animate-pulse-glow" />
+                    <div className="absolute inset-0 bg-accent-primary/25 blur-3xl animate-pulse-glow" />
                     <div className="relative w-24 h-24 mx-auto rounded-full glass-morphism flex items-center justify-center">
                       <Play className="w-12 h-12 text-accent-primary ml-1" />
                     </div>
