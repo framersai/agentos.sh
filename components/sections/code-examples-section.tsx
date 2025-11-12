@@ -556,7 +556,7 @@ export function CodeExamplesSection() {
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-accent-primary animate-pulse" />
                       <span className="text-xs font-semibold text-text-muted">
-                        {example.category.charAt(0).toUpperCase() + example.category.slice(1)}
+                        {activeExample.category.charAt(0).toUpperCase() + activeExample.category.slice(1)}
                       </span>
                     </div>
                   </div>
