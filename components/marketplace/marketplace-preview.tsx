@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Star, Download, TrendingUp, DollarSign, Users, ArrowRight, Sparkle } from 'lucide-react';
+import { Star, Download, TrendingUp, DollarSign, Users, ArrowRight } from 'lucide-react';
 
 interface MarketplaceAgent {
   id: string;
@@ -111,18 +111,7 @@ interface MarketplaceAgentSummaryResponse {
   };
 }
 
-const marketplaceStats = [
-  { value: '70%', label: 'Revenue share' },
-  { value: 'Free', label: 'Start building' },
-  { value: 'Global', label: 'Marketplace' },
-  { value: 'Open', label: 'Source ecosystem' }
-];
-
-const marketplaceSignals = [
-  { icon: Users, text: 'Growing community' },
-  { icon: TrendingUp, text: 'Join early' },
-  { icon: Star, text: 'Apache 2.0 & MIT' }
-];
+// (SEO) This marketplace is the curated AgentOS marketplace
 
 const avatarGradients = [
   'from-rose-500/20 via-rose-400/10 to-purple-500/20 text-rose-600',
@@ -326,6 +315,60 @@ export function MarketplacePreview() {
 
   return (
     <div className="space-y-12 transition-theme">
+      {/* Curated AgentOS marketplace CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.35, ease: 'easeOut' }}
+        className="relative overflow-hidden rounded-3xl border border-border-subtle bg-gradient-to-br from-accent-primary/5 to-accent-secondary/5 px-6 py-8 sm:px-10"
+      >
+        <div className="pointer-events-none absolute -top-24 -left-16 h-64 w-64 rounded-full bg-gradient-to-br from-purple-500/15 via-pink-500/10 to-fuchsia-500/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -right-20 h-56 w-56 rounded-full bg-gradient-to-tr from-violet-500/15 via-cyan-500/10 to-rose-500/15 blur-3xl" />
+
+        <div className="relative z-10 grid gap-6 sm:grid-cols-[1fr_auto] sm:items-center">
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2">
+              Curated AgentOS Marketplace (vca.chat)
+            </h3>
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+              Publish AgentOS‑compatible agents and earn, or share them for free. CI/CD, security checks, packaging,
+              distribution, and hosting are first‑class. Discover and share with the community on{' '}
+              <a href="https://vca.chat" className="font-semibold text-accent-primary underline-offset-4 hover:underline" target="_blank" rel="noopener noreferrer">vca.chat</a>.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-slate-700 dark:text-slate-200">
+              <span className="inline-flex items-center gap-2">
+                <DollarSign className="h-4 w-4 text-accent-primary" /> Sell or share free
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Users className="h-4 w-4 text-accent-primary" /> Curated community
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-accent-primary" /> Built-in CI/CD & security
+              </span>
+            </div>
+          </div>
+          <div className="flex gap-3 sm:justify-end">
+            <a
+              href="https://app.vca.chat/marketplace"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full bg-accent-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              Open marketplace
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </a>
+            <a
+              href="https://vca.chat"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-accent-primary/30 px-5 py-2.5 text-sm font-semibold text-accent-primary transition-all hover:bg-accent-primary/10"
+            >
+              Visit vca.chat
+            </a>
+          </div>
+        </div>
+      </motion.div>
       {/* Featured Agents Grid */}
       <div>
         <div className="marketplace-featured__intro text-center">
