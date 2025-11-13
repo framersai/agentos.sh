@@ -39,11 +39,40 @@ export function HeroSection() {
     return () => { cancelled = true }
   }, [])
   
-  // Independent subtle alternation of headline words
+  // Alternation of headline words (exclusive "Emergent" across lines)
   useEffect(() => {
-    const t1 = setInterval(() => setAltTop((v) => !v), 7000 + Math.floor(Math.random() * 3000))
-    const t2 = setInterval(() => setAltBottom((v) => !v), 8500 + Math.floor(Math.random() * 3500))
-    return () => { clearInterval(t1); clearInterval(t2) }
+    let mounted = true
+    let t1: number | undefined
+    let t2: number | undefined
+    const scheduleTop = (delay: number) => {
+      t1 = window.setTimeout(() => {
+        if (!mounted) return
+        setAltTop((curr) => {
+          const next = !curr
+          if (next) setAltBottom(false)
+          return next
+        })
+        scheduleTop(8000 + Math.floor(Math.random() * 3000))
+      }, delay)
+    }
+    const scheduleBottom = (delay: number) => {
+      t2 = window.setTimeout(() => {
+        if (!mounted) return
+        setAltBottom((curr) => {
+          const next = !curr
+          if (next) setAltTop(false)
+          return next
+        })
+        scheduleBottom(9000 + Math.floor(Math.random() * 3000))
+      }, delay)
+    }
+    scheduleTop(1200)
+    scheduleBottom(2600)
+    return () => {
+      mounted = false
+      if (t1) window.clearTimeout(t1)
+      if (t2) window.clearTimeout(t2)
+    }
   }, [])
   
   return (
@@ -103,27 +132,27 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6"
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-[1.1] overflow-visible"
           >
-            <span className="gradient-text inline-block">
+            <span className="gradient-text inline-block py-1">
               <motion.span
                 key={altTop ? 'emergent-top' : 'adaptive-top'}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 4 }}
+                transition={{ duration: 0.6, ease: 'easeInOut' }}
               >
                 {altTop ? 'Emergent Intelligence' : 'Adaptive Intelligence'}
               </motion.span>
             </span>
             <br />
-            <span className="text-text-primary inline-block">
+            <span className="text-text-primary inline-block py-1">
               <motion.span
                 key={altBottom ? 'emergent-bottom' : 'autonomous-bottom'}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 4 }}
+                transition={{ duration: 0.6, ease: 'easeInOut' }}
               >
                 {altBottom ? 'for Emergent Agents' : 'for Autonomous Agents'}
               </motion.span>
