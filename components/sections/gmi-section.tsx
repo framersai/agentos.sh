@@ -13,6 +13,20 @@ export function GMISection() {
   const [detailPos, setDetailPos] = useState<{ x: number; y: number } | null>(null)
   const hoverTimerRef = useRef<number | undefined>(undefined)
 
+  // Automatic parallel detail cycle (2 agents at a time)
+  const [autoAgents, setAutoAgents] = useState<string[]>([])
+
+  useEffect(() => {
+    let idx = 0
+    const tick = () => {
+      setAutoAgents([agents[idx % agents.length].id, agents[(idx + 1) % agents.length].id])
+      idx = (idx + 2) % agents.length
+    }
+    tick()
+    const t = setInterval(tick, 8000) // slow paced
+    return () => clearInterval(t)
+  }, [])
+
   const agents = [
     { id: 'researcher', name: 'Researcher', icon: Brain, description: 'Discovers and analyzes information',
       examples: ['Web search and source ranking', 'Literature survey (PDFs, arXiv)', 'Fact extraction to memory'],
@@ -173,34 +187,13 @@ export function GMISection() {
                     const left = rect.left - svgRect.left + rect.width / 2 - tooltipWidth / 2
                     const top = rect.top - svgRect.top - 16
                     setTooltipPos({ x: Math.max(8, left), y: Math.max(8, top) })
-                  }, 250)
+                  }, 100)
                 }}
                 onMouseLeave={() => {
                   if (hoverTimerRef.current) window.clearTimeout(hoverTimerRef.current)
                   setActiveNode((prev) => (prev === n.id ? null : prev))
                 }}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  // map node to agent if possible, else orchestrator
-                  const agentId =
-                    n.id === 'ui' ? 'researcher' :
-                    n.id === 'gateway' ? 'orchestrator' :
-                    n.id === 'orchestrator' ? 'orchestrator' :
-                    n.id === 'agents' ? 'creator' :
-                    n.id === 'memory' ? 'analyst' :
-                    n.id === 'events' ? 'executor' : 'orchestrator'
-                  setSelectedAgent(agentId)
-                  const svg = (e.currentTarget.ownerSVGElement as SVGSVGElement)
-                  const pt = svg.createSVGPoint()
-                  pt.x = n.x + n.w + 20; pt.y = n.y + 20
-                  const ctm = (e.currentTarget as SVGRectElement).getCTM()
-                  if (ctm) {
-                    const screen = pt.matrixTransform(ctm)
-                    setDetailPos({ x: screen.x, y: screen.y })
-                  } else {
-                    setDetailPos({ x: n.x + n.w + 20, y: n.y + 20 })
-                  }
-                }}
+                /* no pointer interaction */
                 tabIndex={0}
                 role="button"
                 aria-describedby={`tt-${n.id}`}
@@ -383,75 +376,31 @@ export function GMISection() {
                 })}
               </svg>
 
-              {/* Click-to-reveal detail card */}
+              {/* Automatic parallel agent info boxes */}
               <AnimatePresence>
-                {selectedAgent && (() => {
-                  const agent = agents.find((a) => a.id === selectedAgent)!
-                  const cardStyle: React.CSSProperties = detailPos
-                    ? { left: Math.max(16, Math.min(detailPos.x, 500 - 280)), top: Math.max(16, Math.min(detailPos.y, 500 - 220)) }
-                    : { left: 24, top: 24 }
+                {autoAgents.map((aid) => {
+                  const agent = agents.find((a) => a.id === aid)!
+                  const i = agents.findIndex((a) => a.id === aid)
+                  const angle = (i / agents.length) * 2 * Math.PI
+                  const x = 250 + 150 * Math.cos(angle)
+                  const y = 250 + 150 * Math.sin(angle)
+                  const cardX = x > 250 ? x - 140 : x + 20
+                  const cardY = y > 250 ? y - 120 : y + 20
                   return (
-                  <motion.div
-                      key={`detail-${agent.id}`}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute z-30 w-72 surface-card p-4 border border-border-subtle rounded-2xl shadow-modern"
-                      style={cardStyle}
-                      role="dialog"
-                      aria-label={`${agent.name} details`}
+                    <motion.div
+                      key={aid}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 0.95, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 1.2, ease: 'easeOut' }}
+                      className="absolute z-20 w-60 surface-card p-4 border border-border-subtle rounded-2xl shadow-modern"
+                      style={{ left: cardX, top: cardY }}
                     >
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="font-semibold text-text-primary">{agent.name}</div>
-                        <button
-                          className="text-text-muted hover:text-accent-primary transition-colors"
-                          onClick={() => setSelectedAgent(null)}
-                          aria-label="Close details"
-                        >
-                          ×
-                        </button>
-                      </div>
-                      <div className="text-xs text-text-secondary mb-2">{agent.description}</div>
-                      <div className="mb-2">
-                        <div className="text-xs font-semibold text-text-muted mb-1">Persona</div>
-                        <div className="text-xs text-text-secondary">{agent.persona}</div>
-                      </div>
-                      <div className="mb-2">
-                        <div className="text-xs font-semibold text-text-muted mb-1">Sample actions</div>
-                        <ul className="list-disc pl-5 text-xs text-text-secondary space-y-1">
-                          {agent.examples.map((ex) => <li key={ex}>{ex}</li>)}
-                        </ul>
-                      </div>
-                      <div className="mb-3">
-                        <div className="text-xs font-semibold text-text-muted mb-1">Extensions / Tools</div>
-                        <div className="flex flex-wrap gap-1">
-                          {agent.tools.map((t) => (
-                            <span key={t} className="px-2 py-0.5 rounded-lg bg-accent-primary/10 text-accent-primary text-[10px] font-semibold">{t}</span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <a
-                          href="https://docs.agentos.sh/api"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-border-subtle text-xs text-text-secondary hover:text-accent-primary hover:border-accent-primary transition-colors"
-                        >
-                          API
-                        </a>
-                        <a
-                          href="https://playground.agentos.sh"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-accent-primary text-white text-xs hover:bg-accent-hover transition-colors"
-                        >
-                          Try
-                        </a>
-                      </div>
+                      <div className="font-semibold text-text-primary mb-1 text-sm text-center">{agent.name}</div>
+                      <div className="text-xs text-text-secondary mb-2 text-center">{agent.description}</div>
                     </motion.div>
-                        )
-                      })()}
+                  )
+                })}
               </AnimatePresence>
             </div>
           </div>

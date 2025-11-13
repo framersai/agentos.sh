@@ -14,6 +14,15 @@ export function HeroSection() {
   const [altTop, setAltTop] = useState(false)
   const [altBottom, setAltBottom] = useState(false)
   const [converge, setConverge] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Lightweight resize listener to toggle mobile optimisations
+  useEffect(() => {
+    const check = () => setIsMobile(window.matchMedia('(max-width: 639px)').matches)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
   
   const handleCopy = () => {
     navigator.clipboard.writeText('npm install @framers/agentos')
@@ -104,7 +113,8 @@ export function HeroSection() {
 
       {/* Floating particles with emergence/convergence (synced to headline morphs) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => {
+        {/* Reduce animated particle count on mobile to lessen main-thread work */}
+        {[...Array(isMobile ? 8 : 20)].map((_, i) => {
           const baseX = Math.random() * 100
           const baseY = Math.random() * 100
           return (
@@ -156,23 +166,34 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.35] overflow-visible pb-4 px-4 font-[family-name:var(--font-grotesk)]"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.35] overflow-visible pb-4 px-4 font-[family-name:var(--font-inter)]"
           >
             <span className="gradient-text inline-block py-2">
               {(altTop ? 'Emergent Intelligence' : 'Adaptive Intelligence').split(' ').map((word, wi) => (
                 <span key={`top-word-${wi}`} className="inline-block mr-3">
-                  {word.split('').map((char, ci) => (
+                  {isMobile ? (
                     <motion.span
-                      key={`top-${altTop ? 'emergent' : 'adaptive'}-${wi}-${ci}`}
-                      initial={{ opacity: 0, y: -8 }}
+                      initial={{ opacity: 0, y: -6 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: (wi * 5 + ci) * 0.03 }}
-                      style={{ display: 'inline-block' }}
+                      exit={{ opacity: 0, y: 6 }}
+                      transition={{ duration: 0.8, ease: 'easeOut' }}
                     >
-                      {char}
+                      {word}
                     </motion.span>
-                  ))}
+                  ) : (
+                    word.split('').map((char, ci) => (
+                      <motion.span
+                        key={`top-${altTop ? 'emergent' : 'adaptive'}-${wi}-${ci}`}
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: (wi * 5 + ci) * 0.03 }}
+                        style={{ display: 'inline-block' }}
+                      >
+                        {char}
+                      </motion.span>
+                    ))
+                  )}
                 </span>
               ))}
             </span>
@@ -180,18 +201,29 @@ export function HeroSection() {
             <span className="text-text-primary inline-block py-2">
               {(altBottom ? 'for Emergent Agents' : 'for Autonomous Agents').split(' ').map((word, wi) => (
                 <span key={`bottom-word-${wi}`} className="inline-block mr-3">
-                  {word.split('').map((char, ci) => (
+                  {isMobile ? (
                     <motion.span
-                      key={`bottom-${altBottom ? 'emergent' : 'autonomous'}-${wi}-${ci}`}
-                      initial={{ opacity: 0, y: -8 }}
+                      initial={{ opacity: 0, y: -6 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: (wi * 5 + ci) * 0.03 }}
-                      style={{ display: 'inline-block' }}
+                      exit={{ opacity: 0, y: 6 }}
+                      transition={{ duration: 0.8, ease: 'easeOut' }}
                     >
-                      {char}
+                      {word}
                     </motion.span>
-                  ))}
+                  ) : (
+                    word.split('').map((char, ci) => (
+                      <motion.span
+                        key={`bottom-${altBottom ? 'emergent' : 'autonomous'}-${wi}-${ci}`}
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: (wi * 5 + ci) * 0.03 }}
+                        style={{ display: 'inline-block' }}
+                      >
+                        {char}
+                      </motion.span>
+                    ))
+                  )}
                 </span>
               ))}
             </span>
@@ -204,9 +236,8 @@ export function HeroSection() {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="max-w-3xl mx-auto text-xl text-text-secondary mb-12 leading-relaxed"
           >
-            Build production-ready AI systems with <span className="font-semibold text-accent-primary">TypeScript</span>.
-            Featuring adaptive personas, <a href="/#gmis" className="font-semibold text-accent-primary underline-offset-4 hover:underline">GMI orchestration</a>, persistent memory,
-            and enterprise-grade guardrails for scalable multi-agent intelligence.
+            Build end-to-end, enterprise-ready AI systems with <span className="font-semibold text-accent-primary">AgentOS</span>.
+            Featuring adaptive personas, <a href="/#gmis" className="font-semibold text-accent-primary underline-offset-4 hover:underline">GMI orchestration</a>, persistent memory and zero-trust guardrails for scalable multi-agent intelligence.
           </motion.p>
 
           {/* Enhanced CTA Buttons */}

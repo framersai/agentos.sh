@@ -390,6 +390,7 @@
   /* High-contrast section titles */
   .section-title {
     @apply font-bold;
+    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     color: var(--color-text-primary);
     letter-spacing: -0.02em;
     position: relative;

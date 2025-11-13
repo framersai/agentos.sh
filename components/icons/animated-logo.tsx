@@ -201,12 +201,15 @@ export function AnimatedAgentOSLogo() {
           ))}
         </g>
 
-        {/* AgentOS Text */}
+        {/* AgentOS Text (use viewBox units so it scales on mobile) */}
         <motion.text
           x="200"
-          y="70"
+          y="75"
           textAnchor="middle"
-          className="text-5xl font-bold select-none"
+          fontFamily="'Space Grotesk', var(--font-inter)"
+          fontSize="40" /* px in SVG space – scales with viewBox */
+          fontWeight="700"
+          className="select-none"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
