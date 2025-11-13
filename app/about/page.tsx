@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Mail, Github, Linkedin, Twitter, Globe, ExternalLink } from 'lucide-react'
-import { AnimatedAgentOSLogo } from '../../components/icons/animated-logo'
+import AgentOSWordmark from '../../components/branding/AgentOSWordmark'
 
 export default function AboutPage() {
   return (
@@ -15,14 +15,14 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <AnimatedAgentOSLogo />
+            <AgentOSWordmark className="mx-auto" size="lg" />
           </motion.div>
           
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-5xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary bg-clip-text text-transparent"
+            className="text-5xl sm:text-6xl mb-6 section-title"
           >
             About AgentOS
           </motion.h1>
@@ -31,11 +31,11 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-gray-700 dark:text-text-secondary leading-relaxed"
+            className="text-xl text-text-secondary leading-relaxed"
           >
-            AgentOS is an open-source TypeScript runtime for building adaptive AI agent systems. 
-            Built by <Link href="https://frame.dev" className="text-purple-600 dark:text-accent-primary hover:underline font-semibold">Frame.dev</Link>, 
-            AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise-grade guardrails.
+            AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. 
+            Built by <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">Frame.dev</Link>, 
+            AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails.
           </motion.p>
         </div>
       </section>
@@ -71,10 +71,10 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="mb-12"
           >
-            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">The Team</h2>
-            <p className="text-lg text-gray-700 dark:text-text-secondary leading-relaxed">
-              AgentOS is developed by the team at <Link href="https://frame.dev" className="text-purple-600 dark:text-accent-primary hover:underline font-semibold">Frame.dev</Link>, 
-              a company focused on building the future of AI-powered development tools. We’re a distributed team of 
+            <h2 className="text-3xl mb-6 section-title">The Team</h2>
+            <p className="text-lg text-text-secondary leading-relaxed">
+              AgentOS is developed by the team at <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">Frame.dev</Link>, 
+              a company focused on building the future of AI‑powered development tools. We&#39;re a distributed team of 
               engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.
             </p>
           </motion.div>
@@ -85,12 +85,12 @@ export default function AboutPage() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="glass-morphism rounded-2xl p-6 border border-purple-200/30 dark:border-purple-500/20"
+              className="surface-card p-6"
             >
               <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">General Inquiries</h3>
               <a 
                 href="mailto:team@frame.dev" 
-                className="flex items-center gap-3 text-purple-600 dark:text-accent-primary hover:underline font-medium"
+                className="flex items-center gap-3 text-accent-primary hover:underline font-medium"
               >
                 <Mail className="w-5 h-5" />
                 team@frame.dev
@@ -101,17 +101,17 @@ export default function AboutPage() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="glass-morphism rounded-2xl p-6 border border-purple-200/30 dark:border-purple-500/20"
+              className="surface-card p-6"
             >
               <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Enterprise & Support</h3>
               <a 
                 href="mailto:team@frame.dev" 
-                className="flex items-center gap-3 text-purple-600 dark:text-accent-primary hover:underline font-medium"
+                className="flex items-center gap-3 text-accent-primary hover:underline font-medium"
               >
                 <Mail className="w-5 h-5" />
                 team@frame.dev
               </a>
-              <p className="text-sm text-gray-600 dark:text-text-muted mt-2">
+              <p className="text-sm text-text-muted mt-2">
                 For production deployments, enterprise licensing, and dedicated support
               </p>
             </motion.div>

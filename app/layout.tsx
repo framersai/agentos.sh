@@ -164,7 +164,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                   <ul className="space-y-2 text-sm">
                     <li><a href="/legal/terms" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">Terms</a></li>
                     <li><a href="/legal/privacy" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">Privacy</a></li>
-                    <li><span className="text-gray-600 dark:text-slate-400">Apache 2.0</span></li>
+                    <li><span className="text-gray-600 dark:text-slate-400">Apache 2.0 (core) + MIT (agents, extensions, guardrails)</span></li>
                   </ul>
                 </div>
               </div>
