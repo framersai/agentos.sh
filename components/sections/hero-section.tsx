@@ -39,7 +39,7 @@ export function HeroSection() {
     return () => { cancelled = true }
   }, [])
   
-  // Alternation of headline words (exclusive "Emergent" across lines)
+  // Alternation of headline words (exclusive "Emergent" across lines; 6-12s cycles)
   useEffect(() => {
     let mounted = true
     let t1: number | undefined
@@ -52,7 +52,7 @@ export function HeroSection() {
           if (next) setAltBottom(false)
           return next
         })
-        scheduleTop(18000 + Math.floor(Math.random() * 6000))
+        scheduleTop(6000 + Math.floor(Math.random() * 6000))
       }, delay)
     }
     const scheduleBottom = (delay: number) => {
@@ -63,11 +63,11 @@ export function HeroSection() {
           if (next) setAltTop(false)
           return next
         })
-        scheduleBottom(22000 + Math.floor(Math.random() * 8000))
+        scheduleBottom(8000 + Math.floor(Math.random() * 4000))
       }, delay)
     }
-    scheduleTop(8000)
-    scheduleBottom(15000)
+    scheduleTop(4000)
+    scheduleBottom(7000)
     return () => {
       mounted = false
       if (t1) window.clearTimeout(t1)
