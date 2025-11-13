@@ -88,29 +88,34 @@ export function HeroSection() {
       <div className="absolute inset-0 organic-gradient" />
       <div className="absolute inset-0 bg-gradient-to-br from-background-primary/90 via-background-secondary/50 to-background-primary/90" />
 
-      {/* Floating particles effect */}
+      {/* Floating particles with emergence/convergence */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-accent-primary rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, Math.random() * 20 - 10, 0],
-              opacity: [0.2, 0.8, 0.2],
-            }}
-            transition={{
-              duration: 10 + Math.random() * 10,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
+        {[...Array(20)].map((_, i) => {
+          const baseX = Math.random() * 100
+          const baseY = Math.random() * 100
+          return (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-accent-primary rounded-full"
+              style={{
+                left: `${baseX}%`,
+                top: `${baseY}%`,
+              }}
+              animate={{
+                x: [0, (50 - baseX) * 0.4, 0, Math.random() * 40 - 20, 0],
+                y: [0, (50 - baseY) * 0.4, 0, -30, 0],
+                opacity: [0.2, 0.9, 0.3, 0.8, 0.2],
+                scale: [1, 1.4, 1, 1.2, 1],
+              }}
+              transition={{
+                duration: 18 + Math.random() * 12,
+                repeat: Infinity,
+                delay: Math.random() * 8,
+                ease: [0.45, 0.05, 0.55, 0.95]
+              }}
+            />
+          )
+        })}
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
