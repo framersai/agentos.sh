@@ -510,7 +510,7 @@ export function GMISection() {
               transition={{ delay: i * 0.05 }}
               className="group cursor-pointer"
             >
-              <div className="h-full p-6 rounded-2xl glass-morphism hover:shadow-modern transition-all">
+              <div className="h-full p-6 surface-card">
                 {/* Silhouette blob instead of icon */}
                 <div className={`relative mb-4 h-12 w-12 rounded-xl overflow-hidden`}>
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-90`} />

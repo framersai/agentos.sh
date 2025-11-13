@@ -2,7 +2,6 @@
 
 import { HeroSection } from '../components/sections/hero-section'
 import { GMISection } from '../components/sections/gmi-section'
-import { VideoDemoSection } from '../components/sections/video-demo-section'
 import { CodeExamplesSection } from '../components/sections/code-examples-section'
 import { EcosystemSection } from '../components/sections/ecosystem-section'
 import { CTASection } from '../components/sections/cta-section'
@@ -12,10 +11,7 @@ import { MarketplacePreview } from '../components/marketplace/marketplace-previe
 import { RealStats } from '../components/real-stats'
 import ScrollToTopButton from '../components/ScrollToTopButton'
 import { motion } from 'framer-motion'
-import {
-  Zap, Users, Sparkles, Globe,
-  Package, Database, Terminal, Lock
-} from 'lucide-react'
+import { Globe, Package, Database, Terminal } from 'lucide-react'
 
 // Enhanced feature cards with better descriptions
 const featureCards = [
@@ -49,61 +45,9 @@ const featureCards = [
   }
 ]
 
-// Enhanced roadmap with clearer milestones
-const roadmap = [
-  {
-    title: 'Streaming Workflow Runtime',
-    description: 'Async generators stream AgentOSResponse chunks with metadata for text, tools, artifacts, and guardrails—ready for SSE, WebSocket, or memory bridges.',
-    status: 'Available Now',
-    progress: 100,
-    icon: Zap,
-    color: 'text-green-500'
-  },
-  {
-    title: 'Multi-Agent Agencies',
-    description: 'Persona overlays, workflow definitions, and Agency registries enable specialized GMIs to collaborate on shared goals with human checkpoints.',
-    status: 'Developer Preview',
-    progress: 75,
-    icon: Users,
-    color: 'text-blue-500'
-  },
-  {
-    title: 'Managed Control Plane',
-    description: 'Hosted streaming, observability, and billing integrations for production teams wanting Frame\'s infrastructure without operational burden.',
-    status: 'Q2 2025',
-    progress: 30,
-    icon: Lock,
-    color: 'text-purple-500'
-  }
-]
+// (roadmap reserved: moved to docs landing)
 
-// Real testimonials
-const testimonials = [
-  {
-    author: 'Sarah Chen',
-    role: 'Senior AI Engineer',
-    company: 'TechCorp',
-    content: 'AgentOS transformed how we build conversational AI. The streaming architecture and persona system are absolute game-changers for production deployments.',
-    avatar: '👩‍💻',
-    rating: 5
-  },
-  {
-    author: 'Marcus Rodriguez',
-    role: 'CTO',
-    company: 'AI Startup',
-    content: 'We deployed 50+ custom agents in just 2 weeks. The tool orchestration and guardrail system saved us months of development time.',
-    avatar: '👨‍💼',
-    rating: 5
-  },
-  {
-    author: 'Emily Watson',
-    role: 'Product Manager',
-    company: 'Enterprise Co',
-    content: 'The subscription-aware limits and compliance features gave us confidence to go to production quickly with enterprise clients.',
-    avatar: '👩‍🏫',
-    rating: 5
-  }
-]
+// (testimonials reserved: moved to marketing site)
 
 
 export default function LandingPage() {
@@ -135,9 +79,7 @@ export default function LandingPage() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-                Enterprise-Ready Features
-              </h2>
+              <h2 className="text-4xl sm:text-5xl mb-6 section-title">Enterprise‑Ready Features</h2>
               <p className="text-lg text-text-muted max-w-3xl mx-auto">
                 Production-grade infrastructure for building, deploying, and scaling AI agents
               </p>
@@ -151,7 +93,7 @@ export default function LandingPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="group bg-background-glass backdrop-blur-md rounded-2xl p-8 border border-border-subtle hover:border-accent-primary transition-all duration-300 shadow-neumorphic hover:shadow-neumorphic-hover"
+                  className="group surface-card p-8"
                 >
                   <div className="flex items-start gap-4">
                     <div className={`p-4 rounded-xl bg-gradient-to-br ${card.gradient} opacity-10 group-hover:opacity-20 transition-opacity`}>
@@ -175,152 +117,44 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Video Demo Section */}
-        <VideoDemoSection />
 
         {/* Code Examples Section */}
         <CodeExamplesSection />
 
-        {/* Architecture & Roadmap */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-primary">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-                Product Roadmap
-              </h2>
-              <p className="text-lg text-text-muted max-w-3xl mx-auto">
-                Our journey to building the most advanced AI agent runtime
-              </p>
-            </motion.div>
 
-            <div className="space-y-8">
-              {roadmap.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-background-glass backdrop-blur-md rounded-2xl p-8 border border-border-subtle shadow-neumorphic"
-                >
-                  <div className="flex items-start gap-6">
-                    <div className={`p-3 rounded-xl bg-background-tertiary ${item.color}`}>
-                      <item.icon className="w-8 h-8" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-2xl font-bold text-text-primary">
-                          {item.title}
-                        </h3>
-                        <span className={`px-4 py-2 rounded-full text-sm font-medium ${
-                          item.progress === 100 ? 'bg-green-500/10 text-green-500' :
-                          item.progress >= 75 ? 'bg-blue-500/10 text-blue-500' :
-                          'bg-purple-500/10 text-purple-500'
-                        }`}>
-                          {item.status}
-                        </span>
-                      </div>
-                      <p className="text-text-muted mb-4">
-                        {item.description}
-                      </p>
-                      <div className="flex items-center gap-4">
-                        <div className="flex-1 h-2 bg-background-tertiary rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${item.progress}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1, delay: index * 0.1 + 0.5 }}
-                            className="h-full bg-gradient-to-r from-accent-primary to-accent-secondary"
-                          />
-                        </div>
-                        <span className="text-sm font-medium text-text-muted">
-                          {item.progress}%
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+        {/* Marketplace Preview - Coming Soon */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-secondary relative">
+          <div className="max-w-7xl mx-auto relative">
+            <div className="absolute inset-0 backdrop-blur-md bg-background-primary/60 z-10 flex items-center justify-center rounded-3xl">
+              <div className="text-center">
+                <h3 className="text-4xl sm:text-5xl section-title">Agent Marketplace Coming Soon</h3>
+                <p className="text-lg text-gray-700 dark:text-text-secondary max-w-2xl mx-auto">
+                  Share, sell, and distribute your AgentOS agents. We&#39;ll handle CI/CD, infrastructure, and payments with a small commission.
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
-
-        {/* Marketplace Preview */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-secondary">
-          <div className="max-w-7xl mx-auto">
-            <MarketplacePreview />
+            <div className="blur-sm opacity-30">
+              <MarketplacePreview />
+            </div>
           </div>
         </section>
 
         {/* Ecosystem Section */}
         <EcosystemSection />
 
-        {/* Media Showcase */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-secondary">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-                See AgentOS in Production
-              </h2>
-              <p className="text-lg text-text-muted max-w-3xl mx-auto">
-                Real-world implementations and case studies from our community
-              </p>
-            </motion.div>
-            <MediaShowcase />
-          </div>
-        </section>
-
-        {/* Testimonials */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-primary">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-                Trusted by Developers Worldwide
-              </h2>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {testimonials.map((testimonial, index) => (
-                <motion.div
-                  key={testimonial.author}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-background-glass backdrop-blur-md rounded-2xl p-6 border border-border-subtle shadow-neumorphic"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="text-4xl">{testimonial.avatar}</div>
-                    <div>
-                      <h4 className="font-semibold text-text-primary">{testimonial.author}</h4>
-                      <p className="text-xs text-text-muted">{testimonial.role} at {testimonial.company}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-1 mb-3">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Sparkles key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-text-secondary italic">
-                    &ldquo;{testimonial.content}&rdquo;
-                  </p>
-                </motion.div>
-              ))}
+        {/* Case Studies - Coming Soon */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-secondary relative">
+          <div className="max-w-7xl mx-auto relative">
+            <div className="absolute inset-0 backdrop-blur-sm bg-background-primary/50 z-10 flex items-center justify-center rounded-3xl">
+              <div className="text-center">
+                <h3 className="text-4xl sm:text-5xl section-title">Case Studies Coming Soon</h3>
+                <p className="text-lg text-gray-700 dark:text-text-secondary">
+                  Real-world AgentOS implementations and production deployments
+                </p>
+              </div>
+            </div>
+            <div className="blur-md opacity-20">
+              <MediaShowcase />
             </div>
           </div>
         </section>

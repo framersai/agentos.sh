@@ -159,6 +159,29 @@
     box-shadow: 0 10px 40px -10px hsla(250, 85%, 50%, 0.2);
   }
 
+  /* Cohesive card surface styling */
+  .surface-card {
+    background:
+      linear-gradient(135deg,
+        color-mix(in oklab, var(--color-background-primary) 92%, transparent),
+        color-mix(in oklab, var(--color-background-secondary) 88%, transparent));
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 1rem;
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow:
+      0 1px 0 color-mix(in oklab, var(--color-border-primary) 40%, transparent) inset,
+      0 10px 30px -15px color-mix(in oklab, var(--color-accent-primary) 24%, transparent);
+    transition: transform 220ms var(--ease-out-quad), box-shadow 220ms var(--ease-out-quad), border-color 220ms var(--ease-out-quad);
+  }
+  .surface-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--color-accent-primary) 35%, var(--color-border-subtle));
+    box-shadow:
+      0 1px 0 color-mix(in oklab, var(--color-accent-primary) 28%, transparent) inset,
+      0 18px 45px -20px color-mix(in oklab, var(--color-accent-primary) 30%, transparent);
+  }
+
   .shadow-modern-lg {
     box-shadow: 0 20px 60px -15px hsla(250, 85%, 50%, 0.3);
   }
@@ -338,29 +361,70 @@
     background-clip: text;
   }
 
-  /* Modern buttons */
-  .btn-primary {
-    @apply px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300;
-    background: var(--color-accent-gradient);
-    box-shadow: 0 4px 15px -2px var(--color-glow-primary);
+  /* High-contrast section titles */
+  .section-title {
+    @apply font-bold;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  .section-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 72px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary));
+    opacity: 0.8;
   }
 
+  /* Modern buttons */
+  .btn-primary {
+    @apply px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 relative overflow-hidden;
+    background: var(--color-accent-gradient);
+    box-shadow: 0 6px 18px -4px color-mix(in oklab, var(--color-accent-primary) 45%, transparent);
+    transform: translateZ(0);
+  }
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px -5px var(--color-glow-primary);
+    box-shadow: 0 12px 28px -8px color-mix(in oklab, var(--color-accent-primary) 55%, transparent);
+  }
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform: translateX(-100%);
+    transition: transform 600ms var(--ease-out-quint);
+  }
+  .btn-primary:hover::after {
+    transform: translateX(100%);
   }
 
   .btn-secondary {
-    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300;
-    background: transparent;
-    border: 2px solid var(--color-border-interactive);
+    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 relative;
+    background:
+      linear-gradient(var(--color-background-primary), var(--color-background-primary)) padding-box,
+      linear-gradient(90deg, color-mix(in oklab, var(--color-accent-primary) 50%, transparent), color-mix(in oklab, var(--color-accent-secondary) 40%, transparent)) border-box;
+    border: 2px solid transparent;
     color: var(--color-accent-primary);
+    box-shadow: 0 4px 14px -6px color-mix(in oklab, var(--color-accent-primary) 35%, transparent);
   }
 
   .btn-secondary:hover {
-    background: var(--color-accent-gradient-subtle);
     transform: translateY(-2px);
-    border-color: var(--color-border-hover);
+    box-shadow: 0 10px 20px -10px color-mix(in oklab, var(--color-accent-primary) 45%, transparent);
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 rounded-xl font-semibold transition-all duration-300;
+    color: var(--color-accent-primary);
+  }
+  .btn-ghost:hover {
+    background: color-mix(in oklab, var(--color-accent-primary) 12%, transparent);
   }
 
   /* Skip to content for accessibility */
@@ -394,21 +458,34 @@
 
   /* Scrollbar styling */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-background-secondary);
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-accent-primary);
-    border-radius: 5px;
+    background: color-mix(in oklab, var(--color-text-muted) 28%, transparent);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-accent-hover);
+    background: color-mix(in oklab, var(--color-text-muted) 42%, transparent);
+    border: 2px solid transparent;
+  }
+
+  /* Firefox */
+  :root {
+    scrollbar-color: color-mix(in oklab, var(--color-text-muted) 28%, transparent) transparent;
+    scrollbar-width: thin;
+  }
+
+  html {
+    scrollbar-gutter: stable both-edges;
   }
 
   /* Selection colors */
