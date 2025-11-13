@@ -127,40 +127,48 @@ export function HeroSection() {
             <AnimatedAgentOSLogo />
           </div>
 
-          {/* Powerful Headline with letter-stagger morph */}
+          {/* Powerful Headline with word-stagger morph (mobile-friendly) */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-[1.25] overflow-visible pb-2"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.3] overflow-visible pb-2 px-2"
           >
             <span className="gradient-text inline-block py-2">
-              {(altTop ? 'Emergent Intelligence' : 'Adaptive Intelligence').split('').map((char, i) => (
-                <motion.span
-                  key={`top-${altTop ? 'emergent' : 'adaptive'}-${i}`}
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.03 }}
-                  style={{ display: 'inline-block' }}
-                >
-                  {char === ' ' ? '\u00A0' : char}
-                </motion.span>
+              {(altTop ? 'Emergent Intelligence' : 'Adaptive Intelligence').split(' ').map((word, wi) => (
+                <span key={`top-word-${wi}`} className="inline-block mr-3">
+                  {word.split('').map((char, ci) => (
+                    <motion.span
+                      key={`top-${altTop ? 'emergent' : 'adaptive'}-${wi}-${ci}`}
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: (wi * 5 + ci) * 0.03 }}
+                      style={{ display: 'inline-block' }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
               ))}
             </span>
             <br />
             <span className="text-text-primary inline-block py-2">
-              {(altBottom ? 'for Emergent Agents' : 'for Autonomous Agents').split('').map((char, i) => (
-                <motion.span
-                  key={`bottom-${altBottom ? 'emergent' : 'autonomous'}-${i}`}
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.03 }}
-                  style={{ display: 'inline-block' }}
-                >
-                  {char === ' ' ? '\u00A0' : char}
-                </motion.span>
+              {(altBottom ? 'for Emergent Agents' : 'for Autonomous Agents').split(' ').map((word, wi) => (
+                <span key={`bottom-word-${wi}`} className="inline-block mr-3">
+                  {word.split('').map((char, ci) => (
+                    <motion.span
+                      key={`bottom-${altBottom ? 'emergent' : 'autonomous'}-${wi}-${ci}`}
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: (wi * 5 + ci) * 0.03 }}
+                      style={{ display: 'inline-block' }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
               ))}
             </span>
           </motion.h1>
