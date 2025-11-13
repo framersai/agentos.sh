@@ -1,19 +1,29 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import type { LucideIcon } from 'lucide-react';
-import { Monitor, Sparkle, Scan, Sun, Leaf, Terminal } from 'lucide-react';
+import { Monitor } from 'lucide-react';
 import { themes, ThemeName, applyTheme, getDefaultTheme } from '@/lib/themes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 
-const themeIcons: Record<ThemeName, LucideIcon> = {
-  'sakura-sunset': Sparkle,
-  'twilight-neo': Scan,
-  'aurora-daybreak': Sun,
-  'warm-embrace': Leaf,
-  'retro-terminus': Terminal
-};
+// Organic blob icon
+function ThemeBlobIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id="ts-blob" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="var(--color-accent-primary)" />
+          <stop offset="100%" stopColor="var(--color-accent-secondary)" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M18 6c6-2 16-1 20 6s1 16-6 20-16 1-20-6 0-16 6-20z"
+        fill="url(#ts-blob)"
+        opacity="0.9"
+      />
+    </svg>
+  );
+}
 
 /**
  * ThemeSelector renders the marketing theme palette picker, synchronising CSS variables with the active mode.
@@ -46,20 +56,16 @@ export function ThemeSelector() {
     setIsOpen(false);
   };
 
-  const renderIcon = (themeName: ThemeName, className: string) => {
-    const Icon = themeIcons[themeName];
-    return Icon ? <Icon className={className} aria-hidden="true" /> : null;
-  };
+  const renderIcon = (_themeName: ThemeName, className: string) => <ThemeBlobIcon className={className} />;
 
   return (
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-white hover:shadow-md dark:border-slate-600 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-800"
-        aria-label="Select theme"
+        className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white/80 p-2 text-sm text-slate-700 shadow-sm transition hover:bg-white hover:shadow-md dark:border-slate-600 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-800"
+        aria-label="Select theme preset"
       >
-        {renderIcon(currentTheme, 'h-4 w-4 text-accent-primary')}
-        <span className="text-xs sm:text-sm font-semibold">{themes[currentTheme].name}</span>
+        {renderIcon(currentTheme, 'h-5 w-5')}
       </button>
 
       <AnimatePresence>
@@ -79,7 +85,7 @@ export function ThemeSelector() {
               transition={{ duration: 0.2, ease: 'easeOut' }}
               className="absolute right-0 top-full z-40 mt-2 w-80 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900"
             >
-              <div className="p-2">
+              <div className="p-2 max-h-[60vh] overflow-auto">
                 {Object.entries(themes).map(([key, theme]) => {
                   const themeName = key as ThemeName;
                   const isActive = currentTheme === themeName;
@@ -94,12 +100,7 @@ export function ThemeSelector() {
                         isActive ? 'bg-accent-primary/10 text-accent-primary' : 'hover:bg-slate-100 dark:hover:bg-slate-800'
                       }`}
                     >
-                      {renderIcon(
-                        themeName,
-                        `h-5 w-5 ${
-                          isActive ? 'text-accent-primary' : 'text-slate-400 dark:text-slate-500 group-hover:text-accent-primary'
-                        }`
-                      )}
+                      {renderIcon(themeName, 'h-5 w-5')}
                       <div className="flex-1">
                         <div className="font-semibold text-slate-900 dark:text-white">{theme.name}</div>
                         <div className="text-xs text-slate-500 dark:text-slate-400">{theme.description}</div>

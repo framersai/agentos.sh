@@ -301,45 +301,7 @@ export function VideoDemoSection() {
             </motion.div>
           </div>
 
-          {/* Feature highlights below video */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
-            {[
-              {
-                title: 'Live Development',
-                desc: 'Watch real-time coding and deployment',
-                icon: '⚡'
-              },
-              {
-                title: 'Production Patterns',
-                desc: 'Learn best practices from experts',
-                icon: '🎯'
-              },
-              {
-                title: 'Full Stack AI',
-                desc: 'End-to-end agent development',
-                icon: '🚀'
-              },
-            ].map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                className="group cursor-pointer"
-              >
-                <div className="p-6 rounded-2xl glass-morphism hover:shadow-modern transition-all">
-                  <div className="text-3xl mb-3">{feature.icon}</div>
-                  <h4 className="font-bold text-text-primary mb-2 group-hover:text-accent-primary transition-colors">
-                    {feature.title}
-                  </h4>
-                  <p className="text-sm text-text-muted">
-                    {feature.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          {/* Feature highlights removed per request */}
         </motion.div>
 
         {/* Additional Resources */}
@@ -350,7 +312,7 @@ export function VideoDemoSection() {
           transition={{ delay: 0.4 }}
           className="mt-16 text-center"
         >
-          <p className="text-text-muted mb-6">Want to see more?</p>
+          <p className="text-text-primary mb-6">Want to see more?</p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="https://youtube.com/@framersai"

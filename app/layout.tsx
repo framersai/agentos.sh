@@ -9,9 +9,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" });
 
 export const metadata: Metadata = {
-  title: "AgentOS - TypeScript Runtime for Adaptive AI Agent Intelligence",
+  title: "AgentOS - TypeScript Runtime for Adaptive, Emergent AI Agents",
   description:
-    "AgentOS is an open-source TypeScript runtime for building intelligent, adaptive AI agents with agency, memory, and tooling. Built by Framers (frame.dev). Contact: team@frame.dev.",
+    "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agents with agency, memory, and tooling. By Framers (frame.dev). Contact: team@frame.dev.",
   metadataBase: new URL("https://agentos.sh"),
   alternates: {
     canonical: "https://agentos.sh",
@@ -26,12 +26,15 @@ export const metadata: Metadata = {
     "agent runtime",
     "AI framework",
     "adaptive intelligence",
+    "emergent intelligence",
+    "emergent AI",
     "agency AI",
     "multi-agent systems",
     "AI orchestration",
     "GMI roles",
     "generalised mind instances",
     "Frame.dev",
+    "FramersAI",
     "voice chat assistant",
     "AI development",
     "open source AI"
@@ -62,9 +65,9 @@ export const metadata: Metadata = {
     ]
   },
   openGraph: {
-    title: "AgentOS - TypeScript Runtime for Adaptive AI Agent Intelligence",
+    title: "AgentOS - TypeScript Runtime for Adaptive, Emergent AI Agents",
     description:
-      "Build intelligent AI agents with memory, tools, and agency. Open-source runtime featuring GMI roles, multi-agent orchestration, and enterprise guardrails. By Framers (frame.dev).",
+      "Build adaptive, emergent AI agents with memory, tools, and agency. Open‑source runtime featuring GMI roles, multi‑agent orchestration, and enterprise guardrails. By Framers (frame.dev).",
     url: "https://agentos.sh",
     siteName: "AgentOS",
     images: [
@@ -80,8 +83,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AgentOS - TypeScript Runtime for Adaptive AI Agents",
-    description: "Build intelligent AI agents with AgentOS. Open-source runtime with GMI roles, agency orchestration, and enterprise guardrails. By Framers.",
+    title: "AgentOS - TypeScript Runtime for Adaptive, Emergent AI Agents",
+    description: "Build adaptive, emergent AI agents with AgentOS. Open‑source runtime with GMI roles, agency orchestration, and enterprise guardrails. By Framers.",
     creator: "@framersai",
     site: "@framersai",
     images: ["/og-image.png"]
@@ -161,7 +164,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                   <ul className="space-y-2 text-sm">
                     <li><a href="/legal/terms" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">Terms</a></li>
                     <li><a href="/legal/privacy" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">Privacy</a></li>
-                    <li><span className="text-gray-600 dark:text-slate-400">Apache 2.0 & MIT</span></li>
+                    <li><span className="text-gray-600 dark:text-slate-400">Apache 2.0</span></li>
                   </ul>
                 </div>
               </div>

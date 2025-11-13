@@ -55,8 +55,8 @@ export function SiteHeader() {
       />
       
       <div className="relative z-10 w-full">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
-        <Link href="/" className="group flex items-center gap-3 transition-all hover:scale-105" onClick={closeMenu}>
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 sm:px-5 lg:px-6 py-3">
+        <Link href="/" className="group flex items-center gap-2 transition-all hover:scale-[1.02]" onClick={closeMenu}>
           <div className="relative">
             <div className="absolute inset-0 bg-accent-primary/20 blur-xl rounded-full animate-pulse-glow" />
             <AgentOSWordmark className="h-10 relative z-10" size="md" />
@@ -64,7 +64,7 @@ export function SiteHeader() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-6 lg:gap-8 text-sm font-medium lg:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-5 lg:gap-7 text-sm font-medium lg:flex" aria-label="Main navigation">
           {NAV_LINKS.map((link) => {
             const isExternalOrAnchor = link.href.startsWith('http') || link.href.includes('#');
             if (isExternalOrAnchor) {
@@ -95,11 +95,11 @@ export function SiteHeader() {
         </nav>
 
         {/* Right side actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {/* GitHub repo CTA (prominent with subtle hover) */}
           <a
             href="https://github.com/framersai/agentos"
-            className="relative hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border-subtle text-text-primary hover:text-accent-primary dark:text-white/90 transition-all duration-300 hover:-translate-y-0.5 group"
+            className="relative hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-border-subtle text-text-primary hover:text-accent-primary dark:text-white/90 transition-all duration-300 hover:-translate-y-0.5 group"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open AgentOS on GitHub"
@@ -126,7 +126,7 @@ export function SiteHeader() {
           {/* Frame.dev CTA - Better styled with high contrast */}
           <a
             href="https://frame.dev"
-            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white text-sm font-semibold transition-all duration-300 group border border-border-subtle"
+            className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-xl text-white text-sm font-semibold transition-all duration-300 group border border-border-subtle"
             target="_blank"
             rel="noopener noreferrer"
             style={{ background: 'linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary))' }}
