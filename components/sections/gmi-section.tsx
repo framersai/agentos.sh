@@ -1,33 +1,22 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight } from 'lucide-react'
 
 // (removed layered list data)
 
 export function GMISection() {
-  const [selectedAgent, setSelectedAgent] = useState<string | null>(null)
+  /* selectedAgent removed: non-interactive */
   const [activeNode, setActiveNode] = useState<string | null>(null)
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
-  const [detailPos, setDetailPos] = useState<{ x: number; y: number } | null>(null)
+  /* detailPos removed */
   const hoverTimerRef = useRef<number | undefined>(undefined)
 
   // Automatic parallel detail cycle (2 agents at a time)
   const [autoAgents, setAutoAgents] = useState<string[]>([])
 
-  useEffect(() => {
-    let idx = 0
-    const tick = () => {
-      setAutoAgents([agents[idx % agents.length].id, agents[(idx + 1) % agents.length].id])
-      idx = (idx + 2) % agents.length
-    }
-    tick()
-    const t = setInterval(tick, 8000) // slow paced
-    return () => clearInterval(t)
-  }, [])
-
-  const agents = [
+  const agents = useMemo(() => ([
     { id: 'researcher', name: 'Researcher', icon: Brain, description: 'Discovers and analyzes information',
       examples: ['Web search and source ranking', 'Literature survey (PDFs, arXiv)', 'Fact extraction to memory'],
       tools: ['WebBrowser', 'PDFReader', 'Search API'], persona: 'curious, precise' },
@@ -43,7 +32,18 @@ export function GMISection() {
     { id: 'orchestrator', name: 'Orchestrator', icon: Network, description: 'Coordinates multi-agent tasks',
       examples: ['Route tasks to roles', 'Resolve conflicts', 'Approve/reject gates'],
       tools: ['Router', 'Guardrails', 'PolicyEngine'], persona: 'balanced, gatekeeper' }
-  ]
+  ]), [])
+
+  useEffect(() => {
+    let idx = 0
+    const tick = () => {
+      setAutoAgents([agents[idx % agents.length].id, agents[(idx + 1) % agents.length].id])
+      idx = (idx + 2) % agents.length
+    }
+    tick()
+    const t = setInterval(tick, 8000) // slow paced
+    return () => clearInterval(t)
+  }, [agents])
 
   useEffect(() => {
     const onEsc = (e: KeyboardEvent) => {
@@ -325,26 +325,13 @@ export function GMISection() {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ duration: 0.7, delay: i * 0.05 }}
-                        className="cursor-pointer"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          setSelectedAgent(agent.id)
-                          // place detail near node using DOM rects (relative to svg container)
-                          const svg = (e.currentTarget.ownerSVGElement as SVGSVGElement)
-                          const svgRect = svg.getBoundingClientRect()
-                          const nodeRect = (e.currentTarget as Element).getBoundingClientRect()
-                          setDetailPos({
-                            x: nodeRect.left - svgRect.left + 20,
-                            y: nodeRect.top - svgRect.top + 20
-                          })
-                        }}
                       >
                         <circle
                           cx={x}
                           cy={y}
                           r="40"
                           fill="var(--color-background-primary)"
-                          stroke={selectedAgent === agent.id ? "var(--color-accent-primary)" : "var(--color-border-primary)"}
+                          stroke={autoAgents.includes(agent.id) ? "var(--color-accent-primary)" : "var(--color-border-primary)"}
                           strokeWidth="2"
                         />
                         <text x={x} y={y - 5} textAnchor="middle" className="fill-text-primary font-semibold text-xs">
