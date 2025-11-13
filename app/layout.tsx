@@ -4,6 +4,7 @@ import "../styles/tokens.css";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 import { SiteHeader } from "../components/site-header";
+import ScrollToTopButton from "../components/ScrollToTopButton";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" });
@@ -122,6 +123,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             }}
           />
           <main id="main-content" tabIndex={-1} className="focus:outline-none scroll-mt-24">{children}</main>
+          <ScrollToTopButton />
           <footer className="border-t border-purple-200/30 dark:border-purple-500/20 bg-gradient-to-br from-white/90 via-purple-50/30 to-pink-50/30 dark:from-black/80 dark:via-purple-950/40 dark:to-pink-950/40 backdrop-blur-lg py-12">
             <div className="mx-auto w-full max-w-6xl px-6">
               <div className="grid md:grid-cols-4 gap-8 mb-8">
