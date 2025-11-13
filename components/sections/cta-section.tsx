@@ -52,7 +52,7 @@ export function CTASection() {
           </h2>
 
           <p className="text-xl text-text-secondary max-w-3xl mx-auto mb-12">
-            AgentOS is open source and MIT licensed. Join the early access list to collaborate
+            AgentOS is open source: Apache&nbsp;2.0 (core) and MIT (agents, extensions, guardrails). Join the early access list to collaborate
             with the Frame team, migrate your existing assistant, and shape the roadmap.
           </p>
         </motion.div>
@@ -64,7 +64,7 @@ export function CTASection() {
           viewport={{ once: true }}
           className="max-w-2xl mx-auto"
         >
-          <div className="bg-background-glass backdrop-blur-md rounded-3xl p-8 md:p-12 border border-accent-primary/20 shadow-neumorphic">
+          <div className="surface-card p-8 md:p-12">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-text-primary mb-2">
@@ -77,14 +77,14 @@ export function CTASection() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@team.dev"
-                    className="flex-1 px-4 py-3 bg-background-primary rounded-xl border border-border-subtle focus:border-accent-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all"
+                    className="flex-1 px-4 py-3 bg-background-primary rounded-xl border border-border-subtle focus:border-accent-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all text-text-primary placeholder:text-text-muted"
                     required
                     disabled={status === 'loading'}
                   />
                   <button
                     type="submit"
                     disabled={status === 'loading'}
-                    className="px-8 py-3 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="btn-primary px-8 py-3 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {status === 'loading' ? (
                       <span>Requesting...</span>
@@ -120,7 +120,7 @@ export function CTASection() {
             </form>
 
             <div className="mt-8 pt-8 border-t border-border-subtle">
-              <p className="text-sm text-text-secondary text-center mb-6">
+              <p className="text-sm text-text-primary text-center mb-6">
                 Or explore AgentOS today:
               </p>
 
@@ -155,81 +155,67 @@ export function CTASection() {
           </div>
         </motion.div>
 
-        {/* Additional CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 grid md:grid-cols-3 gap-6 max-w-4xl mx-auto"
-        >
-          <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center">
-              <span className="text-2xl">📚</span>
-            </div>
-            <h3 className="font-semibold mb-2">Documentation</h3>
-            <p className="text-sm text-text-muted mb-4">
-              Comprehensive guides and API references
-            </p>
-            <a
-              href="https://docs.agentos.sh"
-              className="text-sm font-medium text-accent-primary hover:text-accent-hover"
-            >
-              Read the docs →
-            </a>
-          </div>
-
-          <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 flex items-center justify-center">
-              <span className="text-2xl">👥</span>
-            </div>
-            <h3 className="font-semibold mb-2">Community</h3>
-            <p className="text-sm text-text-muted mb-4">
-              Join discussions and get help from experts
-            </p>
-            <a
-              href="https://discord.gg/agentos"
-              className="text-sm font-medium text-accent-primary hover:text-accent-hover"
-            >
-              Join Discord →
-            </a>
-          </div>
-
-          <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 flex items-center justify-center">
-              <span className="text-2xl">🚀</span>
-            </div>
-            <h3 className="font-semibold mb-2">Enterprise</h3>
-            <p className="text-sm text-text-muted mb-4">
-              Custom deployment and support options
-            </p>
-            <a
-              href="mailto:enterprise@frame.dev"
-              className="text-sm font-medium text-accent-primary hover:text-accent-hover"
-            >
-              Contact sales →
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Footer Attribution */}
+        {/* Animated Gradient Wave Divider */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-20 text-center"
+          className="mt-20 relative h-32 overflow-hidden"
         >
-          <p className="text-sm text-text-muted">
-            A product by{' '}
-            <a
-              href="https://frame.dev"
-              className="font-medium text-accent-primary hover:text-accent-hover"
+          <svg
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <linearGradient id="wave-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgb(168, 85, 247)" stopOpacity="0.4">
+                  <animate attributeName="stop-color" values="rgb(168, 85, 247); rgb(236, 72, 153); rgb(192, 132, 252); rgb(168, 85, 247)" dur="8s" repeatCount="indefinite" />
+                </stop>
+                <stop offset="50%" stopColor="rgb(236, 72, 153)" stopOpacity="0.3">
+                  <animate attributeName="stop-color" values="rgb(236, 72, 153); rgb(192, 132, 252); rgb(168, 85, 247); rgb(236, 72, 153)" dur="8s" repeatCount="indefinite" />
+                </stop>
+                <stop offset="100%" stopColor="rgb(192, 132, 252)" stopOpacity="0.4">
+                  <animate attributeName="stop-color" values="rgb(192, 132, 252); rgb(168, 85, 247); rgb(236, 72, 153); rgb(192, 132, 252)" dur="8s" repeatCount="indefinite" />
+                </stop>
+              </linearGradient>
+            </defs>
+            
+            {/* Flowing wave paths */}
+            <path
+              d="M0,40 C300,80 600,0 900,40 C1050,60 1150,40 1200,40 L1200,120 L0,120 Z"
+              fill="url(#wave-gradient)"
+              opacity="0.5"
             >
-              Frame.dev
-            </a>
-          </p>
+              <animate
+                attributeName="d"
+                dur="10s"
+                repeatCount="indefinite"
+                values="
+                  M0,40 C300,80 600,0 900,40 C1050,60 1150,40 1200,40 L1200,120 L0,120 Z;
+                  M0,60 C300,20 600,80 900,30 C1050,10 1150,50 1200,30 L1200,120 L0,120 Z;
+                  M0,40 C300,80 600,0 900,40 C1050,60 1150,40 1200,40 L1200,120 L0,120 Z"
+              />
+            </path>
+            
+            <path
+              d="M0,60 C300,20 600,80 900,30 C1050,10 1150,50 1200,30 L1200,120 L0,120 Z"
+              fill="url(#wave-gradient)"
+              opacity="0.3"
+            >
+              <animate
+                attributeName="d"
+                dur="12s"
+                repeatCount="indefinite"
+                values="
+                  M0,60 C300,20 600,80 900,30 C1050,10 1150,50 1200,30 L1200,120 L0,120 Z;
+                  M0,30 C300,70 600,10 900,60 C1050,80 1150,30 1200,50 L1200,120 L0,120 Z;
+                  M0,60 C300,20 600,80 900,30 C1050,10 1150,50 1200,30 L1200,120 L0,120 Z"
+              />
+            </path>
+          </svg>
         </motion.div>
       </div>
     </section>
   )
 }
-

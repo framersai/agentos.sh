@@ -70,8 +70,8 @@ export default function LandingPage() {
         {/* GMI Section with architecture diagrams */}
         <GMISection />
 
-        {/* Features Grid with neumorphic cards */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background-primary relative">
+        {/* Features Grid */}
+        <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-background-primary relative">
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
