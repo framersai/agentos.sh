@@ -8,6 +8,7 @@
     "dev:full": "concurrently \"pnpm --filter @framers/agentos run docs:watch\" \"next dev\"",
     "build": "npm run copy:docs || true && next build",
     "copy:docs": "node scripts/copy-docs.js",
+    "export-chrome": "node scripts/export-static-chrome.mjs",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
