@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Mail, Github, Linkedin, Twitter, Globe, ExternalLink } from 'lucide-react'
-import AgentOSWordmark from '../../components/branding/AgentOSWordmark'
+import FrameWordmark from '../../components/branding/FrameWordmark'
 
 export default function AboutPage() {
   return (
@@ -15,7 +15,15 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <AgentOSWordmark className="mx-auto" size="lg" />
+            <FrameWordmark className="mx-auto" size="lg" />
+            <motion.div
+              className="mt-2 text-sm lowercase text-text-muted italic"
+              initial={{ opacity: 0.4 }}
+              animate={{ opacity: [0.35, 0.85, 0.35] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              we are the framers
+            </motion.div>
           </motion.div>
           
           <motion.h1
