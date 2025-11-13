@@ -4,36 +4,9 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight } from 'lucide-react'
 
-// Interactive diagram data
-const architectureLayers = [
-  {
-    id: 'application',
-    name: 'Application Layer',
-    components: ['Voice Chat', 'Web Interface', 'API Endpoints', 'Webhooks'],
-    color: 'from-purple-500 to-pink-500'
-  },
-  {
-    id: 'orchestration',
-    name: 'Orchestration Layer',
-    components: ['Agency Manager', 'Workflow Engine', 'Task Scheduler', 'Load Balancer'],
-    color: 'from-blue-500 to-cyan-500'
-  },
-  {
-    id: 'gmi',
-    name: 'GMI Core Layer',
-    components: ['Agent Runtime', 'Memory System', 'Context Manager', 'Role Engine'],
-    color: 'from-green-500 to-emerald-500'
-  },
-  {
-    id: 'infrastructure',
-    name: 'Infrastructure Layer',
-    components: ['Vector DB', 'Event Stream', 'Storage', 'Compute'],
-    color: 'from-orange-500 to-red-500'
-  }
-]
+// (removed layered list data)
 
 export function GMISection() {
-  const [activeLayer, setActiveLayer] = useState<string | null>(null)
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null)
   const [activeNode, setActiveNode] = useState<string | null>(null)
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)

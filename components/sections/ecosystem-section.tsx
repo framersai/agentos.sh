@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   Github, ExternalLink, Package, Shield, Mic,
   Puzzle, Database, Globe, Users, BookOpen,
-  Terminal, Settings, Brain, Code2, GitBranch
+  Terminal, Brain, Code2, GitBranch
 } from 'lucide-react'
 
 interface Repository {
