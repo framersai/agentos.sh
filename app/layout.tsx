@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     "open source AI",
     "adaptive ai intelligence"
   ],
-  authors: [{ name: "Framers", url: "https://frame.dev", email: "team@frame.dev" }],
+  authors: [{ name: "Framers", url: "https://frame.dev" }],
   creator: "Framers",
   publisher: "Framers",
   robots: {
@@ -113,6 +113,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 "@type": "Organization",
                 name: "AgentOS",
                 url: "https://agentos.sh",
+                email: "mailto:team@frame.dev",
                 sameAs: [
                   "https://frame.dev",
                   "https://github.com/framersai",
