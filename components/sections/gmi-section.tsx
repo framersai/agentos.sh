@@ -331,17 +331,14 @@ export function GMISection() {
                         onClick={(e) => {
                           e.stopPropagation()
                           setSelectedAgent(agent.id)
-                          // place detail near node in page coords
+                          // place detail near node using DOM rects (relative to svg container)
                           const svg = (e.currentTarget.ownerSVGElement as SVGSVGElement)
-                          const pt = svg.createSVGPoint()
-                          pt.x = x + 20; pt.y = y + 20
-                          const ctm = (e.currentTarget as SVGElement).getCTM()
-                          if (ctm) {
-                            const screen = pt.matrixTransform(ctm)
-                            setDetailPos({ x: screen.x, y: screen.y })
-                          } else {
-                            setDetailPos({ x: x + 20, y: y + 20 })
-                          }
+                          const svgRect = svg.getBoundingClientRect()
+                          const nodeRect = (e.currentTarget as Element).getBoundingClientRect()
+                          setDetailPos({
+                            x: nodeRect.left - svgRect.left + 20,
+                            y: nodeRect.top - svgRect.top + 20
+                          })
                         }}
                       >
                         <circle
