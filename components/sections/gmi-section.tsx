@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight } from 'lucide-react'
 
@@ -11,6 +11,7 @@ export function GMISection() {
   const [activeNode, setActiveNode] = useState<string | null>(null)
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
   const [detailPos, setDetailPos] = useState<{ x: number; y: number } | null>(null)
+  const hoverTimerRef = useRef<number | undefined>(undefined)
 
   const agents = [
     { id: 'researcher', name: 'Researcher', icon: Brain, description: 'Discovers and analyzes information',
