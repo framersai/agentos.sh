@@ -383,7 +383,7 @@ export function GMISection() {
                 {[
                   ...agents,
                   { id: 'critic', name: 'Critic', icon: Activity, description: 'Reviews outputs and flags issues' },
-                ].map((agent, i, arr) => {
+                ].map((agent, i) => {
                   const angle = (i / agents.length) * 2 * Math.PI
                   const x = 250 + 150 * Math.cos(angle)
                   const y = 250 + 150 * Math.sin(angle)
