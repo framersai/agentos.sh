@@ -10,13 +10,24 @@ export function GMISection() {
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null)
   const [activeNode, setActiveNode] = useState<string | null>(null)
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
+  const [detailPos, setDetailPos] = useState<{ x: number; y: number } | null>(null)
 
   const agents = [
-    { id: 'researcher', name: 'Researcher', icon: Brain, description: 'Discovers and analyzes information' },
-    { id: 'analyst', name: 'Analyst', icon: Activity, description: 'Processes and interprets data' },
-    { id: 'creator', name: 'Creator', icon: Code, description: 'Generates content and solutions' },
-    { id: 'executor', name: 'Executor', icon: Cpu, description: 'Takes actions and implements' },
-    { id: 'orchestrator', name: 'Orchestrator', icon: Network, description: 'Coordinates multi-agent tasks' }
+    { id: 'researcher', name: 'Researcher', icon: Brain, description: 'Discovers and analyzes information',
+      examples: ['Web search and source ranking', 'Literature survey (PDFs, arXiv)', 'Fact extraction to memory'],
+      tools: ['WebBrowser', 'PDFReader', 'Search API'], persona: 'curious, precise' },
+    { id: 'analyst', name: 'Analyst', icon: Activity, description: 'Processes and interprets data',
+      examples: ['Summarize and compare sources', 'Quant/qual trend analysis', 'Sanity checks and flags'],
+      tools: ['DataFrame', 'Calculator', 'Validator'], persona: 'skeptical, methodical' },
+    { id: 'creator', name: 'Creator', icon: Code, description: 'Generates content and solutions',
+      examples: ['Drafts and revisions', 'Artifact generation (docs, code)', 'Style adaptation'],
+      tools: ['Writer', 'Formatter', 'TemplateKit'], persona: 'clear, persuasive' },
+    { id: 'executor', name: 'Executor', icon: Cpu, description: 'Takes actions and implements',
+      examples: ['Call external APIs', 'Create issues/PRs', 'Schedule tasks'],
+      tools: ['HTTP', 'GitHub', 'Scheduler'], persona: 'reliable, action-oriented' },
+    { id: 'orchestrator', name: 'Orchestrator', icon: Network, description: 'Coordinates multi-agent tasks',
+      examples: ['Route tasks to roles', 'Resolve conflicts', 'Approve/reject gates'],
+      tools: ['Router', 'Guardrails', 'PolicyEngine'], persona: 'balanced, gatekeeper' }
   ]
 
   useEffect(() => {
@@ -134,7 +145,7 @@ export function GMISection() {
             />
           ))}
 
-          {/* Nodes with interactive tooltips */}
+          {/* Nodes with interactive tooltips (click to open detail card) */}
           {architectureNodes.map((n) => (
             <g key={n.id}>
               {/* glow plate */}
@@ -164,9 +175,26 @@ export function GMISection() {
                 }}
                 onMouseLeave={() => setActiveNode((prev) => (prev === n.id ? null : prev))}
                 onClick={(e) => {
-                  // toggle for touch
                   e.stopPropagation()
-                  setActiveNode((prev) => (prev === n.id ? null : n.id))
+                  // map node to agent if possible, else orchestrator
+                  const agentId =
+                    n.id === 'ui' ? 'researcher' :
+                    n.id === 'gateway' ? 'orchestrator' :
+                    n.id === 'orchestrator' ? 'orchestrator' :
+                    n.id === 'agents' ? 'creator' :
+                    n.id === 'memory' ? 'analyst' :
+                    n.id === 'events' ? 'executor' : 'orchestrator'
+                  setSelectedAgent(agentId)
+                  const svg = (e.currentTarget.ownerSVGElement as SVGSVGElement)
+                  const pt = svg.createSVGPoint()
+                  pt.x = n.x + n.w + 20; pt.y = n.y + 20
+                  const ctm = (e.currentTarget as SVGRectElement).getCTM()
+                  if (ctm) {
+                    const screen = pt.matrixTransform(ctm)
+                    setDetailPos({ x: screen.x, y: screen.y })
+                  } else {
+                    setDetailPos({ x: n.x + n.w + 20, y: n.y + 20 })
+                  }
                 }}
                 tabIndex={0}
                 role="button"
@@ -226,7 +254,7 @@ export function GMISection() {
             Build sophisticated AI systems with adaptive personas, emergent behaviors, and true multi-agent collaboration.
             GMIs enable autonomous agents that learn, adapt, and evolve.
           </p>
-        </div>
+                    </div>
 
         {/* (Removed) layered architecture list; keeping custom SVG diagrams only */}
 
@@ -300,7 +328,21 @@ export function GMISection() {
                         animate={{ scale: 1 }}
                         transition={{ duration: 0.7, delay: i * 0.05 }}
                         className="cursor-pointer"
-                        onClick={() => setSelectedAgent(agent.id)}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setSelectedAgent(agent.id)
+                          // place detail near node in page coords
+                          const svg = (e.currentTarget.ownerSVGElement as SVGSVGElement)
+                          const pt = svg.createSVGPoint()
+                          pt.x = x + 20; pt.y = y + 20
+                          const ctm = (e.currentTarget as SVGElement).getCTM()
+                          if (ctm) {
+                            const screen = pt.matrixTransform(ctm)
+                            setDetailPos({ x: screen.x, y: screen.y })
+                          } else {
+                            setDetailPos({ x: x + 20, y: y + 20 })
+                          }
+                        }}
                       >
                         <circle
                           cx={x}
@@ -339,31 +381,76 @@ export function GMISection() {
                 })}
               </svg>
 
-              {/* Parallel popovers for all nodes (static for mobile visibility) */}
-              <div className="pointer-events-none absolute inset-0">
-                {[
-                  ...agents,
-                  { id: 'critic', name: 'Critic', icon: Activity, description: 'Reviews outputs and flags issues' },
-                ].map((agent, i) => {
-                  const angle = (i / agents.length) * 2 * Math.PI
-                  const x = 250 + 150 * Math.cos(angle)
-                  const y = 250 + 150 * Math.sin(angle)
-                  const left = `calc(${(x / 500) * 100}% - 80px)`
-                  const top = `calc(${(y / 500) * 100}% - 70px)`
+              {/* Click-to-reveal detail card */}
+              <AnimatePresence>
+                {selectedAgent && (() => {
+                  const agent = agents.find((a) => a.id === selectedAgent)!
+                  const cardStyle: React.CSSProperties = detailPos
+                    ? { left: Math.max(16, Math.min(detailPos.x, 500 - 280)), top: Math.max(16, Math.min(detailPos.y, 500 - 220)) }
+                    : { left: 24, top: 24 }
                   return (
-                    <div
-                      key={`popover-${agent.id}`}
-                      className="absolute w-40 rounded-xl glass-morphism p-2 shadow-modern text-xs"
-                      style={{ left, top }}
-                      role="note"
-                      aria-label={`${agent.name} role`}
+                  <motion.div
+                      key={`detail-${agent.id}`}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute z-30 w-72 surface-card p-4 border border-border-subtle rounded-2xl shadow-modern"
+                      style={cardStyle}
+                      role="dialog"
+                      aria-label={`${agent.name} details`}
                     >
-                      <div className="font-semibold text-text-primary">{agent.name}</div>
-                      <div className="text-text-muted">{agent.description}</div>
-                    </div>
-                  )
-                })}
-              </div>
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="font-semibold text-text-primary">{agent.name}</div>
+                        <button
+                          className="text-text-muted hover:text-accent-primary transition-colors"
+                          onClick={() => setSelectedAgent(null)}
+                          aria-label="Close details"
+                        >
+                          ×
+                        </button>
+                      </div>
+                      <div className="text-xs text-text-secondary mb-2">{agent.description}</div>
+                      <div className="mb-2">
+                        <div className="text-xs font-semibold text-text-muted mb-1">Persona</div>
+                        <div className="text-xs text-text-secondary">{agent.persona}</div>
+                      </div>
+                      <div className="mb-2">
+                        <div className="text-xs font-semibold text-text-muted mb-1">Sample actions</div>
+                        <ul className="list-disc pl-5 text-xs text-text-secondary space-y-1">
+                          {agent.examples.map((ex) => <li key={ex}>{ex}</li>)}
+                        </ul>
+                      </div>
+                      <div className="mb-3">
+                        <div className="text-xs font-semibold text-text-muted mb-1">Extensions / Tools</div>
+                        <div className="flex flex-wrap gap-1">
+                          {agent.tools.map((t) => (
+                            <span key={t} className="px-2 py-0.5 rounded-lg bg-accent-primary/10 text-accent-primary text-[10px] font-semibold">{t}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <a
+                          href="https://docs.agentos.sh/api"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-border-subtle text-xs text-text-secondary hover:text-accent-primary hover:border-accent-primary transition-colors"
+                        >
+                          API
+                        </a>
+                        <a
+                          href="https://playground.agentos.sh"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-accent-primary text-white text-xs hover:bg-accent-hover transition-colors"
+                        >
+                          Try
+                        </a>
+                      </div>
+                    </motion.div>
+                        )
+                      })()}
+              </AnimatePresence>
             </div>
           </div>
         </motion.div>
