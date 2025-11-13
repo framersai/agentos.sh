@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight } from 'lucide-react'
 
@@ -35,6 +35,8 @@ const architectureLayers = [
 export function GMISection() {
   const [activeLayer, setActiveLayer] = useState<string | null>(null)
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null)
+  const [activeNode, setActiveNode] = useState<string | null>(null)
+  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
 
   const agents = [
     { id: 'researcher', name: 'Researcher', icon: Brain, description: 'Discovers and analyzes information' },
@@ -44,6 +46,198 @@ export function GMISection() {
     { id: 'orchestrator', name: 'Orchestrator', icon: Network, description: 'Coordinates multi-agent tasks' }
   ]
 
+  useEffect(() => {
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveNode(null)
+    }
+    window.addEventListener('keydown', onEsc)
+    return () => window.removeEventListener('keydown', onEsc)
+  }, [])
+
+  const architectureNodes = [
+    {
+      id: 'ui',
+      label: 'User Interfaces',
+      subtitle: 'Voice • Web • CLI',
+      x: 20, y: 40, w: 160, h: 80,
+      details: 'Entrypoints where users speak, type, and automate tasks.',
+      example: 'Capture a voice prompt for a real‑time, fact‑checked briefing.'
+    },
+    {
+      id: 'gateway',
+      label: 'API Gateway',
+      subtitle: 'Auth • Rate‑limit',
+      x: 210, y: 40, w: 160, h: 80,
+      details: 'Front door for requests; applies auth, quotas, and routing.',
+      example: 'Throttle bursty inputs; attach tenant identity to requests.'
+    },
+    {
+      id: 'orchestrator',
+      label: 'GMI Orchestrator',
+      subtitle: 'Routing • Guardrails',
+      x: 390, y: 30, w: 190, h: 100,
+      details: 'Coordinates agent roles, tools, and safety policies.',
+      example: 'Parallelize research, analysis, creation, and critique.'
+    },
+    {
+      id: 'agents',
+      label: 'Agent Pool',
+      subtitle: 'Researcher • Analyst • Creator • Critic • Executor',
+      x: 600, y: 10, w: 270, h: 140,
+      details: 'Specialized GMIs stream outputs; orchestrator merges.',
+      example: 'Researcher fetches sources while Analyst verifies claims.'
+    },
+    {
+      id: 'memory',
+      label: 'Memory System',
+      subtitle: 'Vector DB • Knowledge Graph',
+      x: 390, y: 160, w: 200, h: 90,
+      details: 'Long‑term memory stores facts, embeddings, and relations.',
+      example: 'Semantic search recalls prior decisions and context.'
+    },
+    {
+      id: 'events',
+      label: 'Event Stream',
+      subtitle: 'Monitoring • Analytics',
+      x: 610, y: 170, w: 180, h: 80,
+      details: 'Observability and compliance pipeline for every step.',
+      example: 'Emit spans for audits; alert on policy violations.'
+    }
+  ] as const
+
+  function InteractiveArchitecture() {
+    return (
+      <div className="relative w-full overflow-x-auto">
+        <svg viewBox="0 0 900 280" className="min-w-[800px] w-full h-auto">
+          <defs>
+            <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="var(--color-accent-primary)" />
+              <stop offset="100%" stopColor="var(--color-accent-secondary)" />
+            </linearGradient>
+            <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="8" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 z" fill="var(--color-accent-primary)" />
+            </marker>
+          </defs>
+
+          {/* Ambient blobs */}
+          <g opacity="0.25" filter="url(#soft-glow)">
+            <circle cx="140" cy="30" r="80" fill="var(--color-accent-primary)" />
+            <circle cx="760" cy="260" r="90" fill="var(--color-accent-secondary)" />
+          </g>
+
+          {/* Flows (bezier) */}
+          <g stroke="url(#flow-gradient)" strokeWidth="2" fill="none" markerEnd="url(#arrow)" opacity="0.9">
+            <path d="M180,80 C195,80 205,80 210,80" />
+            <path d="M370,80 C380,60 385,60 390,80" />
+            <path d="M580,70 C590,40 595,40 600,70" />
+            <path d="M485,130 C485,145 490,150 490,160" />
+            <path d="M590,205 C600,205 606,205 610,205" />
+            <path d="M780,150 C820,150 820,180 790,170" />
+          </g>
+
+          {/* Streaming dots */}
+          {[
+            { x: [180, 210], y: [80, 80], delay: 0 },
+            { x: [370, 390], y: [70, 80], delay: 0.4 },
+            { x: [580, 600], y: [65, 70], delay: 0.8 },
+            { x: [485, 490], y: [130, 160], delay: 1.2 },
+            { x: [590, 610], y: [205, 205], delay: 1.6 },
+            { x: [780, 790], y: [150, 170], delay: 2.0 },
+          ].map((seg, i) => (
+            <motion.circle
+              key={`spark-${i}`}
+              r="3"
+              fill="var(--color-accent-primary)"
+              initial={{ cx: seg.x[0], cy: seg.y[0] }}
+              animate={{ cx: seg.x[1], cy: seg.y[1] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: 'linear', delay: seg.delay }}
+            />
+          ))}
+
+          {/* Nodes with interactive tooltips */}
+          {architectureNodes.map((n) => (
+            <g key={n.id}>
+              {/* glow plate */}
+              <rect x={n.x - 6} y={n.y - 6} width={n.w + 12} height={n.h + 12} rx="20"
+                    fill="var(--color-accent-primary)" opacity="0.05" />
+              <rect
+                x={n.x}
+                y={n.y}
+                width={n.w}
+                height={n.h}
+                rx="16"
+                fill="var(--color-background-primary)"
+                stroke="var(--color-border-primary)"
+                className="cursor-pointer"
+                onMouseEnter={(e) => {
+                  setActiveNode(n.id)
+                  const svg = (e.currentTarget.ownerSVGElement as SVGSVGElement)
+                  const pt = svg.createSVGPoint()
+                  pt.x = n.x + n.w + 8; pt.y = n.y + 8
+                  const ctm = (e.currentTarget as SVGRectElement).getCTM()
+                  if (ctm) {
+                    const screen = pt.matrixTransform(ctm)
+                    setTooltipPos({ x: screen.x, y: screen.y })
+                  } else {
+                    setTooltipPos({ x: n.x + n.w + 8, y: n.y + 8 })
+                  }
+                }}
+                onMouseLeave={() => setActiveNode((prev) => (prev === n.id ? null : prev))}
+                onClick={(e) => {
+                  // toggle for touch
+                  e.stopPropagation()
+                  setActiveNode((prev) => (prev === n.id ? null : n.id))
+                }}
+                tabIndex={0}
+                role="button"
+                aria-describedby={`tt-${n.id}`}
+              />
+              <text x={n.x + n.w / 2} y={n.y + 40} textAnchor="middle" className="fill-text-primary font-semibold">
+                {n.label}
+              </text>
+              <text x={n.x + n.w / 2} y={n.y + 60} textAnchor="middle" className="fill-text-muted text-xs">
+                {n.subtitle}
+              </text>
+            </g>
+          ))}
+        </svg>
+
+        {/* Portal-like tooltip (positioned absolute over SVG container) */}
+        <AnimatePresence>
+          {activeNode && (() => {
+            const n = architectureNodes.find((x) => x.id === activeNode)!
+            const pos = tooltipPos ?? { x: n.x + n.w + 8, y: n.y + 8 }
+            return (
+              <motion.div
+                key={`tt-${n.id}`}
+                id={`tt-${n.id}`}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.18 }}
+                className="diagram-tooltip"
+                style={{ left: pos.x, top: pos.y }}
+                role="tooltip"
+              >
+                <div className="text-xs uppercase tracking-wide text-text-muted mb-1">{n.label}</div>
+                <div className="text-sm text-text-primary font-semibold">{n.details}</div>
+                <div className="text-xs text-text-secondary mt-2">
+                  <span className="font-semibold text-accent-primary">Example:</span> {n.example}
+                </div>
+              </motion.div>
+            )
+          })()}
+        </AnimatePresence>
+      </div>
+    )
+  }
   return (
     <section id="gmis" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme section-gradient" aria-labelledby="gmi-heading">
       {/* Subtle organic gradient */}
@@ -285,7 +479,7 @@ export function GMISection() {
           </div>
         </motion.div>
 
-        {/* Custom Architecture Diagram (SVG) */}
+        {/* Custom Architecture Diagram (SVG) with interactive tooltips */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -294,8 +488,9 @@ export function GMISection() {
         >
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
             <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-text-primary">AgentOS Architecture (streaming)</h3>
-            <div className="relative w-full overflow-x-auto">
-              <svg viewBox="0 0 900 280" className="min-w-[800px] w-full h-auto">
+            <InteractiveArchitecture />
+          </div>
+        </motion.div>
                 {/* Boxes */}
                 <g id="ui">
                   <rect x="20" y="40" width="160" height="80" rx="16" fill="var(--color-background-primary)" stroke="var(--color-border-primary)" />

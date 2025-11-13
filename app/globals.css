@@ -244,6 +244,24 @@
     animation: pulse-glow 3s ease-in-out infinite;
   }
 
+  /* Futuristic diagram tooltip */
+  .diagram-tooltip {
+    position: absolute;
+    z-index: 20;
+    min-width: 220px;
+    max-width: 300px;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.75rem;
+    background:
+      linear-gradient(135deg,
+        color-mix(in oklab, var(--color-background-primary) 88%, transparent),
+        color-mix(in oklab, var(--color-accent-secondary) 8%, transparent));
+    border: 1px solid color-mix(in oklab, var(--color-border-primary) 80%, transparent);
+    box-shadow: 0 10px 40px -10px color-mix(in oklab, var(--color-accent-primary) 30%, transparent);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+  }
+
   /* Theme-aware skeletons and transitions */
   .transition-theme {
     transition: background-color var(--duration-smooth) var(--ease-out-quad),
