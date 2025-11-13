@@ -153,6 +153,24 @@ const headTags = `
   body { padding-top: 5rem; }
   #scroll-to-top { transition: opacity 0.3s ease; }
 </style>
+<script>
+(function () {
+  var key = 'theme';
+  var root = document.documentElement;
+  try {
+    var stored = localStorage.getItem(key);
+    var system = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var mode = stored || (system ? 'dark' : 'light');
+    if (mode === 'dark') root.classList.add('dark');
+    window.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'j' || e.key === 'J')) {
+        root.classList.toggle('dark');
+        localStorage.setItem(key, root.classList.contains('dark') ? 'dark' : 'light');
+      }
+    });
+  } catch(_) {}
+})();
+</script>
 `
 
 async function main() {
