@@ -600,6 +600,15 @@ export function CodeExamplesSection() {
                         <Book className="w-4 h-4" />
                         View Docs
                       </a>
+                      <a
+                        href="https://docs.agentos.sh/api"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-accent-primary text-accent-primary font-semibold hover:bg-accent-primary/10 transition-all"
+                      >
+                        <Book className="w-4 h-4" />
+                        API Reference (TypeDoc/TSDoc)
+                      </a>
                     </div>
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-accent-primary animate-pulse" />

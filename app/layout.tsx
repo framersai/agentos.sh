@@ -147,7 +147,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <div>
                   <h3 className="font-bold text-gray-900 dark:text-white mb-3">Resources</h3>
                   <ul className="space-y-2 text-sm">
-                    <li><a href="/docs" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">Documentation</a></li>
+                    <li><a href="https://docs.agentos.sh" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">Docs (Guides)</a></li>
+                    <li><a href="https://docs.agentos.sh/api" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">API Reference (TypeDoc/TSDoc)</a></li>
                     <li><a href="/#code" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">Examples</a></li>
                     <li><a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">GitHub</a></li>
                     <li><a href="https://discord.gg/framersai" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-accent-primary transition-colors">Discord</a></li>
