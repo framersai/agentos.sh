@@ -52,7 +52,7 @@ export function HeroSection() {
           if (next) setAltBottom(false)
           return next
         })
-        scheduleTop(8000 + Math.floor(Math.random() * 3000))
+        scheduleTop(18000 + Math.floor(Math.random() * 6000))
       }, delay)
     }
     const scheduleBottom = (delay: number) => {
@@ -63,11 +63,11 @@ export function HeroSection() {
           if (next) setAltTop(false)
           return next
         })
-        scheduleBottom(9000 + Math.floor(Math.random() * 3000))
+        scheduleBottom(22000 + Math.floor(Math.random() * 8000))
       }, delay)
     }
-    scheduleTop(1200)
-    scheduleBottom(2600)
+    scheduleTop(8000)
+    scheduleBottom(15000)
     return () => {
       mounted = false
       if (t1) window.clearTimeout(t1)
@@ -127,35 +127,41 @@ export function HeroSection() {
             <AnimatedAgentOSLogo />
           </div>
 
-          {/* Powerful Headline */}
+          {/* Powerful Headline with letter-stagger morph */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-[1.1] overflow-visible"
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-[1.25] overflow-visible pb-2"
           >
-            <span className="gradient-text inline-block py-1">
-              <motion.span
-                key={altTop ? 'emergent-top' : 'adaptive-top'}
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                transition={{ duration: 0.6, ease: 'easeInOut' }}
-              >
-                {altTop ? 'Emergent Intelligence' : 'Adaptive Intelligence'}
-              </motion.span>
+            <span className="gradient-text inline-block py-2">
+              {(altTop ? 'Emergent Intelligence' : 'Adaptive Intelligence').split('').map((char, i) => (
+                <motion.span
+                  key={`top-${altTop ? 'emergent' : 'adaptive'}-${i}`}
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.03 }}
+                  style={{ display: 'inline-block' }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </motion.span>
+              ))}
             </span>
             <br />
-            <span className="text-text-primary inline-block py-1">
-              <motion.span
-                key={altBottom ? 'emergent-bottom' : 'autonomous-bottom'}
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                transition={{ duration: 0.6, ease: 'easeInOut' }}
-              >
-                {altBottom ? 'for Emergent Agents' : 'for Autonomous Agents'}
-              </motion.span>
+            <span className="text-text-primary inline-block py-2">
+              {(altBottom ? 'for Emergent Agents' : 'for Autonomous Agents').split('').map((char, i) => (
+                <motion.span
+                  key={`bottom-${altBottom ? 'emergent' : 'autonomous'}-${i}`}
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.03 }}
+                  style={{ display: 'inline-block' }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </motion.span>
+              ))}
             </span>
           </motion.h1>
 
