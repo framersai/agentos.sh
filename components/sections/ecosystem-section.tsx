@@ -158,15 +158,7 @@ const repositories: Repository[] = [
     status: 'stable',
     lastUpdated: '3 days ago'
   },
-  {
-    name: '.github',
-    description: 'Community health files and GitHub configuration for all Frame repositories.',
-    url: 'https://github.com/framersai/.github',
-    category: 'infrastructure',
-    icon: Settings,
-    status: 'stable',
-    lastUpdated: '2 minutes ago'
-  }
+  // Removed utility repository entry
 ]
 
 const categoryInfo = {
@@ -224,13 +216,13 @@ export function EcosystemSection() {
           </p>
         </motion.div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        {/* Quick Stats (live values only; contributors omitted) */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
           {[
             { label: 'Repositories', value: '22', icon: GitBranch },
-            { label: 'Contributors', value: '150+', icon: Users },
-            { label: 'Weekly Downloads', value: '25K+', icon: Package },
-            { label: 'GitHub Stars', value: '5K+', icon: Github }
+            // { label: 'Contributors', value: '—', icon: Users },
+            { label: 'Weekly Downloads', value: '—', icon: Package },
+            { label: 'GitHub Stars', value: '—', icon: Github }
           ].map((stat, i) => (
             <motion.div
               key={stat.label}

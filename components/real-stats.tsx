@@ -35,7 +35,7 @@ async function fetchGitHubStats() {
 
 async function fetchNpmStats() {
   try {
-    const response = await fetch('https://api.npmjs.org/downloads/point/last-week/@framersai/agentos')
+    const response = await fetch('https://api.npmjs.org/downloads/point/last-week/@framers/agentos')
     if (response.ok) {
       const data = await response.json()
       return data.downloads
@@ -69,19 +69,8 @@ export function RealStats() {
     loadStats()
   }, [])
 
+  // Only live stats (no fake numbers). Contributors temporarily omitted.
   const statItems = [
-    {
-      value: stats.npmDownloads ? `${(stats.npmDownloads / 1000).toFixed(1)}k` : '—',
-      label: 'Weekly Downloads',
-      icon: '📦',
-      loading: loading && !stats.npmDownloads
-    },
-    {
-      value: stats.contributors ? `${stats.contributors}+` : '—',
-      label: 'Contributors',
-      icon: '👥',
-      loading: loading && !stats.contributors
-    },
     {
       value: stats.githubStars ? stats.githubStars.toLocaleString() : '—',
       label: 'GitHub Stars',
@@ -89,7 +78,19 @@ export function RealStats() {
       loading: loading && !stats.githubStars
     },
     {
-      value: 'MIT',
+      value: stats.npmDownloads ? `${(stats.npmDownloads / 1000).toFixed(1)}k` : '—',
+      label: 'Weekly Downloads',
+      icon: '📦',
+      loading: loading && !stats.npmDownloads
+    },
+    // {
+    //   value: stats.contributors ? `${stats.contributors}+` : '—',
+    //   label: 'Contributors',
+    //   icon: '👥',
+    //   loading: loading && !stats.contributors
+    // },
+    {
+      value: 'Apache 2.0',
       label: 'Open Source',
       icon: '✨',
       loading: false

@@ -1,26 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Github, MessageCircle, Sparkles } from 'lucide-react'
-import { useState } from 'react'
+import { Github, MessageCircle, Sparkles } from 'lucide-react'
 
 export function CTASection() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-
-    setStatus('loading')
-
-    // Simulate API call
-    setTimeout(() => {
-      setStatus('success')
-      setEmail('')
-      setTimeout(() => setStatus('idle'), 3000)
-    }, 1000)
-  }
+  // Newsletter removed (will live as modal on About later)
 
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -57,7 +41,7 @@ export function CTASection() {
           </p>
         </motion.div>
 
-        {/* Main CTA Card */}
+        {/* Main CTA Card (explore only) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -65,61 +49,7 @@ export function CTASection() {
           className="max-w-2xl mx-auto"
         >
           <div className="surface-card p-8 md:p-12">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-text-primary mb-2">
-                  Email address
-                </label>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@team.dev"
-                    className="flex-1 px-4 py-3 bg-background-primary rounded-xl border border-border-subtle focus:border-accent-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all text-text-primary placeholder:text-text-muted"
-                    required
-                    disabled={status === 'loading'}
-                  />
-                  <button
-                    type="submit"
-                    disabled={status === 'loading'}
-                    className="btn-primary px-8 py-3 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {status === 'loading' ? (
-                      <span>Requesting...</span>
-                    ) : status === 'success' ? (
-                      <>
-                        <span>Success!</span>
-                        <Sparkles className="w-4 h-4" />
-                      </>
-                    ) : (
-                      <>
-                        <span>Request Access</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {status === 'success' && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-sm text-green-500"
-                >
-                  Thank you! We&apos;ll be in touch soon.
-                </motion.p>
-              )}
-
-              <p className="text-xs text-text-muted">
-                By subscribing you agree to receive product updates from Frame.dev.
-                No spam, pinky promise.
-              </p>
-            </form>
-
-            <div className="mt-8 pt-8 border-t border-border-subtle">
+            <div>
               <p className="text-sm text-text-primary text-center mb-6">
                 Or explore AgentOS today:
               </p>

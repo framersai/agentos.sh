@@ -22,7 +22,7 @@ const codeExamples: CodeExample[] = [
     description: 'Basic agent setup with memory and tools',
     language: 'typescript',
     category: 'basic',
-    code: `import { Agent, Memory, Tool } from '@framersai/agentos'
+    code: `import { Agent, Memory, Tool } from '@framers/agentos'
 
 // Define a simple calculator tool
 const calculatorTool = new Tool({
@@ -61,7 +61,7 @@ console.log(response)
     description: 'Implementing Generalised Mind Instance roles',
     language: 'typescript',
     category: 'advanced',
-    code: `import { GMI, Agency, Role } from '@framersai/agentos'
+    code: `import { GMI, Agency, Role } from '@framers/agentos'
 
 // Define specialized roles
 const researcherRole = new Role({
@@ -117,7 +117,7 @@ console.log('References:', article.references)`
     description: 'Implementing persistent and contextual memory',
     language: 'typescript',
     category: 'advanced',
-    code: `import { Agent, VectorMemory, EpisodicMemory, WorkingMemory } from '@framersai/agentos'
+    code: `import { Agent, VectorMemory, EpisodicMemory, WorkingMemory } from '@framers/agentos'
 
 // Configure multi-tier memory system
 const memorySystem = {
@@ -184,8 +184,8 @@ const response = await agent.run({
     description: 'Connect APIs and services as agent tools',
     language: 'typescript',
     category: 'integration',
-    code: `import { Agent, Tool, ToolRegistry } from '@framersai/agentos'
-import { WebBrowser, CodeInterpreter, DatabaseQuery } from '@framersai/agentos-tools'
+    code: `import { Agent, Tool, ToolRegistry } from '@framers/agentos'
+import { WebBrowser, CodeInterpreter, DatabaseQuery } from '@framers/agentos-tools'
 
 // Create custom API tool
 const weatherTool = new Tool({
@@ -243,7 +243,7 @@ const result = await agent.run({
     description: 'Stream agent responses for better UX',
     language: 'typescript',
     category: 'advanced',
-    code: `import { StreamingAgent, StreamProcessor } from '@framersai/agentos-streaming'
+    code: `import { StreamingAgent, StreamProcessor } from '@framers/agentos/streaming'
 
 // Configure streaming agent
 const streamingAgent = new StreamingAgent({
@@ -525,8 +525,38 @@ export function CodeExamplesSection() {
                   </div>
                 </div>
 
-                {/* Code Block with Syntax Highlighting */}
-                <div className="flex-1 overflow-auto bg-[#1e1e1e]">
+        {/* Tabs: Synchronous vs Streaming (if applicable) */}
+        <div className="px-6 pt-4 border-b border-border-subtle">
+          <div className="inline-flex gap-2 rounded-2xl p-1 glass-morphism">
+            <button
+              onClick={() => {
+                if (activeExample.id === 'streaming') {
+                  // no-op, already streaming
+                } else {
+                  setActiveExample(codeExamples.find((e) => e.id === 'basic-agent') || activeExample)
+                }
+              }}
+              className={`px-3 py-1.5 rounded-xl text-sm font-semibold ${
+                activeExample.id !== 'streaming' ? 'bg-accent-primary text-white' : 'text-text-secondary hover:text-text-primary'
+              }`}
+            >
+              Synchronous
+            </button>
+            <button
+              onClick={() => {
+                setActiveExample(codeExamples.find((e) => e.id === 'streaming') || activeExample)
+              }}
+              className={`px-3 py-1.5 rounded-xl text-sm font-semibold ${
+                activeExample.id === 'streaming' ? 'bg-accent-primary text-white' : 'text-text-secondary hover:text-text-primary'
+              }`}
+            >
+              Streaming
+            </button>
+          </div>
+        </div>
+
+        {/* Code Block with Syntax Highlighting */}
+        <div className="flex-1 overflow-auto bg-[#1e1e1e]">
                   <SyntaxHighlighter
                     language={activeExample.language}
                     style={vscDarkPlus}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Github, Terminal, Zap, Brain, Workflow, Database, Globe, Play } from 'lucide-react'
@@ -10,11 +10,41 @@ import { Toast } from '../ui/toast'
 
 export function HeroSection() {
   const [showToast, setShowToast] = useState(false)
+  const [stars, setStars] = useState<number | null>(null)
+  const [altTop, setAltTop] = useState(false)
+  const [altBottom, setAltBottom] = useState(false)
   
   const handleCopy = () => {
-    navigator.clipboard.writeText('npm install @framersai/agentos')
+    navigator.clipboard.writeText('npm install @framers/agentos')
     setShowToast(true)
   }
+  
+  // Fetch GitHub stars (framersai/agentos)
+  useEffect(() => {
+    let cancelled = false
+    const fetchStars = async () => {
+      try {
+        const res = await fetch('https://api.github.com/repos/framersai/agentos', { cache: 'no-store' })
+        if (res.ok) {
+          const data = await res.json()
+          if (!cancelled) setStars(typeof data.stargazers_count === 'number' ? data.stargazers_count : 0)
+        } else {
+          if (!cancelled) setStars(0)
+        }
+      } catch {
+        if (!cancelled) setStars(0)
+      }
+    }
+    fetchStars()
+    return () => { cancelled = true }
+  }, [])
+  
+  // Independent subtle alternation of headline words
+  useEffect(() => {
+    const t1 = setInterval(() => setAltTop((v) => !v), 7000 + Math.floor(Math.random() * 3000))
+    const t2 = setInterval(() => setAltBottom((v) => !v), 8500 + Math.floor(Math.random() * 3500))
+    return () => { clearInterval(t1); clearInterval(t2) }
+  }, [])
   
   return (
     <>
@@ -103,9 +133,29 @@ export function HeroSection() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6"
           >
-            <span className="gradient-text">Adaptive Intelligence</span>
+            <span className="gradient-text inline-block">
+              <motion.span
+                key={altTop ? 'emergent-top' : 'adaptive-top'}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                {altTop ? 'Emergent Intelligence' : 'Adaptive Intelligence'}
+              </motion.span>
+            </span>
             <br />
-            <span className="text-text-primary">for Autonomous Agents</span>
+            <span className="text-text-primary inline-block">
+              <motion.span
+                key={altBottom ? 'emergent-bottom' : 'autonomous-bottom'}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                {altBottom ? 'for Emergent Agents' : 'for Autonomous Agents'}
+              </motion.span>
+            </span>
           </motion.h1>
 
           {/* Better Description */}
@@ -147,7 +197,7 @@ export function HeroSection() {
                 <Github className="w-5 h-5" />
                 Star on GitHub
                 <span className="text-xs px-2 py-0.5 rounded-full bg-accent-primary/10 text-accent-primary font-bold">
-                  2.3k
+                  {stars ?? '—'}
                 </span>
               </span>
             </Link>
@@ -185,7 +235,7 @@ export function HeroSection() {
             <div className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl glass-morphism shadow-modern">
               <Terminal className="w-5 h-5 text-accent-primary animate-pulse-glow" />
               <code className="text-sm font-mono text-text-primary select-all">
-                npm install @framersai/agentos
+                npm install @framers/agentos
               </code>
               <button
                 onClick={handleCopy}
