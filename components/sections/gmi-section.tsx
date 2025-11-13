@@ -161,19 +161,23 @@ export function GMISection() {
                 stroke="var(--color-border-primary)"
                 className="cursor-pointer"
                 onMouseEnter={(e) => {
-                  setActiveNode(n.id)
-                  const svg = (e.currentTarget.ownerSVGElement as SVGSVGElement)
-                  const pt = svg.createSVGPoint()
-                  pt.x = n.x + n.w + 8; pt.y = n.y + 8
-                  const ctm = (e.currentTarget as SVGRectElement).getCTM()
-                  if (ctm) {
-                    const screen = pt.matrixTransform(ctm)
-                    setTooltipPos({ x: screen.x, y: screen.y })
-                  } else {
-                    setTooltipPos({ x: n.x + n.w + 8, y: n.y + 8 })
-                  }
+                  // debounce hover reveal; center tooltip
+                  if (hoverTimerRef.current) window.clearTimeout(hoverTimerRef.current)
+                  hoverTimerRef.current = window.setTimeout(() => {
+                    setActiveNode(n.id)
+                    const svg = (e.currentTarget.ownerSVGElement as SVGSVGElement)
+                    const svgRect = svg.getBoundingClientRect()
+                    const rect = (e.currentTarget as Element).getBoundingClientRect()
+                    const tooltipWidth = 240
+                    const left = rect.left - svgRect.left + rect.width / 2 - tooltipWidth / 2
+                    const top = rect.top - svgRect.top - 16
+                    setTooltipPos({ x: Math.max(8, left), y: Math.max(8, top) })
+                  }, 250)
                 }}
-                onMouseLeave={() => setActiveNode((prev) => (prev === n.id ? null : prev))}
+                onMouseLeave={() => {
+                  if (hoverTimerRef.current) window.clearTimeout(hoverTimerRef.current)
+                  setActiveNode((prev) => (prev === n.id ? null : prev))
+                }}
                 onClick={(e) => {
                   e.stopPropagation()
                   // map node to agent if possible, else orchestrator
@@ -249,10 +253,10 @@ export function GMISection() {
           <h2 id="gmi-heading" className="text-4xl sm:text-5xl font-extrabold mb-4">
             <span className="gradient-text">Parallel Agency</span>
           </h2>
-          <p className="text-sm uppercase tracking-wide text-text-muted mb-3">Use case: Real‑time fact‑checked briefing</p>
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-            Build sophisticated AI systems with adaptive personas, emergent behaviors, and true multi-agent collaboration.
-            GMIs enable autonomous agents that learn, adapt, and evolve.
+            Build sophisticated AI systems with adaptive personas and <span className="font-semibold text-accent-primary">emergent, dynamic behaviors</span>,
+            coordinated through multi‑agent collaboration. <a href="/" className="font-semibold text-accent-primary hover:underline">AgentOS</a> GMIs
+            enable autonomous agents that learn, adapt, and evolve.
           </p>
                     </div>
 
