@@ -13,6 +13,7 @@ export function HeroSection() {
   const [stars, setStars] = useState<number | null>(null)
   const [altTop, setAltTop] = useState(false)
   const [altBottom, setAltBottom] = useState(false)
+  const [converge, setConverge] = useState(false)
   
   const handleCopy = () => {
     navigator.clipboard.writeText('npm install @framers/agentos')
@@ -40,16 +41,23 @@ export function HeroSection() {
   }, [])
   
   // Alternation of headline words (exclusive "Emergent" across lines; 6-12s cycles)
+  // Sync particle convergence with text morphs (staggered, rhythmic)
   useEffect(() => {
     let mounted = true
     let t1: number | undefined
     let t2: number | undefined
+    let t3: number | undefined
     const scheduleTop = (delay: number) => {
       t1 = window.setTimeout(() => {
         if (!mounted) return
         setAltTop((curr) => {
           const next = !curr
-          if (next) setAltBottom(false)
+          if (next) {
+            setAltBottom(false)
+            // Trigger convergence 400ms before text morph for rhythmic sync
+            setTimeout(() => setConverge(true), 0)
+            setTimeout(() => setConverge(false), 2000)
+          }
           return next
         })
         scheduleTop(6000 + Math.floor(Math.random() * 6000))
@@ -60,7 +68,12 @@ export function HeroSection() {
         if (!mounted) return
         setAltBottom((curr) => {
           const next = !curr
-          if (next) setAltTop(false)
+          if (next) {
+            setAltTop(false)
+            // Trigger convergence 600ms before text morph (staggered from top)
+            setTimeout(() => setConverge(true), 0)
+            setTimeout(() => setConverge(false), 2200)
+          }
           return next
         })
         scheduleBottom(8000 + Math.floor(Math.random() * 4000))
@@ -72,6 +85,7 @@ export function HeroSection() {
       mounted = false
       if (t1) window.clearTimeout(t1)
       if (t2) window.clearTimeout(t2)
+      if (t3) window.clearTimeout(t3)
     }
   }, [])
   
@@ -88,7 +102,7 @@ export function HeroSection() {
       <div className="absolute inset-0 organic-gradient" />
       <div className="absolute inset-0 bg-gradient-to-br from-background-primary/90 via-background-secondary/50 to-background-primary/90" />
 
-      {/* Floating particles with emergence/convergence */}
+      {/* Floating particles with emergence/convergence (synced to headline morphs) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(20)].map((_, i) => {
           const baseX = Math.random() * 100
@@ -101,17 +115,22 @@ export function HeroSection() {
                 left: `${baseX}%`,
                 top: `${baseY}%`,
               }}
-              animate={{
-                x: [0, (50 - baseX) * 0.4, 0, Math.random() * 40 - 20, 0],
-                y: [0, (50 - baseY) * 0.4, 0, -30, 0],
-                opacity: [0.2, 0.9, 0.3, 0.8, 0.2],
-                scale: [1, 1.4, 1, 1.2, 1],
+              animate={converge ? {
+                x: (50 - baseX) * 0.5,
+                y: (50 - baseY) * 0.5,
+                opacity: 0.9,
+                scale: 1.6,
+              } : {
+                x: [0, Math.random() * 40 - 20, 0],
+                y: [0, -30, 0],
+                opacity: [0.2, 0.8, 0.2],
+                scale: [1, 1.2, 1],
               }}
               transition={{
-                duration: 18 + Math.random() * 12,
-                repeat: Infinity,
-                delay: Math.random() * 8,
-                ease: [0.45, 0.05, 0.55, 0.95]
+                duration: converge ? 1.8 : 18 + Math.random() * 12,
+                repeat: converge ? 0 : Infinity,
+                delay: converge ? i * 0.02 : Math.random() * 8,
+                ease: converge ? [0.25, 0.1, 0.25, 1] : [0.45, 0.05, 0.55, 0.95]
               }}
             />
           )
@@ -132,12 +151,12 @@ export function HeroSection() {
             <AnimatedAgentOSLogo />
           </div>
 
-          {/* Powerful Headline with word-stagger morph (mobile-friendly) */}
+          {/* Powerful Headline with word-stagger morph (mobile-friendly, Space Grotesk for better descenders) */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.3] overflow-visible pb-2 px-2"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.35] overflow-visible pb-4 px-4 font-[family-name:var(--font-grotesk)]"
           >
             <span className="gradient-text inline-block py-2">
               {(altTop ? 'Emergent Intelligence' : 'Adaptive Intelligence').split(' ').map((word, wi) => (
