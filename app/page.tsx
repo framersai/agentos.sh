@@ -1,24 +1,41 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { HeroSection } from '../components/sections/hero-section'
 import { GMISection } from '../components/sections/gmi-section'
 import { CodeExamplesSection } from '../components/sections/code-examples-section'
 import { EcosystemSection } from '../components/sections/ecosystem-section'
 import { CTASection } from '../components/sections/cta-section'
-import { AnimatedBackground, FloatingElements } from '../components/ui/animated-background'
+import dynamic from 'next/dynamic'
 import { MediaShowcase } from '../components/media/media-showcase'
 import { MarketplacePreview } from '../components/marketplace/marketplace-preview'
 import { RealStats } from '../components/real-stats'
 import ScrollToTopButton from '../components/ScrollToTopButton'
-import { motion } from 'framer-motion'
-import { Globe, Package, Database, Terminal } from 'lucide-react'
+import { LazyMotion, domAnimation, motion } from 'framer-motion'
+import { Globe, Package, Database, Terminal, Users } from 'lucide-react'
+
+const AnimatedBackgroundLazy = dynamic(
+  () => import('../components/ui/animated-background').then(m => m.AnimatedBackground),
+  { ssr: false }
+)
+const FloatingElementsLazy = dynamic(
+  () => import('../components/ui/animated-background').then(m => m.FloatingElements),
+  { ssr: false }
+)
 
 // Enhanced feature cards with better descriptions
 const featureCards = [
   {
+    icon: Users,
+    title: 'Emergent Multi-Agent Coordination',
+    body: 'Agents autonomously decompose complex goals into subtasks, spawn adaptive roles, and coordinate through shared context. Choose emergent (adaptive) or static (deterministic) strategies for optimal control.',
+    pill: '🆕 v0.1.0',
+    gradient: 'from-violet-500 to-purple-500'
+  },
+  {
     icon: Package,
     title: 'Tool & Guardrail Packs',
-    body: 'Register tools, guardrails, and workflows through extension manifests. Built-in permission tags, rate budgets, and automatic retries ensure reliable agent operations.',
+    body: 'Register tools, guardrails, and workflows through extension manifests. Built-in permission tags, rate budgets, and automatic retries ensure reliable agent operations. Verified extensions program included.',
     pill: 'Extension Ecosystem',
     gradient: 'from-blue-500 to-cyan-500'
   },
@@ -32,14 +49,14 @@ const featureCards = [
   {
     icon: Database,
     title: 'Storage & Deployment',
-    body: 'Swap between PostgreSQL, better-sqlite3, sql.js, or custom stores. Deploy anywhere with our reference server template.',
+    body: 'Swap between PostgreSQL, better-sqlite3, sql.js, or custom stores. Full state persistence for agency executions, seat progress, and emergent metadata. Deploy anywhere with our reference server template.',
     pill: 'Deploy Anywhere',
     gradient: 'from-green-500 to-emerald-500'
   },
   {
     icon: Terminal,
     title: 'Local-First Workbench',
-    body: 'Run the full AgentOS runtime in-browser with SQL persistence, workflow telemetry, and marketplace personas for offline prototyping.',
+    body: 'Run the full AgentOS runtime in-browser with SQL persistence, workflow telemetry, agency history view, and marketplace personas for offline prototyping. Browse emergent behavior insights in real-time.',
     pill: 'Offline Capable',
     gradient: 'from-orange-500 to-red-500'
   }
@@ -52,10 +69,9 @@ const featureCards = [
 
 export default function LandingPage() {
   return (
-    <>
-      {/* Animated Background */}
-      <AnimatedBackground />
-      <FloatingElements />
+    <LazyMotion features={domAnimation}>
+      {/* Animated Background (mount after idle) */}
+      <DeferredAnimatedBackground />
 
       {/* Skip to Content for Accessibility */}
       <a href="#main-content" className="skip-to-content">
@@ -217,6 +233,26 @@ export default function LandingPage() {
 
       {/* Scroll to Top Button */}
       <ScrollToTopButton />
+    </LazyMotion>
+  )
+}
+
+function DeferredAnimatedBackground() {
+  const [showBg, setShowBg] = useState(false)
+  useEffect(() => {
+    const mount = () => setShowBg(true)
+    if ('requestIdleCallback' in window) {
+      ;(window as any).requestIdleCallback(mount, { timeout: 1200 })
+    } else {
+      const t = setTimeout(mount, 600)
+      return () => clearTimeout(t)
+    }
+  }, [])
+  if (!showBg) return null
+  return (
+    <>
+      <AnimatedBackgroundLazy />
+      <FloatingElementsLazy />
     </>
   )
 }

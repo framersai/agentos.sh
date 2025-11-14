@@ -13,6 +13,7 @@ const NAV_LINKS: ReadonlyArray<{ href: string; label: string }> = [
   { href: '/#features', label: 'Features' },
   { href: 'https://docs.agentos.sh', label: 'Docs' }, // external docs
   { href: 'https://docs.agentos.sh/api', label: 'API Reference' }, // typedoc api
+  { href: '/docs/api', label: 'OpenAPI' },
   { href: '/about', label: 'About' },
 ];
 
@@ -57,10 +58,11 @@ export function SiteHeader() {
       
       <div className="relative z-10 w-full">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 sm:px-5 lg:px-6 py-3">
-        <Link href="/" className="group flex items-center gap-2 transition-all hover:scale-[1.02] leading-none" onClick={closeMenu}>
+        <Link href="/" aria-label="AgentOS home" className="group flex items-center gap-2 transition-all hover:scale-[1.02] leading-none" onClick={closeMenu}>
           <div className="relative overflow-visible">
             <div className="absolute inset-0 bg-accent-primary/20 blur-xl rounded-full animate-pulse-glow" />
             <AgentOSWordmark className="h-10 relative z-10 transform scale-[1.18]" size="md" />
+            <span className="sr-only">AgentOS</span>
           </div>
         </Link>
 

@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check, Terminal, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import dynamic from 'next/dynamic'
 
 interface CodeExample {
   id: string
@@ -358,6 +357,9 @@ export function CodeExamplesSection() {
   const [activeExample, setActiveExample] = useState(codeExamples[0])
   const [activeCategory, setActiveCategory] = useState<'all' | 'basic' | 'advanced' | 'integration' | 'deployment'>('all')
   const [copied, setCopied] = useState<string | null>(null)
+  const [SyntaxHighlighter, setSyntaxHighlighter] = useState<null | (typeof import('react-syntax-highlighter').Prism)>(null)
+  const [syntaxTheme, setSyntaxTheme] = useState<any>(null)
+  const [codeViewerReady, setCodeViewerReady] = useState(false)
   
   // Auto-select first example when category changes
   useEffect(() => {
@@ -366,6 +368,27 @@ export function CodeExamplesSection() {
       setActiveExample(filtered[0])
     }
   }, [activeCategory])
+
+  // Defer loading the heavy code highlighter until after mount/idle
+  useEffect(() => {
+    const loadHighlighter = () => {
+      Promise.all([
+        import('react-syntax-highlighter').then(m => m.Prism as any),
+        import('react-syntax-highlighter/dist/esm/styles/prism').then(m => (m as any).vscDarkPlus)
+      ]).then(([PrismComp, theme]) => {
+        setSyntaxHighlighter(() => PrismComp)
+        setSyntaxTheme(theme)
+        setCodeViewerReady(true)
+      }).catch(() => {
+        // no-op fallback; keep viewer minimal if load fails
+      })
+    }
+    if ('requestIdleCallback' in window) {
+      ;(window as any).requestIdleCallback(loadHighlighter, { timeout: 1500 })
+    } else {
+      setTimeout(loadHighlighter, 600)
+    }
+  }, [])
 
   const categories = [
     { value: 'all' as const, label: 'All Examples', icon: Code2, color: 'from-purple-500 to-pink-500' },
@@ -557,25 +580,35 @@ export function CodeExamplesSection() {
 
         {/* Code Block with Syntax Highlighting */}
         <div className="flex-1 overflow-auto bg-[#1e1e1e]">
-                  <SyntaxHighlighter
-                    language={activeExample.language}
-                    style={vscDarkPlus}
-                    showLineNumbers={true}
-                    customStyle={{
-                      margin: 0,
-                      padding: '1.5rem',
-                      background: 'transparent',
-                      fontSize: '0.875rem',
-                    }}
-                    lineNumberStyle={{
-                      minWidth: '2.5rem',
-                      paddingRight: '1rem',
-                      color: '#6b7280',
-                      userSelect: 'none',
-                    }}
-                  >
-                    {activeExample.code}
-                  </SyntaxHighlighter>
+                  {codeViewerReady && SyntaxHighlighter && syntaxTheme ? (
+                    <SyntaxHighlighter
+                      language={activeExample.language}
+                      style={syntaxTheme}
+                      showLineNumbers={true}
+                      customStyle={{
+                        margin: 0,
+                        padding: '1.5rem',
+                        background: 'transparent',
+                        fontSize: '0.875rem',
+                      }}
+                      lineNumberStyle={{
+                        minWidth: '2.5rem',
+                        paddingRight: '1rem',
+                        color: '#6b7280',
+                        userSelect: 'none',
+                      }}
+                    >
+                      {activeExample.code}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <pre
+                      aria-busy="true"
+                      className="m-0 p-6 text-sm text-gray-200"
+                      style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
+                    >
+{activeExample.code}
+                    </pre>
+                  )}
                 </div>
 
                 {/* Footer - Interactive */}

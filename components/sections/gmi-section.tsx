@@ -45,6 +45,17 @@ export function GMISection() {
     return () => clearInterval(t)
   }, [agents])
 
+  // helper to position tooltip with minimal layout thrash
+  function computeTooltipPosition(target: Element) {
+    const svg = (target.ownerSVGElement as SVGSVGElement)
+    const svgRect = svg.getBoundingClientRect()
+    const rect = target.getBoundingClientRect()
+    const tooltipWidth = 240
+    const left = rect.left - svgRect.left + rect.width / 2 - tooltipWidth / 2
+    const top = rect.top - svgRect.top - 16
+    return { x: Math.max(8, left), y: Math.max(8, top) }
+  }
+
   useEffect(() => {
     const onEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setActiveNode(null)
@@ -176,17 +187,14 @@ export function GMISection() {
                 stroke="var(--color-border-primary)"
                 className="cursor-pointer"
                 onMouseEnter={(e) => {
-                  // debounce hover reveal; center tooltip
+                  // debounce hover reveal; measure in rAF to avoid sync reflow after state change
                   if (hoverTimerRef.current) window.clearTimeout(hoverTimerRef.current)
+                  const target = e.currentTarget as Element
                   hoverTimerRef.current = window.setTimeout(() => {
-                    setActiveNode(n.id)
-                    const svg = (e.currentTarget.ownerSVGElement as SVGSVGElement)
-                    const svgRect = svg.getBoundingClientRect()
-                    const rect = (e.currentTarget as Element).getBoundingClientRect()
-                    const tooltipWidth = 240
-                    const left = rect.left - svgRect.left + rect.width / 2 - tooltipWidth / 2
-                    const top = rect.top - svgRect.top - 16
-                    setTooltipPos({ x: Math.max(8, left), y: Math.max(8, top) })
+                    requestAnimationFrame(() => {
+                      setActiveNode(n.id)
+                      setTooltipPos(computeTooltipPosition(target))
+                    })
                   }, 100)
                 }}
                 onMouseLeave={() => {
@@ -196,7 +204,16 @@ export function GMISection() {
                 /* no pointer interaction */
                 tabIndex={0}
                 role="button"
+                aria-label={`${n.label}. ${n.subtitle}. ${n.details}`}
                 aria-describedby={`tt-${n.id}`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    const target = e.currentTarget as Element
+                    setActiveNode(n.id)
+                    setTooltipPos(computeTooltipPosition(target))
+                  }
+                }}
               />
               <text x={n.x + n.w / 2} y={n.y + 40} textAnchor="middle" className="fill-text-primary font-semibold">
                 {n.label}

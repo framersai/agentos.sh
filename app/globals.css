@@ -16,7 +16,7 @@
     /* Rich, deep text colors for maximum readability */
     --color-text-primary: hsl(220, 30%, 10%);
     --color-text-secondary: hsl(220, 20%, 25%);
-    --color-text-muted: hsl(220, 15%, 45%);
+    --color-text-muted: hsl(220, 15%, 38%);
     --color-text-placeholder: hsl(220, 10%, 60%);
     --color-text-contrast: hsl(0, 0%, 100%);
     --color-text-link: hsl(250, 85%, 50%);
