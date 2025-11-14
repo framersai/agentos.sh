@@ -64,8 +64,15 @@ export function GMISection() {
 
   // helper to position tooltip with minimal layout thrash
   function computeTooltipPosition(target: Element) {
-    const svg = (target as SVGElement).ownerSVGElement as SVGSVGElement
-    const svgRect = svg.getBoundingClientRect()
+    const svgElement =
+      (target as SVGGraphicsElement).ownerSVGElement ??
+      target.closest('svg')
+    if (!svgElement) {
+      // fallback to basic positioning relative to viewport if SVG context missing
+      const rect = target.getBoundingClientRect()
+      return { x: rect.left, y: rect.top }
+    }
+    const svgRect = svgElement.getBoundingClientRect()
     const rect = target.getBoundingClientRect()
     const tooltipWidth = 240
     const left = rect.left - svgRect.left + rect.width / 2 - tooltipWidth / 2
