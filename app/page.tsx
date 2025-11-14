@@ -275,7 +275,8 @@ function DeferredAnimatedBackground() {
   useEffect(() => {
     const mount = () => setShowBg(true)
     if ('requestIdleCallback' in window) {
-      ;(window as any).requestIdleCallback(mount, { timeout: 1200 })
+      const w = window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void }
+      w.requestIdleCallback(mount, { timeout: 1200 })
     } else {
       const t = setTimeout(mount, 600)
       return () => clearTimeout(t)

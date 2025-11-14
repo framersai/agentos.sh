@@ -239,7 +239,7 @@ export function EcosystemSection() {
             loading: false
           })
         }
-      } catch (error) {
+      } catch {
         if (!cancelled) {
           setLiveStats((prev) => ({ ...prev, loading: false }))
         }

@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check, Terminal, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
-import dynamic from 'next/dynamic'
 
 interface CodeExample {
   id: string
@@ -358,7 +357,7 @@ export function CodeExamplesSection() {
   const [activeCategory, setActiveCategory] = useState<'all' | 'basic' | 'advanced' | 'integration' | 'deployment'>('all')
   const [copied, setCopied] = useState<string | null>(null)
   const [SyntaxHighlighter, setSyntaxHighlighter] = useState<null | (typeof import('react-syntax-highlighter').Prism)>(null)
-  const [syntaxTheme, setSyntaxTheme] = useState<any>(null)
+  const [syntaxTheme, setSyntaxTheme] = useState<Record<string, React.CSSProperties> | null>(null)
   const [codeViewerReady, setCodeViewerReady] = useState(false)
   
   // Auto-select first example when category changes
@@ -373,8 +372,8 @@ export function CodeExamplesSection() {
   useEffect(() => {
     const loadHighlighter = () => {
       Promise.all([
-        import('react-syntax-highlighter').then(m => m.Prism as any),
-        import('react-syntax-highlighter/dist/esm/styles/prism').then(m => (m as any).vscDarkPlus)
+        import('react-syntax-highlighter').then(m => m.Prism),
+        import('react-syntax-highlighter/dist/esm/styles/prism').then(m => m.vscDarkPlus)
       ]).then(([PrismComp, theme]) => {
         setSyntaxHighlighter(() => PrismComp)
         setSyntaxTheme(theme)
@@ -384,7 +383,8 @@ export function CodeExamplesSection() {
       })
     }
     if ('requestIdleCallback' in window) {
-      ;(window as any).requestIdleCallback(loadHighlighter, { timeout: 1500 })
+      const w = window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void }
+      w.requestIdleCallback(loadHighlighter, { timeout: 1500 })
     } else {
       setTimeout(loadHighlighter, 600)
     }

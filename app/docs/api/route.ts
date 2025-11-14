@@ -26,8 +26,9 @@ export async function GET() {
     }
 
     return NextResponse.json({ error: 'OpenAPI spec not found' }, { status: 404 });
-  } catch (e: any) {
-    return NextResponse.json({ error: 'Failed to serve OpenAPI spec', details: e?.message }, { status: 500 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Unknown error'
+    return NextResponse.json({ error: 'Failed to serve OpenAPI spec', details: message }, { status: 500 });
   }
 }
 
