@@ -27,6 +27,7 @@ export function HeroSection() {
   const handleCopy = () => {
     navigator.clipboard.writeText('npm install @framers/agentos')
     setShowToast(true)
+    
   }
   
   // Fetch GitHub stars (framersai/agentos)
@@ -237,7 +238,7 @@ export function HeroSection() {
             className="max-w-3xl mx-auto text-xl text-text-secondary mb-12 leading-relaxed"
           >
             Build end-to-end, enterprise-ready AI systems with <span className="font-semibold text-accent-primary">AgentOS</span>.
-            Featuring adaptive personas, <a href="/#gmis" className="font-semibold text-accent-primary underline-offset-4 hover:underline">GMI orchestration</a>, persistent memory and zero-trust guardrails for scalable multi-agent intelligence.
+            Featuring <span className="font-semibold text-accent-primary">emergent multi-agent coordination</span>, adaptive personas, <a href="/#gmis" className="font-semibold text-accent-primary underline-offset-4 hover:underline">GMI orchestration</a>, and persistent memory. Agents autonomously decompose goals, spawn roles, and produce structured outputs—zero-trust guardrails included.
           </motion.p>
 
           {/* Enhanced CTA Buttons */}
