@@ -301,7 +301,6 @@ export function VideoDemoSection() {
             </motion.div>
           </div>
 
-          {/* Feature highlights removed per request */}
         </motion.div>
 
         {/* Additional Resources */}

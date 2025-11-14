@@ -4,16 +4,9 @@ import { motion } from 'framer-motion'
 import { Github, MessageCircle, Sparkles } from 'lucide-react'
 
 export function CTASection() {
-  // Newsletter removed (will live as modal on About later)
-
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/10 via-transparent to-accent-secondary/10" />
-        <div className="absolute top-0 left-0 w-96 h-96 bg-accent-primary/20 rounded-full filter blur-3xl animate-float" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent-secondary/20 rounded-full filter blur-3xl animate-float-reverse" />
-      </div>
+    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-tint">
+      <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(circle_at_15%_10%,var(--color-accent-warm-soft),transparent_60%),radial-gradient(circle_at_85%_20%,hsla(260,90%,65%,0.25),transparent_70%)]" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
@@ -36,8 +29,7 @@ export function CTASection() {
           </h2>
 
           <p className="text-xl text-text-secondary max-w-3xl mx-auto mb-12">
-            AgentOS is open source: Apache&nbsp;2.0 (core) and MIT (agents, extensions, guardrails). Join the early access list to collaborate
-            with the Frame team, migrate your existing assistant, and shape the roadmap.
+            AgentOS is open source (Apache&nbsp;2.0 core, MIT extensions) and fully portable. Export emergent agencies, ingest them in any stack, and keep adaptive, permanent intelligence under your guardrails.
           </p>
         </motion.div>
 

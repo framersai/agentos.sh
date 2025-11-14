@@ -6,6 +6,8 @@ import { GMISection } from '../components/sections/gmi-section'
 import { CodeExamplesSection } from '../components/sections/code-examples-section'
 import { EcosystemSection } from '../components/sections/ecosystem-section'
 import { CTASection } from '../components/sections/cta-section'
+import { SocialProofSection } from '../components/sections/social-proof-section'
+import { CoordinationPatternsSection } from '../components/sections/coordination-patterns-section'
 import dynamic from 'next/dynamic'
 import { MediaShowcase } from '../components/media/media-showcase'
 import { MarketplacePreview } from '../components/marketplace/marketplace-preview'
@@ -28,37 +30,49 @@ const featureCards = [
   {
     icon: Users,
     title: 'Emergent Multi-Agent Coordination',
-    body: 'Agents autonomously decompose complex goals into subtasks, spawn adaptive roles, and coordinate through shared context. Choose emergent (adaptive) or static (deterministic) strategies for optimal control.',
+    body: 'Spawn researcher, analyst, critic, and executor personas from a single goal. Shared context, budgets, and approvals keep every branch in sync.',
     pill: '🆕 v0.1.0',
-    gradient: 'from-violet-500 to-purple-500'
+    gradient: 'from-violet-500 to-purple-500',
+    layout: 'horizontal',
+    span: 'lg:col-span-2',
+    bullets: ['Deterministic routing or adaptive fan-out', 'Citations + memory stitched automatically']
   },
   {
     icon: Package,
     title: 'Tool & Guardrail Packs',
-    body: 'Register tools, guardrails, and workflows through extension manifests. Built-in permission tags, rate budgets, and automatic retries ensure reliable agent operations. Verified extensions program included.',
+    body: 'Ship opinionated extensions for search, vision, code execution, or custom APIs with built-in permissions and retries.',
     pill: 'Extension Ecosystem',
-    gradient: 'from-blue-500 to-cyan-500'
+    gradient: 'from-blue-500 to-cyan-500',
+    layout: 'vertical',
+    bullets: ['Manifest-driven tool registry', 'Guardrail presets + compliance tags']
   },
   {
     icon: Globe,
     title: 'Language & Translation',
-    body: 'Auto language detection, persona-aware responses, and pluggable translation providers keep GMIs fluent across every surface and locale.',
+    body: 'Auto-detect locale and tone per surface. Personas stay fluent across voice, chat, and docs with translation providers of your choice.',
     pill: 'Multilingual Ready',
-    gradient: 'from-purple-500 to-pink-500'
+    gradient: 'from-purple-500 to-pink-500',
+    layout: 'vertical',
+    bullets: ['Persona-aware tone adaptation', 'Fallback routing by locale']
   },
   {
     icon: Database,
     title: 'Storage & Deployment',
-    body: 'Swap between PostgreSQL, better-sqlite3, sql.js, or custom stores. Full state persistence for agency executions, seat progress, and emergent metadata. Deploy anywhere with our reference server template.',
+    body: 'Switch between PostgreSQL, better-sqlite3, sql.js, or your own data layers. Every agent step is synced and replayable.',
     pill: 'Deploy Anywhere',
-    gradient: 'from-green-500 to-emerald-500'
+    gradient: 'from-green-500 to-emerald-500',
+    layout: 'horizontal',
+    span: 'lg:col-span-2',
+    bullets: ['Reference server templates', 'Snapshot + replay tooling']
   },
   {
     icon: Terminal,
     title: 'Local-First Workbench',
-    body: 'Run the full AgentOS runtime in-browser with SQL persistence, workflow telemetry, agency history view, and marketplace personas for offline prototyping. Browse emergent behavior insights in real-time.',
+    body: 'Prototype entire agencies in-browser with persisted SQL, timeline scrubbers, and a built-in marketplace of personas.',
     pill: 'Offline Capable',
-    gradient: 'from-orange-500 to-red-500'
+    gradient: 'from-orange-500 to-red-500',
+    layout: 'vertical',
+    bullets: ['Inspect reasoning + telemetry live', 'Sync artifacts back to the cloud', 'Export full agencies as Markdown/JSON bundles']
   }
 ]
 
@@ -87,7 +101,7 @@ export default function LandingPage() {
         <GMISection />
 
         {/* Features Grid */}
-        <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-background-primary relative">
+        <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 section-tint relative overflow-hidden">
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -101,38 +115,57 @@ export default function LandingPage() {
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {featureCards.map((card, index) => (
-                <motion.div
-                  key={card.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group surface-card p-8"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`p-4 rounded-xl bg-gradient-to-br ${card.gradient} opacity-10 group-hover:opacity-20 transition-opacity`}>
-                      <card.icon className="w-8 h-8 text-accent-primary" />
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-6">
+              {featureCards.map((card, index) => {
+                const Icon = card.icon
+                const isHorizontal = card.layout === 'horizontal'
+                return (
+                  <motion.div
+                    key={card.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.08 }}
+                    className={`group surface-card h-full ${card.span ?? ''} ${isHorizontal ? 'p-8 md:flex md:items-center md:gap-6' : 'p-8 flex flex-col gap-4'}`}
+                  >
+                    <div className={`flex ${isHorizontal ? 'items-center gap-6 w-full' : 'items-start gap-4'}`}>
+                      <div className={`shrink-0 h-14 w-14 rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center text-white shadow-lg shadow-black/5`}>
+                        <Icon className="w-7 h-7 drop-shadow" />
+                      </div>
+                      <div className="flex-1 space-y-3">
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-primary/10 text-xs font-semibold text-accent-primary">
+                          {card.pill}
+                        </span>
+                        <h3 className="text-xl font-bold text-text-primary group-hover:text-accent-primary transition-colors">
+                          {card.title}
+                        </h3>
+                        <p className="text-text-muted text-sm">
+                          {card.body}
+                        </p>
+                        {card.bullets && (
+                          <ul className="space-y-1.5 text-sm text-text-secondary">
+                            {card.bullets.map((bullet) => (
+                              <li key={bullet} className="flex items-start gap-2">
+                                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent-primary" aria-hidden="true" />
+                                <span>{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <span className="inline-block px-3 py-1 rounded-full bg-accent-primary/10 text-xs font-semibold text-accent-primary mb-3">
-                        {card.pill}
-                      </span>
-                      <h3 className="text-xl font-bold mb-2 text-text-primary group-hover:text-accent-primary transition-colors">
-                        {card.title}
-                      </h3>
-                      <p className="text-text-muted">
-                        {card.body}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                )
+              })}
             </div>
           </div>
         </section>
 
+
+        <SocialProofSection />
+
+        {/* Coordination Patterns Section */}
+        <CoordinationPatternsSection />
 
         {/* Code Examples Section */}
         <CodeExamplesSection />
@@ -145,7 +178,7 @@ export default function LandingPage() {
               <div className="text-center">
                 <h3 className="text-4xl sm:text-5xl section-title">Agent Marketplace Coming Soon</h3>
                 <p className="text-lg text-gray-700 dark:text-text-secondary max-w-2xl mx-auto">
-                  Share, sell, and distribute your AgentOS agents. We&#39;ll handle CI/CD, infrastructure, and payments with a small commission.
+                  Share, buy, and sell your AgentOS agencies. We&#39;ll handle CI/CD, infrastructure, payouts, and compliance so you can focus on adaptive, emergent, permanent intelligence.
                 </p>
               </div>
             </div>

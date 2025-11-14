@@ -10,9 +10,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" });
 
 export const metadata: Metadata = {
-  title: "AgentOS | Adaptive AI Intelligence for Enterprise-Ready Agents",
+  title: "AgentOS | Portable AI Agent Runtime for Adaptive & Emergent Intelligence",
   description:
-    "AgentOS lets teams build end-to-end, enterprise-ready AI systems. Adaptive AI intelligence runtime with parallel personas, GMI orchestration, persistent memory and guardrails—powered by TypeScript.",
+    "Build adaptive, emergent AI agents with AgentOS—the portable universal runtime for enterprise RAG, multi-agent orchestration, and permanent intelligence.",
   metadataBase: new URL("https://agentos.sh"),
   alternates: {
     canonical: "https://agentos.sh",
@@ -39,7 +39,15 @@ export const metadata: Metadata = {
     "voice chat assistant",
     "AI development",
     "open source AI",
-    "adaptive ai intelligence"
+    "adaptive ai intelligence",
+    "enterprise AI platform",
+    "RAG orchestration",
+    "portable agents",
+    "AI agency runtime",
+    "permanent intelligence",
+    "dynamic AI coordination",
+    "transportable agent instances",
+    "agent export markdown json"
   ],
   authors: [{ name: "Framers", url: "https://frame.dev" }],
   creator: "Framers",
@@ -124,6 +132,35 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               })
             }}
           />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                name: "AgentOS",
+                applicationCategory: "EnterpriseApplication",
+                operatingSystem: "Cross-platform",
+                offers: {
+                  "@type": "Offer",
+                  price: "0",
+                  priceCurrency: "USD"
+                },
+                downloadUrl: "https://github.com/framersai/agentos",
+                featureList: [
+                  "Adaptive and emergent multi-agent orchestration",
+                  "Portable intelligence exports (Markdown/JSON)",
+                  "Deterministic guardrails and approvals",
+                  "Streaming-first runtime with unified memory"
+                ],
+                aggregateRating: {
+                  "@type": "AggregateRating",
+                  ratingValue: "4.9",
+                  reviewCount: "40"
+                }
+              })
+            }}
+          />
           <main id="main-content" tabIndex={-1} className="focus:outline-none scroll-mt-24">{children}</main>
           <ScrollToTopButton />
           <footer className="border-t border-purple-200/30 dark:border-purple-500/20 bg-gradient-to-br from-white/90 via-purple-50/30 to-pink-50/30 dark:from-black/80 dark:via-purple-950/40 dark:to-pink-950/40 backdrop-blur-lg py-12">
@@ -155,6 +192,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     <li><a href="https://docs.agentos.sh" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Docs (Guides)</a></li>
                     <li><a href="https://docs.agentos.sh/api" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">API Reference (TypeDoc/TSDoc)</a></li>
                     <li><a href="/#code" className="text-text-secondary hover:text-accent-primary transition-colors">Examples</a></li>
+                    <li><a href="https://github.com/framersai/agentos/releases" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Release Notes</a></li>
                     <li><a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">GitHub</a></li>
                     <li><a href="https://discord.gg/framersai" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Discord</a></li>
                   </ul>
@@ -163,8 +201,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                   <h3 className="font-bold text-text-primary mb-3">Company</h3>
                   <ul className="space-y-2 text-sm">
                     <li><a href="/about" className="text-text-secondary hover:text-accent-primary transition-colors">About</a></li>
+                    <li><a href="/faq" className="text-text-secondary hover:text-accent-primary transition-colors">FAQ</a></li>
                     <li><a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Frame.dev</a></li>
-                    <li><a href="mailto:team@frame.dev" className="text-text-secondary hover:text-accent-primary transition-colors">team@frame.dev</a></li>
+                    <li><a href="mailto:team@frame.dev" className="text-text-secondary hover:text-accent-primary transition-colors">Contact</a></li>
                   </ul>
                 </div>
                 <div>

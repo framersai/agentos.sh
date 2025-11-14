@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   Github, ExternalLink, Package, Shield, Mic,
@@ -17,6 +18,18 @@ interface Repository {
   stars?: number
   status: 'stable' | 'beta' | 'experimental'
   lastUpdated?: string
+}
+
+type LiveStats = {
+  repos: number
+  stars: number | null
+  downloads: number | null
+  loading: boolean
+}
+
+type RepoStat = {
+  stars: number
+  updatedAt: string
 }
 
 const repositories: Repository[] = [
@@ -157,8 +170,7 @@ const repositories: Repository[] = [
     icon: Users,
     status: 'stable',
     lastUpdated: '3 days ago'
-  },
-  // Removed utility repository entry
+  }
 ]
 
 const categoryInfo = {
@@ -190,6 +202,108 @@ const categoryInfo = {
 }
 
 export function EcosystemSection() {
+  const [liveStats, setLiveStats] = useState<LiveStats>({
+    repos: repositories.length,
+    stars: null,
+    downloads: null,
+    loading: true
+  })
+  const [repoStats, setRepoStats] = useState<Record<string, RepoStat>>({})
+
+  useEffect(() => {
+    let cancelled = false
+    const fetchStats = async () => {
+      try {
+        const repoTargets = ['agentos', 'agentos-extensions', 'agentos-client']
+        const githubResponses = await Promise.all(
+          repoTargets.map(async (repo) => {
+            const response = await fetch(`https://api.github.com/repos/framersai/${repo}`)
+            if (!response.ok) {
+              throw new Error('github')
+            }
+            return response.json()
+          })
+        )
+        const stars = githubResponses.reduce(
+          (sum, repo) => sum + (repo?.stargazers_count ?? 0),
+          0
+        )
+        const npmResponse = await fetch('https://api.npmjs.org/downloads/point/last-week/%40framersai%2Fagentos')
+        const npmJson = npmResponse.ok ? await npmResponse.json() : null
+        const downloads = npmJson?.downloads ?? null
+        if (!cancelled) {
+          setLiveStats({
+            repos: repositories.length,
+            stars,
+            downloads,
+            loading: false
+          })
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setLiveStats((prev) => ({ ...prev, loading: false }))
+        }
+      }
+    }
+    fetchStats()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+    const slugs = Array.from(
+      new Set(
+        repositories
+          .map((repo) => repo.url.match(/github.com\/framersai\/([^/]+)/)?.[1])
+          .filter((slug): slug is string => Boolean(slug))
+      )
+    )
+
+    const fetchRepoStats = async () => {
+      try {
+        const responses = await Promise.all(
+          slugs.map(async (slug) => {
+            const response = await fetch(`https://api.github.com/repos/framersai/${slug}`)
+            if (!response.ok) return null
+            const data = await response.json()
+            return {
+              slug,
+              stars: data?.stargazers_count ?? 0,
+              updatedAt: data?.updated_at ?? new Date().toISOString()
+            }
+          })
+        )
+        if (!cancelled) {
+          const next: Record<string, RepoStat> = {}
+          responses.forEach((entry) => {
+            if (!entry) return
+            next[entry.slug] = { stars: entry.stars, updatedAt: entry.updatedAt }
+          })
+          setRepoStats(next)
+        }
+      } catch {
+        // swallow; we already have fallback copy
+      }
+    }
+    fetchRepoStats()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const statsConfig = [
+    { label: 'Repositories', value: liveStats.repos, icon: GitBranch },
+    { label: 'Weekly Downloads', value: liveStats.downloads, icon: Package },
+    { label: 'GitHub Stars', value: liveStats.stars, icon: Github }
+  ] as const
+
+  const formatNumber = (value: number | null) => {
+    if (value === null || Number.isNaN(value)) return null
+    return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value)
+  }
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="ecosystem-heading">
       {/* Background Pattern */}
@@ -211,19 +325,17 @@ export function EcosystemSection() {
             The AgentOS Ecosystem
           </h2>
           <p className="text-lg text-text-muted max-w-3xl mx-auto">
-            Explore our comprehensive suite of open-source tools, frameworks, and applications
-            for building next-generation AI systems
+            Explore the portable AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.
           </p>
         </motion.div>
 
-        {/* Quick Stats (live values only; contributors omitted) */}
+        {/* Quick Stats with real-time data */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
-          {[
-            { label: 'Repositories', value: '22', icon: GitBranch },
-            // { label: 'Contributors', value: '—', icon: Users },
-            { label: 'Weekly Downloads', value: '—', icon: Package },
-            { label: 'GitHub Stars', value: '—', icon: Github }
-          ].map((stat, i) => (
+          {statsConfig.map((stat, i) => {
+            const StatIcon = stat.icon
+            const formatted = formatNumber(stat.value)
+            const displayValue = formatted ?? (liveStats.loading ? '…' : '—')
+            return (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -232,11 +344,11 @@ export function EcosystemSection() {
               transition={{ delay: i * 0.1 }}
               className="bg-background-glass backdrop-blur-md rounded-xl p-6 border border-border-subtle text-center"
             >
-              <stat.icon className="w-8 h-8 mx-auto mb-2 text-accent-primary" />
-              <div className="text-2xl font-bold text-text-primary">{stat.value}</div>
+              <StatIcon className="w-8 h-8 mx-auto mb-2 text-accent-primary" />
+              <div className="text-2xl font-bold text-text-primary">{displayValue}</div>
               <div className="text-sm text-text-muted">{stat.label}</div>
             </motion.div>
-          ))}
+          )})}
         </div>
 
         {/* Repository Grid by Category */}
@@ -298,7 +410,7 @@ export function EcosystemSection() {
                           {repo.description}
                         </p>
 
-                        <div className="flex items-center gap-4 text-xs text-text-muted">
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-text-muted">
                           {repo.language && (
                             <span className="flex items-center gap-1">
                               {(() => {
@@ -309,9 +421,27 @@ export function EcosystemSection() {
                               {repo.language}
                             </span>
                           )}
-                          {repo.lastUpdated && (
-                            <span>Updated {repo.lastUpdated}</span>
-                          )}
+                          {(() => {
+                            const slug = repo.url.match(/github.com\/framersai\/([^/]+)/)?.[1]
+                            const live = slug ? repoStats[slug] : undefined
+                            const starsDisplay = live?.stars != null ? formatNumber(live.stars) : null
+                            const updatedDisplay = live?.updatedAt
+                              ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date(live.updatedAt))
+                              : repo.lastUpdated
+                            return (
+                              <>
+                                {starsDisplay && (
+                                  <span className="flex items-center gap-1">
+                                    <Github className="w-3 h-3" />
+                                    {starsDisplay} stars
+                                  </span>
+                                )}
+                                {updatedDisplay && (
+                                  <span>Updated {updatedDisplay}</span>
+                                )}
+                              </>
+                            )
+                          })()}
                         </div>
                       </div>
                     </div>

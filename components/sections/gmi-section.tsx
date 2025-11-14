@@ -4,13 +4,9 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight } from 'lucide-react'
 
-// (removed layered list data)
-
 export function GMISection() {
-  /* selectedAgent removed: non-interactive */
   const [activeNode, setActiveNode] = useState<string | null>(null)
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
-  /* detailPos removed */
   const hoverTimerRef = useRef<number | undefined>(undefined)
 
   // Automatic parallel detail cycle (2 agents at a time)
@@ -33,6 +29,27 @@ export function GMISection() {
       examples: ['Route tasks to roles', 'Resolve conflicts', 'Approve/reject gates'],
       tools: ['Router', 'Guardrails', 'PolicyEngine'], persona: 'balanced, gatekeeper' }
   ]), [])
+
+  const gmiSnapshots = [
+    {
+      useCase: 'Route support + CRM updates',
+      outcome: 'Researcher gathers context, Analyst verifies facts, and Executor pushes the outcome into Salesforce or Linear automatically.'
+    },
+    {
+      useCase: 'Safety-critical approvals',
+      outcome: 'Orchestrator enforces guardrails, memory logs every decision, and Event Stream keeps auditors in the loop for SOC2/GDPR.'
+    },
+    {
+      useCase: 'RAG-powered expansion packs',
+      outcome: 'Creator + Executor personas adapt content by locale while Gateway throttles workloads and exports full runs as Markdown/JSON.'
+    }
+  ] as const
+
+  const whatYouGet = [
+    'Persona library for research, analysis, creation, critique, execution, and future GMIs.',
+    'Deterministic orchestration with guardrails, budgets, approvals, and SOC2/GDPR-ready event trails.',
+    'Unified memory fabric (working, episodic, vector) plus portable exports for Markdown/JSON ingestion.'
+  ] as const
 
   useEffect(() => {
     let idx = 0
@@ -71,7 +88,8 @@ export function GMISection() {
       subtitle: 'Voice • Web • CLI',
       x: 20, y: 40, w: 160, h: 80,
       details: 'Entrypoints where users speak, type, and automate tasks.',
-      example: 'Capture a voice prompt for a real‑time, fact‑checked briefing.'
+      example: 'Capture a voice prompt for a real‑time, fact‑checked briefing.',
+      outcome: 'Every interface streams into the same shared AgentOS memory and policy store.'
     },
     {
       id: 'gateway',
@@ -79,7 +97,8 @@ export function GMISection() {
       subtitle: 'Auth • Rate‑limit',
       x: 210, y: 40, w: 160, h: 80,
       details: 'Front door for requests; applies auth, quotas, and routing.',
-      example: 'Throttle bursty inputs; attach tenant identity to requests.'
+      example: 'Throttle bursty inputs; attach tenant identity to requests.',
+      outcome: 'Tenants, rate budgets, and approvals stay deterministic even when agents spawn in parallel.'
     },
     {
       id: 'orchestrator',
@@ -87,7 +106,8 @@ export function GMISection() {
       subtitle: 'Routing • Guardrails',
       x: 390, y: 30, w: 190, h: 100,
       details: 'Coordinates agent roles, tools, and safety policies.',
-      example: 'Parallelize research, analysis, creation, and critique.'
+      example: 'Parallelize research, analysis, creation, and critique.',
+      outcome: 'Adaptive and deterministic agency modes keep emergent intelligence auditable.'
     },
     {
       id: 'agents',
@@ -95,7 +115,8 @@ export function GMISection() {
       subtitle: 'Researcher • Analyst • Creator • Critic • Executor',
       x: 600, y: 10, w: 270, h: 140,
       details: 'Specialized GMIs stream outputs; orchestrator merges.',
-      example: 'Researcher fetches sources while Analyst verifies claims.'
+      example: 'Researcher fetches sources while Analyst verifies claims.',
+      outcome: 'Each persona can be exported as Markdown/JSON capsules and ingested into other runtimes.'
     },
     {
       id: 'memory',
@@ -103,7 +124,8 @@ export function GMISection() {
       subtitle: 'Vector DB • Knowledge Graph',
       x: 390, y: 160, w: 200, h: 90,
       details: 'Long‑term memory stores facts, embeddings, and relations.',
-      example: 'Semantic search recalls prior decisions and context.'
+      example: 'Semantic search recalls prior decisions and context.',
+      outcome: 'Zero-copy working, episodic, and vector layers keep adaptive and permanent intelligence aligned.'
     },
     {
       id: 'events',
@@ -111,9 +133,13 @@ export function GMISection() {
       subtitle: 'Monitoring • Analytics',
       x: 610, y: 170, w: 180, h: 80,
       details: 'Observability and compliance pipeline for every step.',
-      example: 'Emit spans for audits; alert on policy violations.'
+      example: 'Emit spans for audits; alert on policy violations.',
+      outcome: 'Every action is replayable for SOC2, GDPR, and custom guardrails.'
     }
   ] as const
+
+  const [selectedNodeId, setSelectedNodeId] = useState<(typeof architectureNodes)[number]['id']>(architectureNodes[0].id)
+  const selectedArchitectureNode = architectureNodes.find((node) => node.id === selectedNodeId)
 
   function InteractiveArchitecture() {
     return (
@@ -192,7 +218,7 @@ export function GMISection() {
                   const target = e.currentTarget as Element
                   hoverTimerRef.current = window.setTimeout(() => {
                     requestAnimationFrame(() => {
-                      setActiveNode(n.id)
+                    setActiveNode(n.id)
                       setTooltipPos(computeTooltipPosition(target))
                     })
                   }, 100)
@@ -201,17 +227,18 @@ export function GMISection() {
                   if (hoverTimerRef.current) window.clearTimeout(hoverTimerRef.current)
                   setActiveNode((prev) => (prev === n.id ? null : prev))
                 }}
-                /* no pointer interaction */
                 tabIndex={0}
                 role="button"
                 aria-label={`${n.label}. ${n.subtitle}. ${n.details}`}
-                aria-describedby={`tt-${n.id}`}
+                aria-controls="gmi-architecture-detail"
+                onClick={() => setSelectedNodeId(n.id)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault()
                     const target = e.currentTarget as Element
                     setActiveNode(n.id)
                     setTooltipPos(computeTooltipPosition(target))
+                    setSelectedNodeId(n.id)
                   }
                 }}
               />
@@ -265,13 +292,45 @@ export function GMISection() {
             <span className="gradient-text">Parallel Agency</span>
           </h2>
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-            Build sophisticated AI systems with adaptive personas and <span className="font-semibold text-accent-primary">emergent, dynamic behaviors</span>,
-            coordinated through multi‑agent collaboration. <a href="/" className="font-semibold text-accent-primary hover:underline">AgentOS</a> GMIs
-            enable autonomous agents that learn, adapt, and evolve.
+            Build sophisticated AI systems with adaptive personas and <span className="font-semibold text-accent-primary">emergent, dynamic behaviors</span>.
+            Route inbound support tickets to the right persona, push CRM updates safely, and keep every RAG workflow inside deterministic guardrails. AgentOS GMIs enable autonomous agents that learn, adapt, and evolve—then export those insights as portable intelligence bundles.
           </p>
                     </div>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          className="grid md:grid-cols-3 gap-4 mb-10"
+        >
+          {gmiSnapshots.map((snapshot) => (
+            <div key={snapshot.useCase} className="p-5 rounded-2xl bg-background-glass border border-border-subtle/60 backdrop-blur">
+              <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">Use case</p>
+              <p className="text-base font-semibold text-text-primary mb-3">{snapshot.useCase}</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">Outcome</p>
+              <p className="text-sm text-text-secondary leading-relaxed">{snapshot.outcome}</p>
+            </div>
+          ))}
+        </motion.div>
 
-        {/* (Removed) layered architecture list; keeping custom SVG diagrams only */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-14 rounded-3xl border border-border-subtle/70 bg-white/80 dark:bg-white/5 dark:border-white/10 p-6 shadow-sm"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-2 w-10 rounded-full bg-gradient-to-r from-accent-primary to-accent-secondary" />
+            <p className="text-sm font-semibold uppercase tracking-wide text-text-muted">What you get</p>
+          </div>
+          <ul className="grid md:grid-cols-3 gap-3 text-sm text-text-secondary leading-relaxed">
+            {whatYouGet.map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent-primary" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
 
         {/* Interactive Agent Network Diagram (slower, more detailed, visible popovers) */}
         <motion.div
@@ -420,6 +479,30 @@ export function GMISection() {
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
             <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-text-primary">AgentOS Architecture (streaming)</h3>
             <InteractiveArchitecture />
+            {selectedArchitectureNode && (
+              <motion.div
+                id="gmi-architecture-detail"
+                role="region"
+                aria-live="polite"
+                className="mt-8 rounded-2xl border border-border-subtle/70 bg-white/85 dark:bg-white/5 dark:border-white/10 p-6 shadow-sm dark:shadow-none"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <p className="text-xs uppercase tracking-wide text-text-muted mb-2">Currently selected</p>
+                <h4 className="text-xl font-semibold text-text-primary mb-2">{selectedArchitectureNode.label}</h4>
+                <p className="text-sm text-text-secondary mb-4">{selectedArchitectureNode.details}</p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-1">Example</p>
+                    <p className="text-sm text-text-primary">{selectedArchitectureNode.example}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-1">Outcome</p>
+                    <p className="text-sm text-text-primary">{selectedArchitectureNode.outcome}</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </div>
         </motion.div>
 

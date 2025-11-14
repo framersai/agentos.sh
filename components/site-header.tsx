@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { Route } from 'next';
 import { Menu, X, Globe, Sparkles, ArrowRight, Github } from 'lucide-react';
@@ -11,9 +11,11 @@ import { motion } from 'framer-motion';
 
 const NAV_LINKS: ReadonlyArray<{ href: string; label: string }> = [
   { href: '/#features', label: 'Features' },
-  { href: 'https://docs.agentos.sh', label: 'Docs' }, // external docs
-  { href: 'https://docs.agentos.sh/api', label: 'API Reference' }, // typedoc api
+  { href: 'https://docs.agentos.sh', label: 'Docs' },
+  { href: 'https://docs.agentos.sh/api', label: 'API Reference' },
+  { href: 'https://github.com/framersai/agentos/releases', label: 'Changelog' },
   { href: '/docs/api', label: 'OpenAPI' },
+  { href: '/faq', label: 'FAQ' },
   { href: '/about', label: 'About' },
 ];
 
@@ -22,8 +24,7 @@ const NAV_LINKS: ReadonlyArray<{ href: string; label: string }> = [
  */
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // No scroll-based styling needed; header uses persistent glass gradient
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (menuOpen) {
@@ -32,6 +33,34 @@ export function SiteHeader() {
       document.body.classList.remove('overflow-hidden');
     }
     return () => document.body.classList.remove('overflow-hidden');
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const container = menuRef.current;
+    const focusable = container?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? [];
+    focusable[0]?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        return;
+      }
+      if (event.key === 'Tab' && focusable.length > 0) {
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
@@ -81,19 +110,15 @@ export function SiteHeader() {
                 </a>
               );
             }
-            // Internal typed route(s)
-            if (link.href === '/about') {
-              return (
-                <Link
-                  key={link.href}
-                  href={'/about' as Route}
-                  className="group relative text-gray-700 hover:text-accent-primary dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-[color:var(--color-accent-primary)] after:to-[color:var(--color-accent-secondary)] after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
-                >
-                  {link.label}
-                </Link>
-              );
-            }
-            return null;
+            return (
+              <Link
+                key={link.href}
+                href={link.href as Route}
+                className="group relative text-gray-700 hover:text-accent-primary dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-[color:var(--color-accent-primary)] after:to-[color:var(--color-accent-secondary)] after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
+              >
+                {link.label}
+              </Link>
+            );
           })}
         </nav>
 
@@ -164,7 +189,7 @@ export function SiteHeader() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen((open) => !open)}
-            className="inline-flex items-center justify-center p-2 rounded-xl glass-morphism hover:bg-accent-primary/10 transition-all lg:hidden"
+            className="inline-flex items-center justify-center p-2 rounded-xl glass-morphism hover:bg-accent-primary/10 transition-all lg:hidden min-h-[44px] min-w-[44px]"
           >
             {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -180,7 +205,7 @@ export function SiteHeader() {
         className={`lg:hidden ${menuOpen ? 'block' : 'hidden'}`}
         id="mobile-menu"
       >
-        <div className="mx-4 mb-4 mt-2 rounded-2xl glass-morphism shadow-modern overflow-hidden">
+        <div ref={menuRef} className="mx-4 mb-4 mt-2 rounded-2xl glass-morphism shadow-modern overflow-hidden">
           <nav className="flex flex-col" aria-label="Mobile navigation">
             {NAV_LINKS.map((link) => {
               const isExternalOrAnchor = link.href.startsWith('http') || link.href.includes('#');
