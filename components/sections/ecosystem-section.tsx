@@ -55,9 +55,9 @@ const repositories: Repository[] = [
     lastUpdated: '6 hours ago'
   },
   {
-    name: 'AgentOS Client',
-    description: 'Local playground environment for AgentOS experiences. Test and debug agents locally.',
-    url: 'https://github.com/framersai/agentos-client',
+    name: 'AgentOS Workbench',
+    description: 'Developer cockpit for AgentOS sessions: inspect personas, debug tool calls, and replay streaming transcripts.',
+    url: 'https://github.com/framersai/agentos-workbench',
     category: 'tools',
     icon: Terminal,
     language: 'TypeScript',
@@ -65,9 +65,9 @@ const repositories: Repository[] = [
     lastUpdated: 'yesterday'
   },
   {
-    name: 'AgentOS Guardrails',
-    description: 'Safety and compliance packages for AgentOS. Implement content filtering and usage policies.',
-    url: 'https://github.com/framersai/agentos-guardrails',
+    name: 'AgentOS Extensions',
+    description: 'Tools, guardrails, and workflows for AgentOS. Includes auth, safety, and integration extensions.',
+    url: 'https://github.com/framersai/agentos-extensions',
     category: 'core',
     icon: Shield,
     language: 'TypeScript',
