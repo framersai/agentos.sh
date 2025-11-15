@@ -302,7 +302,7 @@ services:
     environment:
       - NODE_ENV=production
       - OPENAI_API_KEY=\${OPENAI_API_KEY}
-      - DATABASE_URL=postgresql://postgres:password@db:5432/agentos
+      - DATABASE_URL=postgresql://postgres@db:5432/agentos
       - REDIS_URL=redis://cache:6379
       - VECTOR_DB_URL=http://vectordb:8000
     ports:
@@ -323,7 +323,7 @@ services:
     image: postgres:15
     environment:
       - POSTGRES_DB=agentos
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=<PASSWORD>
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
