@@ -8,8 +8,8 @@ export default createMiddleware({
   // Used when no locale matches
   defaultLocale,
 
-  // Always use locale prefixes for static export compatibility
-  localePrefix: 'always',
+  // Use locale prefix only when needed (default locale stays at root)
+  localePrefix: 'as-needed',
 
   // Detect locale from user's browser
   localeDetection: true,
