@@ -18,7 +18,7 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params: { locale } }: Props) {
+export async function resolveLocaleMetadata(locale: Locale) {
   const t = await getTranslations({ locale, namespace: 'metadata' });
 
   return {
@@ -122,6 +122,10 @@ export async function generateMetadata({ params: { locale } }: Props) {
       yandex: 'yandex-verification-code',
     }
   };
+}
+
+export async function generateMetadata({ params: { locale } }: Props) {
+  return resolveLocaleMetadata(locale as Locale);
 }
 
 export default async function LocaleLayout({
