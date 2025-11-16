@@ -2,16 +2,12 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
-import { Inter, Space_Grotesk } from 'next/font/google';
 import '../../styles/tokens.css';
 import '../globals.css';
 import { ThemeProvider } from '../../components/theme-provider';
 import { SiteHeader } from '../../components/site-header';
 import ScrollToTopButton from '../../components/ScrollToTopButton';
 import { locales, type Locale } from '../../i18n';
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const grotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-grotesk' });
 
 type Props = {
   children: ReactNode;
@@ -132,20 +128,13 @@ export default async function LocaleLayout({
   children,
   params: { locale }
 }: Props) {
-  // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale as Locale)) {
-    notFound();
-  }
+  if (!locales.includes(locale as Locale)) notFound();
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning className={`${inter.variable} ${grotesk.variable}`}>
-      <body className="grainy min-h-screen antialiased transition-theme">
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
+    <NextIntlClientProvider messages={messages}>
+      <ThemeProvider>
             <a href="#main-content" className="skip-to-content">Skip to content</a>
             <SiteHeader />
             {/* JSON-LD: Organization */}
@@ -256,10 +245,8 @@ export default async function LocaleLayout({
                 </div>
               </div>
             </footer>
-          </ThemeProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+      </ThemeProvider>
+    </NextIntlClientProvider>
   );
 }
 
