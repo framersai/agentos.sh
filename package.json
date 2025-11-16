@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:full": "concurrently \"pnpm --filter @framers/agentos run docs:watch\" \"next dev\"",
-    "build": "npm run copy:docs || true && next build",
+    "build": "npm run copy:docs || true && next build && node scripts/post-export.mjs",
     "copy:docs": "node scripts/copy-docs.js",
     "export-chrome": "node scripts/export-static-chrome.mjs",
     "start": "next start",
