@@ -1,4 +1,7 @@
 import { execSync } from 'node:child_process';
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 function resolveSqlAdapterVersion() {
   try {
@@ -29,4 +32,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

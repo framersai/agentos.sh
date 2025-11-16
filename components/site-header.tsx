@@ -1,30 +1,33 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import type { Route } from 'next';
 import { Menu, X, Globe, Sparkles, ArrowRight, Github } from 'lucide-react';
 import AgentOSWordmark from './branding/AgentOSWordmark';
 import { ModeToggle } from './mode-toggle';
 import { ThemeSelector } from './theme-selector';
+import { LanguageSwitcher } from './language-switcher';
 import { motion } from 'framer-motion';
-
-const NAV_LINKS: ReadonlyArray<{ href: string; label: string }> = [
-  { href: '/#features', label: 'Features' },
-  { href: 'https://docs.agentos.sh', label: 'Docs' },
-  { href: 'https://docs.agentos.sh/api', label: 'API Reference' },
-  { href: 'https://github.com/framersai/agentos/releases', label: 'Changelog' },
-  { href: '/docs/api', label: 'OpenAPI' },
-  { href: '/faq', label: 'FAQ' },
-  { href: '/about', label: 'About' },
-];
 
 /**
  * Enhanced SiteHeader with modern design and marketplace link
  */
 export function SiteHeader() {
+  const t = useTranslations('nav');
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
+
+  const NAV_LINKS: ReadonlyArray<{ href: string; label: string }> = [
+    { href: '/#features', label: t('features') },
+    { href: 'https://docs.agentos.sh', label: t('docs') },
+    { href: 'https://docs.agentos.sh/api', label: t('apiReference') },
+    { href: 'https://github.com/framersai/agentos/releases', label: t('changelog') },
+    { href: '/docs/api', label: t('openapi') },
+    { href: '/faq', label: t('faq') },
+    { href: '/about', label: t('about') },
+  ];
 
   useEffect(() => {
     if (menuOpen) {
@@ -137,7 +140,7 @@ export function SiteHeader() {
               style={{ background: 'linear-gradient(90deg, color-mix(in oklab, var(--color-accent-primary) 18%, transparent), color-mix(in oklab, var(--color-accent-secondary) 14%, transparent))' }}
             />
             <Github className="w-4 h-4" />
-            <span className="font-semibold">GitHub</span>
+            <span className="font-semibold">{t('github')}</span>
           </a>
           {/* Marketplace button */}
           <a
@@ -147,7 +150,7 @@ export function SiteHeader() {
             rel="noopener noreferrer"
           >
             <Globe className="w-4 h-4" />
-            Marketplace
+            {t('marketplace')}
             <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
           </a>
 
@@ -164,8 +167,9 @@ export function SiteHeader() {
             <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
           </a>
 
-          {/* Theme controls */}
+          {/* Theme controls and language switcher */}
           <div className="flex items-center gap-2">
+            <LanguageSwitcher />
             <ModeToggle />
             <ThemeSelector />
           </div>
@@ -243,7 +247,7 @@ export function SiteHeader() {
               className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all flex items-center gap-2"
             >
               <Globe className="w-4 h-4" />
-              Marketplace
+              {t('marketplace')}
             </a>
             <a
               href="https://github.com/framersai/agentos"
@@ -253,7 +257,7 @@ export function SiteHeader() {
               className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all flex items-center gap-2"
             >
               <Github className="w-4 h-4" />
-              GitHub
+              {t('github')}
             </a>
             <a
               href="https://frame.dev"

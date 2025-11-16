@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "title": "AgentOS | 적응형 및 창발적 지능을 위한 휴대용 AI 에이전트 런타임",
+    "description": "AgentOS로 적응형, 창발적 AI 에이전트를 구축하세요—엔터프라이즈 RAG, 멀티 에이전트 오케스트레이션, 영구 지능을 위한 휴대용 범용 런타임.",
+    "ogTitle": "AgentOS | 엔터프라이즈급 에이전트를 위한 적응형 AI 지능",
+    "ogDescription": "메모리, 도구, 에이전시를 갖춘 적응형, 창발적 AI 에이전트를 구축하세요. GMI 역할, 멀티 에이전트 오케스트레이션, 엔터프라이즈 가드레일을 갖춘 오픈소스 런타임. Framers (frame.dev) 제공.",
+    "twitterTitle": "AgentOS | 엔터프라이즈급 에이전트를 위한 적응형 AI 지능",
+    "twitterDescription": "AgentOS로 적응형, 창발적 AI 에이전트를 구축하세요. GMI 역할, 에이전시 오케스트레이션, 엔터프라이즈 가드레일을 갖춘 오픈소스 런타임. Framers 제공."
+  },
+  "nav": {
+    "features": "기능",
+    "docs": "문서",
+    "apiReference": "API 레퍼런스",
+    "changelog": "변경 로그",
+    "openapi": "OpenAPI",
+    "faq": "자주 묻는 질문",
+    "about": "소개",
+    "github": "GitHub",
+    "marketplace": "마켓플레이스"
+  },
+  "hero": {
+    "badge": "오픈소스 · 적응형 · 창발적",
+    "title": "적응형 및 창발적 지능을 위한 휴대용 AI 에이전트 런타임",
+    "subtitle": "메모리, 도구, 에이전시를 갖춘 적응형, 창발적 AI 에이전트를 구축하세요. GMI 역할, 멀티 에이전트 오케스트레이션, 엔터프라이즈 가드레일을 갖춘 TypeScript 런타임.",
+    "getStarted": "시작하기",
+    "viewDocs": "문서 보기",
+    "watchDemo": "데모 보기"
+  },
+  "features": {
+    "sectionTitle": "엔터프라이즈급 기능",
+    "sectionSubtitle": "AI 에이전트를 구축, 배포 및 확장하기 위한 프로덕션급 인프라",
+    "multiAgent": {
+      "title": "창발적 멀티 에이전트 조정",
+      "description": "단일 목표에서 연구원, 분석가, 비평가, 실행자 페르소나를 생성합니다. 공유된 컨텍스트, 예산, 승인으로 모든 분기를 동기화합니다.",
+      "pill": "🆕 v0.1.0",
+      "bullet1": "결정론적 라우팅 또는 적응형 팬아웃",
+      "bullet2": "자동으로 연결된 인용 + 메모리"
+    },
+    "toolPacks": {
+      "title": "도구 및 가드레일 팩",
+      "description": "검색, 비전, 코드 실행 또는 사용자 정의 API를 위한 의견이 있는 확장을 내장 권한 및 재시도와 함께 제공합니다.",
+      "pill": "확장 생태계",
+      "bullet1": "매니페스트 기반 도구 레지스트리",
+      "bullet2": "가드레일 프리셋 + 규정 준수 태그"
+    },
+    "language": {
+      "title": "언어 및 번역",
+      "description": "각 표면에 대해 로케일과 톤을 자동 감지합니다. 페르소나는 선택한 번역 제공업체를 사용하여 음성, 채팅 및 문서에서 유창함을 유지합니다.",
+      "pill": "다국어 지원",
+      "bullet1": "페르소나 인식 톤 적응",
+      "bullet2": "로케일별 폴백 라우팅"
+    },
+    "storage": {
+      "title": "스토리지 및 배포",
+      "description": "PostgreSQL, better-sqlite3, sql.js 또는 자체 데이터 레이어 간에 전환합니다. 모든 에이전트 단계가 동기화되고 재생 가능합니다.",
+      "pill": "어디서나 배포",
+      "bullet1": "참조 서버 템플릿",
+      "bullet2": "스냅샷 + 재생 도구"
+    },
+    "workbench": {
+      "title": "로컬 우선 워크벤치",
+      "description": "지속적인 SQL, 타임라인 스크러버, 내장된 페르소나 마켓플레이스를 사용하여 브라우저에서 전체 에이전시를 프로토타입합니다.",
+      "pill": "오프라인 가능",
+      "bullet1": "실시간 추론 + 텔레메트리 검사",
+      "bullet2": "아티팩트를 클라우드에 동기화",
+      "bullet3": "전체 에이전시를 Markdown/JSON 번들로 내보내기"
+    }
+  },
+  "marketplace": {
+    "comingSoon": "에이전트 마켓플레이스 출시 예정",
+    "description": "AgentOS 에이전시를 공유, 구매, 판매하세요. CI/CD, 인프라, 지불, 규정 준수를 처리하므로 적응형, 창발적, 영구적 지능에 집중할 수 있습니다."
+  },
+  "caseStudies": {
+    "comingSoon": "사례 연구 출시 예정",
+    "description": "실제 AgentOS 구현 및 프로덕션 배포"
+  },
+  "footer": {
+    "tagline": "Frame.dev의 적응형 AI 에이전트를 위한 TypeScript 런타임",
+    "resources": "리소스",
+    "docsGuides": "문서 (가이드)",
+    "apiReferenceTSDoc": "API 레퍼런스 (TypeDoc/TSDoc)",
+    "examples": "예제",
+    "releaseNotes": "릴리스 노트",
+    "discord": "Discord",
+    "company": "회사",
+    "contact": "문의하기",
+    "legal": "법률",
+    "terms": "이용약관",
+    "privacy": "개인정보 보호정책",
+    "license": "Apache 2.0 (코어) + MIT (에이전트, 확장, 가드레일)",
+    "copyright": "© {year} Frame.dev. 모든 권리 보유."
+  },
+  "cta": {
+    "title": "적응형 AI 에이전트를 구축할 준비가 되셨나요?",
+    "description": "AgentOS로 차세대 지능형 시스템을 구축하는 개발자와 함께하세요.",
+    "getStarted": "시작하기",
+    "talkToUs": "문의하기"
+  },
+  "skipToContent": "콘텐츠로 건너뛰기",
+  "skipToMain": "메인 콘텐츠로 건너뛰기"
+}
+

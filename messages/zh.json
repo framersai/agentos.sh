@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "title": "AgentOS | 自适应与涌现智能的便携式AI代理运行时",
+    "description": "使用AgentOS构建自适应、涌现的AI代理——企业级RAG、多代理编排和永久智能的便携式通用运行时。",
+    "ogTitle": "AgentOS | 企业级代理的自适应AI智能",
+    "ogDescription": "使用AgentOS构建具有记忆、工具和代理能力的自适应、涌现AI代理。开源运行时，具备GMI角色、多代理编排和企业级防护。由Framers（frame.dev）提供。",
+    "twitterTitle": "AgentOS | 企业级代理的自适应AI智能",
+    "twitterDescription": "使用AgentOS构建自适应、涌现的AI代理。具备GMI角色、代理编排和企业级防护的开源运行时。由Framers提供。"
+  },
+  "nav": {
+    "features": "功能特性",
+    "docs": "文档",
+    "apiReference": "API参考",
+    "changelog": "更新日志",
+    "openapi": "OpenAPI",
+    "faq": "常见问题",
+    "about": "关于",
+    "github": "GitHub",
+    "marketplace": "市场"
+  },
+  "hero": {
+    "badge": "开源 · 自适应 · 涌现",
+    "title": "自适应与涌现智能的便携式AI代理运行时",
+    "subtitle": "构建具有记忆、工具和代理能力的自适应、涌现AI代理。TypeScript运行时，具备GMI角色、多代理编排和企业级防护。",
+    "getStarted": "开始使用",
+    "viewDocs": "查看文档",
+    "watchDemo": "观看演示"
+  },
+  "features": {
+    "sectionTitle": "企业级功能特性",
+    "sectionSubtitle": "用于构建、部署和扩展AI代理的生产级基础设施",
+    "multiAgent": {
+      "title": "涌现式多代理协作",
+      "description": "从单一目标生成研究员、分析师、评论家和执行者角色。共享上下文、预算和审批使每个分支保持同步。",
+      "pill": "🆕 v0.1.0",
+      "bullet1": "确定性路由或自适应扇出",
+      "bullet2": "自动拼接引用和记忆"
+    },
+    "toolPacks": {
+      "title": "工具与防护包",
+      "description": "为搜索、视觉、代码执行或自定义API提供带有内置权限和重试的扩展包。",
+      "pill": "扩展生态系统",
+      "bullet1": "清单驱动的工具注册表",
+      "bullet2": "防护预设 + 合规标签"
+    },
+    "language": {
+      "title": "语言与翻译",
+      "description": "自动检测每个界面的语言环境和语气。角色在语音、聊天和文档中保持流畅，可选择翻译提供商。",
+      "pill": "多语言支持",
+      "bullet1": "角色感知的语气适配",
+      "bullet2": "按语言环境的后备路由"
+    },
+    "storage": {
+      "title": "存储与部署",
+      "description": "在PostgreSQL、better-sqlite3、sql.js或您自己的数据层之间切换。每个代理步骤都会同步并可重放。",
+      "pill": "随处部署",
+      "bullet1": "参考服务器模板",
+      "bullet2": "快照 + 重放工具"
+    },
+    "workbench": {
+      "title": "本地优先工作台",
+      "description": "在浏览器中使用持久化SQL、时间轴滑动条和内置角色市场原型化整个代理机构。",
+      "pill": "离线可用",
+      "bullet1": "实时检查推理 + 遥测",
+      "bullet2": "将工件同步回云端",
+      "bullet3": "将完整代理机构导出为Markdown/JSON包"
+    }
+  },
+  "marketplace": {
+    "comingSoon": "代理市场即将推出",
+    "description": "分享、购买和销售您的AgentOS代理机构。我们将处理CI/CD、基础设施、支付和合规，让您专注于自适应、涌现、永久的智能。"
+  },
+  "caseStudies": {
+    "comingSoon": "案例研究即将推出",
+    "description": "真实世界的AgentOS实现和生产部署"
+  },
+  "footer": {
+    "tagline": "由Frame.dev开发的自适应AI代理TypeScript运行时",
+    "resources": "资源",
+    "docsGuides": "文档（指南）",
+    "apiReferenceTSDoc": "API参考（TypeDoc/TSDoc）",
+    "examples": "示例",
+    "releaseNotes": "发布说明",
+    "discord": "Discord",
+    "company": "公司",
+    "contact": "联系我们",
+    "legal": "法律",
+    "terms": "服务条款",
+    "privacy": "隐私政策",
+    "license": "Apache 2.0（核心）+ MIT（代理、扩展、防护）",
+    "copyright": "© {year} Frame.dev. 版权所有。"
+  },
+  "cta": {
+    "title": "准备构建自适应AI代理？",
+    "description": "加入开发者行列，使用AgentOS构建下一代智能系统。",
+    "getStarted": "开始使用",
+    "talkToUs": "联系我们"
+  },
+  "skipToContent": "跳到内容",
+  "skipToMain": "跳到主要内容"
+}
+

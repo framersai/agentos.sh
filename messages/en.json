@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "title": "AgentOS | Portable AI Agent Runtime for Adaptive & Emergent Intelligence",
+    "description": "Build adaptive, emergent AI agents with AgentOS—the portable universal runtime for enterprise RAG, multi-agent orchestration, and permanent intelligence.",
+    "ogTitle": "AgentOS | Adaptive AI Intelligence for Enterprise-Ready Agents",
+    "ogDescription": "Build adaptive, emergent AI agents with memory, tools, and agency. Open‑source runtime featuring GMI roles, multi‑agent orchestration, and enterprise guardrails. By Framers (frame.dev).",
+    "twitterTitle": "AgentOS | Adaptive AI Intelligence for Enterprise-Ready Agents",
+    "twitterDescription": "Build adaptive, emergent AI agents with AgentOS. Open‑source runtime with GMI roles, agency orchestration, and enterprise guardrails. By Framers."
+  },
+  "nav": {
+    "features": "Features",
+    "docs": "Docs",
+    "apiReference": "API Reference",
+    "changelog": "Changelog",
+    "openapi": "OpenAPI",
+    "faq": "FAQ",
+    "about": "About",
+    "github": "GitHub",
+    "marketplace": "Marketplace"
+  },
+  "hero": {
+    "badge": "Open Source · Adaptive · Emergent",
+    "title": "Portable AI Agent Runtime for Adaptive & Emergent Intelligence",
+    "subtitle": "Build adaptive, emergent AI agents with memory, tools, and agency. TypeScript runtime featuring GMI roles, multi-agent orchestration, and enterprise guardrails.",
+    "getStarted": "Get Started",
+    "viewDocs": "View Docs",
+    "watchDemo": "Watch Demo"
+  },
+  "features": {
+    "sectionTitle": "Enterprise‑Ready Features",
+    "sectionSubtitle": "Production-grade infrastructure for building, deploying, and scaling AI agents",
+    "multiAgent": {
+      "title": "Emergent Multi-Agent Coordination",
+      "description": "Spawn researcher, analyst, critic, and executor personas from a single goal. Shared context, budgets, and approvals keep every branch in sync.",
+      "pill": "🆕 v0.1.0",
+      "bullet1": "Deterministic routing or adaptive fan-out",
+      "bullet2": "Citations + memory stitched automatically"
+    },
+    "toolPacks": {
+      "title": "Tool & Guardrail Packs",
+      "description": "Ship opinionated extensions for search, vision, code execution, or custom APIs with built-in permissions and retries.",
+      "pill": "Extension Ecosystem",
+      "bullet1": "Manifest-driven tool registry",
+      "bullet2": "Guardrail presets + compliance tags"
+    },
+    "language": {
+      "title": "Language & Translation",
+      "description": "Auto-detect locale and tone per surface. Personas stay fluent across voice, chat, and docs with translation providers of your choice.",
+      "pill": "Multilingual Ready",
+      "bullet1": "Persona-aware tone adaptation",
+      "bullet2": "Fallback routing by locale"
+    },
+    "storage": {
+      "title": "Storage & Deployment",
+      "description": "Switch between PostgreSQL, better-sqlite3, sql.js, or your own data layers. Every agent step is synced and replayable.",
+      "pill": "Deploy Anywhere",
+      "bullet1": "Reference server templates",
+      "bullet2": "Snapshot + replay tooling"
+    },
+    "workbench": {
+      "title": "Local-First Workbench",
+      "description": "Prototype entire agencies in-browser with persisted SQL, timeline scrubbers, and a built-in marketplace of personas.",
+      "pill": "Offline Capable",
+      "bullet1": "Inspect reasoning + telemetry live",
+      "bullet2": "Sync artifacts back to the cloud",
+      "bullet3": "Export full agencies as Markdown/JSON bundles"
+    }
+  },
+  "marketplace": {
+    "comingSoon": "Agent Marketplace Coming Soon",
+    "description": "Share, buy, and sell your AgentOS agencies. We'll handle CI/CD, infrastructure, payouts, and compliance so you can focus on adaptive, emergent, permanent intelligence."
+  },
+  "caseStudies": {
+    "comingSoon": "Case Studies Coming Soon",
+    "description": "Real-world AgentOS implementations and production deployments"
+  },
+  "footer": {
+    "tagline": "TypeScript runtime for adaptive AI agents by Frame.dev",
+    "resources": "Resources",
+    "docsGuides": "Docs (Guides)",
+    "apiReferenceTSDoc": "API Reference (TypeDoc/TSDoc)",
+    "examples": "Examples",
+    "releaseNotes": "Release Notes",
+    "discord": "Discord",
+    "company": "Company",
+    "contact": "Contact",
+    "legal": "Legal",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "license": "Apache 2.0 (core) + MIT (agents, extensions, guardrails)",
+    "copyright": "© {year} Frame.dev. All rights reserved."
+  },
+  "cta": {
+    "title": "Ready to Build Adaptive AI Agents?",
+    "description": "Join developers building the next generation of intelligent systems with AgentOS.",
+    "getStarted": "Get Started",
+    "talkToUs": "Talk to Us"
+  },
+  "skipToContent": "Skip to content",
+  "skipToMain": "Skip to main content"
+}
+

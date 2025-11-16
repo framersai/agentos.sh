@@ -1,0 +1,102 @@
+{
+  "metadata": {
+    "title": "AgentOS | Portable KI-Agenten-Laufzeitumgebung für adaptive und emergente Intelligenz",
+    "description": "Erstellen Sie adaptive, emergente KI-Agenten mit AgentOS—der portablen universellen Laufzeitumgebung für Enterprise-RAG, Multi-Agenten-Orchestrierung und permanente Intelligenz.",
+    "ogTitle": "AgentOS | Adaptive KI-Intelligenz für unternehmensfertige Agenten",
+    "ogDescription": "Erstellen Sie adaptive, emergente KI-Agenten mit Gedächtnis, Tools und Handlungsfähigkeit. Open-Source-Laufzeitumgebung mit GMI-Rollen, Multi-Agenten-Orchestrierung und Enterprise-Leitplanken. Von Framers (frame.dev).",
+    "twitterTitle": "AgentOS | Adaptive KI-Intelligenz für unternehmensfertige Agenten",
+    "twitterDescription": "Erstellen Sie adaptive, emergente KI-Agenten mit AgentOS. Open-Source-Laufzeitumgebung mit GMI-Rollen, Agentur-Orchestrierung und Enterprise-Leitplanken. Von Framers."
+  },
+  "nav": {
+    "features": "Funktionen",
+    "docs": "Dokumentation",
+    "apiReference": "API-Referenz",
+    "changelog": "Änderungsprotokoll",
+    "openapi": "OpenAPI",
+    "faq": "FAQ",
+    "about": "Über uns",
+    "github": "GitHub",
+    "marketplace": "Marktplatz"
+  },
+  "hero": {
+    "badge": "Open Source · Adaptiv · Emergent",
+    "title": "Portable KI-Agenten-Laufzeitumgebung für adaptive und emergente Intelligenz",
+    "subtitle": "Erstellen Sie adaptive, emergente KI-Agenten mit Gedächtnis, Tools und Handlungsfähigkeit. TypeScript-Laufzeitumgebung mit GMI-Rollen, Multi-Agenten-Orchestrierung und Enterprise-Leitplanken.",
+    "getStarted": "Loslegen",
+    "viewDocs": "Dokumentation ansehen",
+    "watchDemo": "Demo ansehen"
+  },
+  "features": {
+    "sectionTitle": "Unternehmensfertige Funktionen",
+    "sectionSubtitle": "Produktionsreife Infrastruktur zum Erstellen, Bereitstellen und Skalieren von KI-Agenten",
+    "multiAgent": {
+      "title": "Emergente Multi-Agenten-Koordination",
+      "description": "Erzeugen Sie Forscher-, Analysten-, Kritiker- und Ausführungs-Personas aus einem einzigen Ziel. Gemeinsamer Kontext, Budgets und Genehmigungen halten jeden Zweig synchron.",
+      "pill": "🆕 v0.1.0",
+      "bullet1": "Deterministisches Routing oder adaptives Fan-out",
+      "bullet2": "Zitate + Gedächtnis automatisch verknüpft"
+    },
+    "toolPacks": {
+      "title": "Tool- und Leitplanken-Pakete",
+      "description": "Versenden Sie meinungsstarke Erweiterungen für Suche, Vision, Code-Ausführung oder benutzerdefinierte APIs mit integrierten Berechtigungen und Wiederholungsversuchen.",
+      "pill": "Erweiterungs-Ökosystem",
+      "bullet1": "Manifest-gesteuerte Tool-Registry",
+      "bullet2": "Leitplanken-Voreinstellungen + Compliance-Tags"
+    },
+    "language": {
+      "title": "Sprache und Übersetzung",
+      "description": "Automatische Erkennung von Gebietsschema und Ton pro Oberfläche. Personas bleiben fließend über Sprache, Chat und Dokumente mit Übersetzungsanbietern Ihrer Wahl.",
+      "pill": "Mehrsprachig bereit",
+      "bullet1": "Persona-bewusste Ton-Anpassung",
+      "bullet2": "Fallback-Routing nach Gebietsschema"
+    },
+    "storage": {
+      "title": "Speicherung und Bereitstellung",
+      "description": "Wechseln Sie zwischen PostgreSQL, better-sqlite3, sql.js oder Ihren eigenen Datenschichten. Jeder Agentenschritt wird synchronisiert und ist wiederholbar.",
+      "pill": "Überall bereitstellen",
+      "bullet1": "Referenz-Server-Vorlagen",
+      "bullet2": "Snapshot + Wiedergabe-Tools"
+    },
+    "workbench": {
+      "title": "Local-First-Workbench",
+      "description": "Prototyp kompletter Agenturen im Browser mit persistiertem SQL, Timeline-Scrubbern und einem integrierten Marktplatz für Personas.",
+      "pill": "Offline-fähig",
+      "bullet1": "Argumentation + Telemetrie live inspizieren",
+      "bullet2": "Artefakte zurück in die Cloud synchronisieren",
+      "bullet3": "Vollständige Agenturen als Markdown/JSON-Bundles exportieren"
+    }
+  },
+  "marketplace": {
+    "comingSoon": "Agenten-Marktplatz Demnächst",
+    "description": "Teilen, kaufen und verkaufen Sie Ihre AgentOS-Agenturen. Wir kümmern uns um CI/CD, Infrastruktur, Auszahlungen und Compliance, damit Sie sich auf adaptive, emergente, permanente Intelligenz konzentrieren können."
+  },
+  "caseStudies": {
+    "comingSoon": "Fallstudien Demnächst",
+    "description": "Reale AgentOS-Implementierungen und Produktionsbereitstellungen"
+  },
+  "footer": {
+    "tagline": "TypeScript-Laufzeitumgebung für adaptive KI-Agenten von Frame.dev",
+    "resources": "Ressourcen",
+    "docsGuides": "Dokumentation (Leitfäden)",
+    "apiReferenceTSDoc": "API-Referenz (TypeDoc/TSDoc)",
+    "examples": "Beispiele",
+    "releaseNotes": "Versionshinweise",
+    "discord": "Discord",
+    "company": "Unternehmen",
+    "contact": "Kontakt",
+    "legal": "Rechtliches",
+    "terms": "Bedingungen",
+    "privacy": "Datenschutz",
+    "license": "Apache 2.0 (Kern) + MIT (Agenten, Erweiterungen, Leitplanken)",
+    "copyright": "© {year} Frame.dev. Alle Rechte vorbehalten."
+  },
+  "cta": {
+    "title": "Bereit, adaptive KI-Agenten zu erstellen?",
+    "description": "Schließen Sie sich Entwicklern an, die mit AgentOS die nächste Generation intelligenter Systeme erstellen.",
+    "getStarted": "Loslegen",
+    "talkToUs": "Sprechen Sie mit uns"
+  },
+  "skipToContent": "Zum Inhalt springen",
+  "skipToMain": "Zum Hauptinhalt springen"
+}
+

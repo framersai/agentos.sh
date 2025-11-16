@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Mail, Github, Linkedin, Twitter, Globe, ExternalLink } from 'lucide-react'
-import FrameWordmark from '../../components/branding/FrameWordmark'
+import { FrameWordmark } from '../../../components/branding/FrameWordmark'
 
 export default function AboutPage() {
   return (
