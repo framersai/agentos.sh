@@ -137,6 +137,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
+    // Fragment without html/body to avoid duplicate root elements
     <NextIntlClientProvider messages={messages}>
       <ThemeProvider>
             <script

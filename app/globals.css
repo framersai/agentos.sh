@@ -57,6 +57,34 @@
     /* Focus ring for accessibility */
     --focus-ring: 0 0 0 3px hsla(250, 85%, 50%, 0.3);
 
+    /* Holographic & Neumorphic Variables - Theme Adaptive */
+    --holographic-primary: linear-gradient(135deg, rgba(255,0,150,0.2) 0%, rgba(100,200,255,0.2) 25%, rgba(255,100,200,0.2) 50%, rgba(150,100,255,0.2) 75%, rgba(255,0,150,0.2) 100%);
+    --holographic-secondary: linear-gradient(-45deg, rgba(255,240,250,0.1) 0%, rgba(200,150,255,0.15) 50%, rgba(100,200,255,0.1) 100%);
+    --holographic-overlay: radial-gradient(circle at 50% 30%, rgba(200,150,255,0.08), transparent 50%);
+    --holographic-shimmer: linear-gradient(105deg, transparent 40%, rgba(255,150,200,0.3) 50%, transparent 60%);
+    --holographic-iridescent: conic-gradient(from 180deg at 50% 50%, rgba(255,0,150,0.15), rgba(100,200,255,0.2), rgba(255,100,200,0.15), rgba(150,100,255,0.2), rgba(255,0,150,0.15));
+
+    /* Neumorphic Shadows */
+    --neumorphic-light-shadow: 8px 8px 16px rgba(200,150,255,0.12), -8px -8px 16px rgba(255,255,255,0.7);
+    --neumorphic-dark-shadow: 8px 8px 16px rgba(50,25,75,0.25), -8px -8px 16px rgba(200,150,255,0.08);
+    --neumorphic-inset-light: inset 6px 6px 12px rgba(200,150,255,0.12), inset -6px -6px 12px rgba(255,255,255,0.7);
+    --neumorphic-inset-dark: inset 6px 6px 12px rgba(50,25,75,0.25), inset -6px -6px 12px rgba(200,150,255,0.08);
+    --neumorphic-glow-soft: 0 0 20px rgba(200,150,255,0.25), 0 0 40px rgba(255,100,200,0.15);
+    --neumorphic-glow-intense: 0 0 30px rgba(255,0,150,0.35), 0 0 60px rgba(100,200,255,0.25);
+
+    /* Premium Glass Effects */
+    --glass-surface: rgba(250,248,255,0.06);
+    --glass-border: rgba(200,150,255,0.15);
+    --glass-reflection: linear-gradient(105deg, rgba(255,255,255,0.08) 0%, transparent 50%, rgba(200,150,255,0.04) 100%);
+
+    /* Premium Gradients */
+    --gradient-hero: radial-gradient(ellipse at top, rgba(255,250,255,0.9), rgba(200,150,255,0.35) 40%, rgba(255,100,200,0.25) 70%, rgba(100,200,255,0.15));
+    --gradient-section: linear-gradient(180deg, rgba(255,250,255,0.95), rgba(250,248,255,0.8) 20%, rgba(200,150,255,0.25) 60%, rgba(255,250,255,0.9));
+    --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,250,255,0.95), rgba(200,150,255,0.15));
+    --gradient-depth-1: linear-gradient(to bottom, rgba(255,250,255,1), rgba(250,248,255,0.98));
+    --gradient-depth-2: linear-gradient(to bottom, rgba(250,248,255,0.98), rgba(200,150,255,0.12));
+    --gradient-depth-3: linear-gradient(to bottom, rgba(200,150,255,0.12), rgba(255,100,200,0.08));
+
     /* Bridge legacy color variables to shared tokens */
     --bg-primary: var(--color-background-primary);
     --bg-secondary: var(--color-background-secondary);
