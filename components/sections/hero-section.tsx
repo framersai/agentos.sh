@@ -22,7 +22,7 @@ export function HeroSection() {
   const [isMobile, setIsMobile] = useState(false)
   const prefersReducedMotion = useReducedMotion()
   const headlinePairs = useMemo(() => {
-    const raw = t('headlinePairs', { returnObjects: true }) as unknown as HeadlinePair[] | undefined
+    const raw = t.raw('headlinePairs', { returnObjects: true }) as HeadlinePair[] | undefined
     return raw ?? [
       { top: 'Adaptive Intelligence', bottom: 'for Autonomous Agents' },
       { top: 'Emergent Intelligence', bottom: 'for Enterprise Orchestration' },
@@ -33,7 +33,7 @@ export function HeroSection() {
   const [headlineIndex, setHeadlineIndex] = useState(0)
   const activePair = headlinePairs[headlineIndex]
   const technicalHighlights = useMemo(() => {
-    const raw = t('technicalHighlights', { returnObjects: true }) as unknown as Highlight[] | undefined
+    const raw = t.raw('technicalHighlights', { returnObjects: true }) as Highlight[] | undefined
     return raw ?? [
       { title: 'Streaming-first runtime', detail: 'Token-level delivery across personas, guardrails, and channels.' },
       { title: 'Deterministic orchestration', detail: 'Parallel GMIs with auditable routing, approvals, and budgets.' },
@@ -43,7 +43,7 @@ export function HeroSection() {
   }, [t])
 
   const heroVisualStats = useMemo(() => {
-    const raw = t('visualStats', { returnObjects: true }) as unknown as Stat[] | undefined
+    const raw = t.raw('visualStats', { returnObjects: true }) as Stat[] | undefined
     return raw ?? [
       { label: 'Agencies live', value: '128' },
       { label: 'Approval SLA', value: '3.2 min' },
