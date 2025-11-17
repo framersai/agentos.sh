@@ -78,7 +78,7 @@ export function LanguageSwitcher() {
       try {
         localStorage.setItem('preferred-locale', newLocale);
         document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`;
-      } catch (e) {
+      } catch {
         // ignore if localStorage blocked
       }
       // Hard reload to the new locale path
