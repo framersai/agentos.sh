@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -10,6 +10,10 @@ import { AnimatedAgentOSLogo } from '../icons/animated-logo'
 import { TypeScriptIcon, OpenSourceIcon, StreamingIcon, MemoryIcon } from '../icons/feature-icons'
 import { Toast } from '../ui/toast'
 
+type HeadlinePair = { top: string; bottom: string };
+type Highlight = { title: string; detail: string };
+type Stat = { label: string; value: string };
+
 export function HeroSection() {
   const t = useTranslations('hero')
   const [showToast, setShowToast] = useState(false)
@@ -17,26 +21,58 @@ export function HeroSection() {
   const [converge, setConverge] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const prefersReducedMotion = useReducedMotion()
-  const headlinePairs = [
-    { top: 'Adaptive Intelligence', bottom: 'for Autonomous Agents' },
-    { top: 'Emergent Intelligence', bottom: 'for Enterprise Orchestration' },
-    { top: 'Adaptive Intelligence', bottom: 'for Safety-Critical Workflows' },
-    { top: 'Emergent Intelligence', bottom: 'for Parallel AI Teams' }
-  ] as const
+  const headlinePairs = useMemo(() => {
+    const raw = t.raw('headlinePairs') as HeadlinePair[] | undefined
+    return raw ?? [
+      { top: 'Adaptive Intelligence', bottom: 'for Autonomous Agents' },
+      { top: 'Emergent Intelligence', bottom: 'for Enterprise Orchestration' },
+      { top: 'Adaptive Intelligence', bottom: 'for Safety-Critical Workflows' },
+      { top: 'Emergent Intelligence', bottom: 'for Parallel AI Teams' }
+    ]
+  }, [t])
   const [headlineIndex, setHeadlineIndex] = useState(0)
   const activePair = headlinePairs[headlineIndex]
-  const technicalHighlights = [
-    { title: 'Streaming-first runtime', detail: 'Token-level delivery across personas, guardrails, and channels.' },
-    { title: 'Deterministic orchestration', detail: 'Parallel GMIs with auditable routing, approvals, and budgets.' },
-    { title: 'Zero-copy memory fabric', detail: 'Vector, episodic, and working memory stitched together for recall.' },
-    { title: 'Portable intelligence capsules', detail: 'Export full AgentOS instances as Markdown or JSON and ingest anywhere.' }
-  ] as const
+  const technicalHighlights = useMemo(() => {
+    const raw = t.raw('technicalHighlights') as Highlight[] | undefined
+    return raw ?? [
+      { title: 'Streaming-first runtime', detail: 'Token-level delivery across personas, guardrails, and channels.' },
+      { title: 'Deterministic orchestration', detail: 'Parallel GMIs with auditable routing, approvals, and budgets.' },
+      { title: 'Zero-copy memory fabric', detail: 'Vector, episodic, and working memory stitched together for recall.' },
+      { title: 'Portable intelligence capsules', detail: 'Export full AgentOS instances as Markdown or JSON and ingest anywhere.' }
+    ]
+  }, [t])
 
-  const heroVisualStats = [
-    { label: 'Agencies live', value: '128' },
-    { label: 'Approval SLA', value: '3.2 min' },
-    { label: 'Guardrail coverage', value: '98%' }
-  ] as const
+  const heroVisualStats = useMemo(() => {
+    const raw = t.raw('visualStats') as Stat[] | undefined
+    return raw ?? [
+      { label: 'Agencies live', value: '128' },
+      { label: 'Approval SLA', value: '3.2 min' },
+      { label: 'Guardrail coverage', value: '98%' }
+    ]
+  }, [t])
+
+  const capabilityItems = useMemo(() => ([
+    {
+      icon: TypeScriptIcon,
+      label: t('capabilities.ts.label'),
+      value: t('capabilities.ts.value')
+    },
+    {
+      icon: OpenSourceIcon,
+      label: t('capabilities.oss.label'),
+      value: t('capabilities.oss.value')
+    },
+    {
+      icon: StreamingIcon,
+      label: t('capabilities.streaming.label'),
+      value: t('capabilities.streaming.value')
+    },
+    {
+      icon: MemoryIcon,
+      label: t('capabilities.memory.label'),
+      value: t('capabilities.memory.value')
+    }
+  ]), [t])
 
   // Lightweight resize listener to toggle mobile optimisations
   useEffect(() => {
@@ -90,7 +126,7 @@ export function HeroSection() {
   return (
     <>
       <Toast 
-        message="Copied to clipboard!" 
+        message={t('copyToast')} 
         type="success" 
         isVisible={showToast} 
         onClose={() => setShowToast(false)} 
@@ -149,8 +185,11 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="mb-8 flex justify-center lg:justify-start">
+          <div className="mb-8 flex flex-col items-center lg:items-start gap-4">
             <AnimatedAgentOSLogo />
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism text-sm font-semibold text-accent-primary">
+              {t('badge')}
+            </span>
           </div>
 
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] items-center">
@@ -236,7 +275,7 @@ export function HeroSection() {
                   <span className="absolute inset-0 bg-gradient-to-r from-accent-secondary via-accent-tertiary to-[color:var(--color-accent-warm)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <Zap className="w-5 h-5" />
-                    Try Voice Chat Assistant
+                    {t('ctaPrimary')}
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </Link>
@@ -247,7 +286,7 @@ export function HeroSection() {
                 >
                   <span className="flex items-center justify-center gap-2">
                     <Github className="w-5 h-5" />
-                    Star on GitHub
+                    {t('ctaSecondary')}
                     <span className="text-xs px-2 py-0.5 rounded-full bg-accent-primary/10 text-accent-primary font-bold">
                       {stars ?? '—'}
                     </span>
@@ -262,12 +301,12 @@ export function HeroSection() {
                 className="text-center lg:text-left"
               >
                 <span className="text-sm text-text-muted">
-                  Need curated agents?{' '}
+                  {t('marketplaceLead')}{' '}
                   <Link
                     href="https://app.vca.chat/marketplace"
                     className="inline-flex items-center gap-1 font-semibold text-accent-primary hover:text-accent-secondary transition-colors"
                   >
-                    Marketplace coming soon
+                    {t('marketplaceCta')}
                     <ArrowRight className="w-3 h-3" />
                   </Link>
                 </span>
@@ -282,12 +321,12 @@ export function HeroSection() {
                 <div className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl glass-morphism shadow-modern">
                   <Terminal className="w-5 h-5 text-accent-primary animate-pulse-glow" />
                   <code className="text-sm font-mono text-text-primary select-all">
-                    npm install @framers/agentos
+                    {t('codeLabel')}
                   </code>
                   <button
                     onClick={handleCopy}
                     className="p-2 rounded-lg hover:bg-accent-primary/10 transition-colors group"
-                    aria-label="Copy command"
+                    aria-label={t('copyAria')}
                   >
                     <svg className="w-4 h-4 text-text-muted group-hover:text-accent-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -302,12 +341,7 @@ export function HeroSection() {
                 transition={{ delay: 0.8 }}
                 className="grid grid-cols-2 sm:grid-cols-4 gap-6"
               >
-                {[
-                  { icon: TypeScriptIcon, label: 'TypeScript Native', value: 'Type-Safe' },
-                  { icon: OpenSourceIcon, label: 'Open Source', value: 'Apache 2.0' },
-                  { icon: StreamingIcon, label: 'Real-time Streaming', value: 'Async Ready' },
-                  { icon: MemoryIcon, label: 'Persistent Memory', value: 'Built-in' },
-                ].map((stat, i) => (
+                {capabilityItems.map((stat, i) => (
                   <motion.div
                     key={stat.label}
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -325,7 +359,7 @@ export function HeroSection() {
               </motion.div>
             </div>
 
-            <HeroVisual stats={heroVisualStats} />
+            <HeroVisual stats={heroVisualStats} altText={t('heroVisualAlt')} />
           </div>
         </motion.div>
       </div>
@@ -334,7 +368,7 @@ export function HeroSection() {
   )
 }
 
-function HeroVisual({ stats }: { stats: ReadonlyArray<{ label: string; value: string }> }) {
+function HeroVisual({ stats, altText }: { stats: ReadonlyArray<{ label: string; value: string }>; altText: string }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.98 }}
@@ -349,7 +383,7 @@ function HeroVisual({ stats }: { stats: ReadonlyArray<{ label: string; value: st
             <div className="rounded-2xl border border-border-subtle/80 overflow-hidden bg-background-primary/95 dark:bg-black/40 shadow-inner">
               <Image
                 src="/og-image.png"
-                alt="AgentOS orchestration workspace preview"
+                alt={altText}
                 width={880}
                 height={506}
                 priority

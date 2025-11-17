@@ -22,9 +22,37 @@
     "badge": "Código Abierto · Adaptativo · Emergente",
     "title": "Runtime Portátil de Agentes de IA para Inteligencia Adaptativa y Emergente",
     "subtitle": "Construye agentes de IA adaptativos y emergentes con memoria, herramientas y autonomía. Runtime TypeScript con roles GMI, orquestación multi-agente y barreras de seguridad empresariales.",
-    "getStarted": "Comenzar",
-    "viewDocs": "Ver Documentación",
-    "watchDemo": "Ver Demo"
+    "headlinePairs": [
+      { "top": "Inteligencia Adaptativa", "bottom": "para Agentes Autónomos" },
+      { "top": "Inteligencia Emergente", "bottom": "para Orquestación Empresarial" },
+      { "top": "Inteligencia Adaptativa", "bottom": "para flujos críticos de seguridad" },
+      { "top": "Inteligencia Emergente", "bottom": "para equipos de IA en paralelo" }
+    ],
+    "technicalHighlights": [
+      { "title": "Runtime prioritario de streaming", "detail": "Entrega a nivel de token entre personas, guardrails y canales." },
+      { "title": "Orquestación determinista", "detail": "GMIs en paralelo con ruteo, aprobaciones y presupuestos auditables." },
+      { "title": "Tejido de memoria sin copias", "detail": "Memoria vectorial, episódica y de trabajo unidas en un mismo flujo recuperable." },
+      { "title": "Cápsulas de inteligencia portables", "detail": "Exporta instancias completas de AgentOS como Markdown/JSON y llévalas a cualquier stack." }
+    ],
+    "visualStats": [
+      { "label": "Agencias activas", "value": "128" },
+      { "label": "SLA de aprobación", "value": "3.2 min" },
+      { "label": "Cobertura de guardrails", "value": "98%" }
+    ],
+    "ctaPrimary": "Probar Voice Chat Assistant",
+    "ctaSecondary": "Dar una estrella en GitHub",
+    "marketplaceLead": "¿Necesitas agentes curados?",
+    "marketplaceCta": "Marketplace muy pronto",
+    "codeLabel": "npm install @framers/agentos",
+    "copyToast": "¡Copiado al portapapeles!",
+    "copyAria": "Copiar comando",
+    "capabilities": {
+      "ts": { "label": "Nativo en TypeScript", "value": "Seguro por tipos" },
+      "oss": { "label": "Código abierto", "value": "Apache 2.0" },
+      "streaming": { "label": "Streaming en tiempo real", "value": "Listo para async" },
+      "memory": { "label": "Memoria persistente", "value": "Integrada" }
+    },
+    "heroVisualAlt": "Vista previa del workspace de orquestación de AgentOS"
   },
   "features": {
     "sectionTitle": "Características Listas para Empresas",

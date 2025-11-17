@@ -22,9 +22,37 @@
     "badge": "오픈소스 · 적응형 · 창발형",
     "title": "적응형 및 창발형 지능을 위한 휴대용 AI 에이전트 런타임",
     "subtitle": "메모리, 도구 및 자율성을 갖춘 적응형, 창발형 AI 에이전트를 구축하세요. GMI 역할, 다중 에이전트 오케스트레이션 및 엔터프라이즈 가드레일을 갖춘 TypeScript 런타임.",
-    "getStarted": "시작하기",
-    "viewDocs": "문서 보기",
-    "watchDemo": "데모 보기"
+    "headlinePairs": [
+      { "top": "적응형 지능", "bottom": "자율 에이전트를 위해" },
+      { "top": "창발형 지능", "bottom": "엔터프라이즈 오케스트레이션용" },
+      { "top": "적응형 지능", "bottom": "안전 필수 워크플로용" },
+      { "top": "창발형 지능", "bottom": "병렬 AI 팀을 위해" }
+    ],
+    "technicalHighlights": [
+      { "title": "스트리밍 우선 런타임", "detail": "페르소나, 가드레일, 채널 전반에 토큰 단위로 전달합니다." },
+      { "title": "결정론적 오케스트레이션", "detail": "감사 가능한 라우팅·승인·예산을 갖춘 병렬 GMI." },
+      { "title": "제로 복사 메모리 패브릭", "detail": "벡터·에피소드·작업 메모리를 하나의 회상 가능한 흐름으로 엮습니다." },
+      { "title": "휴대용 인텔리전스 캡슐", "detail": "완전한 AgentOS 인스턴스를 Markdown/JSON으로 내보내 어느 스택에서도 사용합니다." }
+    ],
+    "visualStats": [
+      { "label": "가동 중인 에이전시", "value": "128" },
+      { "label": "승인 SLA", "value": "3.2분" },
+      { "label": "가드레일 커버리지", "value": "98%" }
+    ],
+    "ctaPrimary": "Voice Chat Assistant 사용해보기",
+    "ctaSecondary": "GitHub에서 Star",
+    "marketplaceLead": "선별된 에이전트가 필요하신가요?",
+    "marketplaceCta": "마켓플레이스가 곧 출시됩니다",
+    "codeLabel": "npm install @framers/agentos",
+    "copyToast": "클립보드에 복사했습니다!",
+    "copyAria": "명령어 복사",
+    "capabilities": {
+      "ts": { "label": "TypeScript 네이티브", "value": "타입 안전" },
+      "oss": { "label": "오픈소스", "value": "Apache 2.0" },
+      "streaming": { "label": "실시간 스트리밍", "value": "비동기 준비" },
+      "memory": { "label": "영구 메모리", "value": "내장" }
+    },
+    "heroVisualAlt": "AgentOS 오케스트레이션 작업 공간 미리보기"
   },
   "features": {
     "sectionTitle": "엔터프라이즈급 기능",

@@ -22,9 +22,37 @@
     "badge": "Open Source · Adaptiv · Emergent",
     "title": "Portable KI-Agenten-Laufzeit für Adaptive & Emergente Intelligenz",
     "subtitle": "Bauen Sie adaptive, emergente KI-Agenten mit Gedächtnis, Tools und Autonomie. TypeScript-Laufzeit mit GMI-Rollen, Multi-Agenten-Orchestrierung und Enterprise-Leitplanken.",
-    "getStarted": "Loslegen",
-    "viewDocs": "Dokumentation Ansehen",
-    "watchDemo": "Demo Ansehen"
+    "headlinePairs": [
+      { "top": "Adaptive Intelligenz", "bottom": "für autonome Agenten" },
+      { "top": "Emergente Intelligenz", "bottom": "für Enterprise-Orchestrierung" },
+      { "top": "Adaptive Intelligenz", "bottom": "für sicherheitskritische Workflows" },
+      { "top": "Emergente Intelligenz", "bottom": "für parallele AI-Teams" }
+    ],
+    "technicalHighlights": [
+      { "title": "Streaming-First-Runtime", "detail": "Tokenweise Auslieferung über Personas, Guardrails und Kanäle hinweg." },
+      { "title": "Deterministische Orchestrierung", "detail": "Parallele GMIs mit prüfbaren Routen, Freigaben und Budgets." },
+      { "title": "Zero-Copy-Memory-Fabric", "detail": "Vektor-, episodische und Arbeitsgedächtnisse zu einem wiederholbaren Strom verwoben." },
+      { "title": "Portable Intelligence-Kapseln", "detail": "Exportiere komplette AgentOS-Instanzen als Markdown/JSON und importiere sie in jeden Stack." }
+    ],
+    "visualStats": [
+      { "label": "Aktive Agenturen", "value": "128" },
+      { "label": "Genehmigungs-SLA", "value": "3.2 min" },
+      { "label": "Guardrail-Abdeckung", "value": "98%" }
+    ],
+    "ctaPrimary": "Voice Chat Assistant testen",
+    "ctaSecondary": "Auf GitHub sterne",
+    "marketplaceLead": "Brauchen Sie kuratierte Agenten?",
+    "marketplaceCta": "Marketplace erscheint bald",
+    "codeLabel": "npm install @framers/agentos",
+    "copyToast": "In die Zwischenablage kopiert!",
+    "copyAria": "Befehl kopieren",
+    "capabilities": {
+      "ts": { "label": "TypeScript-nativ", "value": "Typsicher" },
+      "oss": { "label": "Open Source", "value": "Apache 2.0" },
+      "streaming": { "label": "Echtzeit-Streaming", "value": "Asynchron bereit" },
+      "memory": { "label": "Persistenter Speicher", "value": "Integriert" }
+    },
+    "heroVisualAlt": "AgentOS Orchestrations-Workspace-Vorschau"
   },
   "features": {
     "sectionTitle": "Unternehmensfertige Funktionen",
