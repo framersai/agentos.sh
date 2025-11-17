@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import type { Route } from 'next';
 import { Menu, X, Globe, Sparkles, ArrowRight, Github } from 'lucide-react';
@@ -16,6 +16,7 @@ import { motion } from 'framer-motion';
  */
 export function SiteHeader() {
   const t = useTranslations('nav');
+  const locale = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -25,6 +26,30 @@ export function SiteHeader() {
     { href: '/faq', label: t('faq') },
     { href: '/about', label: t('about') },
   ];
+
+  const localizeHref = useCallback((href: string) => {
+    if (!href) {
+      return locale === 'en' ? '/' : `/${locale}`;
+    }
+    if (href.startsWith('http')) {
+      return href;
+    }
+    if (href.startsWith('#')) {
+      return locale === 'en' ? href : `/${locale}${href}`;
+    }
+    if (href === '/' || href === '') {
+      return locale === 'en' ? '/' : `/${locale}`;
+    }
+    if (href.startsWith('/#')) {
+      return locale === 'en' ? href : `/${locale}${href}`;
+    }
+    if (href.startsWith('/')) {
+      return locale === 'en' ? href : `/${locale}${href}`;
+    }
+    return locale === 'en' ? `/${href}` : `/${locale}/${href}`;
+  }, [locale]);
+
+  const homeHref = useMemo(() => (locale === 'en' ? '/' : `/${locale}`), [locale]);
 
   useEffect(() => {
     if (menuOpen) {
@@ -87,7 +112,7 @@ export function SiteHeader() {
       
       <div className="relative z-10 w-full">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 sm:px-5 lg:px-6 py-3">
-        <Link href="/" aria-label="AgentOS home" className="group flex items-center gap-2 transition-all hover:scale-[1.02] leading-none" onClick={closeMenu}>
+        <Link href={homeHref as Route} aria-label="AgentOS home" className="group flex items-center gap-2 transition-all hover:scale-[1.02] leading-none" onClick={closeMenu}>
           <div className="relative overflow-visible">
             <div className="absolute inset-0 bg-accent-primary/20 blur-xl rounded-full animate-pulse-glow" />
             <AgentOSWordmark className="h-10 relative z-10 transform scale-[1.18]" size="md" />
@@ -98,12 +123,14 @@ export function SiteHeader() {
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-5 lg:gap-7 text-sm font-medium lg:flex" aria-label="Main navigation">
           {NAV_LINKS.map((link) => {
-            const isExternalOrAnchor = link.href.startsWith('http') || link.href.includes('#');
-            if (isExternalOrAnchor) {
+            const localizedHref = localizeHref(link.href);
+            const isExternal = localizedHref.startsWith('http');
+            const hasHash = localizedHref.includes('#');
+            if (isExternal || hasHash) {
               return (
                 <a
                   key={link.href}
-                  href={link.href}
+                  href={localizedHref}
                   className="group relative text-gray-700 hover:text-accent-primary dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-[color:var(--color-accent-primary)] after:to-[color:var(--color-accent-secondary)] after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
                 >
                   {link.label}
@@ -113,7 +140,7 @@ export function SiteHeader() {
             return (
               <Link
                 key={link.href}
-                href={link.href as Route}
+                href={localizedHref as Route}
                 className="group relative text-gray-700 hover:text-accent-primary dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-[color:var(--color-accent-primary)] after:to-[color:var(--color-accent-secondary)] after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
               >
                 {link.label}
@@ -209,12 +236,14 @@ export function SiteHeader() {
         <div ref={menuRef} className="mx-4 mb-4 mt-2 rounded-2xl glass-morphism shadow-modern overflow-hidden">
           <nav className="flex flex-col" aria-label="Mobile navigation">
             {NAV_LINKS.map((link) => {
-              const isExternalOrAnchor = link.href.startsWith('http') || link.href.includes('#');
-              if (isExternalOrAnchor) {
+              const localizedHref = localizeHref(link.href);
+              const isExternal = localizedHref.startsWith('http');
+              const hasHash = localizedHref.includes('#');
+              if (isExternal || hasHash) {
                 return (
                   <a
                     key={link.href}
-                    href={link.href}
+                    href={localizedHref}
                     onClick={closeMenu}
                     className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all"
                   >
@@ -222,19 +251,16 @@ export function SiteHeader() {
                   </a>
                 );
               }
-              if (link.href === '/about') {
-                return (
-                  <Link
-                    key={link.href}
-                    href={'/about' as Route}
-                    onClick={closeMenu}
-                    className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all"
-                  >
-                    {link.label}
-                  </Link>
-                );
-              }
-              return null;
+              return (
+                <Link
+                  key={link.href}
+                  href={localizedHref as Route}
+                  onClick={closeMenu}
+                  className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all"
+                >
+                  {link.label}
+                </Link>
+              );
             })}
             <a
               href="https://app.vca.chat/marketplace"

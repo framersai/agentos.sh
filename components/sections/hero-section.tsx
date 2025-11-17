@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -21,35 +21,39 @@ export function HeroSection() {
   const [converge, setConverge] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const prefersReducedMotion = useReducedMotion()
+  const translateArray = useCallback(<T,>(key: string) => {
+    return t.raw(key) as T[] | undefined
+  }, [t])
+
   const headlinePairs = useMemo(() => {
-    const raw = t('headlinePairs', { returnObjects: true }) as unknown as HeadlinePair[] | undefined
+    const raw = translateArray<HeadlinePair>('headlinePairs')
     return raw ?? [
       { top: 'Adaptive Intelligence', bottom: 'for Autonomous Agents' },
       { top: 'Emergent Intelligence', bottom: 'for Enterprise Orchestration' },
       { top: 'Adaptive Intelligence', bottom: 'for Safety-Critical Workflows' },
       { top: 'Emergent Intelligence', bottom: 'for Parallel AI Teams' }
     ]
-  }, [t])
+  }, [translateArray])
   const [headlineIndex, setHeadlineIndex] = useState(0)
   const activePair = headlinePairs[headlineIndex]
   const technicalHighlights = useMemo(() => {
-    const raw = t('technicalHighlights', { returnObjects: true }) as unknown as Highlight[] | undefined
+    const raw = translateArray<Highlight>('technicalHighlights')
     return raw ?? [
       { title: 'Streaming-first runtime', detail: 'Token-level delivery across personas, guardrails, and channels.' },
       { title: 'Deterministic orchestration', detail: 'Parallel GMIs with auditable routing, approvals, and budgets.' },
       { title: 'Zero-copy memory fabric', detail: 'Vector, episodic, and working memory stitched together for recall.' },
       { title: 'Portable intelligence capsules', detail: 'Export full AgentOS instances as Markdown or JSON and ingest anywhere.' }
     ]
-  }, [t])
+  }, [translateArray])
 
   const heroVisualStats = useMemo(() => {
-    const raw = t('visualStats', { returnObjects: true }) as unknown as Stat[] | undefined
+    const raw = translateArray<Stat>('visualStats')
     return raw ?? [
       { label: 'Agencies live', value: '128' },
       { label: 'Approval SLA', value: '3.2 min' },
       { label: 'Guardrail coverage', value: '98%' }
     ]
-  }, [t])
+  }, [translateArray])
 
   const capabilityItems = useMemo(() => ([
     {
