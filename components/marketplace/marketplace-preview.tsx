@@ -277,6 +277,13 @@ export function MarketplacePreview() {
     const controller = new AbortController();
 
     const loadAgents = async () => {
+      // Only fetch live data if API is enabled
+      if (!process.env.NEXT_PUBLIC_MARKETPLACE_API_ENABLED) {
+        setAgents(FALLBACK_AGENTS);
+        setIsLoading(false);
+        return;
+      }
+
       try {
         setIsLoading(true);
         const response = await fetch(`${API_BASE_URL}/marketplace/agents`, {

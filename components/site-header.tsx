@@ -22,9 +22,6 @@ export function SiteHeader() {
   const NAV_LINKS: ReadonlyArray<{ href: string; label: string }> = [
     { href: '/#features', label: t('features') },
     { href: 'https://docs.agentos.sh', label: t('docs') },
-    { href: 'https://docs.agentos.sh/api', label: t('apiReference') },
-    { href: 'https://github.com/framersai/agentos/releases', label: t('changelog') },
-    { href: '/docs/api', label: t('openapi') },
     { href: '/faq', label: t('faq') },
     { href: '/about', label: t('about') },
   ];

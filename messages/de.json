@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "AgentOS | Portable KI-Agenten-Laufzeitumgebung für adaptive und emergente Intelligenz",
-    "description": "Erstellen Sie adaptive, emergente KI-Agenten mit AgentOS—der portablen universellen Laufzeitumgebung für Enterprise-RAG, Multi-Agenten-Orchestrierung und permanente Intelligenz.",
-    "ogTitle": "AgentOS | Adaptive KI-Intelligenz für unternehmensfertige Agenten",
-    "ogDescription": "Erstellen Sie adaptive, emergente KI-Agenten mit Gedächtnis, Tools und Handlungsfähigkeit. Open-Source-Laufzeitumgebung mit GMI-Rollen, Multi-Agenten-Orchestrierung und Enterprise-Leitplanken. Von Framers (frame.dev).",
-    "twitterTitle": "AgentOS | Adaptive KI-Intelligenz für unternehmensfertige Agenten",
-    "twitterDescription": "Erstellen Sie adaptive, emergente KI-Agenten mit AgentOS. Open-Source-Laufzeitumgebung mit GMI-Rollen, Agentur-Orchestrierung und Enterprise-Leitplanken. Von Framers."
+    "title": "AgentOS | Portable KI-Agenten-Laufzeit für Adaptive & Emergente Intelligenz",
+    "description": "Bauen Sie adaptive, emergente KI-Agenten mit AgentOS—die portable universelle Laufzeit für Enterprise RAG, Multi-Agenten-Orchestrierung und permanente Intelligenz.",
+    "ogTitle": "AgentOS | Adaptive KI-Intelligenz für Unternehmensfertige Agenten",
+    "ogDescription": "Bauen Sie adaptive, emergente KI-Agenten mit Gedächtnis, Tools und Autonomie. Open-Source-Laufzeit mit GMI-Rollen, Multi-Agenten-Orchestrierung und Enterprise-Leitplanken. Von Framers (frame.dev).",
+    "twitterTitle": "AgentOS | Adaptive KI-Intelligenz für Unternehmensfertige Agenten",
+    "twitterDescription": "Bauen Sie adaptive emergente KI-Agenten mit AgentOS. Open-Source-Laufzeit mit GMI-Rollen, Agenten-Orchestrierung und Enterprise-Leitplanken. Von Framers."
   },
   "nav": {
     "features": "Funktionen",
@@ -14,54 +14,54 @@
     "changelog": "Änderungsprotokoll",
     "openapi": "OpenAPI",
     "faq": "FAQ",
-    "about": "Über uns",
+    "about": "Über",
     "github": "GitHub",
     "marketplace": "Marktplatz"
   },
   "hero": {
     "badge": "Open Source · Adaptiv · Emergent",
-    "title": "Portable KI-Agenten-Laufzeitumgebung für adaptive und emergente Intelligenz",
-    "subtitle": "Erstellen Sie adaptive, emergente KI-Agenten mit Gedächtnis, Tools und Handlungsfähigkeit. TypeScript-Laufzeitumgebung mit GMI-Rollen, Multi-Agenten-Orchestrierung und Enterprise-Leitplanken.",
+    "title": "Portable KI-Agenten-Laufzeit für Adaptive & Emergente Intelligenz",
+    "subtitle": "Bauen Sie adaptive, emergente KI-Agenten mit Gedächtnis, Tools und Autonomie. TypeScript-Laufzeit mit GMI-Rollen, Multi-Agenten-Orchestrierung und Enterprise-Leitplanken.",
     "getStarted": "Loslegen",
-    "viewDocs": "Dokumentation ansehen",
-    "watchDemo": "Demo ansehen"
+    "viewDocs": "Dokumentation Ansehen",
+    "watchDemo": "Demo Ansehen"
   },
   "features": {
     "sectionTitle": "Unternehmensfertige Funktionen",
     "sectionSubtitle": "Produktionsreife Infrastruktur zum Erstellen, Bereitstellen und Skalieren von KI-Agenten",
     "multiAgent": {
       "title": "Emergente Multi-Agenten-Koordination",
-      "description": "Erzeugen Sie Forscher-, Analysten-, Kritiker- und Ausführungs-Personas aus einem einzigen Ziel. Gemeinsamer Kontext, Budgets und Genehmigungen halten jeden Zweig synchron.",
+      "description": "Erzeugen Sie Forscher-, Analysten-, Kritiker- und Executor-Personas aus einem einzigen Ziel. Gemeinsamer Kontext, Budgets und Genehmigungen halten jeden Zweig synchron.",
       "pill": "🆕 v0.1.0",
-      "bullet1": "Deterministisches Routing oder adaptives Fan-out",
+      "bullet1": "Deterministisches Routing oder adaptives Fan-Out",
       "bullet2": "Zitate + Gedächtnis automatisch verknüpft"
     },
     "toolPacks": {
-      "title": "Tool- und Leitplanken-Pakete",
-      "description": "Versenden Sie meinungsstarke Erweiterungen für Suche, Vision, Code-Ausführung oder benutzerdefinierte APIs mit integrierten Berechtigungen und Wiederholungsversuchen.",
+      "title": "Tool- & Leitplanken-Pakete",
+      "description": "Liefern Sie eigenwillige Erweiterungen für Suche, Vision, Code-Ausführung oder benutzerdefinierte APIs mit integrierten Berechtigungen und Wiederholungen.",
       "pill": "Erweiterungs-Ökosystem",
-      "bullet1": "Manifest-gesteuerte Tool-Registry",
+      "bullet1": "Manifest-gesteuertes Tool-Registry",
       "bullet2": "Leitplanken-Voreinstellungen + Compliance-Tags"
     },
     "language": {
-      "title": "Sprache und Übersetzung",
-      "description": "Automatische Erkennung von Gebietsschema und Ton pro Oberfläche. Personas bleiben fließend über Sprache, Chat und Dokumente mit Übersetzungsanbietern Ihrer Wahl.",
-      "pill": "Mehrsprachig bereit",
-      "bullet1": "Persona-bewusste Ton-Anpassung",
+      "title": "Sprache & Übersetzung",
+      "description": "Erkennen Sie automatisch Gebietsschema und Ton pro Oberfläche. Personas bleiben fließend in Sprache, Chat und Dokumenten mit Übersetzungsanbietern Ihrer Wahl.",
+      "pill": "Mehrsprachig Bereit",
+      "bullet1": "Persona-bewusste Tonanpassung",
       "bullet2": "Fallback-Routing nach Gebietsschema"
     },
     "storage": {
-      "title": "Speicherung und Bereitstellung",
+      "title": "Speicherung & Bereitstellung",
       "description": "Wechseln Sie zwischen PostgreSQL, better-sqlite3, sql.js oder Ihren eigenen Datenschichten. Jeder Agentenschritt wird synchronisiert und ist wiederholbar.",
-      "pill": "Überall bereitstellen",
+      "pill": "Überall Bereitstellen",
       "bullet1": "Referenz-Server-Vorlagen",
-      "bullet2": "Snapshot + Wiedergabe-Tools"
+      "bullet2": "Snapshot + Replay-Tools"
     },
     "workbench": {
-      "title": "Local-First-Workbench",
-      "description": "Prototyp kompletter Agenturen im Browser mit persistiertem SQL, Timeline-Scrubbern und einem integrierten Marktplatz für Personas.",
-      "pill": "Offline-fähig",
-      "bullet1": "Argumentation + Telemetrie live inspizieren",
+      "title": "Local-First Workbench",
+      "description": "Prototypen Sie ganze Agenturen im Browser mit persistiertem SQL, Timeline-Scrubbern und einem integrierten Marktplatz von Personas.",
+      "pill": "Offline-Fähig",
+      "bullet1": "Begründung + Telemetrie live inspizieren",
       "bullet2": "Artefakte zurück in die Cloud synchronisieren",
       "bullet3": "Vollständige Agenturen als Markdown/JSON-Bundles exportieren"
     }
@@ -75,9 +75,9 @@
     "description": "Reale AgentOS-Implementierungen und Produktionsbereitstellungen"
   },
   "footer": {
-    "tagline": "TypeScript-Laufzeitumgebung für adaptive KI-Agenten von Frame.dev",
+    "tagline": "TypeScript-Laufzeit für adaptive KI-Agenten von Frame.dev",
     "resources": "Ressourcen",
-    "docsGuides": "Dokumentation (Leitfäden)",
+    "docsGuides": "Dokumentation (Anleitungen)",
     "apiReferenceTSDoc": "API-Referenz (TypeDoc/TSDoc)",
     "examples": "Beispiele",
     "releaseNotes": "Versionshinweise",
@@ -91,12 +91,16 @@
     "copyright": "© {year} Frame.dev. Alle Rechte vorbehalten."
   },
   "cta": {
-    "title": "Bereit, adaptive KI-Agenten zu erstellen?",
-    "description": "Schließen Sie sich Entwicklern an, die mit AgentOS die nächste Generation intelligenter Systeme erstellen.",
+    "title": "Bereit, Adaptive KI-Agenten zu Bauen?",
+    "description": "Schließen Sie sich Entwicklern an, die die nächste Generation intelligenter Systeme mit AgentOS bauen.",
     "getStarted": "Loslegen",
-    "talkToUs": "Sprechen Sie mit uns"
+    "talkToUs": "Sprechen Sie mit Uns"
+  },
+  "LanguageSwitcher": {
+    "switchLanguage": "Sprache wechseln",
+    "currentLanguage": "Aktuelle Sprache: {language}",
+    "selectLanguage": "Sprache auswählen"
   },
   "skipToContent": "Zum Inhalt springen",
   "skipToMain": "Zum Hauptinhalt springen"
 }
-

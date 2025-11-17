@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "AgentOS | Runtime Portátil de Agentes IA para Inteligencia Adaptativa y Emergente",
-    "description": "Construye agentes IA adaptativos y emergentes con AgentOS—el runtime universal portátil para RAG empresarial, orquestación multi-agente e inteligencia permanente.",
-    "ogTitle": "AgentOS | Inteligencia IA Adaptativa para Agentes Empresariales",
-    "ogDescription": "Construye agentes IA adaptativos y emergentes con memoria, herramientas y agencia. Runtime de código abierto con roles GMI, orquestación multi-agente y barreras de protección empresariales. Por Framers (frame.dev).",
-    "twitterTitle": "AgentOS | Inteligencia IA Adaptativa para Agentes Empresariales",
-    "twitterDescription": "Construye agentes IA adaptativos y emergentes con AgentOS. Runtime de código abierto con roles GMI, orquestación de agencia y barreras de protección empresariales. Por Framers."
+    "title": "AgentOS | Runtime Portátil de Agentes de IA para Inteligencia Adaptativa y Emergente",
+    "description": "Construye agentes de IA adaptativos y emergentes con AgentOS—el runtime universal portátil para RAG empresarial, orquestación multi-agente e inteligencia permanente.",
+    "ogTitle": "AgentOS | Inteligencia de IA Adaptativa para Agentes Listos para Empresas",
+    "ogDescription": "Construye agentes de IA adaptativos y emergentes con memoria, herramientas y autonomía. Runtime de código abierto con roles GMI, orquestación multi-agente y barreras de seguridad empresariales. Por Framers (frame.dev).",
+    "twitterTitle": "AgentOS | Inteligencia de IA Adaptativa para Agentes Listos para Empresas",
+    "twitterDescription": "Construye agentes de IA adaptativos y emergentes con AgentOS. Runtime de código abierto con roles GMI, orquestación de agentes y barreras de seguridad empresariales. Por Framers."
   },
   "nav": {
     "features": "Características",
@@ -20,34 +20,34 @@
   },
   "hero": {
     "badge": "Código Abierto · Adaptativo · Emergente",
-    "title": "Runtime Portátil de Agentes IA para Inteligencia Adaptativa y Emergente",
-    "subtitle": "Construye agentes IA adaptativos y emergentes con memoria, herramientas y agencia. Runtime TypeScript con roles GMI, orquestación multi-agente y barreras de protección empresariales.",
+    "title": "Runtime Portátil de Agentes de IA para Inteligencia Adaptativa y Emergente",
+    "subtitle": "Construye agentes de IA adaptativos y emergentes con memoria, herramientas y autonomía. Runtime TypeScript con roles GMI, orquestación multi-agente y barreras de seguridad empresariales.",
     "getStarted": "Comenzar",
     "viewDocs": "Ver Documentación",
     "watchDemo": "Ver Demo"
   },
   "features": {
-    "sectionTitle": "Características Empresariales",
-    "sectionSubtitle": "Infraestructura de nivel producción para construir, desplegar y escalar agentes IA",
+    "sectionTitle": "Características Listas para Empresas",
+    "sectionSubtitle": "Infraestructura de grado de producción para construir, desplegar y escalar agentes de IA",
     "multiAgent": {
       "title": "Coordinación Multi-Agente Emergente",
-      "description": "Genera personas de investigador, analista, crítico y ejecutor a partir de un solo objetivo. Contexto compartido, presupuestos y aprobaciones mantienen cada rama sincronizada.",
+      "description": "Genera investigadores, analistas, críticos y ejecutores desde un solo objetivo. Contexto compartido, presupuestos y aprobaciones mantienen cada rama sincronizada.",
       "pill": "🆕 v0.1.0",
-      "bullet1": "Enrutamiento determinístico o fan-out adaptativo",
-      "bullet2": "Citas + memoria unidas automáticamente"
+      "bullet1": "Enrutamiento determinista o despliegue adaptativo",
+      "bullet2": "Citas + memoria enlazadas automáticamente"
     },
     "toolPacks": {
-      "title": "Packs de Herramientas y Barreras",
-      "description": "Envía extensiones especializadas para búsqueda, visión, ejecución de código o APIs personalizadas con permisos y reintentos integrados.",
+      "title": "Paquetes de Herramientas y Barreras",
+      "description": "Envía extensiones opinadas para búsqueda, visión, ejecución de código o APIs personalizadas con permisos integrados y reintentos.",
       "pill": "Ecosistema de Extensiones",
       "bullet1": "Registro de herramientas basado en manifiestos",
       "bullet2": "Preajustes de barreras + etiquetas de cumplimiento"
     },
     "language": {
       "title": "Idioma y Traducción",
-      "description": "Detección automática de configuración regional y tono por superficie. Las personas se mantienen fluidas en voz, chat y documentos con proveedores de traducción de su elección.",
-      "pill": "Listo para Multilingüe",
-      "bullet1": "Adaptación de tono consciente de persona",
+      "description": "Detecta automáticamente la configuración regional y el tono por superficie. Las personas permanecen fluidas en voz, chat y documentos con proveedores de traducción de su elección.",
+      "pill": "Multilingüe Listo",
+      "bullet1": "Adaptación de tono consciente de la persona",
       "bullet2": "Enrutamiento de respaldo por configuración regional"
     },
     "storage": {
@@ -55,12 +55,12 @@
       "description": "Cambia entre PostgreSQL, better-sqlite3, sql.js o tus propias capas de datos. Cada paso del agente está sincronizado y es reproducible.",
       "pill": "Despliega en Cualquier Lugar",
       "bullet1": "Plantillas de servidor de referencia",
-      "bullet2": "Herramientas de snapshot + reproducción"
+      "bullet2": "Herramientas de instantánea + reproducción"
     },
     "workbench": {
-      "title": "Banco de Trabajo Local-First",
-      "description": "Prototipa agencias completas en el navegador con SQL persistido, deslizadores de línea de tiempo y un mercado integrado de personas.",
-      "pill": "Capaz sin Conexión",
+      "title": "Workbench Local-Primero",
+      "description": "Prototipa agencias completas en el navegador con SQL persistente, depuradores de línea de tiempo y un mercado integrado de personas.",
+      "pill": "Capacidad Sin Conexión",
       "bullet1": "Inspecciona razonamiento + telemetría en vivo",
       "bullet2": "Sincroniza artefactos de vuelta a la nube",
       "bullet3": "Exporta agencias completas como paquetes Markdown/JSON"
@@ -71,11 +71,11 @@
     "description": "Comparte, compra y vende tus agencias AgentOS. Nos encargamos de CI/CD, infraestructura, pagos y cumplimiento para que puedas enfocarte en inteligencia adaptativa, emergente y permanente."
   },
   "caseStudies": {
-    "comingSoon": "Casos de Estudio Próximamente",
-    "description": "Implementaciones reales de AgentOS y despliegues en producción"
+    "comingSoon": "Estudios de Caso Próximamente",
+    "description": "Implementaciones y despliegues de producción reales de AgentOS"
   },
   "footer": {
-    "tagline": "Runtime TypeScript para agentes IA adaptativos por Frame.dev",
+    "tagline": "Runtime TypeScript para agentes de IA adaptativos por Frame.dev",
     "resources": "Recursos",
     "docsGuides": "Documentación (Guías)",
     "apiReferenceTSDoc": "Referencia API (TypeDoc/TSDoc)",
@@ -91,12 +91,16 @@
     "copyright": "© {year} Frame.dev. Todos los derechos reservados."
   },
   "cta": {
-    "title": "¿Listo para Construir Agentes IA Adaptativos?",
-    "description": "Únete a los desarrolladores que construyen la próxima generación de sistemas inteligentes con AgentOS.",
+    "title": "¿Listo para Construir Agentes de IA Adaptativos?",
+    "description": "Únete a los desarrolladores que están construyendo la próxima generación de sistemas inteligentes con AgentOS.",
     "getStarted": "Comenzar",
-    "talkToUs": "Hablar con Nosotros"
+    "talkToUs": "Habla con Nosotros"
+  },
+  "LanguageSwitcher": {
+    "switchLanguage": "Cambiar idioma",
+    "currentLanguage": "Idioma actual: {language}",
+    "selectLanguage": "Seleccionar idioma"
   },
   "skipToContent": "Saltar al contenido",
   "skipToMain": "Saltar al contenido principal"
 }
-

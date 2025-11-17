@@ -96,6 +96,11 @@
     "getStarted": "Get Started",
     "talkToUs": "Talk to Us"
   },
+  "LanguageSwitcher": {
+    "switchLanguage": "Switch language",
+    "currentLanguage": "Current language: {language}",
+    "selectLanguage": "Select language"
+  },
   "skipToContent": "Skip to content",
   "skipToMain": "Skip to main content"
 }

@@ -5,11 +5,13 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Github, Terminal, Zap } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { AnimatedAgentOSLogo } from '../icons/animated-logo'
 import { TypeScriptIcon, OpenSourceIcon, StreamingIcon, MemoryIcon } from '../icons/feature-icons'
 import { Toast } from '../ui/toast'
 
 export function HeroSection() {
+  const t = useTranslations('hero')
   const [showToast, setShowToast] = useState(false)
   const [stars, setStars] = useState<number | null>(null)
   const [converge, setConverge] = useState(false)
@@ -196,7 +198,7 @@ export function HeroSection() {
                 transition={{ delay: 0.35, duration: 0.7 }}
                 className="text-xl text-text-secondary leading-relaxed max-w-3xl mx-auto lg:mx-0"
               >
-                AgentOS is the portable, universal agent OS for adaptive, emergent, and permanent intelligence. Route support tickets, push CRM updates, or orchestrate RAG pipelines with deterministic guardrails, then export the entire agency as Markdown or JSON to transport into any stack.
+                {t('subtitle')}
               </motion.p>
 
               <motion.ul
