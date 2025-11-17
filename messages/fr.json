@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "title": "AgentOS | Runtime portable d'agents IA pour l'intelligence adaptative et émergente",
+    "description": "Créez des agents IA adaptatifs et émergents avec AgentOS, le runtime universel portable pour le RAG d'entreprise, l'orchestration multi-agents et l'intelligence permanente.",
+    "ogTitle": "AgentOS | Intelligence IA adaptative prête pour l'entreprise",
+    "ogDescription": "Déployez des agents IA adaptatifs dotés de mémoire, d'outils et d'autonomie. Runtime open source avec rôles GMI, orchestration multi-agents et garde-fous entreprise. Par Framers (frame.dev).",
+    "twitterTitle": "AgentOS | Intelligence IA adaptative prête pour l'entreprise",
+    "twitterDescription": "Créez des agents IA adaptatifs avec AgentOS. Runtime open source avec rôles GMI, orchestration et garde-fous pour l'entreprise. Par Framers."
+  },
+  "nav": {
+    "features": "Fonctionnalités",
+    "docs": "Docs",
+    "apiReference": "Référence API",
+    "changelog": "Changelog",
+    "openapi": "OpenAPI",
+    "faq": "FAQ",
+    "about": "À propos",
+    "github": "GitHub",
+    "marketplace": "Marketplace"
+  },
+  "hero": {
+    "badge": "Open Source · Adaptatif · Émergent",
+    "title": "Runtime portable pour agents IA adaptatifs et émergents",
+    "subtitle": "Créez des agents IA adaptatifs avec mémoire, outils et autonomie. Runtime TypeScript avec rôles GMI, orchestration multi-agents et garde-fous entreprise.",
+    "headlinePairs": [
+      { "top": "Intelligence adaptative", "bottom": "pour des agents autonomes" },
+      { "top": "Intelligence émergente", "bottom": "pour l'orchestration d'entreprise" },
+      { "top": "Intelligence adaptative", "bottom": "pour les workflows critiques" },
+      { "top": "Intelligence émergente", "bottom": "pour les équipes IA parallèles" }
+    ],
+    "technicalHighlights": [
+      { "title": "Runtime orienté streaming", "detail": "Diffusion au niveau du token entre personas, garde-fous et canaux." },
+      { "title": "Orchestration déterministe", "detail": "GMI parallèles avec routage, validations et budgets auditables." },
+      { "title": "Tissu mémoire sans copie", "detail": "Mémoires vectorielle, épisodique et de travail réunies dans un flux réutilisable." },
+      { "title": "Capsules d'intelligence portables", "detail": "Exportez AgentOS en Markdown/JSON et réimportez-le dans n'importe quelle stack." }
+    ],
+    "visualStats": [
+      { "label": "Agences en production", "value": "128" },
+      { "label": "SLA d'approbation", "value": "3,2 min" },
+      { "label": "Couverture des garde-fous", "value": "98%" }
+    ],
+    "ctaPrimary": "Essayer Voice Chat Assistant",
+    "ctaSecondary": "Étoiler sur GitHub",
+    "marketplaceLead": "Besoin d'agents sélectionnés ?",
+    "marketplaceCta": "Marketplace bientôt disponible",
+    "codeLabel": "npm install @framers/agentos",
+    "copyToast": "Copié dans le presse-papiers !",
+    "copyAria": "Copier la commande",
+    "capabilities": {
+      "ts": { "label": "Natf TypeScript", "value": "Typé" },
+      "oss": { "label": "Open Source", "value": "Apache 2.0" },
+      "streaming": { "label": "Streaming temps réel", "value": "Async ready" },
+      "memory": { "label": "Mémoire persistante", "value": "Intégrée" }
+    },
+    "heroVisualAlt": "Aperçu de l'espace d'orchestration AgentOS"
+  },
+  "features": {
+    "sectionTitle": "Fonctionnalités prêtes pour l'entreprise",
+    "sectionSubtitle": "Infrastructure de production pour créer, déployer et faire évoluer des agents IA",
+    "multiAgent": {
+      "title": "Coordination multi-agent émergente",
+      "description": "Générez chercheurs, analystes, critiques et exécutants à partir d'un seul objectif. Contexte, budgets et validations partagés gardent chaque branche alignée.",
+      "pill": "🆕 v0.1.0",
+      "bullet1": "Routage déterministe ou éventail adaptatif",
+      "bullet2": "Citations et mémoires fusionnées automatiquement"
+    },
+    "toolPacks": {
+      "title": "Packs d'outils et garde-fous",
+      "description": "Extensions clés en main pour la recherche, la vision, l'exécution de code ou les API custom, avec autorisations et retries intégrés.",
+      "pill": "Écosystème d'extensions",
+      "bullet1": "Registre d'outils piloté par manifeste",
+      "bullet2": "Préréglages de garde-fous + balises conformité"
+    },
+    "language": {
+      "title": "Langue et traduction",
+      "description": "Détection automatique de la langue et du ton. Les personas restent fluides sur voix, chat et docs avec le fournisseur de traduction de votre choix.",
+      "pill": "Multilingue prêt",
+      "bullet1": "Adaptation du ton selon la persona",
+      "bullet2": "Routage de secours par langue"
+    },
+    "storage": {
+      "title": "Stockage et déploiement",
+      "description": "Basculez entre PostgreSQL, better-sqlite3, sql.js ou votre couche de données. Chaque étape agent est synchronisée et rejouable.",
+      "pill": "Déployez partout",
+      "bullet1": "Modèles de serveurs de référence",
+      "bullet2": "Outils de snapshot & replay"
+    },
+    "workbench": {
+      "title": "Workbench local-first",
+      "description": "Prototyper des agences complètes dans le navigateur avec SQL persistant, scrubbing de timeline et marketplace intégrée.",
+      "pill": "Utilisable hors ligne",
+      "bullet1": "Inspectez raisonnement et télémétrie en direct",
+      "bullet2": "Synchronisez les artefacts vers le cloud",
+      "bullet3": "Exportez l'agence en bundles Markdown/JSON"
+    }
+  },
+  "marketplace": {
+    "comingSoon": "Marketplace d'agents bientôt disponible",
+    "description": "Partagez, achetez et vendez vos agences AgentOS. Nous gérons CI/CD, infra, paiements et conformité pour que vous restiez concentré sur l'intelligence adaptative et émergente."
+  },
+  "caseStudies": {
+    "comingSoon": "Études de cas à venir",
+    "description": "Déploiements AgentOS réels et applications en production"
+  },
+  "footer": {
+    "tagline": "Runtime TypeScript pour agents IA adaptatifs par Frame.dev",
+    "resources": "Ressources",
+    "docsGuides": "Docs (Guides)",
+    "apiReferenceTSDoc": "Référence API (TypeDoc/TSDoc)",
+    "examples": "Exemples",
+    "releaseNotes": "Notes de version",
+    "discord": "Discord",
+    "company": "Entreprise",
+    "contact": "Contact",
+    "legal": "Légal",
+    "terms": "Conditions",
+    "privacy": "Confidentialité",
+    "license": "Apache 2.0 (core) + MIT (agents, extensions, garde-fous)",
+    "copyright": "© {year} Frame.dev. Tous droits réservés."
+  },
+  "cta": {
+    "title": "Prêt à construire des agents IA adaptatifs ?",
+    "description": "Rejoignez les développeurs qui bâtissent la prochaine génération de systèmes intelligents avec AgentOS.",
+    "getStarted": "Commencer",
+    "talkToUs": "Discuter"
+  },
+  "LanguageSwitcher": {
+    "switchLanguage": "Changer de langue",
+    "currentLanguage": "Langue actuelle : {language}",
+    "selectLanguage": "Sélectionner une langue"
+  },
+  "skipToContent": "Aller au contenu",
+  "skipToMain": "Aller au contenu principal"
+}
+

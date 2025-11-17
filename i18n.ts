@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
 
 // Supported locales
-export const locales = ['en', 'zh', 'ko', 'ja', 'es', 'de'] as const;
+export const locales = ['en', 'es', 'fr', 'de', 'pt', 'ja', 'ko', 'zh'] as const;
 export type Locale = (typeof locales)[number];
 
 // Default locale (English)
@@ -11,11 +11,13 @@ export const defaultLocale: Locale = 'en';
 // Locale names for display
 export const localeNames: Record<Locale, string> = {
   en: 'English',
-  zh: '简体中文',
-  ko: '한국어',
-  ja: '日本語',
   es: 'Español',
+  fr: 'Français',
   de: 'Deutsch',
+  pt: 'Português',
+  ja: '日本語',
+  ko: '한국어',
+  zh: '简体中文',
 };
 
 export default getRequestConfig(async ({ locale }) => {

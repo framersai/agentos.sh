@@ -139,6 +139,12 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <ThemeProvider>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `document.documentElement.setAttribute('lang','${locale}');
+document.documentElement.dataset.locale='${locale}';`
+              }}
+            />
             <a href="#main-content" className="skip-to-content">Skip to content</a>
             <SiteHeader />
             {/* JSON-LD: Organization */}

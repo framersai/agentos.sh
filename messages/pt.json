@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "title": "AgentOS | Runtime Portátil de Agentes IA para Inteligência Adaptativa e Emergente",
+    "description": "Crie agentes IA adaptativos com o AgentOS — o runtime universal portátil para RAG corporativo, orquestração multiagente e inteligência permanente.",
+    "ogTitle": "AgentOS | Inteligência IA adaptativa pronta para empresas",
+    "ogDescription": "Construa agentes IA com memória, ferramentas e autonomia. Runtime open source com papéis GMI, orquestração multiagente e guardrails corporativos. Por Framers (frame.dev).",
+    "twitterTitle": "AgentOS | Inteligência IA adaptativa pronta para empresas",
+    "twitterDescription": "Crie agentes IA adaptativos com o AgentOS. Runtime open source com papéis GMI, orquestração e guardrails empresariais. Por Framers."
+  },
+  "nav": {
+    "features": "Recursos",
+    "docs": "Docs",
+    "apiReference": "Referência API",
+    "changelog": "Changelog",
+    "openapi": "OpenAPI",
+    "faq": "FAQ",
+    "about": "Sobre",
+    "github": "GitHub",
+    "marketplace": "Marketplace"
+  },
+  "hero": {
+    "badge": "Open Source · Adaptativo · Emergente",
+    "title": "Runtime portátil para agentes IA adaptativos e emergentes",
+    "subtitle": "Crie agentes IA adaptativos com memória, ferramentas e autonomia. Runtime TypeScript com papéis GMI, orquestração multiagente e guardrails corporativos.",
+    "headlinePairs": [
+      { "top": "Inteligência adaptativa", "bottom": "para agentes autônomos" },
+      { "top": "Inteligência emergente", "bottom": "para orquestração corporativa" },
+      { "top": "Inteligência adaptativa", "bottom": "para fluxos críticos" },
+      { "top": "Inteligência emergente", "bottom": "para equipes IA paralelas" }
+    ],
+    "technicalHighlights": [
+      { "title": "Runtime first em streaming", "detail": "Entrega token a token entre personas, guardrails e canais." },
+      { "title": "Orquestração determinística", "detail": "GMIs paralelos com roteamento, aprovações e orçamentos auditáveis." },
+      { "title": "Tecido de memória zero-cópia", "detail": "Memórias vetorial, episódica e de trabalho unificadas em um fluxo reutilizável." },
+      { "title": "Cápsulas de inteligência portáveis", "detail": "Exporte instâncias AgentOS como Markdown/JSON e use em qualquer stack." }
+    ],
+    "visualStats": [
+      { "label": "Agências ativas", "value": "128" },
+      { "label": "SLA de aprovação", "value": "3,2 min" },
+      { "label": "Cobertura de guardrails", "value": "98%" }
+    ],
+    "ctaPrimary": "Testar Voice Chat Assistant",
+    "ctaSecondary": "Dar estrela no GitHub",
+    "marketplaceLead": "Precisa de agentes curados?",
+    "marketplaceCta": "Marketplace chegando em breve",
+    "codeLabel": "npm install @framers/agentos",
+    "copyToast": "Copiado para a área de transferência!",
+    "copyAria": "Copiar comando",
+    "capabilities": {
+      "ts": { "label": "Nativo em TypeScript", "value": "Type-safe" },
+      "oss": { "label": "Open Source", "value": "Apache 2.0" },
+      "streaming": { "label": "Streaming em tempo real", "value": "Pronto para async" },
+      "memory": { "label": "Memória persistente", "value": "Integrada" }
+    },
+    "heroVisualAlt": "Prévia do workspace de orquestração AgentOS"
+  },
+  "features": {
+    "sectionTitle": "Recursos prontos para empresas",
+    "sectionSubtitle": "Infraestrutura de produção para criar, lançar e escalar agentes IA",
+    "multiAgent": {
+      "title": "Coordenação multiagente emergente",
+      "description": "Gere pesquisador, analista, crítico e executor a partir de um único objetivo. Contexto, orçamento e aprovações compartilhados mantêm cada ramo sincronizado.",
+      "pill": "🆕 v0.1.0",
+      "bullet1": "Roteamento determinístico ou fan-out adaptativo",
+      "bullet2": "Citações + memória costuradas automaticamente"
+    },
+    "toolPacks": {
+      "title": "Packs de ferramentas e guardrails",
+      "description": "Extensões opinativas para busca, visão, execução de código ou APIs customizadas, com permissões e retries embutidos.",
+      "pill": "Ecossistema de extensões",
+      "bullet1": "Registro de ferramentas baseado em manifesto",
+      "bullet2": "Presets de guardrails + etiquetas de conformidade"
+    },
+    "language": {
+      "title": "Idioma e tradução",
+      "description": "Detecte automaticamente idioma e tom por superfície. Personas permanecem fluentes em voz, chat e docs com o provedor de tradução que você preferir.",
+      "pill": "Multilíngue pronto",
+      "bullet1": "Adaptação de tom sensível à persona",
+      "bullet2": "Roteamento de fallback por idioma"
+    },
+    "storage": {
+      "title": "Armazenamento e implantação",
+      "description": "Troque entre PostgreSQL, better-sqlite3, sql.js ou sua própria camada. Cada passo do agente é sincronizado e reproduzível.",
+      "pill": "Implante em qualquer lugar",
+      "bullet1": "Modelos de servidor de referência",
+      "bullet2": "Ferramentas de snapshot + replay"
+    },
+    "workbench": {
+      "title": "Workbench local-first",
+      "description": "Prototipe agências completas no navegador com SQL persistente, scrubber de timeline e marketplace embutido.",
+      "pill": "Offline-ready",
+      "bullet1": "Inspecione raciocínio e telemetria ao vivo",
+      "bullet2": "Sincronize artefatos de volta para a nuvem",
+      "bullet3": "Exporte agências em bundles Markdown/JSON"
+    }
+  },
+  "marketplace": {
+    "comingSoon": "Marketplace de agentes em breve",
+    "description": "Compartilhe, compre e venda suas agências AgentOS. Nós cuidamos de CI/CD, infraestrutura, pagamentos e compliance para você focar em inteligência adaptativa."
+  },
+  "caseStudies": {
+    "comingSoon": "Estudos de caso em breve",
+    "description": "Implementações reais e implantações em produção com AgentOS"
+  },
+  "footer": {
+    "tagline": "Runtime TypeScript para agentes IA adaptativos por Frame.dev",
+    "resources": "Recursos",
+    "docsGuides": "Docs (Guias)",
+    "apiReferenceTSDoc": "Referência API (TypeDoc/TSDoc)",
+    "examples": "Exemplos",
+    "releaseNotes": "Notas de versão",
+    "discord": "Discord",
+    "company": "Empresa",
+    "contact": "Contato",
+    "legal": "Jurídico",
+    "terms": "Termos",
+    "privacy": "Privacidade",
+    "license": "Apache 2.0 (core) + MIT (agentes, extensões, guardrails)",
+    "copyright": "© {year} Frame.dev. Todos os direitos reservados."
+  },
+  "cta": {
+    "title": "Pronto para construir agentes IA adaptativos?",
+    "description": "Junte-se aos desenvolvedores que constroem a próxima geração de sistemas inteligentes com AgentOS.",
+    "getStarted": "Começar",
+    "talkToUs": "Fale conosco"
+  },
+  "LanguageSwitcher": {
+    "switchLanguage": "Trocar idioma",
+    "currentLanguage": "Idioma atual: {language}",
+    "selectLanguage": "Selecionar idioma"
+  },
+  "skipToContent": "Ir para o conteúdo",
+  "skipToMain": "Ir para o conteúdo principal"
+}
+
