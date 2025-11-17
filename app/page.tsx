@@ -1,14 +1,5 @@
-import LocaleLayout, { resolveLocaleMetadata } from './[locale]/layout';
-import LandingPage from './[locale]/page';
+import { redirect } from 'next/navigation';
 
-export async function generateMetadata() {
-  return resolveLocaleMetadata('en');
-}
-
-export default async function RootPage() {
-  return (
-    <LocaleLayout params={{ locale: 'en' }}>
-      <LandingPage />
-    </LocaleLayout>
-  );
+export default function RootPage() {
+  redirect('/en');
 }
