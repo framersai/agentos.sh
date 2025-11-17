@@ -71,7 +71,21 @@ export function LanguageSwitcher() {
       });
     }
 
-    router.push(targetPath);
+    // For static export (GitHub Pages), we need a hard reload to pick up the new locale
+    // because middleware doesn't run on static hosts
+    if (typeof window !== 'undefined') {
+      // Save preference
+      try {
+        localStorage.setItem('preferred-locale', newLocale);
+        document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`;
+      } catch (e) {
+        // ignore if localStorage blocked
+      }
+      // Hard reload to the new locale path
+      window.location.href = targetPath;
+    } else {
+      router.push(targetPath);
+    }
     setIsOpen(false);
   };
 

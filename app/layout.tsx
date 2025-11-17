@@ -67,6 +67,23 @@ const criticalStyles = `
   }
 `;
 
+const localeRedirectScript = `
+(function () {
+  // Check for saved locale preference on root page only
+  if (window.location.pathname === '/' || window.location.pathname === '') {
+    try {
+      var saved = localStorage.getItem('preferred-locale');
+      if (saved && saved !== 'en') {
+        window.location.replace('/' + saved + '/');
+        return;
+      }
+    } catch (e) {
+      // localStorage blocked, continue
+    }
+  }
+})();
+`;
+
 const removePreloadScript = `
 (function () {
   var removePreload = function () {
@@ -96,16 +113,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <style dangerouslySetInnerHTML={{ __html: criticalStyles }} />
       </head>
       <body className={`${inter.variable} ${grotesk.variable} grainy min-h-screen antialiased transition-theme bg-background-primary text-text-primary`}>
+        <script dangerouslySetInnerHTML={{ __html: localeRedirectScript }} />
         <div id="initial-loader" className="app-shell-loader" aria-hidden="true">
           <span className="loader-orb" />
           <span className="loader-label">Loading AgentOS…</span>
         </div>
         {children}
-          <script
-            dangerouslySetInnerHTML={{
-            __html: removePreloadScript,
-          }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: removePreloadScript }} />
       </body>
     </html>
   );
