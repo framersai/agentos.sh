@@ -19,12 +19,15 @@ export const localeNames: Record<Locale, string> = {
 };
 
 export default getRequestConfig(async ({ locale }) => {
+  // Normalise locale: default to 'en' when undefined (e.g. root path on static export)
+  const effectiveLocale = (locale || defaultLocale) as Locale;
+
   // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale as any)) notFound();
+  if (!locales.includes(effectiveLocale)) notFound();
 
   return {
-    locale,
-    messages: (await import(`./messages/${locale}.json`)).default
+    locale: effectiveLocale,
+    messages: (await import(`./messages/${effectiveLocale}.json`)).default
   } as any;
 });
 
