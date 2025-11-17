@@ -38,13 +38,40 @@ export function LanguageSwitcher() {
   }, [isOpen]);
 
   const switchLocale = (newLocale: Locale) => {
-    // Remove the current locale from pathname
-    const pathnameWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
-    
-    // Add new locale prefix
-    const newPathname = `/${newLocale}${pathnameWithoutLocale === '/' ? '' : pathnameWithoutLocale}`;
+    if (!pathname) return;
 
-    router.push(newPathname);
+    // Normalise: ensure we don't duplicate locale segments.
+    let subPath = pathname;
+    const segments = pathname.split('/');
+    const first = segments[1] as Locale | undefined;
+
+    if (first && locales.includes(first)) {
+      // Strip existing locale segment from the front
+      subPath = '/' + segments.slice(2).join('/');
+      if (subPath === '//') subPath = '/';
+    }
+
+    // Build new path. Default locale ('en') stays at root.
+    let targetPath: string;
+    if (newLocale === 'en') {
+      targetPath = subPath || '/';
+    } else {
+      targetPath = `/${newLocale}${subPath === '/' ? '' : subPath}`;
+    }
+
+    // Optional: lightweight debug trace
+    // In dev, log path transitions for debugging mis-routed locales.
+    if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined' && 'console' in window) {
+      window.console.debug('[LanguageSwitcher] locale change', {
+        from: locale,
+        to: newLocale,
+        pathname,
+        subPath,
+        targetPath,
+      });
+    }
+
+    router.push(targetPath);
     setIsOpen(false);
   };
 
