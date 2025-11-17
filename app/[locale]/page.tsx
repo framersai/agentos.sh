@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { HeroSection } from '../../components/sections/hero-section'
 import { GMISection } from '../../components/sections/gmi-section'
 import { CodeExamplesSection } from '../../components/sections/code-examples-section'
@@ -25,63 +26,62 @@ const FloatingElementsLazy = dynamic(
   { ssr: false }
 )
 
-// Enhanced feature cards with better descriptions
-const featureCards = [
-  {
-    icon: Users,
-    title: 'Emergent Multi-Agent Coordination',
-    body: 'Spawn researcher, analyst, critic, and executor personas from a single goal. Shared context, budgets, and approvals keep every branch in sync.',
-    pill: '🆕 v0.1.0',
-    gradient: 'from-violet-500 to-purple-500',
-    layout: 'horizontal',
-    span: 'lg:col-span-2',
-    bullets: ['Deterministic routing or adaptive fan-out', 'Citations + memory stitched automatically']
-  },
-  {
-    icon: Package,
-    title: 'Tool & Guardrail Packs',
-    body: 'Ship opinionated extensions for search, vision, code execution, or custom APIs with built-in permissions and retries.',
-    pill: 'Extension Ecosystem',
-    gradient: 'from-blue-500 to-cyan-500',
-    layout: 'vertical',
-    bullets: ['Manifest-driven tool registry', 'Guardrail presets + compliance tags']
-  },
-  {
-    icon: Globe,
-    title: 'Language & Translation',
-    body: 'Auto-detect locale and tone per surface. Personas stay fluent across voice, chat, and docs with translation providers of your choice.',
-    pill: 'Multilingual Ready',
-    gradient: 'from-purple-500 to-pink-500',
-    layout: 'vertical',
-    bullets: ['Persona-aware tone adaptation', 'Fallback routing by locale']
-  },
-  {
-    icon: Database,
-    title: 'Storage & Deployment',
-    body: 'Switch between PostgreSQL, better-sqlite3, sql.js, or your own data layers. Every agent step is synced and replayable.',
-    pill: 'Deploy Anywhere',
-    gradient: 'from-green-500 to-emerald-500',
-    layout: 'horizontal',
-    span: 'lg:col-span-2',
-    bullets: ['Reference server templates', 'Snapshot + replay tooling']
-  },
-  {
-    icon: Terminal,
-    title: 'Local-First Workbench',
-    body: 'Prototype entire agencies in-browser with persisted SQL, timeline scrubbers, and a built-in marketplace of personas.',
-    pill: 'Offline Capable',
-    gradient: 'from-orange-500 to-red-500',
-    layout: 'vertical',
-    bullets: ['Inspect reasoning + telemetry live', 'Sync artifacts back to the cloud', 'Export full agencies as Markdown/JSON bundles']
-  }
-]
-
-// (roadmap reserved: moved to docs landing)
-
-// (testimonials reserved: moved to marketing site)
-
-
 export default function LandingPage() {
+  const t = useTranslations('features')
+  const tCommon = useTranslations()
+  const tMarketplace = useTranslations('marketplace')
+  const tCaseStudies = useTranslations('caseStudies')
+  
+  // Enhanced feature cards with translations
+  const featureCards = [
+    {
+      icon: Users,
+      title: t('multiAgent.title'),
+      body: t('multiAgent.description'),
+      pill: t('multiAgent.pill'),
+      gradient: 'from-violet-500 to-purple-500',
+      layout: 'horizontal',
+      span: 'lg:col-span-2',
+      bullets: [t('multiAgent.bullet1'), t('multiAgent.bullet2')]
+    },
+    {
+      icon: Package,
+      title: t('toolPacks.title'),
+      body: t('toolPacks.description'),
+      pill: t('toolPacks.pill'),
+      gradient: 'from-blue-500 to-cyan-500',
+      layout: 'vertical',
+      bullets: [t('toolPacks.bullet1'), t('toolPacks.bullet2')]
+    },
+    {
+      icon: Globe,
+      title: t('language.title'),
+      body: t('language.description'),
+      pill: t('language.pill'),
+      gradient: 'from-purple-500 to-pink-500',
+      layout: 'vertical',
+      bullets: [t('language.bullet1'), t('language.bullet2')]
+    },
+    {
+      icon: Database,
+      title: t('storage.title'),
+      body: t('storage.description'),
+      pill: t('storage.pill'),
+      gradient: 'from-green-500 to-emerald-500',
+      layout: 'horizontal',
+      span: 'lg:col-span-2',
+      bullets: [t('storage.bullet1'), t('storage.bullet2')]
+    },
+    {
+      icon: Terminal,
+      title: t('workbench.title'),
+      body: t('workbench.description'),
+      pill: t('workbench.pill'),
+      gradient: 'from-orange-500 to-red-500',
+      layout: 'vertical',
+      bullets: [t('workbench.bullet1'), t('workbench.bullet2'), t('workbench.bullet3')]
+    }
+  ]
   return (
     <LazyMotion features={domAnimation}>
       {/* Animated Background (mount after idle) */}
@@ -89,7 +89,7 @@ export default function LandingPage() {
 
       {/* Skip to Content for Accessibility */}
       <a href="#main-content" className="skip-to-content">
-        Skip to main content
+        {tCommon('skipToMain')}
       </a>
 
       {/* Main Content */}
@@ -176,9 +176,9 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto relative">
             <div className="absolute inset-0 backdrop-blur-md bg-background-primary/60 z-10 flex items-center justify-center rounded-3xl">
               <div className="text-center">
-                <h3 className="text-4xl sm:text-5xl section-title">Agent Marketplace Coming Soon</h3>
+                <h3 className="text-4xl sm:text-5xl section-title">{tMarketplace('comingSoon')}</h3>
                 <p className="text-lg text-gray-700 dark:text-text-secondary max-w-2xl mx-auto">
-                  Share, buy, and sell your AgentOS agencies. We&#39;ll handle CI/CD, infrastructure, payouts, and compliance so you can focus on adaptive, emergent, permanent intelligence.
+                  {tMarketplace('description')}
                 </p>
               </div>
             </div>
@@ -196,9 +196,9 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto relative">
             <div className="absolute inset-0 backdrop-blur-sm bg-background-primary/50 z-10 flex items-center justify-center rounded-3xl">
               <div className="text-center">
-                <h3 className="text-4xl sm:text-5xl section-title">Case Studies Coming Soon</h3>
+                <h3 className="text-4xl sm:text-5xl section-title">{tCaseStudies('comingSoon')}</h3>
                 <p className="text-lg text-gray-700 dark:text-text-secondary">
-                  Real-world AgentOS implementations and production deployments
+                  {tCaseStudies('description')}
                 </p>
               </div>
             </div>

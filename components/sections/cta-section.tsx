@@ -2,8 +2,10 @@
 
 import { motion } from 'framer-motion'
 import { Github, MessageCircle, Sparkles } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function CTASection() {
+  const t = useTranslations('cta')
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-tint">
       <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(circle_at_15%_10%,var(--color-accent-warm-soft),transparent_60%),radial-gradient(circle_at_85%_20%,hsla(260,90%,65%,0.25),transparent_70%)]" />
@@ -24,12 +26,12 @@ export function CTASection() {
 
           <h2 className="text-5xl sm:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-              Ready to Build with AgentOS?
+              {t('title')}
             </span>
           </h2>
 
           <p className="text-xl text-text-secondary max-w-3xl mx-auto mb-12">
-            AgentOS is open source (Apache&nbsp;2.0 core, MIT extensions) and fully portable. Export emergent agencies, ingest them in any stack, and keep adaptive, permanent intelligence under your guardrails.
+            {t('description')}
           </p>
         </motion.div>
 
