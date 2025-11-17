@@ -140,9 +140,12 @@ export function SiteHeader() {
                 <a
                   key={link.href}
                   href={localizedHref}
-                  className="group relative text-gray-700 hover:text-accent-primary dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-[color:var(--color-accent-primary)] after:to-[color:var(--color-accent-secondary)] after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
+                  className="nav-link group relative inline-block py-1 text-gray-700 dark:text-white/90 font-semibold transition-colors duration-300 ease-out"
                 >
-                  {link.label}
+                  <span className="relative z-10 transition-all duration-300 ease-out group-hover:bg-gradient-to-r group-hover:from-accent-primary group-hover:to-accent-secondary group-hover:bg-clip-text group-hover:text-transparent">
+                    {link.label}
+                  </span>
+                  <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-accent-primary to-accent-secondary transition-all duration-500 ease-out group-hover:w-full" />
                 </a>
               );
             }
@@ -150,9 +153,12 @@ export function SiteHeader() {
               <Link
                 key={link.href}
                 href={localizedHref as Route}
-                className="group relative text-gray-700 hover:text-accent-primary dark:text-white/90 dark:hover:text-white transition-all duration-200 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gradient-to-r after:from-[color:var(--color-accent-primary)] after:to-[color:var(--color-accent-secondary)] after:transition-all after:duration-300 group-hover:after:w-full font-semibold"
+                className="nav-link group relative inline-block py-1 text-gray-700 dark:text-white/90 font-semibold transition-colors duration-300 ease-out"
               >
-                {link.label}
+                <span className="relative z-10 transition-all duration-300 ease-out group-hover:bg-gradient-to-r group-hover:from-accent-primary group-hover:to-accent-secondary group-hover:bg-clip-text group-hover:text-transparent">
+                  {link.label}
+                </span>
+                <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-accent-primary to-accent-secondary transition-all duration-500 ease-out group-hover:w-full" />
               </Link>
             );
           })}
@@ -254,7 +260,7 @@ export function SiteHeader() {
                     key={link.href}
                     href={localizedHref}
                     onClick={closeMenu}
-                    className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all"
+                    className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-gradient-to-r hover:from-accent-primary/8 hover:to-accent-secondary/8 transition-all duration-300 ease-out"
                   >
                     {link.label}
                   </a>
@@ -265,7 +271,7 @@ export function SiteHeader() {
                   key={link.href}
                   href={localizedHref as Route}
                   onClick={closeMenu}
-                  className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all"
+                  className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-gradient-to-r hover:from-accent-primary/8 hover:to-accent-secondary/8 transition-all duration-300 ease-out"
                 >
                   {link.label}
                 </Link>
@@ -276,7 +282,7 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
-              className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all flex items-center gap-2"
+              className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-gradient-to-r hover:from-accent-primary/8 hover:to-accent-secondary/8 transition-all duration-300 ease-out flex items-center gap-2"
             >
               <Globe className="w-4 h-4" />
               {t('marketplace')}
@@ -286,7 +292,7 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
-              className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 transition-all flex items-center gap-2"
+              className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-gradient-to-r hover:from-accent-primary/8 hover:to-accent-secondary/8 transition-all duration-300 ease-out flex items-center gap-2"
             >
               <Github className="w-4 h-4" />
               {t('github')}
