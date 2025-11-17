@@ -213,55 +213,6 @@ export default function LandingPage() {
 
         {/* CTA Section */}
         <CTASection />
-
-        {/* Footer */}
-        <footer className="bg-background-tertiary py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-8">
-              <div>
-                <h3 className="font-bold mb-4 text-text-primary">AgentOS</h3>
-                <p className="text-sm text-text-muted">
-                  TypeScript runtime for adaptive AI agent intelligence.
-                </p>
-                <div className="mt-3 text-xs text-text-muted">
-                  <p>Core: Apache 2.0</p>
-                  <p>Extensions & Guardrails: MIT</p>
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-3 text-text-primary">Resources</h4>
-                <ul className="space-y-2 text-sm">
-                  <li><a href="https://docs.agentos.sh" className="text-text-secondary hover:text-accent-primary">Documentation</a></li>
-                  <li><a href="https://github.com/framersai/agentos" className="text-text-secondary hover:text-accent-primary">GitHub</a></li>
-                  <li><a href="https://discord.gg/framersai" className="text-text-secondary hover:text-accent-primary">Discord</a></li>
-                  <li><a href="https://vca.chat" className="text-text-secondary hover:text-accent-primary">Marketplace</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-3 text-text-primary">FramersAI</h4>
-                <ul className="space-y-2 text-sm">
-                  <li><a href="https://github.com/framersai" className="text-text-secondary hover:text-accent-primary">GitHub Org</a></li>
-                  <li><a href="https://twitter.com/framersai" className="text-text-secondary hover:text-accent-primary">Twitter</a></li>
-                  <li><a href="https://www.linkedin.com/company/framersai" className="text-text-secondary hover:text-accent-primary">LinkedIn</a></li>
-                  <li><a href="mailto:hello@frame.dev" className="text-text-secondary hover:text-accent-primary">Contact</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-3 text-text-primary">Legal</h4>
-                <ul className="space-y-2 text-sm">
-                  <li><a href="/legal/privacy" className="text-text-secondary hover:text-accent-primary">Privacy Policy</a></li>
-                  <li><a href="/legal/terms" className="text-text-secondary hover:text-accent-primary">Terms of Service</a></li>
-                  <li><a href="https://github.com/framersai/agentos/blob/main/LICENSE" className="text-text-secondary hover:text-accent-primary">License</a></li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-8 pt-8 border-t border-border-subtle text-center">
-              <p className="text-sm text-text-muted">
-                © 2024 FramersAI / Frame.dev. All rights reserved. Built with AgentOS.
-              </p>
-            </div>
-          </div>
-        </footer>
       </main>
 
       {/* Scroll to Top Button */}
