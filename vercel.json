@@ -1,4 +1,8 @@
 {
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/:locale(en|zh|ko|ja|es|de)", "destination": "/:locale/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
