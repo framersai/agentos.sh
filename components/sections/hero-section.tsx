@@ -5,7 +5,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Github, Terminal, Zap } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { AnimatedAgentOSLogo } from '../icons/animated-logo'
 import { TypeScriptIcon, OpenSourceIcon, StreamingIcon, MemoryIcon } from '../icons/feature-icons'
 import { Toast } from '../ui/toast'
@@ -16,6 +16,7 @@ type Stat = { label: string; value: string };
 
 export function HeroSection() {
   const t = useTranslations('hero')
+  const locale = useLocale()
   const [showToast, setShowToast] = useState(false)
   const [stars, setStars] = useState<number | null>(null)
   const [converge, setConverge] = useState(false)
@@ -55,6 +56,21 @@ export function HeroSection() {
     ]
   }, [translateArray])
 
+  // Debug i18n logs (visible in browser console)
+  useEffect(() => {
+    try {
+      // Avoid printing excessively large objects
+      // eslint-disable-next-line no-console
+      console.info('[i18n:hero]', {
+        locale,
+        subtitle: t('subtitle'),
+        headlinePairs: Array.isArray(headlinePairs) ? headlinePairs.length : 'n/a',
+        technicalHighlights: Array.isArray(technicalHighlights) ? technicalHighlights.length : 'n/a',
+        visualStats: Array.isArray(heroVisualStats) ? heroVisualStats.length : 'n/a'
+      })
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locale, headlinePairs, technicalHighlights, heroVisualStats])
   const capabilityItems = useMemo(() => ([
     {
       icon: TypeScriptIcon,

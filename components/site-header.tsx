@@ -51,6 +51,15 @@ export function SiteHeader() {
 
   const homeHref = useMemo(() => (locale === 'en' ? '/' : `/${locale}`), [locale]);
 
+  // Debug i18n logs
+  useEffect(() => {
+    try {
+      const localized = NAV_LINKS.map(l => ({ src: l.href, dst: localizeHref(l.href) }));
+      // eslint-disable-next-line no-console
+      console.info('[i18n:nav]', { locale, homeHref, links: localized });
+    } catch {}
+  }, [locale, homeHref, localizeHref]);
+
   useEffect(() => {
     if (menuOpen) {
       document.body.classList.add('overflow-hidden');

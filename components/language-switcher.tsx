@@ -59,10 +59,9 @@ export function LanguageSwitcher() {
       targetPath = `/${newLocale}${subPath === '/' ? '' : subPath}`;
     }
 
-    // Optional: lightweight debug trace
-    // In dev, log path transitions for debugging mis-routed locales.
-    if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined' && 'console' in window) {
-      window.console.debug('[LanguageSwitcher] locale change', {
+    // Debug trace for locale switching
+    if (typeof window !== 'undefined' && 'console' in window) {
+      window.console.info('[i18n:switch]', {
         from: locale,
         to: newLocale,
         pathname,

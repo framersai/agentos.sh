@@ -142,7 +142,8 @@ export default async function LocaleLayout({
             <script
               dangerouslySetInnerHTML={{
                 __html: `document.documentElement.setAttribute('lang','${locale}');
-document.documentElement.dataset.locale='${locale}';`
+document.documentElement.dataset.locale='${locale}';
+try{console.info('[i18n] layout ready', { locale: '${locale}' });}catch(_){}`
               }}
             />
             <a href="#main-content" className="skip-to-content">Skip to content</a>
