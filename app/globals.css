@@ -295,6 +295,253 @@
       0 15px 40px -25px var(--color-accent-warm-soft);
   }
 
+  /* Holographic & Neumorphic Classes */
+  .holographic-card {
+    background: var(--glass-surface);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--neumorphic-light-shadow);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .holographic-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--glass-reflection);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .holographic-card::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: var(--holographic-shimmer);
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+
+  .holographic-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--neumorphic-glow-soft);
+    border-color: color-mix(in oklab, var(--glass-border) 150%, transparent);
+  }
+
+  .holographic-card:hover::after {
+    opacity: 1;
+    animation: holographicShimmerMove 0.8s ease;
+  }
+
+  .dark .holographic-card {
+    box-shadow: var(--neumorphic-dark-shadow);
+  }
+
+  .dark .holographic-card:hover {
+    box-shadow: var(--neumorphic-glow-intense);
+  }
+
+  .neumorphic-button {
+    background: var(--holographic-primary);
+    border: none;
+    box-shadow: var(--neumorphic-light-shadow);
+    border-radius: 16px;
+    padding: 12px 24px;
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .neumorphic-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--neumorphic-glow-soft);
+  }
+
+  .neumorphic-button:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: var(--neumorphic-inset-light);
+  }
+
+  .dark .neumorphic-button {
+    box-shadow: var(--neumorphic-dark-shadow);
+  }
+
+  .dark .neumorphic-button:hover {
+    box-shadow: var(--neumorphic-glow-intense);
+  }
+
+  .dark .neumorphic-button:active {
+    box-shadow: var(--neumorphic-inset-dark);
+  }
+
+  .holographic-gradient {
+    background: var(--gradient-hero);
+    position: relative;
+  }
+
+  .holographic-gradient::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--holographic-iridescent);
+    opacity: 0.3;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  .premium-depth-1 {
+    background: var(--gradient-depth-1);
+  }
+
+  .premium-depth-2 {
+    background: var(--gradient-depth-2);
+  }
+
+  .premium-depth-3 {
+    background: var(--gradient-depth-3);
+  }
+
+  /* Liquid Morph Text Animation */
+  @keyframes liquidMorph {
+    0% {
+      opacity: 0;
+      filter: blur(10px);
+      transform: scale(0.9) rotateX(90deg) translateZ(-50px);
+    }
+    50% {
+      opacity: 0.5;
+      filter: blur(5px);
+      transform: scale(0.95) rotateX(45deg) translateZ(-25px);
+    }
+    100% {
+      opacity: 1;
+      filter: blur(0px);
+      transform: scale(1) rotateX(0deg) translateZ(0px);
+    }
+  }
+
+  @keyframes liquidMorphOut {
+    0% {
+      opacity: 1;
+      filter: blur(0px);
+      transform: scale(1) rotateX(0deg) translateZ(0px);
+    }
+    50% {
+      opacity: 0.5;
+      filter: blur(5px);
+      transform: scale(1.05) rotateX(-45deg) translateZ(25px);
+    }
+    100% {
+      opacity: 0;
+      filter: blur(10px);
+      transform: scale(1.1) rotateX(-90deg) translateZ(50px);
+    }
+  }
+
+  .liquid-morph-text {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  .liquid-morph-text.entering {
+    animation: liquidMorph 1.2s cubic-bezier(0.43, 0.13, 0.23, 0.96) forwards;
+  }
+
+  .liquid-morph-text.exiting {
+    animation: liquidMorphOut 1.2s cubic-bezier(0.43, 0.13, 0.23, 0.96) forwards;
+  }
+
+  /* Holographic Shimmer Animation */
+  @keyframes holographicShimmerMove {
+    0% {
+      transform: rotate(45deg) translateX(-100%);
+    }
+    100% {
+      transform: rotate(45deg) translateX(100%);
+    }
+  }
+
+  /* Floating Hologram Animation */
+  @keyframes floatingHologram {
+    0%, 100% {
+      transform: translateY(0) rotateY(0deg) scale(1);
+    }
+    25% {
+      transform: translateY(-10px) rotateY(90deg) scale(1.05);
+    }
+    50% {
+      transform: translateY(-5px) rotateY(180deg) scale(1.02);
+    }
+    75% {
+      transform: translateY(-15px) rotateY(270deg) scale(1.08);
+    }
+  }
+
+  .floating-hologram {
+    animation: floatingHologram 20s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+
+  /* Depth Pulse Animation */
+  @keyframes depthPulse {
+    0%, 100% {
+      transform: scale(1) translateZ(0);
+      box-shadow: var(--neumorphic-light-shadow);
+    }
+    50% {
+      transform: scale(1.02) translateZ(10px);
+      box-shadow: var(--neumorphic-glow-soft);
+    }
+  }
+
+  .depth-pulse {
+    animation: depthPulse 4s ease-in-out infinite;
+  }
+
+  /* Premium Paper Effect */
+  .premium-paper {
+    background:
+      linear-gradient(105deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 100%),
+      var(--gradient-card);
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.1),
+      0 8px 16px rgba(0,0,0,0.05),
+      inset 0 1px 0 rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 16px;
+    position: relative;
+  }
+
+  .premium-paper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255,255,255,0.8) 50%,
+      transparent 100%);
+    pointer-events: none;
+  }
+
   @keyframes slow-shimmer {
     0% { background-position: -100% 0; }
     100% { background-position: 200% 0; }

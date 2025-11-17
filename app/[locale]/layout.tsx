@@ -2,12 +2,16 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import '../../styles/tokens.css';
 import '../globals.css';
 import { ThemeProvider } from '../../components/theme-provider';
 import { SiteHeader } from '../../components/site-header';
 import ScrollToTopButton from '../../components/ScrollToTopButton';
 import { locales, type Locale } from '../../i18n';
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" });
 
 type Props = {
   children: ReactNode;
@@ -137,16 +141,14 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    // Fragment without html/body to avoid duplicate root elements
-    <NextIntlClientProvider messages={messages}>
-      <ThemeProvider>
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `document.documentElement.setAttribute('lang','${locale}');
-document.documentElement.dataset.locale='${locale}';
-try{console.info('[i18n] layout ready', { locale: '${locale}' });}catch(_){}`
-              }}
-            />
+    <html lang={locale} suppressHydrationWarning className="preload">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      </head>
+      <body className={`${inter.variable} ${grotesk.variable} grainy min-h-screen antialiased transition-theme bg-background-primary text-text-primary`}>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider>
             <a href="#main-content" className="skip-to-content">Skip to content</a>
             <SiteHeader />
             {/* JSON-LD: Organization */}
@@ -257,8 +259,10 @@ try{console.info('[i18n] layout ready', { locale: '${locale}' });}catch(_){}`
                 </div>
               </div>
             </footer>
-      </ThemeProvider>
-    </NextIntlClientProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }
 
