@@ -853,6 +853,42 @@
   .glow-lg {
     box-shadow: 0 0 60px var(--color-glow-primary);
   }
+  
+  /* Enterprise icon gradient animations */
+  @keyframes hue-shift {
+    0%, 100% {
+      stop-color: var(--color-enterprise-from);
+    }
+    50% {
+      stop-color: var(--color-enterprise-accent);
+    }
+  }
+  
+  @keyframes hue-shift-delay {
+    0%, 100% {
+      stop-color: var(--color-enterprise-to);
+    }
+    50% {
+      stop-color: var(--color-accent-tertiary);
+    }
+  }
+  
+  .animate-hue-shift {
+    animation: hue-shift 8s ease-in-out infinite;
+  }
+  
+  .animate-hue-shift-delay {
+    animation: hue-shift-delay 8s ease-in-out infinite;
+    animation-delay: 0.5s;
+  }
+  
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-hue-shift,
+    .animate-hue-shift-delay {
+      animation: none;
+    }
+  }
 }
 
 /* Accessible skip link */

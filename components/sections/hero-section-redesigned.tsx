@@ -7,6 +7,8 @@ import { ArrowRight, Github, Terminal, Star, GitBranch, Users, Shield } from 'lu
 import { useLocale, useTranslations } from 'next-intl'
 import { AnimatedAgentOSLogo } from '../icons/animated-logo'
 import { Toast } from '../ui/toast'
+import { LinkButton } from '../ui/LinkButton'
+import { Button } from '../ui/Button'
 import { applyHolographicTheme } from '@/lib/holographic-design-system'
 import { useTheme } from 'next-themes'
 
@@ -174,28 +176,51 @@ export function HeroSectionRedesigned() {
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
-        {/* Top section with headline */}
-        <div className="text-center mb-16">
-          {/* Liquid morph headline */}
-          <div className="relative h-32 sm:h-40 mb-8">
-            <AnimatePresence mode="wait">
-              <motion.h1
-                key={activeHeadline}
-                className={`absolute inset-0 text-4xl sm:text-6xl lg:text-7xl font-bold liquid-morph-text ${
-                  isTransitioning ? 'exiting' : 'entering'
-                }`}
+          {/* Top section with headline */}
+          <div className="text-center mb-12">
+            {/* Smooth word-swap headline - fixed line-height to prevent jumps */}
+            <div className="relative mb-6 overflow-hidden">
+              <h1 
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight"
                 style={{
-                  background: 'var(--holographic-primary)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  textShadow: '0 0 40px var(--color-accent-primary)',
+                  fontFamily: 'var(--font-grotesk)',
+                  minHeight: '4.5rem',
                 }}
               >
-                {activeHeadline === 0 ? headlinePair.primary : headlinePair.alternate}
-              </motion.h1>
-            </AnimatePresence>
-          </div>
+                {/* Morphing first word (Adaptive ↔ Emergent) */}
+                <span className="inline-block relative" style={{ width: '14ch' }}>
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={activeHeadline}
+                      initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                      className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent"
+                    >
+                      {activeHeadline === 0 ? 'Adaptive' : 'Emergent'}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+                {' intelligence for '}
+                {/* Morphing last word (emergent ↔ adaptive) */}
+                <span className="inline-block relative" style={{ width: '11ch' }}>
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={activeHeadline + 100}
+                      initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                      className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                    >
+                      {activeHeadline === 0 ? 'emergent' : 'adaptive'}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+                {' agents'}
+              </h1>
+            </div>
 
           {/* Subtitle */}
           <motion.p
@@ -294,29 +319,29 @@ export function HeroSectionRedesigned() {
           ))}
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons - Redesigned with proper components */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.8 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
-          <Link
-            href={`/${locale}/docs`}
-            className="neumorphic-button text-white font-medium px-8 py-3 flex items-center gap-2 group"
+          <LinkButton
+            href={`/${locale === 'en' ? '' : locale + '/'}docs`}
+            variant="primary"
+            size="lg"
           >
             <span>{t('getStarted')}</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          </LinkButton>
 
           <a
-            href="https://github.com/agentos-project/agentos"
+            href="https://github.com/framersai/agentos"
             target="_blank"
             rel="noopener noreferrer"
-            className="neumorphic-button bg-transparent text-primary font-medium px-8 py-3 flex items-center gap-2"
-            style={{ background: 'transparent', border: '2px solid var(--glass-border)' }}
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border-2 border-[var(--color-border-interactive)] bg-transparent text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 transition-all duration-[var(--duration-fast)]"
           >
-            <Github className="w-4 h-4" />
+            <Github className="w-5 h-5" />
             <span>{t('viewOnGithub')}</span>
           </a>
         </motion.div>
@@ -328,17 +353,19 @@ export function HeroSectionRedesigned() {
           transition={{ delay: 1.7, duration: 0.8 }}
           className="flex justify-center"
         >
-          <button
+          <Button
             onClick={copyCommand}
-            className="holographic-card px-6 py-3 flex items-center gap-3 group cursor-pointer transition-all hover:scale-105"
+            variant="secondary"
+            size="lg"
+            className="gap-3 group"
             aria-label="Copy installation command"
           >
-            <Terminal className="w-5 h-5 text-accent-primary" />
+            <Terminal className="w-5 h-5 text-[var(--color-accent-primary)]" />
             <code className="font-mono text-sm">npm install agentos</code>
-            <span className="text-xs text-muted opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="text-xs text-[var(--color-text-muted)] opacity-0 group-hover:opacity-100 transition-opacity">
               Click to copy
             </span>
-          </button>
+          </Button>
         </motion.div>
 
         {/* Compliance Notice */}

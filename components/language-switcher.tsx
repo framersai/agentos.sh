@@ -40,51 +40,29 @@ export function LanguageSwitcher() {
   const switchLocale = (newLocale: Locale) => {
     if (!pathname) return;
 
-    // Normalise: ensure we don't duplicate locale segments.
+    // Normalise: remove existing locale prefix if present
     let subPath = pathname;
     const segments = pathname.split('/');
-    const first = segments[1] as Locale | undefined;
-
-    if (first && locales.includes(first)) {
-      // Strip existing locale segment from the front
+    const firstSeg = segments[1] as Locale | undefined;
+    if (firstSeg && locales.includes(firstSeg)) {
       subPath = '/' + segments.slice(2).join('/');
-      if (subPath === '//') subPath = '/';
+      if (subPath === '//' || subPath === '') subPath = '/';
     }
 
-    // Build new path. Default locale ('en') stays at root.
-    let targetPath: string;
-    if (newLocale === 'en') {
-      targetPath = subPath || '/';
-    } else {
-      targetPath = `/${newLocale}${subPath === '/' ? '' : subPath}`;
+    // Build the new url – English remains at root
+    const targetPath =
+      newLocale === 'en' ? subPath || '/' : `/${newLocale}${subPath === '/' ? '' : subPath}`;
+
+    // Persist preference (non-critical)
+    try {
+      localStorage.setItem('preferred-locale', newLocale);
+      document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`;
+    } catch {
+      /* ignore */
     }
 
-    // Debug trace for locale switching
-    if (typeof window !== 'undefined' && 'console' in window) {
-      window.console.info('[i18n:switch]', {
-        from: locale,
-        to: newLocale,
-        pathname,
-        subPath,
-        targetPath,
-      });
-    }
-
-    // For static export (GitHub Pages), we need a hard reload to pick up the new locale
-    // because middleware doesn't run on static hosts
-    if (typeof window !== 'undefined') {
-      // Save preference
-      try {
-        localStorage.setItem('preferred-locale', newLocale);
-        document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`;
-      } catch {
-        // ignore if localStorage blocked
-      }
-      // Hard reload to the new locale path
-      window.location.href = targetPath;
-    } else {
-      router.push(targetPath);
-    }
+    // Soft navigate to avoid full reload / duplicate <html>
+    router.push(targetPath as any);
     setIsOpen(false);
   };
 

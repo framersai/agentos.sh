@@ -3,12 +3,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Shield,
-  Key,
-  UserCheck,
-  FileCheck,
-  ServerCog,
-  Activity,
   AlertTriangle,
   CheckCircle,
   Building,
@@ -17,6 +11,14 @@ import {
   Globe
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
+import { 
+  ShieldIcon, 
+  LockIcon, 
+  CertificateIcon, 
+  GraphIcon, 
+  SkylineIcon, 
+  DocumentCheckIcon 
+} from '../icons/enterprise-icons'
 
 interface BuildingFeature {
   id: string
@@ -35,7 +37,7 @@ const enterpriseFeatures: BuildingFeature[] = [
     title: 'Security Foundation',
     height: 3,
     position: 10,
-    icon: Shield,
+    icon: ShieldIcon,
     features: ['AES-256 Encryption', 'Zero-Trust Architecture', 'End-to-End Security'],
     status: 'complete',
     glow: '#00FF00'
@@ -45,7 +47,7 @@ const enterpriseFeatures: BuildingFeature[] = [
     title: 'Compliance & Privacy',
     height: 5,
     position: 25,
-    icon: FileCheck,
+    icon: DocumentCheckIcon,
     features: ['GDPR Compliant', 'PII Redaction', 'Data Residency Controls'],
     status: 'complete',
     glow: '#00FFFF'
@@ -55,7 +57,7 @@ const enterpriseFeatures: BuildingFeature[] = [
     title: 'Authentication',
     height: 4,
     position: 40,
-    icon: Key,
+    icon: LockIcon,
     features: ['SSO/SAML 2.0', 'OAuth 2.0', 'MFA Support'],
     status: 'complete',
     glow: '#FF00FF'
@@ -65,7 +67,7 @@ const enterpriseFeatures: BuildingFeature[] = [
     title: 'Audit & Monitoring',
     height: 6,
     position: 55,
-    icon: Activity,
+    icon: GraphIcon,
     features: ['Real-time Monitoring', 'Audit Logs', 'Anomaly Detection'],
     status: 'complete',
     glow: '#FFFF00'
@@ -75,7 +77,7 @@ const enterpriseFeatures: BuildingFeature[] = [
     title: 'SOC2 Compliance',
     height: 7,
     position: 70,
-    icon: UserCheck,
+    icon: CertificateIcon,
     features: ['Type II (In Progress)', 'Annual Audits', 'Continuous Compliance'],
     status: 'building',
     glow: '#FF8800'
@@ -85,7 +87,7 @@ const enterpriseFeatures: BuildingFeature[] = [
     title: 'Enterprise Scale',
     height: 9,
     position: 85,
-    icon: ServerCog,
+    icon: SkylineIcon,
     features: ['Auto-scaling', '99.99% SLA', 'Global CDN'],
     status: 'complete',
     glow: '#8800FF'
@@ -122,14 +124,29 @@ export function EnterpriseSkyline() {
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background Gradient */}
+      {/* Enterprise Background Gradient - Deep indigo to violet */}
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
           style={{
             background: isDark
-              ? 'linear-gradient(to bottom, #000033 0%, #000066 50%, #000099 100%)'
-              : 'linear-gradient(to bottom, #E6F3FF 0%, #CCE7FF 50%, #99CFFF 100%)'
+              ? `radial-gradient(ellipse at top, 
+                  hsl(240 80% 8%) 0%, 
+                  hsl(250 70% 5%) 40%, 
+                  hsl(260 60% 3%) 100%)`
+              : `radial-gradient(ellipse at top, 
+                  hsl(240 60% 97%) 0%, 
+                  hsl(250 50% 94%) 40%, 
+                  hsl(260 40% 90%) 100%)`
+          }}
+        />
+        {/* Subtle gradient overlay for depth */}
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            background: `linear-gradient(135deg, 
+              var(--color-enterprise-from)/10 0%, 
+              var(--color-enterprise-to)/10 100%)`
           }}
         />
         {/* Stars/Particles in background */}
@@ -144,7 +161,7 @@ export function EnterpriseSkyline() {
                   height: Math.random() * 2 + 'px',
                   left: Math.random() * 100 + '%',
                   top: Math.random() * 50 + '%',
-                  opacity: Math.random() * 0.8,
+                  opacity: Math.random() * 0.6,
                   animation: `twinkle ${3 + Math.random() * 4}s infinite`
                 }}
               />
@@ -201,18 +218,28 @@ export function EnterpriseSkyline() {
                 onMouseEnter={() => setHoveredBuilding(feature.id)}
                 onMouseLeave={() => setHoveredBuilding(null)}
               >
-                {/* Building Structure */}
+                {/* Building Structure - Enterprise gradient */}
                 <div
-                  className="relative w-full h-full cursor-pointer group"
+                  className="relative w-full h-full cursor-pointer group rounded-t-sm overflow-hidden"
                   style={{
                     background: isDark
-                      ? `linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.7))`
-                      : `linear-gradient(to top, rgba(100,100,150,0.9), rgba(150,150,200,0.7))`,
+                      ? `linear-gradient(to top, 
+                          var(--color-enterprise-from), 
+                          var(--color-enterprise-to))`
+                      : `linear-gradient(to top, 
+                          hsl(238 75% 55%), 
+                          hsl(270 75% 65%))`,
                     boxShadow: hoveredBuilding === feature.id
-                      ? `0 0 40px ${feature.glow}, inset 0 0 20px ${feature.glow}40`
-                      : `0 0 20px rgba(0,0,0,0.3)`,
-                    border: `1px solid ${feature.glow}40`,
-                    transition: 'all 0.3s ease'
+                      ? `0 0 30px var(--color-enterprise-accent), 
+                         inset 0 0 20px var(--color-enterprise-accent)/40,
+                         0 10px 40px -10px var(--color-enterprise-from)`
+                      : `0 5px 20px -5px rgba(0,0,0,0.4)`,
+                    border: `1.5px solid ${
+                      hoveredBuilding === feature.id 
+                        ? 'var(--color-enterprise-accent)' 
+                        : 'rgba(255,255,255,0.15)'
+                    }`,
+                    transition: 'all var(--duration-smooth) var(--ease-out-quint)'
                   }}
                 >
                   {/* Windows Grid */}
@@ -232,12 +259,11 @@ export function EnterpriseSkyline() {
                     ))}
                   </div>
 
-                  {/* Building Label */}
-                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                    <feature.icon
-                      className="w-6 h-6 mx-auto mb-1"
-                      style={{ color: feature.glow }}
-                    />
+                  {/* Building Label - Custom animated SVG icon */}
+                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                    <div className="w-10 h-10 mx-auto mb-1 transition-transform group-hover:scale-110 duration-300">
+                      <feature.icon id={feature.id} className="w-full h-full drop-shadow-lg" />
+                    </div>
                   </div>
 
                   {/* Status Indicator */}
@@ -282,7 +308,9 @@ export function EnterpriseSkyline() {
                     >
                       <div className="holographic-card p-4">
                         <h4 className="font-semibold mb-2 flex items-center gap-2">
-                          <feature.icon className="w-4 h-4" style={{ color: feature.glow }} />
+                          <div className="w-5 h-5">
+                            <feature.icon id={`${feature.id}-tooltip`} className="w-full h-full" />
+                          </div>
                           {feature.title}
                         </h4>
                         <ul className="space-y-1">
