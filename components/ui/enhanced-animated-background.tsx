@@ -23,7 +23,7 @@ interface Connection {
   pulseOffset: number
 }
 
-export function PremiumAnimatedBackground() {
+export function EnhancedAnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()
   const particlesRef = useRef<Particle[]>([])

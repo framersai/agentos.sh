@@ -243,7 +243,7 @@ function AnimatedSVGBackground({ type, color }: { type: string; color: string })
   }
 }
 
-export function ProductCardsRedesigned() {
+export function ProductCardsNew() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
   const [liveData, setLiveData] = useState<Record<string, any>>({})
 

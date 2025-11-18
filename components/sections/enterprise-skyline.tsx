@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Shield,
-  Lock,
   Key,
   UserCheck,
   FileCheck,
@@ -15,9 +14,7 @@ import {
   Building,
   Cpu,
   Database,
-  Cloud,
-  Globe,
-  Layers
+  Globe
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 

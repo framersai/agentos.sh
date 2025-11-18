@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { HeroSectionRedesigned } from '../../components/sections/hero-section-redesigned'
-import { ProductCardsRedesigned } from '../../components/sections/product-cards-redesigned'
+import { HeroSectionNew } from '../../components/sections/hero-section-new'
+import { ProductCardsNew } from '../../components/sections/product-cards-new'
 import { MultiAgentCollaboration } from '../../components/sections/multi-agent-collaboration'
 import { EnterpriseSkyline } from '../../components/sections/enterprise-skyline'
 import { HolographicVideoPlayer } from '../../components/media/holographic-video-player'
@@ -28,13 +28,13 @@ import {
   Code2
 } from 'lucide-react'
 
-// Lazy load the premium animated background
-const PremiumAnimatedBackgroundLazy = dynamic(
-  () => import('../../components/ui/premium-animated-background').then(m => m.PremiumAnimatedBackground),
+// Lazy load the enhanced animated background
+const EnhancedAnimatedBackgroundLazy = dynamic(
+  () => import('../../components/ui/enhanced-animated-background').then(m => m.EnhancedAnimatedBackground),
   { ssr: false }
 )
 
-export default function LandingPageRedesigned() {
+export default function LandingPage() {
   const t = useTranslations('features')
   const tCommon = useTranslations()
   const tMarketplace = useTranslations('marketplace')
@@ -145,7 +145,7 @@ agentos deploy --env production`
   return (
     <LazyMotion features={domAnimation}>
       {/* Premium Animated Background */}
-      <DeferredPremiumBackground />
+      <DeferredEnhancedBackground />
 
       {/* Skip to Content for Accessibility */}
       <a href="#main-content" className="skip-to-content">
@@ -155,7 +155,7 @@ agentos deploy --env production`
       {/* Main Content */}
       <main id="main-content">
         {/* Hero Section with Redesigned Components */}
-        <HeroSectionRedesigned />
+        <HeroSectionNew />
 
         {/* Video Demo Section */}
         <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
@@ -183,7 +183,7 @@ agentos deploy --env production`
         </section>
 
         {/* Product Cards Section */}
-        <ProductCardsRedesigned />
+        <ProductCardsNew />
 
         {/* Multi-Agent Collaboration Section */}
         <MultiAgentCollaboration />
@@ -289,7 +289,7 @@ agentos deploy --env production`
   )
 }
 
-function DeferredPremiumBackground() {
+function DeferredEnhancedBackground() {
   const [showBg, setShowBg] = useState(false)
 
   useEffect(() => {
@@ -305,5 +305,5 @@ function DeferredPremiumBackground() {
 
   if (!showBg) return null
 
-  return <PremiumAnimatedBackgroundLazy />
+  return <EnhancedAnimatedBackgroundLazy />
 }

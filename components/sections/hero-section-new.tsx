@@ -3,11 +3,9 @@
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRight, Github, Terminal, Zap, Star, GitBranch, Users, Shield } from 'lucide-react'
+import { ArrowRight, Github, Terminal, Star, GitBranch, Users, Shield } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import { AnimatedAgentOSLogo } from '../icons/animated-logo'
-import { TypeScriptIcon, OpenSourceIcon, StreamingIcon, MemoryIcon } from '../icons/feature-icons'
 import { Toast } from '../ui/toast'
 import { applyHolographicTheme } from '@/lib/holographic-design-system'
 import { useTheme } from 'next-themes'
@@ -16,7 +14,7 @@ type HeadlinePair = { primary: string; alternate: string };
 type Highlight = { title: string; detail: string };
 type Stat = { label: string; value: string | number; live?: boolean; icon: React.ElementType };
 
-export function HeroSectionRedesigned() {
+export function HeroSectionNew() {
   const t = useTranslations('hero')
   const locale = useLocale()
   const { theme: currentTheme, resolvedTheme } = useTheme()
