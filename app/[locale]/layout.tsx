@@ -139,6 +139,11 @@ export default async function LocaleLayout({
   if (!locales.includes(locale as Locale)) notFound();
 
   const messages = await getMessages();
+  
+  // Debug: log message keys to verify locale is loading
+  if (typeof messages === 'object' && messages !== null) {
+    console.log('[i18n:layout] Loading locale:', locale, 'Message keys:', Object.keys(messages).slice(0, 5));
+  }
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -154,9 +159,10 @@ export default async function LocaleLayout({
           .skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%); animation: skeleton-shimmer 2s ease-in-out infinite; }
           @keyframes skeleton-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
         ` }} />
+        <script dangerouslySetInnerHTML={{ __html: `window.__NEXT_INTL_LOCALE__ = '${locale}';` }} />
       </head>
       <body className={`${inter.variable} ${grotesk.variable} grainy min-h-screen antialiased transition-theme bg-background-primary text-text-primary`}>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>
             <a href="#main-content" className="skip-to-content">Skip to content</a>
             <SiteHeader />
