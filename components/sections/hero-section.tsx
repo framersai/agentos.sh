@@ -68,7 +68,9 @@ export function HeroSection() {
         technicalHighlights: Array.isArray(technicalHighlights) ? technicalHighlights.length : 'n/a',
         visualStats: Array.isArray(heroVisualStats) ? heroVisualStats.length : 'n/a'
       })
-    } catch {}
+    } catch {
+      // ignore console errors
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locale, headlinePairs, technicalHighlights, heroVisualStats])
   const capabilityItems = useMemo(() => ([

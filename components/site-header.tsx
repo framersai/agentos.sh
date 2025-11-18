@@ -20,12 +20,12 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
-  const NAV_LINKS: ReadonlyArray<{ href: string; label: string }> = [
+  const NAV_LINKS = useMemo(() => [
     { href: '/#features', label: t('features') },
     { href: 'https://docs.agentos.sh', label: t('docs') },
     { href: '/faq', label: t('faq') },
     { href: '/about', label: t('about') },
-  ];
+  ], [t]);
 
   const localizeHref = useCallback((href: string) => {
     if (!href) {
@@ -57,8 +57,10 @@ export function SiteHeader() {
       const localized = NAV_LINKS.map(l => ({ src: l.href, dst: localizeHref(l.href) }));
       // eslint-disable-next-line no-console
       console.info('[i18n:nav]', { locale, homeHref, links: localized });
-    } catch {}
-  }, [locale, homeHref, localizeHref]);
+    } catch {
+      // ignore console errors
+    }
+  }, [locale, homeHref, localizeHref, NAV_LINKS]);
 
   useEffect(() => {
     if (menuOpen) {
