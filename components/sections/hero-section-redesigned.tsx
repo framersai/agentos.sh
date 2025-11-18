@@ -135,39 +135,60 @@ export function HeroSectionRedesigned() {
   ]
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden holographic-gradient">
-      {/* Premium depth background layers */}
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[var(--color-background-primary)]">
+      {/* Clean gradient background - subtle and professional */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 premium-depth-1" />
-        <div className="absolute inset-0 premium-depth-2 opacity-50" />
-        <div className="absolute inset-0 premium-depth-3 opacity-30" />
+        <div 
+          className="absolute inset-0 opacity-60"
+          style={{
+            background: isDark
+              ? `radial-gradient(ellipse at top, 
+                  hsl(250 100% 10%) 0%, 
+                  hsl(240 50% 4%) 50%, 
+                  hsl(240 30% 2%) 100%)`
+              : `radial-gradient(ellipse at top, 
+                  hsl(250 60% 98%) 0%, 
+                  hsl(240 40% 97%) 50%, 
+                  hsl(0 0% 100%) 100%)`
+          }}
+        />
+        {/* Subtle accent overlay */}
+        <div 
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: `radial-gradient(circle at 30% 20%, 
+              var(--color-accent-primary)/8 0%, 
+              transparent 50%),
+              radial-gradient(circle at 70% 80%, 
+              var(--color-accent-secondary)/6 0%, 
+              transparent 50%)`
+          }}
+        />
       </div>
 
-      {/* Enhanced particle system with intentional movement */}
+      {/* Minimal particle system - elegant and performant */}
       <div className="absolute inset-0 pointer-events-none">
         {!prefersReducedMotion && !isMobile && (
           <>
-            {Array.from({ length: 24 }).map((_, i) => (
+            {Array.from({ length: 12 }).map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-2 h-2 rounded-full"
+                className="absolute w-1 h-1 rounded-full"
                 style={{
-                  background: `radial-gradient(circle, var(--color-accent-primary), transparent)`,
-                  boxShadow: `0 0 ${10 + i % 3 * 5}px var(--color-accent-primary)`,
-                  left: `${10 + (i % 6) * 15}%`,
-                  top: `${10 + Math.floor(i / 6) * 20}%`,
+                  background: `var(--color-accent-primary)`,
+                  boxShadow: `0 0 8px var(--color-accent-primary)`,
+                  left: `${15 + (i % 4) * 22}%`,
+                  top: `${20 + Math.floor(i / 4) * 25}%`,
                 }}
                 animate={{
-                  x: [0, (i % 2 ? 30 : -30), 0],
-                  y: [0, -40, 0],
-                  scale: [1, 1.5, 1],
-                  opacity: [0.3, 0.8, 0.3],
+                  y: [0, -20, 0],
+                  opacity: [0.2, 0.5, 0.2],
                 }}
                 transition={{
-                  duration: 10 + i * 0.5,
+                  duration: 8 + i * 0.5,
                   repeat: Infinity,
                   ease: "easeInOut",
-                  delay: i * 0.2,
+                  delay: i * 0.3,
                 }}
               />
             ))}
@@ -271,21 +292,23 @@ export function HeroSectionRedesigned() {
           </motion.div>
         </div>
 
-        {/* Centered Logo Section - Lowered */}
+        {/* Centered Logo Section - Compact */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.8, duration: 1, ease: [0.43, 0.13, 0.23, 0.96] }}
-          className="flex justify-center mb-16"
+          transition={{ delay: 0.8, duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
+          className="flex justify-center mb-8"
         >
-          <div className="relative">
-            <div className="absolute inset-0 blur-3xl opacity-30">
-              <div className="w-64 h-64 bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-tertiary rounded-full" />
-            </div>
-            <div className="relative floating-hologram">
-              <div className="w-48 h-48 sm:w-64 sm:h-64 mx-auto">
-                <AnimatedAgentOSLogo />
-              </div>
+          <div className="relative w-32 h-32 sm:w-40 sm:h-40">
+            {/* Subtle glow behind logo */}
+            <div 
+              className="absolute inset-0 blur-2xl opacity-20"
+              style={{
+                background: `radial-gradient(circle, var(--color-accent-primary), transparent 70%)`
+              }}
+            />
+            <div className="relative w-full h-full">
+              <AnimatedAgentOSLogo />
             </div>
           </div>
         </motion.div>

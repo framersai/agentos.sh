@@ -240,7 +240,7 @@ export default async function LocaleLayout({
                     <ul className="space-y-2 text-sm">
                       <li><a href="https://docs.agentos.sh" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Docs (Guides)</a></li>
                       <li><a href="https://docs.agentos.sh/api" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">API Reference (TypeDoc/TSDoc)</a></li>
-                      <li><a href="/#code" className="text-text-secondary hover:text-accent-primary transition-colors">Examples</a></li>
+                      <li><a href={locale === 'en' ? '/#code' : `/${locale}/#code`} className="text-text-secondary hover:text-accent-primary transition-colors">Examples</a></li>
                       <li><a href="https://github.com/framersai/agentos/releases" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Release Notes</a></li>
                       <li><a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">GitHub</a></li>
                       <li><a href="https://discord.gg/framersai" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Discord</a></li>
@@ -249,8 +249,8 @@ export default async function LocaleLayout({
                   <div>
                     <h3 className="font-bold text-text-primary mb-3">Company</h3>
                     <ul className="space-y-2 text-sm">
-                      <li><a href="/about" className="text-text-secondary hover:text-accent-primary transition-colors">About</a></li>
-                      <li><a href="/faq" className="text-text-secondary hover:text-accent-primary transition-colors">FAQ</a></li>
+                      <li><a href={locale === 'en' ? '/about' : `/${locale}/about`} className="text-text-secondary hover:text-accent-primary transition-colors">About</a></li>
+                      <li><a href={locale === 'en' ? '/faq' : `/${locale}/faq`} className="text-text-secondary hover:text-accent-primary transition-colors">FAQ</a></li>
                       <li><a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Frame.dev</a></li>
                       <li><a href="mailto:team@frame.dev" className="text-text-secondary hover:text-accent-primary transition-colors">Contact</a></li>
                     </ul>
@@ -258,8 +258,8 @@ export default async function LocaleLayout({
                   <div>
                     <h3 className="font-bold text-text-primary mb-3">Legal</h3>
                     <ul className="space-y-2 text-sm">
-                      <li><a href="/legal/terms" className="text-text-secondary hover:text-accent-primary transition-colors">Terms</a></li>
-                      <li><a href="/legal/privacy" className="text-text-secondary hover:text-accent-primary transition-colors">Privacy</a></li>
+                      <li><a href={locale === 'en' ? '/legal/terms' : `/${locale}/legal/terms`} className="text-text-secondary hover:text-accent-primary transition-colors">Terms</a></li>
+                      <li><a href={locale === 'en' ? '/legal/privacy' : `/${locale}/legal/privacy`} className="text-text-secondary hover:text-accent-primary transition-colors">Privacy</a></li>
                       <li><span className="text-text-secondary">Apache 2.0 (core) + MIT (agents, extensions, guardrails)</span></li>
                     </ul>
                   </div>
