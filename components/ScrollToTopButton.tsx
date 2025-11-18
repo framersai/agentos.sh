@@ -28,7 +28,17 @@ export default function ScrollToTopButton() {
       onClick={scrollToTop}
       aria-label="Scroll back to top"
       className={clsx(
-        "scroll-to-top-button fixed bottom-6 right-6 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/90 text-slate-700 shadow-lg transition-all hover:-translate-y-1 hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:border-slate-700 dark:bg-slate-900/90 dark:text-white",
+        "fixed bottom-6 right-6 z-50",
+        "inline-flex h-12 w-12 items-center justify-center",
+        "rounded-full",
+        "border border-[var(--color-border-subtle)]",
+        "bg-[var(--color-background-glass)]",
+        "backdrop-blur-xl",
+        "text-[var(--color-text-primary)]",
+        "shadow-lg shadow-[var(--color-accent-primary)]/10",
+        "transition-all duration-[var(--duration-smooth)]",
+        "hover:-translate-y-1 hover:shadow-xl hover:border-[var(--color-border-interactive)] hover:bg-[var(--color-accent-primary)]/10",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent-primary)]",
         visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       )}
     >
