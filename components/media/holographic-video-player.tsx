@@ -57,11 +57,12 @@ export function HolographicVideoPlayer({
 
     let frame = 0
     const shapes: HolographicShape[] = []
+    const shapeTypes: ShapeType[] = ['cube', 'pyramid', 'sphere', 'torus']
 
     // Create floating holographic shapes
     for (let i = 0; i < 12; i++) {
       shapes.push({
-        type: ['cube', 'pyramid', 'sphere', 'torus'][Math.floor(Math.random() * 4)],
+        type: shapeTypes[Math.floor(Math.random() * shapeTypes.length)],
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         z: Math.random() * 100,

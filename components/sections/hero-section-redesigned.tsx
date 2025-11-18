@@ -258,7 +258,9 @@ export function HeroSectionRedesigned() {
               <div className="w-64 h-64 bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-tertiary rounded-full" />
             </div>
             <div className="relative floating-hologram">
-              <AnimatedAgentOSLogo className="w-48 h-48 sm:w-64 sm:h-64" />
+              <div className="w-48 h-48 sm:w-64 sm:h-64 mx-auto">
+                <AnimatedAgentOSLogo />
+              </div>
             </div>
           </div>
         </motion.div>
@@ -364,7 +366,7 @@ export function HeroSectionRedesigned() {
       <Toast
         message={t('copiedToClipboard')}
         isVisible={showToast}
-        onHide={() => setShowToast(false)}
+        onClose={() => setShowToast(false)}
       />
     </section>
   )

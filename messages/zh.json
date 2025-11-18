@@ -46,6 +46,9 @@
     "codeLabel": "npm install @framers/agentos",
     "copyToast": "已复制到剪贴板！",
     "copyAria": "复制命令",
+    "getStarted": "开始使用",
+    "viewOnGithub": "在 GitHub 上查看",
+    "copiedToClipboard": "已复制到剪贴板！",
     "capabilities": {
       "ts": { "label": "原生 TypeScript", "value": "类型安全" },
       "oss": { "label": "开源", "value": "Apache 2.0" },

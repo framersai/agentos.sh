@@ -46,6 +46,9 @@
     "codeLabel": "npm install @framers/agentos",
     "copyToast": "Copié dans le presse-papiers !",
     "copyAria": "Copier la commande",
+    "getStarted": "Commencer",
+    "viewOnGithub": "Voir sur GitHub",
+    "copiedToClipboard": "Copié dans le presse-papiers !",
     "capabilities": {
       "ts": { "label": "Natf TypeScript", "value": "Typé" },
       "oss": { "label": "Open Source", "value": "Apache 2.0" },

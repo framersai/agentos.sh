@@ -46,6 +46,9 @@
     "codeLabel": "npm install @framers/agentos",
     "copyToast": "Copiado para a área de transferência!",
     "copyAria": "Copiar comando",
+    "getStarted": "Começar",
+    "viewOnGithub": "Ver no GitHub",
+    "copiedToClipboard": "Copiado para a área de transferência!",
     "capabilities": {
       "ts": { "label": "Nativo em TypeScript", "value": "Type-safe" },
       "oss": { "label": "Open Source", "value": "Apache 2.0" },

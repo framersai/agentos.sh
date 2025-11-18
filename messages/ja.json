@@ -46,6 +46,9 @@
     "codeLabel": "npm install @framers/agentos",
     "copyToast": "クリップボードにコピーしました！",
     "copyAria": "コマンドをコピー",
+    "getStarted": "始める",
+    "viewOnGithub": "GitHubで表示",
+    "copiedToClipboard": "クリップボードにコピーしました！",
     "capabilities": {
       "ts": { "label": "TypeScriptネイティブ", "value": "型安全" },
       "oss": { "label": "オープンソース", "value": "Apache 2.0" },

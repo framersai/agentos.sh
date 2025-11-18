@@ -46,6 +46,9 @@
     "codeLabel": "npm install @framers/agentos",
     "copyToast": "클립보드에 복사했습니다!",
     "copyAria": "명령어 복사",
+    "getStarted": "시작하기",
+    "viewOnGithub": "GitHub에서 보기",
+    "copiedToClipboard": "클립보드에 복사했습니다!",
     "capabilities": {
       "ts": { "label": "TypeScript 네이티브", "value": "타입 안전" },
       "oss": { "label": "오픈소스", "value": "Apache 2.0" },
