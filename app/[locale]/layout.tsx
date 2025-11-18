@@ -140,11 +140,6 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   
-  // Debug: log message keys to verify locale is loading
-  if (typeof messages === 'object' && messages !== null) {
-    console.log('[i18n:layout] Loading locale:', locale, 'Message keys:', Object.keys(messages).slice(0, 5));
-  }
-
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
