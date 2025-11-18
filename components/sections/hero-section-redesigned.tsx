@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import Link from 'next/link'
 import { ArrowRight, Github, Terminal, Star, GitBranch, Users, Shield } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import { AnimatedAgentOSLogo } from '../icons/animated-logo'
@@ -12,8 +11,6 @@ import { Button } from '../ui/Button'
 import { applyHolographicTheme } from '@/lib/holographic-design-system'
 import { useTheme } from 'next-themes'
 
-type HeadlinePair = { primary: string; alternate: string };
-
 export function HeroSectionRedesigned() {
   const t = useTranslations('hero')
   const locale = useLocale()
@@ -22,7 +19,6 @@ export function HeroSectionRedesigned() {
   const [githubStars, setGithubStars] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [activeHeadline, setActiveHeadline] = useState(0)
-  const [isTransitioning, setIsTransitioning] = useState(false)
   const prefersReducedMotion = useReducedMotion()
   const lastSwitchTime = useRef(Date.now())
   const isDark = resolvedTheme === 'dark'
@@ -39,12 +35,6 @@ export function HeroSectionRedesigned() {
     const mappedTheme = themeMap[currentTheme as keyof typeof themeMap] || 'aurora-daybreak'
     applyHolographicTheme(mappedTheme, isDark)
   }, [currentTheme, isDark])
-
-  // Fixed headline pair that switches between two states
-  const headlinePair: HeadlinePair = {
-    primary: 'Adaptive intelligence for emergent agents',
-    alternate: 'Emergent intelligence for adaptive agents'
-  }
 
   // Live stats with GitHub stars
   const productStats = useMemo(() => {
@@ -102,12 +92,8 @@ export function HeroSectionRedesigned() {
       const minTime = 8000 + Math.random() * 7000 // 8-15 seconds
 
       if (timeSinceLastSwitch >= minTime) {
-        setIsTransitioning(true)
-        setTimeout(() => {
-          setActiveHeadline(prev => prev === 0 ? 1 : 0)
-          setIsTransitioning(false)
-          lastSwitchTime.current = now
-        }, 600)
+        setActiveHeadline(prev => prev === 0 ? 1 : 0)
+        lastSwitchTime.current = now
       }
     }, 1000) // Check every second but only switch when conditions are met
 

@@ -2,6 +2,7 @@
 
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
+import type { Route } from 'next';
 import { useState, useRef, useEffect } from 'react';
 import { Globe, Check } from 'lucide-react';
 import { locales, localeNames, type Locale } from '../i18n';
@@ -62,7 +63,7 @@ export function LanguageSwitcher() {
     }
 
     // Soft navigate to avoid full reload / duplicate <html>
-    router.push(targetPath as any);
+    router.push(targetPath as Route);
     setIsOpen(false);
   };
 
