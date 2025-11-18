@@ -141,10 +141,19 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning className="preload">
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <style dangerouslySetInnerHTML={{ __html: `
+          :root { color-scheme: dark; background-color: #030014; }
+          body { margin: 0; min-height: 100vh; background: var(--color-background-primary, #030014); color: var(--color-text-primary, #f5f0ff); }
+          .skip-to-content { position: absolute; left: -9999px; z-index: 999; padding: 1rem 1.5rem; background: #6366F1; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }
+          .skip-to-content:focus { left: 1rem; top: 1rem; outline: 2px solid #8B5CF6; outline-offset: 2px; }
+          .skeleton { position: relative; overflow: hidden; background: rgba(255,255,255,0.06); border-radius: 0.5rem; }
+          .skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%); animation: skeleton-shimmer 2s ease-in-out infinite; }
+          @keyframes skeleton-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        ` }} />
       </head>
       <body className={`${inter.variable} ${grotesk.variable} grainy min-h-screen antialiased transition-theme bg-background-primary text-text-primary`}>
         <NextIntlClientProvider messages={messages}>
