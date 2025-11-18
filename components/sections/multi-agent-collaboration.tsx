@@ -346,14 +346,14 @@ export function MultiAgentCollaboration() {
                 setActiveUseCase(0)
                 setShowCode(false)
               }}
-              className={`holographic-card px-6 py-4 flex items-center gap-3 transition-all ${
+              className={`px-6 py-4 rounded-lg backdrop-blur-xl flex items-center gap-3 transition-all duration-[var(--duration-smooth)] ${
                 selectedPattern === pattern.mode
-                  ? 'ring-2 ring-accent-primary'
-                  : ''
+                  ? 'bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] text-[var(--color-text-on-accent)] shadow-lg shadow-[var(--color-accent-primary)]/30'
+                  : 'bg-[var(--color-background-glass)] border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] hover:border-[var(--color-border-interactive)]'
               }`}
             >
-              <pattern.icon className="w-5 h-5 text-accent-primary" />
-              <span className="font-medium">{pattern.title}</span>
+              <pattern.icon className={`w-5 h-5 ${selectedPattern === pattern.mode ? 'text-white' : 'text-[var(--color-accent-primary)]'}`} />
+              <span className="font-semibold">{pattern.title}</span>
             </motion.button>
           ))}
         </div>
@@ -566,10 +566,10 @@ export function MultiAgentCollaboration() {
                       <button
                         key={i}
                         onClick={() => setActiveUseCase(i)}
-                        className={`px-3 py-1 rounded-lg text-sm whitespace-nowrap transition-all ${
+                        className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-[var(--duration-fast)] ${
                           activeUseCase === i
-                            ? 'bg-accent-primary text-white'
-                            : 'bg-glass-surface text-muted hover:text-primary'
+                            ? 'bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] text-[var(--color-text-on-accent)] shadow-lg'
+                            : 'bg-[var(--color-background-glass)] border border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-interactive)]'
                         }`}
                       >
                         Case {i + 1}

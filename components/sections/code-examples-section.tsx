@@ -675,13 +675,13 @@ export function CodeExamplesSection() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <div className="px-8 py-4 bg-background-primary rounded-2xl font-mono text-sm border-2 border-accent-primary/30 shadow-modern">
-                  <span className="text-text-muted">$</span> npm install @framersai/agentos
+                <div className="px-8 py-4 bg-[var(--color-background-elevated)] rounded-xl font-mono text-sm border-2 border-[var(--color-border-interactive)] shadow-lg">
+                  <span className="text-[var(--color-text-muted)]">$</span> npm install @framersai/agentos
                 </div>
 
                 <a
                   href="https://docs.agentos.sh/quickstart"
-                  className="btn-primary inline-flex items-center gap-2"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] text-[var(--color-text-on-accent)] shadow-lg shadow-[var(--color-accent-primary)]/20 hover:shadow-xl hover:brightness-110 transition-all duration-[var(--duration-fast)]"
                 >
                   <Sparkles className="w-5 h-5" />
                   Start Building

@@ -109,10 +109,10 @@ export function CoordinationPatternsSection() {
                 <button
                   key={pattern.id}
                   onClick={() => setActivePattern(pattern.id)}
-                  className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl font-medium transition-all text-sm whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all duration-[var(--duration-smooth)] text-sm whitespace-nowrap ${
                     activePattern === pattern.id
-                      ? `bg-gradient-to-r ${pattern.gradient} text-white shadow-modern`
-                      : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
+                      ? `bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] text-[var(--color-text-on-accent)] shadow-lg shadow-[var(--color-accent-primary)]/20`
+                      : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-elevated)] border border-transparent hover:border-[var(--color-border-subtle)]'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -247,7 +247,7 @@ export function CoordinationPatternsSection() {
         >
           <a
             href="https://docs.agentos.sh/coordination"
-            className="btn-primary inline-flex items-center gap-2"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] text-[var(--color-text-on-accent)] shadow-lg shadow-[var(--color-accent-primary)]/20 hover:shadow-xl hover:brightness-110 transition-all duration-[var(--duration-fast)]"
           >
             Explore Coordination Docs
             <ArrowRight className="w-4 h-4" />

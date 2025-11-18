@@ -51,28 +51,28 @@ export function CTASection() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <a
                   href="https://vca.chat"
-                  className="group flex items-center justify-center gap-2 px-4 py-3 bg-background-primary rounded-xl border border-border-subtle hover:border-accent-primary transition-all"
+                  className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-glass)] backdrop-blur-xl rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-border-interactive)] transition-all duration-[var(--duration-fast)]"
                 >
-                  <MessageCircle className="w-4 h-4 text-accent-primary" />
-                  <span className="text-sm font-medium">Try Voice Chat</span>
+                  <MessageCircle className="w-4 h-4 text-[var(--color-accent-primary)]" />
+                  <span className="text-sm">Try Voice Chat</span>
                 </a>
 
                 <a
                   href="https://github.com/framersai/agentos"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center gap-2 px-4 py-3 bg-background-primary rounded-xl border border-border-subtle hover:border-accent-primary transition-all"
+                  className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-glass)] backdrop-blur-xl rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-border-interactive)] transition-all duration-[var(--duration-fast)]"
                 >
-                  <Github className="w-4 h-4 text-accent-primary" />
-                  <span className="text-sm font-medium">Browse Code</span>
+                  <Github className="w-4 h-4 text-[var(--color-accent-primary)]" />
+                  <span className="text-sm">Browse Code</span>
                 </a>
 
                 <a
                   href="https://marketplace.agentos.sh"
-                  className="group flex items-center justify-center gap-2 px-4 py-3 bg-background-primary rounded-xl border border-border-subtle hover:border-accent-primary transition-all"
+                  className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-glass)] backdrop-blur-xl rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-border-interactive)] transition-all duration-[var(--duration-fast)]"
                 >
-                  <Sparkles className="w-4 h-4 text-accent-primary" />
-                  <span className="text-sm font-medium">Marketplace</span>
+                  <Sparkles className="w-4 h-4 text-[var(--color-accent-primary)]" />
+                  <span className="text-sm">Marketplace</span>
                 </a>
               </div>
             </div>
