@@ -101,10 +101,16 @@ export function EnterpriseSkyline() {
   const t = useTranslations('enterprise')
   const [hoveredBuilding, setHoveredBuilding] = useState<string | null>(null)
   const [animatedWindows, setAnimatedWindows] = useState<Record<string, boolean[]>>({})
+  const [mounted, setMounted] = useState(false)
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
   
   const enterpriseFeatures = useMemo(() => getEnterpriseFeatures(t), [t])
+  
+  // Mounted state for hydration-safe rendering
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Animate building windows
   useEffect(() => {
@@ -156,7 +162,7 @@ export function EnterpriseSkyline() {
           }}
         />
         {/* Stars/Particles in background */}
-        {isDark && (
+        {mounted && isDark && (
           <div className="absolute inset-0">
             {Array.from({ length: 50 }).map((_, i) => (
               <div
