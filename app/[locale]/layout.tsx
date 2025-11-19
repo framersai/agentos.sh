@@ -147,9 +147,10 @@ export default async function LocaleLayout({
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <style dangerouslySetInnerHTML={{ __html: `
           * { box-sizing: border-box; }
-          html { width: 100%; height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
-          body { width: 100%; min-height: 100vh; margin: 0; padding: 0; overflow-x: hidden; background: var(--color-background-primary, #030014); color: var(--color-text-primary, #f5f0ff); }
-          :root { color-scheme: dark; background-color: #030014; }
+          html, body { width: 100%; margin: 0; padding: 0; }
+          html { height: 100%; overflow-x: hidden; }
+          body { min-height: 100vh; overflow-x: hidden; background-color: #030014; color: #f5f0ff; }
+          :root { background-color: #030014; }
           .skip-to-content { position: absolute; left: -9999px; z-index: 999; padding: 1rem 1.5rem; background: #6366F1; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }
           .skip-to-content:focus { left: 1rem; top: 1rem; outline: 2px solid #8B5CF6; outline-offset: 2px; }
           .skeleton { position: relative; overflow: hidden; background: rgba(255,255,255,0.06); border-radius: 0.5rem; }
@@ -158,7 +159,7 @@ export default async function LocaleLayout({
         ` }} />
         <script dangerouslySetInnerHTML={{ __html: `window.__NEXT_INTL_LOCALE__ = '${locale}';` }} />
       </head>
-      <body className={`${inter.variable} ${grotesk.variable} grainy min-h-screen antialiased transition-theme bg-background-primary text-text-primary`}>
+      <body suppressHydrationWarning className={`${inter.variable} ${grotesk.variable} grainy min-h-screen antialiased transition-theme bg-background-primary text-text-primary`}>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>
             <a href="#main-content" className="skip-to-content">Skip to content</a>
