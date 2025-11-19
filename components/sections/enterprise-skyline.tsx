@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   AlertTriangle,
@@ -88,6 +88,24 @@ export function EnterpriseSkyline() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
 
+  // Deterministic star field to avoid hydration mismatches
+  const stars = useMemo(() => {
+    let seed = 1337 >>> 0
+    const rand = () => {
+      // Linear congruential generator (LCG)
+      seed = (Math.imul(1664525, seed) + 1013904223) >>> 0
+      return seed / 4294967296
+    }
+    return Array.from({ length: 50 }).map(() => ({
+      width: rand() * 2 + 1,
+      height: rand() * 2 + 1,
+      left: rand() * 100,
+      top: rand() * 50,
+      opacity: rand() * 0.6,
+      duration: 3 + rand() * 4
+    }))
+  }, [])
+
   // Animate building windows
   useEffect(() => {
     const interval = setInterval(() => {
@@ -140,17 +158,17 @@ export function EnterpriseSkyline() {
         {/* Stars/Particles in background */}
         {isDark && (
           <div className="absolute inset-0">
-            {Array.from({ length: 50 }).map((_, i) => (
+            {stars.map((s, i) => (
               <div
                 key={i}
                 className="absolute rounded-full bg-white"
                 style={{
-                  width: Math.random() * 2 + 'px',
-                  height: Math.random() * 2 + 'px',
-                  left: Math.random() * 100 + '%',
-                  top: Math.random() * 50 + '%',
-                  opacity: Math.random() * 0.6,
-                  animation: `twinkle ${3 + Math.random() * 4}s infinite`
+                  width: `${s.width}px`,
+                  height: `${s.height}px`,
+                  left: `${s.left}%`,
+                  top: `${s.top}%`,
+                  opacity: s.opacity,
+                  animation: `twinkle ${s.duration}s infinite`
                 }}
               />
             ))}

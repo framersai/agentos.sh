@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { HeroSectionRedesigned } from '../../components/sections/hero-section-redesigned'
 import { ProductCardsRedesigned } from '../../components/sections/product-cards-redesigned'
-import { EnterpriseSkyline } from '../../components/sections/enterprise-skyline'
+import { EnterpriseSkyline as SkylineSection } from '../../components/sections/enterprise-skyline'
 import { HolographicVideoPlayer } from '../../components/media/holographic-video-player'
 import { CodePopover } from '../../components/ui/code-popover'
 import { CTASection } from '../../components/sections/cta-section'
@@ -20,8 +20,8 @@ import {
   Code2
 } from 'lucide-react'
 
-// Lazy load the premium animated background
-const PremiumAnimatedBackgroundLazy = dynamic(
+// Lazy load the animated background
+const AnimatedBackgroundLazy = dynamic(
   () => import('../../components/ui/premium-animated-background').then(m => m.PremiumAnimatedBackground),
   { ssr: false }
 )
@@ -174,8 +174,8 @@ agentos deploy --env production`
 
   return (
     <LazyMotion features={domAnimation}>
-      {/* Premium Animated Background */}
-      <DeferredPremiumBackground />
+      {/* Animated Background */}
+      <DeferredAnimatedBackground />
 
       {/* Skip to Content for Accessibility */}
       <a href="#main-content" className="skip-to-content">
@@ -297,8 +297,8 @@ agentos deploy --env production`
           </div>
         </section>
 
-        {/* Enterprise Skyline Section */}
-        <EnterpriseSkyline />
+        {/* Skyline Section */}
+        <SkylineSection />
 
         {/* Code Examples Section */}
         <CodeExamplesSectionLazy />
@@ -319,7 +319,7 @@ agentos deploy --env production`
   )
 }
 
-function DeferredPremiumBackground() {
+function DeferredAnimatedBackground() {
   const [showBg, setShowBg] = useState(false)
 
   useEffect(() => {
@@ -335,7 +335,7 @@ function DeferredPremiumBackground() {
 
   if (!showBg) return null
 
-  return <PremiumAnimatedBackgroundLazy />
+  return <AnimatedBackgroundLazy />
 }
 
 function SectionSkeleton({ heightClass = 'h-[320px]' }: { heightClass?: string }) {
