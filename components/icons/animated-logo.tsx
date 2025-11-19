@@ -2,6 +2,23 @@
 
 import { motion } from 'framer-motion'
 
+const stableValue = (index: number) => {
+  const x = Math.sin((index + 1) * 9876.543) * 43758.5453123
+  return x - Math.floor(x)
+}
+
+const neuralLines = Array.from({ length: 8 }, (_, i) => ({
+  x1: 50 + stableValue(i) * 300,
+  y1: 20 + stableValue(i + 10) * 100,
+  x2: 50 + stableValue(i + 20) * 300,
+  y2: 20 + stableValue(i + 30) * 100
+}))
+
+const neuralNodes = Array.from({ length: 12 }, (_, i) => ({
+  cx: 50 + stableValue(i + 40) * 300,
+  cy: 20 + stableValue(i + 50) * 100
+}))
+
 export function AnimatedAgentOSLogo() {
   return (
     <motion.div
@@ -69,60 +86,50 @@ export function AnimatedAgentOSLogo() {
         {/* Background neural network animation */}
         <g opacity="0.3">
           {/* Neural connections */}
-          {[...Array(8)].map((_, i) => {
-            const x1 = 50 + Math.random() * 300
-            const y1 = 20 + Math.random() * 100
-            const x2 = 50 + Math.random() * 300
-            const y2 = 20 + Math.random() * 100
-            return (
-              <motion.line
-                key={`line-${i}`}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke="url(#logo-gradient-animated)"
-                strokeWidth="0.5"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: [0, 1, 1, 0],
-                  opacity: [0, 0.5, 0.5, 0]
-                }}
-                transition={{
-                  duration: 4,
-                  delay: i * 0.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-            )
-          })}
+          {neuralLines.map((line, i) => (
+            <motion.line
+              key={`line-${i}`}
+              x1={line.x1}
+              y1={line.y1}
+              x2={line.x2}
+              y2={line.y2}
+              stroke="url(#logo-gradient-animated)"
+              strokeWidth="0.5"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{
+                pathLength: [0, 1, 1, 0],
+                opacity: [0, 0.5, 0.5, 0]
+              }}
+              transition={{
+                duration: 4,
+                delay: i * 0.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
 
           {/* Neural nodes */}
-          {[...Array(12)].map((_, i) => {
-            const cx = 50 + Math.random() * 300
-            const cy = 20 + Math.random() * 100
-            return (
-              <motion.circle
-                key={`node-${i}`}
-                cx={cx}
-                cy={cy}
-                r="2"
-                fill="url(#logo-gradient-animated)"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{
-                  scale: [0, 1, 1, 0],
-                  opacity: [0, 0.8, 0.8, 0]
-                }}
-                transition={{
-                  duration: 3,
-                  delay: i * 0.3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-            )
-          })}
+          {neuralNodes.map((node, i) => (
+            <motion.circle
+              key={`node-${i}`}
+              cx={node.cx}
+              cy={node.cy}
+              r="2"
+              fill="url(#logo-gradient-animated)"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{
+                scale: [0, 1, 1, 0],
+                opacity: [0, 0.8, 0.8, 0]
+              }}
+              transition={{
+                duration: 3,
+                delay: i * 0.3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
         </g>
 
         {/* Main logo group */}

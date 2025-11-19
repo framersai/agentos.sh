@@ -4,15 +4,10 @@ import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { HeroSectionRedesigned } from '../../components/sections/hero-section-redesigned'
 import { ProductCardsRedesigned } from '../../components/sections/product-cards-redesigned'
-import { MultiAgentCollaboration } from '../../components/sections/multi-agent-collaboration'
 import { EnterpriseSkyline } from '../../components/sections/enterprise-skyline'
 import { HolographicVideoPlayer } from '../../components/media/holographic-video-player'
 import { CodePopover } from '../../components/ui/code-popover'
-import { GMISection } from '../../components/sections/gmi-section'
-import { CodeExamplesSection } from '../../components/sections/code-examples-section'
-import { EcosystemSection } from '../../components/sections/ecosystem-section'
 import { CTASection } from '../../components/sections/cta-section'
-import { SocialProofSection } from '../../components/sections/social-proof-section'
 import dynamic from 'next/dynamic'
 import ScrollToTopButton from '../../components/ScrollToTopButton'
 import { LazyMotion, domAnimation, motion } from 'framer-motion'
@@ -29,6 +24,46 @@ import {
 const PremiumAnimatedBackgroundLazy = dynamic(
   () => import('../../components/ui/premium-animated-background').then(m => m.PremiumAnimatedBackground),
   { ssr: false }
+)
+
+const MultiAgentCollaborationSection = dynamic(
+  () =>
+    import('../../components/sections/multi-agent-collaboration').then((m) => ({
+      default: m.MultiAgentCollaboration
+    })),
+  { loading: () => <SectionSkeleton heightClass="h-[520px]" /> }
+)
+
+const GMISectionLazy = dynamic(
+  () =>
+    import('../../components/sections/gmi-section').then((m) => ({
+      default: m.GMISection
+    })),
+  { loading: () => <SectionSkeleton heightClass="h-[620px]" /> }
+)
+
+const CodeExamplesSectionLazy = dynamic(
+  () =>
+    import('../../components/sections/code-examples-section').then((m) => ({
+      default: m.CodeExamplesSection
+    })),
+  { loading: () => <SectionSkeleton heightClass="h-[540px]" /> }
+)
+
+const EcosystemSectionLazy = dynamic(
+  () =>
+    import('../../components/sections/ecosystem-section').then((m) => ({
+      default: m.EcosystemSection
+    })),
+  { loading: () => <SectionSkeleton heightClass="h-[480px]" /> }
+)
+
+const SocialProofSectionLazy = dynamic(
+  () =>
+    import('../../components/sections/social-proof-section').then((m) => ({
+      default: m.SocialProofSection
+    })),
+  { loading: () => <SectionSkeleton heightClass="h-[420px]" /> }
 )
 
 export default function LandingPageRedesigned() {
@@ -181,10 +216,10 @@ agentos deploy --env production`
         <ProductCardsRedesigned />
 
         {/* Multi-Agent Collaboration Section */}
-        <MultiAgentCollaboration />
+        <MultiAgentCollaborationSection />
 
         {/* GMI Section with architecture diagrams */}
-        <GMISection />
+        <GMISectionLazy />
 
         {/* Enhanced Features Grid with Code Popovers */}
         <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 holographic-gradient relative overflow-hidden">
@@ -266,13 +301,13 @@ agentos deploy --env production`
         <EnterpriseSkyline />
 
         {/* Code Examples Section */}
-        <CodeExamplesSection />
+        <CodeExamplesSectionLazy />
 
         {/* Social Proof Section */}
-        <SocialProofSection />
+        <SocialProofSectionLazy />
 
         {/* Ecosystem Section */}
-        <EcosystemSection />
+        <EcosystemSectionLazy />
 
         {/* CTA Section */}
         <CTASection />
@@ -301,4 +336,13 @@ function DeferredPremiumBackground() {
   if (!showBg) return null
 
   return <PremiumAnimatedBackgroundLazy />
+}
+
+function SectionSkeleton({ heightClass = 'h-[320px]' }: { heightClass?: string }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`skeleton border border-border-subtle/40 rounded-3xl w-full ${heightClass}`}
+    />
+  )
 }

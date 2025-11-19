@@ -124,7 +124,7 @@ export function HeroSectionRedesigned() {
   ];
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[var(--color-background-primary)]">
+    <section className="hero-critical relative min-h-screen flex flex-col justify-center overflow-hidden bg-[var(--color-background-primary)]">
       {/* Clean gradient background - subtle and professional */}
       <div className="absolute inset-0">
         <div 

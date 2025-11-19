@@ -159,6 +159,32 @@ export default async function LocaleLayout({
           .skeleton { position: relative; overflow: hidden; background: rgba(255,255,255,0.06); border-radius: 0.5rem; }
           .skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%); animation: skeleton-shimmer 2s ease-in-out infinite; }
           @keyframes skeleton-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+          .hero-critical { position: relative; background-color: #030014; color: #f5f0ff; }
+          .hero-critical::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+              radial-gradient(ellipse at top, rgba(15,4,40,0.8), rgba(3,0,20,0.95) 60%),
+              radial-gradient(circle at 30% 20%, rgba(118,75,255,0.3), transparent 45%),
+              radial-gradient(circle at 70% 80%, rgba(255,102,196,0.25), transparent 50%);
+            opacity: 0.65;
+            pointer-events: none;
+            z-index: 0;
+          }
+          .hero-critical > * { position: relative; z-index: 1; }
+          @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+              animation-duration: 0.01ms !important;
+              animation-iteration-count: 1 !important;
+              transition-duration: 0.01ms !important;
+              scroll-behavior: auto !important;
+            }
+            .motion-safe {
+              animation: none !important;
+              transition: none !important;
+            }
+          }
         ` }} />
         <script dangerouslySetInnerHTML={{ __html: `window.__NEXT_INTL_LOCALE__ = '${locale}';` }} />
       </head>
