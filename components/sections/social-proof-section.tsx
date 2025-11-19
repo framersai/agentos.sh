@@ -3,11 +3,7 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 
-const placeholderLogos = [
-  { name: 'Helios Finance', descriptionKey: 'placeholders.helios' },
-  { name: 'Northwind Labs', descriptionKey: 'placeholders.northwind' },
-  { name: 'Atlas Service Desk', descriptionKey: 'placeholders.atlas' }
-] as const
+const placeholderSlots = [0, 1, 2] as const
 
 export function SocialProofSection() {
   const t = useTranslations('socialProof')
@@ -46,17 +42,27 @@ export function SocialProofSection() {
             viewport={{ once: true }}
             className="grid sm:grid-cols-2 gap-4"
           >
-            {placeholderLogos.map((item, index) => (
-              <div key={item.name} className="relative overflow-hidden rounded-3xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 dark:border-white/10 p-5 backdrop-blur">
+            {placeholderSlots.map((slot) => (
+              <div key={slot} className="relative overflow-hidden rounded-3xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 dark:border-white/10 p-5 backdrop-blur">
                 <div className="absolute inset-0 bg-black/50 blur-lg opacity-0 pointer-events-none" aria-hidden="true" />
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-accent-primary to-[color:var(--color-accent-warm)] opacity-30" />
-                  <div>
-                    <p className="font-semibold text-text-primary">{item.name}</p>
-                    <p className="text-xs text-accent-primary">{t('reveal', { index: index + 1 })}</p>
+                {/* Abstract logo silhouette – no text label */}
+                <div className="flex items-center justify-center mb-3">
+                  <div className="h-14 w-28 rounded-3xl overflow-hidden relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent-primary to-[color:var(--color-accent-warm)] opacity-60" />
+                    <svg viewBox="0 0 100 40" className="relative w-full h-full">
+                      <path
+                        d="M5 30 C 20 10, 40 5, 55 20 S 85 35, 95 15"
+                        fill="none"
+                        stroke="rgba(255,255,255,0.85)"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                      />
+                      <circle cx="25" cy="18" r="3" fill="rgba(255,255,255,0.8)" />
+                      <circle cx="55" cy="24" r="3" fill="rgba(255,255,255,0.7)" />
+                      <circle cx="80" cy="14" r="3" fill="rgba(255,255,255,0.75)" />
+                    </svg>
                   </div>
                 </div>
-                <p className="text-sm text-text-muted">{t(item.descriptionKey)}</p>
                 <div className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-black/70 backdrop-blur-lg text-center">
                   <span className="text-sm font-semibold text-text-primary">{t('comingSoon')}</span>
                 </div>
@@ -85,7 +91,7 @@ export function SocialProofSection() {
               ))}
             </ul>
             <div className="mt-6 rounded-2xl border border-dashed border-accent-primary/40 p-4 text-center">
-              <p className="text-sm text-text-secondary">{t('cta.ask')}</p>
+              <p className="text-sm text-text-secondary">{t('wantFeatured')}</p>
               <a href="mailto:team@frame.dev" className="text-accent-primary font-semibold">team@frame.dev</a>
             </div>
           </motion.div>
