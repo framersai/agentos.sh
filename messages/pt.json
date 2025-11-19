@@ -19,25 +19,60 @@
     "marketplace": "Marketplace"
   },
   "hero": {
+    "cycleWords": ["Adaptativa", "Emergente"],
+    "cycleWordsTail": ["emergente", "adaptativa"],
     "badge": "Open Source · Adaptativo · Emergente",
     "title": "Runtime portátil para agentes IA adaptativos e emergentes",
     "subtitle": "Crie agentes IA adaptativos com memória, ferramentas e autonomia. Runtime TypeScript com papéis GMI, orquestração multiagente e guardrails corporativos.",
     "headlinePairs": [
-      { "top": "Inteligência adaptativa", "bottom": "para agentes autônomos" },
-      { "top": "Inteligência emergente", "bottom": "para orquestração corporativa" },
-      { "top": "Inteligência adaptativa", "bottom": "para fluxos críticos" },
-      { "top": "Inteligência emergente", "bottom": "para equipes IA paralelas" }
+      {
+        "top": "Inteligência adaptativa",
+        "bottom": "para agentes autônomos"
+      },
+      {
+        "top": "Inteligência emergente",
+        "bottom": "para orquestração corporativa"
+      },
+      {
+        "top": "Inteligência adaptativa",
+        "bottom": "para fluxos críticos"
+      },
+      {
+        "top": "Inteligência emergente",
+        "bottom": "para equipes IA paralelas"
+      }
     ],
     "technicalHighlights": [
-      { "title": "Runtime first em streaming", "detail": "Entrega token a token entre personas, guardrails e canais." },
-      { "title": "Orquestração determinística", "detail": "GMIs paralelos com roteamento, aprovações e orçamentos auditáveis." },
-      { "title": "Tecido de memória zero-cópia", "detail": "Memórias vetorial, episódica e de trabalho unificadas em um fluxo reutilizável." },
-      { "title": "Cápsulas de inteligência portáveis", "detail": "Exporte instâncias AgentOS como Markdown/JSON e use em qualquer stack." }
+      {
+        "title": "Runtime first em streaming",
+        "detail": "Entrega token a token entre personas, guardrails e canais."
+      },
+      {
+        "title": "Orquestração determinística",
+        "detail": "GMIs paralelos com roteamento, aprovações e orçamentos auditáveis."
+      },
+      {
+        "title": "Tecido de memória zero-cópia",
+        "detail": "Memórias vetorial, episódica e de trabalho unificadas em um fluxo reutilizável."
+      },
+      {
+        "title": "Cápsulas de inteligência portáveis",
+        "detail": "Exporte instâncias AgentOS como Markdown/JSON e use em qualquer stack."
+      }
     ],
     "visualStats": [
-      { "label": "Agências ativas", "value": "128" },
-      { "label": "SLA de aprovação", "value": "3,2 min" },
-      { "label": "Cobertura de guardrails", "value": "98%" }
+      {
+        "label": "Agências ativas",
+        "value": "128"
+      },
+      {
+        "label": "SLA de aprovação",
+        "value": "3,2 min"
+      },
+      {
+        "label": "Cobertura de guardrails",
+        "value": "98%"
+      }
     ],
     "ctaPrimary": "Testar Voice Chat Assistant",
     "ctaSecondary": "Dar estrela no GitHub",
@@ -50,12 +85,43 @@
     "viewOnGithub": "Ver no GitHub",
     "copiedToClipboard": "Copiado para a área de transferência!",
     "capabilities": {
-      "ts": { "label": "Nativo em TypeScript", "value": "Type-safe" },
-      "oss": { "label": "Open Source", "value": "Apache 2.0" },
-      "streaming": { "label": "Streaming em tempo real", "value": "Pronto para async" },
-      "memory": { "label": "Memória persistente", "value": "Integrada" }
+      "ts": {
+        "label": "Nativo em TypeScript",
+        "value": "Type-safe"
+      },
+      "oss": {
+        "label": "Open Source",
+        "value": "Apache 2.0"
+      },
+      "streaming": {
+        "label": "Streaming em tempo real",
+        "value": "Pronto para async"
+      },
+      "memory": {
+        "label": "Memória persistente",
+        "value": "Integrada"
+      }
     },
-    "heroVisualAlt": "Prévia do workspace de orquestração AgentOS"
+    "heroVisualAlt": "Prévia do workspace de orquestração AgentOS",
+    "cycleWords": [
+      "Adaptativa",
+      "Emergente"
+    ],
+    "cycleWordsTail": [
+      "emergente",
+      "adaptativa"
+    ],
+    "stats": {
+      "githubStars": "Estrelas do GitHub",
+      "contributors": "Contribuidores",
+      "forks": "Forks",
+      "securityScore": "Pontuação de segurança"
+    },
+    "compliance": {
+      "gdpr": "Compatível com GDPR e PII",
+      "soc2": "SOC2 (Em breve)",
+      "enterpriseSupport": "Suporte Empresarial Disponível"
+    }
   },
   "features": {
     "sectionTitle": "Recursos prontos para empresas",
@@ -125,7 +191,12 @@
     "title": "Pronto para construir agentes IA adaptativos?",
     "description": "Junte-se aos desenvolvedores que constroem a próxima geração de sistemas inteligentes com AgentOS.",
     "getStarted": "Começar",
-    "talkToUs": "Fale conosco"
+    "talkToUs": "Fale conosco",
+    "badge": "Junte-se à Revolução da IA",
+    "exploreLabel": "Ou explore o AgentOS hoje:",
+    "tryVoiceChat": "Experimentar chat de voz",
+    "browseCode": "Navegar código",
+    "marketplace": "Mercado"
   },
   "LanguageSwitcher": {
     "switchLanguage": "Trocar idioma",
@@ -135,4 +206,3 @@
   "skipToContent": "Ir para o conteúdo",
   "skipToMain": "Ir para o conteúdo principal"
 }
-

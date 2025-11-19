@@ -19,25 +19,60 @@
     "marketplace": "Marktplatz"
   },
   "hero": {
+    "cycleWords": ["Adaptiv", "Emergent"],
+    "cycleWordsTail": ["emergent", "adaptiv"],
     "badge": "Open Source · Adaptiv · Emergent",
     "title": "Portable KI-Agenten-Laufzeit für Adaptive & Emergente Intelligenz",
     "subtitle": "Bauen Sie adaptive, emergente KI-Agenten mit Gedächtnis, Tools und Autonomie. TypeScript-Laufzeit mit GMI-Rollen, Multi-Agenten-Orchestrierung und Enterprise-Leitplanken.",
     "headlinePairs": [
-      { "top": "Adaptive Intelligenz", "bottom": "für autonome Agenten" },
-      { "top": "Emergente Intelligenz", "bottom": "für Enterprise-Orchestrierung" },
-      { "top": "Adaptive Intelligenz", "bottom": "für sicherheitskritische Workflows" },
-      { "top": "Emergente Intelligenz", "bottom": "für parallele AI-Teams" }
+      {
+        "top": "Adaptive Intelligenz",
+        "bottom": "für autonome Agenten"
+      },
+      {
+        "top": "Emergente Intelligenz",
+        "bottom": "für Enterprise-Orchestrierung"
+      },
+      {
+        "top": "Adaptive Intelligenz",
+        "bottom": "für sicherheitskritische Workflows"
+      },
+      {
+        "top": "Emergente Intelligenz",
+        "bottom": "für parallele AI-Teams"
+      }
     ],
     "technicalHighlights": [
-      { "title": "Streaming-First-Runtime", "detail": "Tokenweise Auslieferung über Personas, Guardrails und Kanäle hinweg." },
-      { "title": "Deterministische Orchestrierung", "detail": "Parallele GMIs mit prüfbaren Routen, Freigaben und Budgets." },
-      { "title": "Zero-Copy-Memory-Fabric", "detail": "Vektor-, episodische und Arbeitsgedächtnisse zu einem wiederholbaren Strom verwoben." },
-      { "title": "Portable Intelligence-Kapseln", "detail": "Exportiere komplette AgentOS-Instanzen als Markdown/JSON und importiere sie in jeden Stack." }
+      {
+        "title": "Streaming-First-Runtime",
+        "detail": "Tokenweise Auslieferung über Personas, Guardrails und Kanäle hinweg."
+      },
+      {
+        "title": "Deterministische Orchestrierung",
+        "detail": "Parallele GMIs mit prüfbaren Routen, Freigaben und Budgets."
+      },
+      {
+        "title": "Zero-Copy-Memory-Fabric",
+        "detail": "Vektor-, episodische und Arbeitsgedächtnisse zu einem wiederholbaren Strom verwoben."
+      },
+      {
+        "title": "Portable Intelligence-Kapseln",
+        "detail": "Exportiere komplette AgentOS-Instanzen als Markdown/JSON und importiere sie in jeden Stack."
+      }
     ],
     "visualStats": [
-      { "label": "Aktive Agenturen", "value": "128" },
-      { "label": "Genehmigungs-SLA", "value": "3.2 min" },
-      { "label": "Guardrail-Abdeckung", "value": "98%" }
+      {
+        "label": "Aktive Agenturen",
+        "value": "128"
+      },
+      {
+        "label": "Genehmigungs-SLA",
+        "value": "3.2 min"
+      },
+      {
+        "label": "Guardrail-Abdeckung",
+        "value": "98%"
+      }
     ],
     "ctaPrimary": "Voice Chat Assistant testen",
     "ctaSecondary": "Auf GitHub sterne",
@@ -50,12 +85,43 @@
     "viewOnGithub": "Auf GitHub ansehen",
     "copiedToClipboard": "In die Zwischenablage kopiert!",
     "capabilities": {
-      "ts": { "label": "TypeScript-nativ", "value": "Typsicher" },
-      "oss": { "label": "Open Source", "value": "Apache 2.0" },
-      "streaming": { "label": "Echtzeit-Streaming", "value": "Asynchron bereit" },
-      "memory": { "label": "Persistenter Speicher", "value": "Integriert" }
+      "ts": {
+        "label": "TypeScript-nativ",
+        "value": "Typsicher"
+      },
+      "oss": {
+        "label": "Open Source",
+        "value": "Apache 2.0"
+      },
+      "streaming": {
+        "label": "Echtzeit-Streaming",
+        "value": "Asynchron bereit"
+      },
+      "memory": {
+        "label": "Persistenter Speicher",
+        "value": "Integriert"
+      }
     },
-    "heroVisualAlt": "AgentOS Orchestrations-Workspace-Vorschau"
+    "heroVisualAlt": "AgentOS Orchestrations-Workspace-Vorschau",
+    "cycleWords": [
+      "Adaptiv",
+      "Emergent"
+    ],
+    "cycleWordsTail": [
+      "emergent",
+      "adaptiv"
+    ],
+    "stats": {
+      "githubStars": "GitHub Sterne",
+      "contributors": "Mitwirkende",
+      "forks": "Forks",
+      "securityScore": "Sicherheitsbewertung"
+    },
+    "compliance": {
+      "gdpr": "GDPR & PII-konform",
+      "soc2": "SOC2 (Demnächst)",
+      "enterpriseSupport": "Enterprise-Support verfügbar"
+    }
   },
   "features": {
     "sectionTitle": "Unternehmensfertige Funktionen",
@@ -125,7 +191,12 @@
     "title": "Bereit, Adaptive KI-Agenten zu Bauen?",
     "description": "Schließen Sie sich Entwicklern an, die die nächste Generation intelligenter Systeme mit AgentOS bauen.",
     "getStarted": "Loslegen",
-    "talkToUs": "Sprechen Sie mit Uns"
+    "talkToUs": "Sprechen Sie mit Uns",
+    "badge": "Treten Sie der KI-Revolution bei",
+    "exploreLabel": "Oder erkunden Sie AgentOS heute:",
+    "tryVoiceChat": "Sprach-Chat ausprobieren",
+    "browseCode": "Code durchsuchen",
+    "marketplace": "Marktplatz"
   },
   "LanguageSwitcher": {
     "switchLanguage": "Sprache wechseln",

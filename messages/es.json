@@ -19,25 +19,66 @@
     "marketplace": "Mercado"
   },
   "hero": {
+    "cycleWords": [
+      "Adaptativa",
+      "Emergente"
+    ],
+    "cycleWordsTail": [
+      "emergente",
+      "adaptativa"
+    ],
     "badge": "Código Abierto · Adaptativo · Emergente",
     "title": "Runtime Portátil de Agentes de IA para Inteligencia Adaptativa y Emergente",
     "subtitle": "Construye agentes de IA adaptativos y emergentes con memoria, herramientas y autonomía. Runtime TypeScript con roles GMI, orquestación multi-agente y barreras de seguridad empresariales.",
     "headlinePairs": [
-      { "top": "Inteligencia Adaptativa", "bottom": "para Agentes Autónomos" },
-      { "top": "Inteligencia Emergente", "bottom": "para Orquestación Empresarial" },
-      { "top": "Inteligencia Adaptativa", "bottom": "para flujos críticos de seguridad" },
-      { "top": "Inteligencia Emergente", "bottom": "para equipos de IA en paralelo" }
+      {
+        "top": "Inteligencia Adaptativa",
+        "bottom": "para Agentes Autónomos"
+      },
+      {
+        "top": "Inteligencia Emergente",
+        "bottom": "para Orquestación Empresarial"
+      },
+      {
+        "top": "Inteligencia Adaptativa",
+        "bottom": "para flujos críticos de seguridad"
+      },
+      {
+        "top": "Inteligencia Emergente",
+        "bottom": "para equipos de IA en paralelo"
+      }
     ],
     "technicalHighlights": [
-      { "title": "Runtime prioritario de streaming", "detail": "Entrega a nivel de token entre personas, guardrails y canales." },
-      { "title": "Orquestación determinista", "detail": "GMIs en paralelo con ruteo, aprobaciones y presupuestos auditables." },
-      { "title": "Tejido de memoria sin copias", "detail": "Memoria vectorial, episódica y de trabajo unidas en un mismo flujo recuperable." },
-      { "title": "Cápsulas de inteligencia portables", "detail": "Exporta instancias completas de AgentOS como Markdown/JSON y llévalas a cualquier stack." }
+      {
+        "title": "Runtime prioritario de streaming",
+        "detail": "Entrega a nivel de token entre personas, guardrails y canales."
+      },
+      {
+        "title": "Orquestación determinista",
+        "detail": "GMIs en paralelo con ruteo, aprobaciones y presupuestos auditables."
+      },
+      {
+        "title": "Tejido de memoria sin copias",
+        "detail": "Memoria vectorial, episódica y de trabajo unidas en un mismo flujo recuperable."
+      },
+      {
+        "title": "Cápsulas de inteligencia portables",
+        "detail": "Exporta instancias completas de AgentOS como Markdown/JSON y llévalas a cualquier stack."
+      }
     ],
     "visualStats": [
-      { "label": "Agencias activas", "value": "128" },
-      { "label": "SLA de aprobación", "value": "3.2 min" },
-      { "label": "Cobertura de guardrails", "value": "98%" }
+      {
+        "label": "Agencias activas",
+        "value": "128"
+      },
+      {
+        "label": "SLA de aprobación",
+        "value": "3.2 min"
+      },
+      {
+        "label": "Cobertura de guardrails",
+        "value": "98%"
+      }
     ],
     "ctaPrimary": "Probar Voice Chat Assistant",
     "ctaSecondary": "Dar una estrella en GitHub",
@@ -50,12 +91,35 @@
     "viewOnGithub": "Ver en GitHub",
     "copiedToClipboard": "¡Copiado al portapapeles!",
     "capabilities": {
-      "ts": { "label": "Nativo en TypeScript", "value": "Seguro por tipos" },
-      "oss": { "label": "Código abierto", "value": "Apache 2.0" },
-      "streaming": { "label": "Streaming en tiempo real", "value": "Listo para async" },
-      "memory": { "label": "Memoria persistente", "value": "Integrada" }
+      "ts": {
+        "label": "Nativo en TypeScript",
+        "value": "Seguro por tipos"
+      },
+      "oss": {
+        "label": "Código abierto",
+        "value": "Apache 2.0"
+      },
+      "streaming": {
+        "label": "Streaming en tiempo real",
+        "value": "Listo para async"
+      },
+      "memory": {
+        "label": "Memoria persistente",
+        "value": "Integrada"
+      }
     },
-    "heroVisualAlt": "Vista previa del workspace de orquestación de AgentOS"
+    "heroVisualAlt": "Vista previa del workspace de orquestación de AgentOS",
+    "stats": {
+      "githubStars": "Estrellas de GitHub",
+      "contributors": "Contribuyentes",
+      "forks": "Forks",
+      "securityScore": "Puntuación de seguridad"
+    },
+    "compliance": {
+      "gdpr": "Compatible con GDPR y PII",
+      "soc2": "SOC2 (Próximamente)",
+      "enterpriseSupport": "Soporte Empresarial Disponible"
+    }
   },
   "features": {
     "sectionTitle": "Características Listas para Empresas",
@@ -125,7 +189,12 @@
     "title": "¿Listo para Construir Agentes de IA Adaptativos?",
     "description": "Únete a los desarrolladores que están construyendo la próxima generación de sistemas inteligentes con AgentOS.",
     "getStarted": "Comenzar",
-    "talkToUs": "Habla con Nosotros"
+    "talkToUs": "Habla con Nosotros",
+    "badge": "Únete a la Revolución de IA",
+    "exploreLabel": "O explora AgentOS hoy:",
+    "tryVoiceChat": "Probar Chat de Voz",
+    "browseCode": "Explorar Código",
+    "marketplace": "Mercado"
   },
   "LanguageSwitcher": {
     "switchLanguage": "Cambiar idioma",
@@ -133,5 +202,98 @@
     "selectLanguage": "Seleccionar idioma"
   },
   "skipToContent": "Saltar al contenido",
-  "skipToMain": "Saltar al contenido principal"
+  "skipToMain": "Saltar al contenido principal",
+  "productCards": {
+    "title": "Capacidades Principales",
+    "subtitle": "Funciones de nivel empresarial para construir, escalar e implementar agentes de IA inteligentes",
+    "cards": {
+      "adaptive": {
+        "title": "Inteligencia Adaptativa",
+        "description": "Aprendizaje en tiempo real y toma de decisiones consciente del contexto que evoluciona con cada interacción"
+      },
+      "distributed": {
+        "title": "Cognición Distribuida",
+        "description": "Procesamiento paralelo entre múltiples agentes con coordinación perfecta y balanceo de carga"
+      },
+      "memory": {
+        "title": "Memoria Persistente",
+        "description": "Almacenamiento infinito con recuperación instantánea mediante embeddings vectoriales avanzados y búsqueda semántica"
+      },
+      "streaming": {
+        "title": "Streaming en Tiempo Real",
+        "description": "Arquitectura de eventos de latencia ultra baja con soporte WebSocket y 99.99% de tiempo de actividad"
+      }
+    }
+  },
+  "enterprise": {
+    "title": "Características Listas para Empresas",
+    "subtitle": "Bloques de construcción de infraestructura de nivel empresarial, cada capa añadiendo seguridad y escala",
+    "features": {
+      "security": {
+        "title": "Fundamento de Seguridad",
+        "items": [
+          "Cifrado AES-256",
+          "Arquitectura de Confianza Cero",
+          "Seguridad de extremo a extremo"
+        ]
+      },
+      "compliance": {
+        "title": "Cumplimiento y Privacidad",
+        "items": [
+          "Compatible con GDPR",
+          "Redacción de PII",
+          "Controles de Residencia de Datos"
+        ]
+      },
+      "auth": {
+        "title": "Autenticación",
+        "items": [
+          "SSO/SAML 2.0",
+          "OAuth 2.0",
+          "Soporte MFA"
+        ]
+      },
+      "audit": {
+        "title": "Auditoría y Monitoreo",
+        "items": [
+          "Monitoreo en tiempo real",
+          "Registros de auditoría",
+          "Detección de anomalías"
+        ]
+      },
+      "soc2": {
+        "title": "Cumplimiento SOC2",
+        "items": [
+          "Tipo II (En progreso)",
+          "Auditorías anuales",
+          "Cumplimiento continuo"
+        ]
+      },
+      "scale": {
+        "title": "Escala Empresarial",
+        "items": [
+          "Auto-escalado",
+          "99.99% SLA",
+          "CDN Global"
+        ]
+      }
+    },
+    "legend": {
+      "fullyImplemented": {
+        "title": "Completamente Implementado",
+        "description": "Cumplimiento de GDPR, redacción de PII y funciones de seguridad principales están listas para producción"
+      },
+      "inProgress": {
+        "title": "En Progreso",
+        "description": "Certificación SOC2 Tipo II en curso, finalización esperada Q2 2024"
+      },
+      "enterpriseSupport": {
+        "title": "Soporte Empresarial",
+        "description": "Soporte 24/7 con integración vca.chat y gerentes de éxito dedicados"
+      }
+    },
+    "trustBadge": "Confiado por líderes de la industria",
+    "wipLabel": "WIP",
+    "currentlyDevelopment": "Actualmente en desarrollo"
+  }
 }

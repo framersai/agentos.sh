@@ -206,6 +206,11 @@
   "cta": {
     "title": "Ready to Build Adaptive AI Agents?",
     "description": "Join developers building the next generation of intelligent systems with AgentOS.",
+    "badge": "Join the AI Revolution",
+    "exploreLabel": "Or explore AgentOS today:",
+    "tryVoiceChat": "Try Voice Chat",
+    "browseCode": "Browse Code",
+    "marketplace": "Marketplace",
     "getStarted": "Get Started",
     "talkToUs": "Talk to Us"
   },

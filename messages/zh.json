@@ -23,21 +23,54 @@
     "title": "自适应与涌现智能的便携式AI代理运行时",
     "subtitle": "构建具有记忆、工具和自主能力的自适应涌现AI代理。TypeScript运行时，具有GMI角色、多代理编排和企业级护栏。",
     "headlinePairs": [
-      { "top": "自适应智能", "bottom": "面向自主代理" },
-      { "top": "涌现智能", "bottom": "服务于企业级编排" },
-      { "top": "自适应智能", "bottom": "守护安全关键工作流" },
-      { "top": "涌现智能", "bottom": "赋能并行 AI 团队" }
+      {
+        "top": "自适应智能",
+        "bottom": "面向自主代理"
+      },
+      {
+        "top": "涌现智能",
+        "bottom": "服务于企业级编排"
+      },
+      {
+        "top": "自适应智能",
+        "bottom": "守护安全关键工作流"
+      },
+      {
+        "top": "涌现智能",
+        "bottom": "赋能并行 AI 团队"
+      }
     ],
     "technicalHighlights": [
-      { "title": "流式优先运行时", "detail": "在角色、护栏与多通道之间实现逐 token 级别的流式传输。" },
-      { "title": "确定性编排", "detail": "并行GMI，支持可审计的路由、审批与预算。" },
-      { "title": "零拷贝记忆织体", "detail": "将向量、情节与工作记忆编织到同一条可回放的语义流。" },
-      { "title": "可移植智能胶囊", "detail": "导出完整AgentOS实例为Markdown/JSON，并在任何技术栈中复用。" }
+      {
+        "title": "流式优先运行时",
+        "detail": "在角色、护栏与多通道之间实现逐 token 级别的流式传输。"
+      },
+      {
+        "title": "确定性编排",
+        "detail": "并行GMI，支持可审计的路由、审批与预算。"
+      },
+      {
+        "title": "零拷贝记忆织体",
+        "detail": "将向量、情节与工作记忆编织到同一条可回放的语义流。"
+      },
+      {
+        "title": "可移植智能胶囊",
+        "detail": "导出完整AgentOS实例为Markdown/JSON，并在任何技术栈中复用。"
+      }
     ],
     "visualStats": [
-      { "label": "运行中的代理机构", "value": "128" },
-      { "label": "审批SLA", "value": "3.2 分钟" },
-      { "label": "护栏覆盖率", "value": "98%" }
+      {
+        "label": "运行中的代理机构",
+        "value": "128"
+      },
+      {
+        "label": "审批SLA",
+        "value": "3.2 分钟"
+      },
+      {
+        "label": "护栏覆盖率",
+        "value": "98%"
+      }
     ],
     "ctaPrimary": "体验 Voice Chat Assistant",
     "ctaSecondary": "在 GitHub 上点星",
@@ -50,12 +83,43 @@
     "viewOnGithub": "在 GitHub 上查看",
     "copiedToClipboard": "已复制到剪贴板！",
     "capabilities": {
-      "ts": { "label": "原生 TypeScript", "value": "类型安全" },
-      "oss": { "label": "开源", "value": "Apache 2.0" },
-      "streaming": { "label": "实时流式", "value": "异步就绪" },
-      "memory": { "label": "持久记忆", "value": "内置" }
+      "ts": {
+        "label": "原生 TypeScript",
+        "value": "类型安全"
+      },
+      "oss": {
+        "label": "开源",
+        "value": "Apache 2.0"
+      },
+      "streaming": {
+        "label": "实时流式",
+        "value": "异步就绪"
+      },
+      "memory": {
+        "label": "持久记忆",
+        "value": "内置"
+      }
     },
-    "heroVisualAlt": "AgentOS 编排工作区预览"
+    "heroVisualAlt": "AgentOS 编排工作区预览",
+    "cycleWords": [
+      "自适应",
+      "涌现"
+    ],
+    "cycleWordsTail": [
+      "涌现",
+      "自适应"
+    ],
+    "stats": {
+      "githubStars": "GitHub 星标",
+      "contributors": "贡献者",
+      "forks": "分叉",
+      "securityScore": "安全评分"
+    },
+    "compliance": {
+      "gdpr": "符合GDPR和PII",
+      "soc2": "SOC2（即将推出）",
+      "enterpriseSupport": "企业支持可用"
+    }
   },
   "features": {
     "sectionTitle": "企业级功能",
@@ -125,7 +189,12 @@
     "title": "准备构建自适应AI代理了吗？",
     "description": "加入使用AgentOS构建下一代智能系统的开发者行列。",
     "getStarted": "开始使用",
-    "talkToUs": "与我们交谈"
+    "talkToUs": "与我们交谈",
+    "badge": "加入AI革命",
+    "exploreLabel": "或立即探索AgentOS：",
+    "tryVoiceChat": "试用语音聊天",
+    "browseCode": "浏览代码",
+    "marketplace": "市场"
   },
   "LanguageSwitcher": {
     "switchLanguage": "切换语言",

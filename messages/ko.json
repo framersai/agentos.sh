@@ -206,6 +206,11 @@
   "cta": {
     "title": "적응형 AI 에이전트를 구축할 준비가 되셨나요?",
     "description": "AgentOS로 차세대 지능형 시스템을 구축하는 개발자에 합류하세요.",
+    "badge": "AI 혁명에 참여하세요",
+    "exploreLabel": "또는 오늘 AgentOS를 탐색하세요:",
+    "tryVoiceChat": "음성 채팅 시도",
+    "browseCode": "코드 탐색",
+    "marketplace": "마켓플레이스",
     "getStarted": "시작하기",
     "talkToUs": "문의하기"
   },

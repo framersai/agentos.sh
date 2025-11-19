@@ -19,25 +19,60 @@
     "marketplace": "マーケットプレイス"
   },
   "hero": {
+    "cycleWords": ["適応型", "創発型"],
+    "cycleWordsTail": ["創発型", "適応型"],
     "badge": "オープンソース · 適応型 · 創発型",
     "title": "適応型および創発型インテリジェンスのためのポータブルAIエージェントランタイム",
     "subtitle": "メモリ、ツール、自律性を備えた適応型、創発型AIエージェントを構築。GMIロール、マルチエージェントオーケストレーション、エンタープライズガードレールを備えたTypeScriptランタイム。",
     "headlinePairs": [
-      { "top": "適応型インテリジェンス", "bottom": "自律型エージェント向け" },
-      { "top": "創発型インテリジェンス", "bottom": "エンタープライズ・オーケストレーション向け" },
-      { "top": "適応型インテリジェンス", "bottom": "安全重要ワークフローのために" },
-      { "top": "創発型インテリジェンス", "bottom": "並列AIチームのために" }
+      {
+        "top": "適応型インテリジェンス",
+        "bottom": "自律型エージェント向け"
+      },
+      {
+        "top": "創発型インテリジェンス",
+        "bottom": "エンタープライズ・オーケストレーション向け"
+      },
+      {
+        "top": "適応型インテリジェンス",
+        "bottom": "安全重要ワークフローのために"
+      },
+      {
+        "top": "創発型インテリジェンス",
+        "bottom": "並列AIチームのために"
+      }
     ],
     "technicalHighlights": [
-      { "title": "ストリーミング優先ランタイム", "detail": "ペルソナ・ガードレール・チャネル全体にトークン単位で配信します。" },
-      { "title": "決定論的オーケストレーション", "detail": "監査可能なルーティング、承認、予算を備えた並列GMI。" },
-      { "title": "ゼロコピー・メモリファブリック", "detail": "ベクトル・エピソード・ワーキングメモリをひとつの再生可能な流れに縫い合わせます。" },
-      { "title": "ポータブル・インテリジェンスカプセル", "detail": "完全なAgentOSインスタンスをMarkdown/JSONで書き出し、あらゆるスタックに取り込めます。" }
+      {
+        "title": "ストリーミング優先ランタイム",
+        "detail": "ペルソナ・ガードレール・チャネル全体にトークン単位で配信します。"
+      },
+      {
+        "title": "決定論的オーケストレーション",
+        "detail": "監査可能なルーティング、承認、予算を備えた並列GMI。"
+      },
+      {
+        "title": "ゼロコピー・メモリファブリック",
+        "detail": "ベクトル・エピソード・ワーキングメモリをひとつの再生可能な流れに縫い合わせます。"
+      },
+      {
+        "title": "ポータブル・インテリジェンスカプセル",
+        "detail": "完全なAgentOSインスタンスをMarkdown/JSONで書き出し、あらゆるスタックに取り込めます。"
+      }
     ],
     "visualStats": [
-      { "label": "稼働中のエージェンシー", "value": "128" },
-      { "label": "承認SLA", "value": "3.2分" },
-      { "label": "ガードレール適用率", "value": "98%" }
+      {
+        "label": "稼働中のエージェンシー",
+        "value": "128"
+      },
+      {
+        "label": "承認SLA",
+        "value": "3.2分"
+      },
+      {
+        "label": "ガードレール適用率",
+        "value": "98%"
+      }
     ],
     "ctaPrimary": "Voice Chat Assistantを試す",
     "ctaSecondary": "GitHubでStarする",
@@ -50,12 +85,43 @@
     "viewOnGithub": "GitHubで表示",
     "copiedToClipboard": "クリップボードにコピーしました！",
     "capabilities": {
-      "ts": { "label": "TypeScriptネイティブ", "value": "型安全" },
-      "oss": { "label": "オープンソース", "value": "Apache 2.0" },
-      "streaming": { "label": "リアルタイムストリーミング", "value": "非同期対応" },
-      "memory": { "label": "永続メモリ", "value": "内蔵" }
+      "ts": {
+        "label": "TypeScriptネイティブ",
+        "value": "型安全"
+      },
+      "oss": {
+        "label": "オープンソース",
+        "value": "Apache 2.0"
+      },
+      "streaming": {
+        "label": "リアルタイムストリーミング",
+        "value": "非同期対応"
+      },
+      "memory": {
+        "label": "永続メモリ",
+        "value": "内蔵"
+      }
     },
-    "heroVisualAlt": "AgentOS オーケストレーションワークスペースのプレビュー"
+    "heroVisualAlt": "AgentOS オーケストレーションワークスペースのプレビュー",
+    "cycleWords": [
+      "適応型",
+      "創発型"
+    ],
+    "cycleWordsTail": [
+      "創発型",
+      "適応型"
+    ],
+    "stats": {
+      "githubStars": "GitHub スター",
+      "contributors": "貢献者",
+      "forks": "フォーク",
+      "securityScore": "セキュリティスコア"
+    },
+    "compliance": {
+      "gdpr": "GDPR＆PII準拠",
+      "soc2": "SOC2（近日公開）",
+      "enterpriseSupport": "エンタープライズサポート利用可能"
+    }
   },
   "features": {
     "sectionTitle": "エンタープライズ対応機能",
@@ -125,7 +191,12 @@
     "title": "適応型AIエージェントを構築する準備はできていますか？",
     "description": "AgentOSで次世代インテリジェントシステムを構築する開発者に参加してください。",
     "getStarted": "始める",
-    "talkToUs": "お問い合わせ"
+    "talkToUs": "お問い合わせ",
+    "badge": "AI革命に参加",
+    "exploreLabel": "または今日AgentOSを探索：",
+    "tryVoiceChat": "音声チャットを試す",
+    "browseCode": "コードを閲覧",
+    "marketplace": "マーケットプレイス"
   },
   "LanguageSwitcher": {
     "switchLanguage": "言語を切り替え",

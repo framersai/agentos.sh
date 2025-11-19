@@ -19,25 +19,60 @@
     "marketplace": "Marketplace"
   },
   "hero": {
+    "cycleWords": ["Adaptative", "Émergente"],
+    "cycleWordsTail": ["émergente", "adaptative"],
     "badge": "Open Source · Adaptatif · Émergent",
     "title": "Runtime portable pour agents IA adaptatifs et émergents",
     "subtitle": "Créez des agents IA adaptatifs avec mémoire, outils et autonomie. Runtime TypeScript avec rôles GMI, orchestration multi-agents et garde-fous entreprise.",
     "headlinePairs": [
-      { "top": "Intelligence adaptative", "bottom": "pour des agents autonomes" },
-      { "top": "Intelligence émergente", "bottom": "pour l'orchestration d'entreprise" },
-      { "top": "Intelligence adaptative", "bottom": "pour les workflows critiques" },
-      { "top": "Intelligence émergente", "bottom": "pour les équipes IA parallèles" }
+      {
+        "top": "Intelligence adaptative",
+        "bottom": "pour des agents autonomes"
+      },
+      {
+        "top": "Intelligence émergente",
+        "bottom": "pour l'orchestration d'entreprise"
+      },
+      {
+        "top": "Intelligence adaptative",
+        "bottom": "pour les workflows critiques"
+      },
+      {
+        "top": "Intelligence émergente",
+        "bottom": "pour les équipes IA parallèles"
+      }
     ],
     "technicalHighlights": [
-      { "title": "Runtime orienté streaming", "detail": "Diffusion au niveau du token entre personas, garde-fous et canaux." },
-      { "title": "Orchestration déterministe", "detail": "GMI parallèles avec routage, validations et budgets auditables." },
-      { "title": "Tissu mémoire sans copie", "detail": "Mémoires vectorielle, épisodique et de travail réunies dans un flux réutilisable." },
-      { "title": "Capsules d'intelligence portables", "detail": "Exportez AgentOS en Markdown/JSON et réimportez-le dans n'importe quelle stack." }
+      {
+        "title": "Runtime orienté streaming",
+        "detail": "Diffusion au niveau du token entre personas, garde-fous et canaux."
+      },
+      {
+        "title": "Orchestration déterministe",
+        "detail": "GMI parallèles avec routage, validations et budgets auditables."
+      },
+      {
+        "title": "Tissu mémoire sans copie",
+        "detail": "Mémoires vectorielle, épisodique et de travail réunies dans un flux réutilisable."
+      },
+      {
+        "title": "Capsules d'intelligence portables",
+        "detail": "Exportez AgentOS en Markdown/JSON et réimportez-le dans n'importe quelle stack."
+      }
     ],
     "visualStats": [
-      { "label": "Agences en production", "value": "128" },
-      { "label": "SLA d'approbation", "value": "3,2 min" },
-      { "label": "Couverture des garde-fous", "value": "98%" }
+      {
+        "label": "Agences en production",
+        "value": "128"
+      },
+      {
+        "label": "SLA d'approbation",
+        "value": "3,2 min"
+      },
+      {
+        "label": "Couverture des garde-fous",
+        "value": "98%"
+      }
     ],
     "ctaPrimary": "Essayer Voice Chat Assistant",
     "ctaSecondary": "Étoiler sur GitHub",
@@ -50,12 +85,43 @@
     "viewOnGithub": "Voir sur GitHub",
     "copiedToClipboard": "Copié dans le presse-papiers !",
     "capabilities": {
-      "ts": { "label": "Natf TypeScript", "value": "Typé" },
-      "oss": { "label": "Open Source", "value": "Apache 2.0" },
-      "streaming": { "label": "Streaming temps réel", "value": "Async ready" },
-      "memory": { "label": "Mémoire persistante", "value": "Intégrée" }
+      "ts": {
+        "label": "Natf TypeScript",
+        "value": "Typé"
+      },
+      "oss": {
+        "label": "Open Source",
+        "value": "Apache 2.0"
+      },
+      "streaming": {
+        "label": "Streaming temps réel",
+        "value": "Async ready"
+      },
+      "memory": {
+        "label": "Mémoire persistante",
+        "value": "Intégrée"
+      }
     },
-    "heroVisualAlt": "Aperçu de l'espace d'orchestration AgentOS"
+    "heroVisualAlt": "Aperçu de l'espace d'orchestration AgentOS",
+    "cycleWords": [
+      "Adaptative",
+      "Émergente"
+    ],
+    "cycleWordsTail": [
+      "émergente",
+      "adaptative"
+    ],
+    "stats": {
+      "githubStars": "Étoiles GitHub",
+      "contributors": "Contributeurs",
+      "forks": "Forks",
+      "securityScore": "Score de sécurité"
+    },
+    "compliance": {
+      "gdpr": "Conforme GDPR et PII",
+      "soc2": "SOC2 (Bientôt)",
+      "enterpriseSupport": "Support d'entreprise disponible"
+    }
   },
   "features": {
     "sectionTitle": "Fonctionnalités prêtes pour l'entreprise",
@@ -125,7 +191,12 @@
     "title": "Prêt à construire des agents IA adaptatifs ?",
     "description": "Rejoignez les développeurs qui bâtissent la prochaine génération de systèmes intelligents avec AgentOS.",
     "getStarted": "Commencer",
-    "talkToUs": "Discuter"
+    "talkToUs": "Discuter",
+    "badge": "Rejoignez la révolution IA",
+    "exploreLabel": "Ou explorez AgentOS aujourd'hui:",
+    "tryVoiceChat": "Essayer le chat vocal",
+    "browseCode": "Parcourir le code",
+    "marketplace": "Marché"
   },
   "LanguageSwitcher": {
     "switchLanguage": "Changer de langue",
@@ -135,4 +206,3 @@
   "skipToContent": "Aller au contenu",
   "skipToMain": "Aller au contenu principal"
 }
-
