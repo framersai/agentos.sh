@@ -138,6 +138,9 @@ export default async function LocaleLayout({
 }: Props) {
   if (!locales.includes(locale as Locale)) notFound();
 
+  const tFooter = await getTranslations({ locale: locale as Locale, namespace: 'footer' });
+  const tNav = await getTranslations({ locale: locale as Locale, namespace: 'nav' });
+
   const messages = await getMessages();
   
   return (
@@ -221,7 +224,7 @@ export default async function LocaleLayout({
                   <div>
                     <h3 className="font-bold text-text-primary mb-3">AgentOS</h3>
                     <p className="text-sm text-text-secondary mb-3">
-                      TypeScript runtime for adaptive AI agents by Frame.dev
+                      {tFooter('tagline')}
                     </p>
                     <div className="flex gap-3">
                       <a href="https://github.com/framersai" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors" aria-label="FramersAI on GitHub">
@@ -239,36 +242,38 @@ export default async function LocaleLayout({
                     </div>
                   </div>
                   <div>
-                    <h3 className="font-bold text-text-primary mb-3">Resources</h3>
+                    <h3 className="font-bold text-text-primary mb-3">{tFooter('resources')}</h3>
                     <ul className="space-y-2 text-sm">
-                      <li><a href="https://docs.agentos.sh" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Docs (Guides)</a></li>
-                      <li><a href="https://docs.agentos.sh/api" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">API Reference (TypeDoc/TSDoc)</a></li>
-                      <li><a href={locale === 'en' ? '/#code' : `/${locale}/#code`} className="text-text-secondary hover:text-accent-primary transition-colors">Examples</a></li>
-                      <li><a href="https://github.com/framersai/agentos/releases" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Release Notes</a></li>
-                      <li><a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">GitHub</a></li>
-                      <li><a href="https://discord.gg/framersai" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Discord</a></li>
+                      <li><a href="https://docs.agentos.sh" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('docsGuides')}</a></li>
+                      <li><a href="https://docs.agentos.sh/api" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('apiReferenceTSDoc')}</a></li>
+                      <li><a href={locale === 'en' ? '/#code' : `/${locale}/#code`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('examples')}</a></li>
+                      <li><a href="https://github.com/framersai/agentos/releases" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('releaseNotes')}</a></li>
+                      <li><a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('github')}</a></li>
+                      <li><a href="https://discord.gg/framersai" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('discord')}</a></li>
                     </ul>
                   </div>
                   <div>
-                    <h3 className="font-bold text-text-primary mb-3">Company</h3>
+                    <h3 className="font-bold text-text-primary mb-3">{tFooter('company')}</h3>
                     <ul className="space-y-2 text-sm">
-                      <li><a href={locale === 'en' ? '/about' : `/${locale}/about`} className="text-text-secondary hover:text-accent-primary transition-colors">About</a></li>
-                      <li><a href={locale === 'en' ? '/faq' : `/${locale}/faq`} className="text-text-secondary hover:text-accent-primary transition-colors">FAQ</a></li>
+                      <li><a href={locale === 'en' ? '/about' : `/${locale}/about`} className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('about')}</a></li>
+                      <li><a href={locale === 'en' ? '/faq' : `/${locale}/faq`} className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('faq')}</a></li>
                       <li><a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Frame.dev</a></li>
-                      <li><a href="mailto:team@frame.dev" className="text-text-secondary hover:text-accent-primary transition-colors">Contact</a></li>
+                      <li><a href="mailto:team@frame.dev" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('contact')}</a></li>
                     </ul>
                   </div>
                   <div>
-                    <h3 className="font-bold text-text-primary mb-3">Legal</h3>
+                    <h3 className="font-bold text-text-primary mb-3">{tFooter('legal')}</h3>
                     <ul className="space-y-2 text-sm">
-                      <li><a href={locale === 'en' ? '/legal/terms' : `/${locale}/legal/terms`} className="text-text-secondary hover:text-accent-primary transition-colors">Terms</a></li>
-                      <li><a href={locale === 'en' ? '/legal/privacy' : `/${locale}/legal/privacy`} className="text-text-secondary hover:text-accent-primary transition-colors">Privacy</a></li>
-                      <li><span className="text-text-secondary">Apache 2.0 (core) + MIT (agents, extensions, guardrails)</span></li>
+                      <li><a href={locale === 'en' ? '/legal/terms' : `/${locale}/legal/terms`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('terms')}</a></li>
+                      <li><a href={locale === 'en' ? '/legal/privacy' : `/${locale}/legal/privacy`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('privacy')}</a></li>
+                      <li><span className="text-text-secondary">{tFooter('license')}</span></li>
                     </ul>
                   </div>
                 </div>
                 <div className="pt-6 border-t border-purple-200/30 dark:border-purple-500/20 text-center">
-                  <p className="text-text-secondary">&copy; {new Date().getFullYear()} Frame.dev. All rights reserved.</p>
+                  <p className="text-text-secondary">{tFooter('copyright', { 
+                    year: new Date().getFullYear() 
+                  })}</p>
                 </div>
               </div>
             </footer>

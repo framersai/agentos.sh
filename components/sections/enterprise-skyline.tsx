@@ -11,6 +11,7 @@ import {
   Globe
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
+import { useTranslations } from 'next-intl'
 import { 
   ShieldIcon, 
   LockIcon, 
@@ -22,11 +23,9 @@ import {
 
 interface BuildingFeature {
   id: string
-  title: string
   height: number // 1-10 scale
   position: number // 0-100 percentage
   icon: React.ElementType
-  features: string[]
   status: 'foundation' | 'building' | 'complete'
   glow: string
 }
@@ -34,67 +33,56 @@ interface BuildingFeature {
 const enterpriseFeatures: BuildingFeature[] = [
   {
     id: 'security',
-    title: 'Security Foundation',
     height: 3,
     position: 10,
     icon: ShieldIcon,
-    features: ['AES-256 Encryption', 'Zero-Trust Architecture', 'End-to-End Security'],
     status: 'complete',
     glow: '#00FF00'
   },
   {
     id: 'compliance',
-    title: 'Compliance & Privacy',
     height: 5,
     position: 25,
     icon: DocumentCheckIcon,
-    features: ['GDPR Compliant', 'PII Redaction', 'Data Residency Controls'],
     status: 'complete',
     glow: '#00FFFF'
   },
   {
     id: 'auth',
-    title: 'Authentication',
     height: 4,
     position: 40,
     icon: LockIcon,
-    features: ['SSO/SAML 2.0', 'OAuth 2.0', 'MFA Support'],
     status: 'complete',
     glow: '#FF00FF'
   },
   {
     id: 'audit',
-    title: 'Audit & Monitoring',
     height: 6,
     position: 55,
     icon: GraphIcon,
-    features: ['Real-time Monitoring', 'Audit Logs', 'Anomaly Detection'],
     status: 'complete',
     glow: '#FFFF00'
   },
   {
     id: 'soc2',
-    title: 'SOC2 Compliance',
     height: 7,
     position: 70,
     icon: CertificateIcon,
-    features: ['Type II (In Progress)', 'Annual Audits', 'Continuous Compliance'],
     status: 'building',
     glow: '#FF8800'
   },
   {
     id: 'scale',
-    title: 'Enterprise Scale',
     height: 9,
     position: 85,
     icon: SkylineIcon,
-    features: ['Auto-scaling', '99.99% SLA', 'Global CDN'],
     status: 'complete',
     glow: '#8800FF'
   }
 ]
 
 export function EnterpriseSkyline() {
+  const t = useTranslations('enterprise')
   const [hoveredBuilding, setHoveredBuilding] = useState<string | null>(null)
   const [animatedWindows, setAnimatedWindows] = useState<Record<string, boolean[]>>({})
   const { resolvedTheme } = useTheme()
@@ -178,10 +166,10 @@ export function EnterpriseSkyline() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-4">
-            Enterprise Ready Features
+            {t('title')}
           </h2>
           <p className="text-lg text-muted max-w-3xl mx-auto">
-            Building blocks of enterprise-grade infrastructure, each layer adding security and scale
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -311,10 +299,10 @@ export function EnterpriseSkyline() {
                           <div className="w-5 h-5">
                             <feature.icon id={`${feature.id}-tooltip`} className="w-full h-full" />
                           </div>
-                          {feature.title}
+                          {t(`features.${feature.id}.title`)}
                         </h4>
                         <ul className="space-y-1">
-                          {feature.features.map((item, i) => (
+                          {t.raw<string[]>(`features.${feature.id}.items`).map((item, i) => (
                             <li key={i} className="text-xs flex items-start gap-1">
                               <CheckCircle className="w-3 h-3 text-green-500 mt-0.5 shrink-0" />
                               <span>{item}</span>
@@ -324,7 +312,7 @@ export function EnterpriseSkyline() {
                         {feature.status === 'building' && (
                           <div className="mt-2 pt-2 border-t border-glass-border">
                             <p className="text-xs text-orange-500">
-                              🚧 Currently in development
+                              🚧 {t('currentlyDevelopment')}
                             </p>
                           </div>
                         )}
@@ -362,10 +350,10 @@ export function EnterpriseSkyline() {
           >
             <div className="flex items-center gap-3 mb-3">
               <Database className="w-8 h-8 text-green-500" />
-              <h3 className="font-semibold">Fully Implemented</h3>
+              <h3 className="font-semibold">{t('legend.fullyImplemented.title')}</h3>
             </div>
             <p className="text-sm text-muted">
-              GDPR compliance, PII redaction, and core security features are production-ready
+              {t('legend.fullyImplemented.description')}
             </p>
           </motion.div>
 
@@ -377,10 +365,10 @@ export function EnterpriseSkyline() {
           >
             <div className="flex items-center gap-3 mb-3">
               <Cpu className="w-8 h-8 text-orange-500" />
-              <h3 className="font-semibold">In Progress</h3>
+              <h3 className="font-semibold">{t('legend.inProgress.title')}</h3>
             </div>
             <p className="text-sm text-muted">
-              SOC2 Type II certification underway, expected completion Q2 2024
+              {t('legend.inProgress.description')}
             </p>
           </motion.div>
 
@@ -392,10 +380,10 @@ export function EnterpriseSkyline() {
           >
             <div className="flex items-center gap-3 mb-3">
               <Globe className="w-8 h-8 text-blue-500" />
-              <h3 className="font-semibold">Enterprise Support</h3>
+              <h3 className="font-semibold">{t('legend.enterpriseSupport.title')}</h3>
             </div>
             <p className="text-sm text-muted">
-              24/7 support with vca.chat integration and dedicated success managers
+              {t('legend.enterpriseSupport.description')}
             </p>
           </motion.div>
         </div>
@@ -407,7 +395,7 @@ export function EnterpriseSkyline() {
           transition={{ delay: 2 }}
           className="mt-12 text-center"
         >
-          <p className="text-sm text-muted mb-4">Trusted by industry leaders</p>
+          <p className="text-sm text-muted mb-4">{t('trustBadge')}</p>
           <div className="flex flex-wrap justify-center gap-8">
             {Array.from({ length: 5 }).map((_, i) => (
               <div

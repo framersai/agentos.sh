@@ -41,7 +41,10 @@ async function fetchNpmStats() {
       return data.downloads
     }
   } catch (error) {
-    console.error('Failed to fetch npm stats:', error)
+    if (process.env.NODE_ENV === 'development') {
+      // eslint-disable-next-line no-console
+      console.error('Failed to fetch npm stats:', error)
+    }
   }
   return null
 }

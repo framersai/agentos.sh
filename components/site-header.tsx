@@ -51,8 +51,9 @@ export function SiteHeader() {
 
   const homeHref = useMemo(() => (locale === 'en' ? '/' : `/${locale}`), [locale]);
 
-  // Debug i18n logs
+  // Debug i18n logs (development only)
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') return;
     try {
       const localized = NAV_LINKS.map(l => ({ src: l.href, dst: localizeHref(l.href) }));
       // eslint-disable-next-line no-console

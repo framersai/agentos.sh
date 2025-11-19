@@ -228,9 +228,17 @@ export function EcosystemSection() {
           (sum, repo) => sum + (repo?.stargazers_count ?? 0),
           0
         )
-        const npmResponse = await fetch('https://api.npmjs.org/downloads/point/last-week/%40framersai%2Fagentos')
-        const npmJson = npmResponse.ok ? await npmResponse.json() : null
-        const downloads = npmJson?.downloads ?? null
+        let downloads: number | null = null
+        try {
+          const npmResponse = await fetch('https://api.npmjs.org/downloads/point/last-week/@framers/agentos')
+          if (npmResponse.ok) {
+            const npmJson = await npmResponse.json()
+            downloads = npmJson?.downloads ?? null
+          }
+        } catch {
+          // Ignore npm stats errors in production to avoid noisy logs
+          downloads = null
+        }
         if (!cancelled) {
           setLiveStats({
             repos: repositories.length,
