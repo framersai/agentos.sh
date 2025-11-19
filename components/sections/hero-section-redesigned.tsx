@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Github, Terminal, Star, GitBranch, Users, Shield } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { AnimatedAgentOSLogo } from '../icons/animated-logo';
 import { Toast } from '../ui/toast';
@@ -20,10 +20,12 @@ export function HeroSectionRedesigned() {
   const { theme: currentTheme, resolvedTheme } = useTheme();
   const [showToast, setShowToast] = useState(false);
   const [githubStars, setGithubStars] = useState<number | null>(null);
+  const [githubForks, setGithubForks] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [activeHeadline, setActiveHeadline] = useState(0);
+  const [headIdxA, setHeadIdxA] = useState(0);
+  const [headIdxB, setHeadIdxB] = useState(1);
   const prefersReducedMotion = useReducedMotion();
-  const lastSwitchTime = useRef(Date.now());
+  const lastSwitchTime = useRef(0);
   const isDark = resolvedTheme === 'dark';
 
   // Apply holographic theme based on current theme selection
@@ -39,69 +41,78 @@ export function HeroSectionRedesigned() {
     applyHolographicTheme(mappedTheme, isDark);
   }, [currentTheme, isDark]);
 
-  // Live stats with GitHub stars
+  // Live stats with GitHub data only
   const productStats = useMemo(() => {
     return [
       {
         label: t('stats.githubStars'),
-        value: githubStars || '2.3k',
+        value: githubStars ?? '—',
         live: true,
         icon: Star
       },
       {
-        label: t('stats.contributors'),
-        value: '47',
-        live: false,
-        icon: Users
-      },
-      {
         label: t('stats.forks'),
-        value: '312',
-        live: false,
+        value: githubForks ?? '—',
+        live: true,
         icon: GitBranch
-      },
-      {
-        label: t('stats.securityScore'),
-        value: 'A+',
-        live: false,
-        icon: Shield
       }
     ];
-  }, [githubStars, t]);
+  }, [githubStars, githubForks, t]);
 
-  // Fetch GitHub stars
+  // Fetch GitHub repo metrics
   useEffect(() => {
-    fetch('https://api.github.com/repos/agentos-project/agentos')
+    fetch('https://api.github.com/repos/framersai/agentos')
       .then(res => res.json())
       .then(data => {
-        if (data.stargazers_count) {
-          setGithubStars(data.stargazers_count);
-        }
+        if (typeof data.stargazers_count === 'number') setGithubStars(data.stargazers_count);
+        if (typeof data.forks_count === 'number') setGithubForks(data.forks_count);
       })
       .catch(() => {
-        // Fallback to placeholder
-        setGithubStars(2347);
+        setGithubStars(null);
+        setGithubForks(null);
       });
   }, []);
 
-  // Liquid morph text switching - less frequent, smoother and clearer
+  // Liquid morph text switching - independent and staggered
   useEffect(() => {
     if (prefersReducedMotion) return;
-
-    const interval = setInterval(() => {
-      const now = Date.now();
-      // Only switch if enough time has passed (randomized between 8-15 seconds)
-      const timeSinceLastSwitch = now - lastSwitchTime.current;
-      const minTime = 8000 + Math.random() * 7000; // 8-15 seconds
-
-      if (timeSinceLastSwitch >= minTime) {
-        setActiveHeadline(prev => prev === 0 ? 1 : 0);
+    let timeoutA: ReturnType<typeof setTimeout> | undefined;
+    const scheduleNextA = () => {
+      const delay = 6000 + Math.random() * 7000; // 6-13s
+      timeoutA = setTimeout(() => {
+        const now = Date.now();
+        if (now - lastSwitchTime.current < 900) {
+          setTimeout(scheduleNextA, 900);
+          return;
+        }
+        setHeadIdxA(prev => (prev + 1) % Math.max(1, cycleWords.length));
         lastSwitchTime.current = now;
-      }
-    }, 1000); // Check every second but only switch when conditions are met
+        scheduleNextA();
+      }, delay);
+    };
+    scheduleNextA();
+    return () => timeoutA && clearTimeout(timeoutA);
+  }, [prefersReducedMotion, cycleWords.length]);
 
-    return () => clearInterval(interval);
-  }, [prefersReducedMotion]);
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    let timeoutB: ReturnType<typeof setTimeout> | undefined;
+    const scheduleNextB = () => {
+      const delay = 7000 + Math.random() * 8000; // 7-15s
+      timeoutB = setTimeout(() => {
+        const now = Date.now();
+        if (now - lastSwitchTime.current < 900) {
+          setTimeout(scheduleNextB, 900);
+          return;
+        }
+        setHeadIdxB(prev => (prev + 1) % Math.max(1, cycleWordsTail.length));
+        lastSwitchTime.current = now;
+        scheduleNextB();
+      }, delay);
+    };
+    scheduleNextB();
+    return () => timeoutB && clearTimeout(timeoutB);
+  }, [prefersReducedMotion, cycleWordsTail.length]);
 
   // Mobile detection
   useEffect(() => {
@@ -213,14 +224,14 @@ export function HeroSectionRedesigned() {
                 <span className="inline-block relative align-baseline">
                   <AnimatePresence mode="wait">
                     <motion.span
-                      key={activeHeadline}
+                      key={`head-a-${headIdxA}`}
                       initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
                       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                       exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                       className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
                     >
-                      {cycleWords[activeHeadline]}
+                      {cycleWords[headIdxA]}
                     </motion.span>
                   </AnimatePresence>
                 </span>
@@ -229,14 +240,14 @@ export function HeroSectionRedesigned() {
                 <span className="inline-block relative align-baseline">
                   <AnimatePresence mode="wait">
                     <motion.span
-                      key={activeHeadline + 100}
+                      key={`head-b-${headIdxB}`}
                       initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
                       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                       exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
                       className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
                     >
-                      {cycleWordsTail[activeHeadline]}
+                      {cycleWordsTail[headIdxB]}
                     </motion.span>
                   </AnimatePresence>
                 </span>

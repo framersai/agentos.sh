@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl'
 import { HeroSectionRedesigned } from '../../components/sections/hero-section-redesigned'
 import { ProductCardsRedesigned } from '../../components/sections/product-cards-redesigned'
 import { EnterpriseSkyline as SkylineSection } from '../../components/sections/enterprise-skyline'
-import { HolographicVideoPlayer } from '../../components/media/holographic-video-player'
 import { CodePopover } from '../../components/ui/code-popover'
 import { CTASection } from '../../components/sections/cta-section'
 import dynamic from 'next/dynamic'
@@ -187,30 +186,25 @@ agentos deploy --env production`
         {/* Hero Section with Redesigned Components */}
         <HeroSectionRedesigned />
 
-        {/* Video Demo Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-4">
-                See AgentOS in Action
-              </h2>
-              <p className="text-lg text-muted max-w-3xl mx-auto">
-                Watch how multi-agent orchestration works in real-world scenarios
-              </p>
-            </motion.div>
-
-            <HolographicVideoPlayer
-              placeholder={true}
-              title="AgentOS Platform Demo"
-              description="Multi-agent collaboration, real-time streaming, and enterprise orchestration"
-            />
-          </div>
-        </section>
+      {/* Placeholder Video Loader (demo coming soon) */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-6"
+          >
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-3">
+              Product demo video
+            </h2>
+            <p className="text-sm text-muted max-w-2xl mx-auto">
+              Video coming soon. For a live walkthrough, contact team@frame.dev.
+            </p>
+          </motion.div>
+          <div className="skeleton h-[420px] rounded-2xl border border-border-subtle/40" />
+        </div>
+      </section>
 
         {/* Product Cards Section */}
         <ProductCardsRedesigned />
@@ -308,6 +302,35 @@ agentos deploy --env production`
 
         {/* Ecosystem Section */}
         <EcosystemSectionLazy />
+
+        {/* Enterprise Edition Info */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8 relative">
+          <div className="max-w-6xl mx-auto holographic-card p-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-3">
+                  AgentOS Enterprise Edition
+                </h3>
+                <p className="text-sm text-muted">
+                  Additional robustness for CI/CD and automated deployments, self‑hosting, advanced PII/anon controls,
+                  evaluations/telemetry, and first‑class local model hosting. Contact{' '}
+                  <a className="underline hover:text-accent-primary" href="mailto:team@frame.dev">team@frame.dev</a> or visit{' '}
+                  <a className="underline hover:text-accent-primary" href="https://frame.dev" target="_blank" rel="noreferrer">Frame.dev</a>.
+                </p>
+              </div>
+              <div>
+                <ul className="space-y-2 text-sm">
+                  <li>• Automated self‑hosted deployments with CI/CD pipelines</li>
+                  <li>• Enhanced PII handling, anonymization plugins, audit trails</li>
+                  <li>• Advanced evaluation and telemetry for production workloads</li>
+                  <li>• Optimized on‑prem/local model serving with GPU orchestration</li>
+                  <li>• SDKs and integrations for fine‑tuning and model ingestion</li>
+                  <li>• SSO/Auth and subscriptions/payments integrations</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* CTA Section */}
         <CTASection />

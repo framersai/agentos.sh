@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Inter, Space_Grotesk } from 'next/font/google';
+import { cookies } from 'next/headers';
 import '../styles/tokens.css';
 import './globals.css';
 
@@ -7,8 +8,10 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const grotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-grotesk' });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const cookieStore = cookies();
+  const lang = cookieStore.get('NEXT_LOCALE')?.value || 'en';
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -17,7 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: `
           * { box-sizing: border-box; }
           html, body { width: 100%; margin: 0; padding: 0; }
-          html { height: 100%; overflow-x: hidden; }
+          html { height: 100%; overflow-x: hidden; background-color: #030014; }
           body { min-height: 100vh; overflow-x: hidden; background-color: #030014; color: #f5f0ff; }
           :root { background-color: #030014; }
           .skip-to-content { position: absolute; left: -9999px; z-index: 999; padding: 1rem 1.5rem; background: #6366F1; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }
@@ -52,6 +55,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             }
           }
         `
+          }}
+        />
+        {/* Prevent theme flash: default to dark and respect stored preference */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var k='agentos-theme';var v=localStorage.getItem(k);var d=v? v==='dark' : true;var root=document.documentElement; if(d){root.classList.add('dark');} else {root.classList.remove('dark');}}catch(e){document.documentElement.classList.add('dark');}})();`
           }}
         />
       </head>

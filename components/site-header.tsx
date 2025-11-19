@@ -154,7 +154,7 @@ export function SiteHeader() {
                 <a
                   key={link.href}
                   href={localizedHref}
-                  className="nav-link group relative inline-block py-1 text-gray-700 dark:text-white/90 font-semibold transition-colors duration-300 ease-out"
+                  className="nav-link group relative inline-block py-1 text-white/90 font-semibold transition-colors duration-300 ease-out"
                 >
                   <span className="relative z-10 transition-all duration-300 ease-out group-hover:bg-gradient-to-r group-hover:from-accent-primary group-hover:to-accent-secondary group-hover:bg-clip-text group-hover:text-transparent">
                     {link.label}
@@ -167,7 +167,7 @@ export function SiteHeader() {
               <Link
                 key={link.href}
                 href={localizedHref as Route}
-                className="nav-link group relative inline-block py-1 text-gray-700 dark:text-white/90 font-semibold transition-colors duration-300 ease-out"
+                className="nav-link group relative inline-block py-1 text-white/90 font-semibold transition-colors duration-300 ease-out"
               >
                 <span className="relative z-10 transition-all duration-300 ease-out group-hover:bg-gradient-to-r group-hover:from-accent-primary group-hover:to-accent-secondary group-hover:bg-clip-text group-hover:text-transparent">
                   {link.label}
@@ -183,7 +183,7 @@ export function SiteHeader() {
           {/* GitHub repo CTA (prominent with subtle hover) */}
           <a
             href="https://github.com/framersai/agentos"
-            className="relative hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-border-subtle text-text-primary hover:text-accent-primary dark:text-white/90 transition-all duration-300 hover:-translate-y-0.5 group"
+            className="relative hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-border-subtle text-white/90 hover:text-accent-primary transition-all duration-300 hover:-translate-y-0.5 group"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open AgentOS on GitHub"

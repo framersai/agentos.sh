@@ -61,8 +61,12 @@ export function LanguageSwitcher() {
       /* ignore */
     }
 
-    // Client-side navigation to avoid full reload / duplicate <html>
-    router.replace(targetPath);
+    // Use full navigation to guarantee fresh messages and styles for locale
+    if (typeof window !== 'undefined') {
+      window.location.assign(targetPath);
+    } else {
+      router.replace(targetPath);
+    }
     setIsOpen(false);
   };
 
