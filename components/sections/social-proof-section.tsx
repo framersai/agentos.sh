@@ -91,7 +91,7 @@ export function SocialProofSection() {
               ))}
             </ul>
             <div className="mt-6 rounded-2xl border border-dashed border-accent-primary/40 p-4 text-center">
-              <p className="text-sm text-text-secondary">{t('wantFeatured')}</p>
+              <p className="text-sm text-text-secondary">{t('cta.ask')}</p>
               <a href="mailto:team@frame.dev" className="text-accent-primary font-semibold">team@frame.dev</a>
             </div>
           </motion.div>

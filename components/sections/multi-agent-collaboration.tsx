@@ -190,7 +190,8 @@ await notifyClients(merged);`
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-4">
@@ -232,16 +233,16 @@ await notifyClients(merged);`
         <AnimatePresence mode="wait">
           <motion.div
             key={selectedPattern}
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 12 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0, x: -12 }}
+            transition={{ duration: 0.35 }}
           >
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Left: Visualization */}
               <div className="space-y-6">
                 {/* Agent Network Visualization */}
-                <div className="holographic-card p-6">
+                <div className="holographic-card p-6 will-change-transform">
                   <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                     <currentPattern.icon className="w-5 h-5 text-accent-primary" />
                     {currentPattern.title}
@@ -399,7 +400,7 @@ await notifyClients(merged);`
 
                 {/* Pros and Cons */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="holographic-card p-4">
+                  <div className="holographic-card p-4 will-change-transform">
                     <h4 className="text-sm font-semibold text-green-500 mb-2">{t('ui.pros')}</h4>
                     <ul className="space-y-1">
                       {currentPattern.proscons.pros.map((pro, i) => (
@@ -410,7 +411,7 @@ await notifyClients(merged);`
                       ))}
                     </ul>
                   </div>
-                  <div className="holographic-card p-4">
+                  <div className="holographic-card p-4 will-change-transform">
                     <h4 className="text-sm font-semibold text-orange-500 mb-2">{t('ui.cons')}</h4>
                     <ul className="space-y-1">
                       {currentPattern.proscons.cons.map((con, i) => (
@@ -427,7 +428,7 @@ await notifyClients(merged);`
               {/* Right: Use Cases and Code */}
               <div className="space-y-6">
                 {/* Use Cases */}
-                <div className="holographic-card p-6">
+                <div className="holographic-card p-6 will-change-transform">
                   <h3 className="text-lg font-semibold mb-4">{t('ui.useCases')}</h3>
 
                   {/* Use Case Tabs */}
@@ -451,9 +452,9 @@ await notifyClients(merged);`
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeUseCase}
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
+                      exit={{ opacity: 0, y: -8 }}
                       className="space-y-4"
                     >
                       <div>
