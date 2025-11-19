@@ -203,6 +203,133 @@
     "currentLanguage": "Aktuelle Sprache: {language}",
     "selectLanguage": "Sprache auswählen"
   },
+  "codeExamples": {
+    "title": "AgentOS in Aktion sehen",
+    "subtitle": "Produktionsreife Code-Beispiele für gängige Muster",
+    "categories": {
+      "basic": "Erste Schritte",
+      "advanced": "Erweiterte Muster",
+      "integration": "Integrationen",
+      "deployment": "Bereitstellung"
+    },
+    "examples": {
+      "basicAgent": {
+        "title": "Erstellen Sie Ihren ersten Agenten",
+        "description": "Grundlegende Agenten-Einrichtung mit Gedächtnis und Tools"
+      },
+      "gmiRoles": {
+        "title": "GMI-Rollen & Agenturen",
+        "description": "Implementierung von Generalised Mind Instance-Rollen"
+      },
+      "memorySystem": {
+        "title": "Erweiterte Speicherverwaltung",
+        "description": "Implementierung von persistentem und kontextuellem Gedächtnis"
+      },
+      "realtimeStream": {
+        "title": "Echtzeit-Streaming",
+        "description": "WebSocket-Streaming für Live-Agenten-Antworten"
+      }
+    },
+    "copyButton": "Kopieren",
+    "copied": "Kopiert!",
+    "runButton": "Beispiel ausführen",
+    "docsButton": "Dokumentation anzeigen"
+  },
+  "gmiSection": {
+    "title": "GMI-Architektur",
+    "subtitle": "Generalised Mind Instance-Orchestrierung für emergente Intelligenz",
+    "agents": {
+      "researcher": {
+        "name": "Forscher",
+        "description": "Entdeckt und analysiert Informationen",
+        "persona": "neugierig, präzise"
+      },
+      "analyst": {
+        "name": "Analyst",
+        "description": "Verarbeitet und interpretiert Daten",
+        "persona": "skeptisch, methodisch"
+      },
+      "creator": {
+        "name": "Creator",
+        "description": "Generiert Inhalte und Lösungen",
+        "persona": "klar, überzeugend"
+      },
+      "executor": {
+        "name": "Executor",
+        "description": "Führt Aktionen aus und implementiert",
+        "persona": "zuverlässig, handlungsorientiert"
+      },
+      "orchestrator": {
+        "name": "Orchestrator",
+        "description": "Koordiniert Multi-Agenten-Aufgaben",
+        "persona": "ausgewogen, Gatekeeper"
+      }
+    },
+    "useCaseTitle": "Reale Anwendungsfälle",
+    "whatYouGetTitle": "Was Sie bekommen",
+    "architectureTitle": "Systemarchitektur"
+  },
+  "multiAgent": {
+    "title": "Multi-Agenten-Kollaborationsmuster",
+    "subtitle": "Orchestrieren Sie Teams spezialisierter KI-Agenten, die zusammenarbeiten",
+    "modes": {
+      "consensus": {
+        "title": "Konsensbasierte Zusammenarbeit",
+        "description": "Mehrere Agenten stimmen über Entscheidungen mit gewichteten Vertrauenswerten ab"
+      },
+      "sequential": {
+        "title": "Sequenzielle Pipeline",
+        "description": "Agenten arbeiten in geordneten Stufen und geben Ergebnisse weiter"
+      },
+      "parallel": {
+        "title": "Parallele Verarbeitung",
+        "description": "Unabhängige Agenten arbeiten gleichzeitig an verschiedenen Aspekten"
+      }
+    },
+    "workflow": "Workflow",
+    "duration": "Dauer",
+    "throughput": "Durchsatz",
+    "useCases": "Anwendungsfälle",
+    "pros": "Vorteile",
+    "cons": "Überlegungen",
+    "codeExample": "Code-Beispiel"
+  },
+  "ecosystem": {
+    "title": "Ökosystem & Integrationen",
+    "subtitle": "Verbinden Sie AgentOS mit Ihren Lieblings-Tools und -Diensten",
+    "categories": {
+      "llms": "Sprachmodelle",
+      "memory": "Gedächtnis & Speicher",
+      "tools": "Tools & APIs",
+      "deployment": "Bereitstellung"
+    }
+  },
+  "coordination": {
+    "title": "Koordinationsmuster",
+    "subtitle": "Design-Muster für komplexe Multi-Agenten-Workflows",
+    "patterns": {
+      "fanOut": "Fan-out-Muster",
+      "pipeline": "Pipeline-Muster",
+      "mapReduce": "Map-Reduce-Muster",
+      "consensus": "Konsens-Muster"
+    }
+  },
+  "socialProof": {
+    "title": "Von Teams weltweit vertraut",
+    "subtitle": "Schließen Sie sich Tausenden von Entwicklern an, die die Zukunft mit AgentOS bauen",
+    "stats": {
+      "developers": "Entwickler",
+      "projects": "Projekte",
+      "countries": "Länder",
+      "stars": "GitHub Sterne"
+    }
+  },
+  "videoDemo": {
+    "title": "AgentOS in Aktion sehen",
+    "subtitle": "Sehen Sie, wie einfach es ist, adaptive KI-Agenten zu bauen",
+    "watchButton": "Demo ansehen",
+    "duration": "Dauer"
+  },
   "skipToContent": "Zum Inhalt springen",
   "skipToMain": "Zum Hauptinhalt springen"
 }

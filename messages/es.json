@@ -295,5 +295,132 @@
     "trustBadge": "Confiado por líderes de la industria",
     "wipLabel": "WIP",
     "currentlyDevelopment": "Actualmente en desarrollo"
+  },
+  "codeExamples": {
+    "title": "Ver AgentOS en Acción",
+    "subtitle": "Ejemplos de código listos para producción para patrones comunes",
+    "categories": {
+      "basic": "Primeros Pasos",
+      "advanced": "Patrones Avanzados",
+      "integration": "Integraciones",
+      "deployment": "Despliegue"
+    },
+    "examples": {
+      "basicAgent": {
+        "title": "Crea Tu Primer Agente",
+        "description": "Configuración básica de agente con memoria y herramientas"
+      },
+      "gmiRoles": {
+        "title": "Roles GMI y Agencias",
+        "description": "Implementando roles de Instancia Mental Generalizada"
+      },
+      "memorySystem": {
+        "title": "Gestión Avanzada de Memoria",
+        "description": "Implementando memoria persistente y contextual"
+      },
+      "realtimeStream": {
+        "title": "Streaming en Tiempo Real",
+        "description": "Streaming WebSocket para respuestas de agentes en vivo"
+      }
+    },
+    "copyButton": "Copiar",
+    "copied": "¡Copiado!",
+    "runButton": "Ejecutar Ejemplo",
+    "docsButton": "Ver Docs"
+  },
+  "gmiSection": {
+    "title": "Arquitectura GMI",
+    "subtitle": "Orquestación de Instancia Mental Generalizada para inteligencia emergente",
+    "agents": {
+      "researcher": {
+        "name": "Investigador",
+        "description": "Descubre y analiza información",
+        "persona": "curioso, preciso"
+      },
+      "analyst": {
+        "name": "Analista",
+        "description": "Procesa e interpreta datos",
+        "persona": "escéptico, metódico"
+      },
+      "creator": {
+        "name": "Creador",
+        "description": "Genera contenido y soluciones",
+        "persona": "claro, persuasivo"
+      },
+      "executor": {
+        "name": "Ejecutor",
+        "description": "Toma acciones e implementa",
+        "persona": "confiable, orientado a la acción"
+      },
+      "orchestrator": {
+        "name": "Orquestador",
+        "description": "Coordina tareas multiagente",
+        "persona": "equilibrado, guardián"
+      }
+    },
+    "useCaseTitle": "Casos de Uso Reales",
+    "whatYouGetTitle": "Lo Que Obtienes",
+    "architectureTitle": "Arquitectura del Sistema"
+  },
+  "multiAgent": {
+    "title": "Patrones de Colaboración Multiagente",
+    "subtitle": "Orquesta equipos de agentes de IA especializados trabajando juntos",
+    "modes": {
+      "consensus": {
+        "title": "Colaboración Basada en Consenso",
+        "description": "Múltiples agentes votan sobre decisiones con puntuaciones de confianza ponderadas"
+      },
+      "sequential": {
+        "title": "Pipeline Secuencial",
+        "description": "Los agentes trabajan en etapas ordenadas pasando resultados hacia adelante"
+      },
+      "parallel": {
+        "title": "Procesamiento Paralelo",
+        "description": "Agentes independientes trabajan simultáneamente en diferentes aspectos"
+      }
+    },
+    "workflow": "Flujo de Trabajo",
+    "duration": "Duración",
+    "throughput": "Rendimiento",
+    "useCases": "Casos de Uso",
+    "pros": "Ventajas",
+    "cons": "Consideraciones",
+    "codeExample": "Ejemplo de Código"
+  },
+  "ecosystem": {
+    "title": "Ecosistema e Integraciones",
+    "subtitle": "Conecta AgentOS con tus herramientas y servicios favoritos",
+    "categories": {
+      "llms": "Modelos de Lenguaje",
+      "memory": "Memoria y Almacenamiento",
+      "tools": "Herramientas y APIs",
+      "deployment": "Despliegue"
+    }
+  },
+  "coordination": {
+    "title": "Patrones de Coordinación",
+    "subtitle": "Patrones de diseño para flujos de trabajo multiagente complejos",
+    "patterns": {
+      "fanOut": "Patrón Fan-out",
+      "pipeline": "Patrón Pipeline",
+      "mapReduce": "Patrón Map-Reduce",
+      "consensus": "Patrón Consenso"
+    }
+  },
+  "socialProof": {
+    "title": "Confiado por Equipos en Todo el Mundo",
+    "subtitle": "Únete a miles de desarrolladores construyendo el futuro con AgentOS",
+    "stats": {
+      "developers": "Desarrolladores",
+      "projects": "Proyectos",
+      "countries": "Países",
+      "stars": "Estrellas GitHub"
+    }
+  },
+  "videoDemo": {
+    "title": "Ver AgentOS en Acción",
+    "subtitle": "Ve lo fácil que es construir agentes de IA adaptativos",
+    "watchButton": "Ver Demo",
+    "duration": "Duración"
   }
 }
