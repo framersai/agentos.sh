@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { Globe, Check } from 'lucide-react';
 import { locales, localeNames, type Locale } from '../i18n';
@@ -9,6 +9,7 @@ import { locales, localeNames, type Locale } from '../i18n';
 export function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -60,9 +61,8 @@ export function LanguageSwitcher() {
       /* ignore */
     }
 
-    // Soft navigate to avoid full reload / duplicate <html>
-    window.location.href = targetPath;
-    // No need to setIsOpen because page reloads, but close for safety in dev fast-refresh
+    // Client-side navigation to avoid full reload / duplicate <html>
+    router.replace(targetPath);
     setIsOpen(false);
   };
 

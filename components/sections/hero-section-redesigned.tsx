@@ -84,7 +84,7 @@ export function HeroSectionRedesigned() {
       });
   }, []);
 
-  // Liquid morph text switching - less frequent, smoother
+  // Liquid morph text switching - less frequent, smoother and clearer
   useEffect(() => {
     if (prefersReducedMotion) return;
 
@@ -124,7 +124,7 @@ export function HeroSectionRedesigned() {
   ];
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[var(--color-background-primary)]">
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[var(--color-background-primary)]">
       {/* Clean gradient background - subtle and professional */}
       <div className="absolute inset-0">
         <div 
@@ -153,28 +153,34 @@ export function HeroSectionRedesigned() {
               transparent 50%)`
           }}
         />
+        {/* Large translucent logo on the left as background decoration */}
+        <div className="pointer-events-none absolute left-[-6rem] top-1/2 -translate-y-1/2 opacity-[0.06] sm:opacity-[0.08]">
+          <div className="w-[420px] h-[420px] sm:w-[520px] sm:h-[520px]">
+            <AnimatedAgentOSLogo />
+          </div>
+        </div>
       </div>
 
       {/* Minimal particle system - elegant and performant */}
       <div className="absolute inset-0 pointer-events-none">
         {!prefersReducedMotion && !isMobile && (
           <>
-            {Array.from({ length: 12 }).map((_, i) => (
+            {Array.from({ length: 6 }).map((_, i) => (
               <motion.div
                 key={i}
                 className="absolute w-1 h-1 rounded-full"
                 style={{
                   background: `var(--color-accent-primary)`,
                   boxShadow: `0 0 8px var(--color-accent-primary)`,
-                  left: `${15 + (i % 4) * 22}%`,
-                  top: `${20 + Math.floor(i / 4) * 25}%`,
+                  left: `${18 + (i % 3) * 24}%`,
+                  top: `${28 + Math.floor(i / 3) * 28}%`,
                 }}
                 animate={{
                   y: [0, -20, 0],
                   opacity: [0.2, 0.5, 0.2],
                 }}
                 transition={{
-                  duration: 8 + i * 0.5,
+                  duration: 10 + i * 0.7,
                   repeat: Infinity,
                   ease: "easeInOut",
                   delay: i * 0.3,
@@ -186,31 +192,33 @@ export function HeroSectionRedesigned() {
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
-          {/* Top section with headline and logo */}
-          <div className="flex flex-col items-center mb-12 sm:flex-row sm:items-start sm:gap-6 text-center sm:text-left">
-            {/* Compact Logo */}
-            <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mt-1">
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24">
-                <AnimatedAgentOSLogo />
+          {/* Left-aligned layout */}
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_0.6fr] items-start gap-10 mb-12">
+            {/* Headline block */}
+            <div className="order-1">
+              {/* Compact mark beside headline on mobile only (avoid double logo on desktop) */}
+              <div className="sm:hidden mb-4">
+                <div className="relative w-16 h-16 opacity-80">
+                  <AnimatedAgentOSLogo />
+                </div>
               </div>
-            </div>
 
-            {/* Smooth word-swap headline */}
-            <div className="relative overflow-hidden">
+              {/* Smooth word-swap headline */}
+              <div className="relative overflow-hidden">
               <h1
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight"
-                style={{ fontFamily: 'var(--font-grotesk)', minHeight: '4.5rem' }}
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-left"
+                style={{ fontFamily: 'var(--font-grotesk)' }}
               >
                 {/* Morphing first word */}
-                <span className="inline-block relative" style={{ width: '14ch' }}>
+                <span className="inline-block relative align-baseline">
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={activeHeadline}
                       initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
                       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                       exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                      className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent"
+                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                      className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
                     >
                       {cycleWords[activeHeadline]}
                     </motion.span>
@@ -218,15 +226,15 @@ export function HeroSectionRedesigned() {
                 </span>
                 {' intelligence for '}
                 {/* Morphing last word */}
-                <span className="inline-block relative" style={{ width: '11ch' }}>
+                <span className="inline-block relative align-baseline">
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={activeHeadline + 100}
                       initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
                       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                       exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-                      className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+                      className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
                     >
                       {cycleWordsTail[activeHeadline]}
                     </motion.span>
@@ -234,6 +242,7 @@ export function HeroSectionRedesigned() {
                 </span>
                 {' agents'}
               </h1>
+              </div>
             </div>
           </div>
 
@@ -242,7 +251,7 @@ export function HeroSectionRedesigned() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-lg sm:text-xl text-muted max-w-3xl mx-auto mb-8"
+            className="text-lg sm:text-xl text-muted max-w-3xl mb-8 text-left"
           >
             {t('subtitle')}
           </motion.p>
@@ -285,26 +294,7 @@ export function HeroSectionRedesigned() {
             </div>
         </motion.div>
 
-        {/* Centered Logo Section - Compact */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.8, duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
-          className="flex justify-center mb-8"
-        >
-          <div className="relative w-32 h-32 sm:w-40 sm:h-40">
-            {/* Subtle glow behind logo */}
-            <div 
-              className="absolute inset-0 blur-2xl opacity-20"
-              style={{
-                background: `radial-gradient(circle, var(--color-accent-primary), transparent 70%)`
-              }}
-            />
-            <div className="relative w-full h-full">
-              <AnimatedAgentOSLogo />
-            </div>
-          </div>
-        </motion.div>
+        {/* Removed centered duplicate logo; background mark now on the left */}
 
         {/* Technical Highlights Grid */}
         <motion.div
@@ -340,7 +330,7 @@ export function HeroSectionRedesigned() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+          className="flex flex-col sm:flex-row items-start gap-4 mb-12"
         >
           <LinkButton
             href={`/${locale === 'en' ? '' : locale + '/'}docs`}
@@ -367,7 +357,7 @@ export function HeroSectionRedesigned() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.7, duration: 0.8 }}
-          className="flex justify-center"
+          className="flex"
         >
           <Button
             onClick={copyCommand}
@@ -389,7 +379,7 @@ export function HeroSectionRedesigned() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 0.8 }}
-          className="mt-8 text-center"
+          className="mt-8 text-left"
         >
           <div className="inline-flex flex-wrap justify-center gap-4 text-xs text-muted">
             <span className="flex items-center gap-1">

@@ -109,16 +109,27 @@ export function SiteHeader() {
       transition={{ duration: 0.5, ease: "easeOut" }}
       className="fixed top-0 z-50 w-full transition-all duration-300 transition-theme"
     >
-      {/* Token-driven glass panel; darker than page bg in dark, subtle in light */}
+      {/* Holographic glass panel with subtle iridescent edge */}
       <div
-        className="absolute inset-0 backdrop-blur-xl border-b border-border-subtle shadow-lg"
+        className="absolute inset-0 backdrop-blur-xl border-b border-transparent shadow-[0_2px_24px_rgba(0,0,0,0.15)]"
         style={{
           background:
             'linear-gradient(135deg,' +
             ' color-mix(in oklab, var(--color-background-primary) 88%, transparent),' +
-            ' color-mix(in oklab, var(--color-accent-primary) 14%, transparent) 50%,' +
-            ' color-mix(in oklab, var(--color-accent-secondary) 12%, transparent))',
-          backgroundColor: 'color-mix(in oklab, var(--color-background-primary) 92%, black)',
+            ' color-mix(in oklab, var(--color-accent-primary) 10%, transparent) 45%,' +
+            ' color-mix(in oklab, var(--color-accent-secondary) 8%, transparent))',
+        }}
+      />
+      {/* Iridescent bottom hairline */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-0 right-0 h-[1px] opacity-70"
+        style={{
+          background:
+            'linear-gradient(90deg,' +
+            ' color-mix(in oklab, var(--color-accent-primary) 55%, transparent),' +
+            ' color-mix(in oklab, var(--color-accent-secondary) 35%, transparent) 50%,' +
+            ' color-mix(in oklab, var(--color-accent-primary) 55%, transparent))',
+          boxShadow: '0 0 24px color-mix(in oklab, var(--color-accent-primary) 25%, transparent)',
         }}
       />
       
