@@ -19,6 +19,8 @@
     "marketplace": "Marketplace"
   },
   "hero": {
+    "cycleWords": ["Adaptive", "Emergent"],
+    "cycleWordsTail": ["emergent", "adaptive"],
     "badge": "Open Source · Adaptive · Emergent",
     "title": "Portable AI Agent Runtime for Adaptive & Emergent Intelligence",
     "subtitle": "Build adaptive, emergent AI agents with memory, tools, and agency. TypeScript runtime featuring GMI roles, multi-agent orchestration, and enterprise guardrails.",
@@ -55,7 +57,18 @@
       "streaming": { "label": "Real-time Streaming", "value": "Async Ready" },
       "memory": { "label": "Persistent Memory", "value": "Built-in" }
     },
-    "heroVisualAlt": "AgentOS orchestration workspace preview"
+    "heroVisualAlt": "AgentOS orchestration workspace preview",
+    "stats": {
+      "githubStars": "GitHub Stars",
+      "contributors": "Contributors",
+      "forks": "Forks",
+      "securityScore": "Security Score"
+    },
+    "compliance": {
+      "gdpr": "GDPR & PII Compliant",
+      "soc2": "SOC2 (Coming Soon)",
+      "enterpriseSupport": "Enterprise Support Available"
+    }
   },
   "features": {
     "sectionTitle": "Enterprise‑Ready Features",
@@ -120,6 +133,75 @@
     "privacy": "Privacy",
     "license": "Apache 2.0 (core) + MIT (agents, extensions, guardrails)",
     "copyright": "© {year} Frame.dev. All rights reserved."
+  },
+  "productCards": {
+    "title": "Core Capabilities",
+    "subtitle": "Enterprise-grade features for building, scaling, and deploying intelligent AI agents",
+    "cards": {
+      "adaptive": {
+        "title": "Adaptive Intelligence",
+        "description": "Real-time learning and context-aware decision making that evolves with every interaction"
+      },
+      "distributed": {
+        "title": "Distributed Cognition",
+        "description": "Parallel processing across multiple agents with seamless coordination and load balancing"
+      },
+      "memory": {
+        "title": "Persistent Memory",
+        "description": "Infinite storage with instant recall using advanced vector embeddings and semantic search"
+      },
+      "streaming": {
+        "title": "Real-time Streaming",
+        "description": "Ultra-low latency event-driven architecture with WebSocket support and 99.99% uptime"
+      }
+    }
+  },
+  "enterprise": {
+    "title": "Enterprise Ready Features",
+    "subtitle": "Building blocks of enterprise-grade infrastructure, each layer adding security and scale",
+    "features": {
+      "security": {
+        "title": "Security Foundation",
+        "items": ["AES-256 Encryption", "Zero-Trust Architecture", "End-to-End Security"]
+      },
+      "compliance": {
+        "title": "Compliance & Privacy",
+        "items": ["GDPR Compliant", "PII Redaction", "Data Residency Controls"]
+      },
+      "auth": {
+        "title": "Authentication",
+        "items": ["SSO/SAML 2.0", "OAuth 2.0", "MFA Support"]
+      },
+      "audit": {
+        "title": "Audit & Monitoring",
+        "items": ["Real-time Monitoring", "Audit Logs", "Anomaly Detection"]
+      },
+      "soc2": {
+        "title": "SOC2 Compliance",
+        "items": ["Type II (In Progress)", "Annual Audits", "Continuous Compliance"]
+      },
+      "scale": {
+        "title": "Enterprise Scale",
+        "items": ["Auto-scaling", "99.99% SLA", "Global CDN"]
+      }
+    },
+    "legend": {
+      "fullyImplemented": {
+        "title": "Fully Implemented",
+        "description": "GDPR compliance, PII redaction, and core security features are production-ready"
+      },
+      "inProgress": {
+        "title": "In Progress",
+        "description": "SOC2 Type II certification underway, expected completion Q2 2024"
+      },
+      "enterpriseSupport": {
+        "title": "Enterprise Support",
+        "description": "24/7 support with vca.chat integration and dedicated success managers"
+      }
+    },
+    "trustBadge": "Trusted by industry leaders",
+    "wipLabel": "WIP",
+    "currentlyDevelopment": "Currently in development"
   },
   "cta": {
     "title": "Ready to Build Adaptive AI Agents?",

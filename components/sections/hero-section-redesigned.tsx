@@ -43,31 +43,31 @@ export function HeroSectionRedesigned() {
   const productStats = useMemo(() => {
     return [
       {
-        label: 'GitHub Stars',
+        label: t('stats.githubStars'),
         value: githubStars || '2.3k',
         live: true,
         icon: Star
       },
       {
-        label: 'Contributors',
+        label: t('stats.contributors'),
         value: '47',
         live: false,
         icon: Users
       },
       {
-        label: 'Forks',
+        label: t('stats.forks'),
         value: '312',
         live: false,
         icon: GitBranch
       },
       {
-        label: 'Security Score',
+        label: t('stats.securityScore'),
         value: 'A+',
         live: false,
         icon: Shield
       }
     ]
-  }, [githubStars])
+  }, [githubStars, t])
 
   // Fetch GitHub stars
   useEffect(() => {
@@ -116,12 +116,9 @@ export function HeroSectionRedesigned() {
     setShowToast(true)
   }, [])
 
-  const technicalHighlights = [
-    { title: 'Streaming-first runtime', detail: 'Token-level delivery across personas, guardrails, and channels.' },
-    { title: 'Deterministic orchestration', detail: 'Parallel GMIs with auditable routing, approvals, and budgets.' },
-    { title: 'Zero-copy memory fabric', detail: 'Vector, episodic, and working memory stitched together for recall.' },
-    { title: 'Portable intelligence capsules', detail: 'Export full AgentOS instances as Markdown or JSON and ingest anywhere.' }
-  ]
+  const technicalHighlights = useMemo(() => {
+    return t.raw<Array<{ title: string; detail: string }>>('technicalHighlights')
+  }, [t])
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[var(--color-background-primary)]">
@@ -395,14 +392,14 @@ export function HeroSectionRedesigned() {
           <div className="inline-flex flex-wrap justify-center gap-4 text-xs text-muted">
             <span className="flex items-center gap-1">
               <Shield className="w-3 h-3" />
-              GDPR & PII Compliant
+              {t('compliance.gdpr')}
             </span>
             <span className="opacity-50">•</span>
             <span className="flex items-center gap-1">
-              SOC2 (Coming Soon)
+              {t('compliance.soc2')}
             </span>
             <span className="opacity-50">•</span>
-            <span>Enterprise Support Available</span>
+            <span>{t('compliance.enterpriseSupport')}</span>
           </div>
         </motion.div>
       </div>

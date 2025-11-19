@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Brain,
@@ -25,64 +26,67 @@ interface ProductCard {
   accentColor: string
 }
 
-const productCards: ProductCard[] = [
-  {
-    id: 'adaptive-intelligence',
-    title: 'Adaptive Intelligence',
-    description: 'Self-evolving agent systems that learn from interactions',
-    icon: Brain,
-    stats: [
-      { label: 'Response Time', value: '< 100ms', trend: -15 },
-      { label: 'Accuracy', value: '99.2%', trend: 2.3 },
-      { label: 'Active Models', value: 14, live: true }
-    ],
-    features: ['Real-time learning', 'Context retention', 'Behavioral adaptation'],
-    bgAnimation: 'neural',
-    accentColor: '#FF00FF'
-  },
-  {
-    id: 'distributed-cognition',
-    title: 'Distributed Cognition',
-    description: 'Parallel processing across multiple specialized agents',
-    icon: Layers,
-    stats: [
-      { label: 'Concurrent Tasks', value: 128, live: true },
-      { label: 'Throughput', value: '10k/sec', trend: 18 },
-      { label: 'Efficiency', value: '94%' }
-    ],
-    features: ['Load balancing', 'Auto-scaling', 'Fault tolerance'],
-    bgAnimation: 'flow',
-    accentColor: '#00FFFF'
-  },
-  {
-    id: 'persistent-memory',
-    title: 'Persistent Memory',
-    description: 'Long-term knowledge retention and instant recall',
-    icon: Database,
-    stats: [
-      { label: 'Storage', value: '∞ TB', trend: 0 },
-      { label: 'Recall Speed', value: '< 5ms' },
-      { label: 'Retention', value: '100%' }
-    ],
-    features: ['Vector embeddings', 'Semantic search', 'Version control'],
-    bgAnimation: 'grid',
-    accentColor: '#FFFF00'
-  },
-  {
-    id: 'real-time-streaming',
-    title: 'Real-time Streaming',
-    description: 'Token-level streaming with sub-second latency',
-    icon: Zap,
-    stats: [
-      { label: 'Latency', value: '< 50ms', trend: -8 },
-      { label: 'Bandwidth', value: '1 Gbps' },
-      { label: 'Uptime', value: '99.99%', live: true }
-    ],
-    features: ['WebSocket support', 'Event-driven', 'Buffering'],
-    bgAnimation: 'pulse',
-    accentColor: '#00FF00'
-  }
-]
+// Build card definitions with translated strings so we can easily swap locale
+function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
+  return [
+    {
+      id: 'adaptive-intelligence',
+      title: t('cards.adaptive.title'),
+      description: t('cards.adaptive.description'),
+      icon: Brain,
+      stats: [
+        { label: 'Response Time', value: '< 100ms', trend: -15 },
+        { label: 'Accuracy', value: '99.2%', trend: 2.3 },
+        { label: 'Active Models', value: 14, live: true }
+      ],
+      features: ['Real-time learning', 'Context retention', 'Behavioral adaptation'],
+      bgAnimation: 'neural',
+      accentColor: '#FF00FF'
+    },
+    {
+      id: 'distributed-cognition',
+      title: t('cards.distributed.title'),
+      description: t('cards.distributed.description'),
+      icon: Layers,
+      stats: [
+        { label: 'Concurrent Tasks', value: 128, live: true },
+        { label: 'Throughput', value: '10k/sec', trend: 18 },
+        { label: 'Efficiency', value: '94%' }
+      ],
+      features: ['Load balancing', 'Auto-scaling', 'Fault tolerance'],
+      bgAnimation: 'flow',
+      accentColor: '#00FFFF'
+    },
+    {
+      id: 'persistent-memory',
+      title: t('cards.memory.title'),
+      description: t('cards.memory.description'),
+      icon: Database,
+      stats: [
+        { label: 'Storage', value: '∞ TB', trend: 0 },
+        { label: 'Recall Speed', value: '< 5ms' },
+        { label: 'Retention', value: '100%' }
+      ],
+      features: ['Vector embeddings', 'Semantic search', 'Version control'],
+      bgAnimation: 'grid',
+      accentColor: '#FFFF00'
+    },
+    {
+      id: 'real-time-streaming',
+      title: t('cards.streaming.title'),
+      description: t('cards.streaming.description'),
+      icon: Zap,
+      stats: [
+        { label: 'Latency', value: '< 50ms', trend: -8 },
+        { label: 'Bandwidth', value: '1 Gbps' },
+        { label: 'Uptime', value: '99.99%', live: true }
+      ],
+      features: ['WebSocket support', 'Event-driven', 'Buffering'],
+      bgAnimation: 'pulse',
+      accentColor: '#00FF00'
+    }
+  ]
+}
 
 function AnimatedSVGBackground({ type, color }: { type: string; color: string }) {
   if (type === 'neural') {
@@ -232,8 +236,11 @@ function AnimatedSVGBackground({ type, color }: { type: string; color: string })
 }
 
 export function ProductCardsRedesigned() {
+  const t = useTranslations('productCards')
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
   const [liveData, setLiveData] = useState<Record<string, string | number>>({})
+
+  const productCards = useMemo(() => getProductCards(t), [t])
 
   // Simulate live data updates
   useEffect(() => {
@@ -258,10 +265,10 @@ export function ProductCardsRedesigned() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-4">
-            Core Capabilities
+            {t('title')}
           </h2>
           <p className="text-lg text-muted max-w-3xl mx-auto">
-            Enterprise-grade AI orchestration with real-time performance metrics
+            {t('subtitle')}
           </p>
         </motion.div>
 

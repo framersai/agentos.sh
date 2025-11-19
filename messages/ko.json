@@ -19,6 +19,8 @@
     "marketplace": "마켓플레이스"
   },
   "hero": {
+    "cycleWords": ["적응형", "창발형"],
+    "cycleWordsTail": ["창발형", "적응형"],
     "badge": "오픈소스 · 적응형 · 창발형",
     "title": "적응형 및 창발형 지능을 위한 휴대용 AI 에이전트 런타임",
     "subtitle": "메모리, 도구 및 자율성을 갖춘 적응형, 창발형 AI 에이전트를 구축하세요. GMI 역할, 다중 에이전트 오케스트레이션 및 엔터프라이즈 가드레일을 갖춘 TypeScript 런타임.",
@@ -55,7 +57,18 @@
       "streaming": { "label": "실시간 스트리밍", "value": "비동기 준비" },
       "memory": { "label": "영구 메모리", "value": "내장" }
     },
-    "heroVisualAlt": "AgentOS 오케스트레이션 작업 공간 미리보기"
+    "heroVisualAlt": "AgentOS 오케스트레이션 작업 공간 미리보기",
+    "stats": {
+      "githubStars": "GitHub 스타",
+      "contributors": "기여자",
+      "forks": "포크",
+      "securityScore": "보안 점수"
+    },
+    "compliance": {
+      "gdpr": "GDPR 및 PII 준수",
+      "soc2": "SOC2 (출시 예정)",
+      "enterpriseSupport": "엔터프라이즈 지원 가능"
+    }
   },
   "features": {
     "sectionTitle": "엔터프라이즈급 기능",
@@ -120,6 +133,75 @@
     "privacy": "개인정보",
     "license": "Apache 2.0(핵심) + MIT(에이전트, 확장, 가드레일)",
     "copyright": "© {year} Frame.dev. 모든 권리 보유."
+  },
+  "productCards": {
+    "title": "핵심 기능",
+    "subtitle": "지능형 AI 에이전트 구축, 확장 및 배포를 위한 엔터프라이즈급 기능",
+    "cards": {
+      "adaptive": {
+        "title": "적응형 지능",
+        "description": "모든 상호작용과 함께 진화하는 실시간 학습 및 상황 인식 의사 결정"
+      },
+      "distributed": {
+        "title": "분산 인지",
+        "description": "원활한 조정 및 로드 밸런싱을 통한 여러 에이전트 간의 병렬 처리"
+      },
+      "memory": {
+        "title": "영구 메모리",
+        "description": "고급 벡터 임베딩 및 의미론적 검색을 사용한 즉각적인 회상 기능의 무한 스토리지"
+      },
+      "streaming": {
+        "title": "실시간 스트리밍",
+        "description": "WebSocket 지원 및 99.99% 가동 시간을 갖춘 초저지연 이벤트 기반 아키텍처"
+      }
+    }
+  },
+  "enterprise": {
+    "title": "엔터프라이즈급 기능",
+    "subtitle": "엔터프라이즈급 인프라의 구성 요소, 각 계층에 보안 및 확장성 추가",
+    "features": {
+      "security": {
+        "title": "보안 기반",
+        "items": ["AES-256 암호화", "제로 트러스트 아키텍처", "종단간 보안"]
+      },
+      "compliance": {
+        "title": "규정 준수 및 개인정보 보호",
+        "items": ["GDPR 준수", "PII 삭제", "데이터 거주 제어"]
+      },
+      "auth": {
+        "title": "인증",
+        "items": ["SSO/SAML 2.0", "OAuth 2.0", "MFA 지원"]
+      },
+      "audit": {
+        "title": "감사 및 모니터링",
+        "items": ["실시간 모니터링", "감사 로그", "이상 탐지"]
+      },
+      "soc2": {
+        "title": "SOC2 규정 준수",
+        "items": ["Type II (진행 중)", "연례 감사", "지속적 규정 준수"]
+      },
+      "scale": {
+        "title": "엔터프라이즈 규모",
+        "items": ["자동 확장", "99.99% SLA", "글로벌 CDN"]
+      }
+    },
+    "legend": {
+      "fullyImplemented": {
+        "title": "완전 구현됨",
+        "description": "GDPR 규정 준수, PII 삭제 및 핵심 보안 기능은 프로덕션 준비 완료"
+      },
+      "inProgress": {
+        "title": "진행 중",
+        "description": "SOC2 Type II 인증 진행 중, 2024년 2분기 완료 예상"
+      },
+      "enterpriseSupport": {
+        "title": "엔터프라이즈 지원",
+        "description": "vca.chat 통합 및 전담 성공 관리자와의 24/7 지원"
+      }
+    },
+    "trustBadge": "업계 리더들이 신뢰하는",
+    "wipLabel": "작업 중",
+    "currentlyDevelopment": "현재 개발 중"
   },
   "cta": {
     "title": "적응형 AI 에이전트를 구축할 준비가 되셨나요?",
