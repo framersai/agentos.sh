@@ -1,20 +1,25 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 const placeholderLogos = [
-  { name: 'Helios Finance', description: 'Multi-market research pods (coming soon)' },
-  { name: 'Northwind Labs', description: 'Product localization + CRM sync (coming soon)' },
-  { name: 'Atlas Service Desk', description: 'Adaptive support routing (coming soon)' }
-] as const
-
-const updateLinks = [
-  { label: 'Release notes', href: 'https://github.com/framersai/agentos/releases' },
-  { label: 'Changelog', href: 'https://docs.agentos.sh/updates' },
-  { label: 'FAQ', href: '/faq' }
+  { name: 'Helios Finance', descriptionKey: 'placeholders.helios' },
+  { name: 'Northwind Labs', descriptionKey: 'placeholders.northwind' },
+  { name: 'Atlas Service Desk', descriptionKey: 'placeholders.atlas' }
 ] as const
 
 export function SocialProofSection() {
+  const t = useTranslations('socialProof')
+  const tNav = useTranslations('nav')
+  const tFooter = useTranslations('footer')
+
+  const updateLinks = [
+    { label: tFooter('releaseNotes'), href: 'https://github.com/framersai/agentos/releases' },
+    { label: tNav('changelog'), href: 'https://docs.agentos.sh/updates' },
+    { label: tNav('faq'), href: '/faq' }
+  ] as const
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-tint" aria-labelledby="social-proof-heading">
       <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_80%_20%,var(--color-accent-primary),transparent_55%)]" />
@@ -25,12 +30,12 @@ export function SocialProofSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <p className="text-sm font-semibold uppercase tracking-wide text-text-muted">Social proof</p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-text-muted">{t('badge')}</p>
           <h2 id="social-proof-heading" className="text-4xl sm:text-5xl font-bold text-text-primary mb-4">
-            Trusted deployments (revealing soon)
+            {t('title')}
           </h2>
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-            We&apos;re onboarding AI agency teams across finance, operations, and support. Logos and case studies unlock with their launches—stay tuned.
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -48,12 +53,12 @@ export function SocialProofSection() {
                   <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-accent-primary to-[color:var(--color-accent-warm)] opacity-30" />
                   <div>
                     <p className="font-semibold text-text-primary">{item.name}</p>
-                    <p className="text-xs text-accent-primary">Reveal #{index + 1}</p>
+                    <p className="text-xs text-accent-primary">{t('reveal', { index: index + 1 })}</p>
                   </div>
                 </div>
-                <p className="text-sm text-text-muted">{item.description}</p>
+                <p className="text-sm text-text-muted">{t(item.descriptionKey)}</p>
                 <div className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-black/70 backdrop-blur-lg text-center">
-                  <span className="text-sm font-semibold text-text-primary">Coming soon</span>
+                  <span className="text-sm font-semibold text-text-primary">{t('comingSoon')}</span>
                 </div>
               </div>
             ))}
@@ -65,7 +70,7 @@ export function SocialProofSection() {
             viewport={{ once: true }}
             className="rounded-3xl border border-border-subtle/70 bg-white/85 dark:bg-white/5 dark:border-white/10 p-6 shadow-sm backdrop-blur"
           >
-            <p className="text-sm font-semibold uppercase tracking-wide text-text-muted mb-4">Latest updates</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-text-muted mb-4">{t('latestUpdates')}</p>
             <ul className="space-y-3">
               {updateLinks.map((link) => (
                 <li key={link.label} className="flex items-center justify-between">
@@ -80,7 +85,7 @@ export function SocialProofSection() {
               ))}
             </ul>
             <div className="mt-6 rounded-2xl border border-dashed border-accent-primary/40 p-4 text-center">
-              <p className="text-sm text-text-secondary">Want to be featured?</p>
+              <p className="text-sm text-text-secondary">{t('cta.ask')}</p>
               <a href="mailto:team@frame.dev" className="text-accent-primary font-semibold">team@frame.dev</a>
             </div>
           </motion.div>

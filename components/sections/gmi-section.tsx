@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function GMISection() {
+  const t = useTranslations('gmiSection')
   const [activeNode, setActiveNode] = useState<string | null>(null)
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
   const hoverTimerRef = useRef<number | undefined>(undefined)
@@ -43,12 +45,6 @@ export function GMISection() {
       useCase: 'RAG-powered expansion packs',
       outcome: 'Creator + Executor personas adapt content by locale while Gateway throttles workloads and exports full runs as Markdown/JSON.'
     }
-  ] as const
-
-  const whatYouGet = [
-    'Persona library for research, analysis, creation, critique, execution, and future GMIs.',
-    'Deterministic orchestration with guardrails, budgets, approvals, and SOC2/GDPR-ready event trails.',
-    'Unified memory fabric (working, episodic, vector) plus portable exports for Markdown/JSON ingestion.'
   ] as const
 
   useEffect(() => {
@@ -296,11 +292,10 @@ export function GMISection() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-10">
           <h2 id="gmi-heading" className="text-4xl sm:text-5xl font-extrabold mb-4">
-            <span className="gradient-text">Parallel Agency</span>
+            <span className="gradient-text">{t('title')}</span>
           </h2>
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-            Build sophisticated AI systems with adaptive personas and <span className="font-semibold text-accent-primary">emergent, dynamic behaviors</span>.
-            Route inbound support tickets to the right persona, push CRM updates safely, and keep every RAG workflow inside deterministic guardrails. AgentOS GMIs enable autonomous agents that learn, adapt, and evolve—then export those insights as portable intelligence bundles.
+            {t('subtitle')}
           </p>
                     </div>
         <motion.div
@@ -311,9 +306,9 @@ export function GMISection() {
         >
           {gmiSnapshots.map((snapshot) => (
             <div key={snapshot.useCase} className="p-5 rounded-2xl bg-background-glass border border-border-subtle/60 backdrop-blur">
-              <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">Use case</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">{t('useCaseTitle')}</p>
               <p className="text-base font-semibold text-text-primary mb-3">{snapshot.useCase}</p>
-              <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">Outcome</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">{t('outcomeTitle')}</p>
               <p className="text-sm text-text-secondary leading-relaxed">{snapshot.outcome}</p>
             </div>
           ))}
@@ -327,10 +322,10 @@ export function GMISection() {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="h-2 w-10 rounded-full bg-gradient-to-r from-accent-primary to-accent-secondary" />
-            <p className="text-sm font-semibold uppercase tracking-wide text-text-muted">What you get</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-text-muted">{t('whatYouGetTitle')}</p>
           </div>
           <ul className="grid md:grid-cols-3 gap-3 text-sm text-text-secondary leading-relaxed">
-            {whatYouGet.map((item) => (
+            {(t.raw('whatYouGetItems') as string[]).map((item) => (
               <li key={item} className="flex items-start gap-2">
                 <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent-primary" aria-hidden="true" />
                 <span>{item}</span>
@@ -484,7 +479,7 @@ export function GMISection() {
           className="mb-16"
         >
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-text-primary">AgentOS Architecture (streaming)</h3>
+            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-text-primary">{t('architectureTitle')}</h3>
             <InteractiveArchitecture />
             {selectedArchitectureNode && (
               <motion.div
@@ -495,16 +490,16 @@ export function GMISection() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <p className="text-xs uppercase tracking-wide text-text-muted mb-2">Currently selected</p>
+                <p className="text-xs uppercase tracking-wide text-text-muted mb-2">{t('currentlySelected')}</p>
                 <h4 className="text-xl font-semibold text-text-primary mb-2">{selectedArchitectureNode.label}</h4>
                 <p className="text-sm text-text-secondary mb-4">{selectedArchitectureNode.details}</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-1">Example</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-1">{t('exampleTitle')}</p>
                     <p className="text-sm text-text-primary">{selectedArchitectureNode.example}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-1">Outcome</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-1">{t('outcomeTitle')}</p>
                     <p className="text-sm text-text-primary">{selectedArchitectureNode.outcome}</p>
                   </div>
                 </div>
@@ -562,7 +557,7 @@ export function GMISection() {
             className="btn-primary inline-flex items-center gap-2"
           >
             <GitBranch className="w-5 h-5" />
-            Explore GMI Documentation
+            {t('ctaExploreDocs')}
             <ArrowRight className="w-4 h-4" />
           </a>
         </motion.div>

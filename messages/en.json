@@ -420,4 +420,112 @@
       "orchestrator": "Orchestrator"
     }
   }
+  ,
+  "ecosystem": {
+    "title": "The AgentOS Ecosystem",
+    "subtitle": "Explore the portable AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.",
+    "stats": {
+      "repositories": "Repositories",
+      "weeklyDownloads": "Weekly Downloads",
+      "githubStars": "GitHub Stars"
+    },
+    "categories": {
+      "core": { "title": "Core Framework", "description": "Essential components and protocols" },
+      "tools": { "title": "Developer Tools", "description": "SDKs, clients, and extensions" },
+      "apps": { "title": "Applications", "description": "Ready-to-use applications and platforms" },
+      "infrastructure": { "title": "Infrastructure", "description": "Storage, deployment, and operations" },
+      "community": { "title": "Community", "description": "Forums, discussions, and resources" }
+    },
+    "starsSuffix": "stars",
+    "updatedLabel": "Updated {date}",
+    "cta": {
+      "title": "Join the AgentOS Community",
+      "description": "Contribute to open-source AI development, share your agents, and collaborate with developers worldwide.",
+      "followOnGithub": "Follow on GitHub",
+      "joinDiscord": "Join Discord Community",
+      "contributeCode": "Contribute Code"
+    }
+  },
+  "codeExamples": {
+    "badge": "Code Examples",
+    "title": "Build with AgentOS",
+    "subtitle": "Production-ready code examples and patterns for building intelligent agent systems",
+    "categories": {
+      "all": "All Examples",
+      "basic": "Basic",
+      "advanced": "Advanced",
+      "integration": "Integration",
+      "deployment": "Deployment"
+    },
+    "selectExample": "Select Example",
+    "tabs": {
+      "synchronous": "Synchronous",
+      "streaming": "Streaming"
+    },
+    "copyButton": "Copy code",
+    "docsButton": "View Docs",
+    "runButton": "Try in Playground",
+    "examples": {
+      "basicAgent": {
+        "title": "Create Your First Agent",
+        "description": "Basic agent setup with memory and tools"
+      },
+      "gmiRoles": {
+        "title": "GMI Roles & Agencies",
+        "description": "Implementing Generalised Mind Instance roles"
+      },
+      "memorySystem": {
+        "title": "Advanced Memory Management",
+        "description": "Implementing persistent and contextual memory"
+      },
+      "toolIntegration": {
+        "title": "External Tool Integration",
+        "description": "Connect APIs and services as agent tools"
+      },
+      "realtimeStream": {
+        "title": "Real-time Streaming Responses",
+        "description": "Stream agent responses for better UX"
+      },
+      "deployment": {
+        "title": "Production Deployment",
+        "description": "Deploy AgentOS with Docker and Kubernetes"
+      }
+    },
+    "cta": {
+      "title": "Ready to Build Your First Agent?",
+      "description": "Get started with AgentOS in less than 5 minutes. Install the SDK and follow our interactive tutorial.",
+      "button": "Start Building",
+      "time": "5 min"
+    }
+  },
+  "socialProof": {
+    "badge": "Social proof",
+    "title": "Trusted deployments (revealing soon)",
+    "subtitle": "We’re onboarding AI agency teams across finance, operations, and support. Logos and case studies unlock with their launches—stay tuned.",
+    "reveal": "Reveal #{index}",
+    "comingSoon": "Coming soon",
+    "latestUpdates": "Latest updates",
+    "cta": { "ask": "Want to be featured?" },
+    "placeholders": {
+      "helios": "Multi-market research pods (coming soon)",
+      "northwind": "Product localization + CRM sync (coming soon)",
+      "atlas": "Adaptive support routing (coming soon)"
+    }
+  },
+  "gmiSection": {
+    "title": "Parallel Agency",
+    "subtitle": "Build sophisticated AI systems with adaptive personas and emergent, dynamic behaviors. Route inbound support tickets to the right persona, push CRM updates safely, and keep every RAG workflow inside deterministic guardrails. AgentOS GMIs enable autonomous agents that learn, adapt, and evolve—then export those insights as portable intelligence bundles.",
+    "useCaseTitle": "Use case",
+    "outcomeTitle": "Outcome",
+    "whatYouGetTitle": "What you get",
+    "whatYouGetItems": [
+      "Persona library for research, analysis, creation, critique, execution, and future GMIs.",
+      "Deterministic orchestration with guardrails, budgets, approvals, and SOC2/GDPR-ready event trails.",
+      "Unified memory fabric (working, episodic, vector) plus portable exports for Markdown/JSON ingestion."
+    ],
+    "architectureTitle": "AgentOS Architecture (streaming)",
+    "currentlySelected": "Currently selected",
+    "exampleTitle": "Example",
+    "ctaExploreDocs": "Explore GMI Documentation"
+  }
 }

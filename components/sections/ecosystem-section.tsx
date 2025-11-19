@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
   Github, ExternalLink, Package, Shield, Mic,
   Puzzle, Database, Globe, Users, BookOpen,
   Terminal, Brain, Code2, GitBranch
 } from 'lucide-react'
+import { useTranslations, useLocale } from 'next-intl'
 
 interface Repository {
   name: string
@@ -173,35 +174,17 @@ const repositories: Repository[] = [
   }
 ]
 
-const categoryInfo = {
-  core: {
-    title: 'Core Framework',
-    description: 'Essential components and protocols',
-    color: 'from-blue-500 to-cyan-500'
-  },
-  tools: {
-    title: 'Developer Tools',
-    description: 'SDKs, clients, and extensions',
-    color: 'from-purple-500 to-pink-500'
-  },
-  apps: {
-    title: 'Applications',
-    description: 'Ready-to-use applications and platforms',
-    color: 'from-green-500 to-emerald-500'
-  },
-  infrastructure: {
-    title: 'Infrastructure',
-    description: 'Storage, deployment, and operations',
-    color: 'from-orange-500 to-red-500'
-  },
-  community: {
-    title: 'Community',
-    description: 'Forums, discussions, and resources',
-    color: 'from-indigo-500 to-purple-500'
-  }
+const CATEGORY_COLORS: Record<string, string> = {
+  core: 'from-blue-500 to-cyan-500',
+  tools: 'from-purple-500 to-pink-500',
+  apps: 'from-green-500 to-emerald-500',
+  infrastructure: 'from-orange-500 to-red-500',
+  community: 'from-indigo-500 to-purple-500'
 }
 
 export function EcosystemSection() {
+  const t = useTranslations('ecosystem')
+  const locale = useLocale()
   const [liveStats, setLiveStats] = useState<LiveStats>({
     repos: repositories.length,
     stars: null,
@@ -230,7 +213,7 @@ export function EcosystemSection() {
         )
         let downloads: number | null = null
         try {
-          const npmResponse = await fetch('https://api.npmjs.org/downloads/point/last-week/@framers/agentos')
+          const npmResponse = await fetch('https://api.npmjs.org/downloads/point/last-week/@framersai/agentos')
           if (npmResponse.ok) {
             const npmJson = await npmResponse.json()
             downloads = npmJson?.downloads ?? null
@@ -302,15 +285,23 @@ export function EcosystemSection() {
   }, [])
 
   const statsConfig = [
-    { label: 'Repositories', value: liveStats.repos, icon: GitBranch },
-    { label: 'Weekly Downloads', value: liveStats.downloads, icon: Package },
-    { label: 'GitHub Stars', value: liveStats.stars, icon: Github }
+    { label: t('stats.repositories'), value: liveStats.repos, icon: GitBranch },
+    { label: t('stats.weeklyDownloads'), value: liveStats.downloads, icon: Package },
+    { label: t('stats.githubStars'), value: liveStats.stars, icon: Github }
   ] as const
 
   const formatNumber = (value: number | null) => {
     if (value === null || Number.isNaN(value)) return null
-    return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value)
+    return new Intl.NumberFormat(locale, { notation: 'compact', maximumFractionDigits: 1 }).format(value)
   }
+
+  const categoryInfo = useMemo(() => ({
+    core: { title: t('categories.core.title'), description: t('categories.core.description'), color: CATEGORY_COLORS.core },
+    tools: { title: t('categories.tools.title'), description: t('categories.tools.description'), color: CATEGORY_COLORS.tools },
+    apps: { title: t('categories.apps.title'), description: t('categories.apps.description'), color: CATEGORY_COLORS.apps },
+    infrastructure: { title: t('categories.infrastructure.title'), description: t('categories.infrastructure.description'), color: CATEGORY_COLORS.infrastructure },
+    community: { title: t('categories.community.title'), description: t('categories.community.description'), color: CATEGORY_COLORS.community }
+  }), [t])
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="ecosystem-heading">
@@ -330,10 +321,10 @@ export function EcosystemSection() {
           className="text-center mb-12"
         >
           <h2 id="ecosystem-heading" className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary bg-clip-text text-transparent">
-            The AgentOS Ecosystem
+            {t('title')}
           </h2>
           <p className="text-lg text-text-muted max-w-3xl mx-auto">
-            Explore the portable AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -441,11 +432,11 @@ export function EcosystemSection() {
                                 {starsDisplay && (
                                   <span className="flex items-center gap-1">
                                     <Github className="w-3 h-3" />
-                                    {starsDisplay} stars
+                                    {starsDisplay} {t('starsSuffix')}
                                   </span>
                                 )}
                                 {updatedDisplay && (
-                                  <span>Updated {updatedDisplay}</span>
+                                  <span>{t('updatedLabel', { date: updatedDisplay })}</span>
                                 )}
                               </>
                             )
@@ -467,9 +458,9 @@ export function EcosystemSection() {
           viewport={{ once: true }}
           className="mt-16 text-center p-8 rounded-3xl bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 border border-accent-primary/20"
         >
-          <h3 className="text-2xl font-bold mb-3">Join the AgentOS Community</h3>
+          <h3 className="text-2xl font-bold mb-3">{t('cta.title')}</h3>
           <p className="text-text-secondary mb-6 max-w-2xl mx-auto">
-            Contribute to open-source AI development, share your agents, and collaborate with developers worldwide
+            {t('cta.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -479,21 +470,21 @@ export function EcosystemSection() {
               className="px-6 py-3 bg-background-primary rounded-xl font-semibold border-2 border-accent-primary hover:bg-accent-primary/10 transition-all flex items-center justify-center gap-2"
             >
               <Github className="w-5 h-5" />
-              Follow on GitHub
+              {t('cta.followOnGithub')}
             </a>
             <a
               href="https://discord.gg/agentos"
               className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary rounded-xl font-semibold text-white hover:shadow-lg hover:shadow-purple-500/50 transition-all flex items-center justify-center gap-2 border border-purple-500/20"
             >
               <Users className="w-5 h-5" />
-              Join Discord Community
+              {t('cta.joinDiscord')}
             </a>
             <a
               href="https://docs.agentos.sh/contributing"
               className="px-6 py-3 bg-background-glass backdrop-blur-md rounded-xl font-semibold border border-border-interactive hover:border-accent-primary transition-all flex items-center justify-center gap-2"
             >
               <Code2 className="w-5 h-5" />
-              Contribute Code
+              {t('cta.contributeCode')}
             </a>
           </div>
         </motion.div>

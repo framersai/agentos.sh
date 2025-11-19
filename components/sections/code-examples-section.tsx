@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check, Terminal, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface CodeExample {
   id: string
@@ -13,11 +14,15 @@ interface CodeExample {
   category: 'basic' | 'advanced' | 'integration' | 'deployment'
 }
 
-const codeExamples: CodeExample[] = [
+export function CodeExamplesSection() {
+  const t = useTranslations('codeExamples')
+  const tFooter = useTranslations('footer')
+
+  const codeExamples: CodeExample[] = useMemo(() => ([
   {
     id: 'basic-agent',
-    title: 'Create Your First Agent',
-    description: 'Basic agent setup with memory and tools',
+    title: t('examples.basicAgent.title'),
+    description: t('examples.basicAgent.description'),
     language: 'typescript',
     category: 'basic',
     code: `import { Agent, Memory, Tool } from '@framers/agentos'
@@ -55,8 +60,8 @@ console.log(response)
   },
   {
     id: 'gmi-roles',
-    title: 'GMI Roles & Agencies',
-    description: 'Implementing Generalised Mind Instance roles',
+    title: t('examples.gmiRoles.title'),
+    description: t('examples.gmiRoles.description'),
     language: 'typescript',
     category: 'advanced',
     code: `import { GMI, Agency, Role } from '@framers/agentos'
@@ -111,8 +116,8 @@ console.log('References:', article.references)`
   },
   {
     id: 'memory-system',
-    title: 'Advanced Memory Management',
-    description: 'Implementing persistent and contextual memory',
+    title: t('examples.memorySystem.title'),
+    description: t('examples.memorySystem.description'),
     language: 'typescript',
     category: 'advanced',
     code: `import { Agent, VectorMemory, EpisodicMemory, WorkingMemory } from '@framers/agentos'
@@ -178,8 +183,8 @@ const response = await agent.run({
   },
   {
     id: 'tool-integration',
-    title: 'External Tool Integration',
-    description: 'Connect APIs and services as agent tools',
+    title: t('examples.toolIntegration.title'),
+    description: t('examples.toolIntegration.description'),
     language: 'typescript',
     category: 'integration',
     code: `import { Agent, Tool, ToolRegistry } from '@framers/agentos'
@@ -237,8 +242,8 @@ const result = await agent.run({
   },
   {
     id: 'streaming',
-    title: 'Real-time Streaming Responses',
-    description: 'Stream agent responses for better UX',
+    title: t('examples.realtimeStream.title'),
+    description: t('examples.realtimeStream.description'),
     language: 'typescript',
     category: 'advanced',
     code: `import { StreamingAgent, StreamProcessor } from '@framers/agentos/streaming'
@@ -289,8 +294,8 @@ streamingAgent.stream({
   },
   {
     id: 'deployment',
-    title: 'Production Deployment',
-    description: 'Deploy AgentOS with Docker and Kubernetes',
+    title: t('examples.deployment.title'),
+    description: t('examples.deployment.description'),
     language: 'yaml',
     category: 'deployment',
     code: `# docker-compose.yml
@@ -350,9 +355,7 @@ volumes:
   redis_data:
   qdrant_data:`
   }
-]
-
-export function CodeExamplesSection() {
+]), [t])
   const [activeExample, setActiveExample] = useState(codeExamples[0])
   const [activeCategory, setActiveCategory] = useState<'all' | 'basic' | 'advanced' | 'integration' | 'deployment'>('all')
   const [copied, setCopied] = useState<string | null>(null)
@@ -366,7 +369,7 @@ export function CodeExamplesSection() {
     if (filtered.length > 0) {
       setActiveExample(filtered[0])
     }
-  }, [activeCategory])
+  }, [activeCategory, codeExamples])
 
   // Defer loading the heavy code highlighter until after mount/idle
   useEffect(() => {
@@ -391,11 +394,11 @@ export function CodeExamplesSection() {
   }, [])
 
   const categories = [
-    { value: 'all' as const, label: 'All Examples', icon: Code2, color: 'from-purple-500 to-pink-500' },
-    { value: 'basic' as const, label: 'Basic', icon: Terminal, color: 'from-blue-500 to-cyan-500' },
-    { value: 'advanced' as const, label: 'Advanced', icon: Cpu, color: 'from-green-500 to-emerald-500' },
-    { value: 'integration' as const, label: 'Integration', icon: GitBranch, color: 'from-orange-500 to-red-500' },
-    { value: 'deployment' as const, label: 'Deployment', icon: Database, color: 'from-indigo-500 to-purple-500' }
+    { value: 'all' as const, label: t('categories.all'), icon: Code2, color: 'from-purple-500 to-pink-500' },
+    { value: 'basic' as const, label: t('categories.basic'), icon: Terminal, color: 'from-blue-500 to-cyan-500' },
+    { value: 'advanced' as const, label: t('categories.advanced'), icon: Cpu, color: 'from-green-500 to-emerald-500' },
+    { value: 'integration' as const, label: t('categories.integration'), icon: GitBranch, color: 'from-orange-500 to-red-500' },
+    { value: 'deployment' as const, label: t('categories.deployment'), icon: Database, color: 'from-indigo-500 to-purple-500' }
   ]
 
   const filteredExamples = activeCategory === 'all'
@@ -429,14 +432,14 @@ export function CodeExamplesSection() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism mb-6">
             <Code2 className="w-4 h-4 text-accent-primary" />
-            <span className="text-sm font-semibold text-text-secondary">Code Examples</span>
+            <span className="text-sm font-semibold text-text-secondary">{t('badge')}</span>
           </div>
 
           <h2 id="code-examples-heading" className="text-4xl sm:text-5xl font-bold mb-4">
-            <span className="gradient-text">Build with AgentOS</span>
+            <span className="gradient-text">{t('title')}</span>
           </h2>
           <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-            Production-ready code examples and patterns for building intelligent agent systems
+            {t('subtitle')}
           </p>
         </motion.div>
 
@@ -468,7 +471,7 @@ export function CodeExamplesSection() {
           {/* Example List - Enhanced */}
           <div className="lg:col-span-1">
             <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-4 px-2">
-              Select Example
+              {t('selectExample')}
             </h3>
             <div className="space-y-2">
               {filteredExamples.map((example) => {
@@ -536,7 +539,7 @@ export function CodeExamplesSection() {
                       <button
                         onClick={() => copyCode(activeExample.code, activeExample.id)}
                         className="p-2.5 rounded-lg hover:bg-accent-primary/10 transition-all group"
-                        aria-label="Copy code"
+                        aria-label={t('copyButton')}
                       >
                         {copied === activeExample.id ? (
                           <Check className="w-5 h-5 text-green-500" />
@@ -563,7 +566,7 @@ export function CodeExamplesSection() {
                 activeExample.id !== 'streaming' ? 'bg-accent-primary text-white' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
-              Synchronous
+              {t('tabs.synchronous')}
             </button>
             <button
               onClick={() => {
@@ -573,7 +576,7 @@ export function CodeExamplesSection() {
                 activeExample.id === 'streaming' ? 'bg-accent-primary text-white' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
-              Streaming
+              {t('tabs.streaming')}
             </button>
           </div>
         </div>
@@ -622,7 +625,7 @@ export function CodeExamplesSection() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent-primary text-white font-semibold hover:bg-accent-hover transition-all group"
                       >
                         <Play className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                        Try in Playground
+                        {t('runButton')}
                       </a>
                       <a
                         href={`https://docs.agentos.sh/examples/${activeExample.id}`}
@@ -631,7 +634,7 @@ export function CodeExamplesSection() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-accent-primary text-accent-primary font-semibold hover:bg-accent-primary/10 transition-all"
                       >
                         <Book className="w-4 h-4" />
-                        View Docs
+                        {t('docsButton')}
                       </a>
                       <a
                         href="https://docs.agentos.sh/api"
@@ -640,13 +643,13 @@ export function CodeExamplesSection() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-accent-primary text-accent-primary font-semibold hover:bg-accent-primary/10 transition-all"
                       >
                         <Book className="w-4 h-4" />
-                        API Reference (TypeDoc/TSDoc)
+                        {tFooter('apiReferenceTSDoc')}
                       </a>
                     </div>
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-accent-primary animate-pulse" />
                       <span className="text-xs font-semibold text-text-muted">
-                        {activeExample.category.charAt(0).toUpperCase() + activeExample.category.slice(1)}
+                        {t(`categories.${activeExample.category}`)}
                       </span>
                     </div>
                   </div>
@@ -668,10 +671,10 @@ export function CodeExamplesSection() {
 
             <div className="relative z-10 text-center">
               <h3 className="text-3xl font-bold mb-4 gradient-text">
-                Ready to Build Your First Agent?
+                {t('cta.title')}
               </h3>
               <p className="text-lg text-text-secondary mb-8 max-w-2xl mx-auto">
-                Get started with AgentOS in less than 5 minutes. Install the SDK and follow our interactive tutorial.
+                {t('cta.description')}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -684,8 +687,8 @@ export function CodeExamplesSection() {
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] text-[var(--color-text-on-accent)] shadow-lg shadow-[var(--color-accent-primary)]/20 hover:shadow-xl hover:brightness-110 transition-all duration-[var(--duration-fast)]"
                 >
                   <Sparkles className="w-5 h-5" />
-                  Start Building
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-white/20">5 min</span>
+                  {t('cta.button')}
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-white/20">{t('cta.time')}</span>
                 </a>
               </div>
             </div>
