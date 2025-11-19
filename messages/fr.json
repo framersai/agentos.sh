@@ -19,8 +19,6 @@
     "marketplace": "Marketplace"
   },
   "hero": {
-    "cycleWords": ["Adaptative", "Émergente"],
-    "cycleWordsTail": ["émergente", "adaptative"],
     "badge": "Open Source · Adaptatif · Émergent",
     "title": "Runtime portable pour agents IA adaptatifs et émergents",
     "subtitle": "Créez des agents IA adaptatifs avec mémoire, outils et autonomie. Runtime TypeScript avec rôles GMI, orchestration multi-agents et garde-fous entreprise.",
@@ -203,133 +201,75 @@
     "currentLanguage": "Langue actuelle : {language}",
     "selectLanguage": "Sélectionner une langue"
   },
-  "codeExamples": {
-    "title": "Voir AgentOS en Action",
-    "subtitle": "Exemples de code prêts pour la production",
-    "categories": {
-      "basic": "Démarrage",
-      "advanced": "Modèles Avancés",
-      "integration": "Intégrations",
-      "deployment": "Déploiement"
-    },
-    "examples": {
-      "basicAgent": {
-        "title": "Créez votre premier agent",
-        "description": "Configuration de base avec mémoire et outils"
-      },
-      "gmiRoles": {
-        "title": "Rôles GMI & Agences",
-        "description": "Implémentation des rôles d'instance mentale généralisée"
-      },
-      "memorySystem": {
-        "title": "Gestion avancée de la mémoire",
-        "description": "Implémentation de la mémoire persistante et contextuelle"
-      },
-      "realtimeStream": {
-        "title": "Streaming en temps réel",
-        "description": "Streaming WebSocket pour les réponses d'agents en direct"
-      }
-    },
-    "copyButton": "Copier",
-    "copied": "Copié!",
-    "runButton": "Exécuter l'exemple",
-    "docsButton": "Voir la doc"
-  },
-  "gmiSection": {
-    "title": "Architecture GMI",
-    "subtitle": "Orchestration d'instances mentales généralisées pour l'intelligence émergente",
-    "agents": {
-      "researcher": {
-        "name": "Chercheur",
-        "description": "Découvre et analyse l'information",
-        "persona": "curieux, précis"
-      },
-      "analyst": {
-        "name": "Analyste",
-        "description": "Traite et interprète les données",
-        "persona": "sceptique, méthodique"
-      },
-      "creator": {
-        "name": "Créateur",
-        "description": "Génère du contenu et des solutions",
-        "persona": "clair, persuasif"
-      },
-      "executor": {
-        "name": "Exécuteur",
-        "description": "Passe à l'action et implémente",
-        "persona": "fiable, orienté action"
-      },
-      "orchestrator": {
-        "name": "Orchestrateur",
-        "description": "Coordonne les tâches multi-agents",
-        "persona": "équilibré, gardien"
-      }
-    },
-    "useCaseTitle": "Cas d'usage réels",
-    "whatYouGetTitle": "Ce que vous obtenez",
-    "architectureTitle": "Architecture système"
-  },
-  "multiAgent": {
-    "title": "Modèles de Collaboration Multi-Agent",
-    "subtitle": "Orchestrez des équipes d'agents IA spécialisés travaillant ensemble",
-    "modes": {
-      "consensus": {
-        "title": "Collaboration par Consensus",
-        "description": "Plusieurs agents votent sur les décisions avec des scores de confiance pondérés"
-      },
-      "sequential": {
-        "title": "Pipeline Séquentiel",
-        "description": "Les agents travaillent par étapes ordonnées en passant les résultats"
-      },
-      "parallel": {
-        "title": "Traitement Parallèle",
-        "description": "Des agents indépendants travaillent simultanément sur différents aspects"
-      }
-    },
-    "workflow": "Flux de travail",
-    "duration": "Durée",
-    "throughput": "Débit",
-    "useCases": "Cas d'usage",
-    "pros": "Avantages",
-    "cons": "Considérations",
-    "codeExample": "Exemple de code"
-  },
-  "ecosystem": {
-    "title": "Écosystème & Intégrations",
-    "subtitle": "Connectez AgentOS à vos outils et services préférés",
-    "categories": {
-      "llms": "Modèles de langage",
-      "memory": "Mémoire & Stockage",
-      "tools": "Outils & APIs",
-      "deployment": "Déploiement"
-    }
-  },
-  "coordination": {
-    "title": "Modèles de Coordination",
-    "subtitle": "Patterns de conception pour workflows multi-agents complexes",
-    "patterns": {
-      "fanOut": "Pattern Fan-out",
-      "pipeline": "Pattern Pipeline",
-      "mapReduce": "Pattern Map-Reduce",
-      "consensus": "Pattern Consensus"
-    }
-  },
-  "socialProof": {
-    "title": "Approuvé par des équipes du monde entier",
-    "subtitle": "Rejoignez des milliers de développeurs construisant l'avenir avec AgentOS",
-    "stats": {
-      "developers": "Développeurs",
-      "projects": "Projets",
-      "countries": "Pays",
-      "stars": "Étoiles GitHub"
-    }
-  },
-  "videoDemo": {
-    "title": "Voir AgentOS en Action",
-    "subtitle": "Découvrez comme il est facile de construire des agents IA adaptatifs",
-    "watchButton": "Voir la démo",
-    "duration": "Durée"
-  },
   "skipToContent": "Aller au contenu",
-  "skipToMain": "Aller au contenu principal"
+  "skipToMain": "Aller au contenu principal",
+  "productCards": {
+    "title": "Capacités clés",
+    "subtitle": "Fonctionnalités de niveau entreprise pour créer, faire évoluer et déployer des agents IA intelligents",
+    "cards": {
+      "adaptive": {
+        "title": "Intelligence adaptative",
+        "description": "Apprentissage en temps réel et décisions sensibles au contexte, qui évoluent à chaque interaction"
+      },
+      "distributed": {
+        "title": "Cognition distribuée",
+        "description": "Traitement parallèle entre plusieurs agents avec coordination fluide et répartition de charge"
+      },
+      "memory": {
+        "title": "Mémoire persistante",
+        "description": "Stockage illimité avec rappel instantané via des embeddings vectoriels avancés et une recherche sémantique"
+      },
+      "streaming": {
+        "title": "Streaming en temps réel",
+        "description": "Architecture d’événements à très faible latence avec support WebSocket et 99,99 % de disponibilité"
+      }
+    }
+  },
+  "enterprise": {
+    "title": "Fonctionnalités prêtes pour l’entreprise",
+    "subtitle": "Blocs d’infrastructure d’entreprise, chaque couche ajoutant sécurité et échelle",
+    "features": {
+      "security": {
+        "title": "Fondation sécurité",
+        "items": ["Chiffrement AES‑256","Architecture Zero‑Trust","Sécurité de bout en bout"]
+      },
+      "compliance": {
+        "title": "Conformité & confidentialité",
+        "items": ["Conforme GDPR","Rédaction PII","Contrôles de résidence des données"]
+      },
+      "auth": {
+        "title": "Authentification",
+        "items": ["SSO/SAML 2.0","OAuth 2.0","Support MFA"]
+      },
+      "audit": {
+        "title": "Audit & supervision",
+        "items": ["Supervision en temps réel","Journaux d’audit","Détection d’anomalies"]
+      },
+      "soc2": {
+        "title": "Conformité SOC2",
+        "items": ["Type II (en cours)","Audits annuels","Conformité continue"]
+      },
+      "scale": {
+        "title": "Échelle entreprise",
+        "items": ["Auto‑scaling","SLA 99,99 %","CDN mondial"]
+      }
+    },
+    "legend": {
+      "fullyImplemented": {
+        "title": "Entièrement implémenté",
+        "description": "Conformité GDPR, rédaction PII et fonctionnalités de sécurité cœur prêtes pour la production"
+      },
+      "inProgress": {
+        "title": "En cours",
+        "description": "Certification SOC2 Type II en cours, achèvement prévu T2 2024"
+      },
+      "enterpriseSupport": {
+        "title": "Support entreprise",
+        "description": "Support 24/7 avec intégration vca.chat et Customer Success dédié"
+      }
+    },
+    "trustBadge": "Plébiscité par des leaders du secteur",
+    "wipLabel": "WIP",
+    "currentlyDevelopment": "Actuellement en développement"
+  }
 }

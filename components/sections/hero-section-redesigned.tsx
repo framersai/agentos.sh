@@ -15,26 +15,19 @@ export function HeroSectionRedesigned() {
   const t = useTranslations('hero')
   const locale = useLocale()
   // i18n morphing words arrays
-  const cycleWords = t.raw('cycleWords') as string[]
-  const cycleWordsTail = t.raw('cycleWordsTail') as string[]
+  const cycleWords = t.raw<string[]>('cycleWords')
+  const cycleWordsTail = t.raw<string[]>('cycleWordsTail')
   const { theme: currentTheme, resolvedTheme } = useTheme()
   const [showToast, setShowToast] = useState(false)
   const [githubStars, setGithubStars] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [activeHeadline, setActiveHeadline] = useState(0)
-  const [mounted, setMounted] = useState(false)
   const prefersReducedMotion = useReducedMotion()
   const lastSwitchTime = useRef(Date.now())
   const isDark = resolvedTheme === 'dark'
 
-  // Mounted state for hydration-safe rendering
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
   // Apply holographic theme based on current theme selection
   useEffect(() => {
-    if (!mounted) return
     const themeMap = {
       'sakura-sunset': 'sakura-sunset',
       'twilight-neo': 'twilight-neo',
@@ -44,7 +37,7 @@ export function HeroSectionRedesigned() {
     }
     const mappedTheme = themeMap[currentTheme as keyof typeof themeMap] || 'aurora-daybreak'
     applyHolographicTheme(mappedTheme, isDark)
-  }, [currentTheme, isDark, mounted])
+  }, [currentTheme, isDark])
 
   // Live stats with GitHub stars
   const productStats = useMemo(() => {
@@ -93,7 +86,7 @@ export function HeroSectionRedesigned() {
 
   // Liquid morph text switching - less frequent, smoother
   useEffect(() => {
-    if (!mounted || prefersReducedMotion) return
+    if (prefersReducedMotion) return
 
     const interval = setInterval(() => {
       const now = Date.now()
@@ -108,25 +101,27 @@ export function HeroSectionRedesigned() {
     }, 1000) // Check every second but only switch when conditions are met
 
     return () => clearInterval(interval)
-  }, [mounted, prefersReducedMotion])
+  }, [prefersReducedMotion])
 
   // Mobile detection
   useEffect(() => {
-    if (!mounted) return
     const check = () => setIsMobile(window.matchMedia('(max-width: 639px)').matches)
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
-  }, [mounted])
+  }, [])
 
   const copyCommand = useCallback(() => {
     navigator.clipboard.writeText('npm install agentos')
     setShowToast(true)
   }, [])
 
-  const technicalHighlights = useMemo(() => {
-    return t.raw('technicalHighlights') as Array<{ title: string; detail: string }>
-  }, [t])
+  const technicalHighlights = [
+    { title: 'Streaming-first runtime', detail: 'Token-level delivery across personas, guardrails, and channels.' },
+    { title: 'Deterministic orchestration', detail: 'Parallel GMIs with auditable routing, approvals, and budgets.' },
+    { title: 'Zero-copy memory fabric', detail: 'Vector, episodic, and working memory stitched together for recall.' },
+    { title: 'Portable intelligence capsules', detail: 'Export full AgentOS instances as Markdown or JSON and ingest anywhere.' }
+  ]
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[var(--color-background-primary)]">
@@ -134,9 +129,8 @@ export function HeroSectionRedesigned() {
       <div className="absolute inset-0">
         <div 
           className="absolute inset-0 opacity-60"
-          suppressHydrationWarning
           style={{
-            background: mounted && isDark
+            background: isDark
               ? `radial-gradient(ellipse at top, 
                   hsl(250 100% 10%) 0%, 
                   hsl(240 50% 4%) 50%, 
@@ -163,7 +157,7 @@ export function HeroSectionRedesigned() {
 
       {/* Minimal particle system - elegant and performant */}
       <div className="absolute inset-0 pointer-events-none">
-        {mounted && !prefersReducedMotion && !isMobile && (
+        {!prefersReducedMotion && !isMobile && (
           <>
             {Array.from({ length: 12 }).map((_, i) => (
               <motion.div
@@ -209,46 +203,34 @@ export function HeroSectionRedesigned() {
               >
                 {/* Morphing first word */}
                 <span className="inline-block relative" style={{ width: '14ch' }}>
-                  {mounted ? (
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={activeHeadline}
-                        initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                        exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent"
-                      >
-                        {cycleWords[activeHeadline]}
-                      </motion.span>
-                    </AnimatePresence>
-                  ) : (
-                    <span className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
-                      {cycleWords[0]}
-                    </span>
-                  )}
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={activeHeadline}
+                      initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                      className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent"
+                    >
+                      {cycleWords[activeHeadline]}
+                    </motion.span>
+                  </AnimatePresence>
                 </span>
                 {' intelligence for '}
                 {/* Morphing last word */}
                 <span className="inline-block relative" style={{ width: '11ch' }}>
-                  {mounted ? (
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={activeHeadline + 100}
-                        initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                        exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-                        className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
-                      >
-                        {cycleWordsTail[activeHeadline]}
-                      </motion.span>
-                    </AnimatePresence>
-                  ) : (
-                    <span className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
-                      {cycleWordsTail[0]}
-                    </span>
-                  )}
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={activeHeadline + 100}
+                      initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
+                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                      className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                    >
+                      {cycleWordsTail[activeHeadline]}
+                    </motion.span>
+                  </AnimatePresence>
                 </span>
                 {' agents'}
               </h1>
@@ -302,6 +284,28 @@ export function HeroSectionRedesigned() {
               </div>
             </div>
           </motion.div>
+        </div>
+
+        {/* Centered Logo Section - Compact */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8, duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
+          className="flex justify-center mb-8"
+        >
+          <div className="relative w-32 h-32 sm:w-40 sm:h-40">
+            {/* Subtle glow behind logo */}
+            <div 
+              className="absolute inset-0 blur-2xl opacity-20"
+              style={{
+                background: `radial-gradient(circle, var(--color-accent-primary), transparent 70%)`
+              }}
+            />
+            <div className="relative w-full h-full">
+              <AnimatedAgentOSLogo />
+            </div>
+          </div>
+        </motion.div>
 
         {/* Technical Highlights Grid */}
         <motion.div

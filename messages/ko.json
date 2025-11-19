@@ -19,66 +19,27 @@
     "marketplace": "마켓플레이스"
   },
   "hero": {
-    "cycleWords": [
-      "적응형",
-      "창발형"
-    ],
-    "cycleWordsTail": [
-      "창발형",
-      "적응형"
-    ],
     "badge": "오픈소스 · 적응형 · 창발형",
     "title": "적응형 및 창발형 지능을 위한 휴대용 AI 에이전트 런타임",
     "subtitle": "메모리, 도구 및 자율성을 갖춘 적응형, 창발형 AI 에이전트를 구축하세요. GMI 역할, 다중 에이전트 오케스트레이션 및 엔터프라이즈 가드레일을 갖춘 TypeScript 런타임.",
+    "cycleWords": ["적응형","창발형"],
+    "cycleWordsTail": ["창발형","적응형"],
     "headlinePairs": [
-      {
-        "top": "적응형 지능",
-        "bottom": "자율 에이전트를 위해"
-      },
-      {
-        "top": "창발형 지능",
-        "bottom": "엔터프라이즈 오케스트레이션용"
-      },
-      {
-        "top": "적응형 지능",
-        "bottom": "안전 필수 워크플로용"
-      },
-      {
-        "top": "창발형 지능",
-        "bottom": "병렬 AI 팀을 위해"
-      }
+      { "top": "적응형 지능", "bottom": "자율 에이전트를 위해" },
+      { "top": "창발형 지능", "bottom": "엔터프라이즈 오케스트레이션용" },
+      { "top": "적응형 지능", "bottom": "안전 필수 워크플로용" },
+      { "top": "창발형 지능", "bottom": "병렬 AI 팀을 위해" }
     ],
     "technicalHighlights": [
-      {
-        "title": "스트리밍 우선 런타임",
-        "detail": "페르소나, 가드레일, 채널 전반에 토큰 단위로 전달합니다."
-      },
-      {
-        "title": "결정론적 오케스트레이션",
-        "detail": "감사 가능한 라우팅·승인·예산을 갖춘 병렬 GMI."
-      },
-      {
-        "title": "제로 복사 메모리 패브릭",
-        "detail": "벡터·에피소드·작업 메모리를 하나의 회상 가능한 흐름으로 엮습니다."
-      },
-      {
-        "title": "휴대용 인텔리전스 캡슐",
-        "detail": "완전한 AgentOS 인스턴스를 Markdown/JSON으로 내보내 어느 스택에서도 사용합니다."
-      }
+      { "title": "스트리밍 우선 런타임", "detail": "페르소나, 가드레일, 채널 전반에 토큰 단위로 전달합니다." },
+      { "title": "결정론적 오케스트레이션", "detail": "감사 가능한 라우팅·승인·예산을 갖춘 병렬 GMI." },
+      { "title": "제로 복사 메모리 패브릭", "detail": "벡터·에피소드·작업 메모리를 하나의 회상 가능한 흐름으로 엮습니다." },
+      { "title": "휴대용 인텔리전스 캡슐", "detail": "완전한 AgentOS 인스턴스를 Markdown/JSON으로 내보내 어느 스택에서도 사용합니다." }
     ],
     "visualStats": [
-      {
-        "label": "가동 중인 에이전시",
-        "value": "128"
-      },
-      {
-        "label": "승인 SLA",
-        "value": "3.2분"
-      },
-      {
-        "label": "가드레일 커버리지",
-        "value": "98%"
-      }
+      { "label": "가동 중인 에이전시", "value": "128" },
+      { "label": "승인 SLA", "value": "3.2분" },
+      { "label": "가드레일 커버리지", "value": "98%" }
     ],
     "ctaPrimary": "Voice Chat Assistant 사용해보기",
     "ctaSecondary": "GitHub에서 Star",
@@ -91,35 +52,12 @@
     "viewOnGithub": "GitHub에서 보기",
     "copiedToClipboard": "클립보드에 복사했습니다!",
     "capabilities": {
-      "ts": {
-        "label": "TypeScript 네이티브",
-        "value": "타입 안전"
-      },
-      "oss": {
-        "label": "오픈소스",
-        "value": "Apache 2.0"
-      },
-      "streaming": {
-        "label": "실시간 스트리밍",
-        "value": "비동기 준비"
-      },
-      "memory": {
-        "label": "영구 메모리",
-        "value": "내장"
-      }
+      "ts": { "label": "TypeScript 네이티브", "value": "타입 안전" },
+      "oss": { "label": "오픈소스", "value": "Apache 2.0" },
+      "streaming": { "label": "실시간 스트리밍", "value": "비동기 준비" },
+      "memory": { "label": "영구 메모리", "value": "내장" }
     },
-    "heroVisualAlt": "AgentOS 오케스트레이션 작업 공간 미리보기",
-    "stats": {
-      "githubStars": "GitHub 스타",
-      "contributors": "기여자",
-      "forks": "포크",
-      "securityScore": "보안 점수"
-    },
-    "compliance": {
-      "gdpr": "GDPR 및 PII 준수",
-      "soc2": "SOC2 (출시 예정)",
-      "enterpriseSupport": "엔터프라이즈 지원 가능"
-    }
+    "heroVisualAlt": "AgentOS 오케스트레이션 작업 공간 미리보기"
   },
   "features": {
     "sectionTitle": "엔터프라이즈급 기능",
@@ -185,107 +123,9 @@
     "license": "Apache 2.0(핵심) + MIT(에이전트, 확장, 가드레일)",
     "copyright": "© {year} Frame.dev. 모든 권리 보유."
   },
-  "productCards": {
-    "title": "핵심 기능",
-    "subtitle": "지능형 AI 에이전트 구축, 확장 및 배포를 위한 엔터프라이즈급 기능",
-    "cards": {
-      "adaptive": {
-        "title": "적응형 지능",
-        "description": "모든 상호작용과 함께 진화하는 실시간 학습 및 상황 인식 의사 결정"
-      },
-      "distributed": {
-        "title": "분산 인지",
-        "description": "원활한 조정 및 로드 밸런싱을 통한 여러 에이전트 간의 병렬 처리"
-      },
-      "memory": {
-        "title": "영구 메모리",
-        "description": "고급 벡터 임베딩 및 의미론적 검색을 사용한 즉각적인 회상 기능의 무한 스토리지"
-      },
-      "streaming": {
-        "title": "실시간 스트리밍",
-        "description": "WebSocket 지원 및 99.99% 가동 시간을 갖춘 초저지연 이벤트 기반 아키텍처"
-      }
-    }
-  },
-  "enterprise": {
-    "title": "엔터프라이즈급 기능",
-    "subtitle": "엔터프라이즈급 인프라의 구성 요소, 각 계층에 보안 및 확장성 추가",
-    "features": {
-      "security": {
-        "title": "보안 기반",
-        "items": [
-          "AES-256 암호화",
-          "제로 트러스트 아키텍처",
-          "종단간 보안"
-        ]
-      },
-      "compliance": {
-        "title": "규정 준수 및 개인정보 보호",
-        "items": [
-          "GDPR 준수",
-          "PII 삭제",
-          "데이터 거주 제어"
-        ]
-      },
-      "auth": {
-        "title": "인증",
-        "items": [
-          "SSO/SAML 2.0",
-          "OAuth 2.0",
-          "MFA 지원"
-        ]
-      },
-      "audit": {
-        "title": "감사 및 모니터링",
-        "items": [
-          "실시간 모니터링",
-          "감사 로그",
-          "이상 탐지"
-        ]
-      },
-      "soc2": {
-        "title": "SOC2 규정 준수",
-        "items": [
-          "Type II (진행 중)",
-          "연례 감사",
-          "지속적 규정 준수"
-        ]
-      },
-      "scale": {
-        "title": "엔터프라이즈 규모",
-        "items": [
-          "자동 확장",
-          "99.99% SLA",
-          "글로벌 CDN"
-        ]
-      }
-    },
-    "legend": {
-      "fullyImplemented": {
-        "title": "완전 구현됨",
-        "description": "GDPR 규정 준수, PII 삭제 및 핵심 보안 기능은 프로덕션 준비 완료"
-      },
-      "inProgress": {
-        "title": "진행 중",
-        "description": "SOC2 Type II 인증 진행 중, 2024년 2분기 완료 예상"
-      },
-      "enterpriseSupport": {
-        "title": "엔터프라이즈 지원",
-        "description": "vca.chat 통합 및 전담 성공 관리자와의 24/7 지원"
-      }
-    },
-    "trustBadge": "업계 리더들이 신뢰하는",
-    "wipLabel": "작업 중",
-    "currentlyDevelopment": "현재 개발 중"
-  },
   "cta": {
     "title": "적응형 AI 에이전트를 구축할 준비가 되셨나요?",
     "description": "AgentOS로 차세대 지능형 시스템을 구축하는 개발자에 합류하세요.",
-    "badge": "AI 혁명에 참여하세요",
-    "exploreLabel": "또는 오늘 AgentOS를 탐색하세요:",
-    "tryVoiceChat": "음성 채팅 시도",
-    "browseCode": "코드 탐색",
-    "marketplace": "마켓플레이스",
     "getStarted": "시작하기",
     "talkToUs": "문의하기"
   },
@@ -296,131 +136,73 @@
   },
   "skipToContent": "콘텐츠로 건너뛰기",
   "skipToMain": "메인 콘텐츠로 건너뛰기",
-  "codeExamples": {
-    "title": "AgentOS 실제 동작 보기",
-    "subtitle": "일반적인 패턴을 위한 프로덕션 준비 코드 예제",
-    "categories": {
-      "basic": "시작하기",
-      "advanced": "고급 패턴",
-      "integration": "통합",
-      "deployment": "배포"
-    },
-    "examples": {
-      "basicAgent": {
-        "title": "첫 번째 에이전트 만들기",
-        "description": "메모리 및 도구를 사용한 기본 에이전트 설정"
+  "productCards": {
+    "title": "핵심 역량",
+    "subtitle": "지능형 AI 에이전트를 구축·확장·배포하기 위한 엔터프라이즈급 기능",
+    "cards": {
+      "adaptive": {
+        "title": "적응형 지능",
+        "description": "모든 상호작용과 함께 진화하는 실시간 학습 및 컨텍스트 인지 의사결정"
       },
-      "gmiRoles": {
-        "title": "GMI 역할 및 에이전시",
-        "description": "일반화된 마인드 인스턴스 역할 구현"
+      "distributed": {
+        "title": "분산 인지",
+        "description": "여러 에이전트 간 병렬 처리와 원활한 조정, 부하 분산"
       },
-      "memorySystem": {
-        "title": "고급 메모리 관리",
-        "description": "영구 및 컨텍스트 메모리 구현"
+      "memory": {
+        "title": "지속 메모리",
+        "description": "고급 벡터 임베딩과 시맨틱 검색으로 즉시 회상 가능한 무한 저장소"
       },
-      "realtimeStream": {
+      "streaming": {
         "title": "실시간 스트리밍",
-        "description": "실시간 에이전트 응답을 위한 WebSocket 스트리밍"
+        "description": "WebSocket 지원과 99.99% 가용성의 초저지연 이벤트 아키텍처"
       }
-    },
-    "copyButton": "복사",
-    "copied": "복사됨!",
-    "runButton": "예제 실행",
-    "docsButton": "문서 보기"
-  },
-  "gmiSection": {
-    "title": "GMI 아키텍처",
-    "subtitle": "창발적 지능을 위한 일반화된 마인드 인스턴스 오케스트레이션",
-    "agents": {
-      "researcher": {
-        "name": "연구원",
-        "description": "정보 발견 및 분석",
-        "persona": "호기심 많은, 정확한"
-      },
-      "analyst": {
-        "name": "분석가",
-        "description": "데이터 처리 및 해석",
-        "persona": "회의적인, 체계적인"
-      },
-      "creator": {
-        "name": "크리에이터",
-        "description": "콘텐츠 및 솔루션 생성",
-        "persona": "명확한, 설득력 있는"
-      },
-      "executor": {
-        "name": "실행자",
-        "description": "행동 실행 및 구현",
-        "persona": "신뢰할 수 있는, 행동 지향적"
-      },
-      "orchestrator": {
-        "name": "오케스트레이터",
-        "description": "다중 에이전트 작업 조정",
-        "persona": "균형 잡힌, 게이트키퍼"
-      }
-    },
-    "useCaseTitle": "실제 사용 사례",
-    "whatYouGetTitle": "제공 내용",
-    "architectureTitle": "시스템 아키텍처"
-  },
-  "multiAgent": {
-    "title": "다중 에이전트 협업 패턴",
-    "subtitle": "함께 작업하는 전문 AI 에이전트 팀 오케스트레이션",
-    "modes": {
-      "consensus": {
-        "title": "합의 기반 협업",
-        "description": "가중치가 적용된 신뢰도 점수로 의사 결정에 투표하는 여러 에이전트"
-      },
-      "sequential": {
-        "title": "순차 파이프라인",
-        "description": "결과를 전달하는 정렬된 단계에서 작업하는 에이전트"
-      },
-      "parallel": {
-        "title": "병렬 처리",
-        "description": "다양한 측면에서 동시에 작업하는 독립 에이전트"
-      }
-    },
-    "workflow": "워크플로",
-    "duration": "기간",
-    "throughput": "처리량",
-    "useCases": "사용 사례",
-    "pros": "장점",
-    "cons": "고려사항",
-    "codeExample": "코드 예제"
-  },
-  "ecosystem": {
-    "title": "생태계 및 통합",
-    "subtitle": "좋아하는 도구 및 서비스와 AgentOS 연결",
-    "categories": {
-      "llms": "언어 모델",
-      "memory": "메모리 및 저장소",
-      "tools": "도구 및 API",
-      "deployment": "배포"
     }
   },
-  "coordination": {
-    "title": "조정 패턴",
-    "subtitle": "복잡한 다중 에이전트 워크플로를 위한 디자인 패턴",
-    "patterns": {
-      "fanOut": "팬아웃 패턴",
-      "pipeline": "파이프라인 패턴",
-      "mapReduce": "맵리듀스 패턴",
-      "consensus": "합의 패턴"
-    }
-  },
-  "socialProof": {
-    "title": "전 세계 팀의 신뢰",
-    "subtitle": "AgentOS로 미래를 구축하는 수천 명의 개발자와 함께하세요",
-    "stats": {
-      "developers": "개발자",
-      "projects": "프로젝트",
-      "countries": "국가",
-      "stars": "GitHub 스타"
-    }
-  },
-  "videoDemo": {
-    "title": "AgentOS 실제 동작 보기",
-    "subtitle": "적응형 AI 에이전트 구축이 얼마나 쉬운지 확인하세요",
-    "watchButton": "데모 보기",
-    "duration": "시간"
+  "enterprise": {
+    "title": "엔터프라이즈 준비 기능",
+    "subtitle": "보안과 확장을 더하는 엔터프라이즈 인프라의 구성 블록",
+    "features": {
+      "security": {
+        "title": "보안 기반",
+        "items": ["AES-256 암호화","제로 트러스트 아키텍처","엔드투엔드 보안"]
+      },
+      "compliance": {
+        "title": "컴플라이언스 & 프라이버시",
+        "items": ["GDPR 준수","PII 마스킹","데이터 거주지 제어"]
+      },
+      "auth": {
+        "title": "인증",
+        "items": ["SSO/SAML 2.0","OAuth 2.0","MFA 지원"]
+      },
+      "audit": {
+        "title": "감사 & 모니터링",
+        "items": ["실시간 모니터링","감사 로그","이상 탐지"]
+      },
+      "soc2": {
+        "title": "SOC2 컴플라이언스",
+        "items": ["Type II (진행 중)","연간 감사","지속 컴플라이언스"]
+      },
+      "scale": {
+        "title": "엔터프라이즈 스케일",
+        "items": ["오토스케일링","99.99% SLA","글로벌 CDN"]
+      }
+    },
+    "legend": {
+      "fullyImplemented": {
+        "title": "완전 구현",
+        "description": "GDPR 준수, PII 마스킹, 핵심 보안 기능이 프로덕션 준비 완료"
+      },
+      "inProgress": {
+        "title": "진행 중",
+        "description": "SOC2 Type II 인증 진행 중 (예상 완료: 2024년 2분기)"
+      },
+      "enterpriseSupport": {
+        "title": "엔터프라이즈 지원",
+        "description": "vca.chat 연동 및 전담 성공 매니저 포함 24/7 지원"
+      }
+    },
+    "trustBadge": "업계 리더들이 신뢰합니다",
+    "wipLabel": "WIP",
+    "currentlyDevelopment": "현재 개발 중"
   }
 }

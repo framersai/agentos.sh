@@ -19,11 +19,11 @@
     "marketplace": "Marketplace"
   },
   "hero": {
-    "cycleWords": ["Adaptive", "Emergent"],
-    "cycleWordsTail": ["emergent", "adaptive"],
     "badge": "Open Source · Adaptive · Emergent",
     "title": "Portable AI Agent Runtime for Adaptive & Emergent Intelligence",
     "subtitle": "Build adaptive, emergent AI agents with memory, tools, and agency. TypeScript runtime featuring GMI roles, multi-agent orchestration, and enterprise guardrails.",
+    "cycleWords": ["Adaptive","Emergent"],
+    "cycleWordsTail": ["emergent","adaptive"],
     "headlinePairs": [
       { "top": "Adaptive Intelligence", "bottom": "for Autonomous Agents" },
       { "top": "Emergent Intelligence", "bottom": "for Enterprise Orchestration" },
@@ -51,13 +51,6 @@
     "getStarted": "Get Started",
     "viewOnGithub": "View on GitHub",
     "copiedToClipboard": "Copied to clipboard!",
-    "capabilities": {
-      "ts": { "label": "TypeScript Native", "value": "Type-Safe" },
-      "oss": { "label": "Open Source", "value": "Apache 2.0" },
-      "streaming": { "label": "Real-time Streaming", "value": "Async Ready" },
-      "memory": { "label": "Persistent Memory", "value": "Built-in" }
-    },
-    "heroVisualAlt": "AgentOS orchestration workspace preview",
     "stats": {
       "githubStars": "GitHub Stars",
       "contributors": "Contributors",
@@ -68,7 +61,14 @@
       "gdpr": "GDPR & PII Compliant",
       "soc2": "SOC2 (Coming Soon)",
       "enterpriseSupport": "Enterprise Support Available"
-    }
+    },
+    "capabilities": {
+      "ts": { "label": "TypeScript Native", "value": "Type-Safe" },
+      "oss": { "label": "Open Source", "value": "Apache 2.0" },
+      "streaming": { "label": "Real-time Streaming", "value": "Async Ready" },
+      "memory": { "label": "Persistent Memory", "value": "Built-in" }
+    },
+    "heroVisualAlt": "AgentOS orchestration workspace preview"
   },
   "features": {
     "sectionTitle": "Enterprise‑Ready Features",
@@ -134,13 +134,27 @@
     "license": "Apache 2.0 (core) + MIT (agents, extensions, guardrails)",
     "copyright": "© {year} Frame.dev. All rights reserved."
   },
+  "cta": {
+    "title": "Ready to Build Adaptive AI Agents?",
+    "description": "Join developers building the next generation of intelligent systems with AgentOS.",
+    "getStarted": "Get Started",
+    "talkToUs": "Talk to Us"
+  },
+  "LanguageSwitcher": {
+    "switchLanguage": "Switch language",
+    "currentLanguage": "Current language: {language}",
+    "selectLanguage": "Select language"
+  },
+  "skipToContent": "Skip to content",
+  "skipToMain": "Skip to main content"
+  ,
   "productCards": {
     "title": "Core Capabilities",
-    "subtitle": "Enterprise-grade features for building, scaling, and deploying intelligent AI agents",
+    "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
     "cards": {
       "adaptive": {
         "title": "Adaptive Intelligence",
-        "description": "Real-time learning and context-aware decision making that evolves with every interaction"
+        "description": "Real-time learning and context-aware decision-making that evolves with every interaction"
       },
       "distributed": {
         "title": "Distributed Cognition",
@@ -148,11 +162,11 @@
       },
       "memory": {
         "title": "Persistent Memory",
-        "description": "Infinite storage with instant recall using advanced vector embeddings and semantic search"
+        "description": "Boundless storage with instant recall via advanced vector embeddings and semantic search"
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event-driven architecture with WebSocket support and 99.99% uptime"
+        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime"
       }
     }
   },
@@ -162,27 +176,27 @@
     "features": {
       "security": {
         "title": "Security Foundation",
-        "items": ["AES-256 Encryption", "Zero-Trust Architecture", "End-to-End Security"]
+        "items": ["AES-256 Encryption","Zero-Trust Architecture","End-to-End Security"]
       },
       "compliance": {
         "title": "Compliance & Privacy",
-        "items": ["GDPR Compliant", "PII Redaction", "Data Residency Controls"]
+        "items": ["GDPR Compliant","PII Redaction","Data Residency Controls"]
       },
       "auth": {
         "title": "Authentication",
-        "items": ["SSO/SAML 2.0", "OAuth 2.0", "MFA Support"]
+        "items": ["SSO/SAML 2.0","OAuth 2.0","MFA Support"]
       },
       "audit": {
         "title": "Audit & Monitoring",
-        "items": ["Real-time Monitoring", "Audit Logs", "Anomaly Detection"]
+        "items": ["Real-time Monitoring","Audit Logs","Anomaly Detection"]
       },
       "soc2": {
         "title": "SOC2 Compliance",
-        "items": ["Type II (In Progress)", "Annual Audits", "Continuous Compliance"]
+        "items": ["Type II (In Progress)","Annual Audits","Continuous Compliance"]
       },
       "scale": {
         "title": "Enterprise Scale",
-        "items": ["Auto-scaling", "99.99% SLA", "Global CDN"]
+        "items": ["Auto-scaling","99.99% SLA","Global CDN"]
       }
     },
     "legend": {
@@ -202,151 +216,6 @@
     "trustBadge": "Trusted by industry leaders",
     "wipLabel": "WIP",
     "currentlyDevelopment": "Currently in development"
-  },
-  "cta": {
-    "title": "Ready to Build Adaptive AI Agents?",
-    "description": "Join developers building the next generation of intelligent systems with AgentOS.",
-    "badge": "Join the AI Revolution",
-    "exploreLabel": "Or explore AgentOS today:",
-    "tryVoiceChat": "Try Voice Chat",
-    "browseCode": "Browse Code",
-    "marketplace": "Marketplace",
-    "getStarted": "Get Started",
-    "talkToUs": "Talk to Us"
-  },
-  "LanguageSwitcher": {
-    "switchLanguage": "Switch language",
-    "currentLanguage": "Current language: {language}",
-    "selectLanguage": "Select language"
-  },
-  "codeExamples": {
-    "title": "See AgentOS in Action",
-    "subtitle": "Production-ready code examples for common patterns",
-    "categories": {
-      "basic": "Getting Started",
-      "advanced": "Advanced Patterns",
-      "integration": "Integrations",
-      "deployment": "Deployment"
-    },
-    "examples": {
-      "basicAgent": {
-        "title": "Create Your First Agent",
-        "description": "Basic agent setup with memory and tools"
-      },
-      "gmiRoles": {
-        "title": "GMI Roles & Agencies",
-        "description": "Implementing Generalised Mind Instance roles"
-      },
-      "memorySystem": {
-        "title": "Advanced Memory Management",
-        "description": "Implementing persistent and contextual memory"
-      },
-      "realtimeStream": {
-        "title": "Real-time Streaming",
-        "description": "WebSocket streaming for live agent responses"
-      }
-    },
-    "copyButton": "Copy",
-    "copied": "Copied!",
-    "runButton": "Run Example",
-    "docsButton": "View Docs"
-  },
-  "gmiSection": {
-    "title": "GMI Architecture",
-    "subtitle": "Generalised Mind Instance orchestration for emergent intelligence",
-    "agents": {
-      "researcher": {
-        "name": "Researcher",
-        "description": "Discovers and analyzes information",
-        "persona": "curious, precise"
-      },
-      "analyst": {
-        "name": "Analyst",
-        "description": "Processes and interprets data",
-        "persona": "skeptical, methodical"
-      },
-      "creator": {
-        "name": "Creator",
-        "description": "Generates content and solutions",
-        "persona": "clear, persuasive"
-      },
-      "executor": {
-        "name": "Executor",
-        "description": "Takes actions and implements",
-        "persona": "reliable, action-oriented"
-      },
-      "orchestrator": {
-        "name": "Orchestrator",
-        "description": "Coordinates multi-agent tasks",
-        "persona": "balanced, gatekeeper"
-      }
-    },
-    "useCaseTitle": "Real-World Use Cases",
-    "whatYouGetTitle": "What You Get",
-    "architectureTitle": "System Architecture"
-  },
-  "multiAgent": {
-    "title": "Multi-Agent Collaboration Patterns",
-    "subtitle": "Orchestrate teams of specialized AI agents working together",
-    "modes": {
-      "consensus": {
-        "title": "Consensus-Based Collaboration",
-        "description": "Multiple agents vote on decisions with weighted confidence scores"
-      },
-      "sequential": {
-        "title": "Sequential Pipeline",
-        "description": "Agents work in ordered stages passing results forward"
-      },
-      "parallel": {
-        "title": "Parallel Processing",
-        "description": "Independent agents work simultaneously on different aspects"
-      }
-    },
-    "workflow": "Workflow",
-    "duration": "Duration",
-    "throughput": "Throughput",
-    "useCases": "Use Cases",
-    "pros": "Advantages",
-    "cons": "Considerations",
-    "codeExample": "Code Example"
-  },
-  "ecosystem": {
-    "title": "Ecosystem & Integrations",
-    "subtitle": "Connect AgentOS with your favorite tools and services",
-    "categories": {
-      "llms": "Language Models",
-      "memory": "Memory & Storage",
-      "tools": "Tools & APIs",
-      "deployment": "Deployment"
-    }
-  },
-  "coordination": {
-    "title": "Coordination Patterns",
-    "subtitle": "Design patterns for complex multi-agent workflows",
-    "patterns": {
-      "fanOut": "Fan-out Pattern",
-      "pipeline": "Pipeline Pattern",
-      "mapReduce": "Map-Reduce Pattern",
-      "consensus": "Consensus Pattern"
-    }
-  },
-  "socialProof": {
-    "title": "Trusted by Teams Worldwide",
-    "subtitle": "Join thousands of developers building the future with AgentOS",
-    "stats": {
-      "developers": "Developers",
-      "projects": "Projects",
-      "countries": "Countries",
-      "stars": "GitHub Stars"
-    }
-  },
-  "videoDemo": {
-    "title": "Watch AgentOS in Action",
-    "subtitle": "See how easy it is to build adaptive AI agents",
-    "watchButton": "Watch Demo",
-    "duration": "Duration"
-  },
-  "skipToContent": "Skip to content",
-  "skipToMain": "Skip to main content"
+  }
 }
 

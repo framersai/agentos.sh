@@ -19,14 +19,6 @@
     "marketplace": "マーケットプレイス"
   },
   "hero": {
-    "cycleWords": [
-      "適応型",
-      "創発型"
-    ],
-    "cycleWordsTail": [
-      "創発型",
-      "適応型"
-    ],
     "badge": "オープンソース · 適応型 · 創発型",
     "title": "適応型および創発型インテリジェンスのためのポータブルAIエージェントランタイム",
     "subtitle": "メモリ、ツール、自律性を備えた適応型、創発型AIエージェントを構築。GMIロール、マルチエージェントオーケストレーション、エンタープライズガードレールを備えたTypeScriptランタイム。",
@@ -109,6 +101,14 @@
       }
     },
     "heroVisualAlt": "AgentOS オーケストレーションワークスペースのプレビュー",
+    "cycleWords": [
+      "適応型",
+      "創発型"
+    ],
+    "cycleWordsTail": [
+      "創発型",
+      "適応型"
+    ],
     "stats": {
       "githubStars": "GitHub スター",
       "contributors": "貢献者",
@@ -202,132 +202,5 @@
     "selectLanguage": "言語を選択"
   },
   "skipToContent": "コンテンツにスキップ",
-  "skipToMain": "メインコンテンツにスキップ",
-  "codeExamples": {
-    "title": "AgentOS の動作を見る",
-    "subtitle": "一般的なパターン向けの本番対応コード例",
-    "categories": {
-      "basic": "始める",
-      "advanced": "高度なパターン",
-      "integration": "統合",
-      "deployment": "デプロイ"
-    },
-    "examples": {
-      "basicAgent": {
-        "title": "最初のエージェントを作成",
-        "description": "メモリとツールを使用した基本的なエージェント設定"
-      },
-      "gmiRoles": {
-        "title": "GMI ロールとエージェンシー",
-        "description": "一般化マインドインスタンスロールの実装"
-      },
-      "memorySystem": {
-        "title": "高度なメモリ管理",
-        "description": "永続的およびコンテキストメモリの実装"
-      },
-      "realtimeStream": {
-        "title": "リアルタイムストリーミング",
-        "description": "ライブエージェント応答用の WebSocket ストリーミング"
-      }
-    },
-    "copyButton": "コピー",
-    "copied": "コピーしました！",
-    "runButton": "例を実行",
-    "docsButton": "ドキュメントを表示"
-  },
-  "gmiSection": {
-    "title": "GMI アーキテクチャ",
-    "subtitle": "創発的知能のための一般化マインドインスタンスオーケストレーション",
-    "agents": {
-      "researcher": {
-        "name": "研究者",
-        "description": "情報を発見し分析",
-        "persona": "好奇心旺盛、正確"
-      },
-      "analyst": {
-        "name": "アナリスト",
-        "description": "データを処理し解釈",
-        "persona": "懐疑的、体系的"
-      },
-      "creator": {
-        "name": "クリエイター",
-        "description": "コンテンツとソリューションを生成",
-        "persona": "明確、説得力のある"
-      },
-      "executor": {
-        "name": "エグゼキューター",
-        "description": "アクションを実行し実装",
-        "persona": "信頼できる、行動指向"
-      },
-      "orchestrator": {
-        "name": "オーケストレーター",
-        "description": "マルチエージェントタスクを調整",
-        "persona": "バランスの取れた、ゲートキーパー"
-      }
-    },
-    "useCaseTitle": "実際の使用例",
-    "whatYouGetTitle": "得られるもの",
-    "architectureTitle": "システムアーキテクチャ"
-  },
-  "multiAgent": {
-    "title": "マルチエージェント協調パターン",
-    "subtitle": "一緒に働く専門AIエージェントチームをオーケストレート",
-    "modes": {
-      "consensus": {
-        "title": "コンセンサスベースの協調",
-        "description": "重み付けされた信頼スコアで決定に投票する複数のエージェント"
-      },
-      "sequential": {
-        "title": "順次パイプライン",
-        "description": "結果を前方に渡す順序付けられた段階で作業するエージェント"
-      },
-      "parallel": {
-        "title": "並列処理",
-        "description": "異なる側面で同時に作業する独立したエージェント"
-      }
-    },
-    "workflow": "ワークフロー",
-    "duration": "期間",
-    "throughput": "スループット",
-    "useCases": "使用例",
-    "pros": "利点",
-    "cons": "考慮事項",
-    "codeExample": "コード例"
-  },
-  "ecosystem": {
-    "title": "エコシステムと統合",
-    "subtitle": "お気に入りのツールとサービスに AgentOS を接続",
-    "categories": {
-      "llms": "言語モデル",
-      "memory": "メモリとストレージ",
-      "tools": "ツールと API",
-      "deployment": "デプロイ"
-    }
-  },
-  "coordination": {
-    "title": "調整パターン",
-    "subtitle": "複雑なマルチエージェントワークフローのデザインパターン",
-    "patterns": {
-      "fanOut": "ファンアウトパターン",
-      "pipeline": "パイプラインパターン",
-      "mapReduce": "マップリデュースパターン",
-      "consensus": "コンセンサスパターン"
-    }
-  },
-  "socialProof": {
-    "title": "世界中のチームに信頼されています",
-    "subtitle": "AgentOS で未来を構築する何千もの開発者に参加",
-    "stats": {
-      "developers": "開発者",
-      "projects": "プロジェクト",
-      "countries": "国",
-      "stars": "GitHub スター"
-    }
-  },
-  "videoDemo": {
-    "title": "AgentOS の動作を見る",
-    "subtitle": "適応型AIエージェントを構築する簡単さを確認",
-    "watchButton": "デモを見る",
-    "duration": "時間"
-  }
+  "skipToMain": "メインコンテンツにスキップ"
 }

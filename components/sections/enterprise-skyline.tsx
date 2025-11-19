@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   AlertTriangle,
@@ -11,7 +11,6 @@ import {
   Globe
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import { useTranslations } from 'next-intl'
 import { 
   ShieldIcon, 
   LockIcon, 
@@ -32,85 +31,74 @@ interface BuildingFeature {
   glow: string
 }
 
-function getEnterpriseFeatures(t: ReturnType<typeof useTranslations>): BuildingFeature[] {
-  return [
-    {
-      id: 'security',
-      title: t('features.security.title'),
-      height: 3,
-      position: 10,
-      icon: ShieldIcon,
-      features: t.raw('features.security.items') as string[],
-      status: 'complete',
-      glow: '#00FF00'
-    },
-    {
-      id: 'compliance',
-      title: t('features.compliance.title'),
-      height: 5,
-      position: 25,
-      icon: DocumentCheckIcon,
-      features: t.raw('features.compliance.items') as string[],
-      status: 'complete',
-      glow: '#00FFFF'
-    },
-    {
-      id: 'auth',
-      title: t('features.auth.title'),
-      height: 4,
-      position: 40,
-      icon: LockIcon,
-      features: t.raw('features.auth.items') as string[],
-      status: 'complete',
-      glow: '#FF00FF'
-    },
-    {
-      id: 'audit',
-      title: t('features.audit.title'),
-      height: 6,
-      position: 55,
-      icon: GraphIcon,
-      features: t.raw('features.audit.items') as string[],
-      status: 'complete',
-      glow: '#FFFF00'
-    },
-    {
-      id: 'soc2',
-      title: t('features.soc2.title'),
-      height: 7,
-      position: 70,
-      icon: CertificateIcon,
-      features: t.raw('features.soc2.items') as string[],
-      status: 'building',
-      glow: '#FF8800'
-    },
-    {
-      id: 'scale',
-      title: t('features.scale.title'),
-      height: 9,
-      position: 85,
-      icon: SkylineIcon,
-      features: t.raw('features.scale.items') as string[],
-      status: 'complete',
-      glow: '#8800FF'
-    }
-  ]
-}
+const enterpriseFeatures: BuildingFeature[] = [
+  {
+    id: 'security',
+    title: 'Security Foundation',
+    height: 3,
+    position: 10,
+    icon: ShieldIcon,
+    features: ['AES-256 Encryption', 'Zero-Trust Architecture', 'End-to-End Security'],
+    status: 'complete',
+    glow: '#00FF00'
+  },
+  {
+    id: 'compliance',
+    title: 'Compliance & Privacy',
+    height: 5,
+    position: 25,
+    icon: DocumentCheckIcon,
+    features: ['GDPR Compliant', 'PII Redaction', 'Data Residency Controls'],
+    status: 'complete',
+    glow: '#00FFFF'
+  },
+  {
+    id: 'auth',
+    title: 'Authentication',
+    height: 4,
+    position: 40,
+    icon: LockIcon,
+    features: ['SSO/SAML 2.0', 'OAuth 2.0', 'MFA Support'],
+    status: 'complete',
+    glow: '#FF00FF'
+  },
+  {
+    id: 'audit',
+    title: 'Audit & Monitoring',
+    height: 6,
+    position: 55,
+    icon: GraphIcon,
+    features: ['Real-time Monitoring', 'Audit Logs', 'Anomaly Detection'],
+    status: 'complete',
+    glow: '#FFFF00'
+  },
+  {
+    id: 'soc2',
+    title: 'SOC2 Compliance',
+    height: 7,
+    position: 70,
+    icon: CertificateIcon,
+    features: ['Type II (In Progress)', 'Annual Audits', 'Continuous Compliance'],
+    status: 'building',
+    glow: '#FF8800'
+  },
+  {
+    id: 'scale',
+    title: 'Enterprise Scale',
+    height: 9,
+    position: 85,
+    icon: SkylineIcon,
+    features: ['Auto-scaling', '99.99% SLA', 'Global CDN'],
+    status: 'complete',
+    glow: '#8800FF'
+  }
+]
 
 export function EnterpriseSkyline() {
-  const t = useTranslations('enterprise')
   const [hoveredBuilding, setHoveredBuilding] = useState<string | null>(null)
   const [animatedWindows, setAnimatedWindows] = useState<Record<string, boolean[]>>({})
-  const [mounted, setMounted] = useState(false)
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
-  
-  const enterpriseFeatures = useMemo(() => getEnterpriseFeatures(t), [t])
-  
-  // Mounted state for hydration-safe rendering
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   // Animate building windows
   useEffect(() => {
@@ -132,7 +120,7 @@ export function EnterpriseSkyline() {
     }, 2000)
 
     return () => clearInterval(interval)
-  }, [enterpriseFeatures])
+  }, [])
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -162,7 +150,7 @@ export function EnterpriseSkyline() {
           }}
         />
         {/* Stars/Particles in background */}
-        {mounted && isDark && (
+        {isDark && (
           <div className="absolute inset-0">
             {Array.from({ length: 50 }).map((_, i) => (
               <div
@@ -190,10 +178,10 @@ export function EnterpriseSkyline() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-4">
-            {t('title')}
+            Enterprise Ready Features
           </h2>
           <p className="text-lg text-muted max-w-3xl mx-auto">
-            {t('subtitle')}
+            Building blocks of enterprise-grade infrastructure, each layer adding security and scale
           </p>
         </motion.div>
 
@@ -283,7 +271,7 @@ export function EnterpriseSkyline() {
                     <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
                       <div className="flex items-center gap-1 bg-orange-500/20 px-2 py-1 rounded-full">
                         <AlertTriangle className="w-3 h-3 text-orange-500" />
-                        <span className="text-xs text-orange-500">{t('wipLabel')}</span>
+                        <span className="text-xs text-orange-500">WIP</span>
                       </div>
                     </div>
                   )}
@@ -336,7 +324,7 @@ export function EnterpriseSkyline() {
                         {feature.status === 'building' && (
                           <div className="mt-2 pt-2 border-t border-glass-border">
                             <p className="text-xs text-orange-500">
-                              🚧 {t('currentlyDevelopment')}
+                              🚧 Currently in development
                             </p>
                           </div>
                         )}
@@ -374,10 +362,10 @@ export function EnterpriseSkyline() {
           >
             <div className="flex items-center gap-3 mb-3">
               <Database className="w-8 h-8 text-green-500" />
-              <h3 className="font-semibold">{t('legend.fullyImplemented.title')}</h3>
+              <h3 className="font-semibold">Fully Implemented</h3>
             </div>
             <p className="text-sm text-muted">
-              {t('legend.fullyImplemented.description')}
+              GDPR compliance, PII redaction, and core security features are production-ready
             </p>
           </motion.div>
 
@@ -389,10 +377,10 @@ export function EnterpriseSkyline() {
           >
             <div className="flex items-center gap-3 mb-3">
               <Cpu className="w-8 h-8 text-orange-500" />
-              <h3 className="font-semibold">{t('legend.inProgress.title')}</h3>
+              <h3 className="font-semibold">In Progress</h3>
             </div>
             <p className="text-sm text-muted">
-              {t('legend.inProgress.description')}
+              SOC2 Type II certification underway, expected completion Q2 2024
             </p>
           </motion.div>
 
@@ -404,10 +392,10 @@ export function EnterpriseSkyline() {
           >
             <div className="flex items-center gap-3 mb-3">
               <Globe className="w-8 h-8 text-blue-500" />
-              <h3 className="font-semibold">{t('legend.enterpriseSupport.title')}</h3>
+              <h3 className="font-semibold">Enterprise Support</h3>
             </div>
             <p className="text-sm text-muted">
-              {t('legend.enterpriseSupport.description')}
+              24/7 support with vca.chat integration and dedicated success managers
             </p>
           </motion.div>
         </div>
@@ -419,7 +407,7 @@ export function EnterpriseSkyline() {
           transition={{ delay: 2 }}
           className="mt-12 text-center"
         >
-          <p className="text-sm text-muted mb-4">{t('trustBadge')}</p>
+          <p className="text-sm text-muted mb-4">Trusted by industry leaders</p>
           <div className="flex flex-wrap justify-center gap-8">
             {Array.from({ length: 5 }).map((_, i) => (
               <div
