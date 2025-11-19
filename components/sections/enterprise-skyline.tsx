@@ -302,7 +302,7 @@ export function EnterpriseSkyline() {
                           {t(`features.${feature.id}.title`)}
                         </h4>
                         <ul className="space-y-1">
-                          {t.raw<string[]>(`features.${feature.id}.items`).map((item, i) => (
+                          {(t.raw(`features.${feature.id}.items`) as string[]).map((item, i) => (
                             <li key={i} className="text-xs flex items-start gap-1">
                               <CheckCircle className="w-3 h-3 text-green-500 mt-0.5 shrink-0" />
                               <span>{item}</span>

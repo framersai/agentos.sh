@@ -72,14 +72,14 @@ export function MultiAgentCollaboration() {
       icon: CheckCircle2,
       agents: agents.slice(0, 4),
       workflow: {
-        steps: t.raw<string[]>('patterns.consensus.workflow.steps'),
+        steps: t.raw('patterns.consensus.workflow.steps') as string[],
         duration: t('patterns.consensus.workflow.duration'),
         throughput: t('patterns.consensus.workflow.throughput')
       },
-      useCases: t.raw<any[]>('patterns.consensus.useCases'),
+      useCases: t.raw('patterns.consensus.useCases') as CollaborationPattern['useCases'],
       proscons: {
-        pros: t.raw<string[]>('patterns.consensus.proscons.pros'),
-        cons: t.raw<string[]>('patterns.consensus.proscons.cons')
+        pros: t.raw('patterns.consensus.proscons.pros') as string[],
+        cons: t.raw('patterns.consensus.proscons.cons') as string[]
       },
       codeExample: `// Consensus-based decision making
 const consensus = await orchestrator.decide({
@@ -110,14 +110,14 @@ if (consensus.agreement >= 0.7) {
       icon: List,
       agents: agents.slice(0, 5),
       workflow: {
-        steps: t.raw<string[]>('patterns.sequential.workflow.steps'),
+        steps: t.raw('patterns.sequential.workflow.steps') as string[],
         duration: t('patterns.sequential.workflow.duration'),
         throughput: t('patterns.sequential.workflow.throughput')
       },
-      useCases: t.raw<any[]>('patterns.sequential.useCases'),
+      useCases: t.raw('patterns.sequential.useCases') as CollaborationPattern['useCases'],
       proscons: {
-        pros: t.raw<string[]>('patterns.sequential.proscons.pros'),
-        cons: t.raw<string[]>('patterns.sequential.proscons.cons')
+        pros: t.raw('patterns.sequential.proscons.pros') as string[],
+        cons: t.raw('patterns.sequential.proscons.cons') as string[]
       },
       codeExample: `// Sequential processing pipeline
 const pipeline = await orchestrator.pipeline({
@@ -149,14 +149,14 @@ return pipeline.final;`
       icon: Shuffle,
       agents: agents,
       workflow: {
-        steps: t.raw<string[]>('patterns.parallel.workflow.steps'),
+        steps: t.raw('patterns.parallel.workflow.steps') as string[],
         duration: t('patterns.parallel.workflow.duration'),
         throughput: t('patterns.parallel.workflow.throughput')
       },
-      useCases: t.raw<any[]>('patterns.parallel.useCases'),
+      useCases: t.raw('patterns.parallel.useCases') as CollaborationPattern['useCases'],
       proscons: {
-        pros: t.raw<string[]>('patterns.parallel.proscons.pros'),
-        cons: t.raw<string[]>('patterns.parallel.proscons.cons')
+        pros: t.raw('patterns.parallel.proscons.pros') as string[],
+        cons: t.raw('patterns.parallel.proscons.cons') as string[]
       },
       codeExample: `// Parallel multi-agent execution
 const results = await orchestrator.parallel({

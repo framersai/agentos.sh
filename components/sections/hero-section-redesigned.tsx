@@ -15,8 +15,8 @@ export function HeroSectionRedesigned() {
   const t = useTranslations('hero');
   const locale = useLocale();
   // i18n morphing words arrays
-  const cycleWords = t.raw<string[]>('cycleWords');
-  const cycleWordsTail = t.raw<string[]>('cycleWordsTail');
+  const cycleWords = t.raw('cycleWords') as string[];
+  const cycleWordsTail = t.raw('cycleWordsTail') as string[];
   const { theme: currentTheme, resolvedTheme } = useTheme();
   const [showToast, setShowToast] = useState(false);
   const [githubStars, setGithubStars] = useState<number | null>(null);
