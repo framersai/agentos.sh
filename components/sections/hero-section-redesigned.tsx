@@ -1,30 +1,30 @@
-'use client'
+'use client';
 
-import { useCallback, useEffect, useMemo, useState, useRef } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { ArrowRight, Github, Terminal, Star, GitBranch, Users, Shield } from 'lucide-react'
-import { useLocale, useTranslations } from 'next-intl'
-import { AnimatedAgentOSLogo } from '../icons/animated-logo'
-import { Toast } from '../ui/toast'
-import { LinkButton } from '../ui/LinkButton'
-import { Button } from '../ui/Button'
-import { applyHolographicTheme } from '@/lib/holographic-design-system'
-import { useTheme } from 'next-themes'
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { ArrowRight, Github, Terminal, Star, GitBranch, Users, Shield } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { AnimatedAgentOSLogo } from '../icons/animated-logo';
+import { Toast } from '../ui/toast';
+import { LinkButton } from '../ui/LinkButton';
+import { Button } from '../ui/Button';
+import { applyHolographicTheme } from '@/lib/holographic-design-system';
+import { useTheme } from 'next-themes';
 
 export function HeroSectionRedesigned() {
-  const t = useTranslations('hero')
-  const locale = useLocale()
+  const t = useTranslations('hero');
+  const locale = useLocale();
   // i18n morphing words arrays
-  const cycleWords = t.raw<string[]>('cycleWords')
-  const cycleWordsTail = t.raw<string[]>('cycleWordsTail')
-  const { theme: currentTheme, resolvedTheme } = useTheme()
-  const [showToast, setShowToast] = useState(false)
-  const [githubStars, setGithubStars] = useState<number | null>(null)
-  const [isMobile, setIsMobile] = useState(false)
-  const [activeHeadline, setActiveHeadline] = useState(0)
-  const prefersReducedMotion = useReducedMotion()
-  const lastSwitchTime = useRef(Date.now())
-  const isDark = resolvedTheme === 'dark'
+  const cycleWords = t.raw<string[]>('cycleWords');
+  const cycleWordsTail = t.raw<string[]>('cycleWordsTail');
+  const { theme: currentTheme, resolvedTheme } = useTheme();
+  const [showToast, setShowToast] = useState(false);
+  const [githubStars, setGithubStars] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeHeadline, setActiveHeadline] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+  const lastSwitchTime = useRef(Date.now());
+  const isDark = resolvedTheme === 'dark';
 
   // Apply holographic theme based on current theme selection
   useEffect(() => {
@@ -34,10 +34,10 @@ export function HeroSectionRedesigned() {
       'aurora-daybreak': 'aurora-daybreak',
       'warm-embrace': 'warm-embrace',
       'retro-terminus': 'retro-terminus'
-    }
-    const mappedTheme = themeMap[currentTheme as keyof typeof themeMap] || 'aurora-daybreak'
-    applyHolographicTheme(mappedTheme, isDark)
-  }, [currentTheme, isDark])
+    };
+    const mappedTheme = themeMap[currentTheme as keyof typeof themeMap] || 'aurora-daybreak';
+    applyHolographicTheme(mappedTheme, isDark);
+  }, [currentTheme, isDark]);
 
   // Live stats with GitHub stars
   const productStats = useMemo(() => {
@@ -66,8 +66,8 @@ export function HeroSectionRedesigned() {
         live: false,
         icon: Shield
       }
-    ]
-  }, [githubStars, t])
+    ];
+  }, [githubStars, t]);
 
   // Fetch GitHub stars
   useEffect(() => {
@@ -75,53 +75,53 @@ export function HeroSectionRedesigned() {
       .then(res => res.json())
       .then(data => {
         if (data.stargazers_count) {
-          setGithubStars(data.stargazers_count)
+          setGithubStars(data.stargazers_count);
         }
       })
       .catch(() => {
         // Fallback to placeholder
-        setGithubStars(2347)
-      })
-  }, [])
+        setGithubStars(2347);
+      });
+  }, []);
 
   // Liquid morph text switching - less frequent, smoother
   useEffect(() => {
-    if (prefersReducedMotion) return
+    if (prefersReducedMotion) return;
 
     const interval = setInterval(() => {
-      const now = Date.now()
+      const now = Date.now();
       // Only switch if enough time has passed (randomized between 8-15 seconds)
-      const timeSinceLastSwitch = now - lastSwitchTime.current
-      const minTime = 8000 + Math.random() * 7000 // 8-15 seconds
+      const timeSinceLastSwitch = now - lastSwitchTime.current;
+      const minTime = 8000 + Math.random() * 7000; // 8-15 seconds
 
       if (timeSinceLastSwitch >= minTime) {
-        setActiveHeadline(prev => prev === 0 ? 1 : 0)
-        lastSwitchTime.current = now
+        setActiveHeadline(prev => prev === 0 ? 1 : 0);
+        lastSwitchTime.current = now;
       }
-    }, 1000) // Check every second but only switch when conditions are met
+    }, 1000); // Check every second but only switch when conditions are met
 
-    return () => clearInterval(interval)
-  }, [prefersReducedMotion])
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion]);
 
   // Mobile detection
   useEffect(() => {
-    const check = () => setIsMobile(window.matchMedia('(max-width: 639px)').matches)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
+    const check = () => setIsMobile(window.matchMedia('(max-width: 639px)').matches);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const copyCommand = useCallback(() => {
-    navigator.clipboard.writeText('npm install agentos')
-    setShowToast(true)
-  }, [])
+    navigator.clipboard.writeText('npm install agentos');
+    setShowToast(true);
+  }, []);
 
   const technicalHighlights = [
     { title: 'Streaming-first runtime', detail: 'Token-level delivery across personas, guardrails, and channels.' },
     { title: 'Deterministic orchestration', detail: 'Parallel GMIs with auditable routing, approvals, and budgets.' },
     { title: 'Zero-copy memory fabric', detail: 'Vector, episodic, and working memory stitched together for recall.' },
     { title: 'Portable intelligence capsules', detail: 'Export full AgentOS instances as Markdown or JSON and ingest anywhere.' }
-  ]
+  ];
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[var(--color-background-primary)]">
@@ -413,5 +413,5 @@ export function HeroSectionRedesigned() {
         onClose={() => setShowToast(false)}
       />
     </section>
-  )
+  );
 }
