@@ -40,7 +40,7 @@ function getEnterpriseFeatures(t: ReturnType<typeof useTranslations>): BuildingF
       height: 3,
       position: 10,
       icon: ShieldIcon,
-      features: t.raw<string[]>('features.security.items'),
+      features: t.raw('features.security.items') as string[],
       status: 'complete',
       glow: '#00FF00'
     },
@@ -50,7 +50,7 @@ function getEnterpriseFeatures(t: ReturnType<typeof useTranslations>): BuildingF
       height: 5,
       position: 25,
       icon: DocumentCheckIcon,
-      features: t.raw<string[]>('features.compliance.items'),
+      features: t.raw('features.compliance.items') as string[],
       status: 'complete',
       glow: '#00FFFF'
     },
@@ -60,7 +60,7 @@ function getEnterpriseFeatures(t: ReturnType<typeof useTranslations>): BuildingF
       height: 4,
       position: 40,
       icon: LockIcon,
-      features: t.raw<string[]>('features.auth.items'),
+      features: t.raw('features.auth.items') as string[],
       status: 'complete',
       glow: '#FF00FF'
     },
@@ -70,7 +70,7 @@ function getEnterpriseFeatures(t: ReturnType<typeof useTranslations>): BuildingF
       height: 6,
       position: 55,
       icon: GraphIcon,
-      features: t.raw<string[]>('features.audit.items'),
+      features: t.raw('features.audit.items') as string[],
       status: 'complete',
       glow: '#FFFF00'
     },
@@ -80,7 +80,7 @@ function getEnterpriseFeatures(t: ReturnType<typeof useTranslations>): BuildingF
       height: 7,
       position: 70,
       icon: CertificateIcon,
-      features: t.raw<string[]>('features.soc2.items'),
+      features: t.raw('features.soc2.items') as string[],
       status: 'building',
       glow: '#FF8800'
     },
@@ -90,7 +90,7 @@ function getEnterpriseFeatures(t: ReturnType<typeof useTranslations>): BuildingF
       height: 9,
       position: 85,
       icon: SkylineIcon,
-      features: t.raw<string[]>('features.scale.items'),
+      features: t.raw('features.scale.items') as string[],
       status: 'complete',
       glow: '#8800FF'
     }
