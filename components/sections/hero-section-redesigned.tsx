@@ -407,6 +407,7 @@ export function HeroSectionRedesigned() {
         </motion.div>
       </div>
 
+      {/* Feedback Toast */}
       <Toast
         message={t('copiedToClipboard')}
         isVisible={showToast}
