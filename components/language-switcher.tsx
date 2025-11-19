@@ -63,7 +63,8 @@ export function LanguageSwitcher() {
     }
 
     // Soft navigate to avoid full reload / duplicate <html>
-    router.push(targetPath as Route);
+    window.location.href = targetPath;
+    // No need to setIsOpen because page reloads, but close for safety in dev fast-refresh
     setIsOpen(false);
   };
 

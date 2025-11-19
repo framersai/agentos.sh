@@ -14,6 +14,9 @@ import { useTheme } from 'next-themes'
 export function HeroSectionRedesigned() {
   const t = useTranslations('hero')
   const locale = useLocale()
+  // i18n morphing words arrays
+  const cycleWords = t.raw<string[]>('cycleWords')
+  const cycleWordsTail = t.raw<string[]>('cycleWordsTail')
   const { theme: currentTheme, resolvedTheme } = useTheme()
   const [showToast, setShowToast] = useState(false)
   const [githubStars, setGithubStars] = useState<number | null>(null)
@@ -183,18 +186,22 @@ export function HeroSectionRedesigned() {
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
-          {/* Top section with headline */}
-          <div className="text-center mb-12">
-            {/* Smooth word-swap headline - fixed line-height to prevent jumps */}
-            <div className="relative mb-6 overflow-hidden">
-              <h1 
+          {/* Top section with headline and logo */}
+          <div className="flex flex-col items-center mb-12 sm:flex-row sm:items-start sm:gap-6 text-center sm:text-left">
+            {/* Compact Logo */}
+            <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mt-1">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24">
+                <AnimatedAgentOSLogo />
+              </div>
+            </div>
+
+            {/* Smooth word-swap headline */}
+            <div className="relative overflow-hidden">
+              <h1
                 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight"
-                style={{
-                  fontFamily: 'var(--font-grotesk)',
-                  minHeight: '4.5rem',
-                }}
+                style={{ fontFamily: 'var(--font-grotesk)', minHeight: '4.5rem' }}
               >
-                {/* Morphing first word (Adaptive ↔ Emergent) */}
+                {/* Morphing first word */}
                 <span className="inline-block relative" style={{ width: '14ch' }}>
                   <AnimatePresence mode="wait">
                     <motion.span
@@ -205,12 +212,12 @@ export function HeroSectionRedesigned() {
                       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                       className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent"
                     >
-                      {activeHeadline === 0 ? 'Adaptive' : 'Emergent'}
+                      {cycleWords[activeHeadline]}
                     </motion.span>
                   </AnimatePresence>
                 </span>
                 {' intelligence for '}
-                {/* Morphing last word (emergent ↔ adaptive) */}
+                {/* Morphing last word */}
                 <span className="inline-block relative" style={{ width: '11ch' }}>
                   <AnimatePresence mode="wait">
                     <motion.span
@@ -221,13 +228,14 @@ export function HeroSectionRedesigned() {
                       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                       className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
                     >
-                      {activeHeadline === 0 ? 'emergent' : 'adaptive'}
+                      {cycleWordsTail[activeHeadline]}
                     </motion.span>
                   </AnimatePresence>
                 </span>
                 {' agents'}
               </h1>
             </div>
+          </div>
 
           {/* Subtitle */}
           <motion.p
