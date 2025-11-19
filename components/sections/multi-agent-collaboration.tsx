@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import {
   Users,
   GitBranch,
@@ -48,77 +49,39 @@ interface CollaborationPattern {
   codeExample: string
 }
 
-const agents: AgentRole[] = [
-  { name: 'Researcher', role: 'Information gathering', icon: Users, color: '#00FFFF' },
-  { name: 'Analyst', role: 'Data processing', icon: GitBranch, color: '#FF00FF' },
-  { name: 'Creator', role: 'Content generation', icon: Layers, color: '#FFFF00' },
-  { name: 'Critic', role: 'Quality assurance', icon: Shield, color: '#00FF00' },
-  { name: 'Executor', role: 'Task implementation', icon: Zap, color: '#FF8800' },
-  { name: 'Orchestrator', role: 'Workflow management', icon: GitMerge, color: '#8800FF' }
-]
+export function MultiAgentCollaboration() {
+  const t = useTranslations('multiAgent')
+  const [selectedPattern, setSelectedPattern] = useState<CollaborationMode>('consensus')
+  const [activeUseCase, setActiveUseCase] = useState(0)
+  const [showCode, setShowCode] = useState(false)
 
-const collaborationPatterns: CollaborationPattern[] = [
-  {
-    mode: 'consensus',
-    title: 'Consensus-Based Collaboration',
-    description: 'Multiple agents vote on decisions with weighted confidence scores',
-    icon: CheckCircle2,
-    agents: agents.slice(0, 4),
-    workflow: {
-      steps: [
-        'All agents analyze input simultaneously',
-        'Each agent proposes solution with confidence score',
-        'Weighted voting based on expertise',
-        'Consensus threshold validation',
-        'Execute agreed-upon action'
-      ],
-      duration: '200-500ms',
-      throughput: '1000 decisions/min'
-    },
-    useCases: [
-      {
-        title: 'Financial Trading Decisions',
-        description: 'Multiple AI analysts vote on trade recommendations',
-        metrics: [
-          { label: 'Accuracy', value: '94%' },
-          { label: 'Consensus Time', value: '< 200ms' },
-          { label: 'Risk Reduction', value: '67%' }
-        ]
+  const agents = useMemo<AgentRole[]>(() => [
+    { name: t('agents.researcher'), role: 'Information gathering', icon: Users, color: '#00FFFF' },
+    { name: t('agents.analyst'), role: 'Data processing', icon: GitBranch, color: '#FF00FF' },
+    { name: t('agents.creator'), role: 'Content generation', icon: Layers, color: '#FFFF00' },
+    { name: t('agents.critic'), role: 'Quality assurance', icon: Shield, color: '#00FF00' },
+    { name: t('agents.executor'), role: 'Task implementation', icon: Zap, color: '#FF8800' },
+    { name: t('agents.orchestrator'), role: 'Workflow management', icon: GitMerge, color: '#8800FF' }
+  ], [t])
+
+  const collaborationPatterns = useMemo<CollaborationPattern[]>(() => [
+    {
+      mode: 'consensus',
+      title: t('patterns.consensus.title'),
+      description: t('patterns.consensus.description'),
+      icon: CheckCircle2,
+      agents: agents.slice(0, 4),
+      workflow: {
+        steps: t.raw<string[]>('patterns.consensus.workflow.steps'),
+        duration: t('patterns.consensus.workflow.duration'),
+        throughput: t('patterns.consensus.workflow.throughput')
       },
-      {
-        title: 'Content Moderation',
-        description: 'Multiple agents evaluate content for policy violations',
-        metrics: [
-          { label: 'False Positives', value: '-82%' },
-          { label: 'Coverage', value: '99.9%' },
-          { label: 'Review Speed', value: '10k/hour' }
-        ]
+      useCases: t.raw<any[]>('patterns.consensus.useCases'),
+      proscons: {
+        pros: t.raw<string[]>('patterns.consensus.proscons.pros'),
+        cons: t.raw<string[]>('patterns.consensus.proscons.cons')
       },
-      {
-        title: 'Medical Diagnosis Support',
-        description: 'Specialist agents collaborate on patient diagnosis',
-        metrics: [
-          { label: 'Diagnostic Accuracy', value: '97%' },
-          { label: 'Second Opinion Rate', value: '100%' },
-          { label: 'Time to Diagnosis', value: '-45%' }
-        ]
-      }
-    ],
-    proscons: {
-      pros: [
-        'High accuracy through collective intelligence',
-        'Built-in validation and error checking',
-        'Reduces individual agent bias',
-        'Transparent decision trail'
-      ],
-      cons: [
-        'Higher latency than single agent',
-        'Requires more compute resources',
-        'Potential for deadlock scenarios',
-        'Complex conflict resolution'
-      ]
-    },
-    codeExample: `// Consensus-based decision making
+      codeExample: `// Consensus-based decision making
 const consensus = await orchestrator.decide({
   pattern: 'consensus',
   agents: ['researcher', 'analyst', 'critic'],
@@ -139,68 +102,24 @@ const consensus = await orchestrator.decide({
 if (consensus.agreement >= 0.7) {
   await executor.run(consensus.decision);
 }`
-  },
-  {
-    mode: 'sequential',
-    title: 'Sequential Pipeline',
-    description: 'Agents process tasks in a defined order, each building on the previous',
-    icon: List,
-    agents: agents.slice(0, 5),
-    workflow: {
-      steps: [
-        'Researcher gathers initial data',
-        'Analyst processes and structures information',
-        'Creator generates solution',
-        'Critic validates and refines',
-        'Executor implements final output'
-      ],
-      duration: '500-2000ms',
-      throughput: '500 tasks/min'
     },
-    useCases: [
-      {
-        title: 'Document Processing Pipeline',
-        description: 'Extract → Analyze → Summarize → Format → Deliver',
-        metrics: [
-          { label: 'Accuracy', value: '96%' },
-          { label: 'Processing Time', value: '1.2s/doc' },
-          { label: 'Error Rate', value: '< 0.1%' }
-        ]
+    {
+      mode: 'sequential',
+      title: t('patterns.sequential.title'),
+      description: t('patterns.sequential.description'),
+      icon: List,
+      agents: agents.slice(0, 5),
+      workflow: {
+        steps: t.raw<string[]>('patterns.sequential.workflow.steps'),
+        duration: t('patterns.sequential.workflow.duration'),
+        throughput: t('patterns.sequential.workflow.throughput')
       },
-      {
-        title: 'Customer Support Escalation',
-        description: 'Triage → Research → Solution → Review → Response',
-        metrics: [
-          { label: 'Resolution Rate', value: '89%' },
-          { label: 'Avg Handle Time', value: '45s' },
-          { label: 'Customer Satisfaction', value: '4.7/5' }
-        ]
+      useCases: t.raw<any[]>('patterns.sequential.useCases'),
+      proscons: {
+        pros: t.raw<string[]>('patterns.sequential.proscons.pros'),
+        cons: t.raw<string[]>('patterns.sequential.proscons.cons')
       },
-      {
-        title: 'Code Review & Refactoring',
-        description: 'Analyze → Identify Issues → Suggest Fixes → Test → Deploy',
-        metrics: [
-          { label: 'Bug Detection', value: '92%' },
-          { label: 'Code Quality', value: '+35%' },
-          { label: 'Review Time', value: '-60%' }
-        ]
-      }
-    ],
-    proscons: {
-      pros: [
-        'Clear workflow and accountability',
-        'Easy to debug and monitor',
-        'Predictable resource usage',
-        'Simple error recovery'
-      ],
-      cons: [
-        'Single point of failure risks',
-        'Limited parallelization',
-        'Higher total latency',
-        'Bottleneck potential'
-      ]
-    },
-    codeExample: `// Sequential processing pipeline
+      codeExample: `// Sequential processing pipeline
 const pipeline = await orchestrator.pipeline({
   pattern: 'sequential',
   stages: [
@@ -222,68 +141,24 @@ const pipeline = await orchestrator.pipeline({
 // Access stage outputs
 console.log(pipeline.stages.analyst.output);
 return pipeline.final;`
-  },
-  {
-    mode: 'parallel',
-    title: 'Parallel Execution',
-    description: 'Agents work simultaneously on different aspects of the same task',
-    icon: Shuffle,
-    agents: agents,
-    workflow: {
-      steps: [
-        'Task decomposition by orchestrator',
-        'Parallel assignment to all agents',
-        'Concurrent processing',
-        'Result aggregation',
-        'Orchestrator merges outputs'
-      ],
-      duration: '100-300ms',
-      throughput: '5000 tasks/min'
     },
-    useCases: [
-      {
-        title: 'Real-time Market Analysis',
-        description: 'Analyze stocks, bonds, forex, crypto simultaneously',
-        metrics: [
-          { label: 'Coverage', value: '10k assets' },
-          { label: 'Update Frequency', value: '100ms' },
-          { label: 'Parallel Streams', value: '128' }
-        ]
+    {
+      mode: 'parallel',
+      title: t('patterns.parallel.title'),
+      description: t('patterns.parallel.description'),
+      icon: Shuffle,
+      agents: agents,
+      workflow: {
+        steps: t.raw<string[]>('patterns.parallel.workflow.steps'),
+        duration: t('patterns.parallel.workflow.duration'),
+        throughput: t('patterns.parallel.workflow.throughput')
       },
-      {
-        title: 'Multi-language Translation',
-        description: 'Translate content into multiple languages at once',
-        metrics: [
-          { label: 'Languages', value: '50+' },
-          { label: 'Speed', value: '< 500ms' },
-          { label: 'Consistency', value: '98%' }
-        ]
+      useCases: t.raw<any[]>('patterns.parallel.useCases'),
+      proscons: {
+        pros: t.raw<string[]>('patterns.parallel.proscons.pros'),
+        cons: t.raw<string[]>('patterns.parallel.proscons.cons')
       },
-      {
-        title: 'A/B Testing & Optimization',
-        description: 'Test multiple variations simultaneously',
-        metrics: [
-          { label: 'Variants', value: '100+' },
-          { label: 'Decision Time', value: '< 1s' },
-          { label: 'Confidence', value: '95%' }
-        ]
-      }
-    ],
-    proscons: {
-      pros: [
-        'Maximum throughput and speed',
-        'Excellent scalability',
-        'Fault isolation between agents',
-        'Real-time processing capability'
-      ],
-      cons: [
-        'Higher resource consumption',
-        'Complex synchronization',
-        'Potential race conditions',
-        'Challenging debugging'
-      ]
-    },
-    codeExample: `// Parallel multi-agent execution
+      codeExample: `// Parallel multi-agent execution
 const results = await orchestrator.parallel({
   pattern: 'parallel',
   agents: {
@@ -304,13 +179,8 @@ const results = await orchestrator.parallel({
 // Process aggregated results
 const merged = orchestrator.merge(results);
 await notifyClients(merged);`
-  }
-]
-
-export function MultiAgentCollaboration() {
-  const [selectedPattern, setSelectedPattern] = useState<CollaborationMode>('consensus')
-  const [activeUseCase, setActiveUseCase] = useState(0)
-  const [showCode, setShowCode] = useState(false)
+    }
+  ], [agents, t])
 
   const currentPattern = collaborationPatterns.find(p => p.mode === selectedPattern)!
 
@@ -324,13 +194,13 @@ export function MultiAgentCollaboration() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-4">
-            Multi-Agent Collaboration Network
+            {t('title')}
           </h2>
           <p className="text-lg text-muted max-w-3xl mx-auto mb-2">
-            Researcher, Analyst, Creator, Critic, Executor stream insights in parallel
+            {t('subtitle')}
           </p>
           <p className="text-base text-muted max-w-2xl mx-auto">
-            Orchestrator routes, memory persists - choose the right pattern for your use case
+            {t('description')}
           </p>
         </motion.div>
 
@@ -505,7 +375,7 @@ export function MultiAgentCollaboration() {
 
                   {/* Workflow Steps */}
                   <div className="mt-6 space-y-2">
-                    <h4 className="text-sm font-medium text-muted mb-2">Workflow Steps:</h4>
+                    <h4 className="text-sm font-medium text-muted mb-2">{t('ui.workflowSteps')}</h4>
                     {currentPattern.workflow.steps.map((step, i) => (
                       <div key={i} className="flex items-start gap-2">
                         <span className="text-accent-primary mt-1">→</span>
@@ -517,11 +387,11 @@ export function MultiAgentCollaboration() {
                   {/* Performance Metrics */}
                   <div className="mt-4 pt-4 border-t border-glass-border grid grid-cols-2 gap-4">
                     <div>
-                      <span className="text-xs text-muted">Latency</span>
+                      <span className="text-xs text-muted">{t('ui.latency')}</span>
                       <p className="font-medium">{currentPattern.workflow.duration}</p>
                     </div>
                     <div>
-                      <span className="text-xs text-muted">Throughput</span>
+                      <span className="text-xs text-muted">{t('ui.throughput')}</span>
                       <p className="font-medium">{currentPattern.workflow.throughput}</p>
                     </div>
                   </div>
@@ -530,7 +400,7 @@ export function MultiAgentCollaboration() {
                 {/* Pros and Cons */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="holographic-card p-4">
-                    <h4 className="text-sm font-semibold text-green-500 mb-2">Pros</h4>
+                    <h4 className="text-sm font-semibold text-green-500 mb-2">{t('ui.pros')}</h4>
                     <ul className="space-y-1">
                       {currentPattern.proscons.pros.map((pro, i) => (
                         <li key={i} className="text-xs flex items-start gap-1">
@@ -541,7 +411,7 @@ export function MultiAgentCollaboration() {
                     </ul>
                   </div>
                   <div className="holographic-card p-4">
-                    <h4 className="text-sm font-semibold text-orange-500 mb-2">Cons</h4>
+                    <h4 className="text-sm font-semibold text-orange-500 mb-2">{t('ui.cons')}</h4>
                     <ul className="space-y-1">
                       {currentPattern.proscons.cons.map((con, i) => (
                         <li key={i} className="text-xs flex items-start gap-1">
@@ -558,7 +428,7 @@ export function MultiAgentCollaboration() {
               <div className="space-y-6">
                 {/* Use Cases */}
                 <div className="holographic-card p-6">
-                  <h3 className="text-lg font-semibold mb-4">Use Cases</h3>
+                  <h3 className="text-lg font-semibold mb-4">{t('ui.useCases')}</h3>
 
                   {/* Use Case Tabs */}
                   <div className="flex gap-2 mb-4 overflow-x-auto">
@@ -572,7 +442,7 @@ export function MultiAgentCollaboration() {
                             : 'bg-[var(--color-background-glass)] border border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-interactive)]'
                         }`}
                       >
-                        Case {i + 1}
+                        {t('ui.case')} {i + 1}
                       </button>
                     ))}
                   </div>
@@ -610,12 +480,12 @@ export function MultiAgentCollaboration() {
                 {/* Code Example */}
                 <div className="holographic-card p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Implementation</h3>
+                    <h3 className="text-lg font-semibold">{t('ui.implementation')}</h3>
                     <button
                       onClick={() => setShowCode(!showCode)}
                       className="text-sm text-accent-primary hover:underline"
                     >
-                      {showCode ? 'Hide' : 'Show'} Code
+                      {showCode ? t('ui.hideCode') : t('ui.showCode')}
                     </button>
                   </div>
 
@@ -639,15 +509,15 @@ export function MultiAgentCollaboration() {
                   {!showCode && (
                     <div className="space-y-3">
                       <p className="text-sm text-muted">
-                        Click &quot;Show Code&quot; to see how to implement {currentPattern.title.toLowerCase()} in your application.
+                        {t('ui.codePrompt', { pattern: currentPattern.title.toLowerCase() })}
                       </p>
                       <div className="flex items-center gap-2 text-sm">
                         <Clock className="w-4 h-4 text-accent-primary" />
-                        <span>Setup time: ~5 minutes</span>
+                        <span>{t('ui.setupTime')}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <Zap className="w-4 h-4 text-accent-primary" />
-                        <span>Performance: Production-ready</span>
+                        <span>{t('ui.performance')}</span>
                       </div>
                     </div>
                   )}

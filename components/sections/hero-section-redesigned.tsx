@@ -283,8 +283,7 @@ export function HeroSectionRedesigned() {
                 ))}
               </div>
             </div>
-          </motion.div>
-        </div>
+        </motion.div>
 
         {/* Centered Logo Section - Compact */}
         <motion.div
