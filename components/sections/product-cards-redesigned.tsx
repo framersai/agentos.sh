@@ -330,22 +330,22 @@ export function ProductCardsRedesigned() {
                       </div>
 
                       {/* Title & Description */}
-                      <h3 className="text-xl font-bold mb-2 tracking-tight">{card.title}</h3>
-                      <p className="text-sm text-muted mb-6 leading-relaxed">{card.description}</p>
+                      <h3 className="text-xl font-bold mb-2 tracking-tight text-[var(--color-text-primary)]">{card.title}</h3>
+                      <p className="text-sm text-[var(--color-text-muted)] mb-6 leading-relaxed font-medium">{card.description}</p>
 
                       {/* Stats */}
                       <div className="space-y-3 mt-auto">
                         {card.stats.map((stat, i) => (
-                          <div key={i} className="flex items-center justify-between bg-white/5 p-2 rounded-lg border border-white/5">
-                            <span className="text-xs font-medium text-muted">{stat.label}</span>
+                          <div key={i} className="flex items-center justify-between bg-white/5 p-2 rounded-lg border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                            <span className="text-xs font-bold text-[var(--color-text-secondary)]">{stat.label}</span>
                             <div className="flex items-center gap-2">
-                              <span className="text-sm font-bold tracking-tight">
+                              <span className="text-sm font-bold tracking-tight text-[var(--color-text-primary)]">
                                 {stat.live && liveData[stat.label.toLowerCase().replace(' ', '-')]
                                   ? liveData[stat.label.toLowerCase().replace(' ', '-')]
                                   : stat.value}
                               </span>
                               {stat.trend && (
-                                <span className={`text-xs font-semibold ${stat.trend > 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                <span className={`text-xs font-semibold ${stat.trend > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
                                   {stat.trend > 0 ? '↑' : '↓'} {Math.abs(stat.trend)}%
                                 </span>
                               )}

@@ -368,27 +368,54 @@
             "title": "Decisiones de trading financiero",
             "description": "Analistas de IA votan recomendaciones de operaciones",
             "metrics": [
-              { "label": "Precisión", "value": "94%" },
-              { "label": "Tiempo de consenso", "value": "< 200 ms" },
-              { "label": "Reducción de riesgo", "value": "67%" }
+              {
+                "label": "Precisión",
+                "value": "94%"
+              },
+              {
+                "label": "Tiempo de consenso",
+                "value": "< 200 ms"
+              },
+              {
+                "label": "Reducción de riesgo",
+                "value": "67%"
+              }
             ]
           },
           {
             "title": "Moderación de contenido",
             "description": "Agentes múltiples evalúan contenido para detectar infracciones",
             "metrics": [
-              { "label": "Falsos positivos", "value": "-82%" },
-              { "label": "Cobertura", "value": "99.9%" },
-              { "label": "Velocidad de revisión", "value": "10k/hora" }
+              {
+                "label": "Falsos positivos",
+                "value": "-82%"
+              },
+              {
+                "label": "Cobertura",
+                "value": "99.9%"
+              },
+              {
+                "label": "Velocidad de revisión",
+                "value": "10k/hora"
+              }
             ]
           },
           {
             "title": "Soporte a diagnóstico médico",
             "description": "Agentes especialistas colaboran en diagnósticos de pacientes",
             "metrics": [
-              { "label": "Precisión diagnóstica", "value": "97%" },
-              { "label": "Tasa de segunda opinión", "value": "100%" },
-              { "label": "Tiempo hasta diagnóstico", "value": "-45%" }
+              {
+                "label": "Precisión diagnóstica",
+                "value": "97%"
+              },
+              {
+                "label": "Tasa de segunda opinión",
+                "value": "100%"
+              },
+              {
+                "label": "Tiempo hasta diagnóstico",
+                "value": "-45%"
+              }
             ]
           }
         ],
@@ -426,27 +453,54 @@
             "title": "Pipeline de procesamiento documental",
             "description": "Extraer → Analizar → Resumir → Formatear → Entregar",
             "metrics": [
-              { "label": "Precisión", "value": "96%" },
-              { "label": "Tiempo de proceso", "value": "1.2 s/doc" },
-              { "label": "Tasa de error", "value": "< 0.1%" }
+              {
+                "label": "Precisión",
+                "value": "96%"
+              },
+              {
+                "label": "Tiempo de proceso",
+                "value": "1.2 s/doc"
+              },
+              {
+                "label": "Tasa de error",
+                "value": "< 0.1%"
+              }
             ]
           },
           {
             "title": "Escalamiento de soporte al cliente",
             "description": "Triage → Investigación → Solución → Revisión → Respuesta",
             "metrics": [
-              { "label": "Tasa de resolución", "value": "89%" },
-              { "label": "Tiempo medio de atención", "value": "45 s" },
-              { "label": "Satisfacción del cliente", "value": "4.7/5" }
+              {
+                "label": "Tasa de resolución",
+                "value": "89%"
+              },
+              {
+                "label": "Tiempo medio de atención",
+                "value": "45 s"
+              },
+              {
+                "label": "Satisfacción del cliente",
+                "value": "4.7/5"
+              }
             ]
           },
           {
             "title": "Revisión y refactorización de código",
             "description": "Analizar → Identificar fallas → Sugerir fixes → Probar → Desplegar",
             "metrics": [
-              { "label": "Detección de bugs", "value": "92%" },
-              { "label": "Calidad del código", "value": "+35%" },
-              { "label": "Tiempo de revisión", "value": "-60%" }
+              {
+                "label": "Detección de bugs",
+                "value": "92%"
+              },
+              {
+                "label": "Calidad del código",
+                "value": "+35%"
+              },
+              {
+                "label": "Tiempo de revisión",
+                "value": "-60%"
+              }
             ]
           }
         ],
@@ -484,27 +538,54 @@
             "title": "Análisis de mercado en tiempo real",
             "description": "Análisis simultáneo de acciones, bonos, forex y cripto",
             "metrics": [
-              { "label": "Cobertura", "value": "10k activos" },
-              { "label": "Frecuencia de actualización", "value": "100 ms" },
-              { "label": "Flujos paralelos", "value": "128" }
+              {
+                "label": "Cobertura",
+                "value": "10k activos"
+              },
+              {
+                "label": "Frecuencia de actualización",
+                "value": "100 ms"
+              },
+              {
+                "label": "Flujos paralelos",
+                "value": "128"
+              }
             ]
           },
           {
             "title": "Traducción multilenguaje",
             "description": "Traduce contenido a múltiples idiomas a la vez",
             "metrics": [
-              { "label": "Idiomas", "value": "50+" },
-              { "label": "Velocidad", "value": "< 500 ms" },
-              { "label": "Consistencia", "value": "98%" }
+              {
+                "label": "Idiomas",
+                "value": "50+"
+              },
+              {
+                "label": "Velocidad",
+                "value": "< 500 ms"
+              },
+              {
+                "label": "Consistencia",
+                "value": "98%"
+              }
             ]
           },
           {
             "title": "Experimentos A/B y optimización",
             "description": "Prueba muchas variantes en paralelo",
             "metrics": [
-              { "label": "Variantes", "value": "100+" },
-              { "label": "Tiempo de decisión", "value": "< 1 s" },
-              { "label": "Confianza", "value": "95%" }
+              {
+                "label": "Variantes",
+                "value": "100+"
+              },
+              {
+                "label": "Tiempo de decisión",
+                "value": "< 1 s"
+              },
+              {
+                "label": "Confianza",
+                "value": "95%"
+              }
             ]
           }
         ],
@@ -575,7 +656,9 @@
     "reveal": "Reveal #{index}",
     "comingSoon": "Coming soon",
     "latestUpdates": "Latest updates",
-    "cta": { "ask": "Want to be featured?" },
+    "cta": {
+      "ask": "Want to be featured?"
+    },
     "placeholders": {
       "helios": "Multi-market research pods (coming soon)",
       "northwind": "Product localization + CRM sync (coming soon)",
@@ -587,5 +670,72 @@
     "subtitle": "Ve lo fácil que es construir agentes de IA adaptativos",
     "watchButton": "Ver Demo",
     "duration": "Duración"
+  },
+  "about": {
+    "hero": {
+      "weAreFramers": "we are the framers",
+      "title": "About AgentOS",
+      "description": "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. Built by {link}, AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "p1": "We’re building the most advanced AI agent runtime for developers who want to create intelligent, adaptive systems without compromising on control, safety, or performance.",
+      "p2": "AgentOS combines cutting-edge AI orchestration with production-ready infrastructure, enabling developers to build everything from simple chatbots to complex multi-agent systems with {span} memory architecture."
+    },
+    "team": {
+      "title": "The Team",
+      "description": "AgentOS is developed by the team at {link}, a company focused on building the future of AI‑powered development tools. We're a distributed team of engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.",
+      "generalInquiries": "General Inquiries",
+      "enterpriseSupport": "Enterprise & Support",
+      "enterpriseSupportDesc": "For production deployments, enterprise licensing, and dedicated support",
+      "hiring": "We are Hiring!",
+      "joinUs": "Join us in building the future of autonomous agents."
+    },
+    "connect": {
+      "title": "Connect With Us",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter",
+      "frameDev": "Frame.dev",
+      "ourCompany": "Our Company"
+    },
+    "license": {
+      "title": "Open Source Licensing",
+      "core": "AgentOS Core Engine",
+      "coreDesc": "The core AgentOS runtime, GMI orchestration, and infrastructure",
+      "extensions": "Extensions & Agents",
+      "extensionsDesc": "Community-built agents, extensions, and guardrails",
+      "footer": "We believe in open source. AgentOS is free to use, modify, and distribute. For enterprise support and production deployments, contact us at {link}"
+    },
+    "cta": {
+      "title": "Ready to Build?",
+      "viewOnGithub": "View on GitHub",
+      "backToHome": "Back to Home"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Answers about AgentOS, orchestration concepts, and how it powers the OS family.",
+    "questions": {
+      "whatIsAgentOS": {
+        "question": "What is AgentOS?",
+        "answer": "AgentOS is a modular platform for building adaptive, policy‑aware agents with tooling, memory, and multi‑agent collaboration."
+      },
+      "integration": {
+        "question": "How does it integrate with VCA?",
+        "answer": "VCA.Chat runs on AgentOS; it showcases agents, extensions, and streaming interactions."
+      },
+      "customPersonas": {
+        "question": "Can I build custom personas and agencies?",
+        "answer": "Yes. Define personas, agencies, and workflows with evolution rules, guardrails, and extensions."
+      }
+    },
+    "seeAlso": "See also",
+    "links": {
+      "vcaFaq": "VCA.Chat FAQ",
+      "frameFaq": "Frame.dev FAQ",
+      "manic": "Manic Agency",
+      "lookingGlass": "The Looking Glass — AI newsletter & blog"
+    }
   }
 }

@@ -526,6 +526,100 @@
     "architectureTitle": "AgentOS Architecture (streaming)",
     "currentlySelected": "Currently selected",
     "exampleTitle": "Example",
-    "ctaExploreDocs": "Explore GMI Documentation"
+    "ctaExploreDocs": "Explore GMI Documentation",
+    "agents": {
+      "researcher": { "name": "Researcher", "description": "Discovers and analyzes information", "persona": "curious, precise" },
+      "analyst": { "name": "Analyst", "description": "Processes and interprets data", "persona": "skeptical, methodical" },
+      "creator": { "name": "Creator", "description": "Generates content and solutions", "persona": "clear, persuasive" },
+      "executor": { "name": "Executor", "description": "Takes actions and implements", "persona": "reliable, action-oriented" },
+      "orchestrator": { "name": "Orchestrator", "description": "Coordinates multi-agent tasks", "persona": "balanced, gatekeeper" },
+      "critic": { "name": "Critic", "description": "Reviews outputs and flags issues" }
+    },
+    "snapshots": [
+      { "useCase": "Route support + CRM updates", "outcome": "Researcher gathers context, Analyst verifies facts, and Executor pushes the outcome into Salesforce or Linear automatically." },
+      { "useCase": "Safety-critical approvals", "outcome": "Orchestrator enforces guardrails, memory logs every decision, and Event Stream keeps auditors in the loop for SOC2/GDPR." },
+      { "useCase": "RAG-powered expansion packs", "outcome": "Creator + Executor personas adapt content by locale while Gateway throttles workloads and exports full runs as Markdown/JSON." }
+    ],
+    "architecture": {
+      "ui": { "label": "User Interfaces", "subtitle": "Voice • Web • CLI", "details": "Entrypoints where users speak, type, and automate tasks.", "example": "Capture a voice prompt for a real‑time, fact‑checked briefing.", "outcome": "Every interface streams into the same shared AgentOS memory and policy store." },
+      "gateway": { "label": "API Gateway", "subtitle": "Auth • Rate‑limit", "details": "Front door for requests; applies auth, quotas, and routing.", "example": "Throttle bursty inputs; attach tenant identity to requests.", "outcome": "Tenants, rate budgets, and approvals stay deterministic even when agents spawn in parallel." },
+      "orchestrator": { "label": "GMI Orchestrator", "subtitle": "Routing • Guardrails", "details": "Coordinates agent roles, tools, and safety policies.", "example": "Parallelize research, analysis, creation, and critique.", "outcome": "Adaptive and deterministic agency modes keep emergent intelligence auditable." },
+      "agents": { "label": "Agent Pool", "subtitle": "Researcher • Analyst • Creator • Critic • Executor", "details": "Specialized GMIs stream outputs; orchestrator merges.", "example": "Researcher fetches sources while Analyst verifies claims.", "outcome": "Each persona can be exported as Markdown/JSON capsules and ingested into other runtimes." },
+      "memory": { "label": "Memory System", "subtitle": "Vector DB • Knowledge Graph", "details": "Long‑term memory stores facts, embeddings, and relations.", "example": "Semantic search recalls prior decisions and context.", "outcome": "Zero-copy working, episodic, and vector layers keep adaptive and permanent intelligence aligned." },
+      "events": { "label": "Event Stream", "subtitle": "Monitoring • Analytics", "details": "Observability and compliance pipeline for every step.", "example": "Emit spans for audits; alert on policy violations.", "outcome": "Every action is replayable for SOC2, GDPR, and custom guardrails." }
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Answers about AgentOS, orchestration concepts, and how it powers the OS family.",
+    "questions": {
+      "whatIsAgentOS": {
+        "question": "What is AgentOS?",
+        "answer": "AgentOS is a modular platform for building adaptive, policy‑aware agents with tooling, memory, and multi‑agent collaboration."
+      },
+      "integration": {
+        "question": "How does it integrate with VCA?",
+        "answer": "VCA.Chat runs on AgentOS; it showcases agents, extensions, and streaming interactions."
+      },
+      "customPersonas": {
+        "question": "Can I build custom personas and agencies?",
+        "answer": "Yes. Define personas, agencies, and workflows with evolution rules, guardrails, and extensions."
+      }
+    },
+    "seeAlso": "See also",
+    "links": {
+      "vcaFaq": "VCA.Chat FAQ",
+      "frameFaq": "Frame.dev FAQ",
+      "manic": "Manic Agency",
+      "lookingGlass": "The Looking Glass — AI newsletter & blog"
+    }
+  },
+  "about": {
+    "hero": {
+      "weAreFramers": "we are the framers",
+      "title": "About AgentOS",
+      "description": "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. Built by {link}, AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "p1": "We’re building the most advanced AI agent runtime for developers who want to create intelligent, adaptive systems without compromising on control, safety, or performance.",
+      "p2": "AgentOS combines cutting-edge AI orchestration with production-ready infrastructure, enabling developers to build everything from simple chatbots to complex multi-agent systems with {span} memory architecture."
+    },
+    "team": {
+      "title": "The Team",
+      "description": "AgentOS is developed by the team at {link}, a company focused on building the future of AI‑powered development tools. We're a distributed team of engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.",
+      "generalInquiries": "General Inquiries",
+      "enterpriseSupport": "Enterprise & Support",
+      "enterpriseSupportDesc": "For production deployments, enterprise licensing, and dedicated support",
+      "hiring": "We are Hiring!",
+      "joinUs": "Join us in building the future of autonomous agents."
+    },
+    "connect": {
+      "title": "Connect With Us",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter",
+      "frameDev": "Frame.dev",
+      "ourCompany": "Our Company"
+    },
+    "license": {
+      "title": "Open Source Licensing",
+      "core": "AgentOS Core Engine",
+      "coreDesc": "The core AgentOS runtime, GMI orchestration, and infrastructure",
+      "extensions": "Extensions & Agents",
+      "extensionsDesc": "Community-built agents, extensions, and guardrails",
+      "footer": "We believe in open source. AgentOS is free to use, modify, and distribute. For enterprise support and production deployments, contact us at {link}"
+    },
+    "cta": {
+      "title": "Ready to Build?",
+      "viewOnGithub": "View on GitHub",
+      "backToHome": "Back to Home"
+    }
+  },
+  "videoDemo": {
+    "title": "See AgentOS in Action",
+    "subtitle": "Watch how easy it is to build adaptive AI agents",
+    "watchButton": "Watch Demo",
+    "duration": "Duration"
   }
 }

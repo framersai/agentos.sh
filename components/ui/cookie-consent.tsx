@@ -28,9 +28,9 @@ export function CookieConsent() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
-          className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:w-96"
+          className="fixed bottom-4 left-4 right-4 z-[100] md:left-auto md:right-4 md:w-96"
         >
-          <div className="glass-morphism p-4 rounded-xl border border-white/10 shadow-2xl flex flex-col gap-3">
+          <div className="bg-[var(--color-background-primary)] p-4 rounded-xl border border-white/10 shadow-2xl flex flex-col gap-3">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2 text-accent-primary font-bold text-sm">
                 <ShieldCheck className="w-4 h-4" />

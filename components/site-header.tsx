@@ -24,8 +24,7 @@ export function SiteHeader() {
     { href: '/#features', label: t('features') },
     { href: '/blog', label: 'Blog' },
     { href: 'https://docs.agentos.sh', label: t('docs') },
-    { href: '/faq', label: t('faq') },
-    { href: '/about', label: t('about') },
+    // Condensed links: Removed FAQ and About from primary nav to reduce clutter
   ], [t]);
 
   const localizeHref = useCallback((href: string) => {
@@ -209,15 +208,15 @@ export function SiteHeader() {
             <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
           </a>
 
-          {/* Frame.dev CTA - Better styled with high contrast */}
+          {/* Frame.dev CTA - Better styled with high contrast, smaller */}
           <a
             href="https://frame.dev"
-            className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-xl text-[var(--color-text-on-accent)] text-sm font-semibold transition-all duration-300 group border border-border-subtle"
+            className="hidden md:inline-flex items-center gap-2 px-2 py-1.5 rounded-lg text-[var(--color-text-on-accent)] text-xs font-bold transition-all duration-300 group border border-border-subtle hover:scale-105"
             target="_blank"
             rel="noopener noreferrer"
             style={{ background: 'linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary))' }}
           >
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="w-3 h-3" />
             Frame.dev
             <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
           </a>

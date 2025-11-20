@@ -161,9 +161,9 @@ export function HeroSectionRedesigned() {
               transparent 50%)`
           }}
         />
-        {/* Large translucent logo on the right side */}
-        <div className="pointer-events-none absolute right-[-10%] top-1/2 -translate-y-1/2 opacity-30 z-0 mix-blend-screen">
-          <div className="w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] animate-slow-spin">
+        {/* Large translucent logo on the right side - repositioned and sized better */}
+        <div className="pointer-events-none absolute right-0 top-[60%] -translate-y-1/2 opacity-30 z-0 mix-blend-screen overflow-visible">
+          <div className="w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] animate-slow-spin scale-[1.2] origin-center">
             <AnimatedAgentOSLogo />
           </div>
         </div>
@@ -398,8 +398,6 @@ export function HeroSectionRedesigned() {
             <span className="flex items-center gap-1">
               {t('compliance.soc2')}
             </span>
-            <span className="opacity-50">•</span>
-            <span>{t('compliance.enterpriseSupport')}</span>
           </div>
         </motion.div>
       </div>

@@ -22,24 +22,63 @@
     "badge": "오픈소스 · 적응형 · 창발형",
     "title": "적응형 및 창발형 지능을 위한 휴대용 AI 에이전트 런타임",
     "subtitle": "메모리, 도구 및 자율성을 갖춘 적응형, 창발형 AI 에이전트를 구축하세요. GMI 역할, 다중 에이전트 오케스트레이션 및 엔터프라이즈 가드레일을 갖춘 TypeScript 런타임.",
-    "cycleWords": ["적응형","창발형"],
-    "cycleWordsTail": ["창발형","적응형"],
+    "cycleWords": [
+      "적응형",
+      "창발형"
+    ],
+    "cycleWordsTail": [
+      "창발형",
+      "적응형"
+    ],
     "headlinePairs": [
-      { "top": "적응형 지능", "bottom": "자율 에이전트를 위해" },
-      { "top": "창발형 지능", "bottom": "엔터프라이즈 오케스트레이션용" },
-      { "top": "적응형 지능", "bottom": "안전 필수 워크플로용" },
-      { "top": "창발형 지능", "bottom": "병렬 AI 팀을 위해" }
+      {
+        "top": "적응형 지능",
+        "bottom": "자율 에이전트를 위해"
+      },
+      {
+        "top": "창발형 지능",
+        "bottom": "엔터프라이즈 오케스트레이션용"
+      },
+      {
+        "top": "적응형 지능",
+        "bottom": "안전 필수 워크플로용"
+      },
+      {
+        "top": "창발형 지능",
+        "bottom": "병렬 AI 팀을 위해"
+      }
     ],
     "technicalHighlights": [
-      { "title": "스트리밍 우선 런타임", "detail": "페르소나, 가드레일, 채널 전반에 토큰 단위로 전달합니다." },
-      { "title": "결정론적 오케스트레이션", "detail": "감사 가능한 라우팅·승인·예산을 갖춘 병렬 GMI." },
-      { "title": "제로 복사 메모리 패브릭", "detail": "벡터·에피소드·작업 메모리를 하나의 회상 가능한 흐름으로 엮습니다." },
-      { "title": "휴대용 인텔리전스 캡슐", "detail": "완전한 AgentOS 인스턴스를 Markdown/JSON으로 내보내 어느 스택에서도 사용합니다." }
+      {
+        "title": "스트리밍 우선 런타임",
+        "detail": "페르소나, 가드레일, 채널 전반에 토큰 단위로 전달합니다."
+      },
+      {
+        "title": "결정론적 오케스트레이션",
+        "detail": "감사 가능한 라우팅·승인·예산을 갖춘 병렬 GMI."
+      },
+      {
+        "title": "제로 복사 메모리 패브릭",
+        "detail": "벡터·에피소드·작업 메모리를 하나의 회상 가능한 흐름으로 엮습니다."
+      },
+      {
+        "title": "휴대용 인텔리전스 캡슐",
+        "detail": "완전한 AgentOS 인스턴스를 Markdown/JSON으로 내보내 어느 스택에서도 사용합니다."
+      }
     ],
     "visualStats": [
-      { "label": "가동 중인 에이전시", "value": "128" },
-      { "label": "승인 SLA", "value": "3.2분" },
-      { "label": "가드레일 커버리지", "value": "98%" }
+      {
+        "label": "가동 중인 에이전시",
+        "value": "128"
+      },
+      {
+        "label": "승인 SLA",
+        "value": "3.2분"
+      },
+      {
+        "label": "가드레일 커버리지",
+        "value": "98%"
+      }
     ],
     "ctaPrimary": "Voice Chat Assistant 사용해보기",
     "ctaSecondary": "GitHub에서 Star",
@@ -63,10 +102,22 @@
       "enterpriseSupport": "엔터프라이즈 지원 가능"
     },
     "capabilities": {
-      "ts": { "label": "TypeScript 네이티브", "value": "타입 안전" },
-      "oss": { "label": "오픈소스", "value": "Apache 2.0" },
-      "streaming": { "label": "실시간 스트리밍", "value": "비동기 준비" },
-      "memory": { "label": "영구 메모리", "value": "내장" }
+      "ts": {
+        "label": "TypeScript 네이티브",
+        "value": "타입 안전"
+      },
+      "oss": {
+        "label": "오픈소스",
+        "value": "Apache 2.0"
+      },
+      "streaming": {
+        "label": "실시간 스트리밍",
+        "value": "비동기 준비"
+      },
+      "memory": {
+        "label": "영구 메모리",
+        "value": "내장"
+      }
     },
     "heroVisualAlt": "AgentOS 오케스트레이션 작업 공간 미리보기"
   },
@@ -175,27 +226,51 @@
     "features": {
       "security": {
         "title": "보안 기반",
-        "items": ["AES-256 암호화","제로 트러스트 아키텍처","엔드투엔드 보안"]
+        "items": [
+          "AES-256 암호화",
+          "제로 트러스트 아키텍처",
+          "엔드투엔드 보안"
+        ]
       },
       "compliance": {
         "title": "컴플라이언스 & 프라이버시",
-        "items": ["GDPR 준수","PII 마스킹","데이터 거주지 제어"]
+        "items": [
+          "GDPR 준수",
+          "PII 마스킹",
+          "데이터 거주지 제어"
+        ]
       },
       "auth": {
         "title": "인증",
-        "items": ["SSO/SAML 2.0","OAuth 2.0","MFA 지원"]
+        "items": [
+          "SSO/SAML 2.0",
+          "OAuth 2.0",
+          "MFA 지원"
+        ]
       },
       "audit": {
         "title": "감사 & 모니터링",
-        "items": ["실시간 모니터링","감사 로그","이상 탐지"]
+        "items": [
+          "실시간 모니터링",
+          "감사 로그",
+          "이상 탐지"
+        ]
       },
       "soc2": {
         "title": "SOC2 컴플라이언스",
-        "items": ["Type II (진행 중)","연간 감사","지속 컴플라이언스"]
+        "items": [
+          "Type II (진행 중)",
+          "연간 감사",
+          "지속 컴플라이언스"
+        ]
       },
       "scale": {
         "title": "엔터프라이즈 스케일",
-        "items": ["오토스케일링","99.99% SLA","글로벌 CDN"]
+        "items": [
+          "오토스케일링",
+          "99.99% SLA",
+          "글로벌 CDN"
+        ]
       }
     },
     "legend": {
@@ -240,27 +315,54 @@
             "title": "금융 거래 결정",
             "description": "여러 AI 분석가가 거래 추천에 투표합니다",
             "metrics": [
-              { "label": "정확도", "value": "94%" },
-              { "label": "합의 시간", "value": "< 200ms" },
-              { "label": "위험 감소", "value": "67%" }
+              {
+                "label": "정확도",
+                "value": "94%"
+              },
+              {
+                "label": "합의 시간",
+                "value": "< 200ms"
+              },
+              {
+                "label": "위험 감소",
+                "value": "67%"
+              }
             ]
           },
           {
             "title": "콘텐츠 조정",
             "description": "여러 에이전트가 정책 위반 여부를 평가합니다",
             "metrics": [
-              { "label": "오탐지", "value": "-82%" },
-              { "label": "커버리지", "value": "99.9%" },
-              { "label": "검토 속도", "value": "10k/시간" }
+              {
+                "label": "오탐지",
+                "value": "-82%"
+              },
+              {
+                "label": "커버리지",
+                "value": "99.9%"
+              },
+              {
+                "label": "검토 속도",
+                "value": "10k/시간"
+              }
             ]
           },
           {
             "title": "의료 진단 지원",
             "description": "전문 에이전트가 환자 진단에 협력합니다",
             "metrics": [
-              { "label": "진단 정확도", "value": "97%" },
-              { "label": "2차 소견 비율", "value": "100%" },
-              { "label": "진단 시간", "value": "-45%" }
+              {
+                "label": "진단 정확도",
+                "value": "97%"
+              },
+              {
+                "label": "2차 소견 비율",
+                "value": "100%"
+              },
+              {
+                "label": "진단 시간",
+                "value": "-45%"
+              }
             ]
           }
         ],
@@ -298,27 +400,54 @@
             "title": "문서 처리 파이프라인",
             "description": "추출 → 분석 → 요약 → 서식 지정 → 전달",
             "metrics": [
-              { "label": "정확도", "value": "96%" },
-              { "label": "처리 시간", "value": "1.2초/문서" },
-              { "label": "오류율", "value": "< 0.1%" }
+              {
+                "label": "정확도",
+                "value": "96%"
+              },
+              {
+                "label": "처리 시간",
+                "value": "1.2초/문서"
+              },
+              {
+                "label": "오류율",
+                "value": "< 0.1%"
+              }
             ]
           },
           {
             "title": "고객 지원 에스컬레이션",
             "description": "분류 → 조사 → 솔루션 → 검토 → 응답",
             "metrics": [
-              { "label": "해결률", "value": "89%" },
-              { "label": "평균 처리 시간", "value": "45초" },
-              { "label": "고객 만족도", "value": "4.7/5" }
+              {
+                "label": "해결률",
+                "value": "89%"
+              },
+              {
+                "label": "평균 처리 시간",
+                "value": "45초"
+              },
+              {
+                "label": "고객 만족도",
+                "value": "4.7/5"
+              }
             ]
           },
           {
             "title": "코드 리뷰 및 리팩토링",
             "description": "분석 → 문제 식별 → 수정 제안 → 테스트 → 배포",
             "metrics": [
-              { "label": "버그 탐지", "value": "92%" },
-              { "label": "코드 품질", "value": "+35%" },
-              { "label": "리뷰 시간", "value": "-60%" }
+              {
+                "label": "버그 탐지",
+                "value": "92%"
+              },
+              {
+                "label": "코드 품질",
+                "value": "+35%"
+              },
+              {
+                "label": "리뷰 시간",
+                "value": "-60%"
+              }
             ]
           }
         ],
@@ -356,27 +485,54 @@
             "title": "실시간 시장 분석",
             "description": "주식, 채권, 외환, 암호화폐 동시 분석",
             "metrics": [
-              { "label": "커버리지", "value": "10k 자산" },
-              { "label": "업데이트 빈도", "value": "100ms" },
-              { "label": "병렬 스트림", "value": "128" }
+              {
+                "label": "커버리지",
+                "value": "10k 자산"
+              },
+              {
+                "label": "업데이트 빈도",
+                "value": "100ms"
+              },
+              {
+                "label": "병렬 스트림",
+                "value": "128"
+              }
             ]
           },
           {
             "title": "다국어 번역",
             "description": "콘텐츠를 여러 언어로 동시에 번역",
             "metrics": [
-              { "label": "언어", "value": "50+" },
-              { "label": "속도", "value": "< 500ms" },
-              { "label": "일관성", "value": "98%" }
+              {
+                "label": "언어",
+                "value": "50+"
+              },
+              {
+                "label": "속도",
+                "value": "< 500ms"
+              },
+              {
+                "label": "일관성",
+                "value": "98%"
+              }
             ]
           },
           {
             "title": "A/B 테스트 및 최적화",
             "description": "여러 변형을 동시에 테스트",
             "metrics": [
-              { "label": "변형", "value": "100+" },
-              { "label": "결정 시간", "value": "< 1초" },
-              { "label": "신뢰도", "value": "95%" }
+              {
+                "label": "변형",
+                "value": "100+"
+              },
+              {
+                "label": "결정 시간",
+                "value": "< 1초"
+              },
+              {
+                "label": "신뢰도",
+                "value": "95%"
+              }
             ]
           }
         ],
@@ -427,7 +583,9 @@
     "reveal": "Reveal #{index}",
     "comingSoon": "Coming soon",
     "latestUpdates": "Latest updates",
-    "cta": { "ask": "Want to be featured?" },
+    "cta": {
+      "ask": "Want to be featured?"
+    },
     "placeholders": {
       "helios": "Multi-market research pods (coming soon)",
       "northwind": "Product localization + CRM sync (coming soon)",
@@ -449,5 +607,78 @@
     "currentlySelected": "Currently selected",
     "exampleTitle": "Example",
     "ctaExploreDocs": "Explore GMI Documentation"
+  },
+  "about": {
+    "hero": {
+      "weAreFramers": "we are the framers",
+      "title": "About AgentOS",
+      "description": "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. Built by {link}, AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "p1": "We’re building the most advanced AI agent runtime for developers who want to create intelligent, adaptive systems without compromising on control, safety, or performance.",
+      "p2": "AgentOS combines cutting-edge AI orchestration with production-ready infrastructure, enabling developers to build everything from simple chatbots to complex multi-agent systems with {span} memory architecture."
+    },
+    "team": {
+      "title": "The Team",
+      "description": "AgentOS is developed by the team at {link}, a company focused on building the future of AI‑powered development tools. We're a distributed team of engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.",
+      "generalInquiries": "General Inquiries",
+      "enterpriseSupport": "Enterprise & Support",
+      "enterpriseSupportDesc": "For production deployments, enterprise licensing, and dedicated support",
+      "hiring": "We are Hiring!",
+      "joinUs": "Join us in building the future of autonomous agents."
+    },
+    "connect": {
+      "title": "Connect With Us",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter",
+      "frameDev": "Frame.dev",
+      "ourCompany": "Our Company"
+    },
+    "license": {
+      "title": "Open Source Licensing",
+      "core": "AgentOS Core Engine",
+      "coreDesc": "The core AgentOS runtime, GMI orchestration, and infrastructure",
+      "extensions": "Extensions & Agents",
+      "extensionsDesc": "Community-built agents, extensions, and guardrails",
+      "footer": "We believe in open source. AgentOS is free to use, modify, and distribute. For enterprise support and production deployments, contact us at {link}"
+    },
+    "cta": {
+      "title": "Ready to Build?",
+      "viewOnGithub": "View on GitHub",
+      "backToHome": "Back to Home"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Answers about AgentOS, orchestration concepts, and how it powers the OS family.",
+    "questions": {
+      "whatIsAgentOS": {
+        "question": "What is AgentOS?",
+        "answer": "AgentOS is a modular platform for building adaptive, policy‑aware agents with tooling, memory, and multi‑agent collaboration."
+      },
+      "integration": {
+        "question": "How does it integrate with VCA?",
+        "answer": "VCA.Chat runs on AgentOS; it showcases agents, extensions, and streaming interactions."
+      },
+      "customPersonas": {
+        "question": "Can I build custom personas and agencies?",
+        "answer": "Yes. Define personas, agencies, and workflows with evolution rules, guardrails, and extensions."
+      }
+    },
+    "seeAlso": "See also",
+    "links": {
+      "vcaFaq": "VCA.Chat FAQ",
+      "frameFaq": "Frame.dev FAQ",
+      "manic": "Manic Agency",
+      "lookingGlass": "The Looking Glass — AI newsletter & blog"
+    }
+  },
+  "videoDemo": {
+    "title": "See AgentOS in Action",
+    "subtitle": "Watch how easy it is to build adaptive AI agents",
+    "watchButton": "Watch Demo",
+    "duration": "Duration"
   }
 }

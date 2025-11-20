@@ -233,8 +233,8 @@ export function SkylineSection() {
                           var(--color-accent-primary), 
                           var(--color-accent-secondary))`
                       : `linear-gradient(to top, 
-                          hsl(238 75% 55%), 
-                          hsl(270 75% 65%))`,
+                          var(--color-accent-primary), 
+                          var(--color-accent-secondary))`,
                     boxShadow: hoveredBuilding === feature.id
                       ? `0 0 30px var(--color-accent-secondary), 
                          inset 0 0 20px var(--color-accent-secondary)/40,

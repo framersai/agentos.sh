@@ -49,6 +49,7 @@
     --color-text-muted: hsl(220, 15%, 50%);
     --color-text-placeholder: hsl(220, 10%, 65%);
     --color-text-contrast: hsl(0, 0%, 100%);
+    --color-text-on-accent: hsl(0, 0%, 100%);
     --color-text-link: hsl(250, 90%, 60%);
 
     /* Accents: Electric Violet & Neon Cyan (adjusted for light mode visibility) */
@@ -83,18 +84,17 @@
     --focus-ring: 0 0 0 3px hsla(250, 95%, 64%, 0.25);
 
     /* Holographic (Light Mode - iridescent pearl effect) */
-    --holographic-primary: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,245,255,0.9) 100%);
-    --holographic-secondary: linear-gradient(-45deg, rgba(250,250,255,0.8) 0%, rgba(240,240,255,0.9) 100%);
-    --holographic-overlay: radial-gradient(circle at 50% 30%, rgba(250, 250, 255, 0.4), transparent 60%);
-    --holographic-shimmer: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.8) 50%, transparent 70%);
-    --holographic-iridescent: conic-gradient(from 180deg at 50% 50%, hsla(250, 90%, 60%, 0.05), hsla(200, 90%, 60%, 0.05), hsla(300, 90%, 60%, 0.05), hsla(250, 90%, 60%, 0.05));
-
-    /* Neumorphic Shadows (Light Mode - soft, distinct) */
-    --neumorphic-light-shadow: 6px 6px 16px rgba(160, 170, 190, 0.12), -4px -4px 12px rgba(255, 255, 255, 0.9);
-    --neumorphic-dark-shadow: 4px 4px 10px rgba(160, 170, 190, 0.1); /* Fallback/Variant */
-    --neumorphic-inset-light: inset 4px 4px 8px rgba(160, 170, 190, 0.1), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
-    --neumorphic-glow-soft: 0 0 15px rgba(250, 95%, 64%, 0.15);
-    --neumorphic-glow-intense: 0 0 25px rgba(250, 95%, 64%, 0.3);
+    --holographic-primary: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,248,255,0.95) 100%);
+    --holographic-secondary: linear-gradient(-45deg, rgba(252,252,255,0.9) 0%, rgba(245,245,255,0.95) 100%);
+    --holographic-overlay: radial-gradient(circle at 50% 30%, rgba(250, 250, 255, 0.6), transparent 60%);
+    --holographic-shimmer: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.9) 50%, transparent 70%);
+    
+    /* Neumorphic Shadows (Light Mode - softer, more elegant borders) */
+    --neumorphic-light-shadow: 8px 8px 24px rgba(160, 170, 190, 0.15), -6px -6px 20px rgba(255, 255, 255, 1);
+    --neumorphic-dark-shadow: 4px 4px 10px rgba(160, 170, 190, 0.1);
+    --neumorphic-inset-light: inset 4px 4px 8px rgba(160, 170, 190, 0.08), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+    --neumorphic-glow-soft: 0 0 20px rgba(var(--color-accent-primary-rgb), 0.2);
+    --neumorphic-glow-intense: 0 0 35px rgba(var(--color-accent-primary-rgb), 0.4);
 
     /* Glass */
     --glass-surface: rgba(255, 255, 255, 0.65);

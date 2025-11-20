@@ -1,10 +1,13 @@
- 'use client'
+'use client'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Mail, Github, Linkedin, Twitter, Globe, ExternalLink } from 'lucide-react'
 import { FrameWordmark } from '../../../components/branding/FrameWordmark'
+import { useTranslations } from 'next-intl'
 
 export default function AboutPage() {
+  const t = useTranslations('about')
+
   return (
     <main className="min-h-screen pt-24 pb-16">
       {/* Hero Section */}
@@ -22,7 +25,7 @@ export default function AboutPage() {
               animate={{ opacity: [0.35, 0.85, 0.35] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
             >
-              we are the framers
+              {t('hero.weAreFramers')}
             </motion.div>
           </motion.div>
           
@@ -32,7 +35,7 @@ export default function AboutPage() {
             transition={{ delay: 0.1 }}
             className="text-5xl sm:text-6xl mb-6 section-title"
           >
-            About AgentOS
+            {t('hero.title')}
           </motion.h1>
           
           <motion.p
@@ -41,9 +44,9 @@ export default function AboutPage() {
             transition={{ delay: 0.2 }}
             className="text-xl text-text-secondary leading-relaxed"
           >
-            AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. 
-            Built by <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">Frame.dev</Link>, 
-            AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails.
+            {t.rich('hero.description', {
+              link: (chunks) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{chunks}</Link>
+            })}
           </motion.p>
         </div>
       </section>
@@ -56,15 +59,14 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Our Mission</h2>
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">{t('mission.title')}</h2>
             <p className="text-lg text-gray-700 dark:text-text-secondary mb-4 leading-relaxed">
-              We’re building the most advanced AI agent runtime for developers who want to create intelligent, 
-              adaptive systems without compromising on control, safety, or performance.
+              {t('mission.p1')}
             </p>
             <p className="text-lg text-gray-700 dark:text-text-secondary leading-relaxed">
-              AgentOS combines cutting-edge AI orchestration with production-ready infrastructure, enabling 
-              developers to build everything from simple chatbots to complex multi-agent systems with 
-              <span className="font-semibold text-purple-600 dark:text-accent-primary"> OpenStrand</span> memory architecture.
+              {t.rich('mission.p2', {
+                span: (chunks) => <span className="font-semibold text-purple-600 dark:text-accent-primary"> OpenStrand</span>
+              })}
             </p>
           </motion.div>
         </div>
@@ -79,11 +81,11 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="mb-12"
           >
-            <h2 className="text-3xl mb-6 section-title">The Team</h2>
+            <h2 className="text-3xl mb-6 section-title">{t('team.title')}</h2>
             <p className="text-lg text-text-secondary leading-relaxed">
-              AgentOS is developed by the team at <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">Frame.dev</Link>, 
-              a company focused on building the future of AI‑powered development tools. We&#39;re a distributed team of 
-              engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.
+              {t.rich('team.description', {
+                link: (chunks) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{chunks}</Link>
+              })}
             </p>
           </motion.div>
 
@@ -95,7 +97,7 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="surface-card p-6"
             >
-              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">General Inquiries</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">{t('team.generalInquiries')}</h3>
               <a 
                 href="mailto:team@frame.dev" 
                 className="flex items-center gap-3 text-accent-primary hover:underline font-medium"
@@ -111,7 +113,7 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="surface-card p-6"
             >
-              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Enterprise & Support</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">{t('team.enterpriseSupport')}</h3>
               <a 
                 href="mailto:team@frame.dev" 
                 className="flex items-center gap-3 text-accent-primary hover:underline font-medium"
@@ -120,7 +122,7 @@ export default function AboutPage() {
                 team@frame.dev
               </a>
               <p className="text-sm text-text-muted mt-2">
-                For production deployments, enterprise licensing, and dedicated support
+                {t('team.enterpriseSupportDesc')}
               </p>
             </motion.div>
           </div>
@@ -136,11 +138,11 @@ export default function AboutPage() {
               href="/careers"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 border border-accent-primary/20 text-accent-primary font-bold hover:bg-accent-primary/20 transition-all group"
             >
-              We are Hiring!
+              {t('team.hiring')}
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </Link>
             <p className="text-sm text-muted mt-3">
-              Join us in building the future of autonomous agents.
+              {t('team.joinUs')}
             </p>
           </motion.div>
         </div>
@@ -155,7 +157,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Connect With Us</h2>
+            <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">{t('connect.title')}</h2>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <a
@@ -165,7 +167,7 @@ export default function AboutPage() {
                 className="glass-morphism rounded-xl p-6 hover:shadow-lg transition-all group border border-purple-200/30 dark:border-purple-500/20"
               >
                 <Github className="w-8 h-8 mx-auto mb-3 text-purple-600 dark:text-accent-primary group-hover:scale-110 transition-transform" />
-                <div className="text-sm font-semibold text-gray-900 dark:text-white">GitHub</div>
+                <div className="text-sm font-semibold text-gray-900 dark:text-white">{t('connect.github')}</div>
                 <div className="text-xs text-gray-600 dark:text-text-muted">@framersai</div>
               </a>
 
@@ -176,7 +178,7 @@ export default function AboutPage() {
                 className="glass-morphism rounded-xl p-6 hover:shadow-lg transition-all group border border-purple-200/30 dark:border-purple-500/20"
               >
                 <Linkedin className="w-8 h-8 mx-auto mb-3 text-purple-600 dark:text-accent-primary group-hover:scale-110 transition-transform" />
-                <div className="text-sm font-semibold text-gray-900 dark:text-white">LinkedIn</div>
+                <div className="text-sm font-semibold text-gray-900 dark:text-white">{t('connect.linkedin')}</div>
                 <div className="text-xs text-gray-600 dark:text-text-muted">FramersAI</div>
               </a>
 
@@ -187,7 +189,7 @@ export default function AboutPage() {
                 className="glass-morphism rounded-xl p-6 hover:shadow-lg transition-all group border border-purple-200/30 dark:border-purple-500/20"
               >
                 <Twitter className="w-8 h-8 mx-auto mb-3 text-purple-600 dark:text-accent-primary group-hover:scale-110 transition-transform" />
-                <div className="text-sm font-semibold text-gray-900 dark:text-white">Twitter</div>
+                <div className="text-sm font-semibold text-gray-900 dark:text-white">{t('connect.twitter')}</div>
                 <div className="text-xs text-gray-600 dark:text-text-muted">@framersai</div>
               </a>
 
@@ -198,8 +200,8 @@ export default function AboutPage() {
                 className="glass-morphism rounded-xl p-6 hover:shadow-lg transition-all group border border-purple-200/30 dark:border-purple-500/20"
               >
                 <Globe className="w-8 h-8 mx-auto mb-3 text-purple-600 dark:text-accent-primary group-hover:scale-110 transition-transform" />
-                <div className="text-sm font-semibold text-gray-900 dark:text-white">Frame.dev</div>
-                <div className="text-xs text-gray-600 dark:text-text-muted">Our Company</div>
+                <div className="text-sm font-semibold text-gray-900 dark:text-white">{t('connect.frameDev')}</div>
+                <div className="text-xs text-gray-600 dark:text-text-muted">{t('connect.ourCompany')}</div>
               </a>
             </div>
           </motion.div>
@@ -215,32 +217,30 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="glass-morphism rounded-2xl p-8 border border-purple-200/30 dark:border-purple-500/20"
           >
-            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Open Source Licensing</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">{t('license.title')}</h2>
             <div className="space-y-4 text-gray-700 dark:text-text-secondary">
               <div>
-                <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">AgentOS Core Engine</h3>
+                <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">{t('license.core')}</h3>
                 <p className="flex items-center gap-2">
                   <span className="px-3 py-1 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-mono text-sm">
                     Apache 2.0
                   </span>
-                  The core AgentOS runtime, GMI orchestration, and infrastructure
+                  {t('license.coreDesc')}
                 </p>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">Extensions & Agents</h3>
+                <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white">{t('license.extensions')}</h3>
                 <p className="flex items-center gap-2">
                   <span className="px-3 py-1 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-mono text-sm">
                     MIT
                   </span>
-                  Community-built agents, extensions, and guardrails
+                  {t('license.extensionsDesc')}
                 </p>
               </div>
               <p className="text-sm mt-6">
-                We believe in open source. AgentOS is free to use, modify, and distribute. 
-                For enterprise support and production deployments, contact us at{' '}
-                <a href="mailto:team@frame.dev" className="text-purple-600 dark:text-accent-primary hover:underline font-semibold">
-                  team@frame.dev
-                </a>
+                {t.rich('license.footer', {
+                  link: (chunks) => <a href="mailto:team@frame.dev" className="text-purple-600 dark:text-accent-primary hover:underline font-semibold">team@frame.dev</a>
+                })}
               </p>
             </div>
           </motion.div>
@@ -255,21 +255,21 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Ready to Build?</h2>
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">{t('cta.title')}</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="https://github.com/framersai/agentos"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all border border-purple-500/20"
               >
                 <Github className="w-5 h-5" />
-                View on GitHub
+                {t('cta.viewOnGithub')}
                 <ExternalLink className="w-4 h-4" />
               </Link>
               <Link
                 href="/"
                 className="inline-flex items-center gap-2 px-6 py-3 glass-morphism rounded-xl font-semibold text-gray-700 dark:text-white hover:bg-purple-100/50 dark:hover:bg-purple-900/30 transition-all border border-purple-200/30 dark:border-purple-500/20"
               >
-                Back to Home
+                {t('cta.backToHome')}
               </Link>
             </div>
           </motion.div>
@@ -278,4 +278,3 @@ export default function AboutPage() {
     </main>
   )
 }
-

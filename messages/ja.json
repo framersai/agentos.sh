@@ -227,27 +227,54 @@
             "title": "金融トレーディング判断",
             "description": "複数のAIアナリストがトレード提案に投票",
             "metrics": [
-              { "label": "精度", "value": "94%" },
-              { "label": "合意時間", "value": "< 200ms" },
-              { "label": "リスク低減", "value": "67%" }
+              {
+                "label": "精度",
+                "value": "94%"
+              },
+              {
+                "label": "合意時間",
+                "value": "< 200ms"
+              },
+              {
+                "label": "リスク低減",
+                "value": "67%"
+              }
             ]
           },
           {
             "title": "コンテンツモデレーション",
             "description": "複数エージェントでポリシー違反を判定",
             "metrics": [
-              { "label": "誤検出", "value": "-82%" },
-              { "label": "カバレッジ", "value": "99.9%" },
-              { "label": "レビュー速度", "value": "10k/時間" }
+              {
+                "label": "誤検出",
+                "value": "-82%"
+              },
+              {
+                "label": "カバレッジ",
+                "value": "99.9%"
+              },
+              {
+                "label": "レビュー速度",
+                "value": "10k/時間"
+              }
             ]
           },
           {
             "title": "医療診断サポート",
             "description": "専門エージェントが診断に協力",
             "metrics": [
-              { "label": "診断精度", "value": "97%" },
-              { "label": "セカンドオピニオン率", "value": "100%" },
-              { "label": "診断までの時間", "value": "-45%" }
+              {
+                "label": "診断精度",
+                "value": "97%"
+              },
+              {
+                "label": "セカンドオピニオン率",
+                "value": "100%"
+              },
+              {
+                "label": "診断までの時間",
+                "value": "-45%"
+              }
             ]
           }
         ],
@@ -285,27 +312,54 @@
             "title": "ドキュメント処理パイプライン",
             "description": "抽出 → 分析 → 要約 → 整形 → 配信",
             "metrics": [
-              { "label": "精度", "value": "96%" },
-              { "label": "処理時間", "value": "1.2秒/文書" },
-              { "label": "エラー率", "value": "< 0.1%" }
+              {
+                "label": "精度",
+                "value": "96%"
+              },
+              {
+                "label": "処理時間",
+                "value": "1.2秒/文書"
+              },
+              {
+                "label": "エラー率",
+                "value": "< 0.1%"
+              }
             ]
           },
           {
             "title": "カスタマーサポートのエスカレーション",
             "description": "トリアージ → 調査 → 解決案 → レビュー → 応答",
             "metrics": [
-              { "label": "解決率", "value": "89%" },
-              { "label": "平均処理時間", "value": "45秒" },
-              { "label": "顧客満足度", "value": "4.7/5" }
+              {
+                "label": "解決率",
+                "value": "89%"
+              },
+              {
+                "label": "平均処理時間",
+                "value": "45秒"
+              },
+              {
+                "label": "顧客満足度",
+                "value": "4.7/5"
+              }
             ]
           },
           {
             "title": "コードレビューとリファクタリング",
             "description": "分析 → 問題特定 → 修正案 → テスト → デプロイ",
             "metrics": [
-              { "label": "バグ検出", "value": "92%" },
-              { "label": "コード品質", "value": "+35%" },
-              { "label": "レビュー時間", "value": "-60%" }
+              {
+                "label": "バグ検出",
+                "value": "92%"
+              },
+              {
+                "label": "コード品質",
+                "value": "+35%"
+              },
+              {
+                "label": "レビュー時間",
+                "value": "-60%"
+              }
             ]
           }
         ],
@@ -343,27 +397,54 @@
             "title": "リアルタイム市場分析",
             "description": "株式・債券・為替・暗号資産を同時分析",
             "metrics": [
-              { "label": "カバレッジ", "value": "10k銘柄" },
-              { "label": "更新頻度", "value": "100ms" },
-              { "label": "並列ストリーム", "value": "128" }
+              {
+                "label": "カバレッジ",
+                "value": "10k銘柄"
+              },
+              {
+                "label": "更新頻度",
+                "value": "100ms"
+              },
+              {
+                "label": "並列ストリーム",
+                "value": "128"
+              }
             ]
           },
           {
             "title": "多言語翻訳",
             "description": "コンテンツを複数言語へ一斉翻訳",
             "metrics": [
-              { "label": "対応言語", "value": "50+" },
-              { "label": "速度", "value": "< 500ms" },
-              { "label": "一貫性", "value": "98%" }
+              {
+                "label": "対応言語",
+                "value": "50+"
+              },
+              {
+                "label": "速度",
+                "value": "< 500ms"
+              },
+              {
+                "label": "一貫性",
+                "value": "98%"
+              }
             ]
           },
           {
             "title": "A/Bテストと最適化",
             "description": "多数のバリエーションを同時テスト",
             "metrics": [
-              { "label": "バリエーション数", "value": "100+" },
-              { "label": "意思決定時間", "value": "< 1秒" },
-              { "label": "信頼度", "value": "95%" }
+              {
+                "label": "バリエーション数",
+                "value": "100+"
+              },
+              {
+                "label": "意思決定時間",
+                "value": "< 1秒"
+              },
+              {
+                "label": "信頼度",
+                "value": "95%"
+              }
             ]
           }
         ],
@@ -414,7 +495,9 @@
     "reveal": "Reveal #{index}",
     "comingSoon": "Coming soon",
     "latestUpdates": "Latest updates",
-    "cta": { "ask": "Want to be featured?" },
+    "cta": {
+      "ask": "Want to be featured?"
+    },
     "placeholders": {
       "helios": "Multi-market research pods (coming soon)",
       "northwind": "Product localization + CRM sync (coming soon)",
@@ -436,5 +519,78 @@
     "currentlySelected": "Currently selected",
     "exampleTitle": "Example",
     "ctaExploreDocs": "Explore GMI Documentation"
+  },
+  "about": {
+    "hero": {
+      "weAreFramers": "we are the framers",
+      "title": "About AgentOS",
+      "description": "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. Built by {link}, AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "p1": "We’re building the most advanced AI agent runtime for developers who want to create intelligent, adaptive systems without compromising on control, safety, or performance.",
+      "p2": "AgentOS combines cutting-edge AI orchestration with production-ready infrastructure, enabling developers to build everything from simple chatbots to complex multi-agent systems with {span} memory architecture."
+    },
+    "team": {
+      "title": "The Team",
+      "description": "AgentOS is developed by the team at {link}, a company focused on building the future of AI‑powered development tools. We're a distributed team of engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.",
+      "generalInquiries": "General Inquiries",
+      "enterpriseSupport": "Enterprise & Support",
+      "enterpriseSupportDesc": "For production deployments, enterprise licensing, and dedicated support",
+      "hiring": "We are Hiring!",
+      "joinUs": "Join us in building the future of autonomous agents."
+    },
+    "connect": {
+      "title": "Connect With Us",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter",
+      "frameDev": "Frame.dev",
+      "ourCompany": "Our Company"
+    },
+    "license": {
+      "title": "Open Source Licensing",
+      "core": "AgentOS Core Engine",
+      "coreDesc": "The core AgentOS runtime, GMI orchestration, and infrastructure",
+      "extensions": "Extensions & Agents",
+      "extensionsDesc": "Community-built agents, extensions, and guardrails",
+      "footer": "We believe in open source. AgentOS is free to use, modify, and distribute. For enterprise support and production deployments, contact us at {link}"
+    },
+    "cta": {
+      "title": "Ready to Build?",
+      "viewOnGithub": "View on GitHub",
+      "backToHome": "Back to Home"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Answers about AgentOS, orchestration concepts, and how it powers the OS family.",
+    "questions": {
+      "whatIsAgentOS": {
+        "question": "What is AgentOS?",
+        "answer": "AgentOS is a modular platform for building adaptive, policy‑aware agents with tooling, memory, and multi‑agent collaboration."
+      },
+      "integration": {
+        "question": "How does it integrate with VCA?",
+        "answer": "VCA.Chat runs on AgentOS; it showcases agents, extensions, and streaming interactions."
+      },
+      "customPersonas": {
+        "question": "Can I build custom personas and agencies?",
+        "answer": "Yes. Define personas, agencies, and workflows with evolution rules, guardrails, and extensions."
+      }
+    },
+    "seeAlso": "See also",
+    "links": {
+      "vcaFaq": "VCA.Chat FAQ",
+      "frameFaq": "Frame.dev FAQ",
+      "manic": "Manic Agency",
+      "lookingGlass": "The Looking Glass — AI newsletter & blog"
+    }
+  },
+  "videoDemo": {
+    "title": "See AgentOS in Action",
+    "subtitle": "Watch how easy it is to build adaptive AI agents",
+    "watchButton": "Watch Demo",
+    "duration": "Duration"
   }
 }

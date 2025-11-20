@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { HeroSectionRedesigned } from '../../components/sections/hero-section-redesigned'
 import { ProductCardsRedesigned } from '../../components/sections/product-cards-redesigned'
 import { SkylineSection } from '../../components/sections/skyline-section'
 import { CodePopover } from '../../components/ui/code-popover'
@@ -24,6 +23,11 @@ import {
 const AnimatedBackgroundLazy = dynamic(
   () => import('../../components/ui/animated-background').then(m => m.AnimatedBackground),
   { ssr: false }
+)
+
+const HeroSectionRedesignedLazy = dynamic(
+  () => import('../../components/sections/hero-section-redesigned').then(m => m.HeroSectionRedesigned),
+  { loading: () => <div className="h-screen bg-[var(--color-background-primary)]" /> }
 )
 
 const MultiAgentCollaborationSection = dynamic(
@@ -185,7 +189,7 @@ agentos deploy --env production`
       {/* Main Content */}
       <main id="main-content">
         {/* Hero Section with Redesigned Components */}
-        <HeroSectionRedesigned />
+        <HeroSectionRedesignedLazy />
 
       {/* Product Demo Video */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
@@ -214,8 +218,8 @@ agentos deploy --env production`
         {/* Product Cards Section */}
         <ProductCardsRedesigned />
 
-        {/* Multi-Agent Collaboration Section */}
-        <MultiAgentCollaborationSection />
+        {/* Multi-Agent Collaboration Section (Commented out as per request) */}
+        {/* <MultiAgentCollaborationSection /> */}
 
         {/* GMI Section with architecture diagrams */}
         <GMISectionLazy />
