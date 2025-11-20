@@ -9,7 +9,6 @@ import {
   Database,
   Zap,
   Code,
-  Cpu,
   Server,
   Globe
 } from 'lucide-react'
