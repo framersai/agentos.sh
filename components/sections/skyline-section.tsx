@@ -19,7 +19,7 @@ import {
   GraphIcon, 
   SkylineIcon, 
   DocumentCheckIcon 
-} from '../icons/enterprise-icons'
+} from '../icons/brand-icons'
 
 interface BuildingFeature {
   id: string
@@ -30,7 +30,7 @@ interface BuildingFeature {
   glow: string
 }
 
-const enterpriseFeatures: BuildingFeature[] = [
+const skylineFeatures: BuildingFeature[] = [
   {
     id: 'security',
     height: 3,
@@ -81,7 +81,7 @@ const enterpriseFeatures: BuildingFeature[] = [
   }
 ]
 
-export function EnterpriseSkyline() {
+export function SkylineSection() {
   const t = useTranslations('enterprise')
   const [hoveredBuilding, setHoveredBuilding] = useState<string | null>(null)
   const [animatedWindows, setAnimatedWindows] = useState<Record<string, boolean[]>>({})
@@ -111,7 +111,7 @@ export function EnterpriseSkyline() {
     const interval = setInterval(() => {
       setAnimatedWindows(prev => {
         const next = { ...prev }
-        enterpriseFeatures.forEach(feature => {
+        skylineFeatures.forEach(feature => {
           if (!next[feature.id]) {
             next[feature.id] = Array(feature.height * 3).fill(false).map(() => Math.random() > 0.3)
           } else {
@@ -130,7 +130,7 @@ export function EnterpriseSkyline() {
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Enterprise Background Gradient - Deep indigo to violet */}
+      {/* Skyline Background Gradient */}
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
@@ -151,8 +151,8 @@ export function EnterpriseSkyline() {
           className="absolute inset-0 opacity-40"
           style={{
             background: `linear-gradient(135deg, 
-              var(--color-enterprise-from)/10 0%, 
-              var(--color-enterprise-to)/10 100%)`
+              var(--color-accent-primary)/10 0%, 
+              var(--color-accent-secondary)/10 100%)`
           }}
         />
         {/* Stars/Particles in background */}
@@ -197,7 +197,7 @@ export function EnterpriseSkyline() {
           <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-accent-primary/20 to-transparent" />
 
           {/* Buildings */}
-          {enterpriseFeatures.map((feature, index) => {
+          {skylineFeatures.map((feature, index) => {
             const buildingHeight = (feature.height / 10) * 400 // Max 400px height
             const buildingWidth = 120
             const leftPosition = `${feature.position}%`
@@ -224,25 +224,25 @@ export function EnterpriseSkyline() {
                 onMouseEnter={() => setHoveredBuilding(feature.id)}
                 onMouseLeave={() => setHoveredBuilding(null)}
               >
-                {/* Building Structure - Enterprise gradient */}
+                {/* Building Structure - Brand gradient */}
                 <div
                   className="relative w-full h-full cursor-pointer group rounded-t-sm overflow-hidden"
                   style={{
                     background: isDark
                       ? `linear-gradient(to top, 
-                          var(--color-enterprise-from), 
-                          var(--color-enterprise-to))`
+                          var(--color-accent-primary), 
+                          var(--color-accent-secondary))`
                       : `linear-gradient(to top, 
                           hsl(238 75% 55%), 
                           hsl(270 75% 65%))`,
                     boxShadow: hoveredBuilding === feature.id
-                      ? `0 0 30px var(--color-enterprise-accent), 
-                         inset 0 0 20px var(--color-enterprise-accent)/40,
-                         0 10px 40px -10px var(--color-enterprise-from)`
+                      ? `0 0 30px var(--color-accent-secondary), 
+                         inset 0 0 20px var(--color-accent-secondary)/40,
+                         0 10px 40px -10px var(--color-accent-primary)`
                       : `0 5px 20px -5px rgba(0,0,0,0.4)`,
                     border: `1.5px solid ${
                       hoveredBuilding === feature.id 
-                        ? 'var(--color-enterprise-accent)' 
+                        ? 'var(--color-accent-secondary)' 
                         : 'rgba(255,255,255,0.15)'
                     }`,
                     transition: 'all var(--duration-smooth) var(--ease-out-quint)'
@@ -440,3 +440,4 @@ export function EnterpriseSkyline() {
     </section>
   )
 }
+

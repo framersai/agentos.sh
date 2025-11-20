@@ -20,7 +20,7 @@ const variantStyles: Record<LinkButtonVariant, string> = {
   primary: `
     relative overflow-hidden
     bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)]
-    text-[var(--color-text-on-accent)]
+    text-[var(--color-text-contrast)]
     shadow-lg shadow-[var(--color-accent-primary)]/20
     hover:shadow-xl hover:shadow-[var(--color-accent-primary)]/30
     hover:brightness-110

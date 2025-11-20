@@ -135,7 +135,7 @@ export default async function LocaleLayout({
   const tFooter = await getTranslations({ locale: locale as Locale, namespace: 'footer' });
   const tNav = await getTranslations({ locale: locale as Locale, namespace: 'nav' });
 
-  const messages = await getMessages();
+  const messages = await getMessages({ locale });
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>

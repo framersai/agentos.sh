@@ -1,12 +1,12 @@
 /**
- * Holographic & Neumorphic Design System for AgentOS
- * Premium, depth-focused design with theme-adaptive holographic effects
+ * Visual & Neumorphic Design System for AgentOS
+ * Depth-focused design with theme-adaptive visual effects
  */
 
-export const holographicThemes = {
+export const visualThemes = {
   'sakura-sunset': {
     name: 'Sakura Sunset',
-    description: 'Pearlescent pink holographic with soft depth',
+    description: 'Pearlescent pink with soft depth',
     holographic: {
       primary: 'linear-gradient(135deg, rgba(255,182,193,0.3) 0%, rgba(255,105,180,0.2) 25%, rgba(255,20,147,0.3) 50%, rgba(255,192,203,0.2) 75%, rgba(255,182,193,0.3) 100%)',
       secondary: 'linear-gradient(-45deg, rgba(255,240,245,0.1) 0%, rgba(255,182,193,0.15) 50%, rgba(255,105,180,0.1) 100%)',
@@ -38,7 +38,7 @@ export const holographicThemes = {
   },
   'twilight-neo': {
     name: 'Twilight Neo',
-    description: 'Electric cyan holographic with sharp depth',
+    description: 'Electric cyan with sharp depth',
     holographic: {
       primary: 'linear-gradient(135deg, rgba(0,255,255,0.3) 0%, rgba(138,43,226,0.2) 25%, rgba(0,191,255,0.3) 50%, rgba(147,112,219,0.2) 75%, rgba(0,255,255,0.3) 100%)',
       secondary: 'linear-gradient(-45deg, rgba(230,230,250,0.1) 0%, rgba(0,191,255,0.15) 50%, rgba(138,43,226,0.1) 100%)',
@@ -70,7 +70,7 @@ export const holographicThemes = {
   },
   'aurora-daybreak': {
     name: 'Aurora Daybreak',
-    description: 'Balanced aurora holographic with gentle depth',
+    description: 'Balanced aurora with gentle depth',
     holographic: {
       primary: 'linear-gradient(135deg, rgba(255,0,150,0.2) 0%, rgba(100,200,255,0.2) 25%, rgba(255,100,200,0.2) 50%, rgba(150,100,255,0.2) 75%, rgba(255,0,150,0.2) 100%)',
       secondary: 'linear-gradient(-45deg, rgba(255,240,250,0.1) 0%, rgba(200,150,255,0.15) 50%, rgba(100,200,255,0.1) 100%)',
@@ -102,7 +102,7 @@ export const holographicThemes = {
   },
   'warm-embrace': {
     name: 'Warm Embrace',
-    description: 'Golden amber holographic with earthy depth',
+    description: 'Golden amber with earthy depth',
     holographic: {
       primary: 'linear-gradient(135deg, rgba(255,215,0,0.3) 0%, rgba(255,140,0,0.2) 25%, rgba(255,165,0,0.3) 50%, rgba(255,193,7,0.2) 75%, rgba(255,215,0,0.3) 100%)',
       secondary: 'linear-gradient(-45deg, rgba(255,248,220,0.1) 0%, rgba(255,193,7,0.15) 50%, rgba(255,140,0,0.1) 100%)',
@@ -134,7 +134,7 @@ export const holographicThemes = {
   },
   'retro-terminus': {
     name: 'Retro Terminus',
-    description: 'Terminal green holographic with matrix depth',
+    description: 'Terminal green with matrix depth',
     holographic: {
       primary: 'linear-gradient(135deg, rgba(0,255,0,0.3) 0%, rgba(50,205,50,0.2) 25%, rgba(0,255,0,0.3) 50%, rgba(124,252,0,0.2) 75%, rgba(0,255,0,0.3) 100%)',
       secondary: 'linear-gradient(-45deg, rgba(0,0,0,0.8) 0%, rgba(0,255,0,0.15) 50%, rgba(0,100,0,0.9) 100%)',
@@ -166,8 +166,8 @@ export const holographicThemes = {
   }
 };
 
-// Premium gradient combinations for each theme
-export const premiumGradients = {
+// Theme gradient combinations
+export const themeGradients = {
   'sakura-sunset': {
     hero: 'radial-gradient(ellipse at top, rgba(255,240,245,0.9), rgba(255,182,193,0.4) 40%, rgba(255,105,180,0.2) 70%, rgba(255,20,147,0.1))',
     section: 'linear-gradient(180deg, rgba(255,250,252,0.95), rgba(255,240,245,0.8) 20%, rgba(255,182,193,0.3) 60%, rgba(255,240,245,0.9))',
@@ -210,8 +210,8 @@ export const premiumGradients = {
   }
 };
 
-// Animation configurations for premium feel
-export const premiumAnimations = {
+// Animation configurations for visual feel
+export const themeAnimations = {
   // Liquid morph for text transitions
   liquidMorph: {
     initial: {
@@ -235,8 +235,8 @@ export const premiumAnimations = {
     }
   },
 
-  // Holographic shimmer
-  holographicShimmer: {
+  // Visual shimmer
+  visualShimmer: {
     animate: {
       backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
     },
@@ -306,13 +306,13 @@ export const premiumAnimations = {
 export const neumorphicComponents = {
   card: (theme: string, isDark: boolean) => ({
     background: isDark
-      ? holographicThemes[theme as keyof typeof holographicThemes].glass.surface
+      ? visualThemes[theme as keyof typeof visualThemes].glass.surface
       : 'rgba(255,255,255,0.7)',
     backdropFilter: 'blur(20px) saturate(180%)',
-    border: `1px solid ${holographicThemes[theme as keyof typeof holographicThemes].glass.border}`,
+    border: `1px solid ${visualThemes[theme as keyof typeof visualThemes].glass.border}`,
     boxShadow: isDark
-      ? holographicThemes[theme as keyof typeof holographicThemes].neumorphic.darkShadow
-      : holographicThemes[theme as keyof typeof holographicThemes].neumorphic.lightShadow,
+      ? visualThemes[theme as keyof typeof visualThemes].neumorphic.darkShadow
+      : visualThemes[theme as keyof typeof visualThemes].neumorphic.lightShadow,
     position: 'relative' as const,
     overflow: 'hidden' as const,
     '&::before': {
@@ -322,7 +322,7 @@ export const neumorphicComponents = {
       left: 0,
       right: 0,
       bottom: 0,
-      background: holographicThemes[theme as keyof typeof holographicThemes].glass.reflection,
+      background: visualThemes[theme as keyof typeof visualThemes].glass.reflection,
       pointerEvents: 'none',
     },
     '&::after': {
@@ -332,7 +332,7 @@ export const neumorphicComponents = {
       left: '-50%',
       width: '200%',
       height: '200%',
-      background: holographicThemes[theme as keyof typeof holographicThemes].holographic.shimmer,
+      background: visualThemes[theme as keyof typeof visualThemes].holographic.shimmer,
       transform: 'rotate(45deg)',
       opacity: 0,
       transition: 'opacity 0.3s ease',
@@ -346,14 +346,14 @@ export const neumorphicComponents = {
 
   button: (theme: string, isDark: boolean, variant: 'primary' | 'secondary' = 'primary') => ({
     background: variant === 'primary'
-      ? holographicThemes[theme as keyof typeof holographicThemes].holographic.primary
+      ? visualThemes[theme as keyof typeof visualThemes].holographic.primary
       : 'transparent',
     border: variant === 'secondary'
-      ? `2px solid ${holographicThemes[theme as keyof typeof holographicThemes].glass.border}`
+      ? `2px solid ${visualThemes[theme as keyof typeof visualThemes].glass.border}`
       : 'none',
     boxShadow: isDark
-      ? holographicThemes[theme as keyof typeof holographicThemes].neumorphic.darkShadow
-      : holographicThemes[theme as keyof typeof holographicThemes].neumorphic.lightShadow,
+      ? visualThemes[theme as keyof typeof visualThemes].neumorphic.darkShadow
+      : visualThemes[theme as keyof typeof visualThemes].neumorphic.lightShadow,
     position: 'relative' as const,
     overflow: 'hidden' as const,
     transform: 'translateZ(0)',
@@ -361,14 +361,14 @@ export const neumorphicComponents = {
     '&:hover': {
       transform: 'translateY(-2px) scale(1.02)',
       boxShadow: isDark
-        ? holographicThemes[theme as keyof typeof holographicThemes].neumorphic.glowIntense
-        : holographicThemes[theme as keyof typeof holographicThemes].neumorphic.glowSoft,
+        ? visualThemes[theme as keyof typeof visualThemes].neumorphic.glowIntense
+        : visualThemes[theme as keyof typeof visualThemes].neumorphic.glowSoft,
     },
     '&:active': {
       transform: 'translateY(0) scale(0.98)',
       boxShadow: isDark
-        ? holographicThemes[theme as keyof typeof holographicThemes].neumorphic.insetDark
-        : holographicThemes[theme as keyof typeof holographicThemes].neumorphic.insetLight,
+        ? visualThemes[theme as keyof typeof visualThemes].neumorphic.insetDark
+        : visualThemes[theme as keyof typeof visualThemes].neumorphic.insetLight,
     }
   }),
 
@@ -376,21 +376,21 @@ export const neumorphicComponents = {
     background: isDark
       ? 'rgba(0,0,0,0.3)'
       : 'rgba(255,255,255,0.5)',
-    border: `1px solid ${holographicThemes[theme as keyof typeof holographicThemes].glass.border}`,
-    boxShadow: holographicThemes[theme as keyof typeof holographicThemes].neumorphic.insetLight,
+    border: `1px solid ${visualThemes[theme as keyof typeof visualThemes].glass.border}`,
+    boxShadow: visualThemes[theme as keyof typeof visualThemes].neumorphic.insetLight,
     backdropFilter: 'blur(10px)',
     transition: 'all 0.3s ease',
     '&:focus': {
-      boxShadow: `${holographicThemes[theme as keyof typeof holographicThemes].neumorphic.insetDark}, 0 0 0 3px ${holographicThemes[theme as keyof typeof holographicThemes].glass.border}`,
+      boxShadow: `${visualThemes[theme as keyof typeof visualThemes].neumorphic.insetDark}, 0 0 0 3px ${visualThemes[theme as keyof typeof visualThemes].glass.border}`,
       borderColor: 'transparent',
     }
   })
 };
 
-// Utility function to apply holographic theme
-export function applyHolographicTheme(themeName: string, isDark: boolean) {
+// Utility function to apply visual theme
+export function applyVisualTheme(themeName: string, isDark: boolean) {
   const root = document.documentElement;
-  const theme = holographicThemes[themeName as keyof typeof holographicThemes];
+  const theme = visualThemes[themeName as keyof typeof visualThemes];
 
   if (!theme) return;
 
@@ -407,22 +407,23 @@ export function applyHolographicTheme(themeName: string, isDark: boolean) {
     root.style.setProperty(`--glass-${key}`, value);
   });
 
-  Object.entries(premiumGradients[themeName as keyof typeof premiumGradients]).forEach(([key, value]) => {
+  Object.entries(themeGradients[themeName as keyof typeof themeGradients]).forEach(([key, value]) => {
     root.style.setProperty(`--gradient-${key}`, value);
   });
 
   // Add theme attribute
-  root.setAttribute('data-holographic-theme', themeName);
+  root.setAttribute('data-visual-theme', themeName);
   root.setAttribute('data-theme-mode', isDark ? 'dark' : 'light');
 }
 
 // Export for use in components
-const holographicDesignSystem = {
-  holographicThemes,
-  premiumGradients,
-  premiumAnimations,
+const visualDesignSystem = {
+  visualThemes,
+  themeGradients,
+  themeAnimations,
   neumorphicComponents,
-  applyHolographicTheme,
+  applyVisualTheme,
 };
 
-export default holographicDesignSystem;
+export default visualDesignSystem;
+

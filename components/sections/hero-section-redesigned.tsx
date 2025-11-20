@@ -8,7 +8,7 @@ import { AnimatedAgentOSLogo } from '../icons/animated-logo';
 import { Toast } from '../ui/toast';
 import { LinkButton } from '../ui/LinkButton';
 import { Button } from '../ui/Button';
-import { applyHolographicTheme } from '@/lib/holographic-design-system';
+import { applyVisualTheme } from '@/lib/visual-design-system';
 import { useTheme } from 'next-themes';
 
 export function HeroSectionRedesigned() {
@@ -28,7 +28,7 @@ export function HeroSectionRedesigned() {
   const lastSwitchTime = useRef(0);
   const isDark = resolvedTheme === 'dark';
 
-  // Apply holographic theme based on current theme selection
+  // Apply visual theme based on current theme selection
   useEffect(() => {
     const themeMap = {
       'sakura-sunset': 'sakura-sunset',
@@ -38,7 +38,7 @@ export function HeroSectionRedesigned() {
       'retro-terminus': 'retro-terminus'
     };
     const mappedTheme = themeMap[currentTheme as keyof typeof themeMap] || 'aurora-daybreak';
-    applyHolographicTheme(mappedTheme, isDark);
+    applyVisualTheme(mappedTheme, isDark);
   }, [currentTheme, isDark]);
 
   // Live stats with GitHub data only

@@ -111,13 +111,14 @@ export function SiteHeader() {
     >
       {/* Holographic glass panel with subtle iridescent edge */}
       <div
-        className="absolute inset-0 backdrop-blur-xl border-b border-transparent shadow-[0_2px_24px_rgba(0,0,0,0.15)]"
+        className="absolute inset-0 backdrop-blur-xl border-b border-transparent shadow-[0_10px_35px_rgba(4,6,15,0.45)]"
         style={{
-          background:
+          backgroundColor: 'var(--color-background-primary)',
+          backgroundImage:
             'linear-gradient(135deg,' +
-            ' color-mix(in oklab, var(--color-background-primary) 88%, transparent),' +
-            ' color-mix(in oklab, var(--color-accent-primary) 10%, transparent) 45%,' +
-            ' color-mix(in oklab, var(--color-accent-secondary) 8%, transparent))',
+            ' color-mix(in oklab, var(--color-background-primary) 90%, transparent),' +
+            ' color-mix(in oklab, var(--color-accent-primary) 16%, transparent) 55%,' +
+            ' color-mix(in oklab, var(--color-accent-secondary) 12%, transparent))',
         }}
       />
       {/* Iridescent bottom hairline */}
@@ -154,7 +155,7 @@ export function SiteHeader() {
                 <a
                   key={link.href}
                   href={localizedHref}
-                  className="nav-link group relative inline-block py-1 text-white/90 font-semibold transition-colors duration-300 ease-out"
+                  className="nav-link group relative inline-block py-1 text-[var(--color-text-primary)] font-semibold transition-colors duration-300 ease-out"
                 >
                   <span className="relative z-10 transition-all duration-300 ease-out group-hover:bg-gradient-to-r group-hover:from-accent-primary group-hover:to-accent-secondary group-hover:bg-clip-text group-hover:text-transparent">
                     {link.label}
@@ -167,7 +168,7 @@ export function SiteHeader() {
               <Link
                 key={link.href}
                 href={localizedHref as Route}
-                className="nav-link group relative inline-block py-1 text-white/90 font-semibold transition-colors duration-300 ease-out"
+                className="nav-link group relative inline-block py-1 text-[var(--color-text-primary)] font-semibold transition-colors duration-300 ease-out"
               >
                 <span className="relative z-10 transition-all duration-300 ease-out group-hover:bg-gradient-to-r group-hover:from-accent-primary group-hover:to-accent-secondary group-hover:bg-clip-text group-hover:text-transparent">
                   {link.label}
@@ -183,7 +184,7 @@ export function SiteHeader() {
           {/* GitHub repo CTA (prominent with subtle hover) */}
           <a
             href="https://github.com/framersai/agentos"
-            className="relative hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-border-subtle text-white/90 hover:text-accent-primary transition-all duration-300 hover:-translate-y-0.5 group"
+            className="relative hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-border-subtle text-[var(--color-text-primary)] hover:text-accent-primary transition-all duration-300 hover:-translate-y-0.5 group"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open AgentOS on GitHub"
@@ -210,7 +211,7 @@ export function SiteHeader() {
           {/* Frame.dev CTA - Better styled with high contrast */}
           <a
             href="https://frame.dev"
-            className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-xl text-white text-sm font-semibold transition-all duration-300 group border border-border-subtle"
+            className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-xl text-[var(--color-text-on-accent)] text-sm font-semibold transition-all duration-300 group border border-border-subtle"
             target="_blank"
             rel="noopener noreferrer"
             style={{ background: 'linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary))' }}

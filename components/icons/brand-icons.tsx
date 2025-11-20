@@ -1,9 +1,9 @@
 /**
- * Custom Animated SVG Icons for Enterprise Section
+ * Custom Animated SVG Icons for Brand Section
  * 
  * Each icon features:
  * - Gradient strokes with animated shifts
- * - Intricate silhouettes matching enterprise themes
+ * - Intricate silhouettes matching brand themes
  * - Respects prefers-reduced-motion
  * - Auto-adapts to light/dark mode via CSS variables
  */
@@ -29,8 +29,8 @@ export const ShieldIcon: React.FC<IconProps> = ({ className = '', id = 'shield' 
   >
     <defs>
       <linearGradient id={`${id}-grad`} x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="var(--color-enterprise-from)" className="animate-hue-shift" />
-        <stop offset="100%" stopColor="var(--color-enterprise-to)" className="animate-hue-shift-delay" />
+        <stop offset="0%" stopColor="var(--color-accent-secondary)" className="animate-hue-shift" />
+        <stop offset="100%" stopColor="var(--color-accent-primary)" className="animate-hue-shift-delay" />
       </linearGradient>
     </defs>
     
@@ -77,8 +77,8 @@ export const LockIcon: React.FC<IconProps> = ({ className = '', id = 'lock' }) =
   >
     <defs>
       <linearGradient id={`${id}-grad`} x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="var(--color-enterprise-from)" className="animate-hue-shift" />
-        <stop offset="100%" stopColor="var(--color-enterprise-to)" className="animate-hue-shift-delay" />
+        <stop offset="0%" stopColor="var(--color-accent-secondary)" className="animate-hue-shift" />
+        <stop offset="100%" stopColor="var(--color-accent-primary)" className="animate-hue-shift-delay" />
       </linearGradient>
     </defs>
     
@@ -121,7 +121,7 @@ export const LockIcon: React.FC<IconProps> = ({ className = '', id = 'lock' }) =
 );
 
 /**
- * Certificate icon - SOC2 / Compliance
+ * Certificate icon - Compliance
  * Ribbon badge with seal
  */
 export const CertificateIcon: React.FC<IconProps> = ({ className = '', id = 'cert' }) => (
@@ -134,8 +134,8 @@ export const CertificateIcon: React.FC<IconProps> = ({ className = '', id = 'cer
   >
     <defs>
       <linearGradient id={`${id}-grad`} x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="var(--color-enterprise-from)" className="animate-hue-shift" />
-        <stop offset="100%" stopColor="var(--color-enterprise-to)" className="animate-hue-shift-delay" />
+        <stop offset="0%" stopColor="var(--color-accent-secondary)" className="animate-hue-shift" />
+        <stop offset="100%" stopColor="var(--color-accent-primary)" className="animate-hue-shift-delay" />
       </linearGradient>
     </defs>
     
@@ -203,8 +203,8 @@ export const GraphIcon: React.FC<IconProps> = ({ className = '', id = 'graph' })
   >
     <defs>
       <linearGradient id={`${id}-grad`} x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="var(--color-enterprise-from)" className="animate-hue-shift" />
-        <stop offset="100%" stopColor="var(--color-enterprise-to)" className="animate-hue-shift-delay" />
+        <stop offset="0%" stopColor="var(--color-accent-secondary)" className="animate-hue-shift" />
+        <stop offset="100%" stopColor="var(--color-accent-primary)" className="animate-hue-shift-delay" />
       </linearGradient>
     </defs>
     
@@ -241,7 +241,7 @@ export const GraphIcon: React.FC<IconProps> = ({ className = '', id = 'graph' })
 );
 
 /**
- * Skyline icon - Enterprise Scale
+ * Skyline icon - Scale
  * Stylized city skyline
  */
 export const SkylineIcon: React.FC<IconProps> = ({ className = '', id = 'skyline' }) => (
@@ -254,8 +254,8 @@ export const SkylineIcon: React.FC<IconProps> = ({ className = '', id = 'skyline
   >
     <defs>
       <linearGradient id={`${id}-grad`} x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="var(--color-enterprise-from)" className="animate-hue-shift" />
-        <stop offset="100%" stopColor="var(--color-enterprise-to)" className="animate-hue-shift-delay" />
+        <stop offset="0%" stopColor="var(--color-accent-secondary)" className="animate-hue-shift" />
+        <stop offset="100%" stopColor="var(--color-accent-primary)" className="animate-hue-shift-delay" />
       </linearGradient>
     </defs>
     
@@ -300,8 +300,8 @@ export const DocumentCheckIcon: React.FC<IconProps> = ({ className = '', id = 'd
   >
     <defs>
       <linearGradient id={`${id}-grad`} x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="var(--color-enterprise-from)" className="animate-hue-shift" />
-        <stop offset="100%" stopColor="var(--color-enterprise-to)" className="animate-hue-shift-delay" />
+        <stop offset="0%" stopColor="var(--color-accent-secondary)" className="animate-hue-shift" />
+        <stop offset="100%" stopColor="var(--color-accent-primary)" className="animate-hue-shift-delay" />
       </linearGradient>
     </defs>
     

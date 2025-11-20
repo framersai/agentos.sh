@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { HeroSectionRedesigned } from '../../components/sections/hero-section-redesigned'
 import { ProductCardsRedesigned } from '../../components/sections/product-cards-redesigned'
-import { EnterpriseSkyline as SkylineSection } from '../../components/sections/enterprise-skyline'
+import { SkylineSection } from '../../components/sections/skyline-section'
 import { CodePopover } from '../../components/ui/code-popover'
 import { CTASection } from '../../components/sections/cta-section'
 import dynamic from 'next/dynamic'
@@ -21,7 +21,7 @@ import {
 
 // Lazy load the animated background
 const AnimatedBackgroundLazy = dynamic(
-  () => import('../../components/ui/premium-animated-background').then(m => m.PremiumAnimatedBackground),
+  () => import('../../components/ui/animated-background').then(m => m.AnimatedBackground),
   { ssr: false }
 )
 
