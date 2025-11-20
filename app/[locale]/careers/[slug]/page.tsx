@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { ChevronLeft, MapPin, Clock, Briefcase } from 'lucide-react';
 import Link from 'next/link';
+import { locales } from '../../../../../i18n';
 
 interface Props {
   params: {
@@ -14,9 +15,13 @@ interface Props {
 
 export async function generateStaticParams() {
   const jobs = getAllJobs();
-  return jobs.map((job) => ({
-    slug: job.slug,
-  }));
+  // Generate paths for every supported locale and every job
+  return locales.flatMap((locale) =>
+    jobs.map((job) => ({
+      locale,
+      slug: job.slug,
+    }))
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

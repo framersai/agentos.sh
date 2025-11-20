@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
+import { locales } from '../../../../../i18n';
 
 interface Props {
   params: {
@@ -14,9 +15,13 @@ interface Props {
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  // Generate paths for every supported locale and every post
+  return locales.flatMap((locale) =>
+    posts.map((post) => ({
+      locale,
+      slug: post.slug,
+    }))
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
