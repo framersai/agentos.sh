@@ -169,8 +169,8 @@ export function HeroSectionRedesigned() {
           }}
         />
         {/* Large translucent logo - adjusted for responsiveness */}
-        <div className="pointer-events-none absolute right-0 sm:right-[-5%] top-[65%] sm:top-[60%] -translate-y-1/2 opacity-20 sm:opacity-30 z-0 mix-blend-screen overflow-hidden sm:overflow-visible">
-          <div className="w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] animate-slow-spin scale-[1.2] origin-center translate-x-1/3 sm:translate-x-0">
+        <div className="pointer-events-none absolute right-[-10%] sm:right-[-5%] top-[50%] sm:top-[60%] -translate-y-1/2 opacity-20 sm:opacity-30 z-0 mix-blend-screen overflow-hidden sm:overflow-visible">
+          <div className="w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] animate-slow-spin scale-[1.0] sm:scale-[1.2] origin-center translate-x-1/4 sm:translate-x-0">
             <AnimatedAgentOSLogo />
           </div>
         </div>
@@ -220,34 +220,46 @@ export function HeroSectionRedesigned() {
               >
                 {/* Morphing first word */}
                 <span className="inline-block relative align-baseline">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={`head-a-${headIdxA}`}
-                      initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                      exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                      className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
-                    >
-                      {cycleWords[headIdxA]}
-                    </motion.span>
-                  </AnimatePresence>
+                  {isMounted ? (
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={`head-a-${headIdxA}`}
+                        initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
+                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                        className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                      >
+                        {cycleWords[headIdxA]}
+                      </motion.span>
+                    </AnimatePresence>
+                  ) : (
+                    <span className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-0">
+                       {cycleWords[0]}
+                    </span>
+                  )}
                 </span>
                 {' intelligence for '}
                 {/* Morphing last word */}
                 <span className="inline-block relative align-baseline">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={`head-b-${headIdxB}`}
-                      initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                      exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
-                      className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
-                    >
-                      {cycleWordsTail[headIdxB]}
-                    </motion.span>
-                  </AnimatePresence>
+                  {isMounted ? (
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={`head-b-${headIdxB}`}
+                        initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
+                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                        className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                      >
+                        {cycleWordsTail[headIdxB]}
+                      </motion.span>
+                    </AnimatePresence>
+                  ) : (
+                     <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-0">
+                        {cycleWordsTail[0]}
+                     </span>
+                  )}
                 </span>
                 {' agents'}
               </h1>
