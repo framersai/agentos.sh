@@ -27,7 +27,7 @@ export function HeroSectionRedesigned() {
   const prefersReducedMotion = useReducedMotion();
   const isDark = resolvedTheme === 'dark';
 
-  // Apply visual theme based on current theme selection
+  // Apply visual theme based on current theme selection - now runs immediately to prevent flash
   useEffect(() => {
     const themeMap = {
       'sakura-sunset': 'sakura-sunset',
@@ -39,6 +39,10 @@ export function HeroSectionRedesigned() {
     const mappedTheme = themeMap[currentTheme as keyof typeof themeMap] || 'aurora-daybreak';
     applyVisualTheme(mappedTheme, isDark);
   }, [currentTheme, isDark]);
+
+  // Show skeleton while waiting for client-side hydration if needed
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => setIsMounted(true), []);
 
   // Live stats with GitHub data only
   const productStats = useMemo(() => {
@@ -122,6 +126,7 @@ export function HeroSectionRedesigned() {
   const copyCommand = useCallback(() => {
     navigator.clipboard.writeText('npm install agentos');
     setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000); // Auto-hide toast
   }, []);
 
   const technicalHighlights = [

@@ -152,32 +152,32 @@ export function SiteHeader() {
             const hasHash = localizedHref.includes('#');
             if (isExternal || hasHash) {
               return (
-                <a
+                  <a
+                    key={link.href}
+                    href={localizedHref}
+                    className="nav-link group relative inline-block py-1 text-[var(--color-text-primary)] font-semibold transition-colors duration-300 ease-out"
+                  >
+                    <span className="relative z-10 transition-all duration-300 ease-out group-hover:text-accent-primary">
+                      {link.label}
+                    </span>
+                    <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-accent-primary to-accent-secondary transition-all duration-500 ease-out group-hover:w-full" />
+                  </a>
+                );
+              }
+              return (
+                <Link
                   key={link.href}
-                  href={localizedHref}
+                  href={localizedHref as Route}
                   className="nav-link group relative inline-block py-1 text-[var(--color-text-primary)] font-semibold transition-colors duration-300 ease-out"
                 >
-                  <span className="relative z-10 transition-all duration-300 ease-out group-hover:bg-gradient-to-r group-hover:from-accent-primary group-hover:to-accent-secondary group-hover:bg-clip-text group-hover:text-transparent">
+                  <span className="relative z-10 transition-all duration-300 ease-out group-hover:text-accent-primary">
                     {link.label}
                   </span>
                   <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-accent-primary to-accent-secondary transition-all duration-500 ease-out group-hover:w-full" />
-                </a>
+                </Link>
               );
-            }
-            return (
-              <Link
-                key={link.href}
-                href={localizedHref as Route}
-                className="nav-link group relative inline-block py-1 text-[var(--color-text-primary)] font-semibold transition-colors duration-300 ease-out"
-              >
-                <span className="relative z-10 transition-all duration-300 ease-out group-hover:bg-gradient-to-r group-hover:from-accent-primary group-hover:to-accent-secondary group-hover:bg-clip-text group-hover:text-transparent">
-                  {link.label}
-                </span>
-                <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-accent-primary to-accent-secondary transition-all duration-500 ease-out group-hover:w-full" />
-              </Link>
-            );
-          })}
-        </nav>
+            })}
+          </nav>
 
         {/* Right side actions */}
         <div className="flex items-center gap-2">

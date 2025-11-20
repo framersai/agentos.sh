@@ -28,7 +28,7 @@ export default function ScrollToTopButton() {
       onClick={scrollToTop}
       aria-label="Scroll back to top"
       className={clsx(
-        "fixed bottom-6 right-6 z-50",
+        "fixed bottom-6 right-6 z-[110]", // z-index increased to be above GDPR banner (z-[100])
         "inline-flex h-12 w-12 items-center justify-center",
         "rounded-full",
         "border border-[var(--color-border-subtle)]",
