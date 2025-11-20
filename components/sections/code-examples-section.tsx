@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Copy, Check, Terminal, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
+import { Copy, Check, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 interface CodeExample {

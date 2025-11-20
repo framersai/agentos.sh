@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   AlertTriangle,
   CheckCircle,
-  Building,
+  // Building,
   Cpu,
   Database,
   Globe
