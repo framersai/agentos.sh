@@ -28,7 +28,6 @@ interface ProductCard {
   features: string[]
   bgAnimation: 'neural' | 'flow' | 'pulse' | 'grid'
   accentColor: string
-  features: string[]
   capabilities: Array<{ name: string, icon?: React.ElementType }>
 }
 
