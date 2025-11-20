@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import { ThemeProvider } from '../../components/theme-provider';
 import { SiteHeader } from '../../components/site-header';
+import { CookieConsent } from '../../components/ui/cookie-consent';
 import ScrollToTopButton from '../../components/ScrollToTopButton';
 import { locales, type Locale } from '../../i18n';
 
@@ -140,6 +141,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <ThemeProvider>
+        <CookieConsent />
         <a href="#main-content" className="skip-to-content">Skip to content</a>
         <SiteHeader />
         {/* JSON-LD: Organization */}
