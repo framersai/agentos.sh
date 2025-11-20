@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { getAllPosts } from '@/lib/markdown';
 import { Metadata } from 'next';
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'AgentOS Blog - News & Insights',
     description: 'Latest news, updates, and insights about AgentOS, AI agents, and multi-agent orchestration.',
