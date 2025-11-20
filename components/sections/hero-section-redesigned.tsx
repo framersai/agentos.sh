@@ -188,22 +188,23 @@ export function HeroSectionRedesigned() {
 
       {/* Minimal particle system - CSS optimized */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {isMounted && !prefersReducedMotion && !isMobile && (
+        {isMounted && !prefersReducedMotion && (
           <>
-            {Array.from({ length: 8 }).map((_, i) => (
+            {Array.from({ length: isMobile ? 4 : 8 }).map((_, i) => (
               <div
                 key={i}
                 className="absolute rounded-full animate-float"
                 style={{
-                  width: i % 2 === 0 ? '4px' : '6px',
-                  height: i % 2 === 0 ? '4px' : '6px',
+                  width: i % 2 === 0 ? '3px' : '5px',
+                  height: i % 2 === 0 ? '3px' : '5px',
                   background: 'var(--color-accent-primary)',
-                  boxShadow: '0 0 10px var(--color-accent-primary)',
+                  boxShadow: '0 0 8px var(--color-accent-primary)',
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  opacity: 0.3 + Math.random() * 0.3,
-                  animationDuration: `${10 + Math.random() * 20}s`,
-                  animationDelay: `-${Math.random() * 10}s`
+                  opacity: 0.25 + Math.random() * 0.25,
+                  animationDuration: `${12 + Math.random() * 18}s`,
+                  animationDelay: `-${Math.random() * 10}s`,
+                  willChange: 'transform'
                 }}
               />
             ))}
@@ -220,7 +221,7 @@ export function HeroSectionRedesigned() {
               {/* Smooth word-swap headline */}
               <div className="relative overflow-hidden">
               <h1
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-left"
+                className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.15] sm:leading-[1.1] tracking-tight text-left"
                 style={{ fontFamily: 'var(--font-grotesk)' }}
               >
                 {/* Morphing first word */}
@@ -331,8 +332,8 @@ export function HeroSectionRedesigned() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-lg sm:text-xl text-muted max-w-3xl mb-8 text-left"
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="text-base sm:text-lg lg:text-xl text-[var(--color-text-secondary)] max-w-3xl mb-6 sm:mb-8 text-left px-2 sm:px-0"
           >
             {t('subtitle')}
           </motion.p>
@@ -342,7 +343,7 @@ export function HeroSectionRedesigned() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="inline-block mb-12"
+            className="inline-block mb-8 sm:mb-12 w-full sm:w-auto"
           >
             <div className="holographic-card p-6 sm:p-8">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
@@ -411,7 +412,7 @@ export function HeroSectionRedesigned() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.8 }}
-          className="flex flex-col sm:flex-row items-start gap-4 mb-12"
+          className="flex flex-col sm:flex-row items-stretch sm:items-start gap-4 mb-8 sm:mb-12 px-2 sm:px-0"
         >
           <LinkButton
             href={`/${locale === 'en' ? '' : locale + '/'}docs`}

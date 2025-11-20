@@ -93,11 +93,11 @@
     --holographic-shimmer: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.95) 50%, transparent 70%);
     
     /* Neumorphic Shadows (Light Mode - softer, more elegant borders) */
-    --neumorphic-light-shadow: 8px 8px 24px rgba(160, 170, 190, 0.15), -6px -6px 20px rgba(255, 255, 255, 1);
-    --neumorphic-dark-shadow: 4px 4px 10px rgba(160, 170, 190, 0.1);
-    --neumorphic-inset-light: inset 4px 4px 8px rgba(160, 170, 190, 0.08), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
-    --neumorphic-glow-soft: 0 0 20px rgba(var(--color-accent-primary-rgb), 0.2);
-    --neumorphic-glow-intense: 0 0 35px rgba(var(--color-accent-primary-rgb), 0.4);
+    --neumorphic-light-shadow: 0 4px 12px rgba(160, 170, 190, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+    --neumorphic-dark-shadow: 0 2px 6px rgba(160, 170, 190, 0.08);
+    --neumorphic-inset-light: inset 2px 2px 4px rgba(160, 170, 190, 0.06), inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+    --neumorphic-glow-soft: 0 0 20px rgba(99, 102, 241, 0.25);
+    --neumorphic-glow-intense: 0 0 35px rgba(99, 102, 241, 0.4);
 
     /* Glass - with better contrast */
     --glass-surface: rgba(252, 253, 255, 0.92);
@@ -141,12 +141,13 @@
     --color-background-elevated: hsl(240, 18%, 10%);
 
     /* Text: Crisp white, soft gray-blues */
-    --color-text-primary: hsl(220, 30%, 99%); /* Brighter white */
-    --color-text-secondary: hsl(220, 20%, 85%); /* Lighter secondary */
-    --color-text-muted: hsl(220, 15%, 70%); /* Lighter muted for readability */
-    --color-text-placeholder: hsl(220, 10%, 55%);
-    --color-text-contrast: hsl(0, 0%, 100%); /* Keep white on accents in dark mode too */
-    --color-text-link: hsl(250, 100%, 80%); /* Lighter violet for dark mode */
+    --color-text-primary: hsl(220, 30%, 98%); /* High contrast white */
+    --color-text-secondary: hsl(220, 25%, 88%); /* Better readability */
+    --color-text-muted: hsl(220, 20%, 75%); /* Improved visibility */
+    --color-text-placeholder: hsl(220, 15%, 60%);
+    --color-text-contrast: hsl(0, 0%, 100%); /* Pure white for accents */
+    --color-text-on-accent: hsl(0, 0%, 100%); /* Ensure white on accent colors */
+    --color-text-link: hsl(250, 100%, 82%); /* Brighter violet for dark mode */
 
     /* Accents: Neon, Glowing, Electric */
     --color-accent-primary: hsl(250, 100%, 70%);
@@ -316,7 +317,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     letter-spacing: -0.03em;
-    color: var(--color-text-primary);
+    color: var(--color-text-primary) !important;
     margin-bottom: 1.5rem;
     position: relative;
     display: inline-block;
@@ -407,6 +408,19 @@
   /* Glow Utilities */
   .glow-text { text-shadow: 0 0 20px var(--color-accent-primary); }
   .glow-box { box-shadow: 0 0 30px var(--color-glow-primary); }
+  
+  /* Text color utilities with important flag for consistency */
+  .text-primary { color: var(--color-text-primary) !important; }
+  .text-secondary { color: var(--color-text-secondary) !important; }
+  .text-muted { color: var(--color-text-muted) !important; }
+  
+  /* Glass morphism utility */
+  .glass-morphism {
+    background: var(--glass-surface);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+  }
 }
 
 /* --- Scrollbar --- */

@@ -1,0 +1,81 @@
+/* Critical CSS for above-the-fold content */
+/* This should be inlined in the HTML head for faster initial paint */
+
+:root {
+  /* Essential color variables for immediate rendering */
+  --color-background-primary: hsl(220, 30%, 98%);
+  --color-text-primary: hsl(222, 47%, 8%);
+  --color-accent-primary: hsl(250, 95%, 55%);
+}
+
+.dark {
+  --color-background-primary: hsl(240, 20%, 3%);
+  --color-text-primary: hsl(220, 30%, 98%);
+  --color-accent-primary: hsl(250, 100%, 70%);
+}
+
+/* Prevent layout shift */
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+/* Hero section immediate styles */
+.hero-critical {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+.gradient-text {
+  background: linear-gradient(135deg, #6366F1, #EC4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Loading skeleton for dynamic content */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(200, 200, 200, 0.1) 0%,
+    rgba(200, 200, 200, 0.2) 50%,
+    rgba(200, 200, 200, 0.1) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Mobile-first responsive utilities */
+@media (max-width: 640px) {
+  .hero-critical {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
