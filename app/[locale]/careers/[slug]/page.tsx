@@ -94,4 +94,3 @@ export default function JobPostPage({ params }: Props) {
     </div>
   );
 }
-
