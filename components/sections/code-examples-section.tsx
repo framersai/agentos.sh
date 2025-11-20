@@ -570,8 +570,8 @@ volumes:
               }}
               className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
                 activeExample.id !== 'streaming' 
-                  ? 'bg-[var(--color-accent-primary)] text-white shadow-md' 
-                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
+                  ? 'bg-[var(--color-accent-primary)] text-[var(--color-text-on-accent)] shadow-md' 
+                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] bg-[var(--color-background-elevated)]'
               }`}
             >
               {t('tabs.synchronous')}
@@ -582,8 +582,8 @@ volumes:
               }}
               className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
                 activeExample.id === 'streaming' 
-                  ? 'bg-[var(--color-accent-primary)] text-white shadow-md' 
-                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
+                  ? 'bg-[var(--color-accent-primary)] text-[var(--color-text-on-accent)] shadow-md' 
+                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] bg-[var(--color-background-elevated)]'
               }`}
             >
               {t('tabs.streaming')}

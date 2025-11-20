@@ -52,12 +52,14 @@ export function CookieConsent() {
               <button
                 onClick={accept}
                 className="flex-1 py-2 px-4 bg-accent-primary hover:bg-accent-hover text-white text-xs font-bold rounded-lg transition-colors"
+                aria-label="Accept all cookies"
               >
                 Accept All
               </button>
               <button
                 onClick={() => setShow(false)}
                 className="flex-1 py-2 px-4 bg-white/5 hover:bg-white/10 text-xs font-bold rounded-lg transition-colors border border-white/10"
+                aria-label="Decline cookies"
               >
                 Decline
               </button>

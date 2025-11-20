@@ -25,14 +25,14 @@ export async function resolveLocaleMetadata(locale: Locale) {
     description: t('description'),
     metadataBase: new URL('https://agentos.sh'),
     alternates: {
-      canonical: locale === 'en' ? 'https://agentos.sh' : `https://agentos.sh/${locale}`,
+      canonical: locale === 'en' ? '/' : `/${locale}`,
       languages: {
-        'en': 'https://agentos.sh',
-        'zh': 'https://agentos.sh/zh',
-        'ko': 'https://agentos.sh/ko',
-        'ja': 'https://agentos.sh/ja',
-        'es': 'https://agentos.sh/es',
-        'de': 'https://agentos.sh/de',
+        'en': '/en',
+        'zh': '/zh',
+        'ko': '/ko',
+        'ja': '/ja',
+        'es': '/es',
+        'de': '/de',
       },
     },
     keywords: [
@@ -88,6 +88,7 @@ export async function resolveLocaleMetadata(locale: Locale) {
         { url: '/icon-256.png', sizes: '256x256', type: 'image/png' },
         { url: '/icon-512.png', sizes: '512x512', type: 'image/png' }
       ],
+      shortcut: [{ url: '/favicon.svg' }],
       apple: [
         { url: '/icon-256.png', sizes: '256x256', type: 'image/png' }
       ]

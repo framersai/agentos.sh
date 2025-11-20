@@ -20,6 +20,7 @@ interface ProductCard {
   description: string
   icon: React.ElementType
   stats: Array<{
+    id?: string
     label: string
     value: string | number
     trend?: number
@@ -40,9 +41,9 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.adaptive.description'),
       icon: Brain,
       stats: [
-        { label: 'Context Window', value: '128k', trend: 0 },
-        { label: 'Inference Latency', value: '< 40ms' },
-        { label: 'Active Personas', value: 14, live: true }
+        { label: t('stats.contextWindow'), value: '128k', trend: 0 },
+        { label: t('stats.inferenceLatency'), value: '< 40ms' },
+        { id: 'active-models', label: t('stats.activePersonas'), value: 14, live: true }
       ],
       features: ['Real-time learning', 'Context retention', 'Behavioral adaptation'],
       bgAnimation: 'neural',
@@ -59,9 +60,9 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.distributed.description'),
       icon: Layers,
       stats: [
-        { label: 'Parallel Tasks', value: 512, live: true },
-        { label: 'Task Throughput', value: '50k/s', trend: 18 },
-        { label: 'Orchestration Overhead', value: '< 2ms' }
+        { id: 'concurrent-tasks', label: t('stats.parallelTasks'), value: 512, live: true },
+        { label: t('stats.taskThroughput'), value: '50k/s', trend: 18 },
+        { label: t('stats.orchestrationOverhead'), value: '< 2ms' }
       ],
       features: ['Load balancing', 'Auto-scaling', 'Fault tolerance'],
       bgAnimation: 'flow',
@@ -78,9 +79,9 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.memory.description'),
       icon: Database,
       stats: [
-        { label: 'Vector Capacity', value: '1B+', trend: 0 },
-        { label: 'Retrieval Speed', value: '< 5ms' },
-        { label: 'Compression Ratio', value: '100:1' }
+        { label: t('stats.vectorCapacity'), value: '1B+', trend: 0 },
+        { label: t('stats.retrievalSpeed'), value: '< 5ms' },
+        { label: t('stats.compressionRatio'), value: '100:1' }
       ],
       features: ['Vector embeddings', 'Semantic search', 'Version control'],
       bgAnimation: 'grid',
@@ -97,9 +98,9 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.streaming.description'),
       icon: Zap,
       stats: [
-        { label: 'End-to-End Latency', value: '< 100ms', trend: -8 },
-        { label: 'Stream Bandwidth', value: '10 Gbps' },
-        { label: 'Connection Stability', value: '99.99%', live: true }
+        { label: t('stats.endToEndLatency'), value: '< 100ms', trend: -8 },
+        { label: t('stats.streamBandwidth'), value: '10 Gbps' },
+        { id: 'uptime', label: t('stats.connectionStability'), value: '99.99%', live: true }
       ],
       features: ['WebSocket support', 'Event-driven', 'Buffering'],
       bgAnimation: 'pulse',
@@ -198,6 +199,7 @@ function AnimatedSVGBackground({ type, color }: { type: string; color: string })
             stroke="url(#flowGradient)"
             strokeWidth="2"
             fill="none"
+            opacity="0.7"
           />
         ))}
       </svg>
@@ -335,29 +337,30 @@ export function ProductCardsRedesigned() {
 
                       {/* Stats */}
                       <div className="space-y-3 mt-auto">
-                        {card.stats.map((stat, i) => (
-                          <div key={i} className="flex items-center justify-between bg-white/5 p-2 rounded-lg border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
-                            <span className="text-xs font-bold text-[var(--color-text-secondary)]">{stat.label}</span>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-bold tracking-tight text-[var(--color-text-primary)]">
-                                {stat.live && liveData[stat.label.toLowerCase().replace(' ', '-')]
-                                  ? liveData[stat.label.toLowerCase().replace(' ', '-')]
-                                  : stat.value}
-                              </span>
-                              {stat.trend && (
-                                <span className={`text-xs font-semibold ${stat.trend > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
-                                  {stat.trend > 0 ? '↑' : '↓'} {Math.abs(stat.trend)}%
+                        {card.stats.map((stat, i) => {
+                          const liveValue = stat.live && stat.id && liveData[stat.id] ? liveData[stat.id] : null
+                          return (
+                            <div key={i} className="flex items-center justify-between bg-[var(--color-background-primary)]/50 dark:bg-white/5 p-2 rounded-lg border border-[var(--color-border-subtle)] backdrop-blur-sm hover:bg-[var(--color-background-secondary)] transition-colors">
+                              <span className="text-xs font-bold text-[var(--color-text-secondary)]">{stat.label}</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-bold tracking-tight text-[var(--color-text-primary)]">
+                                  {liveValue || stat.value}
                                 </span>
-                              )}
-                              {stat.live && (
-                                <span className="relative flex h-2 w-2">
-                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                                </span>
-                              )}
+                                {stat.trend && (
+                                  <span className={`text-xs font-semibold ${stat.trend > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                    {stat.trend > 0 ? '↑' : '↓'} {Math.abs(stat.trend)}%
+                                  </span>
+                                )}
+                                {stat.live && (
+                                  <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                  </span>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          )
+                        })}
                       </div>
                     </div>
                   </div>

@@ -161,9 +161,9 @@ export function HeroSectionRedesigned() {
               transparent 50%)`
           }}
         />
-        {/* Large translucent logo on the right side - repositioned and sized better */}
-        <div className="pointer-events-none absolute right-0 top-[60%] -translate-y-1/2 opacity-30 z-0 mix-blend-screen overflow-visible">
-          <div className="w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] animate-slow-spin scale-[1.2] origin-center">
+        {/* Large translucent logo - adjusted for responsiveness */}
+        <div className="pointer-events-none absolute right-0 sm:right-[-5%] top-[65%] sm:top-[60%] -translate-y-1/2 opacity-20 sm:opacity-30 z-0 mix-blend-screen overflow-hidden sm:overflow-visible">
+          <div className="w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] animate-slow-spin scale-[1.2] origin-center translate-x-1/3 sm:translate-x-0">
             <AnimatedAgentOSLogo />
           </div>
         </div>
@@ -204,13 +204,7 @@ export function HeroSectionRedesigned() {
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_0.6fr] items-start gap-10 mb-12">
             {/* Headline block */}
             <div className="order-1">
-              {/* Compact mark beside headline on mobile only (avoid double logo on desktop) */}
-              <div className="sm:hidden mb-4">
-                <div className="relative w-16 h-16 opacity-80">
-                  <AnimatedAgentOSLogo />
-                </div>
-              </div>
-
+              
               {/* Smooth word-swap headline */}
               <div className="relative overflow-hidden">
               <h1
@@ -322,9 +316,9 @@ export function HeroSectionRedesigned() {
             >
               <div className="relative">
                 <div className="absolute -top-1 -left-1 w-full h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <h3 className="font-semibold mb-2 text-sm sm:text-base gradient-text">
+                <h2 className="font-semibold mb-2 text-sm sm:text-base gradient-text">
                   {highlight.title}
-                </h3>
+                </h2>
                 <p className="text-xs sm:text-sm text-muted">
                   {highlight.detail}
                 </p>

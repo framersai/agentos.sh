@@ -72,6 +72,9 @@
     --color-border-interactive: hsl(250, 95%, 64%);
     --color-border-hover: hsl(250, 95%, 80%);
 
+    /* Backgrounds: Elevated Surface for Cards */
+    --color-background-elevated: hsl(0, 0%, 100%);
+
     /* States */
     --color-success: hsl(150, 100%, 35%);
     --color-warning: hsl(40, 100%, 50%);
@@ -135,6 +138,7 @@
     --color-background-glass: hsla(240, 20%, 3%, 0.8);
     --color-background-card: hsl(240, 18%, 5%);
     --color-background-amber: hsl(30, 30%, 10%);
+    --color-background-elevated: hsl(240, 18%, 10%);
 
     /* Text: Crisp white, soft gray-blues */
     --color-text-primary: hsl(220, 30%, 98%);
