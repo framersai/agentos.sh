@@ -13,6 +13,8 @@ interface Props {
   };
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const jobs = getAllJobs();
   // Generate paths for every supported locale and every job

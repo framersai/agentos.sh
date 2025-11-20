@@ -2,7 +2,20 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const contentDirectory = path.join(process.cwd(), 'apps/agentos.sh/content');
+const contentDirectory = (() => {
+  const pathsToTry = [
+    path.join(process.cwd(), 'apps/agentos.sh/content'),
+    path.join(process.cwd(), 'content')
+  ];
+  
+  for (const p of pathsToTry) {
+    if (fs.existsSync(p)) {
+      return p;
+    }
+  }
+  
+  return pathsToTry[0];
+})();
 
 export interface Post {
   slug: string;
