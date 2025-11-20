@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import { locales } from '../../../../../i18n';
+import { locales } from '@/i18n';
 
 interface Props {
   params: {
