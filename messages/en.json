@@ -138,7 +138,12 @@
     "title": "Ready to Build Adaptive AI Agents?",
     "description": "Join developers building the next generation of intelligent systems with AgentOS.",
     "getStarted": "Get Started",
-    "talkToUs": "Talk to Us"
+    "talkToUs": "Talk to Us",
+    "badge": "Join the AI Revolution",
+    "exploreLabel": "Or explore AgentOS today:",
+    "tryVoiceChat": "Try Voice Chat",
+    "browseCode": "Browse Code",
+    "marketplace": "Marketplace"
   },
   "LanguageSwitcher": {
     "switchLanguage": "Switch language",
@@ -150,6 +155,20 @@
   "productCards": {
     "title": "Core Capabilities",
     "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
+    "stats": {
+      "contextWindow": "Context Window",
+      "inferenceLatency": "Inference Latency",
+      "activePersonas": "Active Personas",
+      "parallelTasks": "Parallel Tasks",
+      "taskThroughput": "Task Throughput",
+      "orchestrationOverhead": "Orchestration Overhead",
+      "vectorCapacity": "Vector Capacity",
+      "retrievalSpeed": "Retrieval Speed",
+      "compressionRatio": "Compression Ratio",
+      "endToEndLatency": "End-to-End Latency",
+      "streamBandwidth": "Stream Bandwidth",
+      "connectionStability": "Connection Stability"
+    },
     "cards": {
       "adaptive": {
         "title": "Adaptive Intelligence",

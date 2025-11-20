@@ -51,14 +51,14 @@ export function CookieConsent() {
             <div className="flex gap-2">
               <button
                 onClick={accept}
-                className="flex-1 py-2 px-4 bg-accent-primary hover:bg-accent-hover text-white text-xs font-bold rounded-lg transition-colors"
+                className="flex-1 py-2 px-4 bg-accent-primary hover:bg-accent-hover text-white text-xs font-bold rounded-lg transition-colors shadow-md"
                 aria-label="Accept all cookies"
               >
                 Accept All
               </button>
               <button
                 onClick={() => setShow(false)}
-                className="flex-1 py-2 px-4 bg-white/5 hover:bg-white/10 text-xs font-bold rounded-lg transition-colors border border-white/10"
+                className="flex-1 py-2 px-4 bg-[var(--color-background-secondary)] hover:bg-[var(--color-background-tertiary)] text-[var(--color-text-primary)] border border-[var(--color-border-subtle)] text-xs font-bold rounded-lg transition-colors"
                 aria-label="Decline cookies"
               >
                 Decline

@@ -223,6 +223,20 @@
         "title": "Echtzeit-Streaming",
         "description": "Ultra-niedrige Latenz-Eventarchitektur mit WebSocket-Unterstützung und 99,99% Verfügbarkeit"
       }
+    },
+    "stats": {
+      "contextWindow": "Context Window",
+      "inferenceLatency": "Inference Latency",
+      "activePersonas": "Active Personas",
+      "parallelTasks": "Parallel Tasks",
+      "taskThroughput": "Task Throughput",
+      "orchestrationOverhead": "Orchestration Overhead",
+      "vectorCapacity": "Vector Capacity",
+      "retrievalSpeed": "Retrieval Speed",
+      "compressionRatio": "Compression Ratio",
+      "endToEndLatency": "End-to-End Latency",
+      "streamBandwidth": "Stream Bandwidth",
+      "connectionStability": "Connection Stability"
     }
   },
   "enterprise": {
@@ -611,7 +625,96 @@
     "architectureTitle": "AgentOS Architecture (streaming)",
     "currentlySelected": "Currently selected",
     "exampleTitle": "Example",
-    "ctaExploreDocs": "Explore GMI Documentation"
+    "ctaExploreDocs": "Explore GMI Documentation",
+    "agents": {
+      "researcher": {
+        "name": "Researcher",
+        "description": "Discovers and analyzes information",
+        "persona": "curious, precise"
+      },
+      "analyst": {
+        "name": "Analyst",
+        "description": "Processes and interprets data",
+        "persona": "skeptical, methodical"
+      },
+      "creator": {
+        "name": "Creator",
+        "description": "Generates content and solutions",
+        "persona": "clear, persuasive"
+      },
+      "executor": {
+        "name": "Executor",
+        "description": "Takes actions and implements",
+        "persona": "reliable, action-oriented"
+      },
+      "orchestrator": {
+        "name": "Orchestrator",
+        "description": "Coordinates multi-agent tasks",
+        "persona": "balanced, gatekeeper"
+      },
+      "critic": {
+        "name": "Critic",
+        "description": "Reviews outputs and flags issues"
+      }
+    },
+    "snapshots": [
+      {
+        "useCase": "Route support + CRM updates",
+        "outcome": "Researcher gathers context, Analyst verifies facts, and Executor pushes the outcome into Salesforce or Linear automatically."
+      },
+      {
+        "useCase": "Safety-critical approvals",
+        "outcome": "Orchestrator enforces guardrails, memory logs every decision, and Event Stream keeps auditors in the loop for SOC2/GDPR."
+      },
+      {
+        "useCase": "RAG-powered expansion packs",
+        "outcome": "Creator + Executor personas adapt content by locale while Gateway throttles workloads and exports full runs as Markdown/JSON."
+      }
+    ],
+    "architecture": {
+      "ui": {
+        "label": "User Interfaces",
+        "subtitle": "Voice • Web • CLI",
+        "details": "Entrypoints where users speak, type, and automate tasks.",
+        "example": "Capture a voice prompt for a real‑time, fact‑checked briefing.",
+        "outcome": "Every interface streams into the same shared AgentOS memory and policy store."
+      },
+      "gateway": {
+        "label": "API Gateway",
+        "subtitle": "Auth • Rate‑limit",
+        "details": "Front door for requests; applies auth, quotas, and routing.",
+        "example": "Throttle bursty inputs; attach tenant identity to requests.",
+        "outcome": "Tenants, rate budgets, and approvals stay deterministic even when agents spawn in parallel."
+      },
+      "orchestrator": {
+        "label": "GMI Orchestrator",
+        "subtitle": "Routing • Guardrails",
+        "details": "Coordinates agent roles, tools, and safety policies.",
+        "example": "Parallelize research, analysis, creation, and critique.",
+        "outcome": "Adaptive and deterministic agency modes keep emergent intelligence auditable."
+      },
+      "agents": {
+        "label": "Agent Pool",
+        "subtitle": "Researcher • Analyst • Creator • Critic • Executor",
+        "details": "Specialized GMIs stream outputs; orchestrator merges.",
+        "example": "Researcher fetches sources while Analyst verifies claims.",
+        "outcome": "Each persona can be exported as Markdown/JSON capsules and ingested into other runtimes."
+      },
+      "memory": {
+        "label": "Memory System",
+        "subtitle": "Vector DB • Knowledge Graph",
+        "details": "Long‑term memory stores facts, embeddings, and relations.",
+        "example": "Semantic search recalls prior decisions and context.",
+        "outcome": "Zero-copy working, episodic, and vector layers keep adaptive and permanent intelligence aligned."
+      },
+      "events": {
+        "label": "Event Stream",
+        "subtitle": "Monitoring • Analytics",
+        "details": "Observability and compliance pipeline for every step.",
+        "example": "Emit spans for audits; alert on policy violations.",
+        "outcome": "Every action is replayable for SOC2, GDPR, and custom guardrails."
+      }
+    }
   },
   "about": {
     "hero": {

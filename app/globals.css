@@ -44,13 +44,13 @@
     --color-background-amber: hsl(35, 100%, 96%);
 
     /* Text: High contrast, deep blue-grays for readability */
-    --color-text-primary: hsl(222, 47%, 11%);
-    --color-text-secondary: hsl(220, 25%, 35%);
-    --color-text-muted: hsl(220, 15%, 50%);
-    --color-text-placeholder: hsl(220, 10%, 65%);
+    --color-text-primary: hsl(222, 47%, 10%); /* Darker for better contrast (WCAG AAA) */
+    --color-text-secondary: hsl(220, 25%, 30%);
+    --color-text-muted: hsl(220, 15%, 40%); /* Darker gray for legibility */
+    --color-text-placeholder: hsl(220, 10%, 55%);
     --color-text-contrast: hsl(0, 0%, 100%);
     --color-text-on-accent: hsl(0, 0%, 100%);
-    --color-text-link: hsl(250, 90%, 60%);
+    --color-text-link: hsl(250, 90%, 55%); /* Slightly darker violet for better link visibility */
 
     /* Accents: Electric Violet & Neon Cyan (adjusted for light mode visibility) */
     --color-accent-primary: hsl(250, 95%, 64%);
@@ -141,12 +141,12 @@
     --color-background-elevated: hsl(240, 18%, 10%);
 
     /* Text: Crisp white, soft gray-blues */
-    --color-text-primary: hsl(220, 30%, 98%);
-    --color-text-secondary: hsl(220, 20%, 80%);
-    --color-text-muted: hsl(220, 15%, 60%);
-    --color-text-placeholder: hsl(220, 10%, 45%);
+    --color-text-primary: hsl(220, 30%, 99%); /* Brighter white */
+    --color-text-secondary: hsl(220, 20%, 85%); /* Lighter secondary */
+    --color-text-muted: hsl(220, 15%, 70%); /* Lighter muted for readability */
+    --color-text-placeholder: hsl(220, 10%, 55%);
     --color-text-contrast: hsl(0, 0%, 100%); /* Keep white on accents in dark mode too */
-    --color-text-link: hsl(250, 100%, 75%);
+    --color-text-link: hsl(250, 100%, 80%); /* Lighter violet for dark mode */
 
     /* Accents: Neon, Glowing, Electric */
     --color-accent-primary: hsl(250, 100%, 70%);

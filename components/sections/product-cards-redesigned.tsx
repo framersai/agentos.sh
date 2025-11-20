@@ -309,9 +309,9 @@ export function ProductCardsRedesigned() {
               >
                 {/* FRONT FACE */}
                 <div className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden">
-                   <div className="holographic-card h-full p-6 flex flex-col border-2 border-white/10 group-hover:border-accent-primary/50 transition-colors shadow-xl">
+                   <div className="holographic-card h-full p-6 flex flex-col border-2 border-white/10 dark:border-white/10 border-[var(--color-border-subtle)] group-hover:border-accent-primary/50 transition-colors shadow-xl bg-[var(--color-background-glass)] backdrop-blur-xl">
                     {/* Background Animation */}
-                    <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-40">
+                    <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-30 dark:opacity-40">
                       <AnimatedSVGBackground type={card.bgAnimation} color={card.accentColor} />
                     </div>
 
@@ -333,7 +333,7 @@ export function ProductCardsRedesigned() {
 
                       {/* Title & Description */}
                       <h3 className="text-xl font-bold mb-2 tracking-tight text-[var(--color-text-primary)]">{card.title}</h3>
-                      <p className="text-sm text-[var(--color-text-muted)] mb-6 leading-relaxed font-medium">{card.description}</p>
+                      <p className="text-sm text-[var(--color-text-secondary)] mb-6 leading-relaxed font-medium">{card.description}</p>
 
                       {/* Stats */}
                       <div className="space-y-3 mt-auto">
@@ -341,13 +341,13 @@ export function ProductCardsRedesigned() {
                           const liveValue = stat.live && stat.id && liveData[stat.id] ? liveData[stat.id] : null
                           return (
                             <div key={i} className="flex items-center justify-between bg-[var(--color-background-primary)]/50 dark:bg-white/5 p-2 rounded-lg border border-[var(--color-border-subtle)] backdrop-blur-sm hover:bg-[var(--color-background-secondary)] transition-colors">
-                              <span className="text-xs font-bold text-[var(--color-text-secondary)]">{stat.label}</span>
+                              <span className="text-xs font-bold text-[var(--color-text-muted)]">{stat.label}</span>
                               <div className="flex items-center gap-2">
                                 <span className="text-sm font-bold tracking-tight text-[var(--color-text-primary)]">
                                   {liveValue || stat.value}
                                 </span>
                                 {stat.trend && (
-                                  <span className={`text-xs font-semibold ${stat.trend > 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                  <span className={`text-xs font-semibold ${stat.trend > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                                     {stat.trend > 0 ? '↑' : '↓'} {Math.abs(stat.trend)}%
                                   </span>
                                 )}
@@ -370,19 +370,19 @@ export function ProductCardsRedesigned() {
                 <div 
                   className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl overflow-hidden"
                 >
-                  <div className="holographic-card h-full p-8 flex flex-col items-center justify-center text-center border-2 border-accent-primary/30 bg-black/80 backdrop-blur-xl">
-                    <div className="absolute inset-0 opacity-20 bg-[url('/grid.svg')] bg-center" />
+                  <div className="holographic-card h-full p-8 flex flex-col items-center justify-center text-center border-2 border-accent-primary/30 bg-[var(--color-background-elevated)] backdrop-blur-xl">
+                    <div className="absolute inset-0 opacity-10 bg-[url('/grid.svg')] bg-center" />
                     
-                    <h4 className="text-lg font-bold mb-6 relative z-10">Powered By</h4>
+                    <h4 className="text-lg font-bold mb-6 relative z-10 text-[var(--color-text-primary)]">Powered By</h4>
                     
                     <div className="grid grid-cols-1 gap-4 w-full relative z-10">
                       {card.techStack.map((tech, i) => (
                         <div 
                           key={i}
-                          className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                          className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-background-secondary)] border border-[var(--color-border-subtle)] hover:border-[var(--color-border-interactive)] transition-colors"
                         >
                           {tech.icon && <tech.icon className="w-5 h-5 text-accent-primary" />}
-                          <span className="font-mono text-sm font-semibold">{tech.name}</span>
+                          <span className="font-mono text-sm font-semibold text-[var(--color-text-primary)]">{tech.name}</span>
                         </div>
                       ))}
                     </div>

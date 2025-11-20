@@ -20,17 +20,17 @@ export function CTASection() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 backdrop-blur-sm border border-accent-primary/20 mb-6">
             <Sparkles className="w-4 h-4 text-accent-primary" />
             <span className="text-sm font-medium bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-              Join the AI Revolution
+              {t('badge')}
             </span>
           </div>
 
-          <h2 className="text-5xl sm:text-6xl font-bold mb-6">
+            <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-[var(--color-text-primary)]">
             <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
               {t('title')}
             </span>
           </h2>
 
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto mb-12">
+          <p className="text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto mb-12">
             {t('description')}
           </p>
         </motion.div>
@@ -45,7 +45,7 @@ export function CTASection() {
           <div className="surface-card p-8 md:p-12">
             <div>
               <p className="text-sm text-text-primary text-center mb-6">
-                Or explore AgentOS today:
+                {t('exploreLabel')}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -54,7 +54,7 @@ export function CTASection() {
                   className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-glass)] backdrop-blur-xl rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-border-interactive)] transition-all duration-[var(--duration-fast)]"
                 >
                   <MessageCircle className="w-4 h-4 text-[var(--color-accent-primary)]" />
-                  <span className="text-sm">Try Voice Chat</span>
+                  <span className="text-sm">{t('tryVoiceChat')}</span>
                 </a>
 
                 <a
@@ -64,7 +64,7 @@ export function CTASection() {
                   className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-glass)] backdrop-blur-xl rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-border-interactive)] transition-all duration-[var(--duration-fast)]"
                 >
                   <Github className="w-4 h-4 text-[var(--color-accent-primary)]" />
-                  <span className="text-sm">Browse Code</span>
+                  <span className="text-sm">{t('browseCode')}</span>
                 </a>
 
                 <a
@@ -72,7 +72,7 @@ export function CTASection() {
                   className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-glass)] backdrop-blur-xl rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-border-interactive)] transition-all duration-[var(--duration-fast)]"
                 >
                   <Sparkles className="w-4 h-4 text-[var(--color-accent-primary)]" />
-                  <span className="text-sm">Marketplace</span>
+                  <span className="text-sm">{t('marketplace')}</span>
                 </a>
               </div>
             </div>

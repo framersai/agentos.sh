@@ -15,35 +15,35 @@ export function GMISection() {
   const [autoAgents, setAutoAgents] = useState<string[]>([])
 
   const agents = useMemo(() => ([
-    { id: 'researcher', name: 'Researcher', icon: Brain, description: 'Discovers and analyzes information',
+    { id: 'researcher', name: t('agents.researcher.name'), icon: Brain, description: t('agents.researcher.description'),
       examples: ['Web search and source ranking', 'Literature survey (PDFs, arXiv)', 'Fact extraction to memory'],
-      tools: ['WebBrowser', 'PDFReader', 'Search API'], persona: 'curious, precise' },
-    { id: 'analyst', name: 'Analyst', icon: Activity, description: 'Processes and interprets data',
+      tools: ['WebBrowser', 'PDFReader', 'Search API'], persona: t('agents.researcher.persona') },
+    { id: 'analyst', name: t('agents.analyst.name'), icon: Activity, description: t('agents.analyst.description'),
       examples: ['Summarize and compare sources', 'Quant/qual trend analysis', 'Sanity checks and flags'],
-      tools: ['DataFrame', 'Calculator', 'Validator'], persona: 'skeptical, methodical' },
-    { id: 'creator', name: 'Creator', icon: Code, description: 'Generates content and solutions',
+      tools: ['DataFrame', 'Calculator', 'Validator'], persona: t('agents.analyst.persona') },
+    { id: 'creator', name: t('agents.creator.name'), icon: Code, description: t('agents.creator.description'),
       examples: ['Drafts and revisions', 'Artifact generation (docs, code)', 'Style adaptation'],
-      tools: ['Writer', 'Formatter', 'TemplateKit'], persona: 'clear, persuasive' },
-    { id: 'executor', name: 'Executor', icon: Cpu, description: 'Takes actions and implements',
+      tools: ['Writer', 'Formatter', 'TemplateKit'], persona: t('agents.creator.persona') },
+    { id: 'executor', name: t('agents.executor.name'), icon: Cpu, description: t('agents.executor.description'),
       examples: ['Call external APIs', 'Create issues/PRs', 'Schedule tasks'],
-      tools: ['HTTP', 'GitHub', 'Scheduler'], persona: 'reliable, action-oriented' },
-    { id: 'orchestrator', name: 'Orchestrator', icon: Network, description: 'Coordinates multi-agent tasks',
+      tools: ['HTTP', 'GitHub', 'Scheduler'], persona: t('agents.executor.persona') },
+    { id: 'orchestrator', name: t('agents.orchestrator.name'), icon: Network, description: t('agents.orchestrator.description'),
       examples: ['Route tasks to roles', 'Resolve conflicts', 'Approve/reject gates'],
-      tools: ['Router', 'Guardrails', 'PolicyEngine'], persona: 'balanced, gatekeeper' }
-  ]), [])
+      tools: ['Router', 'Guardrails', 'PolicyEngine'], persona: t('agents.orchestrator.persona') }
+  ]), [t])
 
   const gmiSnapshots = [
     {
-      useCase: 'Route support + CRM updates',
-      outcome: 'Researcher gathers context, Analyst verifies facts, and Executor pushes the outcome into Salesforce or Linear automatically.'
+      useCase: t('snapshots.0.useCase'),
+      outcome: t('snapshots.0.outcome')
     },
     {
-      useCase: 'Safety-critical approvals',
-      outcome: 'Orchestrator enforces guardrails, memory logs every decision, and Event Stream keeps auditors in the loop for SOC2/GDPR.'
+      useCase: t('snapshots.1.useCase'),
+      outcome: t('snapshots.1.outcome')
     },
     {
-      useCase: 'RAG-powered expansion packs',
-      outcome: 'Creator + Executor personas adapt content by locale while Gateway throttles workloads and exports full runs as Markdown/JSON.'
+      useCase: t('snapshots.2.useCase'),
+      outcome: t('snapshots.2.outcome')
     }
   ] as const
 
@@ -87,57 +87,57 @@ export function GMISection() {
   const architectureNodes = [
     {
       id: 'ui',
-      label: 'User Interfaces',
-      subtitle: 'Voice • Web • CLI',
+      label: t('architecture.ui.label'),
+      subtitle: t('architecture.ui.subtitle'),
       x: 20, y: 40, w: 160, h: 80,
-      details: 'Entrypoints where users speak, type, and automate tasks.',
-      example: 'Capture a voice prompt for a real‑time, fact‑checked briefing.',
-      outcome: 'Every interface streams into the same shared AgentOS memory and policy store.'
+      details: t('architecture.ui.details'),
+      example: t('architecture.ui.example'),
+      outcome: t('architecture.ui.outcome')
     },
     {
       id: 'gateway',
-      label: 'API Gateway',
-      subtitle: 'Auth • Rate‑limit',
+      label: t('architecture.gateway.label'),
+      subtitle: t('architecture.gateway.subtitle'),
       x: 210, y: 40, w: 160, h: 80,
-      details: 'Front door for requests; applies auth, quotas, and routing.',
-      example: 'Throttle bursty inputs; attach tenant identity to requests.',
-      outcome: 'Tenants, rate budgets, and approvals stay deterministic even when agents spawn in parallel.'
+      details: t('architecture.gateway.details'),
+      example: t('architecture.gateway.example'),
+      outcome: t('architecture.gateway.outcome')
     },
     {
       id: 'orchestrator',
-      label: 'GMI Orchestrator',
-      subtitle: 'Routing • Guardrails',
+      label: t('architecture.orchestrator.label'),
+      subtitle: t('architecture.orchestrator.subtitle'),
       x: 390, y: 30, w: 190, h: 100,
-      details: 'Coordinates agent roles, tools, and safety policies.',
-      example: 'Parallelize research, analysis, creation, and critique.',
-      outcome: 'Adaptive and deterministic agency modes keep emergent intelligence auditable.'
+      details: t('architecture.orchestrator.details'),
+      example: t('architecture.orchestrator.example'),
+      outcome: t('architecture.orchestrator.outcome')
     },
     {
       id: 'agents',
-      label: 'Agent Pool',
-      subtitle: 'Researcher • Analyst • Creator • Critic • Executor',
+      label: t('architecture.agents.label'),
+      subtitle: t('architecture.agents.subtitle'),
       x: 600, y: 10, w: 270, h: 140,
-      details: 'Specialized GMIs stream outputs; orchestrator merges.',
-      example: 'Researcher fetches sources while Analyst verifies claims.',
-      outcome: 'Each persona can be exported as Markdown/JSON capsules and ingested into other runtimes.'
+      details: t('architecture.agents.details'),
+      example: t('architecture.agents.example'),
+      outcome: t('architecture.agents.outcome')
     },
     {
       id: 'memory',
-      label: 'Memory System',
-      subtitle: 'Vector DB • Knowledge Graph',
+      label: t('architecture.memory.label'),
+      subtitle: t('architecture.memory.subtitle'),
       x: 390, y: 160, w: 200, h: 90,
-      details: 'Long‑term memory stores facts, embeddings, and relations.',
-      example: 'Semantic search recalls prior decisions and context.',
-      outcome: 'Zero-copy working, episodic, and vector layers keep adaptive and permanent intelligence aligned.'
+      details: t('architecture.memory.details'),
+      example: t('architecture.memory.example'),
+      outcome: t('architecture.memory.outcome')
     },
     {
       id: 'events',
-      label: 'Event Stream',
-      subtitle: 'Monitoring • Analytics',
+      label: t('architecture.events.label'),
+      subtitle: t('architecture.events.subtitle'),
       x: 610, y: 170, w: 180, h: 80,
-      details: 'Observability and compliance pipeline for every step.',
-      example: 'Emit spans for audits; alert on policy violations.',
-      outcome: 'Every action is replayable for SOC2, GDPR, and custom guardrails.'
+      details: t('architecture.events.details'),
+      example: t('architecture.events.example'),
+      outcome: t('architecture.events.outcome')
     }
   ] as const
 
@@ -375,7 +375,7 @@ export function GMISection() {
                 {/* Agent nodes */}
                 {[
                   ...agents,
-                  { id: 'critic', name: 'Critic', icon: Activity, description: 'Reviews outputs and flags issues' },
+                  { id: 'critic', name: t('agents.critic.name'), icon: Activity, description: t('agents.critic.description') },
                 ].map((agent, i) => {
                   const angle = (i / agents.length) * 2 * Math.PI
                   const x = 250 + 150 * Math.cos(angle)
