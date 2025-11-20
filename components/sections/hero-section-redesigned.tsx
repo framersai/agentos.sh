@@ -140,20 +140,22 @@ export function HeroSectionRedesigned() {
     <section className="hero-critical relative min-h-screen flex flex-col justify-center overflow-hidden bg-[var(--color-background-primary)]">
       {/* Clean gradient background - subtle and professional */}
       <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0 opacity-60"
-          style={{
-            background: isDark
-              ? `radial-gradient(ellipse at top, 
-                  hsl(250 100% 10%) 0%, 
-                  hsl(240 50% 4%) 50%, 
-                  hsl(240 30% 2%) 100%)`
-              : `radial-gradient(ellipse at top, 
-                  hsl(250 60% 98%) 0%, 
-                  hsl(240 40% 97%) 50%, 
-                  hsl(0 0% 100%) 100%)`
-          }}
-        />
+        {isMounted && (
+          <div 
+            className="absolute inset-0 opacity-60"
+            style={{
+              background: isDark
+                ? `radial-gradient(ellipse at top, 
+                    hsl(250 100% 10%) 0%, 
+                    hsl(240 50% 4%) 50%, 
+                    hsl(240 30% 2%) 100%)`
+                : `radial-gradient(ellipse at top, 
+                    hsl(250 60% 98%) 0%, 
+                    hsl(240 40% 97%) 50%, 
+                    hsl(0 0% 100%) 100%)`
+            }}
+          />
+        )}
         {/* Subtle accent overlay */}
         <div 
           className="absolute inset-0 opacity-30"
@@ -176,7 +178,7 @@ export function HeroSectionRedesigned() {
 
       {/* Minimal particle system - elegant and performant */}
       <div className="absolute inset-0 pointer-events-none">
-        {!prefersReducedMotion && !isMobile && (
+        {isMounted && !prefersReducedMotion && !isMobile && (
           <>
             {Array.from({ length: 6 }).map((_, i) => (
               <motion.div
