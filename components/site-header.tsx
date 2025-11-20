@@ -22,6 +22,7 @@ export function SiteHeader() {
 
   const NAV_LINKS = useMemo(() => [
     { href: '/#features', label: t('features') },
+    { href: '/blog', label: 'Blog' },
     { href: 'https://docs.agentos.sh', label: t('docs') },
     { href: '/faq', label: t('faq') },
     { href: '/about', label: t('about') },
@@ -275,7 +276,7 @@ export function SiteHeader() {
                     key={link.href}
                     href={localizedHref}
                     onClick={closeMenu}
-                    className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-gradient-to-r hover:from-accent-primary/8 hover:to-accent-secondary/8 transition-all duration-300 ease-out"
+                    className="px-6 py-4 text-base font-bold text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/5 transition-all duration-300 ease-out block border-b border-border-subtle/20 last:border-0"
                   >
                     {link.label}
                   </a>
@@ -286,7 +287,7 @@ export function SiteHeader() {
                   key={link.href}
                   href={localizedHref as Route}
                   onClick={closeMenu}
-                  className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-gradient-to-r hover:from-accent-primary/8 hover:to-accent-secondary/8 transition-all duration-300 ease-out"
+                  className="px-6 py-4 text-base font-bold text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/5 transition-all duration-300 ease-out block border-b border-border-subtle/20 last:border-0"
                 >
                   {link.label}
                 </Link>
@@ -297,9 +298,9 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
-              className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-gradient-to-r hover:from-accent-primary/8 hover:to-accent-secondary/8 transition-all duration-300 ease-out flex items-center gap-2"
+              className="px-6 py-4 text-base font-bold text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/5 transition-all duration-300 ease-out flex items-center gap-2 border-b border-border-subtle/20"
             >
-              <Globe className="w-4 h-4" />
+              <Globe className="w-5 h-5" />
               {t('marketplace')}
             </a>
             <a
@@ -307,20 +308,22 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
-              className="px-6 py-4 text-sm font-semibold text-text-secondary hover:text-accent-primary hover:bg-gradient-to-r hover:from-accent-primary/8 hover:to-accent-secondary/8 transition-all duration-300 ease-out flex items-center gap-2"
+              className="px-6 py-4 text-base font-bold text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/5 transition-all duration-300 ease-out flex items-center gap-2 border-b border-border-subtle/20"
             >
-              <Github className="w-4 h-4" />
+              <Github className="w-5 h-5" />
               {t('github')}
             </a>
-            <a
-              href="https://frame.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={closeMenu}
-              className="mx-4 my-3 px-4 py-3 rounded-xl bg-gradient-to-r from-accent-primary to-accent-secondary text-white text-sm font-semibold text-center hover:shadow-modern transition-all"
-            >
-              Visit Frame.dev
-            </a>
+            <div className="p-4">
+              <a
+                href="https://frame.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={closeMenu}
+                className="block w-full px-4 py-3 rounded-xl bg-gradient-to-r from-accent-primary to-accent-secondary text-white text-base font-bold text-center hover:shadow-modern transition-all"
+              >
+                Visit Frame.dev
+              </a>
+            </div>
           </nav>
         </div>
       </motion.div>

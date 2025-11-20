@@ -468,40 +468,46 @@ volumes:
         </div>
 
         <div className="grid lg:grid-cols-4 gap-6">
-          {/* Example List - Enhanced */}
-          <div className="lg:col-span-1">
+          {/* Example List - Enhanced Blocks */}
+          <div className="lg:col-span-1 space-y-4">
             <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-4 px-2">
               {t('selectExample')}
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {filteredExamples.map((example) => {
                 const Icon = categoryIcons[example.category]
                 return (
                   <motion.button
                     key={example.id}
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: 1.02, x: 4 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveExample(example)}
-                    className={`w-full text-left p-4 rounded-2xl transition-all ${
+                    className={`w-full text-left p-4 rounded-xl transition-all relative overflow-hidden group ${
                       activeExample.id === example.id
-                        ? 'glass-morphism shadow-modern border-l-4 border-accent-primary'
-                        : 'hover:bg-background-primary/50 border-l-4 border-transparent'
+                        ? 'bg-gradient-to-br from-[var(--color-background-elevated)] to-[var(--color-background-glass)] shadow-lg border border-[var(--color-accent-primary)]'
+                        : 'bg-[var(--color-background-glass)] border border-transparent hover:border-[var(--color-border-interactive)]'
                     }`}
                   >
-                    <div className="flex items-start gap-3">
-                      <div className={`p-2 rounded-lg ${
+                    <div className={`absolute left-0 top-0 bottom-0 w-1.5 transition-colors ${
+                        activeExample.id === example.id ? 'bg-accent-primary' : 'bg-transparent group-hover:bg-accent-primary/50'
+                    }`} />
+                    
+                    <div className="flex items-center gap-3 pl-2">
+                      <div className={`p-2 rounded-lg shrink-0 ${
                         activeExample.id === example.id
-                          ? 'bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20'
-                          : 'bg-background-tertiary'
+                          ? 'bg-accent-primary text-white shadow-md'
+                          : 'bg-accent-primary/10 text-accent-primary'
                       }`}>
-                        <Icon className="w-4 h-4 text-accent-primary" />
+                        <Icon className="w-4 h-4" />
                       </div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-sm text-text-primary mb-1">
+                      <div className="flex-1 min-w-0">
+                        <p className={`font-bold text-sm mb-0.5 truncate ${
+                            activeExample.id === example.id ? 'text-[var(--color-text-primary)]' : 'text-[var(--color-text-secondary)]'
+                        }`}>
                           {example.title}
                         </p>
-                        <p className="text-xs text-text-muted line-clamp-2">
-                          {example.description}
+                        <p className="text-xs text-[var(--color-text-muted)] line-clamp-1">
+                          {example.category}
                         </p>
                       </div>
                     </div>
@@ -562,8 +568,10 @@ volumes:
                   setActiveExample(codeExamples.find((e) => e.id === 'basic-agent') || activeExample)
                 }
               }}
-              className={`px-3 py-1.5 rounded-xl text-sm font-semibold ${
-                activeExample.id !== 'streaming' ? 'bg-accent-primary text-white' : 'text-text-secondary hover:text-text-primary'
+              className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
+                activeExample.id !== 'streaming' 
+                  ? 'bg-[var(--color-accent-primary)] text-white shadow-md' 
+                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
               }`}
             >
               {t('tabs.synchronous')}
@@ -572,8 +580,10 @@ volumes:
               onClick={() => {
                 setActiveExample(codeExamples.find((e) => e.id === 'streaming') || activeExample)
               }}
-              className={`px-3 py-1.5 rounded-xl text-sm font-semibold ${
-                activeExample.id === 'streaming' ? 'bg-accent-primary text-white' : 'text-text-secondary hover:text-text-primary'
+              className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
+                activeExample.id === 'streaming' 
+                  ? 'bg-[var(--color-accent-primary)] text-white shadow-md' 
+                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-black/5 dark:hover:bg-white/5'
               }`}
             >
               {t('tabs.streaming')}

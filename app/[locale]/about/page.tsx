@@ -124,6 +124,25 @@ export default function AboutPage() {
               </p>
             </motion.div>
           </div>
+
+          {/* Join Us CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <Link 
+              href="/careers"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 border border-accent-primary/20 text-accent-primary font-bold hover:bg-accent-primary/20 transition-all group"
+            >
+              We are Hiring!
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+            <p className="text-sm text-muted mt-3">
+              Join us in building the future of autonomous agents.
+            </p>
+          </motion.div>
         </div>
       </section>
 

@@ -7,7 +7,11 @@ import {
   Brain,
   Layers,
   Database,
-  Zap
+  Zap,
+  Code,
+  Cpu,
+  Server,
+  Globe
 } from 'lucide-react'
 
 interface ProductCard {
@@ -24,6 +28,7 @@ interface ProductCard {
   features: string[]
   bgAnimation: 'neural' | 'flow' | 'pulse' | 'grid'
   accentColor: string
+  techStack: Array<{ name: string, icon?: React.ElementType }>
 }
 
 // Build card definitions with translated strings so we can easily swap locale
@@ -35,13 +40,18 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.adaptive.description'),
       icon: Brain,
       stats: [
-        { label: 'Response Time', value: '< 100ms', trend: -15 },
-        { label: 'Accuracy', value: '99.2%', trend: 2.3 },
-        { label: 'Active Models', value: 14, live: true }
+        { label: 'Context Window', value: '128k', trend: 0 },
+        { label: 'Inference Latency', value: '< 40ms' },
+        { label: 'Active Personas', value: 14, live: true }
       ],
       features: ['Real-time learning', 'Context retention', 'Behavioral adaptation'],
       bgAnimation: 'neural',
-      accentColor: '#FF00FF'
+      accentColor: '#FF00FF',
+      techStack: [
+        { name: 'PyTorch', icon: Cpu },
+        { name: 'TensorFlow', icon: Brain },
+        { name: 'CUDA', icon: Zap }
+      ]
     },
     {
       id: 'distributed-cognition',
@@ -49,13 +59,18 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.distributed.description'),
       icon: Layers,
       stats: [
-        { label: 'Concurrent Tasks', value: 128, live: true },
-        { label: 'Throughput', value: '10k/sec', trend: 18 },
-        { label: 'Efficiency', value: '94%' }
+        { label: 'Parallel Tasks', value: 512, live: true },
+        { label: 'Task Throughput', value: '50k/s', trend: 18 },
+        { label: 'Orchestration Overhead', value: '< 2ms' }
       ],
       features: ['Load balancing', 'Auto-scaling', 'Fault tolerance'],
       bgAnimation: 'flow',
-      accentColor: '#00FFFF'
+      accentColor: '#00FFFF',
+      techStack: [
+        { name: 'Kubernetes', icon: Server },
+        { name: 'RabbitMQ', icon: Layers },
+        { name: 'Redis', icon: Database }
+      ]
     },
     {
       id: 'persistent-memory',
@@ -63,13 +78,18 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.memory.description'),
       icon: Database,
       stats: [
-        { label: 'Storage', value: '∞ TB', trend: 0 },
-        { label: 'Recall Speed', value: '< 5ms' },
-        { label: 'Retention', value: '100%' }
+        { label: 'Vector Capacity', value: '1B+', trend: 0 },
+        { label: 'Retrieval Speed', value: '< 5ms' },
+        { label: 'Compression Ratio', value: '100:1' }
       ],
       features: ['Vector embeddings', 'Semantic search', 'Version control'],
       bgAnimation: 'grid',
-      accentColor: '#FFFF00'
+      accentColor: '#FFFF00',
+      techStack: [
+        { name: 'Pinecone', icon: Database },
+        { name: 'Postgres', icon: Database },
+        { name: 'LangChain', icon: Code }
+      ]
     },
     {
       id: 'real-time-streaming',
@@ -77,13 +97,18 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.streaming.description'),
       icon: Zap,
       stats: [
-        { label: 'Latency', value: '< 50ms', trend: -8 },
-        { label: 'Bandwidth', value: '1 Gbps' },
-        { label: 'Uptime', value: '99.99%', live: true }
+        { label: 'End-to-End Latency', value: '< 100ms', trend: -8 },
+        { label: 'Stream Bandwidth', value: '10 Gbps' },
+        { label: 'Connection Stability', value: '99.99%', live: true }
       ],
       features: ['WebSocket support', 'Event-driven', 'Buffering'],
       bgAnimation: 'pulse',
-      accentColor: '#00FF00'
+      accentColor: '#00FF00',
+      techStack: [
+        { name: 'WebSocket', icon: Globe },
+        { name: 'gRPC', icon: Zap },
+        { name: 'Node.js', icon: Server }
+      ]
     }
   ]
 }
@@ -237,7 +262,6 @@ function AnimatedSVGBackground({ type, color }: { type: string; color: string })
 
 export function ProductCardsRedesigned() {
   const t = useTranslations('productCards')
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null)
   const [liveData, setLiveData] = useState<Record<string, string | number>>({})
 
   const productCards = useMemo(() => getProductCards(t), [t])
@@ -256,7 +280,7 @@ export function ProductCardsRedesigned() {
   }, [])
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 perspective-1000">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -274,103 +298,114 @@ export function ProductCardsRedesigned() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {productCards.map((card, index) => (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              onMouseEnter={() => setHoveredCard(card.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-              className="relative group"
-            >
-              <div className="holographic-card h-full p-6 flex flex-col">
-                {/* Background Animation */}
-                <div className="absolute inset-0 overflow-hidden rounded-2xl">
-                  <AnimatedSVGBackground type={card.bgAnimation} color={card.accentColor} />
-                </div>
-
-                {/* Card Content */}
-                <div className="relative z-10">
-                  {/* Icon */}
-                  <div className="mb-4">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center"
-                      style={{
-                        background: `linear-gradient(135deg, ${card.accentColor}20, ${card.accentColor}40)`,
-                        boxShadow: `0 0 20px ${card.accentColor}30`
-                      }}
-                    >
-                      <card.icon className="w-6 h-6" style={{ color: card.accentColor }} />
+            <div key={card.id} className="relative group h-[420px] cursor-pointer perspective-1000">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                className="w-full h-full relative preserve-3d transition-transform duration-700 group-hover:rotate-y-180"
+              >
+                {/* FRONT FACE */}
+                <div className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden">
+                   <div className="holographic-card h-full p-6 flex flex-col border-2 border-white/10 group-hover:border-accent-primary/50 transition-colors shadow-xl">
+                    {/* Background Animation */}
+                    <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-40">
+                      <AnimatedSVGBackground type={card.bgAnimation} color={card.accentColor} />
                     </div>
-                  </div>
 
-                  {/* Title & Description */}
-                  <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
-                  <p className="text-sm text-muted mb-4">{card.description}</p>
-
-                  {/* Stats */}
-                  <div className="space-y-2 mb-4">
-                    {card.stats.map((stat, i) => (
-                      <div key={i} className="flex items-center justify-between">
-                        <span className="text-xs text-muted">{stat.label}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium">
-                            {stat.live && liveData[stat.label.toLowerCase().replace(' ', '-')]
-                              ? liveData[stat.label.toLowerCase().replace(' ', '-')]
-                              : stat.value}
-                          </span>
-                          {stat.trend && (
-                            <span className={`text-xs ${stat.trend > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                              {stat.trend > 0 ? '↑' : '↓'} {Math.abs(stat.trend)}%
-                            </span>
-                          )}
-                          {stat.live && (
-                            <span className="relative flex h-2 w-2">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Features */}
-                  <div className="mt-auto pt-4 border-t border-glass-border">
-                    <div className="flex flex-wrap gap-2">
-                      {card.features.map((feature, i) => (
-                        <span
-                          key={i}
-                          className="text-xs px-2 py-1 rounded-full"
+                    {/* Card Content */}
+                    <div className="relative z-10 flex flex-col h-full">
+                      {/* Icon */}
+                      <div className="mb-4">
+                        <div
+                          className="w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-md"
                           style={{
-                            background: `${card.accentColor}15`,
-                            border: `1px solid ${card.accentColor}30`
+                            background: `linear-gradient(135deg, ${card.accentColor}20, ${card.accentColor}10)`,
+                            boxShadow: `0 4px 20px ${card.accentColor}20`,
+                            border: `1px solid ${card.accentColor}40`
                           }}
                         >
-                          {feature}
-                        </span>
-                      ))}
+                          <card.icon className="w-7 h-7" style={{ color: card.accentColor }} />
+                        </div>
+                      </div>
+
+                      {/* Title & Description */}
+                      <h3 className="text-xl font-bold mb-2 tracking-tight">{card.title}</h3>
+                      <p className="text-sm text-muted mb-6 leading-relaxed">{card.description}</p>
+
+                      {/* Stats */}
+                      <div className="space-y-3 mt-auto">
+                        {card.stats.map((stat, i) => (
+                          <div key={i} className="flex items-center justify-between bg-white/5 p-2 rounded-lg border border-white/5">
+                            <span className="text-xs font-medium text-muted">{stat.label}</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-bold tracking-tight">
+                                {stat.live && liveData[stat.label.toLowerCase().replace(' ', '-')]
+                                  ? liveData[stat.label.toLowerCase().replace(' ', '-')]
+                                  : stat.value}
+                              </span>
+                              {stat.trend && (
+                                <span className={`text-xs font-semibold ${stat.trend > 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                  {stat.trend > 0 ? '↑' : '↓'} {Math.abs(stat.trend)}%
+                                </span>
+                              )}
+                              {stat.live && (
+                                <span className="relative flex h-2 w-2">
+                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Hover Effect Overlay */}
-                <AnimatePresence>
-                  {hoveredCard === card.id && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="absolute inset-0 rounded-2xl pointer-events-none"
-                      style={{
-                        background: `radial-gradient(circle at center, ${card.accentColor}10, transparent)`,
-                        boxShadow: `inset 0 0 30px ${card.accentColor}20`
-                      }}
-                    />
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
+                {/* BACK FACE (Tech Stack) */}
+                <div 
+                  className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl overflow-hidden"
+                >
+                  <div className="holographic-card h-full p-8 flex flex-col items-center justify-center text-center border-2 border-accent-primary/30 bg-black/80 backdrop-blur-xl">
+                    <div className="absolute inset-0 opacity-20 bg-[url('/grid.svg')] bg-center" />
+                    
+                    <h4 className="text-lg font-bold mb-6 relative z-10">Powered By</h4>
+                    
+                    <div className="grid grid-cols-1 gap-4 w-full relative z-10">
+                      {card.techStack.map((tech, i) => (
+                        <div 
+                          key={i}
+                          className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                        >
+                          {tech.icon && <tech.icon className="w-5 h-5 text-accent-primary" />}
+                          <span className="font-mono text-sm font-semibold">{tech.name}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 relative z-10">
+                      <div className="text-xs text-muted uppercase tracking-wider mb-2">Capabilities</div>
+                      <div className="flex flex-wrap justify-center gap-2">
+                        {card.features.map((feature, i) => (
+                          <span
+                            key={i}
+                            className="text-[10px] px-2 py-1 rounded-full font-medium"
+                            style={{
+                              background: `${card.accentColor}15`,
+                              border: `1px solid ${card.accentColor}30`,
+                              color: card.accentColor
+                            }}
+                          >
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           ))}
         </div>
       </div>

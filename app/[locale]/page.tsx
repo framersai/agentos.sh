@@ -8,6 +8,7 @@ import { SkylineSection } from '../../components/sections/skyline-section'
 import { CodePopover } from '../../components/ui/code-popover'
 import { CTASection } from '../../components/sections/cta-section'
 import dynamic from 'next/dynamic'
+import { HolographicVideoPlayer } from '../../components/media/holographic-video-player'
 import ScrollToTopButton from '../../components/ScrollToTopButton'
 import { LazyMotion, domAnimation, motion } from 'framer-motion'
 import {
@@ -186,23 +187,27 @@ agentos deploy --env production`
         {/* Hero Section with Redesigned Components */}
         <HeroSectionRedesigned />
 
-      {/* Placeholder Video Loader (demo coming soon) */}
+      {/* Product Demo Video */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-6"
+            className="text-center mb-8"
           >
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-3">
-              Product demo video
+              Product Demo
             </h2>
             <p className="text-sm text-muted max-w-2xl mx-auto">
-              Video coming soon. For a live walkthrough, contact team@frame.dev.
+              See AgentOS orchestrate complex workflows in real-time.
             </p>
           </motion.div>
-          <div className="skeleton h-[420px] rounded-2xl border border-border-subtle/40" />
+          <HolographicVideoPlayer 
+            placeholder={true}
+            title="AgentOS Architecture Demo"
+            description="Visualizing high-throughput multi-agent coordination."
+          />
         </div>
       </section>
 

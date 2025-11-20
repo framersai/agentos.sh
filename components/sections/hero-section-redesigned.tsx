@@ -73,46 +73,44 @@ export function HeroSectionRedesigned() {
       });
   }, []);
 
-  // Liquid morph text switching - independent and staggered
+  // Liquid morph text switching - coordinated to avoid duplicates
   useEffect(() => {
     if (prefersReducedMotion) return;
-    let timeoutA: ReturnType<typeof setTimeout> | undefined;
-    const scheduleNextA = () => {
-      const delay = 6000 + Math.random() * 7000; // 6-13s
-      timeoutA = setTimeout(() => {
-        const now = Date.now();
-        if (now - lastSwitchTime.current < 900) {
-          setTimeout(scheduleNextA, 900);
-          return;
+    
+    const interval = setInterval(() => {
+      setHeadIdxA(prev => {
+        const next = (prev + 1) % Math.max(1, cycleWords.length);
+        // Avoid collision with current B if words are identical
+        if (cycleWords[next] === cycleWordsTail[headIdxB]) {
+           return (next + 1) % Math.max(1, cycleWords.length);
         }
-        setHeadIdxA(prev => (prev + 1) % Math.max(1, cycleWords.length));
-        lastSwitchTime.current = now;
-        scheduleNextA();
-      }, delay);
-    };
-    scheduleNextA();
-    return () => timeoutA && clearTimeout(timeoutA);
-  }, [prefersReducedMotion, cycleWords.length]);
+        return next;
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion, cycleWords.length, cycleWordsTail, headIdxB, cycleWords]);
 
   useEffect(() => {
     if (prefersReducedMotion) return;
-    let timeoutB: ReturnType<typeof setTimeout> | undefined;
-    const scheduleNextB = () => {
-      const delay = 7000 + Math.random() * 8000; // 7-15s
-      timeoutB = setTimeout(() => {
-        const now = Date.now();
-        if (now - lastSwitchTime.current < 900) {
-          setTimeout(scheduleNextB, 900);
-          return;
-        }
-        setHeadIdxB(prev => (prev + 1) % Math.max(1, cycleWordsTail.length));
-        lastSwitchTime.current = now;
-        scheduleNextB();
-      }, delay);
-    };
-    scheduleNextB();
-    return () => timeoutB && clearTimeout(timeoutB);
-  }, [prefersReducedMotion, cycleWordsTail.length]);
+    
+    // Offset timing for B
+    const timeout = setTimeout(() => {
+        const interval = setInterval(() => {
+          setHeadIdxB(prev => {
+            const next = (prev + 1) % Math.max(1, cycleWordsTail.length);
+             // Avoid collision with current A
+            if (cycleWordsTail[next] === cycleWords[headIdxA]) {
+               return (next + 1) % Math.max(1, cycleWordsTail.length);
+            }
+            return next;
+          });
+        }, 4000);
+        return () => clearInterval(interval);
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [prefersReducedMotion, cycleWordsTail.length, cycleWords, headIdxA, cycleWordsTail]);
 
   // Mobile detection
   useEffect(() => {
@@ -164,9 +162,9 @@ export function HeroSectionRedesigned() {
               transparent 50%)`
           }}
         />
-        {/* Large translucent logo on the left as background decoration */}
-        <div className="pointer-events-none absolute left-[-6rem] top-1/2 -translate-y-1/2 opacity-[0.06] sm:opacity-[0.08]">
-          <div className="w-[420px] h-[420px] sm:w-[520px] sm:h-[520px]">
+        {/* Large translucent logo on the right side */}
+        <div className="pointer-events-none absolute right-[-10%] top-1/2 -translate-y-1/2 opacity-30 z-0 mix-blend-screen">
+          <div className="w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] animate-slow-spin">
             <AnimatedAgentOSLogo />
           </div>
         </div>

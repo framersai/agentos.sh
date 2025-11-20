@@ -1,243 +1,166 @@
 'use client'
 
 import { motion } from 'framer-motion'
-
-const stableValue = (index: number) => {
-  const x = Math.sin((index + 1) * 9876.543) * 43758.5453123
-  return x - Math.floor(x)
-}
-
-const neuralLines = Array.from({ length: 8 }, (_, i) => ({
-  x1: 50 + stableValue(i) * 300,
-  y1: 20 + stableValue(i + 10) * 100,
-  x2: 50 + stableValue(i + 20) * 300,
-  y2: 20 + stableValue(i + 30) * 100
-}))
-
-const neuralNodes = Array.from({ length: 12 }, (_, i) => ({
-  cx: 50 + stableValue(i + 40) * 300,
-  cy: 20 + stableValue(i + 50) * 100
-}))
+import { useEffect, useState } from 'react'
 
 export function AnimatedAgentOSLogo() {
+  const [electrons, setElectrons] = useState<Array<{ angle: number, speed: number, radius: number }>>([])
+
+  useEffect(() => {
+    setElectrons(
+      Array.from({ length: 6 }, (_, i) => ({
+        angle: (i * 360) / 6,
+        speed: 0.5 + Math.random() * 0.5,
+        radius: 120 + Math.random() * 20
+      }))
+    )
+  }, [])
+
   return (
     <motion.div
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="relative"
+      className="relative w-full h-full flex items-center justify-center"
     >
       <svg
-        width="400"
-        height="140"
-        viewBox="0 0 400 140"
-        className="w-64 sm:w-80 md:w-96"
+        viewBox="0 0 400 400"
+        className="w-full h-full"
+        style={{ overflow: 'visible' }}
       >
         <defs>
-          {/* Animated gradient */}
-          <linearGradient id="logo-gradient-animated" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--color-accent-primary)">
-              <animate
-                attributeName="stop-color"
-                values="var(--color-accent-primary);var(--color-accent-secondary);var(--color-accent-tertiary);var(--color-accent-primary)"
-                dur="6s"
-                repeatCount="indefinite"
-              />
-            </stop>
-            <stop offset="50%" stopColor="var(--color-accent-secondary)">
-              <animate
-                attributeName="stop-color"
-                values="var(--color-accent-secondary);var(--color-accent-tertiary);var(--color-accent-primary);var(--color-accent-secondary)"
-                dur="6s"
-                repeatCount="indefinite"
-              />
-            </stop>
-            <stop offset="100%" stopColor="var(--color-accent-tertiary)">
-              <animate
-                attributeName="stop-color"
-                values="var(--color-accent-tertiary);var(--color-accent-primary);var(--color-accent-secondary);var(--color-accent-tertiary)"
-                dur="6s"
-                repeatCount="indefinite"
-              />
-            </stop>
+          <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="var(--color-accent-primary)" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="var(--color-accent-primary)" stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="circuit-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="var(--color-accent-primary)" />
+            <stop offset="100%" stopColor="var(--color-accent-secondary)" />
           </linearGradient>
-
-          {/* Glow filter */}
-          <filter id="logo-glow">
-            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+          <filter id="glow-blur">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
             <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-
-          {/* Circuit pattern mask */}
-          <pattern id="circuit-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <circle cx="5" cy="5" r="1" fill="url(#logo-gradient-animated)" opacity="0.3">
-              <animate attributeName="r" values="1;2;1" dur="2s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="35" cy="35" r="1" fill="url(#logo-gradient-animated)" opacity="0.3">
-              <animate attributeName="r" values="1;2;1" dur="2s" begin="0.5s" repeatCount="indefinite" />
-            </circle>
-            <path d="M5,5 L35,5 L35,35" stroke="url(#logo-gradient-animated)" strokeWidth="0.5" fill="none" opacity="0.2" />
-          </pattern>
         </defs>
 
-        {/* Background neural network animation */}
-        <g opacity="0.3">
-          {/* Neural connections */}
-          {neuralLines.map((line, i) => (
-            <motion.line
-              key={`line-${i}`}
-              x1={line.x1}
-              y1={line.y1}
-              x2={line.x2}
-              y2={line.y2}
-              stroke="url(#logo-gradient-animated)"
-              strokeWidth="0.5"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{
-                pathLength: [0, 1, 1, 0],
-                opacity: [0, 0.5, 0.5, 0]
-              }}
-              transition={{
-                duration: 4,
-                delay: i * 0.5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-
-          {/* Neural nodes */}
-          {neuralNodes.map((node, i) => (
-            <motion.circle
-              key={`node-${i}`}
-              cx={node.cx}
-              cy={node.cy}
-              r="2"
-              fill="url(#logo-gradient-animated)"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{
-                scale: [0, 1, 1, 0],
-                opacity: [0, 0.8, 0.8, 0]
-              }}
-              transition={{
-                duration: 3,
-                delay: i * 0.3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-        </g>
-
-        {/* Main logo group */}
-        <g transform="translate(200, 70)">
-          {/* Hexagon shape background */}
-          <motion.path
-            d="M-60,0 L-30,-52 L30,-52 L60,0 L30,52 L-30,52 Z"
+        {/* Orbital Rings */}
+        {[100, 140, 180].map((r, i) => (
+          <motion.circle
+            key={`ring-${i}`}
+            cx="200"
+            cy="200"
+            r={r}
             fill="none"
-            stroke="url(#logo-gradient-animated)"
-            strokeWidth="2"
-            opacity="0.3"
-            initial={{ rotate: 0 }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          />
-
-          {/* Inner hexagon */}
-          <motion.path
-            d="M-40,0 L-20,-35 L20,-35 L40,0 L20,35 L-20,35 Z"
-            fill="url(#circuit-pattern)"
-            stroke="url(#logo-gradient-animated)"
+            stroke="var(--color-accent-primary)"
             strokeWidth="1"
-            opacity="0.5"
-            initial={{ scale: 0.8 }}
-            animate={{ scale: [0.8, 1, 0.8] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            opacity="0.2"
+            initial={{ rotate: i * 30 }}
+            animate={{ rotate: 360 + i * 30 }}
+            transition={{ duration: 20 + i * 5, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: '200px 200px' }}
           />
+        ))}
 
-          {/* Central AI brain icon */}
+        {/* Electrons */}
+        {electrons.map((e, i) => (
           <motion.g
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.5, type: "spring" }}
+            key={`electron-${i}`}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 4 / e.speed, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: '200px 200px' }}
           >
-            {/* Brain outline */}
+            <circle
+              cx={200 + e.radius}
+              cy="200"
+              r="4"
+              fill="var(--color-accent-secondary)"
+              filter="url(#glow-blur)"
+            >
+              <animate
+                attributeName="r"
+                values="4;6;4"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.6;1;0.6"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            {/* Trail */}
             <path
-              d="M-20,-15 Q-25,-25 -15,-30 Q-5,-32 0,-28 Q5,-32 15,-30 Q25,-25 20,-15 Q18,-5 10,0 Q5,5 0,8 Q-5,5 -10,0 Q-18,-5 -20,-15 Z"
-              fill="none"
-              stroke="url(#logo-gradient-animated)"
+              d={`M ${200 + e.radius - 10} 200 Q ${200 + e.radius} 200 ${200 + e.radius} 200`}
+              stroke="var(--color-accent-secondary)"
               strokeWidth="2"
-              filter="url(#logo-glow)"
-            />
-
-            {/* Neural pathways inside brain */}
-            <motion.path
-              d="M-10,-20 Q0,-15 10,-20 M-10,-10 Q0,-5 10,-10 M-10,0 Q0,5 10,0"
-              stroke="url(#logo-gradient-animated)"
-              strokeWidth="1"
-              fill="none"
-              opacity="0.6"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              opacity="0.5"
             />
           </motion.g>
+        ))}
 
-          {/* Orbiting particles */}
-          {[...Array(3)].map((_, i) => (
-            <motion.circle
-              key={`orbit-${i}`}
-              r="3"
-              fill="url(#logo-gradient-animated)"
-              filter="url(#logo-glow)"
-              initial={{ x: 0, y: 0 }}
-              animate={{
-                x: [0, 50 * Math.cos(i * 2.094), 0, -50 * Math.cos(i * 2.094), 0],
-                y: [0, 50 * Math.sin(i * 2.094), 0, -50 * Math.sin(i * 2.094), 0],
-              }}
-              transition={{
-                duration: 6,
-                delay: i * 2,
-                repeat: Infinity,
-                ease: "linear"
-              }}
+        {/* Central Core Hexagon */}
+        <motion.g
+          animate={{ rotate: -360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: '200px 200px' }}
+        >
+          <path
+            d="M200 140 L252 170 L252 230 L200 260 L148 230 L148 170 Z"
+            fill="none"
+            stroke="url(#circuit-gradient)"
+            strokeWidth="2"
+            filter="url(#glow-blur)"
+          />
+           {/* Inner Circuit Lines */}
+           <path
+            d="M200 140 L200 170 M252 170 L226 185 M252 230 L226 215 M200 260 L200 230 M148 230 L174 215 M148 170 L174 185"
+            stroke="url(#circuit-gradient)"
+            strokeWidth="1"
+            opacity="0.6"
+          />
+        </motion.g>
+
+        {/* Core Pulse */}
+        <circle cx="200" cy="200" r="40" fill="url(#core-glow)">
+          <animate
+            attributeName="opacity"
+            values="0.4;0.8;0.4"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="r"
+            values="40;50;40"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        {/* Brain Icon in Center */}
+        <g transform="translate(176, 176) scale(1)">
+           <path
+              d="M12 4C10.8 4 9.8 4.9 9.8 6L9.8 8C9.8 9.1 8.9 10 7.8 10C6.7 10 5.8 10.9 5.8 12L5.8 14C5.8 15.1 4.9 16 3.8 16C2.7 16 1.8 16.9 1.8 18L1.8 30C1.8 31.1 2.7 32 3.8 32C4.9 32 5.8 32.9 5.8 34L5.8 36C5.8 37.1 6.7 38 7.8 38C8.9 38 9.8 38.9 9.8 40L9.8 42C9.8 43.1 10.7 44 11.8 44L23.8 44C24.9 44 25.8 43.1 25.8 42L25.8 40C25.8 38.9 26.7 38 27.8 38C28.9 38 29.8 37.1 29.8 36L29.8 34C29.8 32.9 30.7 32 31.8 32C32.9 32 33.8 31.1 33.8 30L33.8 18C33.8 16.9 32.9 16 31.8 16C30.7 16 29.8 15.1 29.8 14L29.8 12C29.8 10.9 28.9 10 27.8 10C26.7 10 25.8 9.1 25.8 8L25.8 6C25.8 4.9 24.9 4 23.8 4L12 4Z"
+              fill="none"
+              stroke="var(--color-accent-primary)"
+              strokeWidth="2"
+              filter="url(#glow-blur)"
             />
-          ))}
+            {/* Synapses */}
+            <circle cx="12" cy="16" r="2" fill="white" opacity="0.8">
+                 <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0s" />
+            </circle>
+            <circle cx="24" cy="12" r="2" fill="white" opacity="0.8">
+                 <animate attributeName="opacity" values="0;1;0" dur="2.5s" repeatCount="indefinite" begin="1s" />
+            </circle>
+            <circle cx="20" cy="28" r="2" fill="white" opacity="0.8">
+                 <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite" begin="0.5s" />
+            </circle>
         </g>
 
-        {/* AgentOS Text (use viewBox units so it scales on mobile) */}
-        <motion.text
-          x="200"
-          y="75"
-          textAnchor="middle"
-          fontFamily="'Space Grotesk', var(--font-inter)"
-          fontSize="40" /* px in SVG space – scales with viewBox */
-          fontWeight="700"
-          className="select-none"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-        >
-          <tspan fill="var(--color-text-primary)">Agent</tspan>
-          <tspan fill="url(#logo-gradient-animated)" filter="url(#logo-glow)">OS</tspan>
-        </motion.text>
-
-        {/* Tagline */}
-        <motion.text
-          x="200"
-          y="125"
-          textAnchor="middle"
-          className="text-sm font-medium"
-          fill="var(--color-text-muted)"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-        >
-          Adaptive AI Runtime
-        </motion.text>
       </svg>
     </motion.div>
   )

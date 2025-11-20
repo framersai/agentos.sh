@@ -73,14 +73,14 @@ export function AnimatedBackground() {
     const colors = getThemeColors()
     const isDark = resolvedTheme === 'dark'
 
-    // Initialize particles with layers for depth
-    const particleCount = window.matchMedia('(max-width: 640px)').matches ? 30 : 60
+    // Initialize particles with layers for depth - INCREASED COUNT
+    const particleCount = window.matchMedia('(max-width: 640px)').matches ? 60 : 150
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * dimensions.width,
       y: Math.random() * dimensions.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      radius: 2 + Math.random() * 3,
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: 0.1 + Math.random() * 0.5, // Falling effect
+      radius: 1 + Math.random() * 2,
       color: colors[Math.floor(Math.random() * colors.length)],
       pulsePhase: Math.random() * Math.PI * 2,
       connectionStrength: 0.3 + Math.random() * 0.7,
@@ -90,7 +90,7 @@ export function AnimatedBackground() {
     // Create intelligent connections
     const updateConnections = () => {
       connectionsRef.current = []
-      const maxDistance = 200
+      const maxDistance = 150 // Reduced max distance for denser look
 
       for (let i = 0; i < particlesRef.current.length; i++) {
         for (let j = i + 1; j < particlesRef.current.length; j++) {
@@ -175,22 +175,17 @@ export function AnimatedBackground() {
             particle.y += Math.sin(angle) * force * 2
           }
 
-          // Boundary collision with soft bounce
-          if (particle.x < 0 || particle.x > dimensions.width) {
-            particle.vx *= -0.8
-            particle.x = Math.max(0, Math.min(dimensions.width, particle.x))
-          }
-          if (particle.y < 0 || particle.y > dimensions.height) {
-            particle.vy *= -0.8
-            particle.y = Math.max(0, Math.min(dimensions.height, particle.y))
-          }
+          // Boundary collision with wrap-around for matrix feel
+          if (particle.x < 0) particle.x = dimensions.width
+          if (particle.x > dimensions.width) particle.x = 0
+          if (particle.y > dimensions.height) particle.y = 0 // Wrap to top
 
           // Update pulse phase
           particle.pulsePhase += 0.02
 
           // Render particle with depth effect
           const pulseSize = 1 + Math.sin(particle.pulsePhase) * 0.3
-          const opacity = 0.3 + layer * 0.2 + Math.sin(particle.pulsePhase) * 0.1
+          const opacity = 0.2 + layer * 0.1 + Math.sin(particle.pulsePhase) * 0.1
 
           // Outer glow
           const glowGradient = ctx.createRadialGradient(
@@ -226,7 +221,7 @@ export function AnimatedBackground() {
 
         // Pulsing connection
         const pulse = Math.sin(time * 2 + connection.pulseOffset) * 0.5 + 0.5
-        const opacity = connection.strength * 0.15 * pulse
+        const opacity = connection.strength * 0.1 * pulse // reduced opacity
 
         // Draw gradient connection
         const gradient = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y)
@@ -244,18 +239,6 @@ export function AnimatedBackground() {
         const midY = (p1.y + p2.y) / 2 + Math.cos(time + connection.pulseOffset) * 20
         ctx.quadraticCurveTo(midX, midY, p2.x, p2.y)
         ctx.stroke()
-
-        // Draw energy pulse along connection
-        if (pulse > 0.8) {
-          const t = (pulse - 0.8) * 5 // 0 to 1 along the line
-          const px = p1.x * (1 - t) + p2.x * t
-          const py = p1.y * (1 - t) + p2.y * t
-
-          ctx.fillStyle = colors[0] + '80'
-          ctx.beginPath()
-          ctx.arc(px, py, 2, 0, Math.PI * 2)
-          ctx.fill()
-        }
       })
 
       animationRef.current = requestAnimationFrame(animate)
@@ -277,7 +260,7 @@ export function AnimatedBackground() {
       className="fixed inset-0 pointer-events-none"
       style={{
         zIndex: 0,
-        opacity: 0.7,
+        opacity: 0.6,
         mixBlendMode: 'screen'
       }}
     />

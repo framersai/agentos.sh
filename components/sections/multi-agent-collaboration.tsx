@@ -212,6 +212,11 @@ await notifyClients(merged);`
               key={pattern.mode}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onMouseEnter={() => {
+                setSelectedPattern(pattern.mode)
+                setActiveUseCase(0)
+                setShowCode(false)
+              }}
               onClick={() => {
                 setSelectedPattern(pattern.mode)
                 setActiveUseCase(0)
