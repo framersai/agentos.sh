@@ -1,11 +1,8 @@
 import Link from 'next/link';
 import { getAllPosts } from '@/lib/markdown';
-import { useTranslations } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
 import { Metadata } from 'next';
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'metadata' });
   return {
     title: 'AgentOS Blog - News & Insights',
     description: 'Latest news, updates, and insights about AgentOS, AI agents, and multi-agent orchestration.',

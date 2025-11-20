@@ -13,6 +13,7 @@ export interface Post {
   author?: string;
   category?: string;
   image?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
@@ -24,6 +25,7 @@ export interface Job {
   department: string;
   content: string;
   excerpt?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 

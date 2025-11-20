@@ -1,14 +1,12 @@
 import Link from 'next/link';
 import { getAllJobs } from '@/lib/markdown';
-import { useTranslations } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
 import { Metadata } from 'next';
 import { MapPin, Clock, Briefcase, ArrowRight } from 'lucide-react';
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Careers at AgentOS - Build the Future of AI',
-    description: 'Join the team building the world\'s first adaptive AI agent runtime. Remote-first, open source, and high impact.',
+    description: 'Join the team building the world&apos;s first adaptive AI agent runtime. Remote-first, open source, and high impact.',
   };
 }
 
@@ -71,7 +69,7 @@ export default async function CareersPage({ params: { locale } }: { params: { lo
         </div>
         
         <div className="mt-16 text-center">
-            <p className="text-muted mb-4">Don't see a fit?</p>
+            <p className="text-muted mb-4">Don&apos;t see a fit?</p>
             <a href="mailto:careers@frame.dev" className="text-accent-primary hover:underline">
                 Email us your resume anyway
             </a>

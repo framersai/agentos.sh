@@ -25,7 +25,6 @@ export function HeroSectionRedesigned() {
   const [headIdxA, setHeadIdxA] = useState(0);
   const [headIdxB, setHeadIdxB] = useState(1);
   const prefersReducedMotion = useReducedMotion();
-  const lastSwitchTime = useRef(0);
   const isDark = resolvedTheme === 'dark';
 
   // Apply visual theme based on current theme selection
