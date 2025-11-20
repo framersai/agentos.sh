@@ -40,7 +40,7 @@ export default function AboutPage() {
           
             <p className="text-xl text-text-secondary leading-relaxed">
               {t.rich('hero.description', {
-                link: (c) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{c}</Link>
+                link: (_c) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{_c}</Link>
               })}
             </p>
         </div>
@@ -60,7 +60,7 @@ export default function AboutPage() {
             </p>
             <p className="text-lg text-gray-700 dark:text-text-secondary leading-relaxed">
               {t.rich('mission.p2', {
-                span: (c) => <span className="font-semibold text-purple-600 dark:text-accent-primary"> OpenStrand</span>
+                span: (_c) => <span className="font-semibold text-purple-600 dark:text-accent-primary"> OpenStrand</span>
               })}
             </p>
           </motion.div>
@@ -79,7 +79,7 @@ export default function AboutPage() {
             <h2 className="text-3xl mb-6 section-title">{t('team.title')}</h2>
             <p className="text-lg text-text-secondary leading-relaxed">
               {t.rich('team.description', {
-                link: (c) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{c}</Link>
+                link: (_c) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{_c}</Link>
               })}
             </p>
           </motion.div>
@@ -234,7 +234,7 @@ export default function AboutPage() {
               </div>
               <p className="text-sm mt-6">
                 {t.rich('license.footer', {
-                  link: (c) => <a href="mailto:team@frame.dev" className="text-purple-600 dark:text-accent-primary hover:underline font-semibold">team@frame.dev</a>
+                  link: (_c) => <a href="mailto:team@frame.dev" className="text-purple-600 dark:text-accent-primary hover:underline font-semibold">team@frame.dev</a>
                 })}
               </p>
             </div>
