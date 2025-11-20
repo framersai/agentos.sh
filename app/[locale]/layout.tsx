@@ -194,6 +194,22 @@ export default async function LocaleLayout({
             })
           }}
         />
+        
+        {/* Immediate Theme Script to prevent FOUC */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                let theme = localStorage.getItem('theme');
+                if (!theme) {
+                  theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.classList.toggle('dark', theme === 'dark');
+              } catch (e) {}
+            `
+          }}
+        />
+
         <main id="main-content" tabIndex={-1} className="focus:outline-none scroll-mt-24">{children}</main>
         <ScrollToTopButton />
         <footer className="border-t border-purple-200/30 dark:border-purple-500/20 bg-gradient-to-br from-white/90 via-purple-50/30 to-pink-50/30 dark:from-black/80 dark:via-purple-950/40 dark:to-pink-950/40 backdrop-blur-lg py-12">

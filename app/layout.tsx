@@ -19,15 +19,33 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: `
           * { box-sizing: border-box; }
           html, body { width: 100%; margin: 0; padding: 0; }
-          html { height: 100%; overflow-x: hidden; }
-          body { min-height: 100vh; overflow-x: hidden; }
+          html { height: 100%; overflow-x: hidden; background: var(--color-background-primary); }
+          body { min-height: 100vh; overflow-x: hidden; background: var(--color-background-primary); color: var(--color-text-primary); }
+          
+          /* Default Theme Variables (Pre-load) to prevent Flash */
+          :root {
+             --color-background-primary: hsl(220, 30%, 98%);
+             --color-background-secondary: hsl(220, 40%, 96%);
+             --color-text-primary: hsl(222, 47%, 10%);
+             --color-accent-primary: hsl(250, 95%, 64%);
+          }
+          .dark:root {
+             --color-background-primary: hsl(240, 20%, 3%);
+             --color-background-secondary: hsl(240, 15%, 6%);
+             --color-text-primary: hsl(220, 30%, 99%);
+             --color-accent-primary: hsl(250, 100%, 70%);
+          }
+          
           .skip-to-content { position: absolute; left: -9999px; z-index: 999; padding: 1rem 1.5rem; background: var(--color-accent-primary); color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }
           .skip-to-content:focus { left: 1rem; top: 1rem; outline: 2px solid var(--color-accent-secondary); outline-offset: 2px; }
           .skeleton { position: relative; overflow: hidden; background: var(--color-background-secondary); border-radius: 0.5rem; }
           .skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, var(--color-background-tertiary) 50%, transparent 100%); animation: skeleton-shimmer 2s ease-in-out infinite; }
           @keyframes skeleton-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-          .hero-critical { position: relative; }
+          
+          /* Critical CSS for Hero to prevent FOUC/CLS */
+          .hero-critical { display: flex; flex-direction: column; justify-content: center; position: relative; min-height: 100vh; overflow: hidden; background: var(--color-background-primary); }
           .hero-critical > * { position: relative; z-index: 1; }
+
           @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
               animation-duration: 0.01ms !important;
