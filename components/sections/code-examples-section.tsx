@@ -395,7 +395,7 @@ volumes:
 
   const categories = [
     { value: 'all' as const, label: t('categories.all'), icon: Code2, color: 'from-purple-500 to-pink-500' },
-    { value: 'basic' as const, label: t('categories.basic'), icon: Terminal, color: 'from-blue-500 to-cyan-500' },
+    { value: 'basic' as const, label: t('categories.basic'), icon: Code2, color: 'from-blue-500 to-cyan-500' },
     { value: 'advanced' as const, label: t('categories.advanced'), icon: Cpu, color: 'from-green-500 to-emerald-500' },
     { value: 'integration' as const, label: t('categories.integration'), icon: GitBranch, color: 'from-orange-500 to-red-500' },
     { value: 'deployment' as const, label: t('categories.deployment'), icon: Database, color: 'from-indigo-500 to-purple-500' }
@@ -412,7 +412,7 @@ volumes:
   }
 
   const categoryIcons = {
-    basic: Terminal,
+    basic: Code2,
     advanced: Cpu,
     integration: GitBranch,
     deployment: Database
@@ -690,6 +690,17 @@ volumes:
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <div className="px-8 py-4 bg-[var(--color-background-elevated)] rounded-xl font-mono text-sm border-2 border-[var(--color-border-interactive)] shadow-lg">
                   <span className="text-[var(--color-text-muted)]">$</span> npm install @framersai/agentos
+                  <button
+                    onClick={() => {
+                        navigator.clipboard.writeText('npm install @framersai/agentos');
+                        // Use a simple alert or reuse toast if available in this context.
+                        // For now, visual feedback on the button is good.
+                    }}
+                    className="ml-3 p-1.5 rounded-md hover:bg-[var(--color-background-secondary)] transition-colors text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+                    aria-label="Copy install command"
+                  >
+                    <Copy className="w-4 h-4" />
+                  </button>
                 </div>
 
                 <a

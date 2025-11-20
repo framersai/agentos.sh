@@ -406,8 +406,8 @@ export function SkylineSection() {
           </motion.div>
         </div>
 
-        {/* Trust Badges Placeholder */}
-        <motion.div
+        {/* Trust Badges Placeholder (Commented out for future carousel) */}
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
@@ -428,7 +428,7 @@ export function SkylineSection() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
 
       <style jsx>{`
