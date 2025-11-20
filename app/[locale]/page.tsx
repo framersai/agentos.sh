@@ -30,13 +30,13 @@ const HeroSectionRedesignedLazy = dynamic(
   { loading: () => <div className="h-screen bg-[var(--color-background-primary)]" /> }
 )
 
-const MultiAgentCollaborationSection = dynamic(
-  () =>
-    import('../../components/sections/multi-agent-collaboration').then((m) => ({
-      default: m.MultiAgentCollaboration
-    })),
-  { loading: () => <SectionSkeleton heightClass="h-[520px]" /> }
-)
+// const MultiAgentCollaborationSection = dynamic(
+//   () =>
+//     import('../../components/sections/multi-agent-collaboration').then((m) => ({
+//       default: m.MultiAgentCollaboration
+//     })),
+//   { loading: () => <SectionSkeleton heightClass="h-[520px]" /> }
+// )
 
 const GMISectionLazy = dynamic(
   () =>

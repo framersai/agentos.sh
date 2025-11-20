@@ -38,16 +38,11 @@ export default function AboutPage() {
             {t('hero.title')}
           </motion.h1>
           
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-text-secondary leading-relaxed"
-          >
-            {t.rich('hero.description', {
-              link: (chunks) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{chunks}</Link>
-            })}
-          </motion.p>
+            <p className="text-xl text-text-secondary leading-relaxed">
+              {t.rich('hero.description', {
+                link: (chunks) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{chunks}</Link>
+              })}
+            </p>
         </div>
       </section>
 

@@ -12,6 +12,7 @@ interface HolographicVideoPlayerProps {
   description?: string
 }
 
+/*
 type ShapeType = 'cube' | 'pyramid' | 'sphere' | 'torus'
 
 interface HolographicShape {
@@ -27,6 +28,7 @@ interface HolographicShape {
   color: string
   opacity: number
 }
+*/
 
 export function HolographicVideoPlayer({
   videoUrl,
@@ -39,9 +41,9 @@ export function HolographicVideoPlayer({
   const [progress, setProgress] = useState(0)
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationRef = useRef<number>()
+  // const animationRef = useRef<number>()
   const { resolvedTheme } = useTheme()
-  const prefersReducedMotion = useReducedMotion()
+  // const prefersReducedMotion = useReducedMotion()
   const isDark = resolvedTheme === 'dark'
 
   // Holographic placeholder animation
@@ -63,14 +65,14 @@ export function HolographicVideoPlayer({
     // Let's just clear it and return to stop the complex particle animation
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     return; 
-
+    
     /* 
     // Original complex animation code commented out for "no background effects"
-    let frame = 0
-    const shapes: HolographicShape[] = []
+    // let frame = 0
+    // const shapes: HolographicShape[] = []
     // ... rest of the animation code ...
     */
-  }, [placeholder, prefersReducedMotion, isDark])
+  }, [placeholder, isDark])
 
   const togglePlay = () => {
     if (!videoRef.current) return
