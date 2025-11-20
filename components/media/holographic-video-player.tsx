@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Play, Pause, Volume2, VolumeX, Maximize, Upload, Sparkles } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
