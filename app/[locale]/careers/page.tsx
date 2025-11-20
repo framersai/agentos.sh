@@ -21,7 +21,7 @@ export default async function CareersPage({ params: { locale } }: { params: { lo
             Join the Mission
           </h1>
           <p className="text-lg text-muted max-w-2xl mx-auto">
-            We're building the operating system for the agentic web. If you love TypeScript, distributed systems, and open source, we want to hear from you.
+            We&apos;re building the operating system for the agentic web. If you love TypeScript, distributed systems, and open source, we want to hear from you.
           </p>
         </div>
 
