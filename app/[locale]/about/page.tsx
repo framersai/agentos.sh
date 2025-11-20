@@ -60,7 +60,7 @@ export default function AboutPage() {
             </p>
             <p className="text-lg text-gray-700 dark:text-text-secondary leading-relaxed">
               {t.rich('mission.p2', {
-                span: (chunks) => <span className="font-semibold text-purple-600 dark:text-accent-primary"> OpenStrand</span>
+                span: (c) => <span className="font-semibold text-purple-600 dark:text-accent-primary"> OpenStrand</span>
               })}
             </p>
           </motion.div>
@@ -234,7 +234,7 @@ export default function AboutPage() {
               </div>
               <p className="text-sm mt-6">
                 {t.rich('license.footer', {
-                  link: (chunks) => <a href="mailto:team@frame.dev" className="text-purple-600 dark:text-accent-primary hover:underline font-semibold">team@frame.dev</a>
+                  link: (c) => <a href="mailto:team@frame.dev" className="text-purple-600 dark:text-accent-primary hover:underline font-semibold">team@frame.dev</a>
                 })}
               </p>
             </div>
