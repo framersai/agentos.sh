@@ -40,7 +40,7 @@ export default function AboutPage() {
           
             <p className="text-xl text-text-secondary leading-relaxed">
               {t.rich('hero.description', {
-                link: (chunks) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{chunks}</Link>
+                link: (c) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{c}</Link>
               })}
             </p>
         </div>
@@ -79,7 +79,7 @@ export default function AboutPage() {
             <h2 className="text-3xl mb-6 section-title">{t('team.title')}</h2>
             <p className="text-lg text-text-secondary leading-relaxed">
               {t.rich('team.description', {
-                link: (chunks) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{chunks}</Link>
+                link: (c) => <Link href="https://frame.dev" className="text-accent-primary hover:underline font-semibold">{c}</Link>
               })}
             </p>
           </motion.div>
