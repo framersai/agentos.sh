@@ -50,6 +50,11 @@ export function SiteHeader() {
       return path;
     }
 
+    // For hash links, append to current locale path properly
+    if (path.startsWith('/#')) {
+      return locale === 'en' ? path : `/${locale}${path}`;
+    }
+
     return locale === 'en' ? path : `/${locale}${path}`;
   }, [locale]);
 
@@ -159,12 +164,12 @@ export function SiteHeader() {
                   <a
                     key={link.href}
                     href={localizedHref}
-                    className="nav-link group relative inline-block py-1 text-[var(--color-text-primary)] font-semibold transition-colors duration-300 ease-out"
+                    className="nav-link group relative inline-block py-2 px-1 text-[var(--color-text-primary)] font-semibold transition-all duration-300 ease-out hover:text-[var(--color-accent-primary)]"
                   >
-                    <span className="relative z-10 transition-all duration-300 ease-out group-hover:text-accent-primary">
+                    <span className="relative z-10 transition-all duration-300 ease-out">
                       {link.label}
                     </span>
-                    <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-accent-primary to-accent-secondary transition-all duration-500 ease-out group-hover:w-full" />
+                    <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] transition-all duration-500 ease-out group-hover:w-full" />
                   </a>
                 );
               }
@@ -172,12 +177,12 @@ export function SiteHeader() {
                 <Link
                   key={link.href}
                   href={localizedHref as Route}
-                  className="nav-link group relative inline-block py-1 text-[var(--color-text-primary)] font-semibold transition-colors duration-300 ease-out"
+                  className="nav-link group relative inline-block py-2 px-1 text-[var(--color-text-primary)] font-semibold transition-all duration-300 ease-out hover:text-[var(--color-accent-primary)]"
                 >
-                  <span className="relative z-10 transition-all duration-300 ease-out group-hover:text-accent-primary">
+                  <span className="relative z-10 transition-all duration-300 ease-out">
                     {link.label}
                   </span>
-                  <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-accent-primary to-accent-secondary transition-all duration-500 ease-out group-hover:w-full" />
+                  <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] transition-all duration-500 ease-out group-hover:w-full" />
                 </Link>
               );
             })}

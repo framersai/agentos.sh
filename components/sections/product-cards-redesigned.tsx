@@ -29,7 +29,8 @@ interface ProductCard {
   features: string[]
   bgAnimation: 'neural' | 'flow' | 'pulse' | 'grid'
   accentColor: string
-  techStack: Array<{ name: string, icon?: React.ElementType }>
+  features: string[]
+  capabilities: Array<{ name: string, icon?: React.ElementType }>
 }
 
 // Build card definitions with translated strings so we can easily swap locale
@@ -48,10 +49,10 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       features: ['Real-time learning', 'Context retention', 'Behavioral adaptation'],
       bgAnimation: 'neural',
       accentColor: '#FF00FF',
-      techStack: [
-        { name: 'PyTorch', icon: Cpu },
-        { name: 'TensorFlow', icon: Brain },
-        { name: 'CUDA', icon: Zap }
+      capabilities: [
+        { name: 'Multi-Model Support', icon: Brain },
+        { name: 'Context Management', icon: Database },
+        { name: 'Adaptive Learning', icon: Zap }
       ]
     },
     {
@@ -67,10 +68,10 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       features: ['Load balancing', 'Auto-scaling', 'Fault tolerance'],
       bgAnimation: 'flow',
       accentColor: '#00FFFF',
-      techStack: [
-        { name: 'Kubernetes', icon: Server },
-        { name: 'RabbitMQ', icon: Layers },
-        { name: 'Redis', icon: Database }
+      capabilities: [
+        { name: 'Orchestration', icon: Server },
+        { name: 'Message Queuing', icon: Layers },
+        { name: 'State Management', icon: Database }
       ]
     },
     {
@@ -86,10 +87,10 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       features: ['Vector embeddings', 'Semantic search', 'Version control'],
       bgAnimation: 'grid',
       accentColor: '#FFFF00',
-      techStack: [
-        { name: 'Pinecone', icon: Database },
-        { name: 'Postgres', icon: Database },
-        { name: 'LangChain', icon: Code }
+      capabilities: [
+        { name: 'Vector Storage', icon: Database },
+        { name: 'SQL Storage', icon: Database },
+        { name: 'Chain Management', icon: Code }
       ]
     },
     {
@@ -105,10 +106,10 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       features: ['WebSocket support', 'Event-driven', 'Buffering'],
       bgAnimation: 'pulse',
       accentColor: '#00FF00',
-      techStack: [
-        { name: 'WebSocket', icon: Globe },
-        { name: 'gRPC', icon: Zap },
-        { name: 'Node.js', icon: Server }
+      capabilities: [
+        { name: 'Real-time Comm', icon: Globe },
+        { name: 'RPC Protocol', icon: Zap },
+        { name: 'Event Loop', icon: Server }
       ]
     }
   ]
@@ -373,10 +374,10 @@ export function ProductCardsRedesigned() {
                   <div className="holographic-card h-full p-8 flex flex-col items-center justify-center text-center border-2 border-accent-primary/30 bg-[var(--color-background-elevated)] backdrop-blur-xl">
                     <div className="absolute inset-0 opacity-10 bg-[url('/grid.svg')] bg-center" />
                     
-                    <h4 className="text-lg font-bold mb-6 relative z-10 text-[var(--color-text-primary)]">Powered By</h4>
+                    <h4 className="text-lg font-bold mb-6 relative z-10 text-[var(--color-text-primary)]">Core Features</h4>
                     
                     <div className="grid grid-cols-1 gap-4 w-full relative z-10">
-                      {card.techStack.map((tech, i) => (
+                      {card.capabilities.map((tech, i) => (
                         <div 
                           key={i}
                           className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-background-secondary)] border border-[var(--color-border-subtle)] hover:border-[var(--color-border-interactive)] transition-colors"

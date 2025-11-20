@@ -73,8 +73,8 @@ export function AnimatedBackground() {
     const colors = getThemeColors()
     const isDark = resolvedTheme === 'dark'
 
-    // Initialize particles with layers for depth - INCREASED COUNT
-    const particleCount = window.matchMedia('(max-width: 640px)').matches ? 60 : 150
+    // Initialize particles with layers for depth - INCREASED COUNT for both modes
+    const particleCount = window.matchMedia('(max-width: 640px)').matches ? 80 : 200
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * dimensions.width,
       y: Math.random() * dimensions.height,
@@ -135,9 +135,10 @@ export function AnimatedBackground() {
         gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.02)')
         gradient.addColorStop(1, 'rgba(0, 0, 0, 0.05)')
       } else {
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0)')
-        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.02)')
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.05)')
+        // Enhanced gradient for light mode with subtle color tints
+        gradient.addColorStop(0, 'rgba(250, 250, 255, 0.1)')
+        gradient.addColorStop(0.5, 'rgba(245, 245, 255, 0.15)')
+        gradient.addColorStop(1, 'rgba(240, 240, 255, 0.2)')
       }
 
       ctx.fillStyle = gradient
@@ -183,9 +184,10 @@ export function AnimatedBackground() {
           // Update pulse phase
           particle.pulsePhase += 0.02
 
-          // Render particle with depth effect
+          // Render particle with depth effect - enhanced for light mode
           const pulseSize = 1 + Math.sin(particle.pulsePhase) * 0.3
-          const opacity = 0.2 + layer * 0.1 + Math.sin(particle.pulsePhase) * 0.1
+          const baseOpacity = isDark ? 0.2 : 0.35 // Higher base opacity for light mode
+          const opacity = baseOpacity + layer * 0.1 + Math.sin(particle.pulsePhase) * 0.1
 
           // Outer glow
           const glowGradient = ctx.createRadialGradient(
@@ -219,9 +221,10 @@ export function AnimatedBackground() {
         const p1 = particlesRef.current[connection.from]
         const p2 = particlesRef.current[connection.to]
 
-        // Pulsing connection
+        // Pulsing connection - adjusted for both modes
         const pulse = Math.sin(time * 2 + connection.pulseOffset) * 0.5 + 0.5
-        const opacity = connection.strength * 0.1 * pulse // reduced opacity
+        const baseConnectionOpacity = isDark ? 0.1 : 0.15 // Slightly higher for light mode
+        const opacity = connection.strength * baseConnectionOpacity * pulse
 
         // Draw gradient connection
         const gradient = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y)
@@ -260,8 +263,8 @@ export function AnimatedBackground() {
       className="fixed inset-0 pointer-events-none"
       style={{
         zIndex: 0,
-        opacity: 0.6,
-        mixBlendMode: 'screen'
+        opacity: resolvedTheme === 'dark' ? 0.6 : 0.4, // Lower opacity for light mode
+        mixBlendMode: resolvedTheme === 'dark' ? 'screen' : 'multiply' // Different blend mode for light
       }}
     />
   )

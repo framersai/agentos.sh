@@ -22,12 +22,25 @@ import {
 // Lazy load the animated background
 const AnimatedBackgroundLazy = dynamic(
   () => import('../../components/ui/animated-background').then(m => m.AnimatedBackground),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => null // No loading placeholder for background
+  }
 )
 
 const HeroSectionRedesignedLazy = dynamic(
   () => import('../../components/sections/hero-section-redesigned').then(m => m.HeroSectionRedesigned),
-  { loading: () => <div className="h-screen bg-[var(--color-background-primary)]" /> }
+  { 
+    loading: () => (
+      <div className="h-screen bg-[var(--color-background-primary)] flex items-center justify-center">
+        <div className="animate-pulse">
+          <div className="h-20 w-96 bg-gradient-to-r from-[var(--color-accent-primary)]/20 to-[var(--color-accent-secondary)]/20 rounded-lg mb-4" />
+          <div className="h-4 w-64 bg-[var(--color-text-muted)]/20 rounded mx-auto" />
+        </div>
+      </div>
+    ),
+    ssr: true // Enable SSR for SEO
+  }
 )
 
 // const MultiAgentCollaborationSection = dynamic(
@@ -224,7 +237,7 @@ agentos deploy --env production`
         {/* GMI Section with architecture diagrams */}
         <GMISectionLazy />
 
-        {/* Enhanced Features Grid with Code Popovers */}
+        {/* Enhanced Features Grid with Code Popovers - Puzzle Piece Design */}
         <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 holographic-gradient relative overflow-hidden">
           <div className="max-w-7xl mx-auto">
             <motion.div
@@ -237,60 +250,102 @@ agentos deploy --env production`
                 Developer-First Platform
               </h2>
               <p className="text-lg text-muted max-w-3xl mx-auto">
-                Production-grade infrastructure with full code examples on hover
+                Building blocks that seamlessly connect to create your AI ecosystem
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-4">
               {featureCards.map((card, index) => {
                 const Icon = card.icon
                 const isHorizontal = card.layout === 'horizontal'
                 return (
                   <motion.div
                     key={card.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.08 }}
-                    className={`group holographic-card h-full ${card.span ?? ''} ${
-                      isHorizontal ? 'p-8 md:flex md:items-center md:gap-6' : 'p-8 flex flex-col gap-4'
+                    initial={{ 
+                      opacity: 0, 
+                      y: -50, 
+                      rotate: Math.random() * 20 - 10,
+                      scale: 0.8
+                    }}
+                    whileInView={{ 
+                      opacity: 1, 
+                      y: 0,
+                      rotate: 0,
+                      scale: 1
+                    }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ 
+                      delay: index * 0.15,
+                      duration: 0.8,
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 15
+                    }}
+                    whileHover={{
+                      scale: 1.05,
+                      zIndex: 10,
+                      transition: { duration: 0.2 }
+                    }}
+                    className={`group relative h-full ${card.span ?? ''} ${
+                      isHorizontal ? 'md:col-span-2' : ''
                     }`}
+                    style={{
+                      perspective: '1000px'
+                    }}
                   >
-                    <div className={`flex ${isHorizontal ? 'items-center gap-6 w-full' : 'items-start gap-4'}`}>
-                      <div className={`shrink-0 h-14 w-14 rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center text-white shadow-lg`}>
-                        <Icon className="w-7 h-7 drop-shadow" />
-                      </div>
-                      <div className="flex-1 space-y-3">
-                        <div className="flex items-center gap-2">
-                          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-primary/10 text-xs font-semibold text-accent-primary">
-                            {card.pill}
-                          </span>
-                          <CodePopover
-                            examples={[card.codeExample]}
-                            trigger={
-                              <button className="p-1 rounded-lg hover:bg-glass-surface transition-colors">
-                                <Code2 className="w-4 h-4 text-accent-primary" />
-                              </button>
-                            }
-                            position="bottom"
-                          />
+                    {/* Puzzle piece card with notch design */}
+                    <div 
+                      className={`holographic-card h-full p-8 flex flex-col gap-4 relative overflow-visible
+                        before:absolute before:top-[20%] before:-right-[2px] before:w-[20px] before:h-[40px]
+                        before:bg-transparent before:rounded-l-full
+                        before:shadow-[-8px_0_0_0_var(--glass-surface)]
+                        after:absolute after:top-[20%] after:-left-[2px] after:w-[20px] after:h-[40px]
+                        after:bg-[var(--color-background-primary)] after:rounded-r-full
+                        after:shadow-[8px_0_0_0_var(--glass-surface)]
+                        ${isHorizontal ? 'md:col-span-2' : ''}
+                      `}
+                      style={{
+                        clipPath: index % 2 === 0 
+                          ? 'polygon(0 0, calc(100% - 15px) 0, 100% 20%, 100% 100%, 0 100%)'
+                          : 'polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 20%)'
+                      }}
+                    >
+                      <div className="relative z-10 flex items-start gap-4">
+                        <div className={`shrink-0 h-14 w-14 rounded-2xl bg-gradient-to-br ${card.gradient} flex items-center justify-center text-white shadow-lg`}>
+                          <Icon className="w-7 h-7 drop-shadow" />
                         </div>
-                        <h3 className="text-xl font-bold group-hover:text-accent-primary transition-colors">
-                          {card.title}
-                        </h3>
-                        <p className="text-muted text-sm">
-                          {card.body}
-                        </p>
-                        {card.bullets && (
-                          <ul className="space-y-1.5 text-sm">
-                            {card.bullets.map((bullet) => (
-                              <li key={bullet} className="flex items-start gap-2">
-                                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent-primary" aria-hidden="true" />
-                                <span>{bullet}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
+                        <div className="flex-1 space-y-3">
+                          <div className="flex items-center gap-2">
+                            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-accent-primary)]/10 text-xs font-semibold text-[var(--color-accent-primary)]">
+                              {card.pill}
+                            </span>
+                            <CodePopover
+                              examples={[card.codeExample]}
+                              trigger={
+                                <button className="p-1 rounded-lg hover:bg-[var(--color-accent-primary)]/10 transition-colors">
+                                  <Code2 className="w-4 h-4 text-[var(--color-accent-primary)]" />
+                                </button>
+                              }
+                              position="bottom"
+                            />
+                          </div>
+                          <h3 className="text-xl font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent-primary)] transition-colors">
+                            {card.title}
+                          </h3>
+                          <p className="text-[var(--color-text-secondary)] text-sm">
+                            {card.body}
+                          </p>
+                          {card.bullets && (
+                            <ul className="space-y-1.5 text-sm">
+                              {card.bullets.map((bullet) => (
+                                <li key={bullet} className="flex items-start gap-2 text-[var(--color-text-primary)]">
+                                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[var(--color-accent-primary)]" aria-hidden="true" />
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -358,9 +413,9 @@ function DeferredAnimatedBackground() {
     const mount = () => setShowBg(true)
     if ('requestIdleCallback' in window) {
       const w = window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void }
-      w.requestIdleCallback(mount, { timeout: 1200 })
+      w.requestIdleCallback(mount, { timeout: 800 }) // Faster load
     } else {
-      const t = setTimeout(mount, 600)
+      const t = setTimeout(mount, 400) // Faster fallback
       return () => clearTimeout(t)
     }
   }, [])

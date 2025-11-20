@@ -206,13 +206,14 @@ export function SkylineSection() {
               <motion.div
                 key={feature.id}
                 initial={{ height: 0, opacity: 0 }}
-                animate={{
+                whileInView={{
                   height: buildingHeight,
                   opacity: 1
                 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{
-                  duration: 1,
-                  delay: index * 0.2,
+                  duration: 1.2,
+                  delay: index * 0.3,
                   ease: [0.43, 0.13, 0.23, 0.96]
                 }}
                 className="absolute bottom-0"
@@ -361,9 +362,19 @@ export function SkylineSection() {
         {/* Legend */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.5 }}
+            initial={{ opacity: 0, x: -20, scale: 0.9 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ 
+              delay: 0.2,
+              duration: 0.6,
+              type: "spring",
+              stiffness: 100
+            }}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2 }
+            }}
             className="holographic-card p-6"
           >
             <div className="flex items-center gap-3 mb-3">
@@ -376,9 +387,19 @@ export function SkylineSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.7 }}
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ 
+              delay: 0.4,
+              duration: 0.6,
+              type: "spring",
+              stiffness: 100
+            }}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2 }
+            }}
             className="holographic-card p-6"
           >
             <div className="flex items-center gap-3 mb-3">
@@ -391,9 +412,19 @@ export function SkylineSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.9 }}
+            initial={{ opacity: 0, x: 20, scale: 0.9 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ 
+              delay: 0.6,
+              duration: 0.6,
+              type: "spring",
+              stiffness: 100
+            }}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2 }
+            }}
             className="holographic-card p-6"
           >
             <div className="flex items-center gap-3 mb-3">

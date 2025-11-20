@@ -24,8 +24,8 @@ export function CTASection() {
             </span>
           </div>
 
-            <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-[var(--color-text-primary)]">
-            <span className="bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
+            <h2 className="text-5xl sm:text-6xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
               {t('title')}
             </span>
           </h2>
@@ -51,7 +51,7 @@ export function CTASection() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <a
                   href="https://vca.chat"
-                  className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-glass)] backdrop-blur-xl rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-border-interactive)] transition-all duration-[var(--duration-fast)]"
+                  className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-card)] backdrop-blur-xl rounded-lg border-2 border-[var(--color-border-primary)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)] transition-all duration-300 shadow-md hover:shadow-lg"
                 >
                   <MessageCircle className="w-4 h-4 text-[var(--color-accent-primary)]" />
                   <span className="text-sm">{t('tryVoiceChat')}</span>
@@ -61,7 +61,7 @@ export function CTASection() {
                   href="https://github.com/framersai/agentos"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-glass)] backdrop-blur-xl rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-border-interactive)] transition-all duration-[var(--duration-fast)]"
+                  className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-card)] backdrop-blur-xl rounded-lg border-2 border-[var(--color-border-primary)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)] transition-all duration-300 shadow-md hover:shadow-lg"
                 >
                   <Github className="w-4 h-4 text-[var(--color-accent-primary)]" />
                   <span className="text-sm">{t('browseCode')}</span>
@@ -69,7 +69,7 @@ export function CTASection() {
 
                 <a
                   href="https://marketplace.agentos.sh"
-                  className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-glass)] backdrop-blur-xl rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-border-interactive)] transition-all duration-[var(--duration-fast)]"
+                  className="group flex items-center justify-center gap-2 px-5 py-3 bg-[var(--color-background-card)] backdrop-blur-xl rounded-lg border-2 border-[var(--color-border-primary)] text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)] transition-all duration-300 shadow-md hover:shadow-lg"
                 >
                   <Sparkles className="w-4 h-4 text-[var(--color-accent-primary)]" />
                   <span className="text-sm">{t('marketplace')}</span>

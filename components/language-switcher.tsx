@@ -88,9 +88,12 @@ export function LanguageSwitcher() {
 
       {isOpen && (
         <div 
-          className="absolute right-0 mt-2 w-48 rounded-xl glass-morphism shadow-modern overflow-hidden z-50 border border-border-subtle"
+          className="absolute right-0 mt-2 w-48 rounded-xl shadow-xl overflow-hidden z-50 border border-[var(--color-border-primary)] bg-[var(--color-background-card)] backdrop-blur-xl"
           role="menu"
           aria-orientation="vertical"
+          style={{ 
+            boxShadow: '0 10px 40px rgba(0,0,0,0.15), 0 2px 10px rgba(0,0,0,0.1)' 
+          }}
         >
           {locales.map((loc) => (
             <button
@@ -98,8 +101,8 @@ export function LanguageSwitcher() {
               onClick={() => switchLocale(loc)}
               className={`w-full px-4 py-3 text-left text-sm flex items-center justify-between transition-all ${
                 loc === locale
-                  ? 'bg-accent-primary/10 text-accent-primary font-semibold'
-                  : 'text-text-secondary hover:bg-accent-primary/5 hover:text-accent-primary'
+                  ? 'bg-[var(--color-accent-primary)]/15 text-[var(--color-accent-primary)] font-semibold'
+                  : 'text-[var(--color-text-primary)] hover:bg-[var(--color-accent-primary)]/10 hover:text-[var(--color-accent-primary)]'
               }`}
               role="menuitem"
             >

@@ -62,18 +62,22 @@ export function HeroSectionRedesigned() {
     ];
   }, [githubStars, githubForks, t]);
 
-  // Fetch GitHub repo metrics
+  // Fetch GitHub repo metrics - defer until after initial render
   useEffect(() => {
-    fetch('https://api.github.com/repos/framersai/agentos')
-      .then(res => res.json())
-      .then(data => {
-        if (typeof data.stargazers_count === 'number') setGithubStars(data.stargazers_count);
-        if (typeof data.forks_count === 'number') setGithubForks(data.forks_count);
-      })
-      .catch(() => {
-        setGithubStars(null);
-        setGithubForks(null);
-      });
+    const timer = setTimeout(() => {
+      fetch('https://api.github.com/repos/framersai/agentos')
+        .then(res => res.json())
+        .then(data => {
+          if (typeof data.stargazers_count === 'number') setGithubStars(data.stargazers_count);
+          if (typeof data.forks_count === 'number') setGithubForks(data.forks_count);
+        })
+        .catch(() => {
+          setGithubStars(null);
+          setGithubForks(null);
+        });
+    }, 1000); // Delay API call to prioritize initial render
+    
+    return () => clearTimeout(timer);
   }, []);
 
   // Liquid morph text switching - coordinated to avoid duplicates
@@ -82,14 +86,15 @@ export function HeroSectionRedesigned() {
     
     const interval = setInterval(() => {
       setHeadIdxA(prev => {
-        const next = (prev + 1) % Math.max(1, cycleWords.length);
-        // Avoid collision with current B if words are identical
-        if (cycleWords[next] === cycleWordsTail[headIdxB]) {
-           return (next + 1) % Math.max(1, cycleWords.length);
+        // Ensure we properly cycle through all words
+        const next = (prev + 1) % cycleWords.length;
+        // Skip if the word would match what's currently shown in tail
+        if (cycleWords[next]?.toLowerCase() === cycleWordsTail[headIdxB]?.toLowerCase()) {
+          return (prev + 2) % cycleWords.length;
         }
         return next;
       });
-    }, 4000);
+    }, 5000); // Slower transition for better readability
 
     return () => clearInterval(interval);
   }, [prefersReducedMotion, cycleWords.length, cycleWordsTail, headIdxB, cycleWords]);
@@ -97,20 +102,20 @@ export function HeroSectionRedesigned() {
   useEffect(() => {
     if (prefersReducedMotion) return;
     
-    // Offset timing for B
+    // Offset timing for B to create alternating effect
     const timeout = setTimeout(() => {
-        const interval = setInterval(() => {
-          setHeadIdxB(prev => {
-            const next = (prev + 1) % Math.max(1, cycleWordsTail.length);
-             // Avoid collision with current A
-            if (cycleWordsTail[next] === cycleWords[headIdxA]) {
-               return (next + 1) % Math.max(1, cycleWordsTail.length);
-            }
-            return next;
-          });
-        }, 4000);
-        return () => clearInterval(interval);
-    }, 2000);
+      const interval = setInterval(() => {
+        setHeadIdxB(prev => {
+          const next = (prev + 1) % cycleWordsTail.length;
+          // Skip if the word would match what's currently shown in head
+          if (cycleWordsTail[next]?.toLowerCase() === cycleWords[headIdxA]?.toLowerCase()) {
+            return (prev + 2) % cycleWordsTail.length;
+          }
+          return next;
+        });
+      }, 5000); // Same slower speed
+      return () => clearInterval(interval);
+    }, 2500); // Half the interval time for proper alternation
 
     return () => clearTimeout(timeout);
   }, [prefersReducedMotion, cycleWordsTail.length, cycleWords, headIdxA, cycleWordsTail]);
@@ -169,10 +174,15 @@ export function HeroSectionRedesigned() {
           }}
         />
         {/* Large translucent logo - adjusted for responsiveness */}
-        <div className="pointer-events-none absolute right-[-10%] sm:right-[-5%] top-[50%] sm:top-[60%] -translate-y-1/2 opacity-40 sm:opacity-50 z-0 overflow-hidden sm:overflow-visible mix-blend-overlay dark:mix-blend-screen">
-          <div className="w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] animate-slow-spin scale-[1.0] sm:scale-[1.2] origin-center translate-x-1/4 sm:translate-x-0">
+        <div className="pointer-events-none absolute right-[-10%] sm:right-[-5%] top-[50%] sm:top-[60%] -translate-y-1/2 opacity-30 sm:opacity-40 z-0 overflow-hidden sm:overflow-visible mix-blend-overlay dark:mix-blend-screen">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] animate-slow-spin scale-[1.0] sm:scale-[1.2] origin-center translate-x-1/4 sm:translate-x-0"
+          >
             <AnimatedAgentOSLogo />
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -219,11 +229,38 @@ export function HeroSectionRedesigned() {
                     <AnimatePresence mode="wait">
                       <motion.span
                         key={`head-a-${headIdxA}`}
-                        initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                        exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                        initial={{ 
+                          opacity: 0, 
+                          y: 20, 
+                          filter: 'blur(10px)',
+                          scale: 0.8,
+                          rotateX: -90
+                        }}
+                        animate={{ 
+                          opacity: 1, 
+                          y: 0, 
+                          filter: 'blur(0px)',
+                          scale: 1,
+                          rotateX: 0
+                        }}
+                        exit={{ 
+                          opacity: 0, 
+                          y: -20, 
+                          filter: 'blur(10px)',
+                          scale: 0.8,
+                          rotateX: 90
+                        }}
+                        transition={{ 
+                          duration: 0.8, 
+                          ease: [0.43, 0.13, 0.23, 0.96],
+                          filter: { duration: 0.6 },
+                          scale: { duration: 0.7 }
+                        }}
+                        className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent inline-block"
+                        style={{
+                          transformStyle: 'preserve-3d',
+                          perspective: '1000px'
+                        }}
                       >
                         {cycleWords[headIdxA]}
                       </motion.span>
@@ -241,11 +278,39 @@ export function HeroSectionRedesigned() {
                     <AnimatePresence mode="wait">
                       <motion.span
                         key={`head-b-${headIdxB}`}
-                        initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
-                        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                        exit={{ opacity: 0, y: -20, filter: 'blur(4px)' }}
-                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
-                        className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                        initial={{ 
+                          opacity: 0, 
+                          y: 20, 
+                          filter: 'blur(10px)',
+                          scale: 0.8,
+                          rotateX: -90
+                        }}
+                        animate={{ 
+                          opacity: 1, 
+                          y: 0, 
+                          filter: 'blur(0px)',
+                          scale: 1,
+                          rotateX: 0
+                        }}
+                        exit={{ 
+                          opacity: 0, 
+                          y: -20, 
+                          filter: 'blur(10px)',
+                          scale: 0.8,
+                          rotateX: 90
+                        }}
+                        transition={{ 
+                          duration: 0.8, 
+                          ease: [0.43, 0.13, 0.23, 0.96],
+                          delay: 0.1,
+                          filter: { duration: 0.6 },
+                          scale: { duration: 0.7 }
+                        }}
+                        className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent inline-block"
+                        style={{
+                          transformStyle: 'preserve-3d',
+                          perspective: '1000px'
+                        }}
                       >
                         {cycleWordsTail[headIdxB]}
                       </motion.span>
