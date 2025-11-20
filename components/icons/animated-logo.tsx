@@ -55,8 +55,8 @@ export function AnimatedAgentOSLogo() {
             r={r}
             fill="none"
             stroke="var(--color-accent-primary)"
-            strokeWidth="1"
-            opacity="0.2"
+            strokeWidth="2"
+            opacity="0.4"
             initial={{ rotate: i * 30 }}
             animate={{ rotate: 360 + i * 30 }}
             transition={{ duration: 20 + i * 5, repeat: Infinity, ease: "linear" }}

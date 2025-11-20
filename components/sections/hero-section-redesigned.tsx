@@ -169,36 +169,31 @@ export function HeroSectionRedesigned() {
           }}
         />
         {/* Large translucent logo - adjusted for responsiveness */}
-        <div className="pointer-events-none absolute right-[-10%] sm:right-[-5%] top-[50%] sm:top-[60%] -translate-y-1/2 opacity-20 sm:opacity-30 z-0 mix-blend-screen overflow-hidden sm:overflow-visible">
+        <div className="pointer-events-none absolute right-[-10%] sm:right-[-5%] top-[50%] sm:top-[60%] -translate-y-1/2 opacity-40 sm:opacity-50 z-0 overflow-hidden sm:overflow-visible mix-blend-overlay dark:mix-blend-screen">
           <div className="w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] animate-slow-spin scale-[1.0] sm:scale-[1.2] origin-center translate-x-1/4 sm:translate-x-0">
             <AnimatedAgentOSLogo />
           </div>
         </div>
       </div>
 
-      {/* Minimal particle system - elegant and performant */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* Minimal particle system - CSS optimized */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {isMounted && !prefersReducedMotion && !isMobile && (
           <>
-            {Array.from({ length: 6 }).map((_, i) => (
-              <motion.div
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div
                 key={i}
-                className="absolute w-1 h-1 rounded-full"
+                className="absolute rounded-full animate-float"
                 style={{
-                  background: `var(--color-accent-primary)`,
-                  boxShadow: `0 0 8px var(--color-accent-primary)`,
-                  left: `${18 + (i % 3) * 24}%`,
-                  top: `${28 + Math.floor(i / 3) * 28}%`,
-                }}
-                animate={{
-                  y: [0, -20, 0],
-                  opacity: [0.2, 0.5, 0.2],
-                }}
-                transition={{
-                  duration: 10 + i * 0.7,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.3,
+                  width: i % 2 === 0 ? '4px' : '6px',
+                  height: i % 2 === 0 ? '4px' : '6px',
+                  background: 'var(--color-accent-primary)',
+                  boxShadow: '0 0 10px var(--color-accent-primary)',
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  opacity: 0.3 + Math.random() * 0.3,
+                  animationDuration: `${10 + Math.random() * 20}s`,
+                  animationDelay: `-${Math.random() * 10}s`
                 }}
               />
             ))}

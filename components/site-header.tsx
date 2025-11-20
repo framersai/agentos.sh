@@ -28,25 +28,29 @@ export function SiteHeader() {
   ], [t]);
 
   const localizeHref = useCallback((href: string) => {
-    if (!href) {
+    // Handle empty/root paths
+    if (!href || href === '/') {
       return locale === 'en' ? '/' : `/${locale}`;
     }
-    if (href.startsWith('http')) {
+    // Handle external links
+    if (href.startsWith('http') || href.startsWith('mailto:')) {
       return href;
     }
+    // Handle anchors
     if (href.startsWith('#')) {
       return locale === 'en' ? href : `/${locale}${href}`;
     }
-    if (href === '/' || href === '') {
-      return locale === 'en' ? '/' : `/${locale}`;
+
+    // Normalize path (ensure it starts with /)
+    const path = href.startsWith('/') ? href : `/${href}`;
+    
+    // If path is already prefixed with locale (shouldn't happen often but safe to check), return it
+    // Simple check: /ja/ or /ja
+    if (path === `/${locale}` || path.startsWith(`/${locale}/`)) {
+      return path;
     }
-    if (href.startsWith('/#')) {
-      return locale === 'en' ? href : `/${locale}${href}`;
-    }
-    if (href.startsWith('/')) {
-      return locale === 'en' ? href : `/${locale}${href}`;
-    }
-    return locale === 'en' ? `/${href}` : `/${locale}/${href}`;
+
+    return locale === 'en' ? path : `/${locale}${path}`;
   }, [locale]);
 
   const homeHref = useMemo(() => (locale === 'en' ? '/' : `/${locale}`), [locale]);

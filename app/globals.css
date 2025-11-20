@@ -44,19 +44,19 @@
     --color-background-amber: hsl(35, 100%, 96%);
 
     /* Text: High contrast, deep blue-grays for readability */
-    --color-text-primary: hsl(222, 47%, 10%); /* Darker for better contrast (WCAG AAA) */
-    --color-text-secondary: hsl(220, 25%, 30%);
-    --color-text-muted: hsl(220, 15%, 40%); /* Darker gray for legibility */
-    --color-text-placeholder: hsl(220, 10%, 55%);
+    --color-text-primary: hsl(222, 47%, 5%); /* Darker for better contrast (WCAG AAA) */
+    --color-text-secondary: hsl(220, 25%, 20%);
+    --color-text-muted: hsl(220, 15%, 35%); /* Darker gray for legibility */
+    --color-text-placeholder: hsl(220, 10%, 50%);
     --color-text-contrast: hsl(0, 0%, 100%);
     --color-text-on-accent: hsl(0, 0%, 100%);
-    --color-text-link: hsl(250, 90%, 55%); /* Slightly darker violet for better link visibility */
+    --color-text-link: hsl(250, 90%, 45%); /* Slightly darker violet for better link visibility */
 
     /* Accents: Electric Violet & Neon Cyan (adjusted for light mode visibility) */
-    --color-accent-primary: hsl(250, 95%, 64%);
-    --color-accent-secondary: hsl(280, 85%, 60%);
-    --color-accent-tertiary: hsl(320, 85%, 60%);
-    --color-accent-warm: hsl(25, 95%, 55%);
+    --color-accent-primary: hsl(250, 95%, 60%);
+    --color-accent-secondary: hsl(280, 85%, 55%);
+    --color-accent-tertiary: hsl(320, 85%, 55%);
+    --color-accent-warm: hsl(25, 95%, 50%);
     --color-accent-warm-soft: hsla(25, 95%, 55%, 0.15);
     
     --color-accent-hover: hsl(250, 95%, 58%);
@@ -100,9 +100,9 @@
     --neumorphic-glow-intense: 0 0 35px rgba(var(--color-accent-primary-rgb), 0.4);
 
     /* Glass */
-    --glass-surface: rgba(255, 255, 255, 0.65);
-    --glass-border: rgba(255, 255, 255, 0.8);
-    --glass-reflection: linear-gradient(105deg, rgba(255,255,255,0.4) 0%, transparent 40%, rgba(255,255,255,0.2) 100%);
+    --glass-surface: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.9);
+    --glass-reflection: linear-gradient(105deg, rgba(255,255,255,0.5) 0%, transparent 40%, rgba(255,255,255,0.3) 100%);
 
     /* Gradients (Light) */
     --gradient-hero: radial-gradient(circle at 50% 0%, hsla(250, 95%, 64%, 0.08) 0%, transparent 60%);
