@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -26,6 +26,8 @@ export function HeroSectionRedesigned() {
   const [isMobile, setIsMobile] = useState(false);
   const [headIdxA, setHeadIdxA] = useState(0);
   const [headIdxB, setHeadIdxB] = useState(1);
+  const headIdxARef = useRef(0);
+  const headIdxBRef = useRef(1);
   const [isContentReady, setIsContentReady] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const isDark = resolvedTheme === 'dark';
@@ -48,9 +50,17 @@ export function HeroSectionRedesigned() {
   useEffect(() => {
     setIsMounted(true);
     // Delay content display slightly to ensure smooth loading
-    const timer = setTimeout(() => setIsContentReady(true), 100);
+    const timer = setTimeout(() => setIsContentReady(true), 600);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    headIdxARef.current = headIdxA;
+  }, [headIdxA]);
+
+  useEffect(() => {
+    headIdxBRef.current = headIdxB;
+  }, [headIdxB]);
 
   // Live stats with GitHub data only
   const productStats = useMemo(() => {
@@ -92,9 +102,9 @@ export function HeroSectionRedesigned() {
   useEffect(() => {
     if (prefersReducedMotion) return;
 
-    // Use state machine approach for better control
-    let currentState = 'A_CHANGING'; // 'A_CHANGING', 'B_CHANGING', or 'WAITING'
-    let nextChangeTime = Date.now() + 3000; // Initial delay before first change
+    const randomDelay = () => 3200 + Math.random() * 2000;
+    let currentState: 'A_CHANGING' | 'B_CHANGING' | 'WAITING' = 'A_CHANGING';
+    let nextChangeTime = Date.now() + randomDelay();
 
     const updateWords = () => {
       const now = Date.now();
@@ -103,37 +113,37 @@ export function HeroSectionRedesigned() {
         if (currentState === 'A_CHANGING') {
           setHeadIdxA(prev => {
             const next = (prev + 1) % cycleWords.length;
-            // Ensure word A is never the same as current word B
-            const currentWordB = cycleWordsTail[headIdxB];
-            if (cycleWords[next]?.toLowerCase() === currentWordB?.toLowerCase()) {
-              return (next + 1) % cycleWords.length;
-            }
-            return next;
+            const currentWordB = cycleWordsTail[headIdxBRef.current];
+            const candidate = cycleWords[next]?.toLowerCase() === currentWordB?.toLowerCase()
+              ? (next + 1) % cycleWords.length
+              : next;
+            headIdxARef.current = candidate;
+            return candidate;
           });
           currentState = 'WAITING';
-          nextChangeTime = now + 2500; // Wait 2.5s before changing B
+          nextChangeTime = now + randomDelay();
         } else if (currentState === 'WAITING') {
           currentState = 'B_CHANGING';
-        } else if (currentState === 'B_CHANGING') {
+        } else {
           setHeadIdxB(prev => {
             const next = (prev + 1) % cycleWordsTail.length;
-            // Ensure word B is never the same as current word A
-            const currentWordA = cycleWords[headIdxA];
-            if (cycleWordsTail[next]?.toLowerCase() === currentWordA?.toLowerCase()) {
-              return (next + 1) % cycleWordsTail.length;
-            }
-            return next;
+            const currentWordA = cycleWords[headIdxARef.current];
+            const candidate = cycleWordsTail[next]?.toLowerCase() === currentWordA?.toLowerCase()
+              ? (next + 1) % cycleWordsTail.length
+              : next;
+            headIdxBRef.current = candidate;
+            return candidate;
           });
           currentState = 'A_CHANGING';
-          nextChangeTime = now + 2500; // Wait 2.5s before changing A again
+          nextChangeTime = now + randomDelay();
         }
       }
     };
 
-    const interval = setInterval(updateWords, 100); // Check frequently for smooth transitions
+    const interval = setInterval(updateWords, 120);
 
     return () => clearInterval(interval);
-  }, [prefersReducedMotion, cycleWords, cycleWordsTail, headIdxA, headIdxB]);
+  }, [prefersReducedMotion, cycleWords, cycleWordsTail]);
 
   // Mobile detection
   useEffect(() => {
@@ -194,17 +204,17 @@ export function HeroSectionRedesigned() {
           }}
         />
         {/* Optimized logo - properly positioned for desktop */}
-        <div className="pointer-events-none absolute right-[5%] sm:right-[10%] top-[40%] sm:top-[50%] -translate-y-1/2 z-0">
+        <div className="pointer-events-none absolute right-[-5%] sm:right-0 bottom-[-8%] sm:bottom-[-4%] z-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
             animate={{ opacity: 0.4, scale: 1, rotate: 0 }}
             transition={{ delay: 0.3, duration: 1.2, ease: "easeOut" }}
             className="relative"
           >
-            <AnimatedAgentOSLogoOptimized size={isMobile ? 200 : 300} className="opacity-60" />
+            <AnimatedAgentOSLogoOptimized size={isMobile ? 220 : 340} className="opacity-60" />
             {/* Additional glow effect */}
             <div className="absolute inset-0 blur-xl">
-              <AnimatedAgentOSLogoOptimized size={isMobile ? 200 : 300} className="opacity-30" />
+              <AnimatedAgentOSLogoOptimized size={isMobile ? 220 : 340} className="opacity-30" />
             </div>
           </motion.div>
         </div>

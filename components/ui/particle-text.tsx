@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, memo } from 'react';
+import { useEffect, useMemo, useRef, useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ParticleTextProps {
@@ -13,7 +13,7 @@ interface ParticleTextProps {
 export const ParticleText = memo(function ParticleText({
   text,
   className = "",
-  particleCount = 30,
+  particleCount = 24,
   animationDuration = 0.8
 }: ParticleTextProps) {
   const [particles, setParticles] = useState<Array<{
@@ -24,6 +24,8 @@ export const ParticleText = memo(function ParticleText({
     delay: number;
   }>>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const slowLoopDuration = useMemo(() => 3.2 + Math.random() * 2.2, [text]);
+  const slowLoopDelay = useMemo(() => Math.random() * 0.6, [text]);
 
   useEffect(() => {
     // Generate particles when text changes
@@ -42,11 +44,11 @@ export const ParticleText = memo(function ParticleText({
       <AnimatePresence mode="wait">
         <motion.span
           key={text}
-          className="relative inline-block"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: animationDuration }}
+        className="relative inline-block"
+        initial={{ opacity: 0, filter: 'blur(12px)', scale: 0.97 }}
+        animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
+        exit={{ opacity: 0, filter: 'blur(12px)', scale: 1.02 }}
+        transition={{ duration: animationDuration }}
         >
           {/* Particle explosion effect on entry */}
           <div className="absolute inset-0 pointer-events-none">
@@ -87,18 +89,22 @@ export const ParticleText = memo(function ParticleText({
 
           {/* Main text with particle formation animation */}
           <motion.span
-            className={`relative ${className}`}
+            className={`relative inline-flex ${className}`}
             initial={{
               filter: 'blur(20px)',
               opacity: 0
             }}
             animate={{
-              filter: 'blur(0px)',
-              opacity: 1
+              filter: ['blur(0px)', 'blur(0.6px)', 'blur(0px)'],
+              opacity: [1, 0.95, 1],
+              scale: [1, 1.01, 1]
             }}
             transition={{
-              duration: animationDuration * 0.7,
-              ease: "easeOut"
+              duration: slowLoopDuration,
+              delay: slowLoopDelay,
+              repeat: Infinity,
+              repeatType: 'mirror',
+              ease: 'easeInOut'
             }}
           >
             {/* Letter-by-letter particle formation */}
@@ -111,7 +117,7 @@ export const ParticleText = memo(function ParticleText({
                 }}
                 initial={{
                   opacity: 0,
-                  scale: 0,
+                  scale: 0.6,
                   rotateZ: (Math.random() - 0.5) * 90,
                   y: (Math.random() - 0.5) * 20,
                 }}
