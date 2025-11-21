@@ -38,7 +38,7 @@ export const ParticleText = memo(function ParticleText({
   }, [text, particleCount]);
 
   return (
-    <div className={`relative inline-block ${className}`} ref={containerRef}>
+  <div className={`relative inline-block`} ref={containerRef}>
       <AnimatePresence mode="wait">
         <motion.span
           key={text}
@@ -87,7 +87,7 @@ export const ParticleText = memo(function ParticleText({
 
           {/* Main text with particle formation animation */}
           <motion.span
-            className="relative"
+            className={`relative ${className}`}
             initial={{
               filter: 'blur(20px)',
               opacity: 0
