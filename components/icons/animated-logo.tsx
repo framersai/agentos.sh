@@ -65,16 +65,16 @@ export function AnimatedAgentOSLogo() {
         </defs>
 
         {/* Outer rings with gradient animation */}
-        <motion.circle
+          <motion.circle
           cx="100"
           cy="100"
           r="75"
-          fill="none"
+            fill="none"
           stroke="url(#neuron-gradient)"
           strokeWidth="1"
           opacity="0.3"
           strokeDasharray="3 6"
-          animate={{ rotate: 360 }}
+            animate={{ rotate: 360 }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           style={{ transformOrigin: '100px 100px' }}
         />
@@ -82,7 +82,7 @@ export function AnimatedAgentOSLogo() {
           cx="100"
           cy="100"
           r="85"
-          fill="none"
+            fill="none"
           stroke="url(#neuron-gradient)"
           strokeWidth="0.5"
           opacity="0.2"
@@ -156,7 +156,7 @@ export function AnimatedAgentOSLogo() {
                 <circle key={`pulse-${i}`} r="3" fill="#FFF" filter="url(#pulse-glow)">
                   <animateMotion
                     dur={`${3 + n.connectionDelay}s`}
-                    repeatCount="indefinite"
+            repeatCount="indefinite"
                     path={`M ${pos.x1} ${pos.y1} L ${pos.x2} ${pos.y2}`}
                   />
                   <animate attributeName="opacity" values="0;1;0" dur={`${3 + n.connectionDelay}s`} repeatCount="indefinite" />
@@ -175,15 +175,15 @@ export function AnimatedAgentOSLogo() {
             repeatCount="indefinite"
           />
         </circle>
-        
+
         {/* Inner core with brain pattern */}
         <g transform="translate(100, 100)">
           {/* Hexagonal brain structure */}
           <motion.path
             d="M0 -20 L17 -10 L17 10 L0 20 L-17 10 L-17 -10 Z"
-            fill="none"
+              fill="none"
             stroke="url(#neuron-gradient)"
-            strokeWidth="2"
+              strokeWidth="2"
             opacity="0.8"
             filter="url(#neuron-glow)"
             animate={{ rotate: -360 }}
@@ -194,7 +194,7 @@ export function AnimatedAgentOSLogo() {
           {/* Central brain icon simplified */}
           <circle cx="0" cy="0" r="8" fill="#FFF" opacity="0.9">
             <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" />
-          </circle>
+            </circle>
         </g>
 
       </svg>
