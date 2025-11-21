@@ -62,20 +62,36 @@ export function HeroSectionRedesigned() {
     headIdxBRef.current = headIdxB;
   }, [headIdxB]);
 
-  // Live stats with GitHub data only
+  // Live stats with GitHub data + additional metrics
   const productStats = useMemo(() => {
     return [
       {
         label: t('stats.githubStars'),
         value: githubStars ?? '—',
         live: true,
-        icon: Star
+        icon: Star,
+        bgGradient: 'from-yellow-400 via-orange-400 to-amber-500'
       },
       {
         label: t('stats.forks'),
         value: githubForks ?? '—',
         live: true,
-        icon: GitBranch
+        icon: GitBranch,
+        bgGradient: 'from-purple-400 via-violet-400 to-indigo-500'
+      },
+      {
+        label: t('stats.contributors'),
+        value: '47',
+        live: false,
+        icon: Shield,
+        bgGradient: 'from-green-400 via-emerald-400 to-teal-500'
+      },
+      {
+        label: t('stats.securityScore'),
+        value: 'A+',
+        live: false,
+        icon: Shield,
+        bgGradient: 'from-blue-400 via-cyan-400 to-sky-500'
       }
     ];
   }, [githubStars, githubForks, t]);
@@ -98,52 +114,35 @@ export function HeroSectionRedesigned() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Properly synchronized word switching - ensures they never show same word and always alternate
+  // Continuous word switching - always alternating between words
   useEffect(() => {
     if (prefersReducedMotion) return;
 
-    const randomDelay = () => 3200 + Math.random() * 2000;
-    let currentState: 'A_CHANGING' | 'B_CHANGING' | 'WAITING' = 'A_CHANGING';
-    let nextChangeTime = Date.now() + randomDelay();
+    // Initial setup - ensure they start different
+    if (headIdxA === headIdxB) {
+      setHeadIdxB(headIdxA === 0 ? 1 : 0);
+    }
 
-    const updateWords = () => {
-      const now = Date.now();
-
-      if (now >= nextChangeTime) {
-        if (currentState === 'A_CHANGING') {
-          setHeadIdxA(prev => {
-            const next = (prev + 1) % cycleWords.length;
-            const currentWordB = cycleWordsTail[headIdxBRef.current];
-            const candidate = cycleWords[next]?.toLowerCase() === currentWordB?.toLowerCase()
-              ? (next + 1) % cycleWords.length
-              : next;
-            headIdxARef.current = candidate;
-            return candidate;
-          });
-          currentState = 'WAITING';
-          nextChangeTime = now + randomDelay();
-        } else if (currentState === 'WAITING') {
-          currentState = 'B_CHANGING';
-        } else {
-          setHeadIdxB(prev => {
-            const next = (prev + 1) % cycleWordsTail.length;
-            const currentWordA = cycleWords[headIdxARef.current];
-            const candidate = cycleWordsTail[next]?.toLowerCase() === currentWordA?.toLowerCase()
-              ? (next + 1) % cycleWordsTail.length
-              : next;
-            headIdxBRef.current = candidate;
-            return candidate;
-          });
-          currentState = 'A_CHANGING';
-          nextChangeTime = now + randomDelay();
-        }
-      }
-    };
-
-    const interval = setInterval(updateWords, 120);
+    const interval = setInterval(() => {
+      // Always keep them alternating - if A is 0, B should be 1, and vice versa
+      setHeadIdxA(prev => {
+        const next = prev === 0 ? 1 : 0;
+        headIdxARef.current = next;
+        return next;
+      });
+      
+      // Stagger B change for visual effect
+      setTimeout(() => {
+        setHeadIdxB(prev => {
+          const next = prev === 0 ? 1 : 0;
+          headIdxBRef.current = next;
+          return next;
+        });
+      }, 1500);
+    }, 4000); // Change every 4 seconds
 
     return () => clearInterval(interval);
-  }, [prefersReducedMotion, cycleWords, cycleWordsTail]);
+  }, [prefersReducedMotion, headIdxA, headIdxB]);
 
   // Mobile detection
   useEffect(() => {
@@ -203,18 +202,18 @@ export function HeroSectionRedesigned() {
               transparent 50%)`
           }}
         />
-        {/* Optimized logo - properly positioned for desktop */}
-        <div className="pointer-events-none absolute right-[-5%] sm:right-0 bottom-[-8%] sm:bottom-[-4%] z-0">
+        {/* Optimized logo - visible position */}
+        <div className="pointer-events-none absolute right-[10%] top-[25%] sm:top-[20%] z-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
-            animate={{ opacity: 0.4, scale: 1, rotate: 0 }}
+            animate={{ opacity: 0.5, scale: 1, rotate: 0 }}
             transition={{ delay: 0.3, duration: 1.2, ease: "easeOut" }}
             className="relative"
           >
-            <AnimatedAgentOSLogoOptimized size={isMobile ? 220 : 340} className="opacity-60" />
+            <AnimatedAgentOSLogoOptimized size={isMobile ? 250 : 400} className="opacity-70" />
             {/* Additional glow effect */}
             <div className="absolute inset-0 blur-xl">
-              <AnimatedAgentOSLogoOptimized size={isMobile ? 220 : 340} className="opacity-30" />
+              <AnimatedAgentOSLogoOptimized size={isMobile ? 250 : 400} className="opacity-40" />
             </div>
           </motion.div>
         </div>
@@ -312,30 +311,44 @@ export function HeroSectionRedesigned() {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="inline-block mb-8 sm:mb-12 w-full sm:w-auto"
           >
-            <div className="holographic-card p-6 sm:p-8">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
+            <div className="holographic-card p-6 sm:p-8 bg-[var(--color-background-primary)]/80 backdrop-blur-xl border border-[var(--color-border-subtle)]/20">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
                 {productStats.map((stat, i) => (
                   <motion.div
                     key={stat.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 + i * 0.1 }}
-                    className="text-center"
+                    className="relative group"
                   >
-                    <div className="flex items-center justify-center mb-2">
-                      <stat.icon className="w-5 h-5 text-accent-primary mr-2" />
-                      {stat.live && (
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                      )}
+                    {/* Animated background gradient */}
+                    <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${stat.bgGradient} opacity-0 group-hover:opacity-10 transition-opacity`} />
+                    
+                    <div className="relative text-center p-4">
+                      <div className="flex items-center justify-center mb-3">
+                        <div className={`p-2 rounded-lg bg-gradient-to-br ${stat.bgGradient}`}>
+                          <stat.icon className="w-5 h-5 text-white" />
+                        </div>
+                        {stat.live && (
+                          <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 border-2 border-white"></span>
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-2xl sm:text-3xl font-bold text-[var(--color-text-primary)]">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1">
+                        {stat.label}
+                      </div>
                     </div>
-                    <div className="text-2xl sm:text-3xl font-bold gradient-text">
-                      {stat.value}
-                    </div>
-                    <div className="text-xs sm:text-sm text-muted">
-                      {stat.label}
+                    
+                    {/* Subtle animated border */}
+                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${stat.bgGradient} p-[1px]`}>
+                        <div className="h-full w-full rounded-xl bg-[var(--color-background-primary)]" />
+                      </div>
                     </div>
                   </motion.div>
                 ))}

@@ -162,12 +162,27 @@ export function VideoDemoSection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="relative max-w-6xl mx-auto"
+          className="relative max-w-6xl mx-auto p-[2px] rounded-3xl"
+          style={{
+            background: 'linear-gradient(135deg, #7877C6 0%, #FF77C6 25%, #7877C6 50%, #FF77C6 75%, #7877C6 100%)',
+            backgroundSize: '200% 200%',
+            animation: 'holographic-shift 8s ease-in-out infinite'
+          }}
         >
           <div
-            className={`relative aspect-video rounded-3xl overflow-hidden glass-morphism shadow-modern-lg ${
+            className={`relative aspect-video rounded-3xl overflow-hidden ${
               isFullscreen ? 'fixed inset-4 z-50 max-w-none' : ''
             }`}
+            style={{
+              background: 'linear-gradient(135deg, rgba(120,119,198,0.1), rgba(255,119,198,0.1))',
+              boxShadow: `
+                0 0 80px rgba(120,119,198,0.3),
+                0 0 120px rgba(255,119,198,0.2),
+                inset 0 0 60px rgba(120,119,198,0.1),
+                0 20px 60px -10px rgba(0,0,0,0.3)
+              `,
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}
             onMouseEnter={() => setShowControls(true)}
             onMouseMove={() => setShowControls(true)}
           >

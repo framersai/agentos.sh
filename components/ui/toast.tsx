@@ -12,7 +12,7 @@ interface ToastProps {
   duration?: number
 }
 
-export function Toast({ message, type = 'success', isVisible, onClose, duration = 2000 }: ToastProps) {
+export function Toast({ message, type = 'success', isVisible, onClose, duration = 3000 }: ToastProps) {
   useEffect(() => {
     if (isVisible && duration > 0) {
       const timer = setTimeout(onClose, duration)
@@ -40,9 +40,9 @@ export function Toast({ message, type = 'success', isVisible, onClose, duration 
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -20, scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] pointer-events-none"
+          className="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none"
         >
-          <div className={`flex items-center gap-3 px-6 py-3 rounded-xl bg-gradient-to-r ${colors[type]} text-white shadow-lg backdrop-blur-md border border-white/20`}>
+          <div className={`flex items-center gap-3 px-6 py-4 rounded-xl bg-gradient-to-r ${colors[type]} text-white shadow-2xl backdrop-blur-md border border-white/30 min-w-[200px]`}>
             {icons[type]}
             <span className="font-medium">{message}</span>
           </div>
