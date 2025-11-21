@@ -788,5 +788,165 @@
     "subtitle": "Watch how easy it is to build adaptive AI agents",
     "watchButton": "Watch Demo",
     "duration": "Duration"
+  },
+  "productCards": {
+    "title": "Core Capabilities",
+    "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
+    "stats": {
+      "contextWindow": "Context Window",
+      "inferenceLatency": "Inference Latency",
+      "activePersonas": "Active Personas",
+      "parallelTasks": "Parallel Tasks",
+      "taskThroughput": "Task Throughput",
+      "orchestrationOverhead": "Orchestration Overhead",
+      "vectorCapacity": "Vector Capacity",
+      "retrievalSpeed": "Retrieval Speed",
+      "compressionRatio": "Compression Ratio",
+      "endToEndLatency": "End-to-End Latency",
+      "streamBandwidth": "Stream Bandwidth",
+      "connectionStability": "Connection Stability"
+    },
+    "cards": {
+      "adaptive": {
+        "title": "Adaptive Intelligence",
+        "description": "Real-time learning and context-aware decision-making that evolves with every interaction"
+      },
+      "distributed": {
+        "title": "Distributed Cognition",
+        "description": "Parallel processing across multiple agents with seamless coordination and load balancing"
+      },
+      "memory": {
+        "title": "Persistent Memory",
+        "description": "Boundless storage with instant recall via advanced vector embeddings and semantic search"
+      },
+      "streaming": {
+        "title": "Real-time Streaming",
+        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime"
+      }
+    }
+  },
+  "enterprise": {
+    "title": "Enterprise Ready Features",
+    "subtitle": "Building blocks of enterprise-grade infrastructure, each layer adding security and scale",
+    "features": {
+      "security": {
+        "title": "Security Foundation",
+        "items": ["AES-256 Encryption","Zero-Trust Architecture","End-to-End Security"]
+      },
+      "compliance": {
+        "title": "Compliance & Privacy",
+        "items": ["GDPR Compliant","PII Redaction","Data Residency Controls"]
+      },
+      "auth": {
+        "title": "Authentication",
+        "items": ["SSO/SAML 2.0","OAuth 2.0","MFA Support"]
+      },
+      "audit": {
+        "title": "Audit & Monitoring",
+        "items": ["Real-time Monitoring","Audit Logs","Anomaly Detection"]
+      },
+      "soc2": {
+        "title": "SOC2 Compliance",
+        "items": ["Type II (In Progress)","Annual Audits","Continuous Compliance"]
+      },
+      "scale": {
+        "title": "Enterprise Scale",
+        "items": ["Auto-scaling","99.99% SLA","Global CDN"]
+      }
+    },
+    "legend": {
+      "fullyImplemented": {
+        "title": "Fully Implemented",
+        "description": "GDPR compliance, PII redaction, and core security features are production-ready"
+      },
+      "inProgress": {
+        "title": "In Progress",
+        "description": "SOC2 Type II certification underway, expected completion Q2 2024"
+      },
+      "enterpriseSupport": {
+        "title": "Enterprise Support",
+        "description": "24/7 support with vca.chat integration and dedicated success managers"
+      }
+    },
+    "trustBadge": "Trusted by industry leaders",
+    "wipLabel": "WIP",
+    "currentlyDevelopment": "Currently in development"
+  },
+  "ecosystem": {
+    "title": "The AgentOS Ecosystem",
+    "subtitle": "Explore the portable AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.",
+    "stats": {
+      "repositories": "Repositories",
+      "weeklyDownloads": "Weekly Downloads",
+      "githubStars": "GitHub Stars"
+    },
+    "categories": {
+      "core": { "title": "Core Framework", "description": "Essential components and protocols" },
+      "tools": { "title": "Developer Tools", "description": "SDKs, clients, and extensions" },
+      "apps": { "title": "Applications", "description": "Ready-to-use applications and platforms" },
+      "infrastructure": { "title": "Infrastructure", "description": "Storage, deployment, and operations" },
+      "community": { "title": "Community", "description": "Forums, discussions, and resources" }
+    },
+    "starsSuffix": "stars",
+    "updatedLabel": "Updated {date}",
+    "cta": {
+      "title": "Join the AgentOS Community",
+      "description": "Contribute to open-source AI development, share your agents, and collaborate with developers worldwide.",
+      "followOnGithub": "Follow on GitHub",
+      "joinDiscord": "Join Discord Community",
+      "contributeCode": "Contribute Code"
+    }
+  },
+  "codeExamples": {
+    "badge": "Code Examples",
+    "title": "Build with AgentOS",
+    "subtitle": "Production-ready code examples and patterns for building intelligent agent systems",
+    "categories": {
+      "all": "All Examples",
+      "basic": "Basic",
+      "advanced": "Advanced",
+      "integration": "Integration",
+      "deployment": "Deployment"
+    },
+    "selectExample": "Select Example",
+    "tabs": {
+      "synchronous": "Synchronous",
+      "streaming": "Streaming"
+    },
+    "copyButton": "Copy code",
+    "docsButton": "View Docs",
+    "runButton": "Try in Playground",
+    "examples": {
+      "basicAgent": {
+        "title": "Create Your First Agent",
+        "description": "Basic agent setup with memory and tools"
+      },
+      "gmiRoles": {
+        "title": "GMI Roles & Agencies",
+        "description": "Implementing Generalised Mind Instance roles"
+      },
+      "memorySystem": {
+        "title": "Advanced Memory Management",
+        "description": "Implementing persistent and contextual memory"
+      },
+      "toolIntegration": {
+        "title": "External Tool Integration",
+        "description": "Connect APIs and services as agent tools"
+      },
+      "realtimeStream": {
+        "title": "Real-time Streaming Responses",
+        "description": "Stream agent responses for better UX"
+      },
+      "deployment": {
+        "title": "Production Deployment",
+        "description": "Deploy AgentOS with Docker and Kubernetes"
+      }
+    },
+    "cta": {
+      "title": "Ready to Build Your First Agent?",
+      "description": "Get started with AgentOS in less than 5 minutes. Install the SDK and follow our interactive tutorial.",
+      "button": "Start Building",
+      "time": "5 min"
+    }
   }
 }
