@@ -4,7 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { AnimatedAgentOSLogo } from '../icons/animated-logo';
+import { AnimatedAgentOSLogoOptimized } from '../icons/animated-logo-optimized';
+import { ParticleText } from '../ui/particle-text';
+import { PageSkeleton } from '../ui/page-skeleton';
 import { Toast } from '../ui/toast';
 import { LinkButton } from '../ui/LinkButton';
 import { Button } from '../ui/Button';
@@ -24,6 +26,7 @@ export function HeroSectionRedesigned() {
   const [isMobile, setIsMobile] = useState(false);
   const [headIdxA, setHeadIdxA] = useState(0);
   const [headIdxB, setHeadIdxB] = useState(1);
+  const [isContentReady, setIsContentReady] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const isDark = resolvedTheme === 'dark';
 
@@ -40,9 +43,14 @@ export function HeroSectionRedesigned() {
     applyVisualTheme(mappedTheme, isDark);
   }, [currentTheme, isDark]);
 
-  // Show skeleton while waiting for client-side hydration if needed
+  // Progressive loading - show skeleton first, then content
   const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => setIsMounted(true), []);
+  useEffect(() => {
+    setIsMounted(true);
+    // Delay content display slightly to ensure smooth loading
+    const timer = setTimeout(() => setIsContentReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Live stats with GitHub data only
   const productStats = useMemo(() => {
@@ -80,45 +88,52 @@ export function HeroSectionRedesigned() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Liquid morph text switching - coordinated to avoid duplicates
+  // Properly synchronized word switching - ensures they never show same word and always alternate
   useEffect(() => {
     if (prefersReducedMotion) return;
-    
-    const interval = setInterval(() => {
-      setHeadIdxA(prev => {
-        // Ensure we properly cycle through all words
-        const next = (prev + 1) % cycleWords.length;
-        // Skip if the word would match what's currently shown in tail
-        if (cycleWords[next]?.toLowerCase() === cycleWordsTail[headIdxB]?.toLowerCase()) {
-          return (prev + 2) % cycleWords.length;
+
+    // Use state machine approach for better control
+    let currentState = 'A_CHANGING'; // 'A_CHANGING', 'B_CHANGING', or 'WAITING'
+    let nextChangeTime = Date.now() + 3000; // Initial delay before first change
+
+    const updateWords = () => {
+      const now = Date.now();
+
+      if (now >= nextChangeTime) {
+        if (currentState === 'A_CHANGING') {
+          setHeadIdxA(prev => {
+            const next = (prev + 1) % cycleWords.length;
+            // Ensure word A is never the same as current word B
+            const currentWordB = cycleWordsTail[headIdxB];
+            if (cycleWords[next]?.toLowerCase() === currentWordB?.toLowerCase()) {
+              return (next + 1) % cycleWords.length;
+            }
+            return next;
+          });
+          currentState = 'WAITING';
+          nextChangeTime = now + 2500; // Wait 2.5s before changing B
+        } else if (currentState === 'WAITING') {
+          currentState = 'B_CHANGING';
+        } else if (currentState === 'B_CHANGING') {
+          setHeadIdxB(prev => {
+            const next = (prev + 1) % cycleWordsTail.length;
+            // Ensure word B is never the same as current word A
+            const currentWordA = cycleWords[headIdxA];
+            if (cycleWordsTail[next]?.toLowerCase() === currentWordA?.toLowerCase()) {
+              return (next + 1) % cycleWordsTail.length;
+            }
+            return next;
+          });
+          currentState = 'A_CHANGING';
+          nextChangeTime = now + 2500; // Wait 2.5s before changing A again
         }
-        return next;
-      });
-    }, 5000); // Slower transition for better readability
+      }
+    };
+
+    const interval = setInterval(updateWords, 100); // Check frequently for smooth transitions
 
     return () => clearInterval(interval);
-  }, [prefersReducedMotion, cycleWords.length, cycleWordsTail, headIdxB, cycleWords]);
-
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    
-    // Offset timing for B to create alternating effect
-    const timeout = setTimeout(() => {
-      const interval = setInterval(() => {
-        setHeadIdxB(prev => {
-          const next = (prev + 1) % cycleWordsTail.length;
-          // Skip if the word would match what's currently shown in head
-          if (cycleWordsTail[next]?.toLowerCase() === cycleWords[headIdxA]?.toLowerCase()) {
-            return (prev + 2) % cycleWordsTail.length;
-          }
-          return next;
-        });
-      }, 5000); // Same slower speed
-      return () => clearInterval(interval);
-    }, 2500); // Half the interval time for proper alternation
-
-    return () => clearTimeout(timeout);
-  }, [prefersReducedMotion, cycleWordsTail.length, cycleWords, headIdxA, cycleWordsTail]);
+  }, [prefersReducedMotion, cycleWords, cycleWordsTail, headIdxA, headIdxB]);
 
   // Mobile detection
   useEffect(() => {
@@ -140,6 +155,11 @@ export function HeroSectionRedesigned() {
     { title: 'Zero-copy memory fabric', detail: 'Vector, episodic, and working memory stitched together for recall.' },
     { title: 'Portable intelligence capsules', detail: 'Export full AgentOS instances as Markdown or JSON and ingest anywhere.' }
   ];
+
+  // Show skeleton during initial load for better perceived performance
+  if (!isContentReady) {
+    return <PageSkeleton />;
+  }
 
   return (
     <section className="hero-critical relative min-h-screen flex flex-col justify-center overflow-hidden bg-[var(--color-background-primary)]">
@@ -173,15 +193,19 @@ export function HeroSectionRedesigned() {
               transparent 50%)`
           }}
         />
-        {/* Large translucent logo - adjusted for responsiveness */}
-        <div className="pointer-events-none absolute right-[-10%] sm:right-[-5%] top-[50%] sm:top-[60%] -translate-y-1/2 opacity-30 sm:opacity-40 z-0 overflow-hidden sm:overflow-visible mix-blend-overlay dark:mix-blend-screen">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] animate-slow-spin scale-[1.0] sm:scale-[1.2] origin-center translate-x-1/4 sm:translate-x-0"
+        {/* Optimized logo - smaller, more vibrant, positioned better */}
+        <div className="pointer-events-none absolute right-[5%] sm:right-[10%] top-[50%] -translate-y-1/2 z-0">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
+            animate={{ opacity: 0.4, scale: 1, rotate: 0 }}
+            transition={{ delay: 0.3, duration: 1.2, ease: "easeOut" }}
+            className="relative"
           >
-            <AnimatedAgentOSLogo />
+            <AnimatedAgentOSLogoOptimized size={300} className="opacity-60" />
+            {/* Additional glow effect */}
+            <div className="absolute inset-0 blur-xl">
+              <AnimatedAgentOSLogoOptimized size={300} className="opacity-30" />
+            </div>
           </motion.div>
         </div>
       </div>
@@ -224,48 +248,15 @@ export function HeroSectionRedesigned() {
                 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.15] sm:leading-[1.1] tracking-tight text-left"
                 style={{ fontFamily: 'var(--font-grotesk)' }}
               >
-                {/* Morphing first word */}
+                {/* Particle effect first word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={`head-a-${headIdxA}`}
-                        initial={{ 
-                          opacity: 0, 
-                          y: 20, 
-                          filter: 'blur(10px)',
-                          scale: 0.8,
-                          rotateX: -90
-                        }}
-                        animate={{ 
-                          opacity: 1, 
-                          y: 0, 
-                          filter: 'blur(0px)',
-                          scale: 1,
-                          rotateX: 0
-                        }}
-                        exit={{ 
-                          opacity: 0, 
-                          y: -20, 
-                          filter: 'blur(10px)',
-                          scale: 0.8,
-                          rotateX: 90
-                        }}
-                        transition={{ 
-                          duration: 0.8, 
-                          ease: [0.43, 0.13, 0.23, 0.96],
-                          filter: { duration: 0.6 },
-                          scale: { duration: 0.7 }
-                        }}
-                        className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent inline-block"
-                        style={{
-                          transformStyle: 'preserve-3d',
-                          perspective: '1000px'
-                        }}
-                      >
-                        {cycleWords[headIdxA]}
-                      </motion.span>
-                    </AnimatePresence>
+                    <ParticleText
+                      text={cycleWords[headIdxA]}
+                      className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                      particleCount={25}
+                      animationDuration={0.8}
+                    />
                   ) : (
                     <span className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-100">
                        {cycleWords[0]}
@@ -273,49 +264,15 @@ export function HeroSectionRedesigned() {
                   )}
                 </span>
                 {' intelligence for '}
-                {/* Morphing last word */}
+                {/* Particle effect last word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={`head-b-${headIdxB}`}
-                        initial={{ 
-                          opacity: 0, 
-                          y: 20, 
-                          filter: 'blur(10px)',
-                          scale: 0.8,
-                          rotateX: -90
-                        }}
-                        animate={{ 
-                          opacity: 1, 
-                          y: 0, 
-                          filter: 'blur(0px)',
-                          scale: 1,
-                          rotateX: 0
-                        }}
-                        exit={{ 
-                          opacity: 0, 
-                          y: -20, 
-                          filter: 'blur(10px)',
-                          scale: 0.8,
-                          rotateX: 90
-                        }}
-                        transition={{ 
-                          duration: 0.8, 
-                          ease: [0.43, 0.13, 0.23, 0.96],
-                          delay: 0.1,
-                          filter: { duration: 0.6 },
-                          scale: { duration: 0.7 }
-                        }}
-                        className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent inline-block"
-                        style={{
-                          transformStyle: 'preserve-3d',
-                          perspective: '1000px'
-                        }}
-                      >
-                        {cycleWordsTail[headIdxB]}
-                      </motion.span>
-                    </AnimatePresence>
+                    <ParticleText
+                      text={cycleWordsTail[headIdxB]}
+                      className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                      particleCount={25}
+                      animationDuration={0.8}
+                    />
                   ) : (
                      <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-100">
                         {cycleWordsTail[0]}

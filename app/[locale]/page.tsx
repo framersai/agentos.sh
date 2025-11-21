@@ -19,27 +19,26 @@ import {
   Code2
 } from 'lucide-react'
 
-// Lazy load the animated background
+// Lazy load the animated background with improved loading
 const AnimatedBackgroundLazy = dynamic(
   () => import('../../components/ui/animated-background').then(m => m.AnimatedBackground),
-  { 
+  {
     ssr: false,
     loading: () => null // No loading placeholder for background
   }
 )
 
+// Import PageSkeleton for loading state
+const PageSkeletonLazy = dynamic(
+  () => import('../../components/ui/page-skeleton').then(m => m.PageSkeleton),
+  { ssr: false }
+)
+
 const HeroSectionRedesignedLazy = dynamic(
   () => import('../../components/sections/hero-section-redesigned').then(m => m.HeroSectionRedesigned),
-  { 
-    loading: () => (
-      <div className="h-screen bg-[var(--color-background-primary)] flex items-center justify-center">
-        <div className="animate-pulse">
-          <div className="h-20 w-96 bg-gradient-to-r from-[var(--color-accent-primary)]/20 to-[var(--color-accent-secondary)]/20 rounded-lg mb-4" />
-          <div className="h-4 w-64 bg-[var(--color-text-muted)]/20 rounded mx-auto" />
-        </div>
-      </div>
-    ),
-    ssr: true // Enable SSR for SEO
+  {
+    loading: () => <PageSkeletonLazy />,
+    ssr: false // Disable SSR for faster interaction
   }
 )
 
@@ -410,14 +409,13 @@ function DeferredAnimatedBackground() {
   const [showBg, setShowBg] = useState(false)
 
   useEffect(() => {
+    // Load background immediately after first paint
     const mount = () => setShowBg(true)
-    if ('requestIdleCallback' in window) {
-      const w = window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => void }
-      w.requestIdleCallback(mount, { timeout: 800 }) // Faster load
-    } else {
-      const t = setTimeout(mount, 400) // Faster fallback
-      return () => clearTimeout(t)
-    }
+
+    // Use requestAnimationFrame for immediate loading after paint
+    requestAnimationFrame(() => {
+      requestAnimationFrame(mount) // Double RAF ensures paint has occurred
+    })
   }, [])
 
   if (!showBg) return null
