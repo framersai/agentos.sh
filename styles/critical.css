@@ -4,17 +4,36 @@
 :root {
   /* Essential color variables for immediate rendering */
   --color-background-primary: hsl(220, 30%, 98%);
+  --color-background-secondary: hsl(220, 25%, 95%);
+  --color-background-tertiary: hsl(220, 20%, 92%);
   --color-text-primary: hsl(222, 47%, 8%);
+  --color-text-secondary: hsl(222, 20%, 45%);
+  --color-text-muted: hsl(222, 15%, 60%);
   --color-accent-primary: hsl(250, 95%, 55%);
+  --color-accent-secondary: hsl(280, 85%, 60%);
+  --color-accent-tertiary: hsl(340, 85%, 65%);
+  --color-accent-hover: hsl(250, 95%, 45%);
+  --color-border-subtle: hsl(220, 15%, 85%);
+  --color-border-interactive: hsl(250, 50%, 75%);
+  --font-grotesk: 'Space Grotesk', system-ui, -apple-system, sans-serif;
 }
 
 .dark {
   --color-background-primary: hsl(240, 20%, 3%);
+  --color-background-secondary: hsl(240, 18%, 8%);
+  --color-background-tertiary: hsl(240, 16%, 12%);
   --color-text-primary: hsl(220, 30%, 98%);
+  --color-text-secondary: hsl(220, 20%, 75%);
+  --color-text-muted: hsl(220, 15%, 55%);
   --color-accent-primary: hsl(250, 100%, 70%);
+  --color-accent-secondary: hsl(280, 90%, 75%);
+  --color-accent-tertiary: hsl(340, 90%, 70%);
+  --color-accent-hover: hsl(250, 100%, 80%);
+  --color-border-subtle: hsl(240, 10%, 20%);
+  --color-border-interactive: hsl(250, 50%, 45%);
 }
 
-/* Prevent layout shift */
+/* Prevent layout shift and FOUC */
 body {
   margin: 0;
   padding: 0;
@@ -22,23 +41,41 @@ body {
   color: var(--color-text-primary);
   font-family: system-ui, -apple-system, sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Hero section immediate styles */
+/* Hero section immediate styles with proper typography */
 .hero-critical {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
   position: relative;
+  background: var(--color-background-primary);
+  padding: 2rem 1rem;
 }
 
-/* Prevent FOUC (Flash of Unstyled Content) */
-.gradient-text {
-  background: linear-gradient(135deg, #6366F1, #EC4899);
+/* Typography critical styles */
+h1 {
+  font-family: var(--font-grotesk);
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Gradient text for immediate rendering */
+.gradient-text,
+.hero-critical h1 span {
+  background: linear-gradient(135deg, 
+    var(--color-accent-primary) 0%, 
+    var(--color-accent-secondary) 50%, 
+    var(--color-accent-tertiary) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 /* Loading skeleton for dynamic content */

@@ -25,15 +25,32 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           /* Default Theme Variables (Pre-load) to prevent Flash */
           :root {
              --color-background-primary: hsl(220, 30%, 98%);
-             --color-background-secondary: hsl(220, 40%, 96%);
-             --color-text-primary: hsl(222, 47%, 10%);
-             --color-accent-primary: hsl(250, 95%, 64%);
+             --color-background-secondary: hsl(220, 25%, 95%);
+             --color-background-tertiary: hsl(220, 20%, 92%);
+             --color-text-primary: hsl(222, 47%, 8%);
+             --color-text-secondary: hsl(222, 20%, 45%);
+             --color-text-muted: hsl(222, 15%, 60%);
+             --color-accent-primary: hsl(250, 95%, 55%);
+             --color-accent-secondary: hsl(280, 85%, 60%);
+             --color-accent-tertiary: hsl(340, 85%, 65%);
+             --color-accent-hover: hsl(250, 95%, 45%);
+             --color-border-subtle: hsl(220, 15%, 85%);
+             --color-border-interactive: hsl(250, 50%, 75%);
+             --font-grotesk: 'Space Grotesk', system-ui, -apple-system, sans-serif;
           }
-          .dark:root {
+          .dark {
              --color-background-primary: hsl(240, 20%, 3%);
-             --color-background-secondary: hsl(240, 15%, 6%);
-             --color-text-primary: hsl(220, 30%, 99%);
+             --color-background-secondary: hsl(240, 18%, 8%);
+             --color-background-tertiary: hsl(240, 16%, 12%);
+             --color-text-primary: hsl(220, 30%, 98%);
+             --color-text-secondary: hsl(220, 20%, 75%);
+             --color-text-muted: hsl(220, 15%, 55%);
              --color-accent-primary: hsl(250, 100%, 70%);
+             --color-accent-secondary: hsl(280, 90%, 75%);
+             --color-accent-tertiary: hsl(340, 90%, 70%);
+             --color-accent-hover: hsl(250, 100%, 80%);
+             --color-border-subtle: hsl(240, 10%, 20%);
+             --color-border-interactive: hsl(250, 50%, 45%);
           }
           
           .skip-to-content { position: absolute; left: -9999px; z-index: 999; padding: 1rem 1.5rem; background: var(--color-accent-primary); color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }

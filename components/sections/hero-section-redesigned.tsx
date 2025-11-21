@@ -193,18 +193,18 @@ export function HeroSectionRedesigned() {
               transparent 50%)`
           }}
         />
-        {/* Optimized logo - smaller, more vibrant, positioned better */}
-        <div className="pointer-events-none absolute right-[5%] sm:right-[10%] top-[50%] -translate-y-1/2 z-0">
+        {/* Optimized logo - properly positioned for desktop */}
+        <div className="pointer-events-none absolute right-[5%] sm:right-[10%] top-[40%] sm:top-[50%] -translate-y-1/2 z-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
             animate={{ opacity: 0.4, scale: 1, rotate: 0 }}
             transition={{ delay: 0.3, duration: 1.2, ease: "easeOut" }}
             className="relative"
           >
-            <AnimatedAgentOSLogoOptimized size={300} className="opacity-60" />
+            <AnimatedAgentOSLogoOptimized size={isMobile ? 200 : 300} className="opacity-60" />
             {/* Additional glow effect */}
             <div className="absolute inset-0 blur-xl">
-              <AnimatedAgentOSLogoOptimized size={300} className="opacity-30" />
+              <AnimatedAgentOSLogoOptimized size={isMobile ? 200 : 300} className="opacity-30" />
             </div>
           </motion.div>
         </div>
@@ -258,12 +258,12 @@ export function HeroSectionRedesigned() {
                       animationDuration={0.8}
                     />
                   ) : (
-                    <span className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-100">
+                    <span className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
                        {cycleWords[0]}
                     </span>
                   )}
                 </span>
-                {' intelligence for '}
+                <span className="text-[var(--color-text-primary)]"> intelligence for </span>
                 {/* Particle effect last word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
@@ -274,12 +274,12 @@ export function HeroSectionRedesigned() {
                       animationDuration={0.8}
                     />
                   ) : (
-                     <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-100">
+                     <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
                         {cycleWordsTail[0]}
                      </span>
                   )}
                 </span>
-                {' agents'}
+                <span className="text-[var(--color-text-primary)]"> agents</span>
               </h1>
               </div>
             </div>
