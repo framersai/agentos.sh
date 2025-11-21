@@ -161,6 +161,53 @@
       "bullet3": "将完整代理机构导出为Markdown/JSON包"
     }
   },
+  "enterprise": {
+    "title": "Enterprise Ready Features",
+    "subtitle": "Building blocks of enterprise-grade infrastructure, each layer adding security and scale",
+    "features": {
+      "security": {
+        "title": "Security Foundation",
+        "items": ["AES-256 Encryption","Zero-Trust Architecture","End-to-End Security"]
+      },
+      "compliance": {
+        "title": "Compliance & Privacy",
+        "items": ["GDPR Compliant","PII Redaction","Data Residency Controls"]
+      },
+      "auth": {
+        "title": "Authentication",
+        "items": ["SSO/SAML 2.0","OAuth 2.0","MFA Support"]
+      },
+      "audit": {
+        "title": "Audit & Monitoring",
+        "items": ["Real-time Monitoring","Audit Logs","Anomaly Detection"]
+      },
+      "soc2": {
+        "title": "SOC2 Compliance",
+        "items": ["Type II (In Progress)","Annual Audits","Continuous Compliance"]
+      },
+      "scale": {
+        "title": "Enterprise Scale",
+        "items": ["Auto-scaling","99.99% SLA","Global CDN"]
+      }
+    },
+    "legend": {
+      "fullyImplemented": {
+        "title": "Fully Implemented",
+        "description": "GDPR compliance, PII redaction, and core security features are production-ready"
+      },
+      "inProgress": {
+        "title": "In Progress",
+        "description": "SOC2 Type II certification underway, expected completion Q2 2024"
+      },
+      "enterpriseSupport": {
+        "title": "Enterprise Support",
+        "description": "24/7 support with vca.chat integration and dedicated success managers"
+      }
+    },
+    "trustBadge": "Trusted by industry leaders",
+    "wipLabel": "WIP",
+    "currentlyDevelopment": "Currently in development"
+  },
   "marketplace": {
     "comingSoon": "代理市场即将推出",
     "description": "分享、购买和出售您的AgentOS代理机构。我们将处理CI/CD、基础设施、支付和合规，让您专注于自适应、涌现和永久智能。"
