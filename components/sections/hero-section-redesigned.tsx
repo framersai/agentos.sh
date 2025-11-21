@@ -267,7 +267,7 @@ export function HeroSectionRedesigned() {
                       </motion.span>
                     </AnimatePresence>
                   ) : (
-                    <span className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-0">
+                    <span className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-100">
                        {cycleWords[0]}
                     </span>
                   )}
@@ -317,7 +317,7 @@ export function HeroSectionRedesigned() {
                       </motion.span>
                     </AnimatePresence>
                   ) : (
-                     <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-0">
+                     <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent opacity-100">
                         {cycleWordsTail[0]}
                      </span>
                   )}
