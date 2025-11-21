@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { AnimatedAgentOSLogoOptimized } from '../icons/animated-logo-optimized';
