@@ -28,15 +28,15 @@ export function SiteHeader() {
   ], [t]);
 
   const localizeHref = useCallback((href: string) => {
-    // Handle empty/root paths
+    // Handle empty/root paths – always prefix locale for consistency
     if (!href || href === '/') {
-      return locale === 'en' ? '/' : `/${locale}`;
+      return `/${locale}`;
     }
     // Handle external links
     if (href.startsWith('http') || href.startsWith('mailto:')) {
       return href;
     }
-    // Handle anchors
+    // Handle anchors ("#section" links)
     if (href.startsWith('#')) {
       return locale === 'en' ? href : `/${locale}${href}`;
     }
@@ -44,8 +44,7 @@ export function SiteHeader() {
     // Normalize path (ensure it starts with /)
     const path = href.startsWith('/') ? href : `/${href}`;
     
-    // If path is already prefixed with locale (shouldn't happen often but safe to check), return it
-    // Simple check: /ja/ or /ja
+    // If path is already prefixed with locale, return as-is
     if (path === `/${locale}` || path.startsWith(`/${locale}/`)) {
       return path;
     }
@@ -55,7 +54,7 @@ export function SiteHeader() {
       return locale === 'en' ? path : `/${locale}${path}`;
     }
 
-    return locale === 'en' ? path : `/${locale}${path}`;
+    return `/${locale}${path}`;
   }, [locale]);
 
   const homeHref = useMemo(() => (locale === 'en' ? '/' : `/${locale}`), [locale]);
