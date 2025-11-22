@@ -38,47 +38,6 @@ export default async function AboutPage({ params: { locale } }: Props) {
   const t = await getTranslations({ locale: locale as Locale, namespace: 'about' });
   const homeHref = locale === 'en' ? '/' : `/${locale}`;
 
-  const heroDescription = t.rich('hero.description', {
-    link: (chunks) => (
-      <a
-        href="https://frame.dev"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-semibold text-accent-primary underline decoration-dotted underline-offset-4"
-      >
-        {chunks}
-      </a>
-    ),
-  });
-
-  const missionHighlight = t.rich('mission.p2', {
-    span: (chunks) => <span className="text-accent-primary font-semibold">{chunks}</span>,
-  });
-
-  const teamDescription = t.rich('team.description', {
-    link: (chunks) => (
-      <a
-        href="https://frame.dev"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-accent-primary underline underline-offset-4"
-      >
-        {chunks}
-      </a>
-    ),
-  });
-
-  const licenseFooter = t.rich('license.footer', {
-    link: (chunks) => (
-      <a
-        href="mailto:team@frame.dev"
-        className="text-accent-primary font-semibold underline underline-offset-4"
-      >
-        {chunks}
-      </a>
-    ),
-  });
-
   const connectLinks = [
     { label: t('connect.github'), href: 'https://github.com/framersai/agentos', icon: Github },
     { label: t('connect.linkedin'), href: 'https://www.linkedin.com/company/framersai', icon: Linkedin },
@@ -89,7 +48,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
   const contactCards = [
     {
       title: t('team.generalInquiries'),
-      description: teamDescription,
+      description: t('team.description'),
       email: 'team@frame.dev',
     },
     {
@@ -121,7 +80,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
             {t('hero.title')}
           </h1>
           <p className="text-lg sm:text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto">
-            {heroDescription}
+            {t('hero.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -148,14 +107,14 @@ export default async function AboutPage({ params: { locale } }: Props) {
         <section className="rounded-[32px] border border-border-subtle/60 bg-white/70 dark:bg-white/5 p-10 space-y-6 shadow-2xl shadow-black/5">
           <h2 className="text-3xl font-bold">{t('mission.title')}</h2>
           <p className="text-lg text-[var(--color-text-secondary)]">{t('mission.p1')}</p>
-          <p className="text-lg text-[var(--color-text-secondary)]">{missionHighlight}</p>
+          <p className="text-lg text-[var(--color-text-secondary)]">{t('mission.p2')}</p>
         </section>
 
         {/* Team & Contact */}
         <section className="space-y-8">
           <div className="space-y-4">
             <h2 className="text-3xl font-bold">{t('team.title')}</h2>
-            <p className="text-[var(--color-text-secondary)] max-w-3xl">{teamDescription}</p>
+            <p className="text-[var(--color-text-secondary)] max-w-3xl">{t('team.description')}</p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {contactCards.map((card) => (
@@ -210,7 +169,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
               <p className="text-[var(--color-text-secondary)]">{t('license.extensionsDesc')}</p>
             </div>
           </div>
-          <p className="text-sm text-[var(--color-text-secondary)]">{licenseFooter}</p>
+          <p className="text-sm text-[var(--color-text-secondary)]">{t('license.footer')}</p>
         </section>
       </div>
     </main>
