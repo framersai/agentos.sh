@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Copy, Check, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { SectionLabel } from '../ui/section-label'
 
 interface CodeExample {
   id: string
@@ -430,10 +431,12 @@ volumes:
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism mb-6">
-            <Code2 className="w-4 h-4 text-accent-primary" />
-            <span className="text-sm font-semibold text-text-secondary">{t('badge')}</span>
-          </div>
+          <SectionLabel
+            icon={<Code2 className="w-4 h-4" />}
+            className="mx-auto mb-6 text-sm"
+          >
+            {t('badge')}
+          </SectionLabel>
 
           <h2 id="code-examples-heading" className="text-4xl sm:text-5xl font-bold mb-4">
             <span className="gradient-text">{t('title')}</span>

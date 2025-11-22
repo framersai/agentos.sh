@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
+import { SectionLabel } from '../ui/section-label'
 
 const placeholderSlots = [0, 1, 2] as const
 
@@ -26,7 +27,12 @@ export function SocialProofSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <p className="text-sm font-semibold uppercase tracking-wide text-text-muted">{t('badge')}</p>
+          <SectionLabel
+            tone="muted"
+            className="mx-auto mb-6 text-[0.7rem] uppercase tracking-[0.3em]"
+          >
+            {t('badge')}
+          </SectionLabel>
           <h2 id="social-proof-heading" className="text-4xl sm:text-5xl font-bold text-text-primary mb-4">
             {t('title')}
           </h2>

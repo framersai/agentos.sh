@@ -17,20 +17,13 @@ export function CTASection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 backdrop-blur-sm border border-accent-primary/20 mb-6">
-            <Sparkles className="w-4 h-4 text-accent-primary" />
-            <span className="text-sm font-medium bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent">
-              {t('badge')}
-            </span>
-          </div>
-
-            <h2 className="text-5xl sm:text-6xl font-bold mb-6">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             <span className="bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
               {t('title')}
             </span>
           </h2>
 
-          <p className="text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto mb-12">
+          <p className="text-lg sm:text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto mb-12">
             {t('description')}
           </p>
         </motion.div>
