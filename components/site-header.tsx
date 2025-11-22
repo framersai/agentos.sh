@@ -21,10 +21,10 @@ export function SiteHeader() {
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const NAV_LINKS = useMemo(() => [
+    { href: '/about', label: t('about') },
     { href: '/#features', label: t('features') },
     { href: '/blog', label: 'Blog' },
     { href: 'https://docs.agentos.sh', label: t('docs') },
-    // Condensed links: Removed FAQ and About from primary nav to reduce clutter
   ], [t]);
 
   const localizeHref = useCallback((href: string) => {
