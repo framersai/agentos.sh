@@ -3,245 +3,141 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState, memo } from 'react'
 
+const orbitLayers = [
+  { rx: 30, ry: 20, duration: 16, tilt: 0, electronColor: '#7C3AED' },
+  { rx: 36, ry: 24, duration: 18, tilt: 26, electronColor: '#EC4899' },
+  { rx: 24, ry: 16, duration: 12, tilt: -26, electronColor: '#22D3EE' }
+]
+
 export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOptimized({
-  size = 120,
+  size = 160,
   className = ""
 }: {
-  size?: number;
-  className?: string;
+  size?: number
+  className?: string
 }) {
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState(false)
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  useEffect(() => setIsClient(true), [])
 
   if (!isClient) {
-    // Simple static placeholder while loading
     return (
       <div className={`relative ${className}`} style={{ width: size, height: size }}>
-        <svg viewBox="0 0 100 100" className="w-full h-full">
-          <circle cx="50" cy="50" r="30" fill="url(#static-gradient)" opacity="0.3" />
-          <defs>
-            <linearGradient id="static-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#6366F1" />
-              <stop offset="100%" stopColor="#EC4899" />
-            </linearGradient>
-          </defs>
-        </svg>
+        <div className="w-full h-full rounded-full bg-gradient-to-br from-purple-500/30 to-cyan-500/30" />
       </div>
-    );
+    )
   }
 
   return (
     <motion.div
-      initial={{ scale: 0.5, opacity: 0 }}
+      initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
       className={`relative ${className}`}
       style={{ width: size, height: size }}
     >
-      <svg
-        viewBox="0 0 100 100"
-        className="w-full h-full"
-        style={{ overflow: 'visible' }}
-      >
+      <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
         <defs>
-          {/* Vibrant radiant gradient */}
-          <radialGradient id="core-radiant" cx="50%" cy="50%">
-            <stop offset="0%" stopColor="#fff" stopOpacity="1">
-              <animate attributeName="stop-opacity" values="1;0.8;1" dur="2s" repeatCount="indefinite" />
-            </stop>
-            <stop offset="20%" stopColor="#E879F9" stopOpacity="0.9" />
-            <stop offset="40%" stopColor="#A855F7" stopOpacity="0.8" />
-            <stop offset="60%" stopColor="#7C3AED" stopOpacity="0.7" />
-            <stop offset="100%" stopColor="#4C1D95" stopOpacity="0.5" />
+          <radialGradient id="agentos-core" cx="50%" cy="50%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+            <stop offset="45%" stopColor="#B0A8FF" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#3B1F8D" stopOpacity="0.4" />
           </radialGradient>
-
-          {/* Enhanced vibrant gradient */}
-          <linearGradient id="vibrant-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FF00FF" stopOpacity="1">
-              <animate attributeName="stop-color" values="#FF00FF;#00FFFF;#FFFF00;#FF00FF" dur="3s" repeatCount="indefinite" />
-            </stop>
-            <stop offset="50%" stopColor="#00FFFF" stopOpacity="1">
-              <animate attributeName="stop-color" values="#00FFFF;#FFFF00;#FF00FF;#00FFFF" dur="3s" repeatCount="indefinite" />
-            </stop>
-            <stop offset="100%" stopColor="#FFFF00" stopOpacity="1">
-              <animate attributeName="stop-color" values="#FFFF00;#FF00FF;#00FFFF;#FFFF00" dur="3s" repeatCount="indefinite" />
-            </stop>
+          <linearGradient id="agentos-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#7C3AED" />
+            <stop offset="50%" stopColor="#EC4899" />
+            <stop offset="100%" stopColor="#22D3EE" />
           </linearGradient>
-
-          {/* Intense glow filter */}
-          <filter id="intense-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-            <feFlood floodColor="#A855F7" floodOpacity="0.5" />
-            <feComposite in2="coloredBlur" operator="in" />
+          <filter id="agentos-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
             <feMerge>
-              <feMergeNode />
+              <feMergeNode in="coloredBlur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-
-          {/* Radiant burst effect */}
-          <filter id="radiant-burst">
-            <feGaussianBlur stdDeviation="2" />
-            <feColorMatrix values="
-              1.5 0 0 0 0
-              0 1.5 0 0 0
-              0 0 1.5 0 0
-              0 0 0 1 0" />
-          </filter>
         </defs>
 
-        {/* Radiant background burst */}
-        <g opacity="0.6">
-          {Array.from({ length: 12 }, (_, i) => (
-            <motion.line
-              key={`ray-${i}`}
-              x1="50"
-              y1="50"
-              x2={50 + Math.cos(i * Math.PI / 6) * 45}
-              y2={50 + Math.sin(i * Math.PI / 6) * 45}
-              stroke="url(#vibrant-gradient)"
-              strokeWidth="0.5"
-              opacity="0"
-              animate={{
-                opacity: [0, 0.8, 0],
-                strokeWidth: [0.5, 2, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                delay: i * 0.1,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-        </g>
+        {/* soft backdrop */}
+        <circle cx="50" cy="50" r="40" fill="url(#agentos-core)" opacity="0.35" />
 
-        {/* Rotating hexagon frame - AgentOS signature shape */}
-        <motion.g
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: '50px 50px' }}
-        >
-          <path
-            d="M50 20 L70 35 L70 65 L50 80 L30 65 L30 35 Z"
-            fill="none"
-            stroke="url(#vibrant-gradient)"
-            strokeWidth="2"
-            opacity="0.8"
-            filter="url(#intense-glow)"
-          />
-        </motion.g>
+        {/* central nucleus */}
+        <motion.circle
+          cx="50"
+          cy="50"
+          r="12"
+          fill="url(#agentos-core)"
+          filter="url(#agentos-glow)"
+          animate={{ r: [11, 13, 11], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+        />
 
-        {/* Inner rotating triangle - more geometric */}
-        <motion.g
-          animate={{ rotate: -360 }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: '50px 50px' }}
-        >
-          <path
-            d="M50 35 L62 60 L38 60 Z"
-            fill="none"
-            stroke="url(#vibrant-gradient)"
-            strokeWidth="1.5"
-            opacity="0.7"
-          />
-        </motion.g>
+        {/* stylized A glyph */}
+        <motion.path
+          d="M50 34 L63 66 H57 L53.5 58 H46.5 L43 66 H37 L50 34 Z M52 52 L50 46 L48 52 Z"
+          fill="none"
+          stroke="url(#agentos-stroke)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          filter="url(#agentos-glow)"
+          animate={{ pathLength: [0.9, 1, 0.9] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        />
 
-        {/* Central core with pulsing radiant effect */}
-        <g filter="url(#radiant-burst)">
+        {/* electron orbits */}
+        {orbitLayers.map((orbit, index) => (
+          <motion.g
+            key={`orbit-${index}`}
+            animate={{ rotate: 360 }}
+            transition={{ duration: orbit.duration, repeat: Infinity, ease: 'linear', delay: index * 0.5 }}
+            style={{ transformOrigin: '50px 50px' }}
+          >
+            <g transform={`rotate(${orbit.tilt} 50 50)`}>
+              <ellipse
+                cx="50"
+                cy="50"
+                rx={orbit.rx}
+                ry={orbit.ry}
+                fill="none"
+                stroke="url(#agentos-stroke)"
+                strokeWidth="0.8"
+                opacity="0.5"
+                strokeDasharray="4 6"
+              />
+
+              <motion.circle
+                cx="50"
+                cy={50 - orbit.ry}
+                r="2.5"
+                fill={orbit.electronColor}
+                filter="url(#agentos-glow)"
+                animate={{ scale: [1, 1.25, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: index * 0.2 }}
+              />
+            </g>
+          </motion.g>
+        ))}
+
+        {/* spark bursts */}
+        {Array.from({ length: 8 }).map((_, i) => (
           <motion.circle
+            key={`spark-${i}`}
             cx="50"
             cy="50"
-            r="12"
-            fill="url(#core-radiant)"
+            r="1"
+            fill="url(#agentos-stroke)"
             animate={{
-              r: [12, 15, 12],
-              opacity: [0.8, 1, 0.8],
+              r: [1, 14, 1],
+              opacity: [0.8, 0, 0.8]
             }}
             transition={{
-              duration: 2,
+              duration: 2.6,
               repeat: Infinity,
-              ease: "easeInOut"
+              delay: i * 0.2
             }}
           />
-
-          {/* Inner bright core */}
-          <motion.circle
-            cx="50"
-            cy="50"
-            r="6"
-            fill="#ffffff"
-            opacity="0.9"
-            animate={{
-              r: [6, 8, 6],
-              opacity: [0.7, 1, 0.7],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-        </g>
-
-        {/* Orbiting particles for added vibrancy */}
-        {Array.from({ length: 6 }, (_, i) => {
-          const angle = (i * Math.PI * 2) / 6;
-          const radius = 25;
-          return (
-            <motion.circle
-              key={`particle-${i}`}
-              r="2"
-              fill="url(#vibrant-gradient)"
-              filter="url(#intense-glow)"
-              initial={{
-                x: 50 + Math.cos(angle) * radius,
-                y: 50 + Math.sin(angle) * radius,
-              }}
-              animate={{
-                x: 50 + Math.cos(angle + Math.PI * 2) * radius,
-                y: 50 + Math.sin(angle + Math.PI * 2) * radius,
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "linear",
-                delay: i * 0.2,
-              }}
-            >
-              <animate
-                attributeName="r"
-                values="2;3;2"
-                dur={`${1.5 + i * 0.1}s`}
-                repeatCount="indefinite"
-              />
-              <animate
-                attributeName="opacity"
-                values="0.5;1;0.5"
-                dur={`${1.5 + i * 0.1}s`}
-                repeatCount="indefinite"
-              />
-            </motion.circle>
-          );
-        })}
-
-        {/* Letter "A" in center for AgentOS */}
-        <text
-          x="50"
-          y="54"
-          fontSize="14"
-          fontWeight="bold"
-          fill="url(#vibrant-gradient)"
-          textAnchor="middle"
-          className="select-none"
-          style={{ fontFamily: 'var(--font-grotesk, sans-serif)' }}
-        >
-          A
-        </text>
+        ))}
       </svg>
     </motion.div>
-  );
-});
+  )
+})

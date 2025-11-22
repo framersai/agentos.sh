@@ -392,12 +392,7 @@ export function ProductCardsRedesigned() {
                         {card.features.map((feature, i) => (
                           <span
                             key={i}
-                            className="text-[10px] px-2 py-1 rounded-full font-medium"
-                            style={{
-                              background: `${card.accentColor}15`,
-                              border: `1px solid ${card.accentColor}30`,
-                              color: card.accentColor
-                            }}
+                            className="text-[11px] px-3 py-1 rounded-full font-semibold border border-[var(--color-border-subtle)] bg-[var(--color-background-primary)] text-[var(--color-text-primary)] dark:bg-white/10 dark:text-white/90"
                           >
                             {feature}
                           </span>

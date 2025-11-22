@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Star, GitBranch } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { AnimatedAgentOSLogoOptimized } from '../icons/animated-logo-optimized';
 import { ParticleText } from '../ui/particle-text';
@@ -62,36 +62,20 @@ export function HeroSectionRedesigned() {
     headIdxBRef.current = headIdxB;
   }, [headIdxB]);
 
-  // Live stats with GitHub data + additional metrics
+  // Live stats with GitHub data only
   const productStats = useMemo(() => {
     return [
       {
         label: t('stats.githubStars'),
         value: githubStars ?? '—',
         live: true,
-        icon: Star,
-        bgGradient: 'from-yellow-400 via-orange-400 to-amber-500'
+        icon: Star
       },
       {
         label: t('stats.forks'),
         value: githubForks ?? '—',
         live: true,
-        icon: GitBranch,
-        bgGradient: 'from-purple-400 via-violet-400 to-indigo-500'
-      },
-      {
-        label: t('stats.contributors'),
-        value: '47',
-        live: false,
-        icon: Shield,
-        bgGradient: 'from-green-400 via-emerald-400 to-teal-500'
-      },
-      {
-        label: t('stats.securityScore'),
-        value: 'A+',
-        live: false,
-        icon: Shield,
-        bgGradient: 'from-blue-400 via-cyan-400 to-sky-500'
+        icon: GitBranch
       }
     ];
   }, [githubStars, githubForks, t]);
@@ -114,35 +98,54 @@ export function HeroSectionRedesigned() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Continuous word switching - always alternating between words
+  // Continuous word switching with natural pacing and no duplicates
   useEffect(() => {
     if (prefersReducedMotion) return;
 
-    // Initial setup - ensure they start different
-    if (headIdxA === headIdxB) {
-      setHeadIdxB(headIdxA === 0 ? 1 : 0);
-    }
+    let cycleTimeout: ReturnType<typeof setTimeout> | null = null;
+    let staggerTimeout: ReturnType<typeof setTimeout> | null = null;
 
-    const interval = setInterval(() => {
-      // Always keep them alternating - if A is 0, B should be 1, and vice versa
-      setHeadIdxA(prev => {
-        const next = prev === 0 ? 1 : 0;
-        headIdxARef.current = next;
-        return next;
-      });
-      
-      // Stagger B change for visual effect
-      setTimeout(() => {
-        setHeadIdxB(prev => {
-          const next = prev === 0 ? 1 : 0;
-          headIdxBRef.current = next;
+    const pickNextIndex = (current: number, options: string[], otherIndex: number) => {
+      if (options.length <= 1) return current;
+      let next = current;
+      let attempts = 0;
+      while ((next === current || next === otherIndex) && attempts < options.length * 2) {
+        next = Math.floor(Math.random() * options.length);
+        attempts += 1;
+      }
+      if (next === otherIndex) {
+        next = (next + 1) % options.length;
+      }
+      return next;
+    };
+
+    const scheduleCycle = () => {
+      cycleTimeout = setTimeout(() => {
+        setHeadIdxA(prev => {
+          const next = pickNextIndex(prev, cycleWords, headIdxBRef.current);
+          headIdxARef.current = next;
           return next;
         });
-      }, 1500);
-    }, 4000); // Change every 4 seconds
 
-    return () => clearInterval(interval);
-  }, [prefersReducedMotion, headIdxA, headIdxB]);
+        staggerTimeout = setTimeout(() => {
+          setHeadIdxB(prev => {
+            const next = pickNextIndex(prev, cycleWordsTail, headIdxARef.current);
+            headIdxBRef.current = next;
+            return next;
+          });
+        }, 1200);
+
+        scheduleCycle();
+      }, 3200 + Math.random() * 2000);
+    };
+
+    scheduleCycle();
+
+    return () => {
+      if (cycleTimeout) clearTimeout(cycleTimeout);
+      if (staggerTimeout) clearTimeout(staggerTimeout);
+    };
+  }, [prefersReducedMotion, cycleWords, cycleWordsTail]);
 
   // Mobile detection
   useEffect(() => {
@@ -304,51 +307,37 @@ export function HeroSectionRedesigned() {
             {t('subtitle')}
           </motion.p>
 
-          {/* Product Stats Card - Top positioned */}
+          {/* Product Stats Card - GitHub only */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
             className="inline-block mb-8 sm:mb-12 w-full sm:w-auto"
           >
-            <div className="holographic-card p-6 sm:p-8 bg-[var(--color-background-primary)]/80 backdrop-blur-xl border border-[var(--color-border-subtle)]/20">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+            <div className="holographic-card p-6 sm:p-8">
+              <div className="grid grid-cols-2 gap-4 sm:gap-8">
                 {productStats.map((stat, i) => (
                   <motion.div
                     key={stat.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 + i * 0.1 }}
-                    className="relative group"
+                    className="text-center"
                   >
-                    {/* Animated background gradient */}
-                    <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${stat.bgGradient} opacity-0 group-hover:opacity-10 transition-opacity`} />
-                    
-                    <div className="relative text-center p-4">
-                      <div className="flex items-center justify-center mb-3">
-                        <div className={`p-2 rounded-lg bg-gradient-to-br ${stat.bgGradient}`}>
-                          <stat.icon className="w-5 h-5 text-white" />
-                        </div>
-                        {stat.live && (
-                          <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 border-2 border-white"></span>
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-2xl sm:text-3xl font-bold text-[var(--color-text-primary)]">
-                        {stat.value}
-                      </div>
-                      <div className="text-xs sm:text-sm text-[var(--color-text-secondary)] mt-1">
-                        {stat.label}
-                      </div>
+                    <div className="flex items-center justify-center mb-2">
+                      <stat.icon className="w-5 h-5 text-accent-primary mr-2" />
+                      {stat.live && (
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                      )}
                     </div>
-                    
-                    {/* Subtle animated border */}
-                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${stat.bgGradient} p-[1px]`}>
-                        <div className="h-full w-full rounded-xl bg-[var(--color-background-primary)]" />
-                      </div>
+                    <div className="text-2xl sm:text-3xl font-bold gradient-text">
+                      {stat.value}
+                    </div>
+                    <div className="text-xs sm:text-sm text-muted">
+                      {stat.label}
                     </div>
                   </motion.div>
                 ))}
