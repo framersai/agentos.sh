@@ -16,18 +16,20 @@ import { useTheme } from 'next-themes';
 export function HeroSectionRedesigned() {
   const t = useTranslations('hero');
   const locale = useLocale();
-  // i18n morphing words arrays
-  const cycleWords = t.raw('cycleWords') as string[];
-  const cycleWordsTail = t.raw('cycleWordsTail') as string[];
+  // Word animation variations
+  const animationPhrases = [
+    { first: 'Adaptive', second: 'intelligence', third: 'for', fourth: 'emergent', fifth: 'agents' },
+    { first: 'Emergent', second: 'intelligence', third: 'for', fourth: 'adaptive', fifth: 'agents' },
+    { first: 'Emergent', second: 'agents', third: 'for', fourth: 'adaptive', fifth: 'intelligence' },
+    { first: 'Adaptive', second: 'agents', third: 'for', fourth: 'emergent', fifth: 'intelligence' }
+  ];
   const { theme: currentTheme, resolvedTheme } = useTheme();
   const [showToast, setShowToast] = useState(false);
   const [githubStars, setGithubStars] = useState<number | null>(null);
   const [githubForks, setGithubForks] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [headIdxA, setHeadIdxA] = useState(0);
-  const [headIdxB, setHeadIdxB] = useState(1);
-  const headIdxARef = useRef(0);
-  const headIdxBRef = useRef(1);
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const phraseIndexRef = useRef(0);
   const [isContentReady, setIsContentReady] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const isDark = resolvedTheme === 'dark';
@@ -55,12 +57,8 @@ export function HeroSectionRedesigned() {
   }, []);
 
   useEffect(() => {
-    headIdxARef.current = headIdxA;
-  }, [headIdxA]);
-
-  useEffect(() => {
-    headIdxBRef.current = headIdxB;
-  }, [headIdxB]);
+    phraseIndexRef.current = phraseIndex;
+  }, [phraseIndex]);
 
   // Live stats with GitHub data only
   const productStats = useMemo(() => {
@@ -98,54 +96,29 @@ export function HeroSectionRedesigned() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Continuous word switching with natural pacing and no duplicates
+  // Phrase cycling animation with random timing
   useEffect(() => {
     if (prefersReducedMotion) return;
 
     let cycleTimeout: ReturnType<typeof setTimeout> | null = null;
-    let staggerTimeout: ReturnType<typeof setTimeout> | null = null;
-
-    const pickNextIndex = (current: number, options: string[], otherIndex: number) => {
-      if (options.length <= 1) return current;
-      let next = current;
-      let attempts = 0;
-      while ((next === current || next === otherIndex) && attempts < options.length * 2) {
-        next = Math.floor(Math.random() * options.length);
-        attempts += 1;
-      }
-      if (next === otherIndex) {
-        next = (next + 1) % options.length;
-      }
-      return next;
-    };
 
     const scheduleCycle = () => {
       cycleTimeout = setTimeout(() => {
-        setHeadIdxA(prev => {
-          const next = pickNextIndex(prev, cycleWords, headIdxBRef.current);
-          headIdxARef.current = next;
+        setPhraseIndex(prev => {
+          const next = (prev + 1) % animationPhrases.length;
+          phraseIndexRef.current = next;
           return next;
         });
-
-        staggerTimeout = setTimeout(() => {
-          setHeadIdxB(prev => {
-            const next = pickNextIndex(prev, cycleWordsTail, headIdxARef.current);
-            headIdxBRef.current = next;
-            return next;
-          });
-        }, 1200);
-
         scheduleCycle();
-      }, 3200 + Math.random() * 2000);
+      }, 4000 + Math.random() * 2000); // 4-6 seconds
     };
 
     scheduleCycle();
 
     return () => {
       if (cycleTimeout) clearTimeout(cycleTimeout);
-      if (staggerTimeout) clearTimeout(staggerTimeout);
     };
-  }, [prefersReducedMotion, cycleWords, cycleWordsTail]);
+  }, [prefersReducedMotion, animationPhrases.length]);
 
   // Mobile detection
   useEffect(() => {
@@ -260,38 +233,69 @@ export function HeroSectionRedesigned() {
                 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.15] sm:leading-[1.1] tracking-tight text-left"
                 style={{ fontFamily: 'var(--font-grotesk)' }}
               >
-                {/* Particle effect first word */}
+                {/* First animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
                     <ParticleText
-                      text={cycleWords[headIdxA]}
+                      text={animationPhrases[phraseIndex].first}
                       className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
                       particleCount={25}
                       animationDuration={0.8}
                     />
                   ) : (
                     <span className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
-                       {cycleWords[0]}
+                       {animationPhrases[0].first}
                     </span>
                   )}
                 </span>
-                <span className="text-[var(--color-text-primary)]"> intelligence for </span>
-                {/* Particle effect last word */}
+                <span className="text-[var(--color-text-primary)]"> </span>
+                {/* Second animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
                     <ParticleText
-                      text={cycleWordsTail[headIdxB]}
-                      className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                      text={animationPhrases[phraseIndex].second}
+                      className="bg-gradient-to-r from-[var(--color-accent-secondary)] via-[var(--color-accent-tertiary)] to-[var(--color-accent-primary)] bg-clip-text text-transparent"
                       particleCount={25}
                       animationDuration={0.8}
                     />
                   ) : (
-                     <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
-                        {cycleWordsTail[0]}
+                    <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] via-[var(--color-accent-tertiary)] to-[var(--color-accent-primary)] bg-clip-text text-transparent">
+                       {animationPhrases[0].second}
+                    </span>
+                  )}
+                </span>
+                <span className="text-[var(--color-text-primary)]"> {animationPhrases[phraseIndex].third} </span>
+                {/* Fourth animated word */}
+                <span className="inline-block relative align-baseline">
+                  {isMounted ? (
+                    <ParticleText
+                      text={animationPhrases[phraseIndex].fourth}
+                      className="bg-gradient-to-r from-[var(--color-accent-tertiary)] via-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent"
+                      particleCount={25}
+                      animationDuration={0.8}
+                    />
+                  ) : (
+                     <span className="bg-gradient-to-r from-[var(--color-accent-tertiary)] via-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
+                        {animationPhrases[0].fourth}
                      </span>
                   )}
                 </span>
-                <span className="text-[var(--color-text-primary)]"> agents</span>
+                <span className="text-[var(--color-text-primary)]"> </span>
+                {/* Fifth animated word */}
+                <span className="inline-block relative align-baseline">
+                  {isMounted ? (
+                    <ParticleText
+                      text={animationPhrases[phraseIndex].fifth}
+                      className="bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                      particleCount={25}
+                      animationDuration={0.8}
+                    />
+                  ) : (
+                     <span className="bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
+                        {animationPhrases[0].fifth}
+                     </span>
+                  )}
+                </span>
               </h1>
               </div>
             </div>

@@ -200,10 +200,15 @@ export function GMISection() {
             />
           ))}
 
-          {/* Nodes with interactive tooltips (click to open detail card) */}
+          {/* Nodes with interactive tooltips (click to select) */}
           {architectureNodes.map((n) => (
             <g key={n.id}>
-              {/* glow plate */}
+              {/* glow plate for selected state */}
+              {selectedNodeId === n.id && (
+                <rect x={n.x - 8} y={n.y - 8} width={n.w + 16} height={n.h + 16} rx="22"
+                      fill="var(--color-accent-primary)" opacity="0.15" 
+                      className="animate-pulse" />
+              )}
               <rect x={n.x - 6} y={n.y - 6} width={n.w + 12} height={n.h + 12} rx="20"
                     fill="var(--color-accent-primary)" opacity="0.05" />
               <rect
@@ -212,9 +217,10 @@ export function GMISection() {
                 width={n.w}
                 height={n.h}
                 rx="16"
-                fill="var(--color-background-primary)"
-                stroke="var(--color-border-primary)"
-                className="cursor-pointer"
+                fill={selectedNodeId === n.id ? "var(--color-background-secondary)" : "var(--color-background-primary)"}
+                stroke={selectedNodeId === n.id ? "var(--color-accent-primary)" : "var(--color-border-primary)"}
+                strokeWidth={selectedNodeId === n.id ? 2 : 1}
+                className="cursor-pointer transition-all"
                 onMouseEnter={(e) => {
                   // debounce hover reveal; measure in rAF to avoid sync reflow after state change
                   if (hoverTimerRef.current) window.clearTimeout(hoverTimerRef.current)
@@ -233,7 +239,7 @@ export function GMISection() {
                 tabIndex={0}
                 role="button"
                 aria-label={`${n.label}. ${n.subtitle}. ${n.details}`}
-                aria-controls="gmi-architecture-detail"
+                aria-pressed={selectedNodeId === n.id}
                 onClick={() => setSelectedNodeId(n.id)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -245,7 +251,8 @@ export function GMISection() {
                   }
                 }}
               />
-              <text x={n.x + n.w / 2} y={n.y + 40} textAnchor="middle" className="fill-text-primary font-semibold">
+              <text x={n.x + n.w / 2} y={n.y + 40} textAnchor="middle" 
+                    className={`font-semibold ${selectedNodeId === n.id ? 'fill-accent-primary' : 'fill-text-primary'}`}>
                 {n.label}
               </text>
               <text x={n.x + n.w / 2} y={n.y + 60} textAnchor="middle" className="fill-text-muted text-xs">
@@ -481,30 +488,30 @@ export function GMISection() {
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
             <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-text-primary">{t('architectureTitle')}</h3>
             <InteractiveArchitecture />
-            {selectedArchitectureNode && (
-              <motion.div
-                id="gmi-architecture-detail"
-                role="region"
-                aria-live="polite"
-                className="mt-8 rounded-2xl border border-border-subtle/70 bg-white/85 dark:bg-white/5 dark:border-white/10 p-6 shadow-sm dark:shadow-none"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <p className="text-xs uppercase tracking-wide text-text-muted mb-2">{t('currentlySelected')}</p>
-                <h4 className="text-xl font-semibold text-text-primary mb-2">{selectedArchitectureNode.label}</h4>
-                <p className="text-sm text-text-secondary mb-4">{selectedArchitectureNode.details}</p>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-1">{t('exampleTitle')}</p>
+            <motion.div
+              key={selectedNodeId}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-8"
+            >
+              {selectedArchitectureNode && (
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div className="rounded-xl border border-border-subtle/70 bg-gradient-to-br from-accent-primary/5 to-transparent p-4">
+                    <h5 className="text-sm font-semibold text-accent-primary mb-2">{selectedArchitectureNode.label}</h5>
+                    <p className="text-sm text-text-secondary leading-relaxed">{selectedArchitectureNode.details}</p>
+                  </div>
+                  <div className="rounded-xl border border-border-subtle/70 bg-white/50 dark:bg-white/5 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-2">{t('exampleTitle')}</p>
                     <p className="text-sm text-text-primary">{selectedArchitectureNode.example}</p>
                   </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-1">{t('outcomeTitle')}</p>
+                  <div className="rounded-xl border border-border-subtle/70 bg-white/50 dark:bg-white/5 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-2">{t('outcomeTitle')}</p>
                     <p className="text-sm text-text-primary">{selectedArchitectureNode.outcome}</p>
                   </div>
                 </div>
-              </motion.div>
-            )}
+              )}
+            </motion.div>
           </div>
         </motion.div>
 
