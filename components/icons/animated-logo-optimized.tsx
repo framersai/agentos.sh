@@ -1,13 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useState, memo } from 'react'
-
-const orbitLayers = [
-  { rx: 30, ry: 20, duration: 16, tilt: 0, electronColor: '#7C3AED' },
-  { rx: 36, ry: 24, duration: 18, tilt: 26, electronColor: '#EC4899' },
-  { rx: 24, ry: 16, duration: 12, tilt: -26, electronColor: '#22D3EE' }
-]
+import { useEffect, useState, memo, useId } from 'react'
 
 export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOptimized({
   size = 160,
@@ -17,6 +11,7 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
   className?: string
 }) {
   const [isClient, setIsClient] = useState(false)
+  const gradientId = useId().replace(/:/g, "-")
 
   useEffect(() => setIsClient(true), [])
 
@@ -38,18 +33,13 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
     >
       <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
         <defs>
-          <radialGradient id="agentos-core" cx="50%" cy="50%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
-            <stop offset="45%" stopColor="#B0A8FF" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#3B1F8D" stopOpacity="0.4" />
-          </radialGradient>
-          <linearGradient id="agentos-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#7C3AED" />
-            <stop offset="50%" stopColor="#EC4899" />
-            <stop offset="100%" stopColor="#22D3EE" />
+          <linearGradient id={`logo-gradient-${gradientId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#6366F1" />
+            <stop offset="50%" stopColor="#8B5CF6" />
+            <stop offset="100%" stopColor="#EC4899" />
           </linearGradient>
-          <filter id="agentos-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+          <filter id={`logo-glow-${gradientId}`} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
             <feMerge>
               <feMergeNode in="coloredBlur" />
               <feMergeNode in="SourceGraphic" />
@@ -57,86 +47,90 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
           </filter>
         </defs>
 
-        {/* soft backdrop */}
-        <circle cx="50" cy="50" r="40" fill="url(#agentos-core)" opacity="0.35" />
-
-        {/* central nucleus */}
-        <motion.circle
-          cx="50"
-          cy="50"
-          r="12"
-          fill="url(#agentos-core)"
-          filter="url(#agentos-glow)"
-          animate={{ r: [11, 13, 11], opacity: [0.7, 1, 0.7] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        {/* stylized A glyph */}
-        <motion.path
-          d="M50 34 L63 66 H57 L53.5 58 H46.5 L43 66 H37 L50 34 Z M52 52 L50 46 L48 52 Z"
-          fill="none"
-          stroke="url(#agentos-stroke)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          filter="url(#agentos-glow)"
-          animate={{ pathLength: [0.9, 1, 0.9] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        {/* electron orbits */}
-        {orbitLayers.map((orbit, index) => (
+        {/* 
+          Original Logo Geometry (AgentOSWordmark):
+          Center: (30, 40)
+          Bounds: ~10-50 X, ~25-58 Y
+          
+          We transform it to center in 100x100 viewbox:
+          Translate origin to (50, 50)
+          Scale up by 2.2
+          Translate center (-30, -40) back
+        */}
+        <g transform="translate(50 50) scale(2.2) translate(-30 -40)">
+          {/* Connections */}
           <motion.g
-            key={`orbit-${index}`}
-            animate={{ rotate: 360 }}
-            transition={{ duration: orbit.duration, repeat: Infinity, ease: 'linear', delay: index * 0.5 }}
-            style={{ transformOrigin: '50px 50px' }}
+             initial={{ opacity: 0.4 }}
+             animate={{ opacity: [0.4, 0.7, 0.4] }}
+             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           >
-            <g transform={`rotate(${orbit.tilt} 50 50)`}>
-              <ellipse
-                cx="50"
-                cy="50"
-                rx={orbit.rx}
-                ry={orbit.ry}
-                fill="none"
-                stroke="url(#agentos-stroke)"
-                strokeWidth="0.8"
-                opacity="0.5"
-                strokeDasharray="4 6"
-              />
-
-              <motion.circle
-                cx="50"
-                cy={50 - orbit.ry}
-                r="2.5"
-                fill={orbit.electronColor}
-                filter="url(#agentos-glow)"
-                animate={{ scale: [1, 1.25, 1], opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: index * 0.2 }}
-              />
-            </g>
+            <line x1="30" y1="40" x2="15" y2="25" stroke={`url(#logo-gradient-${gradientId})`} strokeWidth="1.5" opacity="0.6" />
+            <line x1="30" y1="40" x2="45" y2="25" stroke={`url(#logo-gradient-${gradientId})`} strokeWidth="1.5" opacity="0.6" />
+            <line x1="30" y1="40" x2="50" y2="45" stroke={`url(#logo-gradient-${gradientId})`} strokeWidth="1.5" opacity="0.6" />
+            <line x1="30" y1="40" x2="30" y2="58" stroke={`url(#logo-gradient-${gradientId})`} strokeWidth="1.5" opacity="0.6" />
+            <line x1="30" y1="40" x2="10" y2="45" stroke={`url(#logo-gradient-${gradientId})`} strokeWidth="1.5" opacity="0.6" />
+            
+            {/* Secondary connections */}
+            <line x1="15" y1="25" x2="45" y2="25" stroke="#6366F1" strokeWidth="1" opacity="0.3" />
+            <line x1="10" y1="45" x2="50" y2="45" stroke="#8B5CF6" strokeWidth="1" opacity="0.3" />
           </motion.g>
-        ))}
 
-        {/* spark bursts */}
-        {Array.from({ length: 8 }).map((_, i) => (
-          <motion.circle
-            key={`spark-${i}`}
-            cx="50"
-            cy="50"
-            r="1"
-            fill="url(#agentos-stroke)"
-            animate={{
-              r: [1, 14, 1],
-              opacity: [0.8, 0, 0.8]
-            }}
-            transition={{
-              duration: 2.6,
-              repeat: Infinity,
-              delay: i * 0.2
-            }}
+          {/* Orbiting Rings */}
+          <motion.g
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            style={{ originX: "30px", originY: "40px" }}
+          >
+             <circle cx="30" cy="40" r="12" fill="none" stroke={`url(#logo-gradient-${gradientId})`} strokeWidth="0.5" opacity="0.3" />
+          </motion.g>
+          
+          <motion.g
+            animate={{ rotate: -360 }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            style={{ originX: "30px", originY: "40px" }}
+          >
+             <circle cx="30" cy="40" r="18" fill="none" stroke={`url(#logo-gradient-${gradientId})`} strokeWidth="0.3" opacity="0.2" />
+          </motion.g>
+
+          {/* Nodes */}
+          {/* Center Node */}
+          <motion.circle 
+            cx="30" cy="40" r="6" 
+            fill={`url(#logo-gradient-${gradientId})`} 
+            filter={`url(#logo-glow-${gradientId})`}
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
-        ))}
+          
+          {/* Satellite Nodes */}
+          {[
+            { cx: 15, cy: 25, fill: "#6366F1", delay: 0 },
+            { cx: 45, cy: 25, fill: "#8B5CF6", delay: 0.2 },
+            { cx: 50, cy: 45, fill: "#EC4899", delay: 0.4 },
+            { cx: 30, cy: 58, fill: "#06B6D4", delay: 0.6 },
+            { cx: 10, cy: 45, fill: "#6366F1", delay: 0.8 },
+          ].map((node, i) => (
+            <motion.circle
+              key={i}
+              cx={node.cx}
+              cy={node.cy}
+              r="4"
+              fill={node.fill}
+              opacity="0.9"
+              filter={`url(#logo-glow-${gradientId})`}
+              animate={{ 
+                scale: [1, 1.2, 1],
+                opacity: [0.8, 1, 0.8]
+              }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity, 
+                ease: "easeInOut",
+                delay: node.delay 
+              }}
+            />
+          ))}
+        </g>
       </svg>
     </motion.div>
   )
