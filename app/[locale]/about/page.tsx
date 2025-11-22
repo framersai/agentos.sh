@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import type { Route } from 'next';
 import { ArrowLeft, ArrowRight, Github, Linkedin, Twitter, Globe, Mail } from 'lucide-react';
