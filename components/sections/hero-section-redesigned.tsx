@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Github, Terminal, Star, GitBranch } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { AnimatedAgentOSLogoOptimized } from '../icons/animated-logo-optimized';
 import { ParticleText } from '../ui/particle-text';

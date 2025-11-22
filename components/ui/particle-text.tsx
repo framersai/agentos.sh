@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState, memo } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ParticleTextProps {
@@ -24,8 +24,13 @@ export const ParticleText = memo(function ParticleText({
     delay: number;
   }>>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const slowLoopDuration = useMemo(() => 3.2 + Math.random() * 2.2, [text]);
-  const slowLoopDelay = useMemo(() => Math.random() * 0.6, [text]);
+  const slowLoopDurationRef = useRef(3.2 + Math.random() * 2.2);
+  const slowLoopDelayRef = useRef(Math.random() * 0.6);
+
+  useEffect(() => {
+    slowLoopDurationRef.current = 3.2 + Math.random() * 2.2;
+    slowLoopDelayRef.current = Math.random() * 0.6;
+  }, [text]);
 
   useEffect(() => {
     // Generate particles when text changes
@@ -100,8 +105,8 @@ export const ParticleText = memo(function ParticleText({
               scale: [1, 1.01, 1]
             }}
             transition={{
-              duration: slowLoopDuration,
-              delay: slowLoopDelay,
+              duration: slowLoopDurationRef.current,
+              delay: slowLoopDelayRef.current,
               repeat: Infinity,
               repeatType: 'mirror',
               ease: 'easeInOut'
