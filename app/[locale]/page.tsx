@@ -11,9 +11,12 @@ import {
   Package,
   Database,
   Terminal,
-  Users,
-  Code2
+  Users
 } from 'lucide-react'
+
+// Enable static generation for faster initial loads
+export const dynamicParams = false
+export const revalidate = 3600 // Revalidate every hour
 
 // Lazy load the animated background - client-only, deferred
 const AnimatedBackgroundLazy = dynamic(
@@ -24,55 +27,39 @@ const AnimatedBackgroundLazy = dynamic(
   }
 )
 
-// Lazy load heavy interactive sections with SSR enabled
-const HeroInteractiveLayer = dynamic(
-  () => import('../../components/sections/hero-interactive-layer'),
-  { ssr: false }
-)
-
-// const MultiAgentCollaborationSection = dynamic(
-//   () =>
-//     import('../../components/sections/multi-agent-collaboration').then((m) => ({
-//       default: m.MultiAgentCollaboration
-//     })),
-//   { loading: () => <SectionSkeleton heightClass="h-[520px]" /> }
-// )
-
+// Lazy load heavy interactive sections
 const GMISectionLazy = dynamic(
-  () =>
-    import('../../components/sections/gmi-section').then((m) => ({
-      default: m.GMISection
-    })),
-  { loading: () => <SectionSkeleton heightClass="h-[620px]" /> }
+  () => import('../../components/sections/gmi-section').then((m) => ({
+    default: m.GMISection
+  })),
+  { ssr: true }
 )
 
 const CodeExamplesSectionLazy = dynamic(
-  () =>
-    import('../../components/sections/code-examples-section').then((m) => ({
-      default: m.CodeExamplesSection
-    })),
-  { loading: () => <SectionSkeleton heightClass="h-[540px]" /> }
+  () => import('../../components/sections/code-examples-section').then((m) => ({
+    default: m.CodeExamplesSection
+  })),
+  { ssr: true }
 )
 
 const EcosystemSectionLazy = dynamic(
-  () =>
-    import('../../components/sections/ecosystem-section').then((m) => ({
-      default: m.EcosystemSection
-    })),
-  { loading: () => <SectionSkeleton heightClass="h-[480px]" /> }
+  () => import('../../components/sections/ecosystem-section').then((m) => ({
+    default: m.EcosystemSection
+  })),
+  { ssr: true }
 )
 
 const SocialProofSectionLazy = dynamic(
-  () =>
-    import('../../components/sections/social-proof-section').then((m) => ({
-      default: m.SocialProofSection
-    })),
-  { loading: () => <SectionSkeleton heightClass="h-[420px]" /> }
+  () => import('../../components/sections/social-proof-section').then((m) => ({
+    default: m.SocialProofSection
+  })),
+  { ssr: true }
 )
 
-// Enable static generation for faster initial loads
-export const dynamic = 'force-static'
-export const revalidate = 3600 // Revalidate every hour
+const FeaturesGridClient = dynamic(
+  () => import('../../components/sections/features-grid-client'),
+  { ssr: false }
+)
 
 export default function LandingPageRedesigned() {
   const t = useTranslations('features')
@@ -274,19 +261,5 @@ agentos deploy --env production`
       {/* Scroll to Top Button */}
       <ScrollToTopButton />
     </>
-  )
-}
-
-const FeaturesGridClient = dynamic(
-  () => import('../../components/sections/features-grid-client'),
-  { ssr: false }
-)
-
-function SectionSkeleton({ heightClass = 'h-[320px]' }: { heightClass?: string }) {
-  return (
-    <div
-      aria-hidden="true"
-      className={`skeleton border border-border-subtle/40 rounded-3xl w-full ${heightClass}`}
-    />
   )
 }
