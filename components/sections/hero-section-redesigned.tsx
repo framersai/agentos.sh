@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { AnimatedAgentOSLogoOptimized } from '../icons/animated-logo-optimized';
+import { ParticleText } from '../ui/particle-text';
 import { PageSkeleton } from '../ui/page-skeleton';
 import { Toast } from '../ui/toast';
 import { LinkButton } from '../ui/LinkButton';
@@ -178,17 +179,17 @@ export function HeroSectionRedesigned() {
           }}
         />
         {/* Optimized logo - visible position - adjusted positioning and size */}
-        <div className="pointer-events-none absolute right-[12%] sm:right-[18%] top-[72%] sm:top-[55%] z-0">
+        <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 top-[65%] sm:left-auto sm:translate-x-0 sm:right-[15%] sm:top-[45%] z-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
             animate={{ opacity: 0.15, scale: 1, rotate: 0 }}
             transition={{ delay: 0.3, duration: 1.2, ease: "easeOut" }}
             className="relative"
           >
-            <AnimatedAgentOSLogoOptimized size={isMobile ? 90 : 150} className="opacity-35" />
+            <AnimatedAgentOSLogoOptimized size={isMobile ? 120 : 200} className="opacity-50" />
             {/* Additional glow effect */}
             <div className="absolute inset-0 blur-xl">
-              <AnimatedAgentOSLogoOptimized size={isMobile ? 90 : 150} className="opacity-15" />
+              <AnimatedAgentOSLogoOptimized size={isMobile ? 120 : 200} className="opacity-25" />
             </div>
           </motion.div>
         </div>
@@ -196,7 +197,7 @@ export function HeroSectionRedesigned() {
 
       {/* Removed particle system for sharper legibility */}
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-12 sm:pt-28 sm:pb-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-24 sm:pb-20">
           {/* Left-aligned layout */}
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_0.6fr] items-start gap-10 mb-12">
             {/* Headline block */}
@@ -211,9 +212,12 @@ export function HeroSectionRedesigned() {
                 {/* First animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
-                      {animationPhrases[phraseIndex].first}
-                    </span>
+                    <ParticleText
+                      text={animationPhrases[phraseIndex].first}
+                      className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent"
+                      particleCount={8}
+                      animationDuration={0.8}
+                    />
                   ) : (
                     <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
                        {animationPhrases[0].first}
@@ -224,9 +228,12 @@ export function HeroSectionRedesigned() {
                 {/* Second animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
-                      {animationPhrases[phraseIndex].second}
-                    </span>
+                    <ParticleText
+                      text={animationPhrases[phraseIndex].second}
+                      className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                      particleCount={8}
+                      animationDuration={0.8}
+                    />
                   ) : (
                     <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
                        {animationPhrases[0].second}
@@ -237,9 +244,12 @@ export function HeroSectionRedesigned() {
                 {/* Fourth animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-tertiary)] to-[var(--color-accent-primary)] bg-clip-text text-transparent">
-                      {animationPhrases[phraseIndex].fourth}
-                    </span>
+                    <ParticleText
+                      text={animationPhrases[phraseIndex].fourth}
+                      className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-tertiary)] to-[var(--color-accent-primary)] bg-clip-text text-transparent"
+                      particleCount={8}
+                      animationDuration={0.8}
+                    />
                   ) : (
                     <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-tertiary)] to-[var(--color-accent-primary)] bg-clip-text text-transparent">
                         {animationPhrases[0].fourth}
@@ -250,9 +260,12 @@ export function HeroSectionRedesigned() {
                 {/* Fifth animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
-                      {animationPhrases[phraseIndex].fifth}
-                    </span>
+                    <ParticleText
+                      text={animationPhrases[phraseIndex].fifth}
+                      className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
+                      particleCount={8}
+                      animationDuration={0.8}
+                    />
                   ) : (
                     <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
                         {animationPhrases[0].fifth}
