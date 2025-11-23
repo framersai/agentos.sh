@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Code2, type LucideIcon } from 'lucide-react'
+import { Code2, Globe, Package, Database, Terminal, Users, type LucideIcon } from 'lucide-react'
 import { CodePopover } from '../ui/code-popover'
+import { useTranslations } from 'next-intl'
 
 interface FeatureCard {
   icon: LucideIcon
@@ -20,11 +21,109 @@ interface FeatureCard {
   }
 }
 
-interface FeaturesGridClientProps {
-  featureCards: FeatureCard[]
-}
+export default function FeaturesGridClient() {
+  const t = useTranslations('features')
+  
+  const featureCards: FeatureCard[] = [
+    {
+      icon: Users,
+      title: t('multiAgent.title'),
+      body: t('multiAgent.description'),
+      pill: t('multiAgent.pill'),
+      gradient: 'from-violet-500 to-purple-500',
+      layout: 'horizontal',
+      span: 'lg:col-span-2',
+      bullets: [t('multiAgent.bullet1'), t('multiAgent.bullet2')],
+      codeExample: {
+        title: 'Multi-Agent Setup',
+        language: 'typescript',
+        code: `const agency = new AgentOS.Agency({
+  agents: [
+    { role: 'researcher', model: 'gpt-4' },
+    { role: 'analyst', model: 'claude-3' },
+    { role: 'executor', model: 'llama-3' }
+  ],
+  orchestration: 'parallel'
+});`
+      }
+    },
+    {
+      icon: Package,
+      title: t('toolPacks.title'),
+      body: t('toolPacks.description'),
+      pill: t('toolPacks.pill'),
+      gradient: 'from-blue-500 to-cyan-500',
+      layout: 'vertical',
+      bullets: [t('toolPacks.bullet1'), t('toolPacks.bullet2')],
+      codeExample: {
+        title: 'Tool Pack Integration',
+        language: 'typescript',
+        code: `import { WebScraper, DataAnalyzer } from '@agentos/tools';
 
-export default function FeaturesGridClient({ featureCards }: FeaturesGridClientProps) {
+agent.use(WebScraper, {
+  timeout: 5000,
+  maxRetries: 3
+});`
+      }
+    },
+    {
+      icon: Globe,
+      title: t('language.title'),
+      body: t('language.description'),
+      pill: t('language.pill'),
+      gradient: 'from-purple-500 to-pink-500',
+      layout: 'vertical',
+      bullets: [t('language.bullet1'), t('language.bullet2')],
+      codeExample: {
+        title: 'Language Support',
+        language: 'typescript',
+        code: `// Supports 50+ languages
+const response = await agent.chat({
+  message: userInput,
+  language: 'ja', // Japanese
+  context: { cultural: true }
+});`
+      }
+    },
+    {
+      icon: Database,
+      title: t('storage.title'),
+      body: t('storage.description'),
+      pill: t('storage.pill'),
+      gradient: 'from-green-500 to-emerald-500',
+      layout: 'horizontal',
+      span: 'lg:col-span-2',
+      bullets: [t('storage.bullet1'), t('storage.bullet2')],
+      codeExample: {
+        title: 'Memory Fabric',
+        language: 'typescript',
+        code: `const memory = new MemoryFabric({
+  vector: PineconeDB,
+  episodic: Redis,
+  working: InMemory,
+  sync: true
+});`
+      }
+    },
+    {
+      icon: Terminal,
+      title: t('workbench.title'),
+      body: t('workbench.description'),
+      pill: t('workbench.pill'),
+      gradient: 'from-orange-500 to-red-500',
+      layout: 'vertical',
+      bullets: [t('workbench.bullet1'), t('workbench.bullet2'), t('workbench.bullet3')],
+      codeExample: {
+        title: 'Dev Workbench',
+        language: 'bash',
+        code: `# Start development environment
+agentos dev --port 3000
+
+# Deploy to production
+agentos deploy --env production`
+      }
+    }
+  ]
   return (
     <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 holographic-gradient relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
