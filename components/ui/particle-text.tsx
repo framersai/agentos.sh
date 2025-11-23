@@ -13,7 +13,7 @@ interface ParticleTextProps {
 export const ParticleText = memo(function ParticleText({
   text,
   className = "",
-  particleCount = 15, // Reduced slightly for better performance with filter
+  particleCount = 8, // Reduce particle count for cleaner look
   animationDuration = 0.8
 }: ParticleTextProps) {
   const [particles, setParticles] = useState<Array<{
@@ -28,14 +28,13 @@ export const ParticleText = memo(function ParticleText({
   const filterId = useId().replace(/:/g, "-");
 
   useEffect(() => {
-    // Generate particles for liquid effect
-    // We create them centered and move them outward/around
+    // Generate particles for subtle accent effect (not obscuring)
     const newParticles = Array.from({ length: particleCount }, (_, i) => ({
       id: i,
-      x: (Math.random() - 0.5) * 100, // Relative % position
-      y: (Math.random() - 0.5) * 60,
-      size: Math.random() * 12 + 6, // Larger particles for gooey effect
-      duration: 2 + Math.random() * 2
+      x: (Math.random() - 0.5) * 80, // Reduced spread
+      y: (Math.random() - 0.5) * 40, // Reduced vertical spread
+      size: Math.random() * 4 + 2, // Smaller particles
+      duration: 3 + Math.random() * 2
     }));
     setParticles(newParticles);
   }, [text, particleCount]);
@@ -48,45 +47,26 @@ export const ParticleText = memo(function ParticleText({
 
   return (
     <div className="relative inline-block">
-      {/* SVG Filter for Gooey/Liquid Effect */}
-      <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
-        <defs>
-          <filter id={`goo-${filterId}`}>
-            {/* Blur to merge elements */}
-            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
-            {/* Contrast to sharpen edges and create liquid connection */}
-            <feColorMatrix 
-              in="blur" 
-              mode="matrix" 
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" 
-              result="goo" 
-            />
-            <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
-          </filter>
-        </defs>
-      </svg>
-
       <AnimatePresence mode="wait">
         <motion.div
           key={text}
           className="relative inline-flex items-center justify-center"
-          style={{ filter: `url(#goo-${filterId})` }} // Apply the gooey filter
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, filter: 'blur(10px)' }}
+          exit={{ opacity: 0 }}
           transition={{ duration: animationDuration }}
         >
-          {/* Liquid Particles Background */}
+          {/* Subtle Particles Background (behind text, not obscuring) */}
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-0">
             {particles.map((particle) => (
               <motion.div
                 key={`p-${text}-${particle.id}`}
-                className="absolute rounded-full"
+                className="absolute rounded-full blur-sm"
                 style={{
                   width: particle.size,
                   height: particle.size,
                   background: colors[particle.id % colors.length],
-                  opacity: 0.7,
+                  opacity: 0.3, // Much lower opacity
                 }}
                 initial={{
                     x: 0, 
@@ -96,35 +76,35 @@ export const ParticleText = memo(function ParticleText({
                 animate={{
                   x: [0, particle.x, particle.x * 0.5, 0],
                   y: [0, particle.y, particle.y * 0.5, 0],
-                  scale: [0, 1, 0.8, 0],
+                  scale: [0, 0.8, 0.6, 0],
+                  opacity: [0, 0.3, 0.2, 0]
                 }}
                 transition={{
                   duration: particle.duration,
                   repeat: Infinity,
                   ease: "easeInOut",
-                  repeatDelay: Math.random() * 1
+                  repeatDelay: Math.random() * 2
                 }}
               />
             ))}
           </div>
 
-          {/* Main Text */}
+          {/* Main Text - Clear and Bold */}
           <motion.span
             className={`relative z-10 ${className}`}
             initial={{ 
-                y: 10, 
-                filter: 'blur(8px)',
-                scale: 0.9
+                opacity: 0,
+                y: 5, 
+                scale: 0.95
             }}
             animate={{ 
+                opacity: 1,
                 y: 0, 
-                filter: 'blur(0px)',
                 scale: 1
             }}
             transition={{ 
-              duration: animationDuration, 
-              type: "spring", 
-              bounce: 0.3 
+              duration: animationDuration * 0.6, 
+              ease: [0.23, 1, 0.32, 1]
             }}
           >
             {text}
