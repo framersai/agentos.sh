@@ -1,7 +1,6 @@
-Sitemap: https://agentos.sh/sitemap.xml
-
 # Global allow
 User-agent: *
 Allow: /
 
-
+# Sitemap
+Sitemap: https://agentos.sh/sitemap.xml

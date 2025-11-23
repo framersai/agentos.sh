@@ -34,12 +34,12 @@ const nextConfig = {
   // Performance optimizations
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ['framer-motion', 'lucide-react'],
+    optimizePackageImports: ['framer-motion', 'lucide-react', 'react-syntax-highlighter'],
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  // Add webpack optimizations
+  // Aggressive webpack optimizations for smaller bundles
   webpack: (config, { dev, isServer }) => {
     // Production optimizations
     if (!dev && !isServer) {
@@ -47,23 +47,65 @@ const nextConfig = {
         ...config.optimization,
         usedExports: true,
         sideEffects: false,
+        moduleIds: 'deterministic',
+        minimize: true,
         splitChunks: {
           chunks: 'all',
           cacheGroups: {
             default: false,
             vendors: false,
+            // React framework bundle
             framework: {
               name: 'framework',
               chunks: 'all',
-              test: /[\\/]node_modules[\\/](react|react-dom|framer-motion)[\\/]/,
+              test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+              priority: 50,
+              enforce: true,
+              reuseExistingChunk: true,
+            },
+            // Framer Motion - separate chunk due to size
+            framerMotion: {
+              name: 'framer-motion',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+              priority: 45,
+              enforce: true,
+              reuseExistingChunk: true,
+            },
+            // Lucide icons
+            lucideReact: {
+              name: 'lucide-react',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/]lucide-react[\\/]/,
+              priority: 43,
+              enforce: true,
+              reuseExistingChunk: true,
+            },
+            // Syntax highlighter - lazy loaded only when needed
+            syntaxHighlighter: {
+              name: 'syntax-highlighter',
+              chunks: 'async',
+              test: /[\\/]node_modules[\\/]react-syntax-highlighter[\\/]/,
+              priority: 42,
+              enforce: true,
+              reuseExistingChunk: true,
+            },
+            // Next.js internals
+            lib: {
+              name: 'lib',
+              chunks: 'all',
+              test: /[\\/]node_modules[\\/](next|next-intl|next-themes)[\\/]/,
               priority: 40,
               enforce: true,
+              reuseExistingChunk: true,
             },
+            // Shared components across pages
             commons: {
               name: 'commons',
               chunks: 'all',
               minChunks: 2,
               priority: 20,
+              reuseExistingChunk: true,
             },
           },
         },

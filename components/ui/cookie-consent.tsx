@@ -51,7 +51,8 @@ export function CookieConsent() {
             <div className="flex gap-2">
               <button
                 onClick={accept}
-                className="flex-1 py-2 px-4 bg-[var(--color-accent-primary)] hover:bg-[var(--color-accent-hover)] text-white text-xs font-bold rounded-lg transition-colors shadow-md"
+                className="flex-1 py-2 px-4 bg-[var(--color-accent-primary)] hover:bg-[var(--color-accent-hover)] text-xs font-bold rounded-lg transition-colors shadow-md"
+                style={{ color: 'hsl(0, 0%, 100%)' }}
                 aria-label="Accept all cookies"
               >
                 Accept All

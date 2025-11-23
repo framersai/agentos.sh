@@ -142,6 +142,20 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <ThemeProvider>
+        {/* Preconnect to external origins for faster API calls */}
+        <link rel="preconnect" href="https://api.github.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://api.npmjs.org" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
+        
+        {/* Preload critical fonts */}
+        <link
+          rel="preload"
+          href="/fonts/space-grotesk.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+
         <CookieConsent />
         <a href="#main-content" className="skip-to-content">Skip to content</a>
         <SiteHeader />

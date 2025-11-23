@@ -498,7 +498,7 @@ export function GMISection() {
               {selectedArchitectureNode && (
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="rounded-xl border border-border-subtle/70 bg-gradient-to-br from-accent-primary/5 to-transparent p-4">
-                    <h5 className="text-sm font-semibold text-accent-primary mb-2">{selectedArchitectureNode.label}</h5>
+                    <h3 className="text-sm font-semibold text-accent-primary mb-2">{selectedArchitectureNode.label}</h3>
                     <p className="text-sm text-text-secondary leading-relaxed">{selectedArchitectureNode.details}</p>
                   </div>
                   <div className="rounded-xl border border-border-subtle/70 bg-white/50 dark:bg-white/5 p-4">

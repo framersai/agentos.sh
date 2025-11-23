@@ -22,14 +22,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           html { height: 100%; overflow-x: hidden; background: var(--color-background-primary); }
           body { min-height: 100vh; overflow-x: hidden; background: var(--color-background-primary); color: var(--color-text-primary); }
           
-          /* Default Theme Variables (Pre-load) to prevent Flash */
+          /* Default Theme Variables (Pre-load) - WCAG AA Compliant */
           :root {
              --color-background-primary: hsl(220, 30%, 98%);
              --color-background-secondary: hsl(220, 25%, 95%);
              --color-background-tertiary: hsl(220, 20%, 92%);
              --color-text-primary: hsl(222, 47%, 8%);
-             --color-text-secondary: hsl(222, 20%, 45%);
-             --color-text-muted: hsl(222, 15%, 60%);
+             --color-text-secondary: hsl(220, 35%, 22%);
+             --color-text-muted: hsl(220, 25%, 35%);
              --color-accent-primary: hsl(250, 95%, 55%);
              --color-accent-secondary: hsl(280, 85%, 60%);
              --color-accent-tertiary: hsl(340, 85%, 65%);
@@ -43,8 +43,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
              --color-background-secondary: hsl(240, 18%, 8%);
              --color-background-tertiary: hsl(240, 16%, 12%);
              --color-text-primary: hsl(220, 30%, 98%);
-             --color-text-secondary: hsl(220, 20%, 75%);
-             --color-text-muted: hsl(220, 15%, 55%);
+             --color-text-secondary: hsl(220, 25%, 85%);
+             --color-text-muted: hsl(220, 22%, 72%);
              --color-accent-primary: hsl(250, 100%, 70%);
              --color-accent-secondary: hsl(280, 90%, 75%);
              --color-accent-tertiary: hsl(340, 90%, 70%);
