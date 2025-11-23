@@ -178,18 +178,18 @@ export function HeroSectionRedesigned() {
               transparent 50%)`
           }}
         />
-        {/* Optimized logo - visible position */}
-        <div className="pointer-events-none absolute right-[10%] top-[25%] sm:top-[20%] z-0">
+        {/* Optimized logo - visible position - adjusted positioning and size */}
+        <div className="pointer-events-none absolute right-[5%] sm:right-[10%] top-[20%] sm:top-[20%] z-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
             animate={{ opacity: 0.5, scale: 1, rotate: 0 }}
             transition={{ delay: 0.3, duration: 1.2, ease: "easeOut" }}
             className="relative"
           >
-            <AnimatedAgentOSLogoOptimized size={isMobile ? 250 : 400} className="opacity-70" />
+            <AnimatedAgentOSLogoOptimized size={isMobile ? 200 : 320} className="opacity-70" />
             {/* Additional glow effect */}
             <div className="absolute inset-0 blur-xl">
-              <AnimatedAgentOSLogoOptimized size={isMobile ? 250 : 400} className="opacity-40" />
+              <AnimatedAgentOSLogoOptimized size={isMobile ? 200 : 320} className="opacity-40" />
             </div>
           </motion.div>
         </div>
@@ -238,12 +238,12 @@ export function HeroSectionRedesigned() {
                   {isMounted ? (
                     <ParticleText
                       text={animationPhrases[phraseIndex].first}
-                      className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
-                      particleCount={25}
+                      className="font-extrabold tracking-tight text-[var(--color-accent-primary)] drop-shadow-md"
+                      particleCount={20}
                       animationDuration={0.8}
                     />
                   ) : (
-                    <span className="bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
+                    <span className="font-extrabold tracking-tight text-[var(--color-accent-primary)] drop-shadow-md">
                        {animationPhrases[0].first}
                     </span>
                   )}
@@ -254,12 +254,12 @@ export function HeroSectionRedesigned() {
                   {isMounted ? (
                     <ParticleText
                       text={animationPhrases[phraseIndex].second}
-                      className="bg-gradient-to-r from-[var(--color-accent-secondary)] via-[var(--color-accent-tertiary)] to-[var(--color-accent-primary)] bg-clip-text text-transparent"
-                      particleCount={25}
+                      className="font-extrabold tracking-tight text-[var(--color-accent-secondary)] drop-shadow-md"
+                      particleCount={20}
                       animationDuration={0.8}
                     />
                   ) : (
-                    <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] via-[var(--color-accent-tertiary)] to-[var(--color-accent-primary)] bg-clip-text text-transparent">
+                    <span className="font-extrabold tracking-tight text-[var(--color-accent-secondary)] drop-shadow-md">
                        {animationPhrases[0].second}
                     </span>
                   )}
@@ -270,14 +270,14 @@ export function HeroSectionRedesigned() {
                   {isMounted ? (
                     <ParticleText
                       text={animationPhrases[phraseIndex].fourth}
-                      className="bg-gradient-to-r from-[var(--color-accent-tertiary)] via-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent"
-                      particleCount={25}
+                      className="font-extrabold tracking-tight text-[var(--color-accent-tertiary)] drop-shadow-md"
+                      particleCount={20}
                       animationDuration={0.8}
                     />
                   ) : (
-                     <span className="bg-gradient-to-r from-[var(--color-accent-tertiary)] via-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
-                        {animationPhrases[0].fourth}
-                     </span>
+                    <span className="font-extrabold tracking-tight text-[var(--color-accent-tertiary)] drop-shadow-md">
+                       {animationPhrases[0].fourth}
+                    </span>
                   )}
                 </span>
                 <span className="text-[var(--color-text-primary)]"> </span>
@@ -286,14 +286,14 @@ export function HeroSectionRedesigned() {
                   {isMounted ? (
                     <ParticleText
                       text={animationPhrases[phraseIndex].fifth}
-                      className="bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
-                      particleCount={25}
+                      className="font-extrabold tracking-tight text-[var(--color-accent-primary)] drop-shadow-md"
+                      particleCount={20}
                       animationDuration={0.8}
                     />
                   ) : (
-                     <span className="bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
-                        {animationPhrases[0].fifth}
-                     </span>
+                    <span className="font-extrabold tracking-tight text-[var(--color-accent-primary)] drop-shadow-md">
+                       {animationPhrases[0].fifth}
+                    </span>
                   )}
                 </span>
               </h1>
@@ -391,6 +391,7 @@ export function HeroSectionRedesigned() {
             href={`/${locale === 'en' ? '' : locale + '/'}docs`}
             variant="primary"
             size="lg"
+            className="w-full sm:w-auto"
           >
             <span>{t('getStarted')}</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -400,7 +401,7 @@ export function HeroSectionRedesigned() {
             href="https://github.com/framersai/agentos"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border-2 border-[var(--color-border-interactive)] bg-transparent text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 transition-all duration-[var(--duration-fast)]"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border-2 border-[var(--color-border-interactive)] bg-transparent text-[var(--color-text-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/10 transition-all duration-[var(--duration-fast)] w-full sm:w-auto"
           >
             <Github className="w-5 h-5" />
             <span>{t('viewOnGithub')}</span>
@@ -418,7 +419,7 @@ export function HeroSectionRedesigned() {
             onClick={copyCommand}
             variant="secondary"
             size="lg"
-            className="gap-3 group"
+            className="gap-3 group w-full sm:w-auto justify-center sm:justify-start"
             aria-label="Copy installation command"
           >
             <Terminal className="w-5 h-5 text-[var(--color-accent-primary)]" />
