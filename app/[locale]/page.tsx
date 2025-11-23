@@ -277,27 +277,6 @@ agentos deploy --env production`
   )
 }
 
-// Lazy loaded sections
-const GMISectionLazy = dynamic(
-  () => import('../../components/sections/gmi-section').then((m) => ({ default: m.GMISection })),
-  { ssr: true }
-)
-
-const CodeExamplesSectionLazy = dynamic(
-  () => import('../../components/sections/code-examples-section').then((m) => ({ default: m.CodeExamplesSection })),
-  { ssr: true }
-)
-
-const EcosystemSectionLazy = dynamic(
-  () => import('../../components/sections/ecosystem-section').then((m) => ({ default: m.EcosystemSection })),
-  { ssr: true }
-)
-
-const SocialProofSectionLazy = dynamic(
-  () => import('../../components/sections/social-proof-section').then((m) => ({ default: m.SocialProofSection })),
-  { ssr: true }
-)
-
 const FeaturesGridClient = dynamic(
   () => import('../../components/sections/features-grid-client'),
   { ssr: false }
