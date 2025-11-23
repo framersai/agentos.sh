@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, memo } from 'react';
+import { useEffect, useState, memo, useId } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ParticleTextProps {
@@ -13,7 +13,7 @@ interface ParticleTextProps {
 export const ParticleText = memo(function ParticleText({
   text,
   className = "",
-  particleCount = 24,
+  particleCount = 15, // Reduced slightly for better performance with filter
   animationDuration = 0.8
 }: ParticleTextProps) {
   const [particles, setParticles] = useState<Array<{
@@ -21,166 +21,115 @@ export const ParticleText = memo(function ParticleText({
     x: number;
     y: number;
     size: number;
-    delay: number;
+    duration: number;
   }>>([]);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const slowLoopDurationRef = useRef(3.2 + Math.random() * 2.2);
-  const slowLoopDelayRef = useRef(Math.random() * 0.6);
+  
+  // Create a unique ID for the filter to avoid conflicts if multiple instances exist
+  const filterId = useId().replace(/:/g, "-");
 
   useEffect(() => {
-    slowLoopDurationRef.current = 3.2 + Math.random() * 2.2;
-    slowLoopDelayRef.current = Math.random() * 0.6;
-  }, [text]);
-
-  useEffect(() => {
-    // Generate particles when text changes
+    // Generate particles for liquid effect
+    // We create them centered and move them outward/around
     const newParticles = Array.from({ length: particleCount }, (_, i) => ({
       id: i,
-      x: (Math.random() - 0.5) * 100,
-      y: (Math.random() - 0.5) * 50,
-      size: Math.random() * 3 + 1,
-      delay: Math.random() * 0.3
+      x: (Math.random() - 0.5) * 100, // Relative % position
+      y: (Math.random() - 0.5) * 60,
+      size: Math.random() * 12 + 6, // Larger particles for gooey effect
+      duration: 2 + Math.random() * 2
     }));
     setParticles(newParticles);
   }, [text, particleCount]);
 
+  const colors = [
+    'var(--color-accent-primary)',
+    'var(--color-accent-secondary)',
+    'var(--color-accent-tertiary)'
+  ];
+
   return (
-  <div className={`relative inline-block`} ref={containerRef}>
+    <div className="relative inline-block">
+      {/* SVG Filter for Gooey/Liquid Effect */}
+      <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
+        <defs>
+          <filter id={`goo-${filterId}`}>
+            {/* Blur to merge elements */}
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+            {/* Contrast to sharpen edges and create liquid connection */}
+            <feColorMatrix 
+              in="blur" 
+              mode="matrix" 
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" 
+              result="goo" 
+            />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+          </filter>
+        </defs>
+      </svg>
+
       <AnimatePresence mode="wait">
-        <motion.span
+        <motion.div
           key={text}
-        className="relative inline-block"
-        initial={{ opacity: 0, filter: 'blur(12px)', scale: 0.97 }}
-        animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
-        exit={{ opacity: 0, filter: 'blur(12px)', scale: 1.02 }}
-        transition={{ duration: animationDuration }}
+          className="relative inline-flex items-center justify-center"
+          style={{ filter: `url(#goo-${filterId})` }} // Apply the gooey filter
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, filter: 'blur(10px)' }}
+          transition={{ duration: animationDuration }}
         >
-          {/* Particle explosion effect on entry */}
-          <div className="absolute inset-0 pointer-events-none">
+          {/* Liquid Particles Background */}
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-0">
             {particles.map((particle) => (
               <motion.div
-                key={`${text}-${particle.id}`}
+                key={`p-${text}-${particle.id}`}
                 className="absolute rounded-full"
                 style={{
                   width: particle.size,
                   height: particle.size,
-                  background: `radial-gradient(circle,
-                    var(--color-accent-primary) 0%,
-                    transparent 70%)`,
-                  left: '50%',
-                  top: '50%',
-                  boxShadow: '0 0 4px var(--color-accent-primary)',
+                  background: colors[particle.id % colors.length],
+                  opacity: 0.7,
                 }}
                 initial={{
-                  x: particle.x,
-                  y: particle.y,
-                  scale: 0,
-                  opacity: 0
+                    x: 0, 
+                    y: 0,
+                    scale: 0
                 }}
                 animate={{
-                  x: 0,
-                  y: 0,
-                  scale: [0, 1.5, 1],
-                  opacity: [0, 1, 0]
+                  x: [0, particle.x, particle.x * 0.5, 0],
+                  y: [0, particle.y, particle.y * 0.5, 0],
+                  scale: [0, 1, 0.8, 0],
                 }}
                 transition={{
-                  duration: animationDuration,
-                  delay: particle.delay,
-                  ease: [0.43, 0.13, 0.23, 0.96]
+                  duration: particle.duration,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  repeatDelay: Math.random() * 1
                 }}
               />
             ))}
           </div>
 
-          {/* Main text with particle formation animation */}
+          {/* Main Text */}
           <motion.span
-            className={`relative inline-flex ${className}`}
-            initial={{
-              filter: 'blur(20px)',
-              opacity: 0
+            className={`relative z-10 ${className}`}
+            initial={{ 
+                y: 10, 
+                filter: 'blur(8px)',
+                scale: 0.9
             }}
-            animate={{
-              filter: ['blur(0px)', 'blur(0.6px)', 'blur(0px)'],
-              opacity: [1, 0.95, 1],
-              scale: [1, 1.01, 1]
+            animate={{ 
+                y: 0, 
+                filter: 'blur(0px)',
+                scale: 1
             }}
-            transition={{
-              duration: slowLoopDurationRef.current,
-              delay: slowLoopDelayRef.current,
-              repeat: Infinity,
-              repeatType: 'mirror',
-              ease: 'easeInOut'
+            transition={{ 
+              duration: animationDuration, 
+              type: "spring", 
+              bounce: 0.3 
             }}
           >
-            {/* Letter-by-letter particle formation */}
-            {text.split('').map((letter, index) => (
-              <motion.span
-                key={`${text}-letter-${index}`}
-                className="inline-block"
-                style={{
-                  transformOrigin: 'center',
-                }}
-                initial={{
-                  opacity: 0,
-                  scale: 0.6,
-                  rotateZ: (Math.random() - 0.5) * 90,
-                  y: (Math.random() - 0.5) * 20,
-                }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  rotateZ: 0,
-                  y: 0,
-                }}
-                transition={{
-                  duration: animationDuration * 0.6,
-                  delay: index * 0.03,
-                  ease: [0.23, 1, 0.32, 1]
-                }}
-              >
-                {letter === ' ' ? '\u00A0' : letter}
-              </motion.span>
-            ))}
+            {text}
           </motion.span>
-
-          {/* Trailing particle effect */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{
-              duration: animationDuration * 1.5,
-              ease: "easeInOut"
-            }}
-          >
-            {Array.from({ length: 8 }, (_, i) => (
-              <motion.div
-                key={`trail-${i}`}
-                className="absolute rounded-full"
-                style={{
-                  width: 2,
-                  height: 2,
-                  background: 'var(--color-accent-secondary)',
-                  left: `${10 + i * 10}%`,
-                  top: '50%',
-                  filter: 'blur(1px)',
-                }}
-                animate={{
-                  x: [0, (Math.random() - 0.5) * 30, 0],
-                  y: [0, (Math.random() - 0.5) * 20, 0],
-                  opacity: [0, 0.7, 0],
-                }}
-                transition={{
-                  duration: animationDuration * 1.2,
-                  delay: i * 0.05,
-                  repeat: Infinity,
-                  repeatDelay: 3,
-                  ease: "easeInOut"
-                }}
-              />
-            ))}
-          </motion.div>
-        </motion.span>
+        </motion.div>
       </AnimatePresence>
     </div>
   );
