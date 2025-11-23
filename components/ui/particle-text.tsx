@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, memo, useId } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ParticleTextProps {
@@ -24,9 +24,6 @@ export const ParticleText = memo(function ParticleText({
     duration: number;
   }>>([]);
   
-  // Create a unique ID for the filter to avoid conflicts if multiple instances exist
-  const filterId = useId().replace(/:/g, "-");
-
   useEffect(() => {
     // Generate particles for subtle accent effect (not obscuring)
     const newParticles = Array.from({ length: particleCount }, (_, i) => ({

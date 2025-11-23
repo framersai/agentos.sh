@@ -202,11 +202,11 @@ export function HeroSectionRedesigned() {
             {/* Headline block */}
             <div className="order-1">
               
-              {/* Smooth word-swap headline */}
+              {/* Smooth word-swap headline - Fixed height to prevent CLS */}
               <div className="relative overflow-hidden">
               <h1
                 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.15] sm:leading-[1.1] tracking-tight text-left"
-                style={{ fontFamily: 'var(--font-grotesk)' }}
+                style={{ fontFamily: 'var(--font-grotesk)', minHeight: '8rem' }}
               >
                 {/* First animated word */}
                 <span className="inline-block relative align-baseline">
