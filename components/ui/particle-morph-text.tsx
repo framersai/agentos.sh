@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface ParticleMorphProps {
   text: string
@@ -13,8 +13,6 @@ interface ParticleMorphProps {
 type Particle = {
   x: number
   y: number
-  vx: number
-  vy: number
   tx: number
   ty: number
   size: number
@@ -26,189 +24,185 @@ export default function ParticleMorphText({
   text,
   className = '',
   fontSize = 60,
-  particleCount = 100,
-  animationDuration = 0.8
+  particleCount = 140,
+  animationDuration = 0.8,
 }: ParticleMorphProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
-  const animationRef = useRef<number>()
+  const frameRef = useRef<number>()
   const startTimeRef = useRef<number>(0)
-  const [showText, setShowText] = useState(false)
+  const showTimeoutRef = useRef<number | null>(null)
+  const settledRef = useRef(false)
+  const [isTextVisible, setIsTextVisible] = useState(false)
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
-    setShowText(false)
     const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')!
-    
-    // Measure and draw text to get pixel data
-    ctx.font = `bold ${fontSize}px system-ui, -apple-system, sans-serif`
-    const metrics = ctx.measureText(text)
-    const w = Math.ceil(metrics.width) + 40
-    const h = fontSize * 1.5
-    canvas.width = w
-    canvas.height = h
-    
-    // Draw text to extract pixel positions
-    ctx.font = `bold ${fontSize}px system-ui, -apple-system, sans-serif`
-    ctx.fillStyle = '#fff'
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return () => undefined
+
+    // Reset visibility state for new text
+    setIsTextVisible(false)
+    settledRef.current = false
+    if (showTimeoutRef.current) {
+      window.clearTimeout(showTimeoutRef.current)
+      showTimeoutRef.current = null
+    }
+
+    ctx.font = `bold ${fontSize}px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
     ctx.textBaseline = 'middle'
     ctx.textAlign = 'center'
-    ctx.fillText(text, w/2, h/2)
-    
-    const imageData = ctx.getImageData(0, 0, w, h)
-    const pixels = imageData.data
+
+    const measured = ctx.measureText(text)
+    const width = Math.ceil(measured.width) + 32
+    const height = Math.ceil(fontSize * 1.6)
+
+    canvas.width = width
+    canvas.height = height
+
+    ctx.font = `bold ${fontSize}px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
+    ctx.fillStyle = '#fff'
+    ctx.fillText(text, width / 2, height / 2)
+
+    const { data } = ctx.getImageData(0, 0, width, height)
     const targets: Array<[number, number]> = []
-    
-    // Sample text pixels more densely
-    const sampling = 2
-    for (let y = 0; y < h; y += sampling) {
-      for (let x = 0; x < w; x += sampling) {
-        const i = (y * w + x) * 4
-        if (pixels[i + 3] > 128) {
-          targets.push([x, y])
-        }
+
+    const sampling = Math.max(2, Math.floor(fontSize / 24))
+    for (let y = 0; y < height; y += sampling) {
+      for (let x = 0; x < width; x += sampling) {
+        const alpha = data[(y * width + x) * 4 + 3]
+        if (alpha > 160) targets.push([x, y])
       }
     }
-    
-    // Create particles that will form the text
-    const particles: Particle[] = []
+
+    if (!targets.length) {
+      setIsTextVisible(true)
+      return () => undefined
+    }
+
+    setDimensions({ width, height })
+
     const colors = [
       'var(--color-accent-primary)',
       'var(--color-accent-secondary)',
-      'var(--color-accent-tertiary)'
+      'var(--color-accent-tertiary)',
     ]
-    
-    for (let i = 0; i < Math.min(particleCount, targets.length); i++) {
-      const [tx, ty] = targets[Math.floor(i * targets.length / particleCount)]
-      
-      // Start particles from random positions around the text area
+
+    const particles: Particle[] = []
+    const totalParticles = Math.min(particleCount, targets.length)
+    for (let i = 0; i < totalParticles; i++) {
+      const target = targets[Math.floor((i / totalParticles) * targets.length)]
       const angle = Math.random() * Math.PI * 2
-      const distance = 100 + Math.random() * 200
-      
+      const distance = width * 0.6 + Math.random() * width * 0.4
       particles.push({
-        x: tx + Math.cos(angle) * distance,
-        y: ty + Math.sin(angle) * distance,
-        vx: 0,
-        vy: 0,
-        tx,
-        ty,
-        size: 3 + Math.random() * 5,
+        x: target[0] + Math.cos(angle) * distance,
+        y: target[1] + Math.sin(angle) * distance,
+        tx: target[0],
+        ty: target[1],
+        size: 3 + Math.random() * 4,
         color: colors[i % colors.length],
-        delay: Math.random() * 200
+        delay: Math.random() * 90,
       })
     }
-    
+
     particlesRef.current = particles
-    
-    // Setup canvas
-    const displayCanvas = canvasRef.current
-    if (!displayCanvas) return
-    
-    displayCanvas.width = w
-    displayCanvas.height = h
-    const renderCtx = displayCanvas.getContext('2d')!
-    
+
+    const canvasEl = canvasRef.current
+    if (!canvasEl) return () => undefined
+
+    const dpr = window.devicePixelRatio || 1
+    canvasEl.width = width * dpr
+    canvasEl.height = height * dpr
+    canvasEl.style.width = `${width}px`
+    canvasEl.style.height = `${height}px`
+
+    const renderCtx = canvasEl.getContext('2d')
+    if (!renderCtx) return () => undefined
+    renderCtx.scale(dpr, dpr)
+
     startTimeRef.current = performance.now()
-    
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTimeRef.current
-      renderCtx.clearRect(0, 0, w, h)
-      
-      // Apply gooey filter effect
-      renderCtx.filter = 'blur(2px) contrast(10)'
-      
-      let completedCount = 0
-      
-      particlesRef.current.forEach((p) => {
-        if (elapsed < p.delay) return
-        
-        const progress = Math.min((elapsed - p.delay) / (animationDuration * 1000), 1)
-        const easeProgress = 1 - Math.pow(1 - progress, 3) // Ease out cubic
-        
-        // Morph particles toward their targets
-        p.x = p.x + (p.tx - p.x) * easeProgress * 0.08
-        p.y = p.y + (p.ty - p.y) * easeProgress * 0.08
-        
-        const dx = p.tx - p.x
-        const dy = p.ty - p.y
-        const dist = Math.hypot(dx, dy)
-        
-        if (dist < 2) {
-          completedCount++
-        }
-        
-        // Draw particle with gradient
-        const gradient = renderCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size)
-        gradient.addColorStop(0, p.color)
+
+    const animate = (timestamp: number) => {
+      const elapsed = timestamp - startTimeRef.current
+      renderCtx.clearRect(0, 0, width, height)
+
+      renderCtx.save()
+      renderCtx.filter = 'blur(2px) contrast(12)'
+      let completed = 0
+
+      particlesRef.current.forEach((particle) => {
+        if (elapsed < particle.delay) return
+
+        const progress = Math.min(
+          (elapsed - particle.delay) / (animationDuration * 1000),
+          1,
+        )
+        const ease = 1 - Math.pow(1 - progress, 3)
+
+        particle.x += (particle.tx - particle.x) * (0.18 * ease + 0.02)
+        particle.y += (particle.ty - particle.y) * (0.18 * ease + 0.02)
+
+        const distance = Math.hypot(particle.tx - particle.x, particle.ty - particle.y)
+        if (distance < 1.4) completed += 1
+
+        const gradient = renderCtx.createRadialGradient(
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
+          particle.size,
+        )
+        gradient.addColorStop(0, particle.color)
         gradient.addColorStop(1, 'transparent')
-        
+
+        renderCtx.globalAlpha = 0.8
         renderCtx.fillStyle = gradient
-        renderCtx.globalAlpha = 0.8 * (1 - progress * 0.3)
         renderCtx.beginPath()
-        renderCtx.arc(p.x, p.y, p.size * (1 + progress * 0.5), 0, Math.PI * 2)
+        renderCtx.arc(particle.x, particle.y, particle.size * (1.1 - ease * 0.2), 0, Math.PI * 2)
         renderCtx.fill()
       })
-      
-      renderCtx.filter = 'none'
-      renderCtx.globalAlpha = 1
-      
-      // Show text when particles are mostly in place
-      if (completedCount > particleCount * 0.7 && !showText) {
-        setTimeout(() => setShowText(true), 100)
+
+      renderCtx.restore()
+
+      const completionRatio = completed / particlesRef.current.length
+      if (!settledRef.current && completionRatio > 0.8) {
+        settledRef.current = true
+        showTimeoutRef.current = window.setTimeout(() => {
+          setIsTextVisible(true)
+        }, 120)
       }
-      
-      if (elapsed < animationDuration * 1500) {
-        animationRef.current = requestAnimationFrame(animate)
+
+      if (elapsed < animationDuration * 1400) {
+        frameRef.current = requestAnimationFrame(animate)
       }
     }
-    
-    animationRef.current = requestAnimationFrame(animate)
-    
+
+    frameRef.current = requestAnimationFrame(animate)
+
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
+      if (frameRef.current) cancelAnimationFrame(frameRef.current)
+      if (showTimeoutRef.current) {
+        window.clearTimeout(showTimeoutRef.current)
+        showTimeoutRef.current = null
       }
     }
   }, [text, fontSize, particleCount, animationDuration])
 
   return (
-    <span className="inline-block relative">
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0 pointer-events-none"
-        style={{ 
-          filter: 'url(#liquid-morph)',
-          transform: 'translate(-20px, -25%)'
-        }} 
-      />
-      
-      {/* SVG filter for liquid effect */}
-      <svg className="absolute w-0 h-0">
-        <defs>
-          <filter id="liquid-morph">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
-            <feColorMatrix 
-              in="blur" 
-              mode="matrix" 
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" 
-            />
-          </filter>
-        </defs>
-      </svg>
-      
-      {/* Actual text that fades in */}
-      <AnimatePresence>
-        {showText && (
-          <motion.span
-            className={className}
-            initial={{ opacity: 0, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 0.5 }}
-          >
-            {text}
-          </motion.span>
-        )}
-      </AnimatePresence>
+    <span
+      className="relative inline-flex items-center justify-start align-middle"
+      style={{ width: dimensions.width, height: dimensions.height }}
+    >
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
+      <motion.span
+        className={`relative inline-block ${className}`}
+        initial={{ opacity: 0, filter: 'blur(14px)' }}
+        animate={{ opacity: isTextVisible ? 1 : 0, filter: isTextVisible ? 'blur(0px)' : 'blur(14px)' }}
+        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+      >
+        {text}
+      </motion.span>
     </span>
   )
 }
