@@ -81,14 +81,12 @@ export default function ParticleMorphText({
 
     const step = () => {
       renderCtx.clearRect(0, 0, w, h)
-      let doneCount = 0
       particlesRef.current.forEach((p) => {
         const dx = p.tx - p.x
         const dy = p.ty - p.y
         const dist = Math.hypot(dx, dy)
         if (dist < 1) {
           p.complete = true
-          doneCount++
         } else {
           const ax = dx * 0.02
           const ay = dy * 0.02
