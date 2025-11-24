@@ -3,10 +3,19 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import { ThemeProvider } from '../../components/theme-provider';
-import { SiteHeader } from '../../components/site-header';
-import { CookieConsent } from '../../components/ui/cookie-consent';
 import ScrollToTopButton from '../../components/ScrollToTopButton';
+import dynamic from 'next/dynamic';
 import { locales, type Locale } from '../../i18n';
+
+const SiteHeader = dynamic(
+  () => import('../../components/site-header').then(mod => mod.SiteHeader),
+  { ssr: false }
+);
+
+const CookieConsent = dynamic(
+  () => import('../../components/ui/cookie-consent').then(mod => mod.CookieConsent),
+  { ssr: false }
+);
 
 type Props = {
   children: ReactNode;
