@@ -13,7 +13,7 @@ interface ParticleTextProps {
 export const ParticleText = memo(function ParticleText({
   text,
   className = "",
-  particleCount = 20, // More particles for liquid effect
+  particleCount = 15,
   animationDuration = 0.8
 }: ParticleTextProps) {
   const [particles, setParticles] = useState<Array<{
@@ -31,114 +31,135 @@ export const ParticleText = memo(function ParticleText({
     // Generate particles for liquid morphing effect
     const newParticles = Array.from({ length: particleCount }, (_, i) => ({
       id: i,
-      x: (Math.random() - 0.5) * 100,
-      y: (Math.random() - 0.5) * 50,
-      size: Math.random() * 12 + 8, // Larger for gooey effect
-      delay: Math.random() * 0.3
+      x: (Math.random() - 0.5) * 80,
+      y: (Math.random() - 0.5) * 40,
+      size: Math.random() * 10 + 6,
+      delay: Math.random() * 0.2
     }));
     setParticles(newParticles);
   }, [text, particleCount]);
 
   return (
-    <div className="relative inline-block">
-      {/* SVG Filter for Liquid/Gooey Effect */}
+    <span className="relative inline-block">
+      {/* SVG Filter for Liquid Effect - OPTIMIZED */}
       <svg style={{ position: 'absolute', width: 0, height: 0 }}>
         <defs>
           <filter id={`liquid-${filterId}`}>
-            {/* Gaussian blur to merge particles */}
-            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-            {/* Color matrix for sharp edges (liquid effect) */}
+            {/* Lower blur for performance */}
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+            {/* Adjusted color matrix for visible liquid effect */}
             <feColorMatrix 
               in="blur" 
               mode="matrix" 
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" 
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" 
               result="gooey" 
             />
-            {/* Composite for final output */}
-            <feComposite in="SourceGraphic" in2="gooey" operator="atop"/>
+            <feBlend in="SourceGraphic" in2="gooey" mode="multiply" />
           </filter>
         </defs>
       </svg>
 
       <AnimatePresence mode="wait">
-        <motion.div
+        <motion.span
           key={text}
-          className="relative inline-flex items-center justify-center"
-          style={{ filter: `url(#liquid-${filterId})` }}
+          className="relative inline-block"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, filter: 'blur(20px)' }}
+          exit={{ opacity: 0 }}
           transition={{ duration: animationDuration }}
         >
-          {/* Liquid Morphing Particles */}
-          <div className="absolute inset-0 pointer-events-none">
-            {particles.map((particle) => (
-              <motion.div
+          {/* Liquid Morphing Particles Container */}
+          <span 
+            className="absolute inset-0 pointer-events-none"
+            style={{ filter: `url(#liquid-${filterId})` }}
+          >
+            {particles.map((particle, i) => (
+              <motion.span
                 key={`${text}-${particle.id}`}
                 className="absolute rounded-full"
                 style={{
                   width: particle.size,
                   height: particle.size,
-                  background: `radial-gradient(circle, 
-                    var(--color-accent-primary) 0%, 
-                    var(--color-accent-secondary) 50%,
-                    transparent 70%)`,
+                  background: i % 2 === 0 
+                    ? 'var(--color-accent-primary)' 
+                    : 'var(--color-accent-secondary)',
                   left: '50%',
                   top: '50%',
-                  boxShadow: '0 0 20px var(--color-accent-primary)',
+                  opacity: 0.8,
                 }}
                 initial={{
                   x: particle.x,
                   y: particle.y,
-                  scale: 0,
-                  opacity: 0
+                  scale: 0
                 }}
                 animate={{
-                  x: [particle.x, 0, -particle.x * 0.5, 0],
-                  y: [particle.y, 0, -particle.y * 0.5, 0],
-                  scale: [0, 1.5, 1, 0],
-                  opacity: [0, 0.8, 0.6, 0]
+                  x: [particle.x, particle.x * 0.3, 0],
+                  y: [particle.y, particle.y * 0.3, 0],
+                  scale: [0, 1.2, 0],
                 }}
                 transition={{
                   duration: animationDuration,
                   delay: particle.delay,
-                  ease: [0.43, 0.13, 0.23, 0.96]
+                  ease: "easeInOut"
                 }}
               />
             ))}
-          </div>
+          </span>
 
-          {/* Liquid morphing text letters */}
+          {/* Main text with dissolve effect */}
           <motion.span
-            className={`relative z-10 inline-flex ${className}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: animationDuration }}
+            className={`relative inline-flex ${className}`}
+            initial={{
+              opacity: 0,
+              filter: 'blur(10px)',
+            }}
+            animate={{
+              opacity: 1,
+              filter: 'blur(0px)',
+            }}
+            exit={{
+              opacity: 0,
+              filter: 'blur(10px)',
+            }}
+            transition={{
+              duration: animationDuration,
+              ease: [0.23, 1, 0.32, 1]
+            }}
           >
+            {/* Letter by letter morphing with dissolve */}
             {text.split('').map((letter, index) => (
               <motion.span
                 key={`${text}-letter-${index}`}
                 className="inline-block"
-                style={{ transformOrigin: 'center' }}
+                style={{ transformOrigin: 'center bottom' }}
                 initial={{
                   opacity: 0,
+                  y: 20,
                   scale: 0,
-                  rotateZ: (Math.random() - 0.5) * 180,
-                  filter: 'blur(10px)'
+                  rotateZ: (Math.random() - 0.5) * 45,
+                  filter: 'blur(6px)'
                 }}
                 animate={{
                   opacity: 1,
+                  y: 0,
                   scale: 1,
                   rotateZ: 0,
                   filter: 'blur(0px)'
                 }}
+                exit={{
+                  opacity: 0,
+                  y: -20,
+                  scale: 0,
+                  rotateZ: (Math.random() - 0.5) * 45,
+                  filter: 'blur(6px)'
+                }}
                 transition={{
-                  duration: animationDuration * 0.8,
-                  delay: index * 0.02,
-                  ease: [0.23, 1, 0.32, 1],
+                  duration: animationDuration * 0.7,
+                  delay: index * 0.03,
+                  ease: [0.43, 0.13, 0.23, 0.96],
                   type: "spring",
-                  stiffness: 200,
-                  damping: 20
+                  stiffness: 300,
+                  damping: 24
                 }}
               >
                 {letter === ' ' ? '\u00A0' : letter}
@@ -146,46 +167,42 @@ export const ParticleText = memo(function ParticleText({
             ))}
           </motion.span>
 
-          {/* Trailing liquid effect */}
-          <motion.div
+          {/* Dissolving particle trail */}
+          <motion.span
             className="absolute inset-0 pointer-events-none"
             initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{
-              duration: animationDuration * 1.5,
-              ease: "easeInOut"
-            }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: animationDuration }}
           >
-            {Array.from({ length: 6 }, (_, i) => (
-              <motion.div
-                key={`trail-${i}`}
+            {Array.from({ length: 8 }, (_, i) => (
+              <motion.span
+                key={`dissolve-${i}`}
                 className="absolute rounded-full"
                 style={{
-                  width: 8,
-                  height: 8,
-                  background: 'var(--color-accent-secondary)',
-                  left: `${20 + i * 10}%`,
+                  width: 4,
+                  height: 4,
+                  background: 'var(--color-accent-tertiary)',
+                  left: `${10 + i * 10}%`,
                   top: '50%',
-                  filter: 'blur(4px)',
+                  filter: 'blur(1px)',
                 }}
                 animate={{
-                  x: [0, (Math.random() - 0.5) * 50, 0],
-                  y: [0, (Math.random() - 0.5) * 30, 0],
-                  scale: [0, 1.5, 0],
+                  y: [0, -30, -60],
                   opacity: [0, 0.6, 0],
+                  scale: [1, 1.5, 0],
                 }}
                 transition={{
-                  duration: animationDuration * 1.5,
-                  delay: i * 0.1,
+                  duration: animationDuration * 1.2,
+                  delay: i * 0.05,
                   repeat: Infinity,
-                  repeatDelay: 2,
-                  ease: "easeInOut"
+                  repeatDelay: 1.5,
+                  ease: "easeOut"
                 }}
               />
             ))}
-          </motion.div>
-        </motion.div>
+          </motion.span>
+        </motion.span>
       </AnimatePresence>
-    </div>
+    </span>
   );
 });
