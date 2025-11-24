@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { AnimatedAgentOSLogoOptimized } from '../icons/animated-logo-optimized';
-import { ParticleText } from '../ui/particle-text';
+import ParticleMorphText from '../ui/particle-morph-text';
 import { PageSkeleton } from '../ui/page-skeleton';
 import { Toast } from '../ui/toast';
 import { LinkButton } from '../ui/LinkButton';
@@ -212,11 +212,10 @@ export function HeroSectionRedesigned() {
                 {/* First animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <ParticleText
+                    <ParticleMorphText
                       text={animationPhrases[phraseIndex].first}
                       className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent"
-                      particleCount={8}
-                      animationDuration={0.8}
+                      fontSize={isMobile ? 36 : 72}
                     />
                   ) : (
                     <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
@@ -228,11 +227,10 @@ export function HeroSectionRedesigned() {
                 {/* Second animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <ParticleText
+                    <ParticleMorphText
                       text={animationPhrases[phraseIndex].second}
                       className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
-                      particleCount={8}
-                      animationDuration={0.8}
+                      fontSize={isMobile ? 36 : 72}
                     />
                   ) : (
                     <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
@@ -244,11 +242,10 @@ export function HeroSectionRedesigned() {
                 {/* Fourth animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <ParticleText
+                    <ParticleMorphText
                       text={animationPhrases[phraseIndex].fourth}
                       className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-tertiary)] to-[var(--color-accent-primary)] bg-clip-text text-transparent"
-                      particleCount={8}
-                      animationDuration={0.8}
+                      fontSize={isMobile ? 36 : 72}
                     />
                   ) : (
                     <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-tertiary)] to-[var(--color-accent-primary)] bg-clip-text text-transparent">
@@ -260,11 +257,10 @@ export function HeroSectionRedesigned() {
                 {/* Fifth animated word */}
                 <span className="inline-block relative align-baseline">
                   {isMounted ? (
-                    <ParticleText
+                    <ParticleMorphText
                       text={animationPhrases[phraseIndex].fifth}
                       className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent"
-                      particleCount={8}
-                      animationDuration={0.8}
+                      fontSize={isMobile ? 36 : 72}
                     />
                   ) : (
                     <span className="font-black tracking-tighter bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
