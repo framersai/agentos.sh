@@ -7,12 +7,12 @@ import ScrollToTopButton from '../../components/ScrollToTopButton';
 import dynamic from 'next/dynamic';
 import { locales, type Locale } from '../../i18n';
 
-const SiteHeader = dynamic(
+const SiteHeaderDynamic = dynamic(
   () => import('../../components/site-header').then(mod => mod.SiteHeader),
   { ssr: false }
 );
 
-const CookieConsent = dynamic(
+const CookieConsentDynamic = dynamic(
   () => import('../../components/ui/cookie-consent').then(mod => mod.CookieConsent),
   { ssr: false }
 );
@@ -165,9 +165,9 @@ export default async function LocaleLayout({
           crossOrigin="anonymous"
         />
 
-        <CookieConsent />
+        <CookieConsentDynamic />
         <a href="#main-content" className="skip-to-content">Skip to content</a>
-        <SiteHeader />
+        <SiteHeaderDynamic />
         {/* JSON-LD: Organization */}
         <script
           type="application/ld+json"
