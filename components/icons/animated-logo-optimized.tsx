@@ -1,8 +1,13 @@
 'use client'
 
-import { motion, useAnimationFrame } from 'framer-motion'
-import { useEffect, useState, memo, useId, useRef, useCallback } from 'react'
+import { motion } from 'framer-motion'
+import { useEffect, useState, memo, useId, useRef } from 'react'
 import { useTheme } from 'next-themes'
+
+// Helper to convert hsl to hsla
+const toHsla = (hsl: string, alpha: number) => {
+  return hsl.replace('hsl(', 'hsla(').replace(')', `, ${alpha})`)
+}
 
 export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOptimized({
   size = 160,
@@ -16,44 +21,19 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
   const [isClient, setIsClient] = useState(false)
   const { resolvedTheme } = useTheme()
   const gradientId = useId().replace(/:/g, "-")
-  const timeRef = useRef(0)
-  const [hue, setHue] = useState(0)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const animationRef = useRef<number>(0)
 
   useEffect(() => setIsClient(true), [])
 
-  // Animate hue rotation for liquid gradient effect
-  useAnimationFrame((t) => {
-    timeRef.current = t
-    setHue((t / 50) % 360)
-  })
-
-  // Theme-aware color palettes - more vibrant and saturated
   const isDark = resolvedTheme === 'dark'
-  
-  const getGradientColors = useCallback(() => {
-    const baseHue = hue
-    if (isDark) {
-      return [
-        `hsl(${baseHue}, 100%, 70%)`,
-        `hsl(${(baseHue + 60) % 360}, 100%, 65%)`,
-        `hsl(${(baseHue + 120) % 360}, 100%, 75%)`,
-        `hsl(${(baseHue + 180) % 360}, 100%, 70%)`,
-        `hsl(${(baseHue + 240) % 360}, 100%, 65%)`,
-      ]
-    }
-    return [
-      `hsl(${baseHue}, 90%, 55%)`,
-      `hsl(${(baseHue + 60) % 360}, 85%, 50%)`,
-      `hsl(${(baseHue + 120) % 360}, 95%, 55%)`,
-      `hsl(${(baseHue + 180) % 360}, 90%, 50%)`,
-      `hsl(${(baseHue + 240) % 360}, 85%, 55%)`,
-    ]
-  }, [hue, isDark])
 
-  const colors = getGradientColors()
+  // Static color palette based on theme
+  const baseColors = isDark
+    ? ['#818cf8', '#c084fc', '#22d3ee', '#f472b6', '#a78bfa']
+    : ['#6366f1', '#a855f7', '#06b6d4', '#ec4899', '#8b5cf6']
 
-  // Liquid blob animation using canvas for performance
+  // Liquid blob animation using canvas
   useEffect(() => {
     if (!isClient || !canvasRef.current) return
 
@@ -66,16 +46,26 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
     canvas.height = size * dpr
     ctx.scale(dpr, dpr)
 
-    let animationId: number
     let time = 0
 
     const drawLiquidBlob = () => {
       ctx.clearRect(0, 0, size, size)
-      time += 0.02 * intensity
+      time += 0.015 * intensity
 
       const centerX = size / 2
       const centerY = size / 2
       const baseRadius = size * 0.35
+
+      // Rotating hue for color shifting
+      const hueShift = (time * 20) % 360
+
+      // Generate dynamic colors
+      const dynamicColors = [
+        `hsl(${(260 + hueShift) % 360}, ${isDark ? 100 : 85}%, ${isDark ? 70 : 55}%)`,
+        `hsl(${(300 + hueShift) % 360}, ${isDark ? 100 : 80}%, ${isDark ? 65 : 50}%)`,
+        `hsl(${(180 + hueShift) % 360}, ${isDark ? 100 : 90}%, ${isDark ? 75 : 55}%)`,
+        `hsl(${(330 + hueShift) % 360}, ${isDark ? 100 : 85}%, ${isDark ? 70 : 50}%)`,
+      ]
 
       // Create multiple overlapping liquid blobs
       for (let layer = 0; layer < 3; layer++) {
@@ -83,7 +73,7 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
         const layerScale = 1 - layer * 0.15
         
         ctx.save()
-        ctx.globalAlpha = 0.4 - layer * 0.1
+        ctx.globalAlpha = 0.5 - layer * 0.12
         
         // Create morphing blob path
         ctx.beginPath()
@@ -120,18 +110,18 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
           baseRadius * 1.5
         )
         
-        const colorIndex = Math.floor(time * 0.5) % colors.length
-        gradient.addColorStop(0, colors[colorIndex])
-        gradient.addColorStop(0.3, colors[(colorIndex + 1) % colors.length].replace(')', ', 0.8)').replace('hsl(', 'hsla('))
-        gradient.addColorStop(0.6, colors[(colorIndex + 2) % colors.length].replace(')', ', 0.6)').replace('hsl(', 'hsla('))
+        const colorIndex = Math.floor(time * 0.3) % dynamicColors.length
+        gradient.addColorStop(0, dynamicColors[colorIndex])
+        gradient.addColorStop(0.4, toHsla(dynamicColors[(colorIndex + 1) % dynamicColors.length], 0.7))
+        gradient.addColorStop(0.7, toHsla(dynamicColors[(colorIndex + 2) % dynamicColors.length], 0.4))
         gradient.addColorStop(1, 'transparent')
 
         ctx.fillStyle = gradient
         ctx.fill()
         
         // Add glow effect
-        ctx.shadowColor = colors[colorIndex]
-        ctx.shadowBlur = 20 * intensity
+        ctx.shadowColor = dynamicColors[colorIndex]
+        ctx.shadowBlur = 25 * intensity
         ctx.fill()
         
         ctx.restore()
@@ -143,12 +133,12 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
         centerX, centerY, 0,
         centerX, centerY, baseRadius * 0.4
       )
-      coreGradient.addColorStop(0, 'rgba(255,255,255,0.9)')
-      coreGradient.addColorStop(0.3, colors[0].replace(')', ', 0.8)').replace('hsl(', 'hsla('))
-      coreGradient.addColorStop(0.7, colors[1].replace(')', ', 0.4)').replace('hsl(', 'hsla('))
+      coreGradient.addColorStop(0, 'rgba(255,255,255,0.95)')
+      coreGradient.addColorStop(0.3, toHsla(dynamicColors[0], 0.8))
+      coreGradient.addColorStop(0.7, toHsla(dynamicColors[1], 0.4))
       coreGradient.addColorStop(1, 'transparent')
       
-      ctx.globalAlpha = 0.8
+      ctx.globalAlpha = 0.9
       ctx.fillStyle = coreGradient
       ctx.beginPath()
       ctx.arc(centerX, centerY, baseRadius * 0.4, 0, Math.PI * 2)
@@ -164,8 +154,8 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
         const particleSize = 3 + Math.sin(time * 2 + i) * 2
 
         const particleGradient = ctx.createRadialGradient(px, py, 0, px, py, particleSize * 3)
-        particleGradient.addColorStop(0, colors[i % colors.length])
-        particleGradient.addColorStop(0.5, colors[i % colors.length].replace(')', ', 0.4)').replace('hsl(', 'hsla('))
+        particleGradient.addColorStop(0, dynamicColors[i % dynamicColors.length])
+        particleGradient.addColorStop(0.5, toHsla(dynamicColors[i % dynamicColors.length], 0.4))
         particleGradient.addColorStop(1, 'transparent')
 
         ctx.fillStyle = particleGradient
@@ -174,13 +164,17 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
         ctx.fill()
       }
 
-      animationId = requestAnimationFrame(drawLiquidBlob)
+      animationRef.current = requestAnimationFrame(drawLiquidBlob)
     }
 
     drawLiquidBlob()
 
-    return () => cancelAnimationFrame(animationId)
-  }, [isClient, size, colors, intensity])
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [isClient, size, isDark, intensity])
 
   if (!isClient) {
     return (
@@ -209,16 +203,16 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
       <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full overflow-visible">
         <defs>
           <linearGradient id={`logo-gradient-${gradientId}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={colors[0]} />
-            <stop offset="25%" stopColor={colors[1]} />
-            <stop offset="50%" stopColor={colors[2]} />
-            <stop offset="75%" stopColor={colors[3]} />
-            <stop offset="100%" stopColor={colors[4]} />
+            <stop offset="0%" stopColor={baseColors[0]} />
+            <stop offset="25%" stopColor={baseColors[1]} />
+            <stop offset="50%" stopColor={baseColors[2]} />
+            <stop offset="75%" stopColor={baseColors[3]} />
+            <stop offset="100%" stopColor={baseColors[4]} />
           </linearGradient>
           
           <filter id={`logo-glow-${gradientId}`} x="-100%" y="-100%" width="300%" height="300%">
             <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-            <feFlood floodColor={colors[0]} floodOpacity="0.5" result="glowColor"/>
+            <feFlood floodColor={baseColors[0]} floodOpacity="0.5" result="glowColor"/>
             <feComposite in="glowColor" in2="coloredBlur" operator="in" result="softGlow"/>
             <feMerge>
               <feMergeNode in="softGlow" />
@@ -237,8 +231,8 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
           {[16, 22, 28].map((radius, i) => (
             <motion.circle
               key={`ring-${i}`}
-              cx="30"
-              cy="40"
+              cx={30}
+              cy={40}
               r={radius}
               fill="none"
               stroke={`url(#logo-gradient-${gradientId})`}
@@ -296,11 +290,11 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
             ))}
           </motion.g>
 
-          {/* Central core node - the brain */}
+          {/* Central core node */}
           <motion.circle
-            cx="30"
-            cy="40"
-            r="8"
+            cx={30}
+            cy={40}
+            r={8}
             fill={`url(#logo-gradient-${gradientId})`}
             filter={`url(#logo-glow-${gradientId})`}
             initial={{ scale: 0 }}
@@ -316,9 +310,9 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
           
           {/* Inner core highlight */}
           <motion.circle
-            cx="28"
-            cy="38"
-            r="3"
+            cx={28}
+            cy={38}
+            r={3}
             fill="rgba(255,255,255,0.8)"
             initial={{ opacity: 0 }}
             animate={{ opacity: [0.6, 1, 0.6] }}
@@ -333,13 +327,13 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
             { cx: 30, cy: 58, delay: 0.45 },
             { cx: 10, cy: 45, delay: 0.6 },
           ].map((node, i) => (
-            <motion.g key={`node-${i}`}>
+            <g key={`node-${i}`}>
               {/* Glow halo */}
               <motion.circle
                 cx={node.cx}
                 cy={node.cy}
-                r="7"
-                fill={colors[i % colors.length]}
+                r={7}
+                fill={baseColors[i % baseColors.length]}
                 filter={`url(#logo-blur-${gradientId})`}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ 
@@ -357,7 +351,7 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
               <motion.circle
                 cx={node.cx}
                 cy={node.cy}
-                r="5"
+                r={5}
                 fill={`url(#logo-gradient-${gradientId})`}
                 filter={`url(#logo-glow-${gradientId})`}
                 initial={{ scale: 0 }}
@@ -375,40 +369,32 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
               <motion.circle
                 cx={node.cx - 1.5}
                 cy={node.cy - 1.5}
-                r="1.5"
+                r={1.5}
                 fill="rgba(255,255,255,0.7)"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0.5, 0.9, 0.5] }}
                 transition={{ duration: 1.5, repeat: Infinity, delay: node.delay }}
               />
-            </motion.g>
+            </g>
           ))}
 
-          {/* Floating particles around the logo */}
-          {Array.from({ length: 12 }).map((_, i) => {
+          {/* Static floating particles (no cx/cy animation) */}
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => {
             const angle = (i / 12) * Math.PI * 2
             const radius = 32 + (i % 3) * 4
+            const cx = 30 + Math.cos(angle) * radius
+            const cy = 40 + Math.sin(angle) * radius
             return (
               <motion.circle
                 key={`particle-${i}`}
-                cx={30 + Math.cos(angle) * radius}
-                cy={40 + Math.sin(angle) * radius}
+                cx={cx}
+                cy={cy}
                 r={1 + (i % 2)}
-                fill={colors[i % colors.length]}
+                fill={baseColors[i % baseColors.length]}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{
                   opacity: [0, 0.8, 0],
-                  scale: [0, 1, 0],
-                  cx: [
-                    30 + Math.cos(angle) * radius,
-                    30 + Math.cos(angle + 0.5) * (radius + 5),
-                    30 + Math.cos(angle + 1) * radius
-                  ],
-                  cy: [
-                    40 + Math.sin(angle) * radius,
-                    40 + Math.sin(angle + 0.5) * (radius + 5),
-                    40 + Math.sin(angle + 1) * radius
-                  ]
+                  scale: [0.5, 1.2, 0.5],
                 }}
                 transition={{
                   duration: 3 + i * 0.2,
@@ -424,9 +410,9 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
 
       {/* Outer radiant glow */}
       <motion.div
-        className="absolute inset-0 rounded-full"
+        className="absolute inset-0 rounded-full pointer-events-none"
         style={{
-          background: `radial-gradient(circle, ${colors[0]}40 0%, ${colors[2]}20 40%, transparent 70%)`,
+          background: `radial-gradient(circle, ${baseColors[0]}40 0%, ${baseColors[2]}20 40%, transparent 70%)`,
           filter: 'blur(20px)',
         }}
         animate={{
