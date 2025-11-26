@@ -121,10 +121,10 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
         )
         
         const colorIndex = Math.floor(time * 0.5) % colors.length
-        gradient.addColorStop(0, colors[colorIndex] + 'ff')
-        gradient.addColorStop(0.3, colors[(colorIndex + 1) % colors.length] + 'cc')
-        gradient.addColorStop(0.6, colors[(colorIndex + 2) % colors.length] + '99')
-        gradient.addColorStop(1, colors[(colorIndex + 3) % colors.length] + '00')
+        gradient.addColorStop(0, colors[colorIndex])
+        gradient.addColorStop(0.3, colors[(colorIndex + 1) % colors.length].replace(')', ', 0.8)').replace('hsl(', 'hsla('))
+        gradient.addColorStop(0.6, colors[(colorIndex + 2) % colors.length].replace(')', ', 0.6)').replace('hsl(', 'hsla('))
+        gradient.addColorStop(1, 'transparent')
 
         ctx.fillStyle = gradient
         ctx.fill()
@@ -144,8 +144,8 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
         centerX, centerY, baseRadius * 0.4
       )
       coreGradient.addColorStop(0, 'rgba(255,255,255,0.9)')
-      coreGradient.addColorStop(0.3, colors[0] + 'cc')
-      coreGradient.addColorStop(0.7, colors[1] + '66')
+      coreGradient.addColorStop(0.3, colors[0].replace(')', ', 0.8)').replace('hsl(', 'hsla('))
+      coreGradient.addColorStop(0.7, colors[1].replace(')', ', 0.4)').replace('hsl(', 'hsla('))
       coreGradient.addColorStop(1, 'transparent')
       
       ctx.globalAlpha = 0.8
@@ -165,7 +165,7 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
 
         const particleGradient = ctx.createRadialGradient(px, py, 0, px, py, particleSize * 3)
         particleGradient.addColorStop(0, colors[i % colors.length])
-        particleGradient.addColorStop(0.5, colors[i % colors.length] + '66')
+        particleGradient.addColorStop(0.5, colors[i % colors.length].replace(')', ', 0.4)').replace('hsl(', 'hsla('))
         particleGradient.addColorStop(1, 'transparent')
 
         ctx.fillStyle = particleGradient
