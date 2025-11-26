@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { ArrowRight, Github, Terminal, Zap } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import { AnimatedAgentOSLogo } from '../icons/animated-logo'
+import { LiquifyMorphText } from '../ui/liquify-morph-text'
 import { TypeScriptIcon, OpenSourceIcon, StreamingIcon, MemoryIcon } from '../icons/feature-icons'
 import { Toast } from '../ui/toast'
 
@@ -222,28 +223,21 @@ export function HeroSection() {
                 transition={{ delay: 0.2, duration: 0.8 }}
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-[-0.02em] overflow-visible font-[family-name:var(--font-grotesk)]"
               >
-                <span className="gradient-text inline-block py-2">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={activePair.top}
-                      initial={{ opacity: 0, y: 12, clipPath: 'inset(0% 0% 100% 0%)' }}
-                      animate={{ opacity: 1, y: 0, clipPath: 'inset(0% 0% 0% 0%)' }}
-                      exit={{ opacity: 0, y: -12, clipPath: 'inset(0% 0% 100% 0%)' }}
-                      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-                      className="inline-block"
-                    >
-                      {activePair.top}
-                    </motion.span>
-                  </AnimatePresence>
+                <span className="inline-block py-2">
+                  <LiquifyMorphText 
+                    words={headlinePairs.map(p => p.top)} 
+                    activeIndex={headlineIndex}
+                    className="font-bold"
+                  />
                 </span>
                 <br />
                 <span className="text-text-primary inline-block py-2">
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={activePair.bottom}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -12 }}
+                      initial={{ opacity: 0, y: 12, filter: 'blur(4px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -12, filter: 'blur(4px)' }}
                       transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
                       className="inline-block"
                     >
