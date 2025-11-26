@@ -351,7 +351,19 @@
   }
 
   /* --- GPU-Accelerated Animations --- */
-  @keyframes float {
+  
+/* Gradient animation for text */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  animation: gradient 3s ease infinite;
+}
+
+@keyframes float {
     0%, 100% { transform: translateY(0) translateZ(0); }
     50% { transform: translateY(-10px) translateZ(0); }
   }
