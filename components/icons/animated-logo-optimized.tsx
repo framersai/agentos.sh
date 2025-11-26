@@ -4,19 +4,12 @@ import { motion } from 'framer-motion'
 import { useEffect, useState, memo, useId, useRef } from 'react'
 import { useTheme } from 'next-themes'
 
-// Helper to convert hsl to hsla
-const toHsla = (hsl: string, alpha: number) => {
-  return hsl.replace('hsl(', 'hsla(').replace(')', `, ${alpha})`)
-}
-
 export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOptimized({
-  size = 160,
-  className = "",
-  intensity = 1
+  size = 120,
+  className = ""
 }: {
   size?: number
   className?: string
-  intensity?: number
 }) {
   const [isClient, setIsClient] = useState(false)
   const { resolvedTheme } = useTheme()
@@ -28,12 +21,12 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
 
   const isDark = resolvedTheme === 'dark'
 
-  // Static color palette based on theme
-  const baseColors = isDark
-    ? ['#818cf8', '#c084fc', '#22d3ee', '#f472b6', '#a78bfa']
-    : ['#6366f1', '#a855f7', '#06b6d4', '#ec4899', '#8b5cf6']
+  // Elegant color palette
+  const colors = isDark
+    ? { primary: '#a78bfa', secondary: '#c084fc', tertiary: '#67e8f9', accent: '#f0abfc' }
+    : { primary: '#7c3aed', secondary: '#a855f7', tertiary: '#06b6d4', accent: '#d946ef' }
 
-  // Liquid blob animation using canvas
+  // Smooth organic blob animation
   useEffect(() => {
     if (!isClient || !canvasRef.current) return
 
@@ -48,383 +41,126 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
 
     let time = 0
 
-    const drawLiquidBlob = () => {
+    const draw = () => {
       ctx.clearRect(0, 0, size, size)
-      time += 0.015 * intensity
+      time += 0.008
 
-      const centerX = size / 2
-      const centerY = size / 2
-      const baseRadius = size * 0.35
+      const cx = size / 2
+      const cy = size / 2
+      const baseR = size * 0.32
 
-      // Rotating hue for color shifting
-      const hueShift = (time * 20) % 360
-
-      // Generate dynamic colors
-      const dynamicColors = [
-        `hsl(${(260 + hueShift) % 360}, ${isDark ? 100 : 85}%, ${isDark ? 70 : 55}%)`,
-        `hsl(${(300 + hueShift) % 360}, ${isDark ? 100 : 80}%, ${isDark ? 65 : 50}%)`,
-        `hsl(${(180 + hueShift) % 360}, ${isDark ? 100 : 90}%, ${isDark ? 75 : 55}%)`,
-        `hsl(${(330 + hueShift) % 360}, ${isDark ? 100 : 85}%, ${isDark ? 70 : 50}%)`,
-      ]
-
-      // Create multiple overlapping liquid blobs
-      for (let layer = 0; layer < 3; layer++) {
-        const layerOffset = layer * 0.5
-        const layerScale = 1 - layer * 0.15
-        
-        ctx.save()
-        ctx.globalAlpha = 0.5 - layer * 0.12
-        
-        // Create morphing blob path
-        ctx.beginPath()
-        const points = 64
-        for (let i = 0; i <= points; i++) {
-          const angle = (i / points) * Math.PI * 2
-          
-          // Multiple frequency noise for organic liquid feel
-          const noise1 = Math.sin(angle * 3 + time + layerOffset) * 0.15
-          const noise2 = Math.sin(angle * 5 - time * 1.3 + layerOffset) * 0.1
-          const noise3 = Math.cos(angle * 7 + time * 0.7 + layerOffset) * 0.08
-          const noise4 = Math.sin(angle * 2 - time * 0.5) * 0.12
-          
-          const radius = baseRadius * layerScale * (1 + noise1 + noise2 + noise3 + noise4)
-          
-          const x = centerX + Math.cos(angle) * radius
-          const y = centerY + Math.sin(angle) * radius
-          
-          if (i === 0) {
-            ctx.moveTo(x, y)
-          } else {
-            ctx.lineTo(x, y)
-          }
-        }
-        ctx.closePath()
-
-        // Radiant gradient fill
-        const gradient = ctx.createRadialGradient(
-          centerX - size * 0.1,
-          centerY - size * 0.1,
-          0,
-          centerX,
-          centerY,
-          baseRadius * 1.5
-        )
-        
-        const colorIndex = Math.floor(time * 0.3) % dynamicColors.length
-        gradient.addColorStop(0, dynamicColors[colorIndex])
-        gradient.addColorStop(0.4, toHsla(dynamicColors[(colorIndex + 1) % dynamicColors.length], 0.7))
-        gradient.addColorStop(0.7, toHsla(dynamicColors[(colorIndex + 2) % dynamicColors.length], 0.4))
-        gradient.addColorStop(1, 'transparent')
-
-        ctx.fillStyle = gradient
-        ctx.fill()
-        
-        // Add glow effect
-        ctx.shadowColor = dynamicColors[colorIndex]
-        ctx.shadowBlur = 25 * intensity
-        ctx.fill()
-        
-        ctx.restore()
-      }
-
-      // Draw inner energy core
+      // Single smooth organic blob
       ctx.save()
-      const coreGradient = ctx.createRadialGradient(
-        centerX, centerY, 0,
-        centerX, centerY, baseRadius * 0.4
-      )
-      coreGradient.addColorStop(0, 'rgba(255,255,255,0.95)')
-      coreGradient.addColorStop(0.3, toHsla(dynamicColors[0], 0.8))
-      coreGradient.addColorStop(0.7, toHsla(dynamicColors[1], 0.4))
-      coreGradient.addColorStop(1, 'transparent')
-      
-      ctx.globalAlpha = 0.9
-      ctx.fillStyle = coreGradient
       ctx.beginPath()
-      ctx.arc(centerX, centerY, baseRadius * 0.4, 0, Math.PI * 2)
+      
+      const points = 72
+      for (let i = 0; i <= points; i++) {
+        const angle = (i / points) * Math.PI * 2
+        const n1 = Math.sin(angle * 3 + time) * 0.08
+        const n2 = Math.cos(angle * 2 - time * 0.7) * 0.06
+        const n3 = Math.sin(angle * 5 + time * 1.2) * 0.04
+        const r = baseR * (1 + n1 + n2 + n3)
+        const x = cx + Math.cos(angle) * r
+        const y = cy + Math.sin(angle) * r
+        
+        if (i === 0) ctx.moveTo(x, y)
+        else ctx.lineTo(x, y)
+      }
+      ctx.closePath()
+
+      // Soft gradient fill
+      const grad = ctx.createRadialGradient(cx - size * 0.1, cy - size * 0.1, 0, cx, cy, baseR * 1.3)
+      grad.addColorStop(0, colors.primary + '40')
+      grad.addColorStop(0.5, colors.secondary + '25')
+      grad.addColorStop(1, 'transparent')
+      
+      ctx.fillStyle = grad
       ctx.fill()
       ctx.restore()
 
-      // Draw orbiting particles
-      for (let i = 0; i < 8; i++) {
-        const particleAngle = (i / 8) * Math.PI * 2 + time * (0.5 + i * 0.1)
-        const orbitRadius = baseRadius * (0.6 + Math.sin(time + i) * 0.2)
-        const px = centerX + Math.cos(particleAngle) * orbitRadius
-        const py = centerY + Math.sin(particleAngle) * orbitRadius
-        const particleSize = 3 + Math.sin(time * 2 + i) * 2
+      // Soft inner glow
+      ctx.save()
+      const innerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseR * 0.5)
+      innerGrad.addColorStop(0, colors.primary + '30')
+      innerGrad.addColorStop(1, 'transparent')
+      ctx.fillStyle = innerGrad
+      ctx.beginPath()
+      ctx.arc(cx, cy, baseR * 0.5, 0, Math.PI * 2)
+      ctx.fill()
+      ctx.restore()
 
-        const particleGradient = ctx.createRadialGradient(px, py, 0, px, py, particleSize * 3)
-        particleGradient.addColorStop(0, dynamicColors[i % dynamicColors.length])
-        particleGradient.addColorStop(0.5, toHsla(dynamicColors[i % dynamicColors.length], 0.4))
-        particleGradient.addColorStop(1, 'transparent')
-
-        ctx.fillStyle = particleGradient
-        ctx.beginPath()
-        ctx.arc(px, py, particleSize * 3, 0, Math.PI * 2)
-        ctx.fill()
-      }
-
-      animationRef.current = requestAnimationFrame(drawLiquidBlob)
+      animationRef.current = requestAnimationFrame(draw)
     }
 
-    drawLiquidBlob()
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
-      }
-    }
-  }, [isClient, size, isDark, intensity])
+    draw()
+    return () => cancelAnimationFrame(animationRef.current)
+  }, [isClient, size, isDark, colors])
 
   if (!isClient) {
     return (
       <div className={`relative ${className}`} style={{ width: size, height: size }}>
-        <div className="w-full h-full rounded-full bg-gradient-to-br from-purple-500/30 to-cyan-500/30 animate-pulse" />
+        <div className="w-full h-full rounded-full bg-gradient-to-br from-violet-500/20 to-cyan-500/20" />
       </div>
     )
   }
 
   return (
     <motion.div
-      initial={{ scale: 0.8, opacity: 0, rotate: -180 }}
-      animate={{ scale: 1, opacity: 1, rotate: 0 }}
-      transition={{ duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
       className={`relative ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* Liquid morphing canvas background */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-        style={{ filter: `blur(${isDark ? 1 : 0.5}px)` }}
-      />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       
-      {/* SVG overlay with network nodes */}
-      <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full overflow-visible">
+      {/* Minimal SVG network */}
+      <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
         <defs>
-          <linearGradient id={`logo-gradient-${gradientId}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={baseColors[0]} />
-            <stop offset="25%" stopColor={baseColors[1]} />
-            <stop offset="50%" stopColor={baseColors[2]} />
-            <stop offset="75%" stopColor={baseColors[3]} />
-            <stop offset="100%" stopColor={baseColors[4]} />
+          <linearGradient id={`g-${gradientId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={colors.primary} />
+            <stop offset="100%" stopColor={colors.secondary} />
           </linearGradient>
-          
-          <filter id={`logo-glow-${gradientId}`} x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-            <feFlood floodColor={baseColors[0]} floodOpacity="0.5" result="glowColor"/>
-            <feComposite in="glowColor" in2="coloredBlur" operator="in" result="softGlow"/>
-            <feMerge>
-              <feMergeNode in="softGlow" />
-              <feMergeNode in="softGlow" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-          <filter id={`logo-blur-${gradientId}`}>
-            <feGaussianBlur stdDeviation="2" />
-          </filter>
         </defs>
 
-        <g transform="translate(50 50) scale(1.8) translate(-30 -40)">
-          {/* Pulsing energy rings */}
-          {[16, 22, 28].map((radius, i) => (
-            <motion.circle
-              key={`ring-${i}`}
-              cx={30}
-              cy={40}
-              r={radius}
-              fill="none"
-              stroke={`url(#logo-gradient-${gradientId})`}
-              strokeWidth={1.5 - i * 0.3}
-              strokeDasharray={i % 2 === 0 ? "8 4" : "4 8"}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ 
-                opacity: [0.3, 0.7, 0.3],
-                rotate: i % 2 === 0 ? 360 : -360,
-                scale: 1
+        <g opacity="0.6">
+          {/* Simple connections */}
+          {[[50,50,35,35],[50,50,65,35],[50,50,65,65],[50,50,35,65]].map(([x1,y1,x2,y2], i) => (
+            <motion.line
+              key={i}
+              x1={x1} y1={y1} x2={x2} y2={y2}
+              stroke={`url(#g-${gradientId})`}
+              strokeWidth="1"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1, opacity: [0.3, 0.6, 0.3] }}
+              transition={{ 
+                pathLength: { duration: 1, delay: i * 0.1 },
+                opacity: { duration: 3, repeat: Infinity, ease: "easeInOut" }
               }}
-              transition={{
-                opacity: { duration: 2 + i, repeat: Infinity, ease: "easeInOut" },
-                rotate: { duration: 10 + i * 5, repeat: Infinity, ease: "linear" },
-                scale: { duration: 0.8, delay: i * 0.2 }
-              }}
-              style={{ transformOrigin: "30px 40px" }}
             />
           ))}
-
-          {/* Neural connections with animated stroke */}
-          <motion.g
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-          >
-            {[
-              { x1: 30, y1: 40, x2: 15, y2: 25 },
-              { x1: 30, y1: 40, x2: 45, y2: 25 },
-              { x1: 30, y1: 40, x2: 50, y2: 45 },
-              { x1: 30, y1: 40, x2: 30, y2: 58 },
-              { x1: 30, y1: 40, x2: 10, y2: 45 },
-              { x1: 15, y1: 25, x2: 45, y2: 25 },
-              { x1: 10, y1: 45, x2: 50, y2: 45 },
-            ].map((line, i) => (
-              <motion.line
-                key={`connection-${i}`}
-                x1={line.x1}
-                y1={line.y1}
-                x2={line.x2}
-                y2={line.y2}
-                stroke={`url(#logo-gradient-${gradientId})`}
-                strokeWidth={i < 5 ? 2 : 1}
-                strokeLinecap="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ 
-                  pathLength: 1, 
-                  opacity: [0.4, 0.9, 0.4]
-                }}
-                transition={{
-                  pathLength: { duration: 1, delay: i * 0.1 },
-                  opacity: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }
-                }}
-              />
-            ))}
-          </motion.g>
-
-          {/* Central core node */}
-          <motion.circle
-            cx={30}
-            cy={40}
-            r={8}
-            fill={`url(#logo-gradient-${gradientId})`}
-            filter={`url(#logo-glow-${gradientId})`}
-            initial={{ scale: 0 }}
-            animate={{ 
-              scale: [1, 1.15, 1],
-              opacity: [0.9, 1, 0.9]
-            }}
-            transition={{
-              scale: { duration: 1.5, repeat: Infinity, ease: "easeInOut" },
-              opacity: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
-            }}
-          />
-          
-          {/* Inner core highlight */}
-          <motion.circle
-            cx={28}
-            cy={38}
-            r={3}
-            fill="rgba(255,255,255,0.8)"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
-
-          {/* Satellite nodes */}
-          {[
-            { cx: 15, cy: 25, delay: 0 },
-            { cx: 45, cy: 25, delay: 0.15 },
-            { cx: 50, cy: 45, delay: 0.3 },
-            { cx: 30, cy: 58, delay: 0.45 },
-            { cx: 10, cy: 45, delay: 0.6 },
-          ].map((node, i) => (
-            <g key={`node-${i}`}>
-              {/* Glow halo */}
-              <motion.circle
-                cx={node.cx}
-                cy={node.cy}
-                r={7}
-                fill={baseColors[i % baseColors.length]}
-                filter={`url(#logo-blur-${gradientId})`}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ 
-                  scale: [1, 1.4, 1],
-                  opacity: [0.3, 0.6, 0.3]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: node.delay
-                }}
-              />
-              {/* Core */}
-              <motion.circle
-                cx={node.cx}
-                cy={node.cy}
-                r={5}
-                fill={`url(#logo-gradient-${gradientId})`}
-                filter={`url(#logo-glow-${gradientId})`}
-                initial={{ scale: 0 }}
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: node.delay
-                }}
-              />
-              {/* Highlight */}
-              <motion.circle
-                cx={node.cx - 1.5}
-                cy={node.cy - 1.5}
-                r={1.5}
-                fill="rgba(255,255,255,0.7)"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0.5, 0.9, 0.5] }}
-                transition={{ duration: 1.5, repeat: Infinity, delay: node.delay }}
-              />
-            </g>
-          ))}
-
-          {/* Static floating particles (no cx/cy animation) */}
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => {
-            const angle = (i / 12) * Math.PI * 2
-            const radius = 32 + (i % 3) * 4
-            const cx = 30 + Math.cos(angle) * radius
-            const cy = 40 + Math.sin(angle) * radius
-            return (
-              <motion.circle
-                key={`particle-${i}`}
-                cx={cx}
-                cy={cy}
-                r={1 + (i % 2)}
-                fill={baseColors[i % baseColors.length]}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{
-                  opacity: [0, 0.8, 0],
-                  scale: [0.5, 1.2, 0.5],
-                }}
-                transition={{
-                  duration: 3 + i * 0.2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.25
-                }}
-              />
-            )
-          })}
         </g>
-      </svg>
 
-      {/* Outer radiant glow */}
-      <motion.div
-        className="absolute inset-0 rounded-full pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${baseColors[0]}40 0%, ${baseColors[2]}20 40%, transparent 70%)`,
-          filter: 'blur(20px)',
-        }}
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.5, 0.8, 0.5],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
+        {/* Center node */}
+        <motion.circle
+          cx={50} cy={50} r={6}
+          fill={`url(#g-${gradientId})`}
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        {/* Corner nodes */}
+        {[[35,35],[65,35],[65,65],[35,65]].map(([x,y], i) => (
+          <motion.circle
+            key={i}
+            cx={x} cy={y} r={3}
+            fill={colors.tertiary}
+            opacity={0.7}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
+          />
+        ))}
+      </svg>
     </motion.div>
   )
 })
