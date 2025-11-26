@@ -34,9 +34,7 @@ export function HeroSectionRedesigned() {
     applyVisualTheme(themeMap[currentTheme || ''] || 'aurora-daybreak', isDark);
   }, [currentTheme, isDark]);
 
-  const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
-    setIsMounted(true);
     const timer = setTimeout(() => setIsContentReady(true), 200);
     return () => clearTimeout(timer);
   }, []);

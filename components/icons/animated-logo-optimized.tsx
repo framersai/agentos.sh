@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useState, memo, useId, useRef } from 'react'
+import { useEffect, useState, memo, useId, useRef, useMemo } from 'react'
 import { useTheme } from 'next-themes'
 
 export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOptimized({
@@ -21,10 +21,11 @@ export const AnimatedAgentOSLogoOptimized = memo(function AnimatedAgentOSLogoOpt
 
   const isDark = resolvedTheme === 'dark'
 
-  // Elegant color palette
-  const colors = isDark
+  // Elegant color palette - memoized to prevent useEffect dependency changes
+  const colors = useMemo(() => isDark
     ? { primary: '#a78bfa', secondary: '#c084fc', tertiary: '#67e8f9', accent: '#f0abfc' }
     : { primary: '#7c3aed', secondary: '#a855f7', tertiary: '#06b6d4', accent: '#d946ef' }
+  , [isDark])
 
   // Smooth organic blob animation
   useEffect(() => {
