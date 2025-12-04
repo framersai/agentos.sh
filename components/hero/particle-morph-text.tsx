@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 interface ParticleMorphTextProps {
-  words: [string, string]; // Exactly two words that alternate
+  words: [string, string];
   className?: string;
   interval?: number;
   fontSize?: number;
   gradientFrom?: string;
   gradientTo?: string;
-  startIndex?: number; // 0 or 1 to coordinate with other instances
+  startIndex?: number;
 }
 
 interface TextParticle {
@@ -26,14 +26,13 @@ interface TextParticle {
 }
 
 /**
- * ParticleMorphText - Refined text morphing with subtle particle effects
- * Alternates between exactly two words with coordinated timing
+ * ParticleMorphText - Fast, smooth text morphing with particle effects
  */
 export function ParticleMorphText({
   words,
   className = '',
-  interval = 3500,
-  fontSize = 56,
+  interval = 2500, // Faster interval
+  fontSize = 48,
   gradientFrom = '#8b5cf6',
   gradientTo = '#06b6d4',
   startIndex = 0,
@@ -47,7 +46,7 @@ export function ParticleMorphText({
   const morphProgressRef = useRef(0);
   const lastSwitchRef = useRef(0);
   const [mounted, setMounted] = useState(false);
-  const [dimensions, setDimensions] = useState({ width: 350, height: 90 });
+  const [dimensions, setDimensions] = useState({ width: 200, height: 50 });
 
   // Color interpolation
   const interpolateColor = useCallback((color1: string, color2: string, t: number): string => {
@@ -74,7 +73,7 @@ export function ParticleMorphText({
   ): TextParticle[] => {
     const particles: TextParticle[] = [];
     
-    ctx.font = `bold ${fontSize}px "Inter", "SF Pro Display", system-ui, sans-serif`;
+    ctx.font = `700 ${fontSize}px "Inter", "SF Pro Display", system-ui, sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
@@ -85,9 +84,9 @@ export function ParticleMorphText({
     const offCtx = offCanvas.getContext('2d');
     if (!offCtx) return particles;
 
-    const padding = 10;
+    const padding = 4;
     offCanvas.width = textWidth + padding * 2;
-    offCanvas.height = fontSize * 1.4;
+    offCanvas.height = fontSize * 1.2;
 
     offCtx.font = ctx.font;
     offCtx.textAlign = 'center';
@@ -97,9 +96,8 @@ export function ParticleMorphText({
 
     const imageData = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height);
     const pixels = imageData.data;
-    const sampleStep = Math.max(3, Math.floor(fontSize / 18));
+    const sampleStep = Math.max(2, Math.floor(fontSize / 16));
     
-    // Get character positions
     const charWidths: number[] = [];
     for (const char of text) {
       charWidths.push(offCtx.measureText(char).width);
@@ -108,8 +106,7 @@ export function ParticleMorphText({
     for (let y = 0; y < offCanvas.height; y += sampleStep) {
       for (let x = 0; x < offCanvas.width; x += sampleStep) {
         const i = (y * offCanvas.width + x) * 4;
-        if (pixels[i + 3] > 100) {
-          // Determine character index
+        if (pixels[i + 3] > 80) {
           const relativeX = x - padding;
           let charIdx = 0;
           let accWidth = 0;
@@ -134,7 +131,7 @@ export function ParticleMorphText({
             originY: finalY,
             targetX: finalX,
             targetY: finalY,
-            radius: 1.8 + Math.random() * 0.8,
+            radius: 1.5 + Math.random() * 0.5,
             color: interpolateColor(gradientFrom, gradientTo, t),
             alpha: 1,
             charIndex: charIdx,
@@ -146,9 +143,9 @@ export function ParticleMorphText({
     return particles;
   }, [fontSize, gradientFrom, gradientTo, interpolateColor]);
 
-  // Smooth easing function
-  const easeInOutCubic = (t: number): number => {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  // Fast easing
+  const easeOutQuart = (t: number): number => {
+    return 1 - Math.pow(1 - t, 4);
   };
 
   // Animation loop
@@ -168,31 +165,27 @@ export function ParticleMorphText({
       morphProgressRef.current = 0;
       lastSwitchRef.current = time;
 
-      // Set scatter targets for current particles
       particlesRef.current.forEach((p) => {
         const angle = Math.random() * Math.PI * 2;
-        const dist = 30 + Math.random() * 40; // Subtle scatter
+        const dist = 15 + Math.random() * 25; // Tighter scatter
         p.targetX = p.originX + Math.cos(angle) * dist;
         p.targetY = p.originY + Math.sin(angle) * dist;
       });
     } else if (phase === 'morphing') {
-      morphProgressRef.current += 0.025; // Faster morphing
+      morphProgressRef.current += 0.045; // Much faster morphing
 
       if (morphProgressRef.current >= 1) {
-        // Switch to next word
         currentWordIdxRef.current = currentWordIdxRef.current === 0 ? 1 : 0;
         const nextWord = words[currentWordIdxRef.current];
         
-        // Create new particles
         const newParticles = createParticles(ctx, nextWord, centerX, centerY);
         
-        // Set incoming positions (scattered, will converge)
         newParticles.forEach((p) => {
           const angle = Math.random() * Math.PI * 2;
-          const dist = 30 + Math.random() * 40;
+          const dist = 15 + Math.random() * 25;
           p.x = p.originX + Math.cos(angle) * dist;
           p.y = p.originY + Math.sin(angle) * dist;
-          p.alpha = 0.6;
+          p.alpha = 0.7;
         });
 
         particlesRef.current = newParticles;
@@ -202,9 +195,8 @@ export function ParticleMorphText({
       }
     }
 
-    // Draw particles
     const progress = morphProgressRef.current;
-    const easedProgress = easeInOutCubic(progress);
+    const easedProgress = easeOutQuart(progress);
 
     particlesRef.current.forEach((p) => {
       let drawX = p.x;
@@ -212,33 +204,28 @@ export function ParticleMorphText({
       let drawAlpha = p.alpha;
 
       if (phaseRef.current === 'morphing') {
-        // Scatter outward
         drawX = p.originX + (p.targetX - p.originX) * easedProgress;
         drawY = p.originY + (p.targetY - p.originY) * easedProgress;
-        // Fade but never fully disappear
-        drawAlpha = Math.max(0.3, 1 - easedProgress * 0.7);
+        drawAlpha = Math.max(0.4, 1 - easedProgress * 0.6);
       } else {
-        // Converge to origin
-        const convergeSpeed = 0.12;
+        const convergeSpeed = 0.18; // Faster convergence
         p.x += (p.originX - p.x) * convergeSpeed;
         p.y += (p.originY - p.y) * convergeSpeed;
         drawX = p.x;
         drawY = p.y;
         
-        // Gentle breathing
-        const breathe = Math.sin(time * 0.002 + p.charIndex * 0.4) * 0.5;
+        const breathe = Math.sin(time * 0.003 + p.charIndex * 0.3) * 0.3;
         drawX += breathe;
         
-        // Fade in smoothly
-        p.alpha = Math.min(1, p.alpha + 0.05);
+        p.alpha = Math.min(1, p.alpha + 0.08);
         drawAlpha = p.alpha;
       }
 
       // Draw glow
-      const glowRadius = p.radius * 2.5;
+      const glowRadius = p.radius * 2;
       const gradient = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, glowRadius);
-      gradient.addColorStop(0, p.color.replace('rgb', 'rgba').replace(')', `, ${drawAlpha * 0.7})`));
-      gradient.addColorStop(0.6, p.color.replace('rgb', 'rgba').replace(')', `, ${drawAlpha * 0.2})`));
+      gradient.addColorStop(0, p.color.replace('rgb', 'rgba').replace(')', `, ${drawAlpha * 0.6})`));
+      gradient.addColorStop(0.5, p.color.replace('rgb', 'rgba').replace(')', `, ${drawAlpha * 0.15})`));
       gradient.addColorStop(1, 'transparent');
 
       ctx.beginPath();
@@ -254,24 +241,22 @@ export function ParticleMorphText({
     });
   }, [dimensions, interval, words, createParticles]);
 
-  // Mount
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Setup dimensions - compact fit to text
+  // Dimensions - match text size exactly
   useEffect(() => {
     if (!mounted) return;
 
     const longestWord = words[0].length > words[1].length ? words[0] : words[1];
-    const estimatedWidth = longestWord.length * fontSize * 0.56; // Compact fit
+    const estimatedWidth = longestWord.length * fontSize * 0.55;
     const width = estimatedWidth;
-    const height = fontSize * 1.0; // Match font height exactly
+    const height = fontSize;
     
     setDimensions({ width, height });
   }, [mounted, words, fontSize]);
 
-  // Animation setup
   useEffect(() => {
     if (!mounted) return;
 
@@ -290,7 +275,6 @@ export function ParticleMorphText({
     canvas.style.height = `${height}px`;
     ctx.scale(dpr, dpr);
 
-    // Initialize with first word
     const firstWord = words[currentWordIdxRef.current];
     particlesRef.current = createParticles(ctx, firstWord, width / 2, height / 2);
     
@@ -319,13 +303,13 @@ export function ParticleMorphText({
       <span 
         className={className}
         style={{
-          display: 'inline-block',
+          display: 'inline',
           background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
           fontSize: `${fontSize}px`,
-          fontWeight: 'bold',
+          fontWeight: 700,
         }}
       >
         {words[startIndex]}
@@ -336,22 +320,19 @@ export function ParticleMorphText({
   return (
     <span 
       ref={containerRef}
-      className={`inline-block ${className}`}
+      className={`inline-flex items-center ${className}`}
       style={{ 
-        position: 'relative',
         width: dimensions.width,
-        height: dimensions.height,
-        verticalAlign: 'baseline',
-        lineHeight: 1,
+        height: fontSize,
+        position: 'relative',
       }}
     >
       <canvas
         ref={canvasRef}
         style={{
           position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          top: 0,
+          left: 0,
           pointerEvents: 'none',
         }}
       />
