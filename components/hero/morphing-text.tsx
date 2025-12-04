@@ -128,7 +128,7 @@ export function ParticleMorphText({
     const timer = setInterval(() => {
       // Create scatter particles before changing word
       const chars = words[currentIndex].split('');
-      const newParticles = chars.map((char, i) => ({
+      const newParticles = chars.map((char) => ({
         x: Math.random() * 200 - 100,
         y: Math.random() * 100 - 50,
         char,
@@ -151,7 +151,7 @@ export function ParticleMorphText({
     <span className={`relative inline-block ${className}`}>
       {/* Scattered particles */}
       <AnimatePresence>
-        {particles.map((particle, i) => (
+        {particles.map((particle) => (
           <motion.span
             key={`particle-${particle.char}-${particle.x}`}
             className="absolute pointer-events-none"
