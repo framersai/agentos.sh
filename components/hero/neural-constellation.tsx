@@ -213,9 +213,8 @@ export function NeuralConstellation({
     const centerX = size / 2;
     const centerY = size / 2;
 
-    // Clear with slight trail effect for smoothness
-    ctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.15)';
-    ctx.fillRect(0, 0, size, size);
+    // Clear canvas completely for transparent background
+    ctx.clearRect(0, 0, size, size);
 
     // Update particle positions with smooth orbital motion
     particles.forEach((p) => {
@@ -342,13 +341,21 @@ export function NeuralConstellation({
       });
     }
 
+    // Helper to convert hex to rgba
+    const hexToRgba = (hex: string, alpha: number): string => {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+
     // Draw particles with glow effect
     particles.forEach((p) => {
       // Outer glow
-      const glowSize = p.radius * 3;
+      const glowSize = p.radius * 3.5;
       const glowGradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowSize);
-      glowGradient.addColorStop(0, p.color.replace(')', `, ${p.alpha * 0.4})`).replace('rgb', 'rgba'));
-      glowGradient.addColorStop(0.4, p.color.replace(')', `, ${p.alpha * 0.15})`).replace('rgb', 'rgba'));
+      glowGradient.addColorStop(0, hexToRgba(p.color, p.alpha * 0.5));
+      glowGradient.addColorStop(0.4, hexToRgba(p.color, p.alpha * 0.2));
       glowGradient.addColorStop(1, 'transparent');
 
       ctx.beginPath();
@@ -358,9 +365,9 @@ export function NeuralConstellation({
 
       // Inner glow (luminescence)
       const innerGlow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 1.5);
-      innerGlow.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+      innerGlow.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
       innerGlow.addColorStop(0.3, p.color);
-      innerGlow.addColorStop(1, p.color.replace(')', ', 0.5)').replace('rgb', 'rgba'));
+      innerGlow.addColorStop(1, hexToRgba(p.color, 0.6));
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);

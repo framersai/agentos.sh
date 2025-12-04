@@ -71,21 +71,15 @@ export function HeroSectionRedesigned() {
     { title: 'Portable', detail: 'Export as Markdown or JSON' }
   ];
 
-  // Word sets that create meaningful combinations and avoid repetition
-  const primaryWords = useMemo(() => [
-    'Adaptive', 'Emergent', 'Autonomous', 'Resilient', 'Cognitive', 'Dynamic'
-  ], []);
-  
-  const secondaryWords = useMemo(() => [
-    'emergent', 'adaptive', 'scalable', 'distributed', 'intelligent', 'modular'
-  ], []);
+  // Only two words: Adaptive and Emergent - coordinated so they're always opposite
+  const morphingWords: [string, string] = ['Adaptive', 'Emergent'];
 
   if (!isContentReady) return <PageSkeleton />;
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-[var(--color-background-primary)]">
+    <section className="relative min-h-screen flex items-center bg-[var(--color-background-primary)]">
       {/* Subtle gradient background */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div 
           className="absolute inset-0"
           style={{
@@ -94,19 +88,19 @@ export function HeroSectionRedesigned() {
               : 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,92,246,0.08) 0%, transparent 60%)'
           }}
         />
-        {/* Secondary ambient gradient */}
+        {/* Secondary ambient gradient for right side */}
         <div 
           className="absolute inset-0"
           style={{
             background: isDark
-              ? 'radial-gradient(ellipse 60% 50% at 80% 50%, rgba(6,182,212,0.08) 0%, transparent 50%)'
-              : 'radial-gradient(ellipse 60% 50% at 80% 50%, rgba(6,182,212,0.05) 0%, transparent 50%)'
+              ? 'radial-gradient(ellipse 70% 60% at 85% 50%, rgba(6,182,212,0.12) 0%, transparent 60%)'
+              : 'radial-gradient(ellipse 70% 60% at 85% 50%, rgba(6,182,212,0.06) 0%, transparent 60%)'
           }}
         />
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left column - Content */}
           <div className="max-w-2xl">
             {/* Headline with particle morphing text */}
@@ -117,29 +111,31 @@ export function HeroSectionRedesigned() {
               className="mb-6"
             >
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
-                <span className="block mb-2">
+                {/* Line 1: starts with "Adaptive", morphs to "Emergent" */}
+                <span className="flex items-baseline gap-3 mb-2 flex-wrap">
                   <ParticleMorphText
-                    words={primaryWords}
-                    interval={4500}
-                    fontSize={56}
+                    words={morphingWords}
+                    interval={3500}
+                    fontSize={52}
                     gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'}
                     gradientTo={isDark ? '#67e8f9' : '#06b6d4'}
-                    className="align-middle"
+                    startIndex={0}
+                    className="align-baseline"
                   />
-                  {' '}
                   <span className="text-[var(--color-text-primary)]">intelligence</span>
                 </span>
-                <span className="block">
-                  <span className="text-[var(--color-text-secondary)]">for </span>
+                {/* Line 2: starts with "Emergent" (opposite), morphs to "Adaptive" */}
+                <span className="flex items-baseline gap-3 flex-wrap">
+                  <span className="text-[var(--color-text-secondary)]">for</span>
                   <ParticleMorphText
-                    words={secondaryWords}
-                    interval={4500}
-                    fontSize={56}
+                    words={morphingWords}
+                    interval={3500}
+                    fontSize={52}
                     gradientFrom={isDark ? '#f472b6' : '#ec4899'}
                     gradientTo={isDark ? '#818cf8' : '#6366f1'}
-                    className="align-middle"
+                    startIndex={1}
+                    className="align-baseline"
                   />
-                  {' '}
                   <span className="text-[var(--color-text-primary)]">agents</span>
                 </span>
               </h1>
@@ -256,24 +252,31 @@ export function HeroSectionRedesigned() {
             </motion.div>
           </div>
 
-          {/* Right column - Neural Constellation */}
+          {/* Right column - Neural Constellation - larger and more visible */}
           <motion.div 
-            className="hidden lg:flex items-center justify-center"
-            initial={{ opacity: 0, scale: 0.8 }}
+            className="hidden lg:flex items-center justify-center relative"
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
-            <NeuralConstellation 
-              size={480} 
-              className="opacity-90"
-            />
+            <div className="relative">
+              <NeuralConstellation 
+                size={520} 
+                className=""
+              />
+            </div>
           </motion.div>
         </div>
 
         {/* Mobile neural visualization */}
-        <div className="lg:hidden flex justify-center mt-12">
-          <NeuralConstellation size={280} className="opacity-80" />
-        </div>
+        <motion.div 
+          className="lg:hidden flex justify-center mt-12"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          <NeuralConstellation size={300} />
+        </motion.div>
       </div>
 
       <Toast
