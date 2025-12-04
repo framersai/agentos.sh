@@ -87,11 +87,19 @@ const HeroSectionInner = memo(function HeroSectionInner() {
         aria-hidden="true"
       />
 
-      {/* Neural Constellation - positioned center-right, slightly above center */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ marginLeft: '15%', marginTop: '-8%' }} aria-hidden="true">
-        <div className="block sm:hidden"><NeuralConstellation size={300} /></div>
+      {/* Neural Constellation - right side, responsive visibility */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 sm:opacity-50 lg:opacity-70" 
+        style={{ marginLeft: 'calc(15% + 40px)', marginTop: '-8%' }} 
+        aria-hidden="true"
+      >
+        {/* Mobile: smaller, more transparent, pushed back */}
+        <div className="block sm:hidden -z-10"><NeuralConstellation size={250} /></div>
+        {/* Tablet */}
         <div className="hidden sm:block lg:hidden"><NeuralConstellation size={450} /></div>
+        {/* Desktop */}
         <div className="hidden lg:block xl:hidden"><NeuralConstellation size={600} /></div>
+        {/* Large desktop */}
         <div className="hidden xl:block"><NeuralConstellation size={750} /></div>
       </div>
 
