@@ -37,8 +37,8 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
 
-  // Tighter container - just enough for text
-  const width = useMemo(() => Math.ceil(Math.max(words[0].length, words[1].length) * fontSize * 0.58), [words, fontSize]);
+  // Tighter container - minimal padding
+  const width = useMemo(() => Math.ceil(Math.max(words[0].length, words[1].length) * fontSize * 0.54), [words, fontSize]);
   const height = useMemo(() => Math.ceil(fontSize * 1.05), [fontSize]);
 
   const hexToRgb = useCallback((hex: string) => {
@@ -187,6 +187,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         width, 
         height,
         verticalAlign: 'middle',
+        marginTop: 5, // shift down 5px
       }}
     >
       <span className="sr-only">{words[0]} / {words[1]}</span>
