@@ -51,7 +51,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     oc.textAlign = 'center';
     oc.textBaseline = 'middle';
     oc.fillStyle = '#fff';
-    oc.fillText(text, width / 2, height / 2);
+    oc.fillText(text, width / 2, height * 0.55);
     
     const d = oc.getImageData(0, 0, width, height).data;
     const step = Math.max(2, Math.floor(fontSize / 16));
