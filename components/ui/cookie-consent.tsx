@@ -145,7 +145,7 @@ export function CookieConsent() {
                       </h3>
                       <p className="text-sm text-[var(--color-text-secondary)]">
                         We use cookies and similar technologies to improve your experience, analyze traffic, 
-                        and provide personalized content. By clicking "Accept All," you consent to our use of cookies.{' '}
+                        and provide personalized content. By clicking &ldquo;Accept All,&rdquo; you consent to our use of cookies.{' '}
                         <Link 
                           href={privacyHref}
                           className="text-[var(--color-accent-primary)] hover:underline"

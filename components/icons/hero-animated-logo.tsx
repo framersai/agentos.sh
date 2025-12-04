@@ -1,7 +1,7 @@
 'use client';
 
 import { useId, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 
 /**
@@ -39,9 +39,8 @@ export function HeroAnimatedLogo({
     glow: isDark ? 'rgba(139, 92, 246, 0.4)' : 'rgba(139, 92, 246, 0.25)'
   };
 
-  // Scale factor based on size (default viewBox is 60x60)
+  // ViewBox is 60x60
   const viewBoxSize = 60;
-  const scale = size / viewBoxSize;
   const cx = 30; // Center X
   const cy = 30; // Center Y
 

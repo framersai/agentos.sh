@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface MorphingTextProps {
@@ -23,14 +23,11 @@ export function MorphingText({
   gradientTo = 'var(--color-accent-secondary)',
 }: MorphingTextProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIsAnimating(true);
       setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % words.length);
-        setIsAnimating(false);
       }, 600); // Duration of exit animation
     }, interval);
 
@@ -156,7 +153,7 @@ export function ParticleMorphText({
       <AnimatePresence>
         {particles.map((particle, i) => (
           <motion.span
-            key={`particle-${i}`}
+            key={`particle-${particle.char}-${particle.x}`}
             className="absolute pointer-events-none"
             initial={{ opacity: 1, x: 0, y: 0, scale: 1 }}
             animate={{
@@ -168,7 +165,7 @@ export function ParticleMorphText({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
             style={{
-              left: `${(i / particles.length) * 100}%`,
+              left: `${(particles.indexOf(particle) / particles.length) * 100}%`,
               background: 'linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary))',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
