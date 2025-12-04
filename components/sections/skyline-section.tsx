@@ -225,6 +225,32 @@ export function SkylineSection() {
                 onMouseEnter={() => setHoveredBuilding(feature.id)}
                 onMouseLeave={() => setHoveredBuilding(null)}
               >
+                {/* Building Label - Custom animated SVG icon with text reveal - OUTSIDE overflow container */}
+                <motion.div 
+                  className="absolute -top-20 left-1/2 transform -translate-x-1/2 whitespace-nowrap text-center z-10"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.3 + 0.5, duration: 0.5 }}
+                >
+                  <div className="w-10 h-10 mx-auto mb-2 transition-transform hover:scale-110 duration-300">
+                    <feature.icon id={feature.id} className="w-full h-full drop-shadow-lg" />
+                  </div>
+                  <span 
+                    className="text-xs font-semibold transition-all duration-300 block"
+                    style={{
+                      color: hoveredBuilding === feature.id 
+                        ? 'var(--color-text-primary)' 
+                        : 'var(--color-text-muted)',
+                      textShadow: hoveredBuilding === feature.id 
+                        ? '0 0 10px var(--color-accent-primary)' 
+                        : 'none',
+                    }}
+                  >
+                    {t(`features.${feature.id}.title`)}
+                  </span>
+                </motion.div>
+
                 {/* Building Structure - Brand gradient */}
                 <div
                   className="relative w-full h-full cursor-pointer group rounded-t-sm overflow-hidden"
@@ -265,32 +291,6 @@ export function SkylineSection() {
                       />
                     ))}
                   </div>
-
-                  {/* Building Label - Custom animated SVG icon with text reveal */}
-                  <motion.div 
-                    className="absolute -top-20 left-1/2 transform -translate-x-1/2 whitespace-nowrap text-center"
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.3 + 0.5, duration: 0.5 }}
-                  >
-                    <div className="w-10 h-10 mx-auto mb-2 transition-transform group-hover:scale-110 duration-300">
-                      <feature.icon id={feature.id} className="w-full h-full drop-shadow-lg" />
-                    </div>
-                    <motion.span 
-                      className="text-xs font-semibold transition-all duration-300 block"
-                      style={{
-                        color: hoveredBuilding === feature.id 
-                          ? 'var(--color-text-primary)' 
-                          : 'var(--color-text-muted)',
-                        textShadow: hoveredBuilding === feature.id 
-                          ? '0 0 10px var(--color-accent-primary)' 
-                          : 'none',
-                      }}
-                    >
-                      {t(`features.${feature.id}.title`)}
-                    </motion.span>
-                  </motion.div>
 
                   {/* Status Indicator */}
                   {feature.status === 'building' && (

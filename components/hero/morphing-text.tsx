@@ -74,15 +74,7 @@ export function MorphingText({
   };
 
   return (
-    <span
-      className={`inline-flex relative ${className}`}
-      style={{
-        background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        backgroundClip: 'text',
-      }}
-    >
+    <span className={`inline-block relative ${className}`}>
       <AnimatePresence mode="wait">
         <motion.span
           key={currentWord}
@@ -90,15 +82,24 @@ export function MorphingText({
           initial="hidden"
           animate="visible"
           exit="exit"
+          style={{
+            background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
         >
           {currentWord.split('').map((letter, i) => (
             <motion.span
               key={`${currentWord}-${i}`}
               custom={i}
               variants={letterVariants}
-              style={{ display: 'inline-block' }}
+              style={{ 
+                display: 'inline-block',
+                minWidth: letter === ' ' ? '0.25em' : undefined,
+              }}
             >
-              {letter}
+              {letter === ' ' ? '\u00A0' : letter}
             </motion.span>
           ))}
         </motion.span>
