@@ -259,14 +259,14 @@ export function ParticleMorphText({
     setMounted(true);
   }, []);
 
-  // Setup dimensions
+  // Setup dimensions - tight fit to text
   useEffect(() => {
     if (!mounted) return;
 
     const longestWord = words[0].length > words[1].length ? words[0] : words[1];
-    const estimatedWidth = longestWord.length * fontSize * 0.62;
-    const width = Math.max(estimatedWidth + 40, 280);
-    const height = fontSize * 1.6;
+    const estimatedWidth = longestWord.length * fontSize * 0.58; // Tighter fit
+    const width = estimatedWidth + 16; // Minimal padding
+    const height = fontSize * 1.3; // Reduced height
     
     setDimensions({ width, height });
   }, [mounted, words, fontSize]);

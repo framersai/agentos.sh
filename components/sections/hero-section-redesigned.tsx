@@ -78,206 +78,196 @@ export function HeroSectionRedesigned() {
 
   return (
     <section className="relative min-h-screen flex items-center bg-[var(--color-background-primary)]">
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div 
-          className="absolute inset-0"
+      {/* Background Neural Constellation - large, centered, subtle */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+        <motion.div
+          className="absolute"
           style={{
-            background: isDark
-              ? 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,92,246,0.15) 0%, transparent 60%)'
-              : 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,92,246,0.08) 0%, transparent 60%)'
+            right: '-5%',
+            top: '50%',
+            transform: 'translateY(-50%)',
           }}
-        />
-        {/* Secondary ambient gradient for right side */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: isDark
-              ? 'radial-gradient(ellipse 70% 60% at 85% 50%, rgba(6,182,212,0.12) 0%, transparent 60%)'
-              : 'radial-gradient(ellipse 70% 60% at 85% 50%, rgba(6,182,212,0.06) 0%, transparent 60%)'
-          }}
-        />
-      </div>
-
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          {/* Left column - Content */}
-          <div className="max-w-2xl">
-            {/* Headline with particle morphing text */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mb-6"
-            >
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
-                {/* Line 1: starts with "Adaptive", morphs to "Emergent" */}
-                <span className="flex items-baseline gap-3 mb-2 flex-wrap">
-                  <ParticleMorphText
-                    words={morphingWords}
-                    interval={3500}
-                    fontSize={52}
-                    gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'}
-                    gradientTo={isDark ? '#67e8f9' : '#06b6d4'}
-                    startIndex={0}
-                    className="align-baseline"
-                  />
-                  <span className="text-[var(--color-text-primary)]">intelligence</span>
-                </span>
-                {/* Line 2: starts with "Emergent" (opposite), morphs to "Adaptive" */}
-                <span className="flex items-baseline gap-3 flex-wrap">
-                  <span className="text-[var(--color-text-secondary)]">for</span>
-                  <ParticleMorphText
-                    words={morphingWords}
-                    interval={3500}
-                    fontSize={52}
-                    gradientFrom={isDark ? '#f472b6' : '#ec4899'}
-                    gradientTo={isDark ? '#818cf8' : '#6366f1'}
-                    startIndex={1}
-                    className="align-baseline"
-                  />
-                  <span className="text-[var(--color-text-primary)]">agents</span>
-                </span>
-              </h1>
-            </motion.div>
-
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-[var(--color-text-secondary)] mb-8 max-w-xl"
-            >
-              {t('subtitle')}
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-3 mb-8"
-            >
-              <LinkButton
-                href={`/${locale === 'en' ? '' : locale + '/'}docs`}
-                variant="primary"
-                size="lg"
-                className="group"
-              >
-                {t('getStarted')}
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </LinkButton>
-
-              <a
-                href="https://github.com/framersai/agentos"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border-2 border-[var(--color-border-primary)] bg-[var(--color-background-card)] text-[var(--color-text-primary)] font-semibold shadow-sm hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)] transition-all duration-200"
-              >
-                <Github className="w-4 h-4" />
-                {t('viewOnGithub')}
-              </a>
-            </motion.div>
-
-            {/* Install command */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mb-10"
-            >
-              <Button
-                onClick={copyCommand}
-                variant="secondary"
-                className="gap-2 group"
-              >
-                <Terminal className="w-4 h-4 text-[var(--color-accent-primary)]" />
-                <code className="font-mono text-sm">npm install agentos</code>
-                <span className="text-xs text-[var(--color-text-muted)] opacity-0 group-hover:opacity-100 transition-opacity ml-2">
-                  copy
-                </span>
-              </Button>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex gap-6 mb-12"
-            >
-              {productStats.map((stat) => (
-                <div key={stat.label} className="flex items-center gap-2">
-                  <stat.icon className="w-4 h-4 text-[var(--color-accent-primary)]" />
-                  <span className="font-semibold text-[var(--color-text-primary)]">{stat.value}</span>
-                  <span className="text-sm text-[var(--color-text-muted)]">{stat.label}</span>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Highlights grid */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="grid grid-cols-2 gap-3"
-            >
-              {highlights.map((h, i) => (
-                <motion.div
-                  key={h.title}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.7 + i * 0.05 }}
-                  className="p-4 rounded-lg bg-[var(--color-background-secondary)]/50 border border-[var(--color-border-subtle)]/50 hover:border-[var(--color-accent-primary)]/30 transition-colors"
-                >
-                  <h3 className="font-medium text-sm text-[var(--color-text-primary)] mb-1">{h.title}</h3>
-                  <p className="text-xs text-[var(--color-text-muted)]">{h.detail}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Compliance */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-              className="mt-10 flex items-center gap-4 text-xs text-[var(--color-text-muted)]"
-            >
-              <span className="flex items-center gap-1">
-                <Shield className="w-3 h-3" />
-                {t('compliance.gdpr')}
-              </span>
-              <span>•</span>
-              <span>{t('compliance.soc2')}</span>
-            </motion.div>
-          </div>
-
-          {/* Right column - Neural Constellation - larger and more visible */}
-          <motion.div 
-            className="hidden lg:flex items-center justify-center relative"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="relative">
-              <NeuralConstellation 
-                size={520} 
-                className=""
-              />
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Mobile neural visualization */}
-        <motion.div 
-          className="lg:hidden flex justify-center mt-12"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: isDark ? 0.6 : 0.4, scale: 1 }}
+          transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
-          <NeuralConstellation size={300} />
+          <NeuralConstellation size={700} />
         </motion.div>
       </div>
+
+      {/* Subtle gradient overlays */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: isDark
+              ? 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,92,246,0.12) 0%, transparent 60%)'
+              : 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,92,246,0.06) 0%, transparent 60%)'
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        {/* Main content - left aligned */}
+        <div className="max-w-3xl">
+          {/* Headline with particle morphing text */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mb-6"
+          >
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight">
+              {/* Line 1 */}
+              <span className="inline-flex items-baseline flex-wrap">
+                <ParticleMorphText
+                  words={morphingWords}
+                  interval={3500}
+                  fontSize={56}
+                  gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'}
+                  gradientTo={isDark ? '#67e8f9' : '#06b6d4'}
+                  startIndex={0}
+                />
+                <span className="text-[var(--color-text-primary)] ml-3">intelligence</span>
+              </span>
+              <br />
+              {/* Line 2 */}
+              <span className="inline-flex items-baseline flex-wrap">
+                <span className="text-[var(--color-text-secondary)] mr-3">for</span>
+                <ParticleMorphText
+                  words={morphingWords}
+                  interval={3500}
+                  fontSize={56}
+                  gradientFrom={isDark ? '#f472b6' : '#ec4899'}
+                  gradientTo={isDark ? '#818cf8' : '#6366f1'}
+                  startIndex={1}
+                />
+                <span className="text-[var(--color-text-primary)] ml-3">agents</span>
+              </span>
+            </h1>
+          </motion.div>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg text-[var(--color-text-secondary)] mb-8 max-w-xl"
+          >
+            {t('subtitle')}
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap gap-3 mb-8"
+          >
+            <LinkButton
+              href={`/${locale === 'en' ? '' : locale + '/'}docs`}
+              variant="primary"
+              size="lg"
+              className="group"
+            >
+              {t('getStarted')}
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </LinkButton>
+
+            <a
+              href="https://github.com/framersai/agentos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border-2 border-[var(--color-border-primary)] bg-[var(--color-background-card)] text-[var(--color-text-primary)] font-semibold shadow-sm hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)] transition-all duration-200"
+            >
+              <Github className="w-4 h-4" />
+              {t('viewOnGithub')}
+            </a>
+          </motion.div>
+
+          {/* Install command */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mb-10"
+          >
+            <Button
+              onClick={copyCommand}
+              variant="secondary"
+              className="gap-2 group"
+            >
+              <Terminal className="w-4 h-4 text-[var(--color-accent-primary)]" />
+              <code className="font-mono text-sm">npm install agentos</code>
+              <span className="text-xs text-[var(--color-text-muted)] opacity-0 group-hover:opacity-100 transition-opacity ml-2">
+                copy
+              </span>
+            </Button>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex gap-6 mb-12"
+          >
+            {productStats.map((stat) => (
+              <div key={stat.label} className="flex items-center gap-2">
+                <stat.icon className="w-4 h-4 text-[var(--color-accent-primary)]" />
+                <span className="font-semibold text-[var(--color-text-primary)]">{stat.value}</span>
+                <span className="text-sm text-[var(--color-text-muted)]">{stat.label}</span>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Highlights grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-3"
+          >
+            {highlights.map((h, i) => (
+              <motion.div
+                key={h.title}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 + i * 0.05 }}
+                className="p-4 rounded-lg bg-[var(--color-background-secondary)]/50 border border-[var(--color-border-subtle)]/50 hover:border-[var(--color-accent-primary)]/30 transition-colors backdrop-blur-sm"
+              >
+                <h3 className="font-medium text-sm text-[var(--color-text-primary)] mb-1">{h.title}</h3>
+                <p className="text-xs text-[var(--color-text-muted)]">{h.detail}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Compliance */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="mt-10 flex items-center gap-4 text-xs text-[var(--color-text-muted)]"
+          >
+            <span className="flex items-center gap-1">
+              <Shield className="w-3 h-3" />
+              {t('compliance.gdpr')}
+            </span>
+            <span>•</span>
+            <span>{t('compliance.soc2')}</span>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Mobile: show smaller constellation at bottom */}
+      <motion.div 
+        className="lg:hidden absolute bottom-10 right-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isDark ? 0.4 : 0.3 }}
+        transition={{ duration: 1, delay: 0.6 }}
+      >
+        <NeuralConstellation size={250} />
+      </motion.div>
 
       <Toast
         message={t('copiedToClipboard')}
