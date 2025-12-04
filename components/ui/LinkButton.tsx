@@ -20,24 +20,26 @@ const variantStyles: Record<LinkButtonVariant, string> = {
   primary: `
     relative overflow-hidden
     bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)]
-    text-[var(--color-text-contrast)]
+    text-white
     shadow-lg shadow-[var(--color-accent-primary)]/20
     hover:shadow-xl hover:shadow-[var(--color-accent-primary)]/30
     hover:brightness-110
     active:scale-[0.98]
-    transition-all duration-[var(--duration-fast)]
+    transition-all duration-200
   `,
   
   secondary: `
     relative
-    bg-[var(--color-background-glass)]
+    bg-[var(--color-background-card)]
     backdrop-blur-xl
-    border border-[var(--color-border-subtle)]
+    border-2 border-[var(--color-border-primary)]
     text-[var(--color-text-primary)]
+    shadow-sm
     hover:bg-[var(--color-accent-primary)]/10
-    hover:border-[var(--color-border-interactive)]
+    hover:border-[var(--color-accent-primary)]
+    hover:text-[var(--color-accent-primary)]
     active:scale-[0.98]
-    transition-all duration-[var(--duration-fast)]
+    transition-all duration-200
   `,
   
   ghost: `
@@ -45,7 +47,7 @@ const variantStyles: Record<LinkButtonVariant, string> = {
     text-[var(--color-accent-primary)]
     hover:text-[var(--color-accent-secondary)]
     hover:underline underline-offset-4
-    transition-all duration-[var(--duration-fast)]
+    transition-all duration-200
   `
 };
 

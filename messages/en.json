@@ -108,6 +108,27 @@
       "bullet1": "Inspect reasoning + telemetry live",
       "bullet2": "Sync artifacts back to the cloud",
       "bullet3": "Export full agencies as Markdown/JSON bundles"
+    },
+    "guardrails": {
+      "title": "Guardrails & Safety",
+      "description": "Built-in content moderation, PII detection, and compliance checks. Define approval flows and budget limits for autonomous operations.",
+      "pill": "Enterprise Safety",
+      "bullet1": "Content filtering & moderation",
+      "bullet2": "Approval workflows"
+    },
+    "streaming": {
+      "title": "Streaming Runtime",
+      "description": "Token-level streaming with real-time output. Built for low-latency interactions with support for SSE, WebSockets, and custom transports.",
+      "pill": "Real-time",
+      "bullet1": "Token-by-token delivery",
+      "bullet2": "Multi-channel support"
+    },
+    "workflow": {
+      "title": "Workflow Engine",
+      "description": "Define complex multi-step workflows with conditional branching, parallel execution, and automatic retry logic.",
+      "pill": "Orchestration",
+      "bullet1": "Visual workflow builder",
+      "bullet2": "Parallel task execution"
     }
   },
   "marketplace": {

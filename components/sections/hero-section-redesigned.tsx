@@ -4,7 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { AnimatedAgentOSLogoOptimized } from '../icons/animated-logo-optimized';
+import { HeroAnimatedLogo } from '../icons/hero-animated-logo';
+import { MorphingText } from '../hero/morphing-text';
 import { PageSkeleton } from '../ui/page-skeleton';
 import { Toast } from '../ui/toast';
 import { LinkButton } from '../ui/LinkButton';
@@ -87,43 +88,41 @@ export function HeroSectionRedesigned() {
       </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
-        {/* Logo - subtle, positioned top right on desktop */}
-        <div className="absolute top-20 right-8 hidden lg:block opacity-60">
-          <AnimatedAgentOSLogoOptimized size={140} />
-        </div>
+        {/* Logo - brand-accurate animated network positioned top right */}
+        <motion.div 
+          className="absolute top-16 right-4 lg:right-8 hidden md:block"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+        >
+          <HeroAnimatedLogo size={160} className="opacity-80" />
+        </motion.div>
 
         {/* Main content */}
         <div className="max-w-3xl">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-accent-primary)]/10 border border-[var(--color-accent-primary)]/20 mb-6"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-primary)] animate-pulse" />
-            <span className="text-xs font-medium text-[var(--color-text-secondary)]">
-              Open Source AI Agent Runtime
-            </span>
-          </motion.div>
-
-          {/* Headline - simple, no morphing */}
+          {/* Headline with morphing text */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6"
           >
-            <span className="bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
-              Adaptive
-            </span>
+            <MorphingText
+              words={['Adaptive', 'Emergent', 'Autonomous', 'Intelligent']}
+              interval={3500}
+              className="font-bold"
+            />
             {' '}
             <span className="text-[var(--color-text-primary)]">intelligence</span>
             <br />
             <span className="text-[var(--color-text-secondary)]">for </span>
-            <span className="bg-gradient-to-r from-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)] bg-clip-text text-transparent">
-              emergent
-            </span>
+            <MorphingText
+              words={['emergent', 'adaptive', 'scalable', 'enterprise']}
+              interval={3500}
+              gradientFrom="var(--color-accent-secondary)"
+              gradientTo="var(--color-accent-tertiary)"
+              className="font-bold"
+            />
             {' '}
             <span className="text-[var(--color-text-primary)]">agents</span>
           </motion.h1>
@@ -159,7 +158,7 @@ export function HeroSectionRedesigned() {
               href="https://github.com/framersai/agentos"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] font-medium hover:bg-[var(--color-accent-primary)]/5 transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border-2 border-[var(--color-border-primary)] bg-[var(--color-background-card)] text-[var(--color-text-primary)] font-semibold shadow-sm hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)] transition-all duration-200"
             >
               <Github className="w-4 h-4" />
               {t('viewOnGithub')}
@@ -240,8 +239,8 @@ export function HeroSectionRedesigned() {
         </div>
 
         {/* Mobile logo */}
-        <div className="lg:hidden flex justify-center mt-12">
-          <AnimatedAgentOSLogoOptimized size={100} className="opacity-50" />
+        <div className="md:hidden flex justify-center mt-12">
+          <HeroAnimatedLogo size={120} className="opacity-70" />
         </div>
       </div>
 

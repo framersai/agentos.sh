@@ -266,12 +266,31 @@ export function SkylineSection() {
                     ))}
                   </div>
 
-                  {/* Building Label - Custom animated SVG icon */}
-                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-                    <div className="w-10 h-10 mx-auto mb-1 transition-transform group-hover:scale-110 duration-300">
+                  {/* Building Label - Custom animated SVG icon with text reveal */}
+                  <motion.div 
+                    className="absolute -top-20 left-1/2 transform -translate-x-1/2 whitespace-nowrap text-center"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.3 + 0.5, duration: 0.5 }}
+                  >
+                    <div className="w-10 h-10 mx-auto mb-2 transition-transform group-hover:scale-110 duration-300">
                       <feature.icon id={feature.id} className="w-full h-full drop-shadow-lg" />
                     </div>
-                  </div>
+                    <motion.span 
+                      className="text-xs font-semibold transition-all duration-300 block"
+                      style={{
+                        color: hoveredBuilding === feature.id 
+                          ? 'var(--color-text-primary)' 
+                          : 'var(--color-text-muted)',
+                        textShadow: hoveredBuilding === feature.id 
+                          ? '0 0 10px var(--color-accent-primary)' 
+                          : 'none',
+                      }}
+                    >
+                      {t(`features.${feature.id}.title`)}
+                    </motion.span>
+                  </motion.div>
 
                   {/* Status Indicator */}
                   {feature.status === 'building' && (
@@ -363,7 +382,8 @@ export function SkylineSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <motion.div
             initial={{ opacity: 0, x: -20, scale: 0.9 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            whileInView={{ opacity: 0.7, x: 0, scale: 1 }}
+            whileHover={{ opacity: 1, scale: 1.03 }}
             viewport={{ once: true }}
             transition={{ 
               delay: 0.2,
@@ -371,24 +391,21 @@ export function SkylineSection() {
               type: "spring",
               stiffness: 100
             }}
-            whileHover={{
-              scale: 1.05,
-              transition: { duration: 0.2 }
-            }}
-            className="holographic-card p-6"
+            className="holographic-card p-6 group cursor-pointer"
           >
             <div className="flex items-center gap-3 mb-3">
-              <Database className="w-8 h-8 text-green-500" />
-              <h3 className="font-semibold">{t('legend.fullyImplemented.title')}</h3>
+              <Database className="w-8 h-8 text-green-500 group-hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.6)] transition-all duration-300" />
+              <h3 className="font-semibold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-300">{t('legend.fullyImplemented.title')}</h3>
             </div>
-            <p className="text-sm text-muted">
+            <p className="text-sm text-[var(--color-text-muted)] group-hover:text-[var(--color-text-secondary)] transition-colors duration-300">
               {t('legend.fullyImplemented.description')}
             </p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            whileInView={{ opacity: 0.7, y: 0, scale: 1 }}
+            whileHover={{ opacity: 1, scale: 1.03 }}
             viewport={{ once: true }}
             transition={{ 
               delay: 0.4,
@@ -396,24 +413,21 @@ export function SkylineSection() {
               type: "spring",
               stiffness: 100
             }}
-            whileHover={{
-              scale: 1.05,
-              transition: { duration: 0.2 }
-            }}
-            className="holographic-card p-6"
+            className="holographic-card p-6 group cursor-pointer"
           >
             <div className="flex items-center gap-3 mb-3">
-              <Cpu className="w-8 h-8 text-orange-500" />
-              <h3 className="font-semibold">{t('legend.inProgress.title')}</h3>
+              <Cpu className="w-8 h-8 text-orange-500 group-hover:drop-shadow-[0_0_8px_rgba(249,115,22,0.6)] transition-all duration-300" />
+              <h3 className="font-semibold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-300">{t('legend.inProgress.title')}</h3>
             </div>
-            <p className="text-sm text-muted">
+            <p className="text-sm text-[var(--color-text-muted)] group-hover:text-[var(--color-text-secondary)] transition-colors duration-300">
               {t('legend.inProgress.description')}
             </p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 20, scale: 0.9 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            whileInView={{ opacity: 0.7, x: 0, scale: 1 }}
+            whileHover={{ opacity: 1, scale: 1.03 }}
             viewport={{ once: true }}
             transition={{ 
               delay: 0.6,
@@ -421,17 +435,13 @@ export function SkylineSection() {
               type: "spring",
               stiffness: 100
             }}
-            whileHover={{
-              scale: 1.05,
-              transition: { duration: 0.2 }
-            }}
-            className="holographic-card p-6"
+            className="holographic-card p-6 group cursor-pointer"
           >
             <div className="flex items-center gap-3 mb-3">
-              <Globe className="w-8 h-8 text-blue-500" />
-              <h3 className="font-semibold">{t('legend.enterpriseSupport.title')}</h3>
+              <Globe className="w-8 h-8 text-blue-500 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] transition-all duration-300" />
+              <h3 className="font-semibold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-300">{t('legend.enterpriseSupport.title')}</h3>
             </div>
-            <p className="text-sm text-muted">
+            <p className="text-sm text-[var(--color-text-muted)] group-hover:text-[var(--color-text-secondary)] transition-colors duration-300">
               {t('legend.enterpriseSupport.description')}
             </p>
           </motion.div>
