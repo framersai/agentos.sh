@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, memo } from 'react';
 
 interface ParticleMorphTextProps {
   words: [string, string];
@@ -12,225 +12,151 @@ interface ParticleMorphTextProps {
   startIndex?: number;
 }
 
-interface TextParticle {
-  x: number;
-  y: number;
-  originX: number;
-  originY: number;
-  targetX: number;
-  targetY: number;
-  radius: number;
-  color: string;
-  alpha: number;
-}
-
 /**
- * ParticleMorphText - Ultra-fast smooth text morphing
+ * ParticleMorphText - High-performance particle text with SEO-friendly fallback
  */
-export function ParticleMorphText({
+export const ParticleMorphText = memo(function ParticleMorphText({
   words,
   className = '',
-  interval = 2000,
+  interval = 1800,
   fontSize = 48,
   gradientFrom = '#8b5cf6',
   gradientTo = '#06b6d4',
   startIndex = 0,
 }: ParticleMorphTextProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>(0);
-  const particlesRef = useRef<TextParticle[]>([]);
-  const currentWordIdxRef = useRef(startIndex);
-  const phaseRef = useRef<'stable' | 'morphing'>('stable');
-  const morphProgressRef = useRef(0);
-  const lastSwitchRef = useRef(0);
+  const animRef = useRef<number>(0);
+  const stateRef = useRef({ wordIdx: startIndex, phase: 0, progress: 0, lastSwitch: 0 });
+  const particlesRef = useRef<{ x: number; y: number; ox: number; oy: number; tx: number; ty: number; r: number; c: string }[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [dimensions, setDimensions] = useState({ width: 200, height: 60 });
 
-  const interpolateColor = useCallback((color1: string, color2: string, t: number): string => {
-    const hex1 = color1.replace('#', '');
-    const hex2 = color2.replace('#', '');
-    const r = Math.round(parseInt(hex1.slice(0, 2), 16) * (1 - t) + parseInt(hex2.slice(0, 2), 16) * t);
-    const g = Math.round(parseInt(hex1.slice(2, 4), 16) * (1 - t) + parseInt(hex2.slice(2, 4), 16) * t);
-    const b = Math.round(parseInt(hex1.slice(4, 6), 16) * (1 - t) + parseInt(hex2.slice(4, 6), 16) * t);
-    return `rgb(${r},${g},${b})`;
+  const width = Math.ceil(Math.max(words[0].length, words[1].length) * fontSize * 0.58);
+  const height = Math.ceil(fontSize * 1.2);
+
+  const hexToRgb = useCallback((hex: string) => {
+    const v = parseInt(hex.slice(1), 16);
+    return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
   }, []);
 
-  const createParticles = useCallback((
-    ctx: CanvasRenderingContext2D,
-    text: string,
-    centerX: number,
-    centerY: number
-  ): TextParticle[] => {
-    const particles: TextParticle[] = [];
+  const lerp = useCallback((a: number[], b: number[], t: number) => 
+    `rgb(${Math.round(a[0] + (b[0] - a[0]) * t)},${Math.round(a[1] + (b[1] - a[1]) * t)},${Math.round(a[2] + (b[2] - a[2]) * t)})`, []);
+
+  const sample = useCallback((ctx: CanvasRenderingContext2D, text: string) => {
+    const off = document.createElement('canvas');
+    const oc = off.getContext('2d', { willReadFrequently: true });
+    if (!oc) return [];
     
-    ctx.font = `700 ${fontSize}px Inter, system-ui, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-
-    const textWidth = ctx.measureText(text).width;
+    off.width = width; off.height = height;
+    oc.font = `700 ${fontSize}px Inter,system-ui,sans-serif`;
+    oc.textAlign = 'center';
+    oc.textBaseline = 'middle';
+    oc.fillStyle = '#fff';
+    oc.fillText(text, width / 2, height / 2);
     
-    const offCanvas = document.createElement('canvas');
-    const offCtx = offCanvas.getContext('2d', { willReadFrequently: true });
-    if (!offCtx) return particles;
-
-    offCanvas.width = Math.ceil(textWidth) + 20;
-    offCanvas.height = Math.ceil(fontSize * 1.3);
-
-    offCtx.font = ctx.font;
-    offCtx.textAlign = 'center';
-    offCtx.textBaseline = 'middle';
-    offCtx.fillStyle = '#fff';
-    offCtx.fillText(text, offCanvas.width / 2, offCanvas.height / 2);
-
-    const imageData = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height);
-    const pixels = imageData.data;
-    const step = Math.max(2, Math.floor(fontSize / 14));
-
-    for (let y = 0; y < offCanvas.height; y += step) {
-      for (let x = 0; x < offCanvas.width; x += step) {
-        if (pixels[(y * offCanvas.width + x) * 4 + 3] > 60) {
-          const fx = centerX + (x - offCanvas.width / 2);
-          const fy = centerY + (y - offCanvas.height / 2);
-          const t = x / offCanvas.width;
-
-          particles.push({
-            x: fx, y: fy,
-            originX: fx, originY: fy,
-            targetX: fx, targetY: fy,
-            radius: 1.2 + Math.random() * 0.6,
-            color: interpolateColor(gradientFrom, gradientTo, t),
-            alpha: 1,
-          });
+    const d = oc.getImageData(0, 0, width, height).data;
+    const step = Math.max(2, Math.floor(fontSize / 16));
+    const c1 = hexToRgb(gradientFrom), c2 = hexToRgb(gradientTo);
+    const pts: typeof particlesRef.current = [];
+    
+    for (let y = 0; y < height; y += step) {
+      for (let x = 0; x < width; x += step) {
+        if (d[(y * width + x) * 4 + 3] > 50) {
+          pts.push({ x, y, ox: x, oy: y, tx: x, ty: y, r: 1.1 + Math.random() * 0.5, c: lerp(c1, c2, x / width) });
         }
       }
     }
-    return particles;
-  }, [fontSize, gradientFrom, gradientTo, interpolateColor]);
-
-  const animate = useCallback((ctx: CanvasRenderingContext2D, time: number) => {
-    const { width, height } = dimensions;
-    const cx = width / 2, cy = height / 2;
-
-    ctx.clearRect(0, 0, width, height);
-
-    const elapsed = time - lastSwitchRef.current;
-
-    if (phaseRef.current === 'stable' && elapsed > interval) {
-      phaseRef.current = 'morphing';
-      morphProgressRef.current = 0;
-      lastSwitchRef.current = time;
-      particlesRef.current.forEach(p => {
-        const a = Math.random() * Math.PI * 2;
-        const d = 10 + Math.random() * 15;
-        p.targetX = p.originX + Math.cos(a) * d;
-        p.targetY = p.originY + Math.sin(a) * d;
-      });
-    } else if (phaseRef.current === 'morphing') {
-      morphProgressRef.current += 0.08; // Very fast
-      if (morphProgressRef.current >= 1) {
-        currentWordIdxRef.current = 1 - currentWordIdxRef.current;
-        const newParticles = createParticles(ctx, words[currentWordIdxRef.current], cx, cy);
-        newParticles.forEach(p => {
-          const a = Math.random() * Math.PI * 2;
-          const d = 10 + Math.random() * 15;
-          p.x = p.originX + Math.cos(a) * d;
-          p.y = p.originY + Math.sin(a) * d;
-          p.alpha = 0.8;
-        });
-        particlesRef.current = newParticles;
-        phaseRef.current = 'stable';
-        morphProgressRef.current = 0;
-        lastSwitchRef.current = time;
-      }
-    }
-
-    const t = morphProgressRef.current;
-    const ease = 1 - Math.pow(1 - t, 3);
-
-    particlesRef.current.forEach(p => {
-      let dx, dy, alpha;
-      if (phaseRef.current === 'morphing') {
-        dx = p.originX + (p.targetX - p.originX) * ease;
-        dy = p.originY + (p.targetY - p.originY) * ease;
-        alpha = Math.max(0.5, 1 - ease * 0.5);
-      } else {
-        p.x += (p.originX - p.x) * 0.25;
-        p.y += (p.originY - p.y) * 0.25;
-        dx = p.x;
-        dy = p.y;
-        p.alpha = Math.min(1, p.alpha + 0.1);
-        alpha = p.alpha;
-      }
-
-      // Soft glow - no hard edges
-      const gr = ctx.createRadialGradient(dx, dy, 0, dx, dy, p.radius * 2.5);
-      gr.addColorStop(0, p.color.replace('rgb', 'rgba').replace(')', `,${alpha})`));
-      gr.addColorStop(0.4, p.color.replace('rgb', 'rgba').replace(')', `,${alpha * 0.4})`));
-      gr.addColorStop(1, 'transparent');
-      ctx.fillStyle = gr;
-      ctx.fillRect(dx - p.radius * 2.5, dy - p.radius * 2.5, p.radius * 5, p.radius * 5);
-    });
-  }, [dimensions, interval, words, createParticles]);
+    return pts;
+  }, [width, height, fontSize, gradientFrom, gradientTo, hexToRgb, lerp]);
 
   useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     if (!mounted) return;
-    const longest = words[0].length > words[1].length ? words[0] : words[1];
-    setDimensions({
-      width: longest.length * fontSize * 0.58,
-      height: fontSize * 1.2
-    });
-  }, [mounted, words, fontSize]);
-
-  useEffect(() => {
-    if (!mounted) return;
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: true });
-    if (!ctx) return;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
 
-    const { width, height } = dimensions;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = width * dpr;
     canvas.height = height * dpr;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
     ctx.scale(dpr, dpr);
 
-    particlesRef.current = createParticles(ctx, words[currentWordIdxRef.current], width / 2, height / 2);
-    lastSwitchRef.current = performance.now();
+    particlesRef.current = sample(ctx, words[stateRef.current.wordIdx]);
+    stateRef.current.lastSwitch = performance.now();
 
-    const loop = (t: number) => {
-      animate(ctx, t);
-      animationRef.current = requestAnimationFrame(loop);
+    const draw = (t: number) => {
+      const s = stateRef.current;
+      const dt = t - s.lastSwitch;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Phase: 0=stable, 1=dissolve, 2=form
+      if (s.phase === 0 && dt > interval) {
+        s.phase = 1; s.progress = 0;
+        particlesRef.current.forEach(p => {
+          const a = Math.random() * Math.PI * 2;
+          p.tx = p.ox + Math.cos(a) * (8 + Math.random() * 12);
+          p.ty = p.oy + Math.sin(a) * (8 + Math.random() * 12);
+        });
+      } else if (s.phase === 1) {
+        s.progress += 0.12;
+        if (s.progress >= 1) {
+          s.wordIdx = 1 - s.wordIdx;
+          particlesRef.current = sample(ctx, words[s.wordIdx]);
+          particlesRef.current.forEach(p => {
+            const a = Math.random() * Math.PI * 2;
+            p.x = p.ox + Math.cos(a) * (8 + Math.random() * 12);
+            p.y = p.oy + Math.sin(a) * (8 + Math.random() * 12);
+          });
+          s.phase = 2; s.progress = 0;
+        }
+      } else if (s.phase === 2) {
+        s.progress += 0.12;
+        if (s.progress >= 1) { s.phase = 0; s.lastSwitch = t; }
+      }
+
+      const ease = s.phase === 1 ? s.progress : s.phase === 2 ? 1 - s.progress : 0;
+
+      particlesRef.current.forEach(p => {
+        const px = s.phase === 1 ? p.ox + (p.tx - p.ox) * ease : s.phase === 2 ? p.ox + (p.x - p.ox) * (1 - ease) : p.ox;
+        const py = s.phase === 1 ? p.oy + (p.ty - p.oy) * ease : s.phase === 2 ? p.oy + (p.y - p.oy) * (1 - ease) : p.oy;
+        const alpha = s.phase === 0 ? 1 : 0.6 + 0.4 * (1 - Math.abs(ease - 0.5) * 2);
+        
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = p.c;
+        ctx.beginPath();
+        ctx.arc(px, py, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+
+      animRef.current = requestAnimationFrame(draw);
     };
-    animationRef.current = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animationRef.current);
-  }, [mounted, dimensions, words, createParticles, animate]);
+    animRef.current = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(animRef.current);
+  }, [mounted, width, height, words, interval, sample]);
 
-  if (!mounted) {
-    return (
-      <span 
-        className={className}
-        style={{
-          background: `linear-gradient(90deg, ${gradientFrom}, ${gradientTo})`,
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          fontSize, fontWeight: 700,
-        }}
-      >
-        {words[startIndex]}
-      </span>
-    );
-  }
-
+  // SEO: Always render text for crawlers, visually hidden when JS runs
   return (
-    <span className={`inline-flex items-center ${className}`} style={{ width: dimensions.width, height: dimensions.height }}>
-      <canvas ref={canvasRef} style={{ display: 'block' }} />
+    <span className={`inline-block ${className}`} style={{ width, height, position: 'relative' }}>
+      <span className="sr-only">{words[0]} / {words[1]}</span>
+      {mounted ? (
+        <canvas ref={canvasRef} style={{ width, height, display: 'block' }} aria-hidden="true" />
+      ) : (
+        <span 
+          style={{
+            background: `linear-gradient(90deg, ${gradientFrom}, ${gradientTo})`,
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            fontSize, fontWeight: 700,
+          }}
+        >
+          {words[startIndex]}
+        </span>
+      )}
     </span>
   );
-}
+});
 
 export default ParticleMorphText;
