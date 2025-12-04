@@ -1,8 +1,5 @@
-import { ProductCardsRedesigned } from '../../components/sections/product-cards-redesigned'
-import { SkylineSection } from '../../components/sections/skyline-section'
 import { CTASection } from '../../components/sections/cta-section'
 import dynamic from 'next/dynamic'
-import { HolographicVideoPlayer } from '../../components/media/holographic-video-player'
 import ScrollToTopButton from '../../components/ScrollToTopButton'
 import { HeroSectionRedesigned } from '../../components/sections/hero-section-redesigned'
 import { useTranslations } from 'next-intl'
@@ -14,38 +11,42 @@ export const revalidate = 3600 // Revalidate every hour
 // Lazy load the animated background - client-only, deferred
 const AnimatedBackgroundLazy = dynamic(
   () => import('../../components/ui/animated-background').then(m => m.AnimatedBackground),
-  {
-    ssr: false,
-    loading: () => null
-  }
+  { ssr: false, loading: () => null }
 )
 
-// Lazy load heavy interactive sections
+// Lazy load below-the-fold sections for better LCP
+const HolographicVideoPlayerLazy = dynamic(
+  () => import('../../components/media/holographic-video-player').then(m => m.HolographicVideoPlayer),
+  { ssr: false, loading: () => <div className="aspect-video bg-slate-900/50 rounded-xl animate-pulse" /> }
+)
+
+const ProductCardsLazy = dynamic(
+  () => import('../../components/sections/product-cards-redesigned').then(m => m.ProductCardsRedesigned),
+  { ssr: true }
+)
+
+const SkylineSectionLazy = dynamic(
+  () => import('../../components/sections/skyline-section').then(m => m.SkylineSection),
+  { ssr: false }
+)
+
 const GMISectionLazy = dynamic(
-  () => import('../../components/sections/gmi-section').then((m) => ({
-    default: m.GMISection
-  })),
+  () => import('../../components/sections/gmi-section').then(m => m.GMISection),
   { ssr: true }
 )
 
 const CodeExamplesSectionLazy = dynamic(
-  () => import('../../components/sections/code-examples-section').then((m) => ({
-    default: m.CodeExamplesSection
-  })),
+  () => import('../../components/sections/code-examples-section').then(m => m.CodeExamplesSection),
   { ssr: true }
 )
 
 const EcosystemSectionLazy = dynamic(
-  () => import('../../components/sections/ecosystem-section').then((m) => ({
-    default: m.EcosystemSection
-  })),
+  () => import('../../components/sections/ecosystem-section').then(m => m.EcosystemSection),
   { ssr: true }
 )
 
 const SocialProofSectionLazy = dynamic(
-  () => import('../../components/sections/social-proof-section').then((m) => ({
-    default: m.SocialProofSection
-  })),
+  () => import('../../components/sections/social-proof-section').then(m => m.SocialProofSection),
   { ssr: true }
 )
 
@@ -86,7 +87,7 @@ export default function LandingPageRedesigned() {
               See AgentOS orchestrate complex workflows in real-time.
             </p>
           </header>
-          <HolographicVideoPlayer 
+          <HolographicVideoPlayerLazy 
             placeholder={true}
             title="AgentOS Architecture Demo"
             description="Visualizing high-throughput multi-agent coordination."
@@ -95,7 +96,7 @@ export default function LandingPageRedesigned() {
       </section>
 
         {/* Product Cards Section */}
-        <ProductCardsRedesigned />
+        <ProductCardsLazy />
 
         {/* Multi-Agent Collaboration Section (Commented out as per request) */}
         {/* <MultiAgentCollaborationSection /> */}
@@ -107,7 +108,7 @@ export default function LandingPageRedesigned() {
         <FeaturesGridClient />
 
         {/* Skyline Section */}
-        <SkylineSection />
+        <SkylineSectionLazy />
 
         {/* Code Examples Section */}
         <CodeExamplesSectionLazy />

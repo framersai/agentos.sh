@@ -358,30 +358,31 @@ export function SkylineSection() {
           })}
         </div>
 
-        {/* Legend Cards - High contrast, readable */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24">
+        {/* Legend Cards - Solid opaque backgrounds for readability */}
+        <div className="relative z-20 grid grid-cols-1 md:grid-cols-3 gap-6 mt-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+            className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-lg"
             style={{
               background: isDark 
-                ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)'
-                : 'linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.02) 100%)',
-              border: `1px solid ${isDark ? 'rgba(34, 197, 94, 0.3)' : 'rgba(34, 197, 94, 0.2)'}`,
+                ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.90) 100%)'
+                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
+              border: `2px solid ${isDark ? 'rgba(34, 197, 94, 0.5)' : 'rgba(34, 197, 94, 0.4)'}`,
+              backdropFilter: 'blur(8px)',
             }}
           >
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 rounded-lg bg-green-500/20">
-                <Database className="w-6 h-6 text-green-500" />
+              <div className="p-2 rounded-lg bg-green-500/30 border border-green-500/40">
+                <Database className="w-6 h-6 text-green-400" />
               </div>
-              <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <h3 className={`font-bold text-lg ${isDark ? 'text-green-300' : 'text-green-700'}`}>
                 {t('legend.fullyImplemented.title')}
               </h3>
             </div>
-            <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+            <p className={`text-sm leading-relaxed ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
               {t('legend.fullyImplemented.description')}
             </p>
           </motion.div>
@@ -391,23 +392,24 @@ export function SkylineSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+            className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-lg"
             style={{
               background: isDark 
-                ? 'linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0.05) 100%)'
-                : 'linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.02) 100%)',
-              border: `1px solid ${isDark ? 'rgba(249, 115, 22, 0.3)' : 'rgba(249, 115, 22, 0.2)'}`,
+                ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.90) 100%)'
+                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
+              border: `2px solid ${isDark ? 'rgba(249, 115, 22, 0.5)' : 'rgba(249, 115, 22, 0.4)'}`,
+              backdropFilter: 'blur(8px)',
             }}
           >
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 rounded-lg bg-orange-500/20">
-                <Cpu className="w-6 h-6 text-orange-500" />
+              <div className="p-2 rounded-lg bg-orange-500/30 border border-orange-500/40">
+                <Cpu className="w-6 h-6 text-orange-400" />
               </div>
-              <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <h3 className={`font-bold text-lg ${isDark ? 'text-orange-300' : 'text-orange-700'}`}>
                 {t('legend.inProgress.title')}
               </h3>
             </div>
-            <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+            <p className={`text-sm leading-relaxed ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
               {t('legend.inProgress.description')}
             </p>
           </motion.div>
@@ -417,23 +419,24 @@ export function SkylineSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+            className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-lg"
             style={{
               background: isDark 
-                ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%)'
-                : 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.02) 100%)',
-              border: `1px solid ${isDark ? 'rgba(59, 130, 246, 0.3)' : 'rgba(59, 130, 246, 0.2)'}`,
+                ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.90) 100%)'
+                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
+              border: `2px solid ${isDark ? 'rgba(59, 130, 246, 0.5)' : 'rgba(59, 130, 246, 0.4)'}`,
+              backdropFilter: 'blur(8px)',
             }}
           >
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 rounded-lg bg-blue-500/20">
-                <Globe className="w-6 h-6 text-blue-500" />
+              <div className="p-2 rounded-lg bg-blue-500/30 border border-blue-500/40">
+                <Globe className="w-6 h-6 text-blue-400" />
               </div>
-              <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <h3 className={`font-bold text-lg ${isDark ? 'text-blue-300' : 'text-blue-700'}`}>
                 {t('legend.enterpriseSupport.title')}
               </h3>
             </div>
-            <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+            <p className={`text-sm leading-relaxed ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
               {t('legend.enterpriseSupport.description')}
             </p>
           </motion.div>
