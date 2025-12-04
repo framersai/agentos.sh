@@ -13,12 +13,12 @@ interface ParticleMorphTextProps {
 }
 
 /**
- * ParticleMorphText - High-performance particle text with SEO-friendly fallback
+ * ParticleMorphText - Smooth liquid particle morphing
  */
 export const ParticleMorphText = memo(function ParticleMorphText({
   words,
   className = '',
-  interval = 1800,
+  interval = 2200,
   fontSize = 48,
   gradientFrom = '#8b5cf6',
   gradientTo = '#06b6d4',
@@ -26,8 +26,21 @@ export const ParticleMorphText = memo(function ParticleMorphText({
 }: ParticleMorphTextProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
-  const stateRef = useRef({ wordIdx: startIndex, phase: 0, progress: 0, lastSwitch: 0 });
-  const particlesRef = useRef<{ x: number; y: number; ox: number; oy: number; tx: number; ty: number; r: number; c: string }[]>([]);
+  const stateRef = useRef({ 
+    wordIdx: startIndex, 
+    phase: 0, // 0=stable, 1=dissolve, 2=form
+    progress: 0, 
+    lastSwitch: 0 
+  });
+  const particlesRef = useRef<{ 
+    x: number; y: number; 
+    ox: number; oy: number; 
+    tx: number; ty: number; 
+    vx: number; vy: number;
+    r: number; c: string; 
+    delay: number;
+    wobble: number;
+  }[]>([]);
   const [mounted, setMounted] = useState(false);
 
   const width = Math.ceil(Math.max(words[0].length, words[1].length) * fontSize * 0.58);
@@ -40,6 +53,11 @@ export const ParticleMorphText = memo(function ParticleMorphText({
 
   const lerp = useCallback((a: number[], b: number[], t: number) => 
     `rgb(${Math.round(a[0] + (b[0] - a[0]) * t)},${Math.round(a[1] + (b[1] - a[1]) * t)},${Math.round(a[2] + (b[2] - a[2]) * t)})`, []);
+
+  // Smooth easing functions
+  const easeInOutCubic = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
+  const easeInQuart = (t: number) => t * t * t * t;
 
   const sample = useCallback((ctx: CanvasRenderingContext2D, text: string) => {
     const off = document.createElement('canvas');
@@ -61,7 +79,17 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     for (let y = 0; y < height; y += step) {
       for (let x = 0; x < width; x += step) {
         if (d[(y * width + x) * 4 + 3] > 50) {
-          pts.push({ x, y, ox: x, oy: y, tx: x, ty: y, r: 1.1 + Math.random() * 0.5, c: lerp(c1, c2, x / width) });
+          const normalizedX = x / width;
+          pts.push({ 
+            x, y, 
+            ox: x, oy: y, 
+            tx: x, ty: y, 
+            vx: 0, vy: 0,
+            r: 1.0 + Math.random() * 0.6, 
+            c: lerp(c1, c2, normalizedX),
+            delay: normalizedX * 0.3 + Math.random() * 0.15, // Staggered by position
+            wobble: Math.random() * Math.PI * 2,
+          });
         }
       }
     }
@@ -90,45 +118,92 @@ export const ParticleMorphText = memo(function ParticleMorphText({
 
       ctx.clearRect(0, 0, width, height);
 
-      // Phase: 0=stable, 1=dissolve, 2=form
+      // Phase transitions
       if (s.phase === 0 && dt > interval) {
-        s.phase = 1; s.progress = 0;
+        s.phase = 1; 
+        s.progress = 0;
+        // Set up dissolve targets - particles flow outward organically
         particlesRef.current.forEach(p => {
-          const a = Math.random() * Math.PI * 2;
-          p.tx = p.ox + Math.cos(a) * (8 + Math.random() * 12);
-          p.ty = p.oy + Math.sin(a) * (8 + Math.random() * 12);
+          const angle = Math.atan2(p.oy - height / 2, p.ox - width / 2) + (Math.random() - 0.5) * 1.5;
+          const dist = 15 + Math.random() * 25;
+          p.tx = p.ox + Math.cos(angle) * dist;
+          p.ty = p.oy + Math.sin(angle) * dist;
+          p.vx = (Math.random() - 0.5) * 2;
+          p.vy = (Math.random() - 0.5) * 2;
         });
       } else if (s.phase === 1) {
-        s.progress += 0.12;
+        s.progress += 0.012; // Slower dissolve
         if (s.progress >= 1) {
           s.wordIdx = 1 - s.wordIdx;
-          particlesRef.current = sample(ctx, words[s.wordIdx]);
-          particlesRef.current.forEach(p => {
-            const a = Math.random() * Math.PI * 2;
-            p.x = p.ox + Math.cos(a) * (8 + Math.random() * 12);
-            p.y = p.oy + Math.sin(a) * (8 + Math.random() * 12);
+          const newParticles = sample(ctx, words[s.wordIdx]);
+          // Position new particles scattered, ready to flow in
+          newParticles.forEach(p => {
+            const angle = Math.atan2(p.oy - height / 2, p.ox - width / 2) + (Math.random() - 0.5) * 1.5;
+            const dist = 15 + Math.random() * 25;
+            p.x = p.ox + Math.cos(angle) * dist;
+            p.y = p.oy + Math.sin(angle) * dist;
+            p.vx = (Math.random() - 0.5) * 2;
+            p.vy = (Math.random() - 0.5) * 2;
           });
-          s.phase = 2; s.progress = 0;
+          particlesRef.current = newParticles;
+          s.phase = 2; 
+          s.progress = 0;
         }
       } else if (s.phase === 2) {
-        s.progress += 0.12;
-        if (s.progress >= 1) { s.phase = 0; s.lastSwitch = t; }
+        s.progress += 0.015; // Slower formation
+        if (s.progress >= 1) { 
+          s.phase = 0; 
+          s.lastSwitch = t; 
+          // Snap to final positions
+          particlesRef.current.forEach(p => {
+            p.x = p.ox;
+            p.y = p.oy;
+          });
+        }
       }
 
-      const ease = s.phase === 1 ? s.progress : s.phase === 2 ? 1 - s.progress : 0;
+      const globalProgress = s.progress;
 
       particlesRef.current.forEach(p => {
-        const px = s.phase === 1 ? p.ox + (p.tx - p.ox) * ease : s.phase === 2 ? p.ox + (p.x - p.ox) * (1 - ease) : p.ox;
-        const py = s.phase === 1 ? p.oy + (p.ty - p.oy) * ease : s.phase === 2 ? p.oy + (p.y - p.oy) * (1 - ease) : p.oy;
-        const alpha = s.phase === 0 ? 1 : 0.6 + 0.4 * (1 - Math.abs(ease - 0.5) * 2);
+        // Apply per-particle delay for liquid stagger effect
+        const delayedProgress = Math.max(0, Math.min(1, (globalProgress - p.delay) / (1 - p.delay * 0.8)));
         
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = p.c;
-        ctx.beginPath();
-        ctx.arc(px, py, p.r, 0, Math.PI * 2);
-        ctx.fill();
+        // Organic wobble during transition
+        const wobbleAmount = s.phase !== 0 ? Math.sin(t * 0.003 + p.wobble) * (1 - delayedProgress) * 2 : 0;
+        
+        let px: number, py: number, alpha: number;
+        
+        if (s.phase === 0) {
+          // Stable - subtle breathing
+          const breath = Math.sin(t * 0.002 + p.wobble) * 0.5;
+          px = p.ox + breath;
+          py = p.oy;
+          alpha = 1;
+        } else if (s.phase === 1) {
+          // Dissolving - smooth ease out
+          const ease = easeInQuart(delayedProgress);
+          px = p.ox + (p.tx - p.ox) * ease + wobbleAmount + p.vx * ease;
+          py = p.oy + (p.ty - p.oy) * ease + wobbleAmount + p.vy * ease;
+          // Fade out smoothly
+          alpha = 1 - easeInOutCubic(delayedProgress) * 0.6;
+        } else {
+          // Forming - smooth ease in
+          const ease = easeOutQuart(delayedProgress);
+          px = p.x + (p.ox - p.x) * ease;
+          py = p.y + (p.oy - p.y) * ease;
+          // Fade in smoothly
+          alpha = 0.4 + easeInOutCubic(delayedProgress) * 0.6;
+        }
+        
+        // Draw with soft glow
+        const gradient = ctx.createRadialGradient(px, py, 0, px, py, p.r * 2);
+        gradient.addColorStop(0, p.c.replace('rgb', 'rgba').replace(')', `,${alpha})`));
+        gradient.addColorStop(0.5, p.c.replace('rgb', 'rgba').replace(')', `,${alpha * 0.5})`));
+        gradient.addColorStop(1, 'transparent');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(px - p.r * 2, py - p.r * 2, p.r * 4, p.r * 4);
       });
-      ctx.globalAlpha = 1;
 
       animRef.current = requestAnimationFrame(draw);
     };
@@ -136,7 +211,6 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return () => cancelAnimationFrame(animRef.current);
   }, [mounted, width, height, words, interval, sample]);
 
-  // SEO: Always render text for crawlers, visually hidden when JS runs
   return (
     <span className={`inline-block ${className}`} style={{ width, height, position: 'relative' }}>
       <span className="sr-only">{words[0]} / {words[1]}</span>
