@@ -259,14 +259,14 @@ export function ParticleMorphText({
     setMounted(true);
   }, []);
 
-  // Setup dimensions - tight fit to text
+  // Setup dimensions - tight fit to text, baseline aligned
   useEffect(() => {
     if (!mounted) return;
 
     const longestWord = words[0].length > words[1].length ? words[0] : words[1];
     const estimatedWidth = longestWord.length * fontSize * 0.58; // Tighter fit
-    const width = estimatedWidth + 16; // Minimal padding
-    const height = fontSize * 1.3; // Reduced height
+    const width = estimatedWidth + 8; // Minimal padding
+    const height = fontSize * 1.1; // Match line height closely
     
     setDimensions({ width, height });
   }, [mounted, words, fontSize]);
@@ -341,7 +341,8 @@ export function ParticleMorphText({
         position: 'relative',
         width: dimensions.width,
         height: dimensions.height,
-        verticalAlign: 'middle',
+        verticalAlign: 'baseline',
+        marginBottom: `-${fontSize * 0.15}px`, // Pull up to align with text baseline
       }}
     >
       <canvas

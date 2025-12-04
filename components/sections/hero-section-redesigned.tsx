@@ -78,20 +78,19 @@ export function HeroSectionRedesigned() {
 
   return (
     <section className="relative min-h-screen flex items-center bg-[var(--color-background-primary)]">
-      {/* Background Neural Constellation - large, centered, subtle */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+      {/* Background Neural Constellation - positioned center-right, higher up */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
           className="absolute"
           style={{
-            right: '-5%',
-            top: '50%',
-            transform: 'translateY(-50%)',
+            right: '5%',
+            top: '15%',
           }}
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: isDark ? 0.6 : 0.4, scale: 1 }}
+          animate={{ opacity: isDark ? 0.5 : 0.35, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
-          <NeuralConstellation size={700} />
+          <NeuralConstellation size={600} />
         </motion.div>
       </div>
 

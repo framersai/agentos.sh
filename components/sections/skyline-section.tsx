@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   AlertTriangle,
   CheckCircle,
-  // Building,
   Cpu,
   Database,
   Globe
@@ -37,7 +36,7 @@ const skylineFeatures: BuildingFeature[] = [
     position: 10,
     icon: ShieldIcon,
     status: 'complete',
-    glow: '#00FF00'
+    glow: '#22c55e'
   },
   {
     id: 'compliance',
@@ -45,7 +44,7 @@ const skylineFeatures: BuildingFeature[] = [
     position: 25,
     icon: DocumentCheckIcon,
     status: 'complete',
-    glow: '#00FFFF'
+    glow: '#06b6d4'
   },
   {
     id: 'auth',
@@ -53,7 +52,7 @@ const skylineFeatures: BuildingFeature[] = [
     position: 40,
     icon: LockIcon,
     status: 'complete',
-    glow: '#FF00FF'
+    glow: '#a855f7'
   },
   {
     id: 'audit',
@@ -61,7 +60,7 @@ const skylineFeatures: BuildingFeature[] = [
     position: 55,
     icon: GraphIcon,
     status: 'complete',
-    glow: '#FFFF00'
+    glow: '#eab308'
   },
   {
     id: 'soc2',
@@ -69,7 +68,7 @@ const skylineFeatures: BuildingFeature[] = [
     position: 70,
     icon: CertificateIcon,
     status: 'building',
-    glow: '#FF8800'
+    glow: '#f97316'
   },
   {
     id: 'scale',
@@ -77,7 +76,7 @@ const skylineFeatures: BuildingFeature[] = [
     position: 85,
     icon: SkylineIcon,
     status: 'complete',
-    glow: '#8800FF'
+    glow: '#8b5cf6'
   }
 ]
 
@@ -88,20 +87,19 @@ export function SkylineSection() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
 
-  // Deterministic star field to avoid hydration mismatches
+  // Deterministic star field
   const stars = useMemo(() => {
     let seed = 1337 >>> 0
     const rand = () => {
-      // Linear congruential generator (LCG)
       seed = (Math.imul(1664525, seed) + 1013904223) >>> 0
       return seed / 4294967296
     }
-    return Array.from({ length: 50 }).map(() => ({
+    return Array.from({ length: 40 }).map(() => ({
       width: rand() * 2 + 1,
       height: rand() * 2 + 1,
       left: rand() * 100,
-      top: rand() * 50,
-      opacity: rand() * 0.6,
+      top: rand() * 40,
+      opacity: rand() * 0.5 + 0.2,
       duration: 3 + rand() * 4
     }))
   }, [])
@@ -115,7 +113,6 @@ export function SkylineSection() {
           if (!next[feature.id]) {
             next[feature.id] = Array(feature.height * 3).fill(false).map(() => Math.random() > 0.3)
           } else {
-            // Randomly toggle some windows
             next[feature.id] = next[feature.id].map(state =>
               Math.random() > 0.95 ? !state : state
             )
@@ -129,37 +126,22 @@ export function SkylineSection() {
   }, [])
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Skyline Background Gradient */}
+    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0">
         <div
           className="absolute inset-0"
           style={{
             background: isDark
-              ? `radial-gradient(ellipse at top, 
-                  hsl(240 80% 8%) 0%, 
-                  hsl(250 70% 5%) 40%, 
-                  hsl(260 60% 3%) 100%)`
-              : `radial-gradient(ellipse at top, 
-                  hsl(240 60% 97%) 0%, 
-                  hsl(250 50% 94%) 40%, 
-                  hsl(260 40% 90%) 100%)`
+              ? 'linear-gradient(to bottom, hsl(250 30% 8%) 0%, hsl(260 25% 12%) 50%, hsl(250 30% 8%) 100%)'
+              : 'linear-gradient(to bottom, hsl(250 30% 98%) 0%, hsl(260 25% 95%) 50%, hsl(250 30% 98%) 100%)'
           }}
         />
-        {/* Subtle gradient overlay for depth */}
-        <div
-          className="absolute inset-0 opacity-40"
-          style={{
-            background: `linear-gradient(135deg, 
-              var(--color-accent-primary)/10 0%, 
-              var(--color-accent-secondary)/10 100%)`
-          }}
-        />
-        {/* Stars/Particles in background */}
+        {/* Stars in dark mode */}
         {isDark && (
           <div className="absolute inset-0">
             {stars.map((s, i) => (
-              <div
+              <motion.div
                 key={i}
                 className="absolute rounded-full bg-white"
                 style={{
@@ -167,8 +149,14 @@ export function SkylineSection() {
                   height: `${s.height}px`,
                   left: `${s.left}%`,
                   top: `${s.top}%`,
-                  opacity: s.opacity,
-                  animation: `twinkle ${s.duration}s infinite`
+                }}
+                animate={{
+                  opacity: [s.opacity * 0.5, s.opacity, s.opacity * 0.5],
+                }}
+                transition={{
+                  duration: s.duration,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
                 }}
               />
             ))}
@@ -180,26 +168,44 @@ export function SkylineSection() {
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-4">
+          <h2 
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
+            style={{
+              background: isDark 
+                ? 'linear-gradient(135deg, #a78bfa 0%, #67e8f9 50%, #f472b6 100%)'
+                : 'linear-gradient(135deg, #8b5cf6 0%, #06b6d4 50%, #ec4899 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
             {t('title')}
           </h2>
-          <p className="text-lg text-muted max-w-3xl mx-auto">
+          <p className={`text-lg max-w-3xl mx-auto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             {t('subtitle')}
           </p>
         </motion.div>
 
         {/* Skyline Visualization */}
-        <div className="relative h-[500px] mb-12">
-          {/* Ground/Base */}
-          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-accent-primary/20 to-transparent" />
+        <div className="relative h-[400px] mb-16">
+          {/* Ground line */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-[2px]"
+            style={{
+              background: isDark 
+                ? 'linear-gradient(90deg, transparent 0%, rgba(139,92,246,0.5) 50%, transparent 100%)'
+                : 'linear-gradient(90deg, transparent 0%, rgba(139,92,246,0.3) 50%, transparent 100%)'
+            }}
+          />
 
           {/* Buildings */}
           {skylineFeatures.map((feature, index) => {
-            const buildingHeight = (feature.height / 10) * 400 // Max 400px height
-            const buildingWidth = 120
+            const buildingHeight = (feature.height / 10) * 320
+            const buildingWidth = 100
             const leftPosition = `${feature.position}%`
 
             return (
@@ -212,8 +218,8 @@ export function SkylineSection() {
                 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{
-                  duration: 1.2,
-                  delay: index * 0.3,
+                  duration: 1,
+                  delay: index * 0.15,
                   ease: [0.43, 0.13, 0.23, 0.96]
                 }}
                 className="absolute bottom-0"
@@ -225,54 +231,17 @@ export function SkylineSection() {
                 onMouseEnter={() => setHoveredBuilding(feature.id)}
                 onMouseLeave={() => setHoveredBuilding(null)}
               >
-                {/* Building Label - Custom animated SVG icon with text reveal - OUTSIDE overflow container */}
-                <motion.div 
-                  className="absolute -top-20 left-1/2 transform -translate-x-1/2 whitespace-nowrap text-center z-10"
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.3 + 0.5, duration: 0.5 }}
-                >
-                  <div className="w-10 h-10 mx-auto mb-2 transition-transform hover:scale-110 duration-300">
-                    <feature.icon id={feature.id} className="w-full h-full drop-shadow-lg" />
-                  </div>
-                  <span 
-                    className="text-xs font-semibold transition-all duration-300 block"
-                    style={{
-                      color: hoveredBuilding === feature.id 
-                        ? 'var(--color-text-primary)' 
-                        : 'var(--color-text-muted)',
-                      textShadow: hoveredBuilding === feature.id 
-                        ? '0 0 10px var(--color-accent-primary)' 
-                        : 'none',
-                    }}
-                  >
-                    {t(`features.${feature.id}.title`)}
-                  </span>
-                </motion.div>
-
-                {/* Building Structure - Brand gradient */}
+                {/* Building Structure */}
                 <div
-                  className="relative w-full h-full cursor-pointer group rounded-t-sm overflow-hidden"
+                  className="relative w-full h-full cursor-pointer rounded-t-md overflow-hidden transition-all duration-300"
                   style={{
                     background: isDark
-                      ? `linear-gradient(to top, 
-                          var(--color-accent-primary), 
-                          var(--color-accent-secondary))`
-                      : `linear-gradient(to top, 
-                          var(--color-accent-primary), 
-                          var(--color-accent-secondary))`,
+                      ? `linear-gradient(to top, ${feature.glow}40 0%, ${feature.glow}20 100%)`
+                      : `linear-gradient(to top, ${feature.glow}30 0%, ${feature.glow}15 100%)`,
+                    border: `1px solid ${hoveredBuilding === feature.id ? feature.glow : isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
                     boxShadow: hoveredBuilding === feature.id
-                      ? `0 0 30px var(--color-accent-secondary), 
-                         inset 0 0 20px var(--color-accent-secondary)/40,
-                         0 10px 40px -10px var(--color-accent-primary)`
-                      : `0 5px 20px -5px rgba(0,0,0,0.4)`,
-                    border: `1.5px solid ${
-                      hoveredBuilding === feature.id 
-                        ? 'var(--color-accent-secondary)' 
-                        : 'rgba(255,255,255,0.15)'
-                    }`,
-                    transition: 'all var(--duration-smooth) var(--ease-out-quint)'
+                      ? `0 0 30px ${feature.glow}50, inset 0 0 20px ${feature.glow}20`
+                      : 'none',
                   }}
                 >
                   {/* Windows Grid */}
@@ -280,76 +249,102 @@ export function SkylineSection() {
                     {animatedWindows[feature.id]?.map((lit, i) => (
                       <div
                         key={i}
-                        className="bg-yellow-300/20"
+                        className="rounded-sm transition-all duration-500"
                         style={{
                           background: lit
-                            ? `radial-gradient(circle, ${feature.glow}60, transparent)`
-                            : 'rgba(0,0,0,0.3)',
-                          boxShadow: lit ? `0 0 10px ${feature.glow}40` : 'none',
-                          transition: 'all 0.5s ease'
+                            ? `${feature.glow}80`
+                            : isDark ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.1)',
+                          boxShadow: lit ? `0 0 8px ${feature.glow}60` : 'none',
                         }}
                       />
                     ))}
                   </div>
 
-                  {/* Status Indicator */}
+                  {/* Status badge */}
                   {feature.status === 'building' && (
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
-                      <div className="flex items-center gap-1 bg-orange-500/20 px-2 py-1 rounded-full">
-                        <AlertTriangle className="w-3 h-3 text-orange-500" />
-                        <span className="text-xs text-orange-500">WIP</span>
-                      </div>
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-orange-500/90 text-white px-2 py-0.5 rounded text-xs font-medium">
+                      <AlertTriangle className="w-3 h-3" />
+                      WIP
                     </div>
                   )}
 
-                  {/* Antenna/Spire for tallest buildings */}
+                  {/* Antenna for tall buildings */}
                   {feature.height >= 7 && (
-                    <div
-                      className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-1"
-                      style={{
-                        height: '32px',
-                        background: `linear-gradient(to top, ${feature.glow}60, transparent)`
-                      }}
-                    >
-                      <div
-                        className="absolute -top-1 -left-1 w-3 h-3 rounded-full animate-pulse"
-                        style={{
-                          background: feature.glow,
-                          boxShadow: `0 0 10px ${feature.glow}`
-                        }}
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2">
+                      <div 
+                        className="w-0.5 h-6"
+                        style={{ background: `linear-gradient(to top, ${feature.glow}, transparent)` }}
+                      />
+                      <motion.div
+                        className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full"
+                        style={{ background: feature.glow }}
+                        animate={{ opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 2, repeat: Infinity }}
                       />
                     </div>
                   )}
                 </div>
 
-                {/* Hover Details */}
+                {/* Label below building */}
+                <motion.div 
+                  className="absolute -bottom-16 left-1/2 -translate-x-1/2 text-center whitespace-nowrap"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.15 + 0.5 }}
+                >
+                  <div 
+                    className="w-8 h-8 mx-auto mb-1 transition-transform duration-300"
+                    style={{ transform: hoveredBuilding === feature.id ? 'scale(1.2)' : 'scale(1)' }}
+                  >
+                    <feature.icon id={feature.id} className="w-full h-full" />
+                  </div>
+                  <span 
+                    className={`text-xs font-medium transition-colors duration-300 ${
+                      hoveredBuilding === feature.id 
+                        ? (isDark ? 'text-white' : 'text-slate-900')
+                        : (isDark ? 'text-slate-400' : 'text-slate-600')
+                    }`}
+                  >
+                    {t(`features.${feature.id}.title`)}
+                  </span>
+                </motion.div>
+
+                {/* Hover tooltip */}
                 <AnimatePresence>
                   {hoveredBuilding === feature.id && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                      className="absolute bottom-full mb-4 left-1/2 transform -translate-x-1/2 z-20"
-                      style={{ minWidth: '200px' }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 z-30"
+                      style={{ minWidth: '220px' }}
                     >
-                      <div className="holographic-card p-4">
-                        <h4 className="font-semibold mb-2 flex items-center gap-2">
+                      <div 
+                        className="p-4 rounded-lg shadow-xl"
+                        style={{
+                          background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.98)',
+                          border: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
+                          backdropFilter: 'blur(12px)',
+                        }}
+                      >
+                        <h4 className={`font-semibold mb-2 flex items-center gap-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                           <div className="w-5 h-5">
                             <feature.icon id={`${feature.id}-tooltip`} className="w-full h-full" />
                           </div>
                           {t(`features.${feature.id}.title`)}
                         </h4>
-                        <ul className="space-y-1">
+                        <ul className="space-y-1.5">
                           {(t.raw(`features.${feature.id}.items`) as string[]).map((item, i) => (
-                            <li key={i} className="text-xs flex items-start gap-1">
-                              <CheckCircle className="w-3 h-3 text-green-500 mt-0.5 shrink-0" />
+                            <li key={i} className={`text-xs flex items-start gap-2 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                              <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 shrink-0" />
                               <span>{item}</span>
                             </li>
                           ))}
                         </ul>
                         {feature.status === 'building' && (
-                          <div className="mt-2 pt-2 border-t border-glass-border">
-                            <p className="text-xs text-orange-500">
+                          <div className={`mt-3 pt-2 border-t ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
+                            <p className="text-xs text-orange-500 font-medium">
                               🚧 {t('currentlyDevelopment')}
                             </p>
                           </div>
@@ -361,124 +356,89 @@ export function SkylineSection() {
               </motion.div>
             )
           })}
-
-          {/* Reflection Effect */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none">
-            <div
-              className="absolute inset-0"
-              style={{
-                background: isDark
-                  ? 'linear-gradient(to bottom, rgba(0,0,50,0.3), transparent)'
-                  : 'linear-gradient(to bottom, rgba(150,200,255,0.2), transparent)',
-                transform: 'scaleY(-1)',
-                transformOrigin: 'bottom',
-                opacity: 0.3
-              }}
-            />
-          </div>
         </div>
 
-        {/* Legend */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Legend Cards - High contrast, readable */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24">
           <motion.div
-            initial={{ opacity: 0, x: -20, scale: 0.9 }}
-            whileInView={{ opacity: 0.7, x: 0, scale: 1 }}
-            whileHover={{ opacity: 1, scale: 1.03 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ 
-              delay: 0.2,
-              duration: 0.6,
-              type: "spring",
-              stiffness: 100
+            transition={{ delay: 0.1 }}
+            className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+            style={{
+              background: isDark 
+                ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)'
+                : 'linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.02) 100%)',
+              border: `1px solid ${isDark ? 'rgba(34, 197, 94, 0.3)' : 'rgba(34, 197, 94, 0.2)'}`,
             }}
-            className="holographic-card p-6 group cursor-pointer"
           >
             <div className="flex items-center gap-3 mb-3">
-              <Database className="w-8 h-8 text-green-500 group-hover:drop-shadow-[0_0_8px_rgba(34,197,94,0.6)] transition-all duration-300" />
-              <h3 className="font-semibold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-300">{t('legend.fullyImplemented.title')}</h3>
+              <div className="p-2 rounded-lg bg-green-500/20">
+                <Database className="w-6 h-6 text-green-500" />
+              </div>
+              <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                {t('legend.fullyImplemented.title')}
+              </h3>
             </div>
-            <p className="text-sm text-[var(--color-text-muted)] group-hover:text-[var(--color-text-secondary)] transition-colors duration-300">
+            <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
               {t('legend.fullyImplemented.description')}
             </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            whileInView={{ opacity: 0.7, y: 0, scale: 1 }}
-            whileHover={{ opacity: 1, scale: 1.03 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ 
-              delay: 0.4,
-              duration: 0.6,
-              type: "spring",
-              stiffness: 100
+            transition={{ delay: 0.2 }}
+            className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+            style={{
+              background: isDark 
+                ? 'linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0.05) 100%)'
+                : 'linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.02) 100%)',
+              border: `1px solid ${isDark ? 'rgba(249, 115, 22, 0.3)' : 'rgba(249, 115, 22, 0.2)'}`,
             }}
-            className="holographic-card p-6 group cursor-pointer"
           >
             <div className="flex items-center gap-3 mb-3">
-              <Cpu className="w-8 h-8 text-orange-500 group-hover:drop-shadow-[0_0_8px_rgba(249,115,22,0.6)] transition-all duration-300" />
-              <h3 className="font-semibold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-300">{t('legend.inProgress.title')}</h3>
+              <div className="p-2 rounded-lg bg-orange-500/20">
+                <Cpu className="w-6 h-6 text-orange-500" />
+              </div>
+              <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                {t('legend.inProgress.title')}
+              </h3>
             </div>
-            <p className="text-sm text-[var(--color-text-muted)] group-hover:text-[var(--color-text-secondary)] transition-colors duration-300">
+            <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
               {t('legend.inProgress.description')}
             </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 20, scale: 0.9 }}
-            whileInView={{ opacity: 0.7, x: 0, scale: 1 }}
-            whileHover={{ opacity: 1, scale: 1.03 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ 
-              delay: 0.6,
-              duration: 0.6,
-              type: "spring",
-              stiffness: 100
+            transition={{ delay: 0.3 }}
+            className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02]"
+            style={{
+              background: isDark 
+                ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%)'
+                : 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.02) 100%)',
+              border: `1px solid ${isDark ? 'rgba(59, 130, 246, 0.3)' : 'rgba(59, 130, 246, 0.2)'}`,
             }}
-            className="holographic-card p-6 group cursor-pointer"
           >
             <div className="flex items-center gap-3 mb-3">
-              <Globe className="w-8 h-8 text-blue-500 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] transition-all duration-300" />
-              <h3 className="font-semibold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-300">{t('legend.enterpriseSupport.title')}</h3>
+              <div className="p-2 rounded-lg bg-blue-500/20">
+                <Globe className="w-6 h-6 text-blue-500" />
+              </div>
+              <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                {t('legend.enterpriseSupport.title')}
+              </h3>
             </div>
-            <p className="text-sm text-[var(--color-text-muted)] group-hover:text-[var(--color-text-secondary)] transition-colors duration-300">
+            <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
               {t('legend.enterpriseSupport.description')}
             </p>
           </motion.div>
         </div>
-
-        {/* Trust Badges Placeholder (Commented out for future carousel) */}
-        {/* <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          className="mt-12 text-center"
-        >
-          <p className="text-sm text-muted mb-4">{t('trustBadge')}</p>
-          <div className="flex flex-wrap justify-center gap-8">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={i}
-                className="w-32 h-12 rounded-lg bg-glass-surface flex items-center justify-center"
-                style={{
-                  background: `linear-gradient(135deg, var(--glass-surface), transparent)`,
-                  border: '1px solid var(--glass-border)'
-                }}
-              >
-                <Building className="w-6 h-6 opacity-30" />
-              </div>
-            ))}
-          </div>
-        </motion.div> */}
       </div>
-
-      <style jsx>{`
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
-        }
-      `}</style>
     </section>
   )
 }
-
