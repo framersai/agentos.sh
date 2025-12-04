@@ -31,9 +31,9 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string }[]>([]);
   const [mounted, setMounted] = useState(false);
 
-  // Tighter dimensions - text fills most of the canvas
-  const width = Math.ceil(Math.max(words[0].length, words[1].length) * fontSize * 0.55);
-  const height = Math.ceil(fontSize * 1.1);
+  // Wider container to prevent cutoff, especially for "Emergent"
+  const width = Math.ceil(Math.max(words[0].length, words[1].length) * fontSize * 0.65);
+  const height = Math.ceil(fontSize * 1.2);
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);
@@ -150,14 +150,14 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return () => cancelAnimationFrame(animRef.current);
   }, [mounted, width, height, words, interval, sampleText]);
 
-  // Use vertical-align to match text baseline
+  // Align with text baseline, shift down slightly
   return (
     <span 
       className={`inline-block align-baseline ${className}`} 
       style={{ 
         width, 
         height,
-        marginBottom: `-${Math.round(fontSize * 0.15)}px`, // Adjust for baseline
+        marginBottom: `-${Math.round(fontSize * 0.08)}px`, // Smaller adjustment = text sits lower
       }}
     >
       <span className="sr-only">{words[0]} / {words[1]}</span>

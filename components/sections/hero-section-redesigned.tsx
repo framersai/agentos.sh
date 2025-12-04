@@ -107,20 +107,20 @@ const HeroSectionInner = memo(function HeroSectionInner() {
         <article className="max-w-2xl">
           {/* SEO-optimized headline with proper h1 */}
           <h1 className="font-bold tracking-tight mb-4" itemProp="description">
-            <div className="text-[24px] sm:text-[32px] lg:text-[42px] leading-tight">
+            <div className="text-[26px] sm:text-[36px] lg:text-[48px] leading-tight">
               <span className="inline-flex items-baseline">
-                <ParticleMorphText words={morphingWords} interval={3000} fontSize={24} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="sm:hidden" />
-                <ParticleMorphText words={morphingWords} interval={3000} fontSize={32} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden sm:inline-block lg:hidden" />
-                <ParticleMorphText words={morphingWords} interval={3000} fontSize={42} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden lg:inline-block" />
+                <ParticleMorphText words={morphingWords} interval={3000} fontSize={26} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="sm:hidden" />
+                <ParticleMorphText words={morphingWords} interval={3000} fontSize={36} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden sm:inline-block lg:hidden" />
+                <ParticleMorphText words={morphingWords} interval={3000} fontSize={48} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden lg:inline-block" />
                 <span className="text-[var(--color-text-primary)]">&nbsp;intelligence</span>
               </span>
             </div>
-            <div className="text-[24px] sm:text-[32px] lg:text-[42px] leading-tight">
+            <div className="text-[26px] sm:text-[36px] lg:text-[48px] leading-tight">
               <span className="inline-flex items-baseline">
                 <span className="text-[var(--color-text-secondary)]">for&nbsp;</span>
-                <ParticleMorphText words={morphingWords} interval={3000} fontSize={24} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="sm:hidden" />
-                <ParticleMorphText words={morphingWords} interval={3000} fontSize={32} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden sm:inline-block lg:hidden" />
-                <ParticleMorphText words={morphingWords} interval={3000} fontSize={42} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden lg:inline-block" />
+                <ParticleMorphText words={morphingWords} interval={3000} fontSize={26} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="sm:hidden" />
+                <ParticleMorphText words={morphingWords} interval={3000} fontSize={36} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden sm:inline-block lg:hidden" />
+                <ParticleMorphText words={morphingWords} interval={3000} fontSize={48} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden lg:inline-block" />
                 <span className="text-[var(--color-text-primary)]">&nbsp;agents</span>
               </span>
             </div>
