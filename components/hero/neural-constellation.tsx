@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 
@@ -56,8 +56,8 @@ export function NeuralConstellation({
 
   const isDark = resolvedTheme === 'dark';
 
-  // Brand-aligned color palette with luminescence
-  const colors = {
+  // Brand-aligned color palette with luminescence (memoized to prevent re-renders)
+  const colors = useMemo(() => ({
     core: isDark ? '#a78bfa' : '#8b5cf6',      // Violet
     inner: isDark ? '#818cf8' : '#6366f1',      // Indigo
     outer: isDark ? '#67e8f9' : '#06b6d4',      // Cyan
@@ -66,7 +66,7 @@ export function NeuralConstellation({
     glow: isDark ? 'rgba(167, 139, 250, 0.6)' : 'rgba(139, 92, 246, 0.4)',
     connectionBase: isDark ? 'rgba(139, 92, 246, 0.15)' : 'rgba(99, 102, 241, 0.12)',
     connectionActive: isDark ? 'rgba(167, 139, 250, 0.5)' : 'rgba(139, 92, 246, 0.35)',
-  };
+  }), [isDark]);
 
   // Initialize particles with intentional positioning
   const initializeParticles = useCallback(() => {
@@ -218,7 +218,7 @@ export function NeuralConstellation({
     ctx.fillRect(0, 0, size, size);
 
     // Update particle positions with smooth orbital motion
-    particles.forEach((p, i) => {
+    particles.forEach((p) => {
       // Pulse effect
       p.pulsePhase += p.pulseSpeed;
       const pulseFactor = 1 + Math.sin(p.pulsePhase) * 0.15;
@@ -260,7 +260,7 @@ export function NeuralConstellation({
     });
 
     // Draw connections with gradient and pulse effect
-    connections.forEach((conn, idx) => {
+    connections.forEach((conn) => {
       const from = particles[conn.from];
       const to = particles[conn.to];
       if (!from || !to) return;
@@ -370,7 +370,7 @@ export function NeuralConstellation({
 
     // Update time
     timeRef.current += 16;
-  }, [size, isDark, colors]);
+  }, [size, isDark]);
 
   // Setup and animation loop
   useEffect(() => {

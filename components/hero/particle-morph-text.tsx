@@ -50,11 +50,9 @@ export function ParticleMorphText({
   const currentWordRef = useRef(0);
   const nextWordRef = useRef(1);
   const lastTransitionRef = useRef(0);
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme: _resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 400, height: 80 });
-
-  const isDark = resolvedTheme === 'dark';
 
   // Shuffle array without immediate repeats
   const shuffledWords = useMemo(() => {
@@ -115,8 +113,6 @@ export function ParticleMorphText({
       colors.push(interpolateColor(gradientFrom, gradientTo, t));
     }
 
-    let charIndex = 0;
-    let currentCharX = 0;
     const charWidths: number[] = [];
     
     // Get individual character widths
@@ -200,11 +196,6 @@ export function ParticleMorphText({
   // Exponential decay easing
   const expDecay = (t: number, decay: number = 4): number => {
     return 1 - Math.exp(-decay * t);
-  };
-
-  // Smooth step easing
-  const smoothStep = (t: number): number => {
-    return t * t * (3 - 2 * t);
   };
 
   // Animation loop
