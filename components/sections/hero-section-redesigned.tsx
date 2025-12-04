@@ -77,23 +77,7 @@ export function HeroSectionRedesigned() {
   if (!isContentReady) return <PageSkeleton />;
 
   return (
-    <section className="relative min-h-screen flex items-center bg-[var(--color-background-primary)]">
-      {/* Background Neural Constellation - positioned center-right, higher up */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          className="absolute"
-          style={{
-            right: '5%',
-            top: '15%',
-          }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: isDark ? 0.5 : 0.35, scale: 1 }}
-          transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <NeuralConstellation size={600} />
-        </motion.div>
-      </div>
-
+    <section className="relative min-h-screen flex items-center bg-[var(--color-background-primary)] overflow-hidden">
       {/* Subtle gradient overlays */}
       <div className="absolute inset-0 pointer-events-none">
         <div 
@@ -106,42 +90,112 @@ export function HeroSectionRedesigned() {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+      {/* Single Neural Constellation - bottom right, responsive */}
+      <motion.div 
+        className="absolute pointer-events-none"
+        style={{
+          right: '-5%',
+          bottom: '5%',
+        }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: isDark ? 0.5 : 0.4, scale: 1 }}
+        transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {/* Responsive sizing: smaller on mobile, larger on desktop */}
+        <div className="block sm:hidden">
+          <NeuralConstellation size={200} />
+        </div>
+        <div className="hidden sm:block md:hidden">
+          <NeuralConstellation size={300} />
+        </div>
+        <div className="hidden md:block lg:hidden">
+          <NeuralConstellation size={400} />
+        </div>
+        <div className="hidden lg:block">
+          <NeuralConstellation size={500} />
+        </div>
+      </motion.div>
+
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
         {/* Main content - left aligned */}
         <div className="max-w-3xl">
-          {/* Headline with particle morphing text */}
+          {/* Headline with particle morphing text - responsive font sizes */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="mb-6"
           >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight">
-              {/* Line 1 */}
-              <span className="inline-flex items-baseline flex-wrap">
-                <ParticleMorphText
-                  words={morphingWords}
-                  interval={3500}
-                  fontSize={56}
-                  gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'}
-                  gradientTo={isDark ? '#67e8f9' : '#06b6d4'}
-                  startIndex={0}
-                />
-                <span className="text-[var(--color-text-primary)] ml-3">intelligence</span>
+            <h1 className="font-bold leading-[1.15] tracking-tight">
+              {/* Line 1 - responsive */}
+              <span className="flex items-baseline flex-wrap gap-x-2 sm:gap-x-3">
+                {/* Mobile: 32px, SM: 40px, LG: 48px */}
+                <span className="block sm:hidden">
+                  <ParticleMorphText
+                    words={morphingWords}
+                    interval={3500}
+                    fontSize={32}
+                    gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'}
+                    gradientTo={isDark ? '#67e8f9' : '#06b6d4'}
+                    startIndex={0}
+                  />
+                </span>
+                <span className="hidden sm:block lg:hidden">
+                  <ParticleMorphText
+                    words={morphingWords}
+                    interval={3500}
+                    fontSize={40}
+                    gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'}
+                    gradientTo={isDark ? '#67e8f9' : '#06b6d4'}
+                    startIndex={0}
+                  />
+                </span>
+                <span className="hidden lg:block">
+                  <ParticleMorphText
+                    words={morphingWords}
+                    interval={3500}
+                    fontSize={48}
+                    gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'}
+                    gradientTo={isDark ? '#67e8f9' : '#06b6d4'}
+                    startIndex={0}
+                  />
+                </span>
+                <span className="text-[var(--color-text-primary)] text-3xl sm:text-4xl lg:text-5xl">intelligence</span>
               </span>
-              <br />
-              {/* Line 2 */}
-              <span className="inline-flex items-baseline flex-wrap">
-                <span className="text-[var(--color-text-secondary)] mr-3">for</span>
-                <ParticleMorphText
-                  words={morphingWords}
-                  interval={3500}
-                  fontSize={56}
-                  gradientFrom={isDark ? '#f472b6' : '#ec4899'}
-                  gradientTo={isDark ? '#818cf8' : '#6366f1'}
-                  startIndex={1}
-                />
-                <span className="text-[var(--color-text-primary)] ml-3">agents</span>
+              {/* Line 2 - responsive */}
+              <span className="flex items-baseline flex-wrap gap-x-2 sm:gap-x-3 mt-1">
+                <span className="text-[var(--color-text-secondary)] text-3xl sm:text-4xl lg:text-5xl">for</span>
+                <span className="block sm:hidden">
+                  <ParticleMorphText
+                    words={morphingWords}
+                    interval={3500}
+                    fontSize={32}
+                    gradientFrom={isDark ? '#f472b6' : '#ec4899'}
+                    gradientTo={isDark ? '#818cf8' : '#6366f1'}
+                    startIndex={1}
+                  />
+                </span>
+                <span className="hidden sm:block lg:hidden">
+                  <ParticleMorphText
+                    words={morphingWords}
+                    interval={3500}
+                    fontSize={40}
+                    gradientFrom={isDark ? '#f472b6' : '#ec4899'}
+                    gradientTo={isDark ? '#818cf8' : '#6366f1'}
+                    startIndex={1}
+                  />
+                </span>
+                <span className="hidden lg:block">
+                  <ParticleMorphText
+                    words={morphingWords}
+                    interval={3500}
+                    fontSize={48}
+                    gradientFrom={isDark ? '#f472b6' : '#ec4899'}
+                    gradientTo={isDark ? '#818cf8' : '#6366f1'}
+                    startIndex={1}
+                  />
+                </span>
+                <span className="text-[var(--color-text-primary)] text-3xl sm:text-4xl lg:text-5xl">agents</span>
               </span>
             </h1>
           </motion.div>
@@ -151,7 +205,7 @@ export function HeroSectionRedesigned() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-[var(--color-text-secondary)] mb-8 max-w-xl"
+            className="text-base sm:text-lg text-[var(--color-text-secondary)] mb-6 sm:mb-8 max-w-xl"
           >
             {t('subtitle')}
           </motion.p>
@@ -161,7 +215,7 @@ export function HeroSectionRedesigned() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-3 mb-8"
+            className="flex flex-wrap gap-3 mb-6 sm:mb-8"
           >
             <LinkButton
               href={`/${locale === 'en' ? '' : locale + '/'}docs`}
@@ -177,7 +231,7 @@ export function HeroSectionRedesigned() {
               href="https://github.com/framersai/agentos"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border-2 border-[var(--color-border-primary)] bg-[var(--color-background-card)] text-[var(--color-text-primary)] font-semibold shadow-sm hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)] transition-all duration-200"
+              className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg border-2 border-[var(--color-border-primary)] bg-[var(--color-background-card)] text-[var(--color-text-primary)] font-semibold text-sm sm:text-base shadow-sm hover:bg-[var(--color-accent-primary)]/10 hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)] transition-all duration-200"
             >
               <Github className="w-4 h-4" />
               {t('viewOnGithub')}
@@ -189,16 +243,16 @@ export function HeroSectionRedesigned() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-10"
+            className="mb-8 sm:mb-10"
           >
             <Button
               onClick={copyCommand}
               variant="secondary"
-              className="gap-2 group"
+              className="gap-2 group text-sm sm:text-base"
             >
               <Terminal className="w-4 h-4 text-[var(--color-accent-primary)]" />
-              <code className="font-mono text-sm">npm install agentos</code>
-              <span className="text-xs text-[var(--color-text-muted)] opacity-0 group-hover:opacity-100 transition-opacity ml-2">
+              <code className="font-mono text-xs sm:text-sm">npm install agentos</code>
+              <span className="text-xs text-[var(--color-text-muted)] opacity-0 group-hover:opacity-100 transition-opacity ml-2 hidden sm:inline">
                 copy
               </span>
             </Button>
@@ -209,13 +263,13 @@ export function HeroSectionRedesigned() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex gap-6 mb-12"
+            className="flex gap-4 sm:gap-6 mb-8 sm:mb-12"
           >
             {productStats.map((stat) => (
-              <div key={stat.label} className="flex items-center gap-2">
-                <stat.icon className="w-4 h-4 text-[var(--color-accent-primary)]" />
-                <span className="font-semibold text-[var(--color-text-primary)]">{stat.value}</span>
-                <span className="text-sm text-[var(--color-text-muted)]">{stat.label}</span>
+              <div key={stat.label} className="flex items-center gap-1.5 sm:gap-2">
+                <stat.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--color-accent-primary)]" />
+                <span className="font-semibold text-sm sm:text-base text-[var(--color-text-primary)]">{stat.value}</span>
+                <span className="text-xs sm:text-sm text-[var(--color-text-muted)]">{stat.label}</span>
               </div>
             ))}
           </motion.div>
@@ -225,7 +279,7 @@ export function HeroSectionRedesigned() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-3"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3"
           >
             {highlights.map((h, i) => (
               <motion.div
@@ -233,10 +287,10 @@ export function HeroSectionRedesigned() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.7 + i * 0.05 }}
-                className="p-4 rounded-lg bg-[var(--color-background-secondary)]/50 border border-[var(--color-border-subtle)]/50 hover:border-[var(--color-accent-primary)]/30 transition-colors backdrop-blur-sm"
+                className="p-3 sm:p-4 rounded-lg bg-[var(--color-background-secondary)]/50 border border-[var(--color-border-subtle)]/50 hover:border-[var(--color-accent-primary)]/30 transition-colors backdrop-blur-sm"
               >
-                <h3 className="font-medium text-sm text-[var(--color-text-primary)] mb-1">{h.title}</h3>
-                <p className="text-xs text-[var(--color-text-muted)]">{h.detail}</p>
+                <h3 className="font-medium text-xs sm:text-sm text-[var(--color-text-primary)] mb-0.5 sm:mb-1">{h.title}</h3>
+                <p className="text-[10px] sm:text-xs text-[var(--color-text-muted)] leading-tight">{h.detail}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -246,7 +300,7 @@ export function HeroSectionRedesigned() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="mt-10 flex items-center gap-4 text-xs text-[var(--color-text-muted)]"
+            className="mt-8 sm:mt-10 flex items-center gap-3 sm:gap-4 text-[10px] sm:text-xs text-[var(--color-text-muted)]"
           >
             <span className="flex items-center gap-1">
               <Shield className="w-3 h-3" />
@@ -257,16 +311,6 @@ export function HeroSectionRedesigned() {
           </motion.div>
         </div>
       </div>
-
-      {/* Mobile: show smaller constellation at bottom */}
-      <motion.div 
-        className="lg:hidden absolute bottom-10 right-0 pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isDark ? 0.4 : 0.3 }}
-        transition={{ duration: 1, delay: 0.6 }}
-      >
-        <NeuralConstellation size={250} />
-      </motion.div>
 
       <Toast
         message={t('copiedToClipboard')}
