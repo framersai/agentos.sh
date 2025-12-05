@@ -1,422 +1,204 @@
-'use client'
+'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRight, Github, Terminal, Zap } from 'lucide-react'
-import { useLocale, useTranslations } from 'next-intl'
-import { AnimatedAgentOSLogo } from '../icons/animated-logo'
-import { LiquifyMorphText } from '../ui/liquify-morph-text'
-import { TypeScriptIcon, OpenSourceIcon, StreamingIcon, MemoryIcon } from '../icons/feature-icons'
-import { Toast } from '../ui/toast'
+import { useCallback, useEffect, useMemo, useState, memo } from 'react';
+import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
+import { PageSkeleton } from '../ui/page-skeleton';
+import { Toast } from '../ui/toast';
+import { LinkButton } from '../ui/LinkButton';
+import { Button } from '../ui/Button';
+import { applyVisualTheme } from '@/lib/visual-design-system';
+import { useTheme } from 'next-themes';
 
-type HeadlinePair = { top: string; bottom: string };
-type Highlight = { title: string; detail: string };
-type Stat = { label: string; value: string };
+// Lazy load heavy animation components
+const NeuralConstellation = dynamic(() => import('../hero/neural-constellation').then(m => ({ default: m.NeuralConstellation })), {
+  ssr: false,
+  loading: () => <div className="w-full h-full rounded-full bg-gradient-to-br from-violet-500/10 to-cyan-500/10 animate-pulse" />
+});
 
-export function HeroSection() {
-  const t = useTranslations('hero')
-  const locale = useLocale()
-  const [showToast, setShowToast] = useState(false)
-  const [stars, setStars] = useState<number | null>(null)
-  const [converge, setConverge] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-  const prefersReducedMotion = useReducedMotion()
-  const translateArray = useCallback(<T,>(key: string) => {
-    return t.raw(key) as T[] | undefined
-  }, [t])
+const ParticleMorphText = dynamic(() => import('../hero/particle-morph-text').then(m => ({ default: m.ParticleMorphText })), {
+  ssr: false,
+});
 
-  const headlinePairs = useMemo(() => {
-    const raw = translateArray<HeadlinePair>('headlinePairs')
-    return raw ?? [
-      { top: 'Adaptive Intelligence', bottom: 'for Autonomous Agents' },
-      { top: 'Emergent Intelligence', bottom: 'for Enterprise Orchestration' },
-      { top: 'Adaptive Intelligence', bottom: 'for Safety-Critical Workflows' },
-      { top: 'Emergent Intelligence', bottom: 'for Parallel AI Teams' }
-    ]
-  }, [translateArray])
-  const [headlineIndex, setHeadlineIndex] = useState(0)
-  const activePair = headlinePairs[headlineIndex]
-  const technicalHighlights = useMemo(() => {
-    const raw = translateArray<Highlight>('technicalHighlights')
-    return raw ?? [
-      { title: 'Streaming-first runtime', detail: 'Token-level delivery across personas, guardrails, and channels.' },
-      { title: 'Deterministic orchestration', detail: 'Parallel GMIs with auditable routing, approvals, and budgets.' },
-      { title: 'Zero-copy memory fabric', detail: 'Vector, episodic, and working memory stitched together for recall.' },
-      { title: 'Portable intelligence capsules', detail: 'Export full AgentOS instances as Markdown or JSON and ingest anywhere.' }
-    ]
-  }, [translateArray])
+const HeroSectionInner = memo(function HeroSectionInner() {
+  const t = useTranslations('hero');
+  const locale = useLocale();
+  const { theme: currentTheme, resolvedTheme } = useTheme();
+  const [showToast, setShowToast] = useState(false);
+  const [githubStars, setGithubStars] = useState<number | null>(null);
+  const [githubForks, setGithubForks] = useState<number | null>(null);
+  const [isReady, setIsReady] = useState(false);
+  const isDark = resolvedTheme === 'dark';
 
-  const heroVisualStats = useMemo(() => {
-    const raw = translateArray<Stat>('visualStats')
-    return raw ?? [
-      { label: 'Agencies live', value: '128' },
-      { label: 'Approval SLA', value: '3.2 min' },
-      { label: 'Guardrail coverage', value: '98%' }
-    ]
-  }, [translateArray])
-
-  // Debug i18n logs (visible in browser console)
   useEffect(() => {
-    try {
-      // Avoid printing excessively large objects
-      // eslint-disable-next-line no-console
-      console.info('[i18n:hero]', {
-        locale,
-        subtitle: t('subtitle'),
-        headlinePairs: Array.isArray(headlinePairs) ? headlinePairs.length : 'n/a',
-        technicalHighlights: Array.isArray(technicalHighlights) ? technicalHighlights.length : 'n/a',
-        visualStats: Array.isArray(heroVisualStats) ? heroVisualStats.length : 'n/a'
-      })
-    } catch {
-      // ignore console errors
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locale, headlinePairs, technicalHighlights, heroVisualStats])
-  const capabilityItems = useMemo(() => ([
-    {
-      icon: TypeScriptIcon,
-      label: t('capabilities.ts.label'),
-      value: t('capabilities.ts.value')
-    },
-    {
-      icon: OpenSourceIcon,
-      label: t('capabilities.oss.label'),
-      value: t('capabilities.oss.value')
-    },
-    {
-      icon: StreamingIcon,
-      label: t('capabilities.streaming.label'),
-      value: t('capabilities.streaming.value')
-    },
-    {
-      icon: MemoryIcon,
-      label: t('capabilities.memory.label'),
-      value: t('capabilities.memory.value')
-    }
-  ]), [t])
+    const themeMap: Record<string, string> = {
+      'sakura-sunset': 'sakura-sunset', 'twilight-neo': 'twilight-neo',
+      'aurora-daybreak': 'aurora-daybreak', 'warm-embrace': 'warm-embrace', 'retro-terminus': 'retro-terminus'
+    };
+    applyVisualTheme(themeMap[currentTheme || ''] || 'aurora-daybreak', isDark);
+  }, [currentTheme, isDark]);
 
-  // Lightweight resize listener to toggle mobile optimisations
+  useEffect(() => { setIsReady(true); }, []);
+
+  const productStats = useMemo(() => [
+    { label: t('stats.githubStars'), value: githubStars ?? '—', icon: Star },
+    { label: t('stats.forks'), value: githubForks ?? '—', icon: GitBranch }
+  ], [githubStars, githubForks, t]);
+
   useEffect(() => {
-    const check = () => setIsMobile(window.matchMedia('(max-width: 639px)').matches)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-  
-  const handleCopy = () => {
-    navigator.clipboard.writeText('npm install @framers/agentos')
-    setShowToast(true)
-    
-  }
-  
-  // Fetch GitHub stars (framersai/agentos)
-  useEffect(() => {
-    let cancelled = false
-    const fetchStars = async () => {
-      try {
-        const res = await fetch('https://api.github.com/repos/framersai/agentos', { cache: 'no-store' })
-        if (res.ok) {
-          const data = await res.json()
-          if (!cancelled) setStars(typeof data.stargazers_count === 'number' ? data.stargazers_count : 0)
-        } else {
-          if (!cancelled) setStars(0)
-        }
-      } catch {
-        if (!cancelled) setStars(0)
-      }
-    }
-    fetchStars()
-    return () => { cancelled = true }
-  }, [])
-  
-  // Smooth headline cycle tied to background motion
-  useEffect(() => {
-    let shimmerTimeout: number | undefined
-    const advanceHeadline = () => {
-      setHeadlineIndex((prev) => (prev + 1) % headlinePairs.length)
-      setConverge(true)
-      shimmerTimeout = window.setTimeout(() => setConverge(false), 1400)
-    }
-    const intervalId = window.setInterval(advanceHeadline, 6500)
-    return () => {
-      window.clearInterval(intervalId)
-      if (shimmerTimeout) window.clearTimeout(shimmerTimeout)
-    }
-  }, [headlinePairs.length])
-  
+    fetch('https://api.github.com/repos/framersai/agentos')
+      .then(r => r.json())
+      .then(d => { if (typeof d.stargazers_count === 'number') setGithubStars(d.stargazers_count); if (typeof d.forks_count === 'number') setGithubForks(d.forks_count); })
+      .catch(() => {});
+  }, []);
+
+  const copyCommand = useCallback(() => {
+    navigator.clipboard.writeText('npm install @framers/agentos');
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+  }, []);
+
+  const highlights = [
+    { title: 'Streaming-first', detail: 'Token-level delivery' },
+    { title: 'Deterministic', detail: 'Auditable routing' },
+    { title: 'Zero-copy memory', detail: 'Unified recall' },
+    { title: 'Portable', detail: 'Export anywhere' }
+  ];
+
+  const morphingWords: [string, string] = ['Adaptive', 'Emergent'];
+
+  if (!isReady) return <PageSkeleton />;
+
   return (
-    <>
-      <Toast 
-        message={t('copyToast')} 
-        type="success" 
-        isVisible={showToast} 
-        onClose={() => setShowToast(false)} 
+    <section className="relative min-h-screen flex items-center bg-[var(--color-background-primary)] overflow-hidden" itemScope itemType="https://schema.org/SoftwareApplication">
+      <meta itemProp="name" content="AgentOS" />
+      <meta itemProp="applicationCategory" content="AI Framework" />
+      <meta itemProp="operatingSystem" content="Any" />
+      
+      {/* Background gradient - CSS only */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: isDark
+            ? 'radial-gradient(ellipse 100% 80% at 70% 30%, rgba(139,92,246,0.12) 0%, transparent 50%)'
+            : 'radial-gradient(ellipse 100% 80% at 70% 30%, rgba(139,92,246,0.06) 0%, transparent 50%)'
+        }}
+        aria-hidden="true"
       />
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden transition-theme section-gradient">
-      {/* Subtle organic gradient background */}
-      <div className="absolute inset-0 organic-gradient" />
-      <div className="absolute inset-0 bg-gradient-to-br from-background-primary/92 via-background-secondary/55 to-background-primary/92" />
-      <div className="absolute inset-0 opacity-35 bg-[radial-gradient(circle_at_20%_20%,var(--color-accent-warm-soft),transparent_55%),radial-gradient(circle_at_80%_0%,hsla(260,90%,65%,0.25),transparent_65%)]" />
 
-      {/* Floating particles with emergence/convergence (synced to headline morphs) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Reduce animated particle count on mobile and respect reduced motion */}
-        {[...Array(prefersReducedMotion ? 0 : isMobile ? 6 : 16)].map((_, i) => {
-          const baseX = Math.random() * 100
-          const baseY = Math.random() * 100
-          return (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-accent-primary rounded-full"
-              style={{
-                left: `${baseX}%`,
-                top: `${baseY}%`,
-              }}
-              animate={
-                prefersReducedMotion
-                  ? { opacity: 0.35 }
-                  : converge
-                    ? {
-                        x: (50 - baseX) * 0.45,
-                        y: (50 - baseY) * 0.45,
-                        opacity: 0.85,
-                        scale: 1.5,
-                      }
-                    : {
-                        x: [0, Math.random() * 28 - 14, 0],
-                        y: [0, -22, 0],
-                        opacity: [0.15, 0.6, 0.15],
-                        scale: [1, 1.12, 1],
-                      }
-              }
-              transition={{
-                duration: prefersReducedMotion ? 0 : converge ? 1.4 : 14 + Math.random() * 8,
-                repeat: converge ? 0 : Infinity,
-                delay: converge ? i * 0.015 : Math.random() * 6,
-                ease: [0.45, 0.05, 0.55, 0.95]
-              }}
-            />
-          )
-        })}
+      {/* Neural Constellation - right side, responsive visibility */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 sm:opacity-50 lg:opacity-70" 
+        style={{ marginLeft: 'calc(15% + 40px)', marginTop: '-8%' }} 
+        aria-hidden="true"
+      >
+        <div className="block sm:hidden -z-10"><NeuralConstellation size={250} /></div>
+        <div className="hidden sm:block lg:hidden"><NeuralConstellation size={450} /></div>
+        <div className="hidden lg:block xl:hidden"><NeuralConstellation size={600} /></div>
+        <div className="hidden xl:block"><NeuralConstellation size={750} /></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="mb-8 flex flex-col items-center lg:items-start gap-4">
-            <AnimatedAgentOSLogo />
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism text-sm font-semibold text-accent-primary">
-              {t('badge')}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18">
+        <article className="max-w-2xl">
+          <h1 className="font-bold tracking-tight mb-4" itemProp="description">
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center overflow-visible">
+              <span className="inline-block min-w-[120px] sm:min-w-[160px] lg:min-w-[220px] pr-1">
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="sm:hidden" />
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden sm:inline-block lg:hidden" />
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden lg:inline-block" />
+              </span>
+              <span className="text-[var(--color-text-primary)]">intelligence</span>
+            </div>
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center overflow-visible">
+              <span className="text-[var(--color-text-secondary)]">for&nbsp;</span>
+              <span className="inline-block min-w-[120px] sm:min-w-[160px] lg:min-w-[220px] pr-1">
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="sm:hidden" />
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden sm:inline-block lg:hidden" />
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden lg:inline-block" />
+              </span>
+              <span className="text-[var(--color-text-primary)]">agents</span>
+            </div>
+          </h1>
+
+          <p className="text-sm sm:text-base text-[var(--color-text-secondary)] mb-4 max-w-lg" itemProp="abstract">
+            {t('subtitle')}
+          </p>
+
+          {/* CTAs */}
+          <nav className="flex flex-wrap gap-2 mb-4" aria-label="Primary actions">
+            <LinkButton href={`/${locale === 'en' ? '' : locale + '/'}docs`} variant="primary" size="lg" className="group text-sm">
+              {t('getStarted')}
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+            </LinkButton>
+            <a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" 
+               className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-border-primary)] bg-[var(--color-background-secondary)] text-[var(--color-text-primary)] dark:text-white font-medium text-sm hover:border-[var(--color-accent-primary)] hover:bg-[var(--color-background-elevated)] transition-all"
+               itemProp="codeRepository">
+              <Github className="w-4 h-4 text-[var(--color-text-primary)]" aria-hidden="true" />
+              <span className="text-[var(--color-text-primary)]">View on GitHub</span>
+            </a>
+          </nav>
+
+          {/* Install command */}
+          <div className="mb-4">
+            <Button onClick={copyCommand} variant="secondary" className="gap-2 text-xs sm:text-sm" aria-label="Copy install command">
+              <Terminal className="w-4 h-4 text-[var(--color-accent-primary)]" aria-hidden="true" />
+              <code className="font-mono">npm install @framers/agentos</code>
+            </Button>
+          </div>
+
+          {/* Stats */}
+          <div className="flex flex-wrap gap-4 mb-3" aria-label="GitHub statistics">
+            {productStats.map((stat) => (
+              <div key={stat.label} className="flex items-center gap-1.5 text-sm">
+                <stat.icon className="w-4 h-4 text-[var(--color-accent-primary)]" aria-hidden="true" />
+                <span className="font-semibold text-[var(--color-text-primary)]">{stat.value}</span>
+                <span className="text-[var(--color-text-muted)]">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Badges */}
+          <div className="flex flex-wrap gap-2 mb-5" aria-label="Package badges">
+            <a href="https://www.npmjs.com/package/@framers/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+              <img src="https://img.shields.io/badge/npm-v0.1.0-cb3837?logo=npm" alt="npm version" className="h-5" />
+            </a>
+            <a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+              <img src="https://img.shields.io/badge/coverage-67%25-green" alt="test coverage" className="h-5" />
+            </a>
+            <a href="https://github.com/framersai/agentos/actions" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+              <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="CI status" className="h-5" />
+            </a>
+            <span className="hover:opacity-80 transition-opacity">
+              <img src="https://img.shields.io/badge/TypeScript-5.4+-3178c6?logo=typescript&logoColor=white" alt="TypeScript" className="h-5" />
             </span>
           </div>
 
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] items-center">
-            <div className="text-center lg:text-left space-y-8">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-[-0.02em] overflow-visible font-[family-name:var(--font-grotesk)]"
-              >
-                <span className="inline-block py-2">
-                  <LiquifyMorphText 
-                    words={headlinePairs.map(p => p.top)} 
-                    activeIndex={headlineIndex}
-                    className="font-bold"
-                  />
-                </span>
-                <br />
-                <span className="text-text-primary inline-block py-2">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={activePair.bottom}
-                      initial={{ opacity: 0, y: 12, filter: 'blur(4px)' }}
-                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                      exit={{ opacity: 0, y: -12, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-                      className="inline-block"
-                    >
-                      {activePair.bottom}
-                    </motion.span>
-                  </AnimatePresence>
-                </span>
-              </motion.h1>
+          {/* Features */}
+          <ul className="grid grid-cols-2 lg:grid-cols-4 gap-2 list-none p-0" aria-label="Key features">
+            {highlights.map((h) => (
+              <li key={h.title} className="p-2 rounded-md bg-[var(--color-background-secondary)]/40 border border-[var(--color-border-subtle)]/30">
+                <div className="text-xs font-medium text-[var(--color-text-primary)]">{h.title}</div>
+                <div className="text-[10px] text-[var(--color-text-muted)]">{h.detail}</div>
+              </li>
+            ))}
+          </ul>
 
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.7 }}
-                className="text-xl text-text-secondary leading-relaxed max-w-3xl mx-auto lg:mx-0"
-              >
-                {t('subtitle')}
-              </motion.p>
-
-              <motion.ul
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.5 }}
-                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
-                className="grid sm:grid-cols-2 gap-4"
-              >
-                {technicalHighlights.map((item) => (
-                  <motion.li
-                    key={item.title}
-                    variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
-                    className="rounded-2xl border border-border-subtle/70 bg-white/85 dark:bg-white/5 dark:border-white/10 p-4 shadow-sm dark:shadow-none backdrop-blur text-left"
-                  >
-                    <span className="inline-flex items-center gap-2 text-sm font-semibold text-text-primary mb-2">
-                      <span className="h-2 w-8 rounded-full bg-gradient-to-r from-accent-primary to-accent-secondary" />
-                      {item.title}
-                    </span>
-                    <p className="text-sm text-text-muted leading-relaxed">{item.detail}</p>
-                  </motion.li>
-                ))}
-              </motion.ul>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-              >
-                <Link
-                  href="https://vca.chat"
-                  className="group relative btn-primary overflow-hidden"
-                >
-                  <span className="absolute inset-0 bg-gradient-to-r from-accent-secondary via-accent-tertiary to-[color:var(--color-accent-warm)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    <Zap className="w-5 h-5" />
-                    {t('ctaPrimary')}
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </Link>
-
-                <Link
-                  href="https://github.com/framersai/agentos"
-                  className="btn-secondary group"
-                >
-                  <span className="flex items-center justify-center gap-2">
-                    <Github className="w-5 h-5" />
-                    {t('ctaSecondary')}
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent-primary/10 text-accent-primary font-bold">
-                      {stars ?? '—'}
-                    </span>
-                  </span>
-                </Link>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.75, duration: 0.6 }}
-                className="text-center lg:text-left"
-              >
-                <span className="text-sm text-text-muted">
-                  {t('marketplaceLead')}{' '}
-                  <Link
-                    href="https://app.vca.chat/marketplace"
-                    className="inline-flex items-center gap-1 font-semibold text-accent-primary hover:text-accent-secondary transition-colors"
-                  >
-                    {t('marketplaceCta')}
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-                className="flex justify-center lg:justify-start"
-              >
-                <div className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl glass-morphism shadow-modern">
-                  <Terminal className="w-5 h-5 text-accent-primary animate-pulse-glow" />
-                  <code className="text-sm font-mono text-text-primary select-all">
-                    {t('codeLabel')}
-                  </code>
-                  <button
-                    onClick={handleCopy}
-                    className="p-2 rounded-lg hover:bg-accent-primary/10 transition-colors group"
-                    aria-label={t('copyAria')}
-                  >
-                    <svg className="w-4 h-4 text-text-muted group-hover:text-accent-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                  </button>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="grid grid-cols-2 sm:grid-cols-4 gap-6"
-              >
-                {capabilityItems.map((stat, i) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.9 + i * 0.1 }}
-                    className="text-center group cursor-pointer"
-                  >
-                    <div className="mb-2 inline-flex p-3 rounded-xl glass-morphism group-hover:scale-110 transition-transform">
-                      <stat.icon className="w-6 h-6 text-accent-primary" />
-                    </div>
-                    <div className="text-2xl font-bold text-text-primary">{stat.value}</div>
-                    <div className="text-xs text-text-muted">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-
-            <HeroVisual stats={heroVisualStats} altText={t('heroVisualAlt')} />
+          {/* Compliance badges */}
+          <div className="mt-4 flex items-center gap-3 text-[10px] text-[var(--color-text-muted)]">
+            <span className="flex items-center gap-1"><Shield className="w-3 h-3" aria-hidden="true" />{t('compliance.gdpr')}</span>
+            <span aria-hidden="true">•</span>
+            <span>{t('compliance.soc2')}</span>
           </div>
-        </motion.div>
+        </article>
       </div>
+
+      <Toast message={t('copiedToClipboard')} isVisible={showToast} onClose={() => setShowToast(false)} />
     </section>
-    </>
-  )
+  );
+});
+
+export function HeroSection() {
+  return <HeroSectionInner />;
 }
 
-function HeroVisual({ stats, altText }: { stats: ReadonlyArray<{ label: string; value: string }>; altText: string }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: 0.4, duration: 0.9 }}
-      className="hero-visual-shell"
-    >
-      <div className="rounded-[32px] p-1 hero-visual-glow">
-        <div className="relative h-full w-full rounded-[28px] bg-white/92 dark:bg-slate-950/70 border border-border-subtle/80 dark:border-white/10 shadow-modern-lg overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-r from-accent-primary/40 via-accent-tertiary/40 to-[color:var(--color-accent-warm-soft)] opacity-70 blur-2xl" />
-          <div className="relative p-4 sm:p-6 space-y-4">
-            <div className="rounded-2xl border border-border-subtle/80 overflow-hidden bg-background-primary/95 dark:bg-black/40 shadow-inner">
-              <Image
-                src="/og-image.png"
-                alt={altText}
-                width={880}
-                height={506}
-                priority
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
-              {stats.map((stat) => (
-                <div key={stat.label} className="rounded-xl border border-border-subtle/70 bg-white/85 dark:bg-white/5 dark:border-white/10 p-3 text-left shadow-sm">
-                  <p className="text-xs uppercase tracking-wide text-text-muted mb-1">{stat.label}</p>
-                  <p className="text-lg font-semibold text-text-primary">{stat.value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  )
-}

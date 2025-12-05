@@ -1,7 +1,7 @@
 import { CTASection } from '../../components/sections/cta-section'
 import dynamic from 'next/dynamic'
 import ScrollToTopButton from '../../components/ScrollToTopButton'
-import { HeroSectionRedesigned } from '../../components/sections/hero-section-redesigned'
+import { HeroSection } from '../../components/sections/hero-section'
 import { useTranslations } from 'next-intl'
 
 // Enable static generation for faster initial loads
@@ -71,7 +71,7 @@ export default function LandingPageRedesigned() {
       {/* Main Content */}
       <main id="main-content">
         {/* Hero Section - SSR enabled for faster LCP */}
-        <HeroSectionRedesigned />
+        <HeroSection />
 
       {/* Product Demo Video */}
       <section 
