@@ -114,154 +114,170 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
 }
 
 function AnimatedSVGBackground({ type, color }: { type: string; color: string }) {
-  // Subtle silhouette-like branded backgrounds
+  // Intricate monochromatic patterns - more visible, detailed
+  const uid = `${type}-${color.replace('#', '')}`;
+  
   if (type === 'neural') {
     return (
-      <svg className="absolute inset-0 w-full h-full opacity-15" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+      <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <radialGradient id="neural-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={color} stopOpacity="0.3" />
+          <radialGradient id={`neural-glow-${uid}`} cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stopColor={color} stopOpacity="0.4" />
+            <stop offset="70%" stopColor={color} stopOpacity="0.1" />
             <stop offset="100%" stopColor={color} stopOpacity="0" />
           </radialGradient>
+          <filter id={`neural-blur-${uid}`}>
+            <feGaussianBlur stdDeviation="0.5" />
+          </filter>
         </defs>
-        {/* Central brain silhouette pattern */}
-        <ellipse cx="200" cy="150" rx="100" ry="80" fill="url(#neural-glow)">
-          <animate attributeName="rx" values="95;105;95" dur="8s" repeatCount="indefinite" />
-        </ellipse>
-        {/* Neural connection lines */}
-        {[0, 60, 120, 180, 240, 300].map((angle, i) => (
-          <line
-            key={i}
-            x1="200"
-            y1="150"
-            x2={200 + Math.cos(angle * Math.PI / 180) * 120}
-            y2={150 + Math.sin(angle * Math.PI / 180) * 90}
-            stroke={color}
-            strokeWidth="1"
-            opacity="0.2"
-          >
-            <animate
-              attributeName="opacity"
-              values="0.1;0.3;0.1"
-              dur={`${3 + i * 0.5}s`}
-              repeatCount="indefinite"
-            />
-          </line>
+        {/* Central glow */}
+        <ellipse cx="200" cy="150" rx="90" ry="70" fill={`url(#neural-glow-${uid})`} />
+        {/* Intricate neural network - 3 layers */}
+        {[40, 80, 120].map((radius, layer) => (
+          <g key={layer} filter={`url(#neural-blur-${uid})`}>
+            {Array.from({ length: 8 + layer * 2 }).map((_, i) => {
+              const angle = (i * 360) / (8 + layer * 2);
+              const x = 200 + Math.cos(angle * Math.PI / 180) * radius;
+              const y = 150 + Math.sin(angle * Math.PI / 180) * radius * 0.7;
+              return (
+                <g key={i}>
+                  {/* Node */}
+                  <circle cx={x} cy={y} r={4 - layer * 0.5} fill={color} opacity={0.5 - layer * 0.1}>
+                    <animate attributeName="opacity" values={`${0.3};${0.6};${0.3}`} dur={`${2 + i * 0.2}s`} repeatCount="indefinite" />
+                  </circle>
+                  {/* Connection to center */}
+                  <line x1="200" y1="150" x2={x} y2={y} stroke={color} strokeWidth="0.5" opacity={0.2 - layer * 0.05} />
+                  {/* Cross connections */}
+                  {i % 2 === 0 && layer < 2 && (
+                    <line 
+                      x1={x} y1={y} 
+                      x2={200 + Math.cos(((i + 3) * 360) / (8 + layer * 2) * Math.PI / 180) * (radius + 40)}
+                      y2={150 + Math.sin(((i + 3) * 360) / (8 + layer * 2) * Math.PI / 180) * (radius + 40) * 0.7}
+                      stroke={color} strokeWidth="0.3" opacity="0.15" strokeDasharray="2,2"
+                    />
+                  )}
+                </g>
+              );
+            })}
+          </g>
         ))}
-        {/* Subtle nodes */}
-        {[0, 60, 120, 180, 240, 300].map((angle, i) => (
-          <circle
-            key={`node-${i}`}
-            cx={200 + Math.cos(angle * Math.PI / 180) * 120}
-            cy={150 + Math.sin(angle * Math.PI / 180) * 90}
-            r="4"
-            fill={color}
-            opacity="0.25"
-          >
-            <animate
-              attributeName="r"
-              values="3;5;3"
-              dur={`${2 + i * 0.3}s`}
-              repeatCount="indefinite"
-            />
-          </circle>
-        ))}
+        {/* Central brain icon */}
+        <path d="M200 130 Q185 140 190 155 Q180 165 195 175 Q200 180 205 175 Q220 165 210 155 Q215 140 200 130" 
+          stroke={color} strokeWidth="1" fill="none" opacity="0.4" />
       </svg>
-    )
+    );
   } else if (type === 'flow') {
     return (
-      <svg className="absolute inset-0 w-full h-full opacity-15" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+      <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <linearGradient id={`flow-grad-${uid}`} x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor={color} stopOpacity="0" />
-            <stop offset="50%" stopColor={color} stopOpacity="0.4" />
+            <stop offset="50%" stopColor={color} stopOpacity="0.6" />
             <stop offset="100%" stopColor={color} stopOpacity="0" />
           </linearGradient>
         </defs>
-        {/* Orchestration flow lines */}
-        {[0, 1, 2, 3].map((i) => (
+        {/* Intricate flow network */}
+        {[50, 100, 150, 200, 250].map((y, i) => (
           <g key={i}>
+            {/* Main flow line */}
             <path
-              d={`M -50,${80 + i * 50} Q 100,${60 + i * 50} 200,${80 + i * 50} T 450,${80 + i * 50}`}
-              stroke={color}
-              strokeWidth="1.5"
-              fill="none"
-              opacity="0.2"
-            >
-              <animate
-                attributeName="d"
-                values={`M -50,${80 + i * 50} Q 100,${60 + i * 50} 200,${80 + i * 50} T 450,${80 + i * 50};M -50,${80 + i * 50} Q 100,${100 + i * 50} 200,${80 + i * 50} T 450,${80 + i * 50};M -50,${80 + i * 50} Q 100,${60 + i * 50} 200,${80 + i * 50} T 450,${80 + i * 50}`}
-                dur={`${6 + i}s`}
-                repeatCount="indefinite"
-              />
-            </path>
-            {/* Moving particle on flow */}
-            <circle r="3" fill={color} opacity="0.4">
-              <animateMotion
-                dur={`${4 + i}s`}
-                repeatCount="indefinite"
-                path={`M -50,${80 + i * 50} Q 100,${60 + i * 50} 200,${80 + i * 50} T 450,${80 + i * 50}`}
-              />
-            </circle>
+              d={`M -20,${y} C 80,${y - 20 + i * 5} 150,${y + 15} 200,${y} S 320,${y - 10} 420,${y + 5}`}
+              stroke={color} strokeWidth={1.5 - i * 0.2} fill="none" opacity={0.35 - i * 0.05}
+              strokeLinecap="round"
+            />
+            {/* Data packets */}
+            {[0, 1, 2].map((p) => (
+              <circle key={p} r={3 - p * 0.5} fill={color} opacity={0.6 - p * 0.15}>
+                <animateMotion
+                  dur={`${3 + i + p}s`}
+                  repeatCount="indefinite"
+                  begin={`${p * 1.2}s`}
+                  path={`M -20,${y} C 80,${y - 20 + i * 5} 150,${y + 15} 200,${y} S 320,${y - 10} 420,${y + 5}`}
+                />
+              </circle>
+            ))}
+          </g>
+        ))}
+        {/* Vertical connectors */}
+        {[80, 160, 240, 320].map((x, i) => (
+          <line key={i} x1={x} y1="40" x2={x} y2="260" stroke={color} strokeWidth="0.5" opacity="0.15" strokeDasharray="4,8" />
+        ))}
+        {/* Node clusters */}
+        {[{x: 120, y: 100}, {x: 280, y: 150}, {x: 180, y: 220}].map((pos, i) => (
+          <g key={i}>
+            <circle cx={pos.x} cy={pos.y} r="12" stroke={color} strokeWidth="1" fill="none" opacity="0.3" />
+            <circle cx={pos.x} cy={pos.y} r="5" fill={color} opacity="0.4" />
           </g>
         ))}
       </svg>
-    )
+    );
   } else if (type === 'pulse') {
     return (
-      <svg className="absolute inset-0 w-full h-full opacity-15" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
-        {/* Streaming/pulse pattern - like a signal emanating */}
+      <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <radialGradient id="pulse-center" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={color} stopOpacity="0.4" />
+          <radialGradient id={`pulse-center-${uid}`} cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor={color} stopOpacity="0.5" />
             <stop offset="100%" stopColor={color} stopOpacity="0" />
           </radialGradient>
         </defs>
-        {/* Central dot */}
-        <circle cx="200" cy="150" r="8" fill={color} opacity="0.3">
-          <animate attributeName="r" values="6;10;6" dur="2s" repeatCount="indefinite" />
+        {/* Central energy source */}
+        <circle cx="200" cy="150" r="15" fill={`url(#pulse-center-${uid})`}>
+          <animate attributeName="r" values="12;18;12" dur="1.5s" repeatCount="indefinite" />
         </circle>
-        {/* Expanding pulse rings */}
-        {[0, 1, 2].map((i) => (
-          <circle
-            key={i}
-            cx="200"
-            cy="150"
-            r="30"
-            stroke={color}
-            strokeWidth="1.5"
-            fill="none"
-          >
-            <animate
-              attributeName="r"
-              values="30;100;30"
-              dur={`${3 + i * 0.5}s`}
-              repeatCount="indefinite"
-              begin={`${i * 0.8}s`}
-            />
-            <animate
-              attributeName="opacity"
-              values="0.4;0;0.4"
-              dur={`${3 + i * 0.5}s`}
-              repeatCount="indefinite"
-              begin={`${i * 0.8}s`}
-            />
+        <circle cx="200" cy="150" r="6" fill={color} opacity="0.6">
+          <animate attributeName="opacity" values="0.4;0.8;0.4" dur="1s" repeatCount="indefinite" />
+        </circle>
+        {/* Multiple pulse rings */}
+        {[0, 1, 2, 3, 4].map((i) => (
+          <circle key={i} cx="200" cy="150" r="20" stroke={color} strokeWidth={1.5 - i * 0.2} fill="none">
+            <animate attributeName="r" values="20;140;20" dur={`${2.5 + i * 0.3}s`} repeatCount="indefinite" begin={`${i * 0.4}s`} />
+            <animate attributeName="opacity" values="0.5;0;0.5" dur={`${2.5 + i * 0.3}s`} repeatCount="indefinite" begin={`${i * 0.4}s`} />
           </circle>
         ))}
-        {/* Lightning bolt silhouette */}
-        <path
-          d="M195 120 L210 145 L200 145 L215 180 L190 150 L205 150 Z"
-          fill={color}
-          opacity="0.15"
-        />
+        {/* Signal rays */}
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
+          <line key={i}
+            x1={200 + Math.cos(angle * Math.PI / 180) * 25}
+            y1={150 + Math.sin(angle * Math.PI / 180) * 25}
+            x2={200 + Math.cos(angle * Math.PI / 180) * 130}
+            y2={150 + Math.sin(angle * Math.PI / 180) * 100}
+            stroke={color} strokeWidth="0.8" opacity="0.2" strokeDasharray="3,6"
+          >
+            <animate attributeName="opacity" values="0.1;0.35;0.1" dur={`${1.5 + i * 0.1}s`} repeatCount="indefinite" />
+          </line>
+        ))}
+        {/* Lightning bolt */}
+        <path d="M195 115 L212 145 L198 148 L218 190 L185 155 L202 152 L185 125 Z"
+          fill={color} opacity="0.25" />
       </svg>
-    )
+    );
   } else {
     // Grid pattern - database/storage themed
     return (
-      <svg className="absolute inset-0 w-full h-full opacity-12" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+      <svg className="absolute inset-0 w-full h-full opacity-25" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id={`grid-${uid}`} width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke={color} strokeWidth="0.3" opacity="0.3" />
+          </pattern>
+        </defs>
+        {/* Grid background */}
+        <rect width="400" height="300" fill={`url(#grid-${uid})`} opacity="0.5" />
+        {/* Database cylinders */}
+        {[{x: 100, y: 80}, {x: 200, y: 150}, {x: 300, y: 100}, {x: 150, y: 200}].map((pos, i) => (
+          <g key={i} opacity={0.4 - i * 0.05}>
+            <ellipse cx={pos.x} cy={pos.y - 20} rx="35" ry="12" fill={color} opacity="0.3" />
+            <rect x={pos.x - 35} y={pos.y - 20} width="70" height="45" fill={color} opacity="0.2" />
+            <ellipse cx={pos.x} cy={pos.y + 25} rx="35" ry="12" fill={color} opacity="0.35" />
+            {/* Data lines */}
+            <line x1={pos.x - 20} y1={pos.y - 5} x2={pos.x + 20} y2={pos.y - 5} stroke={color} strokeWidth="2" opacity="0.4" />
+            <line x1={pos.x - 15} y1={pos.y + 5} x2={pos.x + 15} y2={pos.y + 5} stroke={color} strokeWidth="2" opacity="0.3" />
+          </g>
+        ))}
+        {/* Connection lines between databases */}
+        <path d="M135 80 Q200 60 265 100" stroke={color} strokeWidth="1" fill="none" opacity="0.2" strokeDasharray="4,4" />
+        <path d="M200 150 L150 200" stroke={color} strokeWidth="1" fill="none" opacity="0.2" strokeDasharray="4,4" />
         {/* Database cylinder silhouette */}
-        <ellipse cx="200" cy="100" rx="80" ry="25" fill={color} opacity="0.2" />
+        <ellipse cx="200" cy="100" rx="80" ry="25" fill={color} opacity="0.15" />
         <rect x="120" y="100" width="160" height="100" fill={color} opacity="0.15" />
         <ellipse cx="200" cy="200" rx="80" ry="25" fill={color} opacity="0.2" />
         {/* Grid lines inside */}

@@ -9,7 +9,6 @@ import AgentOSWordmark from './branding/AgentOSWordmark';
 import { ModeToggle } from './mode-toggle';
 import { ThemeSelector } from './theme-selector';
 import { LanguageSwitcher } from './language-switcher';
-import { motion } from 'framer-motion';
 
 /**
  * Enhanced SiteHeader with modern design and marketplace link
@@ -111,11 +110,9 @@ export function SiteHeader() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="fixed top-0 z-50 w-full transition-all duration-300 transition-theme"
+    <header
+      className="fixed top-0 z-50 w-full animate-fade-in"
+      style={{ willChange: 'transform' }}
     >
       {/* Holographic glass panel with subtle iridescent edge */}
       <div
@@ -204,17 +201,15 @@ export function SiteHeader() {
             <Github className="w-4 h-4" />
             <span className="font-semibold">{t('github')}</span>
           </a>
-          {/* Marketplace button */}
-          <a
-            href="https://app.vca.chat/marketplace"
-            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl glass-morphism text-sm font-semibold text-accent-primary hover:bg-accent-primary/10 transition-all duration-300 group"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Marketplace button - Coming Soon */}
+          <span
+            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl glass-morphism text-sm font-semibold text-[var(--color-text-muted)] cursor-not-allowed opacity-60"
+            title="Marketplace coming soon"
           >
             <Globe className="w-4 h-4" />
             {t('marketplace')}
-            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-          </a>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-accent-primary)]/20 text-[var(--color-accent-primary)]">Soon</span>
+          </span>
 
           {/* Frame.dev CTA - Better styled with high contrast, smaller */}
           <a
@@ -264,12 +259,10 @@ export function SiteHeader() {
       </div>
 
       {/* Mobile menu */}
-      <motion.div
-        initial={false}
-        animate={menuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-        transition={{ duration: 0.2 }}
-        className={`lg:hidden ${menuOpen ? 'block' : 'hidden'}`}
+      <div
+        className={`lg:hidden transition-all duration-200 ${menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
         id="mobile-menu"
+        style={{ display: menuOpen ? 'block' : 'none' }}
       >
         <div ref={menuRef} className="mx-4 mb-4 mt-2 rounded-2xl glass-morphism shadow-modern overflow-hidden">
           <nav className="flex flex-col" aria-label="Mobile navigation">
@@ -333,7 +326,7 @@ export function SiteHeader() {
             </div>
           </nav>
         </div>
-      </motion.div>
-    </motion.header>
+      </div>
+    </header>
   );
 }

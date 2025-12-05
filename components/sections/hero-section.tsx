@@ -10,15 +10,23 @@ import { Button } from '../ui/Button';
 import { applyVisualTheme } from '@/lib/visual-design-system';
 import { useTheme } from 'next-themes';
 
+// Skeleton placeholder for morphing text
+const TextSkeleton = ({ width }: { width: string }) => (
+  <span 
+    className="inline-block rounded bg-gradient-to-r from-violet-500/20 to-cyan-500/20 animate-pulse"
+    style={{ width, height: '1em', verticalAlign: 'middle' }}
+  />
+);
+
 // Lazy load heavy animation components - deferred for better LCP
 const NeuralConstellation = dynamic(() => import('../hero/neural-constellation').then(m => ({ default: m.NeuralConstellation })), {
   ssr: false,
-  loading: () => null // No loading state - renders when ready
+  loading: () => null
 });
 
 const ParticleMorphText = dynamic(() => import('../hero/particle-morph-text').then(m => ({ default: m.ParticleMorphText })), {
   ssr: false,
-  loading: () => <span className="opacity-0">Adaptive</span> // Invisible placeholder to prevent layout shift
+  loading: () => <TextSkeleton width="120px" />
 });
 
 const HeroSectionInner = memo(function HeroSectionInner() {
@@ -29,10 +37,16 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   const [githubStars, setGithubStars] = useState<number | null>(null);
   const [githubForks, setGithubForks] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
   const isDark = resolvedTheme === 'dark';
 
-  // Mark as mounted after hydration
-  useEffect(() => { setMounted(true); }, []);
+  // Mark as mounted after hydration, then trigger content ready
+  useEffect(() => { 
+    setMounted(true);
+    // Small delay for smooth fade-in
+    const timer = setTimeout(() => setContentReady(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (!mounted) return;
@@ -94,6 +108,24 @@ const HeroSectionInner = memo(function HeroSectionInner() {
       <meta itemProp="applicationCategory" content="AI Framework" />
       <meta itemProp="operatingSystem" content="Any" />
       
+      {/* Loading skeleton overlay - fades out when content ready */}
+      <div 
+        className={`absolute inset-0 z-20 bg-[var(--color-background-primary)] transition-opacity duration-300 pointer-events-none ${contentReady ? 'opacity-0' : 'opacity-100'}`}
+        aria-hidden="true"
+      >
+        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 mt-16">
+          <div className="max-w-2xl space-y-4">
+            <div className="h-10 w-64 bg-gradient-to-r from-violet-500/10 to-cyan-500/10 rounded animate-pulse" />
+            <div className="h-10 w-48 bg-gradient-to-r from-pink-500/10 to-indigo-500/10 rounded animate-pulse" />
+            <div className="h-4 w-96 bg-[var(--color-background-secondary)] rounded animate-pulse mt-4" />
+            <div className="flex gap-2 mt-4">
+              <div className="h-10 w-32 bg-violet-500/20 rounded-lg animate-pulse" />
+              <div className="h-10 w-36 bg-[var(--color-background-secondary)] rounded-lg animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </div>
+      
       {/* Background gradient - CSS only */}
       <div 
         className="absolute inset-0 pointer-events-none"
@@ -117,11 +149,11 @@ const HeroSectionInner = memo(function HeroSectionInner() {
         <div className="hidden xl:block"><NeuralConstellation size={750} /></div>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18">
+      <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
           <h1 className="font-bold tracking-tight mb-4" itemProp="description">
             <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
-              <span className="inline-block mr-2">
+              <span className="inline-block mr-2" style={{ marginTop: '-4px' }}>
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="sm:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden sm:inline-block lg:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden lg:inline-block" />
@@ -130,7 +162,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             </div>
             <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
               <span className="text-[var(--color-text-secondary)]">for&nbsp;</span>
-              <span className="inline-block mr-2">
+              <span className="inline-block mr-2" style={{ marginTop: '-4px' }}>
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="sm:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden sm:inline-block lg:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden lg:inline-block" />
