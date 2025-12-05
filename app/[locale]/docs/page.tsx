@@ -99,9 +99,9 @@ export default function DocsPage() {
             </p>
             <div>
               <pre className="code-block overflow-x-auto">
-                <code>{`pnpm add @framersai/agentos
+                <code>{`pnpm add @framers/agentos
 
-import { AgentOS } from "@framersai/agentos";
+import { AgentOS } from "@framers/agentos";
 
 const agentos = new AgentOS();
 await agentos.initialize(config);`}</code>

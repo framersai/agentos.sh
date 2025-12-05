@@ -692,10 +692,10 @@ volumes:
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <div className="px-8 py-4 bg-[var(--color-background-elevated)] rounded-xl font-mono text-sm border-2 border-[var(--color-border-interactive)] shadow-lg">
-                  <span className="text-[var(--color-text-muted)]">$</span> npm install @framersai/agentos
+                  <span className="text-[var(--color-text-muted)]">$</span> npm install @framers/agentos
                   <button
                     onClick={() => {
-                        navigator.clipboard.writeText('npm install @framersai/agentos');
+                        navigator.clipboard.writeText('npm install @framers/agentos');
                         // Use a simple alert or reuse toast if available in this context.
                         // For now, visual feedback on the button is good.
                     }}

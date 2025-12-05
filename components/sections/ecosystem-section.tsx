@@ -213,7 +213,7 @@ export function EcosystemSection() {
         )
         let downloads: number | null = null
         try {
-          const npmResponse = await fetch('https://api.npmjs.org/downloads/point/last-week/@framersai/agentos')
+          const npmResponse = await fetch('https://api.npmjs.org/downloads/point/last-week/@framers/agentos')
           if (npmResponse.ok) {
             const npmJson = await npmResponse.json()
             downloads = npmJson?.downloads ?? null

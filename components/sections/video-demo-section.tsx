@@ -18,7 +18,7 @@ const demoVideoData = {
     { start: 21, end: 24, text: "Multi-agent workflows", shape: 'hexagon', position: 'top-left' },
     { start: 24, end: 27, text: "Real-time streaming", shape: 'diamond', position: 'bottom-right' },
     { start: 27, end: 30, text: "Join thousands of developers", shape: 'rounded', position: 'center' },
-    { start: 30, end: 35, text: "npm install @framersai/agentos", shape: 'hexagon', position: 'bottom-center' },
+    { start: 30, end: 35, text: "npm install @framers/agentos", shape: 'hexagon', position: 'bottom-center' },
     { start: 35, end: 40, text: "Start building today", shape: 'diamond', position: 'top-center' },
     { start: 40, end: 45, text: "Production-ready runtime", shape: 'rounded', position: 'top-left' },
     { start: 45, end: 50, text: "Scale to millions", shape: 'hexagon', position: 'bottom-right' },

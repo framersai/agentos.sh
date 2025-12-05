@@ -149,7 +149,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
           </div>
 
           {/* Stats */}
-          <div className="flex gap-4 mb-5" aria-label="GitHub statistics">
+          <div className="flex flex-wrap gap-4 mb-3" aria-label="GitHub statistics">
             {productStats.map((stat) => (
               <div key={stat.label} className="flex items-center gap-1.5 text-sm">
                 <stat.icon className="w-4 h-4 text-[var(--color-accent-primary)]" aria-hidden="true" />
@@ -157,6 +157,20 @@ const HeroSectionInner = memo(function HeroSectionInner() {
                 <span className="text-[var(--color-text-muted)]">{stat.label}</span>
               </div>
             ))}
+          </div>
+
+          {/* Badges */}
+          <div className="flex flex-wrap gap-2 mb-5" aria-label="Package badges">
+            <a href="https://www.npmjs.com/package/@framers/agentos" target="_blank" rel="noopener noreferrer">
+              <img src="https://img.shields.io/npm/v/@framers/agentos?logo=npm&color=cb3837&label=npm" alt="npm version" className="h-5" />
+            </a>
+            <a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer">
+              <img src="https://img.shields.io/badge/coverage-67%25-yellow" alt="test coverage" className="h-5" />
+            </a>
+            <a href="https://github.com/framersai/agentos/actions" target="_blank" rel="noopener noreferrer">
+              <img src="https://img.shields.io/github/actions/workflow/status/framersai/agentos/agentos-ci.yml?label=CI" alt="CI status" className="h-5" />
+            </a>
+            <img src="https://img.shields.io/badge/TypeScript-5.4+-3178c6?logo=typescript&logoColor=white" alt="TypeScript" className="h-5" />
           </div>
 
           {/* Features */}
