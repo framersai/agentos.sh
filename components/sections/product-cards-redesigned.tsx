@@ -419,35 +419,30 @@ export function ProductCardsRedesigned() {
                 <div 
                   className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl overflow-hidden"
                 >
-                  <div className="holographic-card h-full p-8 flex flex-col items-center justify-center text-center border-2 border-accent-primary/30 bg-[var(--color-background-elevated)] backdrop-blur-xl">
-                    <div className="absolute inset-0 opacity-10 bg-[url('/grid.svg')] bg-center" />
+                  <div className="holographic-card h-full p-6 flex flex-col items-center justify-center border-2 border-accent-primary/30 bg-[var(--color-background-elevated)] backdrop-blur-xl">
+                    <AnimatedSVGBackground type={card.bgAnimation} color={card.accentColor} />
                     
-                    <h4 className="text-lg font-bold mb-6 relative z-10 text-[var(--color-text-primary)]">Core Features</h4>
-                    
-                    <div className="grid grid-cols-1 gap-4 w-full relative z-10">
+                    <div className="grid grid-cols-1 gap-3 w-full relative z-10 mb-4">
                       {card.capabilities.map((tech, i) => (
                         <div 
                           key={i}
-                          className="flex items-center gap-3 p-3 rounded-xl bg-[var(--color-background-secondary)] border border-[var(--color-border-subtle)] hover:border-[var(--color-border-interactive)] transition-colors"
+                          className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-[var(--color-background-secondary)] to-transparent border border-[var(--color-border-subtle)] hover:border-[var(--color-accent-primary)]/50 transition-colors"
                         >
-                          {tech.icon && <tech.icon className="w-5 h-5 text-accent-primary" />}
+                          {tech.icon && <tech.icon className="w-5 h-5 text-[var(--color-accent-primary)]" />}
                           <span className="font-mono text-sm font-semibold text-[var(--color-text-primary)]">{tech.name}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="mt-8 relative z-10">
-                      <div className="text-xs text-muted uppercase tracking-wider mb-2">Capabilities</div>
-                      <div className="flex flex-wrap justify-center gap-2">
-                        {card.features.map((feature, i) => (
-                          <span
-                            key={i}
-                            className="text-[11px] px-3 py-1 rounded-full font-semibold border border-[var(--color-border-subtle)] bg-[var(--color-background-primary)] text-[var(--color-text-primary)] dark:bg-white/10 dark:text-white/90"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
+                    <div className="flex flex-wrap justify-center gap-2 relative z-10">
+                      {card.features.map((feature, i) => (
+                        <span
+                          key={i}
+                          className="text-[11px] px-3 py-1.5 rounded-full font-semibold bg-gradient-to-r from-[var(--color-accent-primary)]/20 to-[var(--color-accent-secondary)]/20 border border-[var(--color-accent-primary)]/30 text-[var(--color-text-primary)]"
+                        >
+                          {feature}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>

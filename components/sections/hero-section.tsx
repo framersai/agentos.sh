@@ -4,21 +4,21 @@ import { useCallback, useEffect, useMemo, useState, memo } from 'react';
 import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
-import { PageSkeleton } from '../ui/page-skeleton';
 import { Toast } from '../ui/toast';
 import { LinkButton } from '../ui/LinkButton';
 import { Button } from '../ui/Button';
 import { applyVisualTheme } from '@/lib/visual-design-system';
 import { useTheme } from 'next-themes';
 
-// Lazy load heavy animation components
+// Lazy load heavy animation components - deferred for better LCP
 const NeuralConstellation = dynamic(() => import('../hero/neural-constellation').then(m => ({ default: m.NeuralConstellation })), {
   ssr: false,
-  loading: () => <div className="w-full h-full rounded-full bg-gradient-to-br from-violet-500/10 to-cyan-500/10 animate-pulse" />
+  loading: () => null // No loading state - renders when ready
 });
 
 const ParticleMorphText = dynamic(() => import('../hero/particle-morph-text').then(m => ({ default: m.ParticleMorphText })), {
   ssr: false,
+  loading: () => <span className="opacity-0">Adaptive</span> // Invisible placeholder to prevent layout shift
 });
 
 const HeroSectionInner = memo(function HeroSectionInner() {
@@ -28,28 +28,48 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   const [showToast, setShowToast] = useState(false);
   const [githubStars, setGithubStars] = useState<number | null>(null);
   const [githubForks, setGithubForks] = useState<number | null>(null);
-  const [isReady, setIsReady] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const isDark = resolvedTheme === 'dark';
 
+  // Mark as mounted after hydration
+  useEffect(() => { setMounted(true); }, []);
+
   useEffect(() => {
+    if (!mounted) return;
     const themeMap: Record<string, string> = {
       'sakura-sunset': 'sakura-sunset', 'twilight-neo': 'twilight-neo',
       'aurora-daybreak': 'aurora-daybreak', 'warm-embrace': 'warm-embrace', 'retro-terminus': 'retro-terminus'
     };
     applyVisualTheme(themeMap[currentTheme || ''] || 'aurora-daybreak', isDark);
-  }, [currentTheme, isDark]);
-
-  useEffect(() => { setIsReady(true); }, []);
+  }, [currentTheme, isDark, mounted]);
 
   const productStats = useMemo(() => [
     { label: t('stats.githubStars'), value: githubStars ?? '—', icon: Star },
     { label: t('stats.forks'), value: githubForks ?? '—', icon: GitBranch }
   ], [githubStars, githubForks, t]);
 
+  // Fetch GitHub stats with cache
   useEffect(() => {
+    const cached = sessionStorage.getItem('github-stats');
+    if (cached) {
+      try {
+        const { stars, forks, ts } = JSON.parse(cached);
+        if (Date.now() - ts < 300000) { // 5 min cache
+          setGithubStars(stars);
+          setGithubForks(forks);
+          return;
+        }
+      } catch {}
+    }
     fetch('https://api.github.com/repos/framersai/agentos')
       .then(r => r.json())
-      .then(d => { if (typeof d.stargazers_count === 'number') setGithubStars(d.stargazers_count); if (typeof d.forks_count === 'number') setGithubForks(d.forks_count); })
+      .then(d => {
+        if (typeof d.stargazers_count === 'number') {
+          setGithubStars(d.stargazers_count);
+          setGithubForks(d.forks_count);
+          sessionStorage.setItem('github-stats', JSON.stringify({ stars: d.stargazers_count, forks: d.forks_count, ts: Date.now() }));
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -67,8 +87,6 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   ];
 
   const morphingWords: [string, string] = ['Adaptive', 'Emergent'];
-
-  if (!isReady) return <PageSkeleton />;
 
   return (
     <section className="relative min-h-screen flex items-center bg-[var(--color-background-primary)] overflow-hidden" itemScope itemType="https://schema.org/SoftwareApplication">
@@ -102,17 +120,17 @@ const HeroSectionInner = memo(function HeroSectionInner() {
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18">
         <article className="max-w-2xl">
           <h1 className="font-bold tracking-tight mb-4" itemProp="description">
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center overflow-visible">
-              <span className="inline-block min-w-[120px] sm:min-w-[160px] lg:min-w-[220px] pr-1">
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
+              <span className="inline-block mr-2">
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="sm:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden sm:inline-block lg:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden lg:inline-block" />
               </span>
               <span className="text-[var(--color-text-primary)]">intelligence</span>
             </div>
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center overflow-visible">
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
               <span className="text-[var(--color-text-secondary)]">for&nbsp;</span>
-              <span className="inline-block min-w-[120px] sm:min-w-[160px] lg:min-w-[220px] pr-1">
+              <span className="inline-block mr-2">
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="sm:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden sm:inline-block lg:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden lg:inline-block" />
