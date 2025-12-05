@@ -54,7 +54,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   }, []);
 
   const copyCommand = useCallback(() => {
-    navigator.clipboard.writeText('npm install agentos');
+    navigator.clipboard.writeText('npm install @framers/agentos');
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2000);
   }, []);
@@ -144,7 +144,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
           <div className="mb-4">
             <Button onClick={copyCommand} variant="secondary" className="gap-2 text-xs sm:text-sm" aria-label="Copy install command">
               <Terminal className="w-4 h-4 text-[var(--color-accent-primary)]" aria-hidden="true" />
-              <code className="font-mono">npm install agentos</code>
+              <code className="font-mono">npm install @framers/agentos</code>
             </Button>
           </div>
 

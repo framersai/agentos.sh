@@ -30,7 +30,7 @@ Traditional agent frameworks are often brittle, relying on static chains of thou
 Getting started is as simple as running:
 
 ```bash
-npm install agentos
+npm install @framers/agentos
 ```
 
 Check out our [Documentation](/docs) for more details and join our community to start building the next generation of AI.
