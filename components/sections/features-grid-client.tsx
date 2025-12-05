@@ -213,7 +213,7 @@ agentos deploy --env production`
   return (
     <section 
       id="features" 
-      className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+      className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
       ref={containerRef}
     >
       {/* Background subtle gradient */}

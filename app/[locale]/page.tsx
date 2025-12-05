@@ -75,12 +75,12 @@ export default function LandingPageRedesigned() {
 
       {/* Product Demo Video */}
       <section 
-        className="py-20 px-4 sm:px-6 lg:px-8 relative"
+        className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative"
         aria-labelledby="demo-heading"
       >
         <div className="max-w-7xl mx-auto">
-          <header className="text-center mb-8">
-            <h2 id="demo-heading" className="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text mb-3">
+          <header className="text-center mb-6">
+            <h2 id="demo-heading" className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-2">
               Product Demo
             </h2>
             <p className="text-sm text-[var(--color-text-muted)] max-w-2xl mx-auto">
@@ -121,32 +121,27 @@ export default function LandingPageRedesigned() {
 
         {/* Enterprise Edition Info */}
         <section 
-          className="py-16 px-4 sm:px-6 lg:px-8 relative"
+          className="py-10 sm:py-12 px-4 sm:px-6 lg:px-8 relative"
           aria-labelledby="enterprise-heading"
         >
-          <article className="max-w-6xl mx-auto holographic-card p-8">
-            <div className="grid md:grid-cols-2 gap-8">
+          <article className="max-w-6xl mx-auto holographic-card p-6 sm:p-8">
+            <div className="grid md:grid-cols-2 gap-6">
               <header>
-                <h2 id="enterprise-heading" className="text-2xl sm:text-3xl font-bold text-[var(--color-text-primary)] mb-3">
-                  AgentOS Enterprise Edition
+                <h2 id="enterprise-heading" className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)] mb-2">
+                  AgentOS Enterprise
                 </h2>
                 <p className="text-sm text-[var(--color-text-muted)]">
-                  Additional robustness for CI/CD and automated deployments, self‑hosting, advanced PII/anon controls,
-                  evaluations/telemetry, and first‑class local model hosting. Contact{' '}
-                  <a className="underline text-[var(--color-accent-primary)] hover:text-[var(--color-accent-secondary)] transition-colors" href="mailto:team@frame.dev">team@frame.dev</a> or visit{' '}
-                  <a className="underline text-[var(--color-accent-primary)] hover:text-[var(--color-accent-secondary)] transition-colors" href="https://frame.dev" target="_blank" rel="noreferrer">Frame.dev</a>.
+                  Self-hosting, advanced PII controls, telemetry, and local model hosting. Contact{' '}
+                  <a className="underline text-[var(--color-accent-primary)] hover:text-[var(--color-accent-secondary)] transition-colors" href="mailto:team@frame.dev">team@frame.dev</a>.
                 </p>
               </header>
-              <div>
-                <ul className="space-y-2 text-sm text-[var(--color-text-secondary)]" role="list">
-                  <li>• Automated self‑hosted deployments with CI/CD pipelines</li>
-                  <li>• Enhanced PII handling, anonymization plugins, audit trails</li>
-                  <li>• Advanced evaluation and telemetry for production workloads</li>
-                  <li>• Optimized on‑prem/local model serving with GPU orchestration</li>
-                  <li>• SDKs and integrations for fine‑tuning and model ingestion</li>
-                  <li>• SSO/Auth and subscriptions/payments integrations</li>
-                </ul>
-              </div>
+              <ul className="space-y-1.5 text-sm text-[var(--color-text-secondary)]" role="list">
+                <li>• CI/CD pipelines & self-hosted deployments</li>
+                <li>• PII handling, anonymization, audit trails</li>
+                <li>• Production telemetry & evaluation</li>
+                <li>• GPU orchestration & local models</li>
+                <li>• SSO, payments & SDK integrations</li>
+              </ul>
             </div>
           </article>
         </section>

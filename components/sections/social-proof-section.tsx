@@ -18,7 +18,7 @@ export function SocialProofSection() {
   ] as const
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-tint" aria-labelledby="social-proof-heading">
+    <section className="py-10 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-tint" aria-labelledby="social-proof-heading">
       <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_80%_20%,var(--color-accent-primary),transparent_55%)]" />
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div

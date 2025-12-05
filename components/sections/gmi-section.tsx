@@ -292,7 +292,7 @@ export function GMISection() {
     )
   }
   return (
-    <section id="gmis" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme section-gradient" aria-labelledby="gmi-heading">
+    <section id="gmis" className="py-12 sm:py-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme section-gradient" aria-labelledby="gmi-heading">
       {/* Subtle organic gradient */}
       <div className="absolute inset-0 organic-gradient opacity-20" />
 

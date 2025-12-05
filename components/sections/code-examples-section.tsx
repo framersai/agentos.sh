@@ -420,7 +420,7 @@ volumes:
   }
 
   return (
-    <section id="code" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="code-examples-heading">
+    <section id="code" className="py-12 sm:py-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="code-examples-heading">
       {/* Subtle organic gradient background */}
       <div className="absolute inset-0 organic-gradient opacity-20" />
 
