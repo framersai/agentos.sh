@@ -107,18 +107,22 @@ const HeroSectionInner = memo(function HeroSectionInner() {
         <article className="max-w-2xl">
           {/* SEO-optimized headline with proper h1 */}
           <h1 className="font-bold tracking-tight mb-4" itemProp="description">
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
-              <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="sm:hidden" />
-              <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden sm:inline-block lg:hidden" />
-              <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden lg:inline-block" />
-              <span className="text-[var(--color-text-primary)]">&nbsp;intelligence</span>
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center overflow-visible">
+              <span className="inline-block min-w-[120px] sm:min-w-[160px] lg:min-w-[220px] pr-1">
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="sm:hidden" />
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden sm:inline-block lg:hidden" />
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden lg:inline-block" />
+              </span>
+              <span className="text-[var(--color-text-primary)]">intelligence</span>
             </div>
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center overflow-visible">
               <span className="text-[var(--color-text-secondary)]">for&nbsp;</span>
-              <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="sm:hidden" />
-              <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden sm:inline-block lg:hidden" />
-              <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden lg:inline-block" />
-              <span className="text-[var(--color-text-primary)]">&nbsp;agents</span>
+              <span className="inline-block min-w-[120px] sm:min-w-[160px] lg:min-w-[220px] pr-1">
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="sm:hidden" />
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden sm:inline-block lg:hidden" />
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden lg:inline-block" />
+              </span>
+              <span className="text-[var(--color-text-primary)]">agents</span>
             </div>
           </h1>
 
@@ -133,10 +137,10 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
             </LinkButton>
             <a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" 
-               className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-border-primary)] bg-[var(--color-background-card)] text-[var(--color-text-primary)] font-medium text-sm hover:border-[var(--color-accent-primary)] transition-colors"
+               className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-border-primary)] bg-[var(--color-background-secondary)] text-[var(--color-text-primary)] dark:text-white font-medium text-sm hover:border-[var(--color-accent-primary)] hover:bg-[var(--color-background-elevated)] transition-all"
                itemProp="codeRepository">
-              <Github className="w-4 h-4" aria-hidden="true" />
-              <span>GitHub</span>
+              <Github className="w-4 h-4 text-[var(--color-text-primary)]" aria-hidden="true" />
+              <span className="text-[var(--color-text-primary)]">View on GitHub</span>
             </a>
           </nav>
 
@@ -161,16 +165,18 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
           {/* Badges */}
           <div className="flex flex-wrap gap-2 mb-5" aria-label="Package badges">
-            <a href="https://www.npmjs.com/package/@framers/agentos" target="_blank" rel="noopener noreferrer">
-              <img src="https://img.shields.io/npm/v/@framers/agentos?logo=npm&color=cb3837&label=npm" alt="npm version" className="h-5" />
+            <a href="https://www.npmjs.com/package/@framers/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+              <img src="https://img.shields.io/badge/npm-v0.1.0-cb3837?logo=npm" alt="npm version" className="h-5" />
             </a>
-            <a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer">
-              <img src="https://img.shields.io/badge/coverage-67%25-yellow" alt="test coverage" className="h-5" />
+            <a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+              <img src="https://img.shields.io/badge/coverage-67%25-green" alt="test coverage" className="h-5" />
             </a>
-            <a href="https://github.com/framersai/agentos/actions" target="_blank" rel="noopener noreferrer">
-              <img src="https://img.shields.io/github/actions/workflow/status/framersai/agentos/agentos-ci.yml?label=CI" alt="CI status" className="h-5" />
+            <a href="https://github.com/framersai/agentos/actions" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+              <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="CI status" className="h-5" />
             </a>
-            <img src="https://img.shields.io/badge/TypeScript-5.4+-3178c6?logo=typescript&logoColor=white" alt="TypeScript" className="h-5" />
+            <span className="hover:opacity-80 transition-opacity">
+              <img src="https://img.shields.io/badge/TypeScript-5.4+-3178c6?logo=typescript&logoColor=white" alt="TypeScript" className="h-5" />
+            </span>
           </div>
 
           {/* Features */}
