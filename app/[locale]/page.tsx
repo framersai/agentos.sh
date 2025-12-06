@@ -20,6 +20,12 @@ const HolographicVideoPlayerLazy = dynamic(
   { ssr: false, loading: () => <div className="aspect-video bg-slate-900/50 rounded-xl animate-pulse" /> }
 )
 
+// Demo Video Player with captions
+const DemoVideoPlayerLazy = dynamic(
+  () => import('../../components/video/DemoVideoPlayer').then(m => m.DemoVideoPlayer),
+  { ssr: false, loading: () => <div className="aspect-video bg-slate-900/50 rounded-xl animate-pulse" /> }
+)
+
 const ProductCardsLazy = dynamic(
   () => import('../../components/sections/product-cards-redesigned').then(m => m.ProductCardsRedesigned),
   { ssr: true }
@@ -73,27 +79,8 @@ export default function LandingPageRedesigned() {
         {/* Hero Section - SSR enabled for faster LCP */}
         <HeroSection />
 
-      {/* Product Demo Video */}
-      <section 
-        className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative"
-        aria-labelledby="demo-heading"
-      >
-        <div className="max-w-7xl mx-auto">
-          <header className="text-center mb-6">
-            <h2 id="demo-heading" className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-2">
-              Product Demo
-            </h2>
-            <p className="text-sm text-[var(--color-text-muted)] max-w-2xl mx-auto">
-              See AgentOS orchestrate complex workflows in real-time.
-            </p>
-          </header>
-          <HolographicVideoPlayerLazy 
-            placeholder={true}
-            title="AgentOS Architecture Demo"
-            description="Visualizing high-throughput multi-agent coordination."
-          />
-        </div>
-      </section>
+      {/* Live Demo Videos with Captions */}
+      <DemoVideoPlayerLazy />
 
         {/* Product Cards Section */}
         <ProductCardsLazy />
