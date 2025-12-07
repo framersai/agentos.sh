@@ -17,7 +17,13 @@ export function SiteHeader() {
   const t = useTranslations('nav');
   const locale = useLocale();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
+
+  // Hydration safety: only show interactive elements after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const NAV_LINKS = useMemo(() => [
     { href: '/about', label: t('about') },

@@ -14,13 +14,7 @@ const AnimatedBackgroundLazy = dynamic(
   { ssr: false, loading: () => null }
 )
 
-// Lazy load below-the-fold sections for better LCP
-const HolographicVideoPlayerLazy = dynamic(
-  () => import('../../components/media/holographic-video-player').then(m => m.HolographicVideoPlayer),
-  { ssr: false, loading: () => <div className="aspect-video bg-slate-900/50 rounded-xl animate-pulse" /> }
-)
-
-// Demo Video Player with captions
+// Demo Video Player with captions - lazy loaded for better LCP
 const DemoVideoPlayerLazy = dynamic(
   () => import('../../components/video/DemoVideoPlayer').then(m => m.DemoVideoPlayer),
   { ssr: false, loading: () => <div className="aspect-video bg-slate-900/50 rounded-xl animate-pulse" /> }
@@ -79,36 +73,49 @@ export default function LandingPageRedesigned() {
         {/* Hero Section - SSR enabled for faster LCP */}
         <HeroSection />
 
-      {/* Live Demo Videos with Captions */}
-      <DemoVideoPlayerLazy />
+        {/* Live Demo Videos with Captions */}
+        <div className="lazy-section">
+          <DemoVideoPlayerLazy />
+        </div>
 
         {/* Product Cards Section */}
-        <ProductCardsLazy />
-
-        {/* Multi-Agent Collaboration Section (Commented out as per request) */}
-        {/* <MultiAgentCollaborationSection /> */}
+        <div className="lazy-section">
+          <ProductCardsLazy />
+        </div>
 
         {/* GMI Section with architecture diagrams */}
-        <GMISectionLazy />
+        <div className="lazy-section-lg">
+          <GMISectionLazy />
+        </div>
 
         {/* Enhanced Features Grid with Code Popovers */}
-        <FeaturesGridClient />
+        <div className="lazy-section-lg">
+          <FeaturesGridClient />
+        </div>
 
         {/* Skyline Section */}
-        <SkylineSectionLazy />
+        <div className="lazy-section">
+          <SkylineSectionLazy />
+        </div>
 
         {/* Code Examples Section */}
-        <CodeExamplesSectionLazy />
+        <div className="lazy-section-lg">
+          <CodeExamplesSectionLazy />
+        </div>
 
         {/* Social Proof Section */}
-        <SocialProofSectionLazy />
+        <div className="lazy-section">
+          <SocialProofSectionLazy />
+        </div>
 
         {/* Ecosystem Section */}
-        <EcosystemSectionLazy />
+        <div className="lazy-section">
+          <EcosystemSectionLazy />
+        </div>
 
         {/* Enterprise Edition Info */}
         <section 
-          className="py-10 sm:py-12 px-4 sm:px-6 lg:px-8 relative"
+          className="lazy-section-sm py-10 sm:py-12 px-4 sm:px-6 lg:px-8 relative"
           aria-labelledby="enterprise-heading"
         >
           <article className="max-w-6xl mx-auto holographic-card p-6 sm:p-8">
@@ -134,7 +141,9 @@ export default function LandingPageRedesigned() {
         </section>
 
         {/* CTA Section */}
-        <CTASection />
+        <div className="lazy-section-sm">
+          <CTASection />
+        </div>
       </main>
 
       {/* Scroll to Top Button */}

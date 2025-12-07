@@ -21,33 +21,45 @@ interface DemoVideo {
 
 const DEMO_VIDEOS: DemoVideo[] = [
   {
+    id: 'streaming',
+    title: 'Real-time Streaming',
+    description: 'Token-level response delivery',
+    src: '/videos/streaming.mp4',
+    poster: '/videos/streaming-thumb.jpg',
+    captions: [
+      { start: 0, end: 3, text: 'Real-time Streaming' },
+      { start: 23, end: 25, text: 'Sending request...' },
+      { start: 27, end: 30, text: 'stream.on("token", render)' },
+      { start: 32, end: 35, text: '< 50ms latency per token' },
+      { start: 36, end: 39, text: '✓ Complete' },
+    ]
+  },
+  {
     id: 'agent-creation',
     title: 'Agent Creation',
     description: 'Build custom AI personas in minutes',
     src: '/videos/agent-creation.mp4',
     poster: '/videos/agent-creation-thumb.jpg',
     captions: [
-      { start: 0, end: 3, text: '◆ Creating a new AI Agent' },
-      { start: 3, end: 7, text: 'Select a persona template or start from scratch' },
-      { start: 8, end: 12, text: '→ Configure personality traits and communication style' },
-      { start: 13, end: 17, text: 'Define capabilities: tools, memory, guardrails' },
-      { start: 18, end: 21, text: '✓ Agent ready for deployment' },
+      { start: 0, end: 2, text: 'Create AI Agent' },
+      { start: 3, end: 6, text: 'Choose template or start fresh' },
+      { start: 7, end: 10, text: 'Configure personality & style' },
+      { start: 11, end: 14, text: 'Add tools, memory, guardrails' },
+      { start: 15, end: 18, text: '✓ Ready to deploy' },
     ]
   },
   {
     id: 'multi-agent',
-    title: 'Multi-Agent Collaboration',
+    title: 'Multi-Agent System',
     description: 'Orchestrate agent teams',
     src: '/videos/multi-agent.mp4',
     poster: '/videos/multi-agent-thumb.jpg',
     captions: [
-      { start: 0, end: 3, text: '◆ Multi-Agent Agency Setup' },
-      { start: 3, end: 7, text: 'Creating an agency with 3 specialized agents' },
-      { start: 8, end: 12, text: '→ Researcher: Gathers information from sources' },
-      { start: 13, end: 17, text: '→ Analyst: Processes and synthesizes data' },
-      { start: 18, end: 22, text: '→ Writer: Generates final output' },
-      { start: 23, end: 27, text: 'Agents communicate via message bus' },
-      { start: 28, end: 31, text: '✓ Task completed collaboratively' },
+      { start: 0, end: 2, text: 'Multi-Agent System' },
+      { start: 3, end: 5, text: 'Building 3-agent team' },
+      { start: 6, end: 9, text: 'Researcher → Analyst → Writer' },
+      { start: 10, end: 12, text: 'Message bus coordination' },
+      { start: 13, end: 16, text: '✓ Collaborative task complete' },
     ]
   },
   {
@@ -57,43 +69,25 @@ const DEMO_VIDEOS: DemoVideo[] = [
     src: '/videos/rag-memory.mp4',
     poster: '/videos/rag-memory-thumb.jpg',
     captions: [
-      { start: 0, end: 3, text: '◆ RAG Memory Dashboard' },
-      { start: 3, end: 7, text: 'Uploading documents to vector store' },
-      { start: 8, end: 12, text: 'Automatic chunking and embedding generation' },
-      { start: 13, end: 17, text: '→ Querying: "What are the key findings?"' },
-      { start: 18, end: 22, text: 'Semantic search retrieves relevant chunks' },
-      { start: 23, end: 26, text: '✓ Context injected into agent prompt' },
+      { start: 0, end: 2, text: 'RAG Memory' },
+      { start: 3, end: 6, text: 'Upload → Chunk → Embed' },
+      { start: 7, end: 10, text: '"What are the key findings?"' },
+      { start: 11, end: 13, text: 'Semantic search retrieval' },
+      { start: 14, end: 17, text: '✓ Context injected' },
     ]
   },
   {
-    id: 'planning',
+    id: 'planning-engine',
     title: 'Planning Engine',
     description: 'Multi-step task decomposition',
-    src: '/videos/planning.mp4',
-    poster: '/videos/planning-thumb.jpg',
+    src: '/videos/planning-engine.mp4',
+    poster: '/videos/planning-engine-thumb.jpg',
     captions: [
-      { start: 0, end: 3, text: '◆ Planning Engine Demo' },
-      { start: 3, end: 7, text: 'Goal: "Deploy a new feature to production"' },
-      { start: 8, end: 11, text: '→ Step 1: Write unit tests' },
-      { start: 12, end: 15, text: '→ Step 2: Run CI/CD pipeline' },
-      { start: 16, end: 19, text: '→ Step 3: Review and approve' },
-      { start: 20, end: 23, text: '→ Step 4: Deploy to staging' },
-      { start: 24, end: 27, text: '→ Step 5: Monitor and verify' },
-      { start: 28, end: 31, text: '✓ Plan executed successfully' },
-    ]
-  },
-  {
-    id: 'streaming',
-    title: 'Real-time Streaming',
-    description: 'Token-level response delivery',
-    src: '/videos/streaming.mp4',
-    poster: '/videos/streaming-thumb.jpg',
-    captions: [
-      { start: 0, end: 3, text: '◆ Streaming Response Demo' },
-      { start: 3, end: 5, text: 'Sending request to agent...' },
-      { start: 6, end: 10, text: '→ Tokens streaming in real-time' },
-      { start: 11, end: 14, text: 'Latency: <50ms per token' },
-      { start: 15, end: 18, text: '✓ Response complete' },
+      { start: 0, end: 2, text: 'Planning Engine' },
+      { start: 3, end: 6, text: 'Goal: Deploy feature to prod' },
+      { start: 7, end: 10, text: '1. Test → 2. CI/CD → 3. Review' },
+      { start: 11, end: 13, text: '4. Stage → 5. Monitor' },
+      { start: 14, end: 17, text: '✓ Plan executed' },
     ]
   }
 ];
@@ -187,11 +181,40 @@ export function DemoVideoPlayer() {
   const [duration, setDuration] = useState(0);
   const [currentCaption, setCurrentCaption] = useState<string | null>(null);
   const [videoError, setVideoError] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const activeVideo = DEMO_VIDEOS[activeIndex];
+
+  // Lazy load video only when section is visible
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Only need to load once
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+    
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Load video source when visible
+  useEffect(() => {
+    if (isVisible && videoRef.current && !videoLoaded) {
+      videoRef.current.load();
+      setVideoLoaded(true);
+    }
+  }, [isVisible, videoLoaded]);
 
   // Update captions based on current time
   useEffect(() => {
@@ -283,7 +306,7 @@ export function DemoVideoPlayer() {
   }, []);
 
   return (
-    <section className="py-16 md:py-24 bg-[var(--color-background)]">
+    <section ref={sectionRef} className="py-16 md:py-24 bg-[var(--color-background)]">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
@@ -319,9 +342,10 @@ export function DemoVideoPlayer() {
               <>
                 <video
                   ref={videoRef}
-                  src={activeVideo.src}
+                  src={isVisible ? activeVideo.src : undefined}
                   poster={activeVideo.poster}
                   muted={isMuted}
+                  preload={isVisible ? 'metadata' : 'none'}
                   onTimeUpdate={handleTimeUpdate}
                   onLoadedMetadata={handleLoadedMetadata}
                   onError={handleError}

@@ -7,13 +7,40 @@ import ScrollToTopButton from '../../components/ScrollToTopButton';
 import dynamic from 'next/dynamic';
 import { locales, type Locale } from '../../i18n';
 
+// Enable SSR for SiteHeader to prevent layout shift
+// The component handles hydration safely
 const SiteHeaderDynamic = dynamic(
   () => import('../../components/site-header').then(mod => mod.SiteHeader),
-  { ssr: false }
+  { 
+    ssr: true,
+    loading: () => (
+      <header className="sticky top-0 z-50 w-full border-b border-[var(--color-border-subtle)] bg-[var(--color-background-primary)]/80 backdrop-blur-xl">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-500 animate-pulse" />
+            <div className="h-5 w-24 rounded bg-[var(--color-background-secondary)] animate-pulse" />
+          </div>
+          <div className="hidden lg:flex items-center gap-6">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="h-4 w-16 rounded bg-[var(--color-background-secondary)] animate-pulse" />
+            ))}
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded-full bg-[var(--color-background-secondary)] animate-pulse" />
+          </div>
+        </div>
+      </header>
+    )
+  }
 );
 
 const CookieConsentDynamic = dynamic(
   () => import('../../components/ui/cookie-consent').then(mod => mod.CookieConsent),
+  { ssr: false }
+);
+
+const GoogleAnalyticsDynamic = dynamic(
+  () => import('../../components/analytics/GoogleAnalytics').then(mod => mod.GoogleAnalytics),
   { ssr: false }
 );
 
@@ -156,6 +183,8 @@ export default async function LocaleLayout({
         <link rel="preconnect" href="https://api.npmjs.org" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://img.shields.io" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         
         {/* Preload critical fonts */}
         <link
@@ -169,6 +198,8 @@ export default async function LocaleLayout({
         {/* Preload LCP image hint */}
         <link rel="preload" as="image" href="/og-image.png" />
 
+        {/* Google Analytics with consent integration */}
+        <GoogleAnalyticsDynamic />
         <CookieConsentDynamic />
         <a href="#main-content" className="skip-to-content">Skip to content</a>
         <SiteHeaderDynamic />

@@ -19,7 +19,8 @@ const TextSkeleton = ({ width }: { width: string }) => (
 );
 
 // Lazy load heavy animation components - deferred for better LCP
-const NeuralConstellation = dynamic(() => import('../hero/neural-constellation').then(m => ({ default: m.NeuralConstellation })), {
+// Use ResponsiveNeuralConstellation for a single scalable instance instead of 4 separate ones
+const ResponsiveNeuralConstellation = dynamic(() => import('../hero/neural-constellation').then(m => ({ default: m.ResponsiveNeuralConstellation })), {
   ssr: false,
   loading: () => null
 });
@@ -137,16 +138,13 @@ const HeroSectionInner = memo(function HeroSectionInner() {
         aria-hidden="true"
       />
 
-      {/* Neural Constellation - right side, responsive visibility */}
+      {/* Neural Constellation - right side, single responsive instance */}
       <div 
         className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 sm:opacity-50 lg:opacity-70" 
         style={{ marginLeft: 'calc(15% + 40px)', marginTop: '-8%' }} 
         aria-hidden="true"
       >
-        <div className="block sm:hidden -z-10"><NeuralConstellation size={250} /></div>
-        <div className="hidden sm:block lg:hidden"><NeuralConstellation size={450} /></div>
-        <div className="hidden lg:block xl:hidden"><NeuralConstellation size={600} /></div>
-        <div className="hidden xl:block"><NeuralConstellation size={750} /></div>
+        <ResponsiveNeuralConstellation />
       </div>
 
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>

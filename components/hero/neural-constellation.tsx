@@ -17,11 +17,41 @@ export const NeuralConstellation = memo(function NeuralConstellation({
   className = '' 
 }: NeuralConstellationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number>(0);
   const tRef = useRef(0);
+  const isVisibleRef = useRef(true);
+  const prefersReducedMotionRef = useRef(false);
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const isDark = resolvedTheme === 'dark';
+
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    prefersReducedMotionRef.current = mediaQuery.matches;
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      prefersReducedMotionRef.current = e.matches;
+    };
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  // IntersectionObserver to pause animation when not visible
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0, rootMargin: '50px' }
+    );
+    
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [mounted]);
 
   const palette = useMemo(() => ({
     core: isDark ? [196, 181, 253] : [167, 139, 250],
@@ -117,6 +147,10 @@ export const NeuralConstellation = memo(function NeuralConstellation({
 
   useEffect(() => {
     if (!mounted) return;
+    
+    // Skip animation entirely if user prefers reduced motion
+    if (prefersReducedMotionRef.current) return;
+    
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx) return;
@@ -126,7 +160,13 @@ export const NeuralConstellation = memo(function NeuralConstellation({
     canvas.height = size * dpr;
     ctx.scale(dpr, dpr);
 
-    const loop = () => { draw(ctx); animRef.current = requestAnimationFrame(loop); };
+    const loop = () => {
+      // Skip frame if not visible (performance optimization)
+      if (isVisibleRef.current) {
+        draw(ctx);
+      }
+      animRef.current = requestAnimationFrame(loop);
+    };
     loop();
     return () => cancelAnimationFrame(animRef.current);
   }, [mounted, size, draw]);
@@ -146,19 +186,52 @@ export const NeuralConstellation = memo(function NeuralConstellation({
 
   if (!mounted) {
     return (
-      <div className={className} style={{ width: size, height: size }} role="img" aria-label="Neural network visualization">
+      <div ref={containerRef} className={className} style={{ width: size, height: size }} role="img" aria-label="Neural network visualization">
         <div className="w-full h-full rounded-full bg-gradient-to-br from-violet-500/20 to-cyan-500/20 animate-pulse" />
       </div>
     );
   }
 
   return (
-    <div className={className} style={{ width: size, height: size, position: 'relative' }} role="img" aria-label="Neural network visualization">
+    <div ref={containerRef} className={className} style={{ width: size, height: size, position: 'relative' }} role="img" aria-label="Neural network visualization">
       <style>{`@keyframes pulse-glow { 0%, 100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.03); } }`}</style>
       <div style={glowStyle} aria-hidden="true" />
       <canvas ref={canvasRef} className="relative z-10" style={{ width: size, height: size }} aria-hidden="true" />
     </div>
   );
 });
+
+/**
+ * Responsive wrapper that scales a single NeuralConstellation instance
+ * using CSS transforms instead of rendering multiple instances
+ */
+export function ResponsiveNeuralConstellation({ className = '' }: { className?: string }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className={`w-full h-full flex items-center justify-center ${className}`}>
+        <div className="w-[250px] h-[250px] sm:w-[450px] sm:h-[450px] lg:w-[600px] lg:h-[600px] xl:w-[750px] xl:h-[750px] rounded-full bg-gradient-to-br from-violet-500/20 to-cyan-500/20 animate-pulse" />
+      </div>
+    );
+  }
+
+  // Render a single 500px canvas and scale with CSS transforms
+  // This is much more performant than rendering 4 separate canvases
+  return (
+    <div className={`w-full h-full flex items-center justify-center ${className}`}>
+      <div 
+        className="transform scale-50 sm:scale-90 lg:scale-[1.2] xl:scale-[1.5] origin-center transition-transform duration-300"
+        style={{ willChange: 'transform' }}
+      >
+        <NeuralConstellation size={500} />
+      </div>
+    </div>
+  );
+}
 
 export default NeuralConstellation;

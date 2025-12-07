@@ -28,6 +28,8 @@ export function AnimatedBackground() {
   const particlesRef = useRef<Particle[]>([])
   const connectionsRef = useRef<Connection[]>([])
   const mouseRef = useRef({ x: 0, y: 0 })
+  const isVisibleRef = useRef(true)
+  const prefersReducedMotion = useRef(false)
   const { theme: currentTheme, resolvedTheme } = useTheme()
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
@@ -46,6 +48,33 @@ export function AnimatedBackground() {
     () => themeMap[currentTheme as keyof typeof themeMap] || themeMap['aurora-daybreak'],
     [currentTheme, themeMap]
   )
+
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    prefersReducedMotion.current = mediaQuery.matches
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      prefersReducedMotion.current = e.matches
+    }
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
+
+  // IntersectionObserver to pause animation when not visible
+  useEffect(() => {
+    if (!canvasRef.current) return
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting
+      },
+      { threshold: 0 }
+    )
+    
+    observer.observe(canvasRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -73,8 +102,13 @@ export function AnimatedBackground() {
     const colors = getThemeColors()
     const isDark = resolvedTheme === 'dark'
 
-    // Initialize particles with layers for depth - INCREASED COUNT for both modes
-    const particleCount = window.matchMedia('(max-width: 640px)').matches ? 80 : 200
+    // Skip animation entirely if user prefers reduced motion
+    if (prefersReducedMotion.current) {
+      return
+    }
+
+    // Initialize particles with layers for depth - OPTIMIZED COUNT for performance
+    const particleCount = window.matchMedia('(max-width: 640px)').matches ? 30 : 80
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * dimensions.width,
       y: Math.random() * dimensions.height,
@@ -118,6 +152,12 @@ export function AnimatedBackground() {
 
     let frame = 0
     const animate = () => {
+      // Skip frame if not visible (performance optimization)
+      if (!isVisibleRef.current) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
+      }
+
       ctx.clearRect(0, 0, dimensions.width, dimensions.height)
 
       // Apply high-fidelity gradient background

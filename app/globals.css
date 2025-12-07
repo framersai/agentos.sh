@@ -451,6 +451,22 @@
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid var(--glass-border);
   }
+
+  /* Content visibility for below-fold sections - major perf optimization */
+  .lazy-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+  
+  .lazy-section-sm {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 300px;
+  }
+  
+  .lazy-section-lg {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 800px;
+  }
 }
 
 /* --- Scrollbar --- */

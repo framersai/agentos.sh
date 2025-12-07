@@ -91,8 +91,76 @@ export default function BlogPostPage({ params }: Props) {
   const relatedPosts = getRelatedPosts(params.slug, post.category, post.tags);
   const readingTime = Math.ceil(post.content.split(/\s+/).length / 200);
 
+  // Article structured data for SEO
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt || '',
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      '@type': 'Person',
+      name: post.author || 'AgentOS Team',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'AgentOS',
+      url: 'https://agentos.sh',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://agentos.sh/og-image.png',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://agentos.sh/${params.locale}/blog/${params.slug}`,
+    },
+    image: post.image || 'https://agentos.sh/og-image.png',
+    articleSection: post.category || 'Technology',
+    keywords: post.tags?.join(', ') || 'AI, AgentOS',
+    wordCount: post.content.split(/\s+/).length,
+    timeRequired: `PT${readingTime}M`,
+  };
+
+  // BreadcrumbList for navigation
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://agentos.sh',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: `https://agentos.sh/${params.locale}/blog`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `https://agentos.sh/${params.locale}/blog/${params.slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-[var(--color-background-primary)]">
+      {/* Article JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-[1fr_280px] gap-8">
           {/* Main Content */}
