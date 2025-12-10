@@ -4,8 +4,8 @@ import path from 'node:path';
 const locales = ['en', 'zh', 'ko', 'ja', 'es', 'de', 'fr', 'pt'];
 const outDir = path.resolve(process.cwd(), 'out');
 
-// Pages that need locale redirects (disabled – keep root pages canonical without /en redirects)
-const localizedPages = [];
+// Pages that need locale redirects (redirect /docs → /en/docs/, etc.)
+const localizedPages = ['docs', 'about', 'faq', 'blog', 'careers', 'legal'];
 
 async function copyIfExists(src, dest) {
   try {
@@ -16,6 +16,14 @@ async function copyIfExists(src, dest) {
       console.warn(`[post-export] Failed to copy ${src} → ${dest}:`, error.message);
     }
     return false;
+  }
+}
+
+async function ensureDir(dirPath) {
+  try {
+    await fs.mkdir(dirPath, { recursive: true });
+  } catch (error) {
+    if (error.code !== 'EEXIST') throw error;
   }
 }
 
@@ -52,9 +60,21 @@ async function run() {
       }
     })
   );
-  
-  // Redirect creation intentionally disabled
-  
+
+  // Create redirect HTML files for non-locale paths
+  await Promise.all(
+    localizedPages.map(async (page) => {
+      const pageDir = path.join(outDir, page);
+      const indexFile = path.join(pageDir, 'index.html');
+      const targetPath = `/en/${page}/`;
+
+      await ensureDir(pageDir);
+      const redirectHtml = await createRedirectHTML(targetPath);
+      await fs.writeFile(indexFile, redirectHtml, 'utf-8');
+      console.log(`[post-export] Created redirect: /${page}/ → ${targetPath}`);
+    })
+  );
+
   // Copy 404.html to out directory for GitHub Pages
   try {
     const src404 = path.join(process.cwd(), 'public', '404.html');
