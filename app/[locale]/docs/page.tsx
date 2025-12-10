@@ -39,28 +39,28 @@ export default function DocsPage() {
             </div>
           </article>
 
-          {/* Backend API */}
+          {/* Guides & Architecture */}
           <article className="holographic-card p-8 group h-full transition-all">
             <div className="flex items-center gap-3 text-[var(--color-accent-primary)] mb-4">
               <FileCode className="h-6 w-6" aria-hidden="true" />
-              <h2 className="text-2xl font-semibold text-[var(--color-text-primary)]">Backend API</h2>
+              <h2 className="text-2xl font-semibold text-[var(--color-text-primary)]">Guides</h2>
             </div>
             <p className="text-[var(--color-text-secondary)] mb-6">
-              REST API documentation for the AgentOS backend server. View all endpoints, request/response
-              schemas, and examples.
+              In-depth guides covering architecture, planning engine, RAG memory, human-in-the-loop patterns,
+              and multi-agent communication.
             </p>
             <div className="flex flex-col gap-3">
               <a
-                href="/docs-generated/api/index.html"
+                href="https://github.com/framersai/agentos/tree/master/docs"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl hover:brightness-110"
               >
                 <FileCode className="h-4 w-4" aria-hidden="true" />
-                View Backend API
+                View Guides
               </a>
               <p className="text-xs text-[var(--color-text-muted)]">
-                Auto-generated from Express routes and OpenAPI spec
+                Architecture, Planning, HITL, Agent Communication, RAG & more
               </p>
             </div>
           </article>
