@@ -1,7 +1,19 @@
 {
+  "redirects": [
+    { "source": "/docs", "destination": "/en/docs/", "permanent": true },
+    { "source": "/docs/:path*", "destination": "/en/docs/:path*", "permanent": true },
+    { "source": "/about", "destination": "/en/about/", "permanent": true },
+    { "source": "/faq", "destination": "/en/faq/", "permanent": true },
+    { "source": "/blog", "destination": "/en/blog/", "permanent": true },
+    { "source": "/blog/:path*", "destination": "/en/blog/:path*", "permanent": true },
+    { "source": "/careers", "destination": "/en/careers/", "permanent": true },
+    { "source": "/careers/:path*", "destination": "/en/careers/:path*", "permanent": true },
+    { "source": "/legal", "destination": "/en/legal/", "permanent": true },
+    { "source": "/legal/:path*", "destination": "/en/legal/:path*", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/:locale(en|zh|ko|ja|es|de)", "destination": "/:locale/index.html" }
+    { "source": "/", "destination": "/en/index.html" },
+    { "source": "/:locale(en|zh|ko|ja|es|de|fr|pt)", "destination": "/:locale/index.html" }
   ],
   "headers": [
     {
