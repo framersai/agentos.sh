@@ -25,7 +25,7 @@ export default function DocsPage() {
             </p>
             <div className="flex flex-col gap-3">
               <a
-                href="/docs-generated/library/index.html"
+                href="https://framersai.github.io/agentos/api/index.html"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl hover:brightness-110"
