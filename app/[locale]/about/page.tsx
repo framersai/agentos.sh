@@ -126,7 +126,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
                 </div>
                 <a
                   href={`mailto:${card.email}`}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-background-secondary)] text-sm font-semibold hover:bg-[var(--color-background-tertiary)] transition-colors w-fit"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-background-tertiary)] text-[var(--color-text-primary)] text-sm font-semibold hover:bg-[var(--color-accent-primary)]/10 hover:text-[var(--color-accent-primary)] transition-colors w-fit border border-[var(--color-border-subtle)]"
                 >
                   <Mail className="w-4 h-4" />
                   {card.email}
@@ -146,10 +146,10 @@ export default async function AboutPage({ params: { locale } }: Props) {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-2xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 px-5 py-4 hover:border-accent-primary transition-colors"
+                className="flex items-center gap-4 rounded-2xl border border-border-subtle/60 bg-[var(--color-background-secondary)] dark:bg-white/5 px-5 py-4 hover:border-accent-primary hover:bg-[var(--color-accent-primary)]/5 transition-colors"
               >
                 <Icon className="w-5 h-5 text-accent-primary" />
-                <span className="text-lg font-semibold">{label}</span>
+                <span className="text-lg font-semibold text-[var(--color-text-primary)]">{label}</span>
                 <ArrowRight className="w-4 h-4 ml-auto text-[var(--color-text-secondary)]" />
               </a>
             ))}
@@ -160,12 +160,12 @@ export default async function AboutPage({ params: { locale } }: Props) {
         <section className="space-y-8">
           <h2 className="text-3xl font-bold">{t('license.title')}</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 p-6">
-              <h3 className="text-2xl font-semibold mb-2">{t('license.core')}</h3>
+            <div className="rounded-2xl border border-border-subtle/60 bg-[var(--color-background-secondary)] dark:bg-white/5 p-6">
+              <h3 className="text-2xl font-semibold text-[var(--color-text-primary)] mb-2">{t('license.core')}</h3>
               <p className="text-[var(--color-text-secondary)]">{t('license.coreDesc')}</p>
             </div>
-            <div className="rounded-2xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 p-6">
-              <h3 className="text-2xl font-semibold mb-2">{t('license.extensions')}</h3>
+            <div className="rounded-2xl border border-border-subtle/60 bg-[var(--color-background-secondary)] dark:bg-white/5 p-6">
+              <h3 className="text-2xl font-semibold text-[var(--color-text-primary)] mb-2">{t('license.extensions')}</h3>
               <p className="text-[var(--color-text-secondary)]">{t('license.extensionsDesc')}</p>
             </div>
           </div>

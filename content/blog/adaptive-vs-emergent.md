@@ -1,8 +1,8 @@
 ---
 title: "Understanding Adaptive vs. Emergent Intelligence"
-date: "2024-06-10"
+date: "2025-01-15"
 excerpt: "Deep dive into the core philosophy behind AgentOS and how we distinguish between systems that adapt and systems that exhibit emergence."
-author: "Dr. AI Researcher"
+author: "AgentOS Team"
 category: "Engineering"
 image: "/blog/adaptive-vs-emergent.png"
 ---

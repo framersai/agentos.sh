@@ -420,7 +420,7 @@ volumes:
   }
 
   return (
-    <section id="code" className="py-12 sm:py-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="code-examples-heading">
+    <section id="code" className="py-8 sm:py-12 lg:py-14 px-2 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="code-examples-heading">
       {/* Subtle organic gradient background */}
       <div className="absolute inset-0 organic-gradient opacity-20" />
 
@@ -572,9 +572,9 @@ volumes:
                 }
               }}
               className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
-                activeExample.id !== 'streaming' 
-                  ? 'bg-[var(--color-accent-primary)] text-[var(--color-text-on-accent)] shadow-md' 
-                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] bg-[var(--color-background-elevated)]'
+                activeExample.id !== 'streaming'
+                  ? 'bg-[var(--color-accent-primary)] text-[var(--color-text-on-accent)] shadow-md'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] bg-[var(--color-background-elevated)] dark:text-[var(--color-text-muted)]'
               }`}
             >
               {t('tabs.synchronous')}
@@ -584,9 +584,9 @@ volumes:
                 setActiveExample(codeExamples.find((e) => e.id === 'streaming') || activeExample)
               }}
               className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
-                activeExample.id === 'streaming' 
-                  ? 'bg-[var(--color-accent-primary)] text-[var(--color-text-on-accent)] shadow-md' 
-                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] bg-[var(--color-background-elevated)]'
+                activeExample.id === 'streaming'
+                  ? 'bg-[var(--color-accent-primary)] text-[var(--color-text-on-accent)] shadow-md'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] bg-[var(--color-background-elevated)] dark:text-[var(--color-text-muted)]'
               }`}
             >
               {t('tabs.streaming')}
@@ -595,7 +595,7 @@ volumes:
         </div>
 
         {/* Code Block with Syntax Highlighting */}
-        <div className="flex-1 overflow-auto bg-[#1e1e1e]">
+        <div className="flex-1 overflow-auto bg-[#1e1e1e] max-h-[300px] sm:max-h-[400px] lg:max-h-none">
                   {codeViewerReady && SyntaxHighlighter && syntaxTheme ? (
                     <SyntaxHighlighter
                       language={activeExample.language}
@@ -628,35 +628,37 @@ volumes:
                 </div>
 
                 {/* Footer - Interactive */}
-                <div className="p-4 border-t border-border-subtle bg-gradient-to-r from-accent-primary/5 to-accent-secondary/5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
+                <div className="p-3 sm:p-4 border-t border-border-subtle bg-gradient-to-r from-accent-primary/5 to-accent-secondary/5">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                       <a
                         href={`https://playground.agentos.sh?example=${activeExample.id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent-primary text-white font-semibold hover:bg-accent-hover transition-all group"
+                        className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-accent-primary text-white text-xs sm:text-sm font-semibold hover:bg-accent-hover transition-all group"
                       >
-                        <Play className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                        <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:scale-110 transition-transform" />
                         {t('runButton')}
                       </a>
                       <a
                         href={`https://docs.agentos.sh/examples/${activeExample.id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-accent-primary text-accent-primary font-semibold hover:bg-accent-primary/10 transition-all"
+                        className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg border-2 border-accent-primary text-accent-primary text-xs sm:text-sm font-semibold hover:bg-accent-primary/10 transition-all"
                       >
-                        <Book className="w-4 h-4" />
-                        {t('docsButton')}
+                        <Book className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">{t('docsButton')}</span>
+                        <span className="sm:hidden">Docs</span>
                       </a>
                       <a
                         href="https://docs.agentos.sh/api"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-accent-primary text-accent-primary font-semibold hover:bg-accent-primary/10 transition-all"
+                        className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg border-2 border-accent-primary text-accent-primary text-xs sm:text-sm font-semibold hover:bg-accent-primary/10 transition-all"
                       >
-                        <Book className="w-4 h-4" />
-                        {tFooter('apiReferenceTSDoc')}
+                        <Book className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <span className="hidden sm:inline">{tFooter('apiReferenceTSDoc')}</span>
+                        <span className="sm:hidden">API</span>
                       </a>
                     </div>
                     <div className="flex items-center gap-2">

@@ -140,7 +140,7 @@ export function SiteHeader() {
       />
       
       <div className="relative z-10 w-full">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 sm:px-5 lg:px-6 py-3">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-2 sm:px-5 lg:px-6 py-3">
         <Link href={homeHref as Route} aria-label="AgentOS home" className="group flex items-center gap-2 transition-all hover:scale-[1.02] leading-none" onClick={closeMenu}>
           <div className="relative overflow-visible">
             <div className="absolute inset-0 bg-accent-primary/20 blur-xl rounded-full animate-pulse-glow" />
