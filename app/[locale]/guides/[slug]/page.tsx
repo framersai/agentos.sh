@@ -13,9 +13,20 @@ type Props = {
 
 export async function generateStaticParams() {
   const guides = getAllGuides();
-  return guides.map((guide) => ({
-    slug: guide.slug,
-  }));
+  const locales = ['en'];
+
+  // Return all locale/slug combinations for static export
+  // If no guides found (e.g., in CI), return empty array
+  if (guides.length === 0) {
+    return [];
+  }
+
+  return locales.flatMap((locale) =>
+    guides.map((guide) => ({
+      locale,
+      slug: guide.slug,
+    }))
+  );
 }
 
 export async function generateMetadata({ params }: Props) {

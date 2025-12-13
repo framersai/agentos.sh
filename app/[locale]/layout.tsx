@@ -44,6 +44,11 @@ const GoogleAnalyticsDynamic = dynamic(
   { ssr: false }
 );
 
+const MicrosoftClarityDynamic = dynamic(
+  () => import('../../components/analytics/MicrosoftClarity').then(mod => mod.MicrosoftClarity),
+  { ssr: false }
+);
+
 type Props = {
   children: ReactNode;
   params: { locale: string };
@@ -198,8 +203,9 @@ export default async function LocaleLayout({
         {/* Preload LCP image hint */}
         <link rel="preload" as="image" href="/og-image.png" />
 
-        {/* Google Analytics with consent integration */}
+        {/* Analytics with consent integration */}
         <GoogleAnalyticsDynamic />
+        <MicrosoftClarityDynamic />
         <CookieConsentDynamic />
         <a href="#main-content" className="skip-to-content">Skip to content</a>
         <SiteHeaderDynamic />
