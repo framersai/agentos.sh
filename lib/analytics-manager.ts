@@ -116,7 +116,7 @@ class AnalyticsManager {
       }
 
       // Microsoft Clarity - automatically tracks page views
-      if (window.clarity) { const clarity = window.clarity;
+      if (window.clarity) {
         window.clarity('set', 'page', data.path);
       }
     });
@@ -138,7 +138,7 @@ class AnalyticsManager {
       }
 
       // Microsoft Clarity custom events
-      if (window.clarity) { const clarity = window.clarity;
+      if (window.clarity) {
         const eventName = `${event.category}_${event.action}`;
         window.clarity('event', eventName);
       }
@@ -367,7 +367,7 @@ class AnalyticsManager {
         window.gtag('set', { user_id: userId });
       }
 
-      if (window.clarity) { const clarity = window.clarity;
+      if (window.clarity) {
         window.clarity('identify', userId);
       }
 
