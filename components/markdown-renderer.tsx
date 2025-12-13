@@ -82,7 +82,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
     ">
       <ReactMarkdown
         components={{
-          code({ node, className, children, ...props }) {
+          code({ node: _node, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
             const isInline = !match && !String(children).includes('\n');
 
@@ -100,7 +100,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
               </CodeBlock>
             );
           },
-          a({ node, href, children, ...props }) {
+          a({ node: _node, href, children, ...props }) {
             const isExternal = href?.startsWith('http');
             return (
               <a
@@ -113,15 +113,15 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
               </a>
             );
           },
-          h1({ node, children, ...props }) {
+          h1({ node: _node, children, ...props }) {
             const id = String(children).toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
             return <h1 id={id} {...props}>{children}</h1>;
           },
-          h2({ node, children, ...props }) {
+          h2({ node: _node, children, ...props }) {
             const id = String(children).toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
             return <h2 id={id} {...props}>{children}</h2>;
           },
-          h3({ node, children, ...props }) {
+          h3({ node: _node, children, ...props }) {
             const id = String(children).toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
             return <h3 id={id} {...props}>{children}</h3>;
           },
