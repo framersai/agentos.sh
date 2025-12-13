@@ -9,7 +9,8 @@
   },
   "nav": {
     "features": "機能",
-    "docs": "ドキュメント",
+    "docs": "APIドキュメント",
+    "guides": "ガイド",
     "apiReference": "APIリファレンス",
     "changelog": "変更履歴",
     "openapi": "OpenAPI",
