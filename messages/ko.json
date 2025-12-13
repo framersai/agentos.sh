@@ -9,7 +9,8 @@
   },
   "nav": {
     "features": "기능",
-    "docs": "문서",
+    "docs": "API 문서",
+    "guides": "가이드",
     "apiReference": "API 참조",
     "changelog": "변경 로그",
     "openapi": "OpenAPI",

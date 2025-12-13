@@ -9,7 +9,8 @@
   },
   "nav": {
     "features": "Características",
-    "docs": "Documentación",
+    "docs": "Documentación de API",
+    "guides": "Guías",
     "apiReference": "Referencia API",
     "changelog": "Registro de Cambios",
     "openapi": "OpenAPI",
