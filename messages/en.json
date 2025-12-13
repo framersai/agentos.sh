@@ -9,7 +9,8 @@
   },
   "nav": {
     "features": "Features",
-    "docs": "Docs",
+    "docs": "API Docs",
+    "guides": "Guides",
     "apiReference": "API Reference",
     "changelog": "Changelog",
     "openapi": "OpenAPI",
