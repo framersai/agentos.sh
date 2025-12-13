@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 
 // Path to the guides directory in packages/agentos/docs
-const GUIDES_DIR = path.join(process.cwd(), '../../packages/agentos/docs');
+const GUIDES_DIR = path.join(process.cwd(), 'content/guides');
 
 export interface Guide {
   slug: string;
