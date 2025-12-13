@@ -107,9 +107,7 @@
       
       // If path doesn't start with a locale, redirect to locale version
       if (!locales.includes(firstSegment)) {
-        const localizedPath = preferredLocale === 'en' 
-          ? currentPath 
-          : `/${preferredLocale}${currentPath}`;
+        const localizedPath = `/${preferredLocale}${currentPath}`;
         
         document.getElementById('message').textContent = 
           `This page should be accessed with a language prefix.`;
