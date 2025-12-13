@@ -87,7 +87,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
               href="https://github.com/framersai/agentos"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-accent-primary to-accent-secondary text-white font-semibold shadow-lg shadow-accent-primary/30"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#5b21b6] dark:bg-gradient-to-r dark:from-accent-primary dark:to-accent-secondary text-white font-semibold shadow-lg shadow-accent-primary/30 hover:bg-[#6d28d9] dark:hover:from-accent-primary dark:hover:to-accent-secondary transition-colors"
             >
               <Github className="w-4 h-4" />
               {t('cta.viewOnGithub')}
