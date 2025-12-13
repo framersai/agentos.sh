@@ -37,7 +37,7 @@ export function SiteHeader() {
     }
     // Handle anchors ("#section" links)
     if (href.startsWith('#')) {
-      return locale === 'en' ? href : `/${locale}${href}`;
+      return `/${locale}${href}`;
     }
 
     // Normalize path (ensure it starts with /)

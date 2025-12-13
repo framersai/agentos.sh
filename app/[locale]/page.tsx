@@ -55,6 +55,11 @@ const FeaturesGridClient = dynamic(
   { ssr: false }
 )
 
+const WorkbenchCTALazy = dynamic(
+  () => import('../../components/sections/workbench-cta').then(m => m.WorkbenchCTA),
+  { ssr: false }
+)
+
 export default function LandingPageRedesigned() {
   const tCommon = useTranslations()
 
@@ -76,6 +81,11 @@ export default function LandingPageRedesigned() {
         {/* Live Demo Videos with Captions */}
         <div className="lazy-section">
           <DemoVideoPlayerLazy />
+        </div>
+
+        {/* AgentOS Workbench CTA */}
+        <div className="lazy-section-sm">
+          <WorkbenchCTALazy />
         </div>
 
         {/* Product Cards Section */}
