@@ -11,9 +11,9 @@
 // Type definitions for window analytics objects
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
-    dataLayer?: any[];
-    clarity?: (...args: any[]) => void;
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
+    clarity?: (...args: unknown[]) => void;
   }
 }
 
@@ -22,7 +22,7 @@ export interface AnalyticsEvent {
   category: string;
   label?: string;
   value?: number;
-  customData?: Record<string, any>;
+  customData?: Record<string, string | number | boolean | undefined>;
 }
 
 export interface PageViewData {
@@ -36,7 +36,7 @@ export interface UserProperties {
   userType?: 'visitor' | 'registered' | 'premium';
   locale?: string;
   theme?: 'light' | 'dark';
-  [key: string]: any;
+  [key: string]: string | undefined;
 }
 
 class AnalyticsManager {
