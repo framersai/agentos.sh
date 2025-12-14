@@ -88,16 +88,6 @@ const repositories: Repository[] = [
     lastUpdated: '3 days ago'
   },
   {
-    name: 'Frame.dev',
-    description: 'Main Frame.dev landing and developer portal. Central hub for all Frame products.',
-    url: 'https://github.com/framersai/frame.dev',
-    category: 'apps',
-    icon: Globe,
-    language: 'TypeScript',
-    status: 'stable',
-    lastUpdated: '2 minutes ago'
-  },
-  {
     name: 'AgentOS.sh',
     description: 'Marketing site and documentation hub for AgentOS. This website!',
     url: 'https://github.com/framersai/agentos.sh',
@@ -106,6 +96,16 @@ const repositories: Repository[] = [
     language: 'TypeScript',
     status: 'stable',
     lastUpdated: '48 minutes ago'
+  },
+  {
+    name: 'Codex',
+    description: 'AI and human-curated knowledge store mapping humanity\'s best knowledge.',
+    url: 'https://github.com/framersai/codex',
+    category: 'apps',
+    icon: BookOpen,
+    language: 'Mixed',
+    status: 'experimental',
+    lastUpdated: '2 weeks ago'
   },
 
   // OpenStrand Ecosystem
@@ -150,16 +150,6 @@ const repositories: Repository[] = [
     language: 'TypeScript',
     status: 'stable',
     lastUpdated: '12 hours ago'
-  },
-  {
-    name: 'Codex',
-    description: 'AI and human-curated knowledge store mapping humanity\'s best knowledge.',
-    url: 'https://github.com/framersai/codex',
-    category: 'core',
-    icon: BookOpen,
-    language: 'Mixed',
-    status: 'experimental',
-    lastUpdated: '2 weeks ago'
   },
 
   // Community
