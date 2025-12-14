@@ -2,7 +2,13 @@ import Link from "next/link";
 import { BookOpen, Code2, FileCode, Github, Layers, Sparkles, ChevronRight } from "lucide-react";
 import { getAllGuides } from "../../../lib/guides";
 
-export default function DocsPage() {
+type Props = {
+  params: {
+    locale: string;
+  };
+};
+
+export default function DocsPage({ params }: Props) {
   const guides = getAllGuides();
   const guideCount = guides.length;
 
@@ -22,7 +28,7 @@ export default function DocsPage() {
 
         {/* Featured: Guides */}
         <div className="mb-8">
-          <Link href="/guides" className="block holographic-card p-6 sm:p-8 group transition-all hover:scale-[1.01] hover:shadow-xl">
+          <Link href={`/${params.locale}/guides`} className="block holographic-card p-6 sm:p-8 group transition-all hover:scale-[1.01] hover:shadow-xl">
             <div className="flex flex-col md:flex-row md:items-center gap-4 sm:gap-6">
               <div className="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 text-white shrink-0 w-fit">
                 <Layers className="h-6 w-6 sm:h-8 sm:w-8" />
@@ -81,32 +87,32 @@ export default function DocsPage() {
             </div>
             <ul className="space-y-2 sm:space-y-3 mb-6">
               <li>
-                <Link href="/guides/architecture" className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors flex items-center gap-2 text-sm sm:text-base">
+                <Link href={`/${params.locale}/guides/architecture`} className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors flex items-center gap-2 text-sm sm:text-base">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-primary)]" />
                   Architecture Overview
                 </Link>
               </li>
               <li>
-                <Link href="/guides/planning_engine" className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors flex items-center gap-2 text-sm sm:text-base">
+                <Link href={`/${params.locale}/guides/planning_engine`} className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors flex items-center gap-2 text-sm sm:text-base">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-secondary)]" />
                   Planning Engine
                 </Link>
               </li>
               <li>
-                <Link href="/guides/human_in_the_loop" className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors flex items-center gap-2 text-sm sm:text-base">
+                <Link href={`/${params.locale}/guides/human_in_the_loop`} className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors flex items-center gap-2 text-sm sm:text-base">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-tertiary)]" />
                   Human-in-the-Loop
                 </Link>
               </li>
               <li>
-                <Link href="/guides/rag_memory_configuration" className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors flex items-center gap-2 text-sm sm:text-base">
+                <Link href={`/${params.locale}/guides/rag_memory_configuration`} className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors flex items-center gap-2 text-sm sm:text-base">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                   RAG & Memory Config
                 </Link>
               </li>
             </ul>
             <Link
-              href="/guides"
+              href={`/${params.locale}/guides`}
               className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[var(--color-border-primary)] bg-[var(--color-background-card)] px-6 py-3 text-sm font-semibold text-[var(--color-text-primary)] shadow-sm transition hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)]"
             >
               View All Guides
@@ -154,7 +160,7 @@ const agentos = new AgentOS();
 await agentos.initialize(config);`}</code>
               </pre>
               <Link
-                href="/guides/architecture"
+                href={`/${params.locale}/guides/architecture`}
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-accent-primary)] hover:text-[var(--color-accent-secondary)] transition-colors"
               >
                 Read the Architecture Guide →
