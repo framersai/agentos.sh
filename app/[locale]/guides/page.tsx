@@ -27,7 +27,13 @@ export const metadata = {
   description: 'Comprehensive guides for building with AgentOS - architecture, features, integration, and more.'
 };
 
-export default function GuidesPage() {
+type Props = {
+  params: {
+    locale: string;
+  };
+};
+
+export default function GuidesPage({ params }: Props) {
   const guides = getAllGuides();
   const categories = getGuideCategories();
 
@@ -86,7 +92,7 @@ export default function GuidesPage() {
                 {categoryGuides.map(guide => (
                   <Link
                     key={guide.slug}
-                    href={`/guides/${guide.slug}`}
+                    href={`/${params.locale}/guides/${guide.slug}`}
                     className="group holographic-card p-6 transition-all hover:scale-[1.02] hover:shadow-lg"
                   >
                     <div className="flex items-start justify-between gap-4">

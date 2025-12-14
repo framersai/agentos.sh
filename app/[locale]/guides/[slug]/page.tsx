@@ -65,11 +65,11 @@ export default function GuidePage({ params }: Props) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16">
         {/* Breadcrumb */}
         <nav className="mb-8 flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
-          <Link href="/docs" className="hover:text-[var(--color-accent-primary)] transition-colors">
+          <Link href={`/${params.locale}/docs`} className="hover:text-[var(--color-accent-primary)] transition-colors">
             Docs
           </Link>
           <ChevronRight className="w-4 h-4" />
-          <Link href="/guides" className="hover:text-[var(--color-accent-primary)] transition-colors">
+          <Link href={`/${params.locale}/guides`} className="hover:text-[var(--color-accent-primary)] transition-colors">
             Guides
           </Link>
           <ChevronRight className="w-4 h-4" />
@@ -108,7 +108,7 @@ export default function GuidePage({ params }: Props) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {prevGuide && (
                   <Link
-                    href={`/guides/${prevGuide.slug}`}
+                    href={`/${params.locale}/guides/${prevGuide.slug}`}
                     className="group holographic-card p-4 transition-all hover:scale-[1.02]"
                   >
                     <div className="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-1">
@@ -122,7 +122,7 @@ export default function GuidePage({ params }: Props) {
                 )}
                 {nextGuide && (
                   <Link
-                    href={`/guides/${nextGuide.slug}`}
+                    href={`/${params.locale}/guides/${nextGuide.slug}`}
                     className="group holographic-card p-4 transition-all hover:scale-[1.02] sm:text-right sm:ml-auto"
                   >
                     <div className="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-1 sm:justify-end">
