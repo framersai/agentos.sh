@@ -1,6 +1,6 @@
 ---
 title: "Announcing AgentOS: The First Adaptive AI Agent Runtime"
-date: "2025-01-10"
+date: "2025-11-10"
 excerpt: "We are thrilled to unveil AgentOS, an open-source typescript framework for building adaptive, multi-agent systems that evolve."
 author: "AgentOS Team"
 category: "Announcements"

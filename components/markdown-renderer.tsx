@@ -2,9 +2,10 @@
 
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Copy, Check } from 'lucide-react';
 import { useState, useCallback } from 'react';
+import { useTheme } from 'next-themes';
 
 interface MarkdownRendererProps {
   content: string;
@@ -12,6 +13,8 @@ interface MarkdownRendererProps {
 
 function CodeBlock({ language, children }: { language: string; children: string }) {
   const [copied, setCopied] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
 
   const copyCode = useCallback(() => {
     navigator.clipboard.writeText(children);
@@ -36,7 +39,7 @@ function CodeBlock({ language, children }: { language: string; children: string 
       </div>
       <SyntaxHighlighter
         language={language || 'text'}
-        style={vscDarkPlus}
+        style={isDark ? vscDarkPlus : vs}
         customStyle={{
           margin: 0,
           borderRadius: '0.75rem',
