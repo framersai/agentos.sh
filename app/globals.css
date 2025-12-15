@@ -15,6 +15,8 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Account for fixed header */
   }
   
   body {

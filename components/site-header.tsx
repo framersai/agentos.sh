@@ -110,6 +110,22 @@ export function SiteHeader() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const handleHashClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Extract the hash from href (e.g., "/#features" -> "features")
+    const hashMatch = href.match(/#(.+)$/);
+    if (hashMatch) {
+      const targetId = hashMatch[1];
+      const element = document.getElementById(targetId);
+      if (element) {
+        e.preventDefault();
+        closeMenu();
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Update URL without triggering navigation
+        window.history.pushState(null, '', href);
+      }
+    }
+  };
+
   return (
     <header
       className="fixed top-0 z-50 w-full animate-fade-in"
@@ -161,6 +177,7 @@ export function SiteHeader() {
                   <a
                     key={link.href}
                     href={localizedHref}
+                    onClick={hasHash && !isExternal ? (e) => handleHashClick(e, localizedHref) : undefined}
                     className="nav-link group relative inline-block py-2 px-1 text-[var(--color-text-primary)] font-semibold transition-all duration-300 ease-out hover:text-[var(--color-accent-primary)]"
                   >
                     <span className="relative z-10 transition-all duration-300 ease-out">
@@ -276,7 +293,7 @@ export function SiteHeader() {
                   <a
                     key={link.href}
                     href={localizedHref}
-                    onClick={closeMenu}
+                    onClick={hasHash && !isExternal ? (e) => handleHashClick(e, localizedHref) : closeMenu}
                     className="px-6 py-4 text-base font-bold text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/5 transition-all duration-300 ease-out block border-b border-border-subtle/20 last:border-0"
                   >
                     {link.label}
