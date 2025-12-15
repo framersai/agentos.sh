@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
   Github, ExternalLink, Package, Shield, Mic,
-  Puzzle, Database, Globe, Users, BookOpen,
+  Puzzle, Database, Users, BookOpen,
   Terminal, Brain, Code2, GitBranch
 } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
