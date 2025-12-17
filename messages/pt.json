@@ -128,7 +128,7 @@
     "multiAgent": {
       "title": "Coordenação multiagente emergente",
       "description": "Gere pesquisador, analista, crítico e executor a partir de um único objetivo. Contexto, orçamento e aprovações compartilhados mantêm cada ramo sincronizado.",
-      "pill": "🆕 v0.1.0",
+      "pill": "🆕 v0.1.3",
       "bullet1": "Roteamento determinístico ou fan-out adaptativo",
       "bullet2": "Citações + memória costuradas automaticamente"
     },

@@ -128,7 +128,7 @@
     "multiAgent": {
       "title": "Coordination multi-agent émergente",
       "description": "Générez chercheurs, analystes, critiques et exécutants à partir d'un seul objectif. Contexte, budgets et validations partagés gardent chaque branche alignée.",
-      "pill": "🆕 v0.1.0",
+      "pill": "🆕 v0.1.3",
       "bullet1": "Routage déterministe ou éventail adaptatif",
       "bullet2": "Citations et mémoires fusionnées automatiquement"
     },

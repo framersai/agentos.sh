@@ -128,7 +128,7 @@
     "multiAgent": {
       "title": "Coordinación Multi-Agente Emergente",
       "description": "Genera investigadores, analistas, críticos y ejecutores desde un solo objetivo. Contexto compartido, presupuestos y aprobaciones mantienen cada rama sincronizada.",
-      "pill": "🆕 v0.1.0",
+      "pill": "🆕 v0.1.3",
       "bullet1": "Enrutamiento determinista o despliegue adaptativo",
       "bullet2": "Citas + memoria enlazadas automáticamente"
     },

@@ -128,7 +128,7 @@
     "multiAgent": {
       "title": "Emergente Multi-Agenten-Koordination",
       "description": "Erzeugen Sie Forscher-, Analysten-, Kritiker- und Executor-Personas aus einem einzigen Ziel. Gemeinsamer Kontext, Budgets und Genehmigungen halten jeden Zweig synchron.",
-      "pill": "🆕 v0.1.0",
+      "pill": "🆕 v0.1.3",
       "bullet1": "Deterministisches Routing oder adaptives Fan-Out",
       "bullet2": "Zitate + Gedächtnis automatisch verknüpft"
     },
