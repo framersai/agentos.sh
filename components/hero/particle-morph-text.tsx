@@ -24,6 +24,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   gradientTo = '#06b6d4',
   startIndex = 0,
 }: ParticleMorphTextProps) {
+  const [wordA, wordB] = words;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const stateRef = useRef({ 
@@ -41,7 +42,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const height = useMemo(() => Math.ceil(fontSize * 1.05), [fontSize]);
   const [wordWidths, setWordWidths] = useState<[number, number]>(() => {
     const estimate = (text: string) => Math.ceil(text.length * fontSize * 0.62);
-    return [estimate(words[0]), estimate(words[1])];
+    return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
   const wrapperWidth = wordWidths[activeWordIndex] ?? width;
@@ -117,15 +118,15 @@ export const ParticleMorphText = memo(function ParticleMorphText({
       const paddingX = Math.ceil(fontSize * 0.18);
 
       const next: [number, number] = [
-        Math.ceil(ctx.measureText(words[0]).width) + paddingX,
-        Math.ceil(ctx.measureText(words[1]).width) + paddingX,
+        Math.ceil(ctx.measureText(wordA).width) + paddingX,
+        Math.ceil(ctx.measureText(wordB).width) + paddingX,
       ];
 
       if (cancelled) return;
       setWordWidths((prev) => (prev[0] === next[0] && prev[1] === next[1] ? prev : next));
     };
 
-    const fontReady = (document as any).fonts?.ready;
+    const fontReady = (document as Document & { fonts?: { ready?: Promise<unknown> } }).fonts?.ready;
     if (fontReady && typeof fontReady.then === 'function') {
       fontReady.then(measure).catch(measure);
     } else {
@@ -135,7 +136,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return () => {
       cancelled = true;
     };
-  }, [mounted, fontSize, words[0], words[1]]);
+  }, [mounted, fontSize, wordA, wordB]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -148,8 +149,8 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     canvas.height = height * dpr;
     ctx.scale(dpr, dpr);
 
-    particlesARef.current = sampleText(words[0]);
-    particlesBRef.current = sampleText(words[1]);
+    particlesARef.current = sampleText(wordA);
+    particlesBRef.current = sampleText(wordB);
     stateRef.current.lastSwitch = performance.now();
 
     const draw = (t: number) => {
@@ -222,7 +223,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     
     animRef.current = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(animRef.current);
-  }, [mounted, width, height, words[0], words[1], interval, sampleText, easeOutExpo, easeInOutExpo]);
+  }, [mounted, width, height, wordA, wordB, interval, sampleText, easeOutExpo, easeInOutExpo]);
 
   // Inline-block for proper text flow alignment
   return (
@@ -238,7 +239,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         willChange: 'width',
       }}
     >
-      <span className="sr-only">{words[0]} / {words[1]}</span>
+      <span className="sr-only">{wordA} / {wordB}</span>
       {mounted ? (
         <canvas ref={canvasRef} style={{ width, height, display: 'block' }} aria-hidden="true" />
       ) : (

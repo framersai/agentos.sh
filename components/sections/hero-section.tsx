@@ -10,6 +10,14 @@ import { Button } from '../ui/Button';
 import { applyVisualTheme } from '@/lib/visual-design-system';
 import { useTheme } from 'next-themes';
 
+function safeJsonParse<T>(value: string): T | null {
+  try {
+    return JSON.parse(value) as T;
+  } catch {
+    return null;
+  }
+}
+
 // Skeleton placeholder for morphing text
 const TextSkeleton = ({ width }: { width: string }) => (
   <span 
@@ -66,15 +74,11 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   // Fetch GitHub stats with cache
   useEffect(() => {
     const cached = sessionStorage.getItem('github-stats');
-    if (cached) {
-      try {
-        const { stars, forks, ts } = JSON.parse(cached);
-        if (Date.now() - ts < 300000) { // 5 min cache
-          setGithubStars(stars);
-          setGithubForks(forks);
-          return;
-        }
-      } catch {}
+    const parsed = cached ? safeJsonParse<{ stars: number; forks: number; ts: number }>(cached) : null;
+    if (parsed && Date.now() - parsed.ts < 300000) { // 5 min cache
+      setGithubStars(parsed.stars);
+      setGithubForks(parsed.forks);
+      return;
     }
     fetch('https://api.github.com/repos/framersai/agentos')
       .then(r => r.json())
@@ -258,4 +262,3 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 export function HeroSection() {
   return <HeroSectionInner />;
 }
-
