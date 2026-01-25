@@ -36,10 +36,15 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const particlesARef = useRef<{ x: number; y: number; r: number; c: string; seed: number }[]>([]);
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
 
-  // Container with just enough padding for longest word
-  const width = useMemo(() => Math.ceil(Math.max(words[0].length, words[1].length) * fontSize * 0.62), [words, fontSize]);
   const height = useMemo(() => Math.ceil(fontSize * 1.05), [fontSize]);
+  const [wordWidths, setWordWidths] = useState<[number, number]>(() => {
+    const estimate = (text: string) => Math.ceil(text.length * fontSize * 0.62);
+    return [estimate(words[0]), estimate(words[1])];
+  });
+  const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
+  const wrapperWidth = wordWidths[activeWordIndex] ?? width;
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);
@@ -95,6 +100,45 @@ export const ParticleMorphText = memo(function ParticleMorphText({
 
   useEffect(() => {
     if (!mounted) return;
+    stateRef.current.wordIdx = startIndex;
+    setActiveWordIndex(startIndex);
+  }, [mounted, startIndex]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    let cancelled = false;
+
+    const measure = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      ctx.font = `700 ${fontSize}px Inter, system-ui, sans-serif`;
+      const paddingX = Math.ceil(fontSize * 0.18);
+
+      const next: [number, number] = [
+        Math.ceil(ctx.measureText(words[0]).width) + paddingX,
+        Math.ceil(ctx.measureText(words[1]).width) + paddingX,
+      ];
+
+      if (cancelled) return;
+      setWordWidths((prev) => (prev[0] === next[0] && prev[1] === next[1] ? prev : next));
+    };
+
+    const fontReady = (document as any).fonts?.ready;
+    if (fontReady && typeof fontReady.then === 'function') {
+      fontReady.then(measure).catch(measure);
+    } else {
+      measure();
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [mounted, fontSize, words[0], words[1]]);
+
+  useEffect(() => {
+    if (!mounted) return;
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx) return;
@@ -127,6 +171,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
           s.morphT = 0;
           s.isMorphing = false;
           s.wordIdx = 1 - s.wordIdx;
+          setActiveWordIndex(s.wordIdx);
           s.lastSwitch = t;
           s.nextInterval = interval + (Math.random() - 0.5) * 1000; // randomize next
         }
@@ -177,17 +222,20 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     
     animRef.current = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(animRef.current);
-  }, [mounted, width, height, words, interval, sampleText, easeOutExpo, easeInOutExpo]);
+  }, [mounted, width, height, words[0], words[1], interval, sampleText, easeOutExpo, easeInOutExpo]);
 
   // Inline-block for proper text flow alignment
   return (
     <span 
       className={`inline-block ${className}`} 
       style={{ 
-        width, 
+        width: wrapperWidth,
         height,
+        overflow: 'hidden',
         verticalAlign: 'middle',
         marginTop: 5, // shift down 5px
+        transition: 'width 520ms cubic-bezier(0.4, 0, 0.2, 1)',
+        willChange: 'width',
       }}
     >
       <span className="sr-only">{words[0]} / {words[1]}</span>
