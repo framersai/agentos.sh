@@ -14,6 +14,7 @@ interface ConsentState {
 
 const CONSENT_KEY = 'agentos-cookie-consent';
 const CONSENT_VERSION = '1.0';
+const CONSENT_EVENT = 'agentos-consent-changed';
 
 /**
  * Gets the current consent state from localStorage
@@ -47,6 +48,20 @@ function storeConsent(consent: ConsentState): void {
     }));
   } catch {
     // Ignore storage errors
+  }
+}
+
+/**
+ * Notify same-tab listeners of consent changes.
+ *
+ * Note: the native `storage` event only fires in other tabs/windows.
+ */
+function dispatchConsentChange(consent: ConsentState): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: { consent } }));
+  } catch {
+    // Ignore dispatch errors
   }
 }
 
@@ -100,6 +115,7 @@ export function CookieConsent() {
     setConsent(newConsent);
     storeConsent(newConsent);
     updateAnalyticsConsent(newConsent);
+    dispatchConsentChange(newConsent);
     setIsVisible(false);
   }, []);
 
@@ -108,12 +124,14 @@ export function CookieConsent() {
     setConsent(newConsent);
     storeConsent(newConsent);
     updateAnalyticsConsent(newConsent);
+    dispatchConsentChange(newConsent);
     setIsVisible(false);
   }, []);
 
   const handleSavePreferences = useCallback(() => {
     storeConsent(consent);
     updateAnalyticsConsent(consent);
+    dispatchConsentChange(consent);
     setShowSettings(false);
     setIsVisible(false);
   }, [consent]);

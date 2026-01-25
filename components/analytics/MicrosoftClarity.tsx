@@ -20,32 +20,40 @@ export function MicrosoftClarity() {
 
   // Check for stored consent on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('agentos-cookie-consent');
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (parsed.consent?.analytics) {
-          setConsentGiven(true);
+    const syncConsent = (value: string | null) => {
+      try {
+        if (!value) {
+          setConsentGiven(false);
+          return;
         }
-      }
-    } catch {
-      // Ignore parsing errors
-    }
-
-    // Listen for consent changes
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'agentos-cookie-consent' && e.newValue) {
-        try {
-          const parsed = JSON.parse(e.newValue);
-          setConsentGiven(parsed.consent?.analytics || false);
-        } catch {
-          // Ignore parsing errors
-        }
+        const parsed = JSON.parse(value);
+        setConsentGiven(Boolean(parsed.consent?.analytics));
+      } catch {
+        // Ignore parsing errors
       }
     };
 
+    // Initial read
+    syncConsent(localStorage.getItem('agentos-cookie-consent'));
+
+    // Listen for consent changes
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'agentos-cookie-consent') {
+        syncConsent(e.newValue);
+      }
+    };
+
+    // Same-tab consent updates (storage event doesn't fire in same tab)
+    const handleConsentChange = () => {
+      syncConsent(localStorage.getItem('agentos-cookie-consent'));
+    };
+
+    window.addEventListener('agentos-consent-changed', handleConsentChange);
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('agentos-consent-changed', handleConsentChange);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   // Don't render if no project ID
