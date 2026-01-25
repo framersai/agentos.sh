@@ -66,19 +66,32 @@ export function useAnalytics() {
 
   // Listen for consent changes
   useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'agentos-cookie-consent' && e.newValue) {
-        try {
-          const parsed = JSON.parse(e.newValue);
-          analytics.updateConsent(parsed.consent?.analytics || false);
-        } catch {
-          // Ignore
-        }
+    const syncConsent = (value: string | null) => {
+      try {
+        const hasConsent = value ? JSON.parse(value).consent?.analytics : false;
+        analytics.updateConsent(Boolean(hasConsent));
+      } catch {
+        // Ignore
       }
     };
 
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'agentos-cookie-consent') {
+        syncConsent(e.newValue);
+      }
+    };
+
+    // Same-tab consent updates (storage event doesn't fire in same tab)
+    const handleConsentChange = () => {
+      syncConsent(localStorage.getItem('agentos-cookie-consent'));
+    };
+
+    window.addEventListener('agentos-consent-changed', handleConsentChange);
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('agentos-consent-changed', handleConsentChange);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   // Return analytics tracking functions

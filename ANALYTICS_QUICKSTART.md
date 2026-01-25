@@ -1,24 +1,24 @@
 # 🎯 Quick Start: Analytics Setup
 
-## Your Tracking IDs (Use for BOTH sites)
-
-```
-Google Analytics: G-4KEEK15KWZ
-Microsoft Clarity: ukky5yykaj
-```
-
 ## Setup (2 minutes)
 
-### 1. Create `.env.local` in `apps/agentos.sh/`
+### 1. Set env vars (recommended via GitHub secrets / deploy env)
+
+AgentOS.sh only enables tracking when IDs are provided via env vars **and** the user accepts analytics cookies.
+
+Create `.env.local` in `apps/agentos.sh/` (gitignored), or set these as environment variables in your deployment (Vercel/Netlify/GitHub Actions).
 
 ```bash
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-4KEEK15KWZ
-NEXT_PUBLIC_CLARITY_PROJECT_ID=ukky5yykaj
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_CLARITY_PROJECT_ID=your-clarity-id
 ```
 
-### 2. Done! 
+For GitHub Pages deployments, add these as repository secrets and the deploy workflow will pick them up:
 
-Everything else is already configured. No GitHub Actions secrets needed.
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+- `NEXT_PUBLIC_CLARITY_PROJECT_ID`
+
+Tip: even though these IDs are not truly “secret” (they’re embedded into the client bundle), keeping them out of the repo prevents forks from accidentally sending data to your properties.
 
 ## What You Get
 
@@ -41,4 +41,4 @@ pnpm dev
 # Open localhost:3000, accept cookies, check DevTools Console
 ```
 
-That's it! 🚀
+That's it.
