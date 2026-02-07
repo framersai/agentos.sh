@@ -13,7 +13,7 @@ export function SocialProofSection() {
 
   const updateLinks = [
     { label: tFooter('releaseNotes'), href: 'https://github.com/framersai/agentos/releases' },
-    { label: tNav('changelog'), href: 'https://docs.agentos.sh/updates' },
+    { label: tNav('changelog'), href: 'https://docs.agentos.sh/docs/getting-started/releasing' },
     { label: tNav('faq'), href: '/faq' }
   ] as const
 
