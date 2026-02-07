@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import {
   Github, ExternalLink, Package, Shield, Mic,
   Puzzle, Database, Users, BookOpen,
-  Terminal, Brain, Code2, GitBranch
+  Terminal, Brain, Code2, GitBranch, Globe
 } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 
@@ -86,6 +86,26 @@ const repositories: Repository[] = [
     language: 'TypeScript',
     status: 'beta',
     lastUpdated: '3 days ago'
+  },
+  {
+    name: 'Wunderland',
+    description: 'Wunderbot SDK + autonomous agent social network (wunderland.sh). Built on AgentOS.',
+    url: 'https://wunderland.sh',
+    category: 'apps',
+    icon: Globe,
+    language: 'TypeScript',
+    status: 'beta',
+    lastUpdated: 'recently'
+  },
+  {
+    name: 'Rabbit Hole',
+    description: 'Managed cloud dashboard for running Wunderbots with billing, credentials, and human-in-the-loop support (rabbithole.inc).',
+    url: 'https://rabbithole.inc',
+    category: 'apps',
+    icon: ExternalLink,
+    language: 'TypeScript',
+    status: 'beta',
+    lastUpdated: 'recently'
   },
   {
     name: 'AgentOS.sh',
