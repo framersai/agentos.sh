@@ -238,6 +238,101 @@ const results = await agent.memory.search('TypeScript agent framework', {
 });
 ```
 
+## Cross-Encoder Reranking (Optional)
+
+Reranking uses a cross-encoder model to re-score retrieved documents for higher relevance.
+**Disabled by default** due to added latency (~100-500ms for 50 docs).
+
+### When to Enable
+
+| Use Case | Recommendation |
+|----------|----------------|
+| Real-time chat | **Disabled** — latency sensitive |
+| Background analysis | **Enabled** — accuracy matters more |
+| Batch processing | **Enabled** — no user waiting |
+| Knowledge-intensive tasks | **Enabled** — reduces hallucination |
+
+### Configuration
+
+```typescript
+await agent.initialize({
+  memory: {
+    // ... other config ...
+    rerankerServiceConfig: {
+      providers: [
+        { providerId: 'cohere', apiKey: process.env.COHERE_API_KEY },
+        { providerId: 'local', defaultModelId: 'cross-encoder/ms-marco-MiniLM-L-6-v2' }
+      ],
+      defaultProviderId: 'local'
+    }
+  }
+});
+
+// Register provider implementations after initialization
+import { CohereReranker, LocalCrossEncoderReranker } from '@framers/agentos/rag/reranking';
+
+agent.registerRerankerProvider(new CohereReranker({
+  providerId: 'cohere',
+  apiKey: process.env.COHERE_API_KEY!
+}));
+
+agent.registerRerankerProvider(new LocalCrossEncoderReranker({
+  providerId: 'local',
+  defaultModelId: 'cross-encoder/ms-marco-MiniLM-L-6-v2'
+}));
+```
+
+### Per-Request Usage
+
+```typescript
+// Enable reranking for specific queries
+const results = await agent.memory.search('complex technical question', {
+  topK: 20,  // Retrieve more, reranker will filter
+  rerankerConfig: {
+    enabled: true,
+    providerId: 'cohere',  // or 'local'
+    modelId: 'rerank-english-v3.0',
+    topN: 5  // Return top 5 after reranking
+  }
+});
+```
+
+### Global Default (for Analysis Personas)
+
+```typescript
+// Enable reranking by default for batch/analysis workloads
+await agent.initialize({
+  memory: {
+    globalDefaultRetrievalOptions: {
+      rerankerConfig: {
+        enabled: true,
+        topN: 5
+      }
+    }
+  }
+});
+```
+
+### Providers
+
+| Provider | Model | Latency | Cost |
+|----------|-------|---------|------|
+| Cohere | `rerank-english-v3.0` | ~100ms/50 docs | $0.10/1K queries |
+| Cohere | `rerank-multilingual-v3.0` | ~150ms/50 docs | $0.10/1K queries |
+| Local | `cross-encoder/ms-marco-MiniLM-L-6-v2` | ~200ms/50 docs | Free (self-hosted) |
+| Local | `BAAI/bge-reranker-base` | ~300ms/50 docs | Free (self-hosted) |
+
+### How It Works
+
+1. **Initial retrieval** — Fast bi-encoder vector search returns top-K candidates
+2. **Reranking** — Cross-encoder scores each (query, document) pair
+3. **Final selection** — Results sorted by cross-encoder score, top-N returned
+
+Cross-encoders jointly encode the query and document together, enabling richer
+semantic understanding than bi-encoder similarity. The trade-off is latency:
+cross-encoders are ~10-100x slower than bi-encoders, hence their use as a
+second-stage reranker rather than primary retrieval.
+
 ## Memory Lifecycle
 
 ```typescript
