@@ -76,6 +76,8 @@ Each skill is a directory with a `SKILL.md` file containing YAML frontmatter (me
 
 **Available Skills:** weather, github, slack, discord, notion, obsidian, trello, apple-notes, apple-reminders, healthcheck, spotify-player, whisper-transcribe, 1password, image-gen, coding-agent, summarize
 
+**Contributing:** Community skills are welcome via PR. See the [Contributing Guide](https://github.com/framersai/agentos-skills/blob/main/CONTRIBUTING.md) for the SKILL.md format spec and submission process.
+
 ---
 
 ### [@framers/agentos-skills-registry](https://github.com/framersai/agentos-skills-registry)
