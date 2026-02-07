@@ -45,6 +45,7 @@
 - [**Cost Optimization**](./COST_OPTIMIZATION.md) — Token usage and API cost management
 
 #### Extensions & Customization
+- [**Extensions Registry**](https://github.com/framersai/agentos-extensions) — Official extensions: `npm install @framers/agentos-extensions-registry`
 - [**RFC Extension Standards**](./RFC_EXTENSION_STANDARDS.md) — Extension development guidelines
 - [**Recursive Self-Building Agents**](./RECURSIVE_SELF_BUILDING_AGENTS.md) — Advanced agent patterns
 
