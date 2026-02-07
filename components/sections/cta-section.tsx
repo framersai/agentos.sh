@@ -55,7 +55,7 @@ export function CTASection() {
             </a>
 
             <a
-              href="https://agentos.sh/docs"
+              href="https://docs.agentos.sh"
               className="group flex flex-col items-center gap-2 p-4 bg-[var(--color-background-card)] backdrop-blur-xl rounded-xl border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] hover:border-[var(--color-accent-primary)] hover:bg-[var(--color-accent-primary)]/5 transition-all duration-300"
             >
               <Sparkles className="w-5 h-5 text-[var(--color-accent-primary)]" />

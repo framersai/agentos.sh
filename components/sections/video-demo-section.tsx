@@ -345,7 +345,7 @@ export function VideoDemoSection() {
               Code Examples
             </a>
             <a
-              href="/docs/tutorials"
+              href="https://docs.agentos.sh"
               className="btn-secondary"
             >
               Interactive Tutorials
