@@ -10,7 +10,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
       defaultTheme="system"
       enableSystem={true}
       disableTransitionOnChange
-      storageKey="agentos-theme"
+      storageKey="agentos-mode"
       {...props}
     >
       {children}
