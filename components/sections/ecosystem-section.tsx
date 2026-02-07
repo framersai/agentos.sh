@@ -75,6 +75,26 @@ const repositories: Repository[] = [
     status: 'stable',
     lastUpdated: '12 hours ago'
   },
+  {
+    name: 'AgentOS Skills',
+    description: '16+ curated SKILL.md prompt modules for AgentOS agents. Data-only — zero runtime deps.',
+    url: 'https://github.com/framersai/agentos-skills',
+    category: 'core',
+    icon: BookOpen,
+    language: 'Markdown',
+    status: 'stable',
+    lastUpdated: 'recently'
+  },
+  {
+    name: 'AgentOS Skills Registry',
+    description: 'Typed SDK for the skills catalog — search, filter, and lazy-load skills with dependency injection.',
+    url: 'https://github.com/framersai/agentos-skills-registry',
+    category: 'tools',
+    icon: Package,
+    language: 'TypeScript',
+    status: 'stable',
+    lastUpdated: 'recently'
+  },
 
   // Apps
   {

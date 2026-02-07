@@ -63,6 +63,45 @@ Only installed extension packages will load — missing ones are skipped silentl
 
 ---
 
+### [@framers/agentos-skills](https://github.com/framersai/agentos-skills)
+**Skills Catalog (Data)** — 16+ curated SKILL.md prompt modules for AgentOS agents. Data-only package — zero runtime code, zero dependencies.
+
+```bash
+npm install @framers/agentos-skills
+```
+
+[![npm](https://img.shields.io/npm/v/@framers/agentos-skills?logo=npm&color=cb3837)](https://www.npmjs.com/package/@framers/agentos-skills)
+
+Each skill is a directory with a `SKILL.md` file containing YAML frontmatter (metadata, requirements, install specs) and markdown instructions that get injected into an agent's system prompt.
+
+**Available Skills:** weather, github, slack, discord, notion, obsidian, trello, apple-notes, apple-reminders, healthcheck, spotify-player, whisper-transcribe, 1password, image-gen, coding-agent, summarize
+
+---
+
+### [@framers/agentos-skills-registry](https://github.com/framersai/agentos-skills-registry)
+**Skills SDK** — Typed catalog queries, search/filter helpers, and lazy-loading registry factories for `@framers/agentos-skills`.
+
+```bash
+npm install @framers/agentos-skills-registry
+```
+
+[![npm](https://img.shields.io/npm/v/@framers/agentos-skills-registry?logo=npm&color=cb3837)](https://www.npmjs.com/package/@framers/agentos-skills-registry)
+
+```typescript
+// Lightweight — no peer deps needed
+import { searchSkills, getSkillsByCategory } from '@framers/agentos-skills-registry/catalog';
+
+// Full registry — requires @framers/agentos peer dep
+import { createCuratedSkillRegistry } from '@framers/agentos-skills-registry';
+const registry = await createCuratedSkillRegistry();
+```
+
+**Two import paths:**
+- `@framers/agentos-skills-registry/catalog` — Zero peer deps. Static queries only.
+- `@framers/agentos-skills-registry` — Lazy-loads `@framers/agentos` for live SkillRegistry + snapshot generation.
+
+---
+
 ### [@framers/agentos-extensions](https://github.com/framersai/agentos-extensions)
 **Extensions Catalog** — Static `registry.json` catalog of all available extensions.
 
@@ -111,7 +150,9 @@ npm install @framers/agentos-extensions
 |----------|------|
 | Documentation | [agentos.sh/docs](https://agentos.sh/docs) |
 | API Reference | [agentos-live-docs branch](https://github.com/framersai/agentos/tree/agentos-live-docs) |
-| npm | [@framers/agentos](https://www.npmjs.com/package/@framers/agentos) |
+| npm: @framers/agentos | [@framers/agentos](https://www.npmjs.com/package/@framers/agentos) |
+| npm: @framers/agentos-skills | [@framers/agentos-skills](https://www.npmjs.com/package/@framers/agentos-skills) |
+| npm: @framers/agentos-skills-registry | [@framers/agentos-skills-registry](https://www.npmjs.com/package/@framers/agentos-skills-registry) |
 | Discord | [Join Community](https://discord.gg/agentos) |
 | Twitter | [@framersai](https://twitter.com/framersai) |
 
@@ -143,12 +184,20 @@ We welcome contributions to any repository in the ecosystem:
 │  │   Runtime   │  │   Manager   │  │                     │  │
 │  └─────────────┘  └─────────────┘  └─────────────────────┘  │
 └─────────────────────────────────────────────────────────────┘
-          │                   │                    │
-          ▼                   ▼                    ▼
-┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
-│ sql-storage-    │  │    agentos-     │  │   LLM Providers │
-│ adapter         │  │    extensions   │  │  (OpenAI, etc.) │
-└─────────────────┘  └─────────────────┘  └─────────────────┘
+     │            │                │               │
+     ▼            ▼                ▼               ▼
+┌──────────┐ ┌──────────────┐ ┌──────────────┐ ┌───────────┐
+│ sql-     │ │   agentos-   │ │   agentos-   │ │   LLM     │
+│ storage- │ │  extensions  │ │ skills-      │ │ Providers │
+│ adapter  │ │              │ │ registry     │ │           │
+└──────────┘ └──────────────┘ └──────────────┘ └───────────┘
+                                    │
+                                    ▼
+                              ┌──────────────┐
+                              │   agentos-   │
+                              │    skills    │
+                              │ (SKILL.md)   │
+                              └──────────────┘
 ```
 
 ---
