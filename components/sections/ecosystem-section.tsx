@@ -47,7 +47,7 @@ const repositories: Repository[] = [
   },
   {
     name: 'AgentOS Extensions',
-    description: 'Extensions registry for AgentOS. Add capabilities like vision, speech, and custom tools.',
+    description: '12 tool extensions (web-search, voice-synthesis, news, images, Giphy, CLI executor) and 5 channel adapters (Telegram, Discord, Slack, WhatsApp, WebChat).',
     url: 'https://github.com/framersai/agentos-extensions',
     category: 'tools',
     icon: Puzzle,
@@ -66,18 +66,8 @@ const repositories: Repository[] = [
     lastUpdated: 'yesterday'
   },
   {
-    name: 'AgentOS Extensions',
-    description: 'Tools, guardrails, and workflows for AgentOS. Includes auth, safety, and integration extensions.',
-    url: 'https://github.com/framersai/agentos-extensions',
-    category: 'core',
-    icon: Shield,
-    language: 'TypeScript',
-    status: 'stable',
-    lastUpdated: '12 hours ago'
-  },
-  {
     name: 'AgentOS Skills',
-    description: '18 curated SKILL.md prompt modules for AgentOS agents. Data-only — zero runtime deps.',
+    description: '18 curated SKILL.md prompt modules — weather, GitHub, Slack, Notion, Spotify, coding-agent, and more. Data-only package with zero runtime dependencies.',
     url: 'https://github.com/framersai/agentos-skills',
     category: 'core',
     icon: BookOpen,
@@ -87,10 +77,20 @@ const repositories: Repository[] = [
   },
   {
     name: 'AgentOS Skills Registry',
-    description: 'Typed SDK for the skills catalog — search, filter, and lazy-load skills with dependency injection.',
+    description: 'Typed SDK for the skills catalog. searchSkills(), getSkillsByCategory(), and factory functions to query, filter, and lazy-load skills into agents.',
     url: 'https://github.com/framersai/agentos-skills-registry',
     category: 'tools',
     icon: Package,
+    language: 'TypeScript',
+    status: 'stable',
+    lastUpdated: 'recently'
+  },
+  {
+    name: 'AgentOS Skills Extension',
+    description: 'Extension pack that exposes skills as agent tools: list, read, enable, and install skills at runtime.',
+    url: 'https://github.com/framersai/agentos-ext-skills',
+    category: 'tools',
+    icon: Puzzle,
     language: 'TypeScript',
     status: 'stable',
     lastUpdated: 'recently'

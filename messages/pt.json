@@ -742,6 +742,10 @@
         "title": "External Tool Integration",
         "description": "Connect APIs and services as agent tools"
       },
+      "skillsIntegration": {
+        "title": "Skills & Extensions",
+        "description": "Browse the curated catalog and register extensions programmatically"
+      },
       "realtimeStream": {
         "title": "Real-time Streaming Responses",
         "description": "Stream agent responses for better UX"

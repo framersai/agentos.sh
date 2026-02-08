@@ -242,6 +242,28 @@ const result = await agent.run({
 })`
   },
   {
+    id: 'skills-integration',
+    title: t('examples.skillsIntegration.title'),
+    description: t('examples.skillsIntegration.description'),
+    language: 'typescript',
+    category: 'integration',
+    code: `import { searchSkills, getSkillsByCategory } from '@framers/agentos-skills-registry/catalog'
+import { createCuratedManifest } from '@framers/agentos-extensions-registry'
+
+// Browse the catalog (zero deps, works anywhere)
+const devTools = getSkillsByCategory('developer-tools')
+// => [{ name: 'github', ... }, { name: 'coding-agent', ... }, { name: 'git', ... }]
+
+const matches = searchSkills('slack')
+// => [{ name: 'slack-helper', category: 'communication', ... }]
+
+// Register extensions + channels in one call
+const manifest = await createCuratedManifest({
+  channels: ['telegram', 'discord', 'slack'],
+  tools: 'all',
+})`
+  },
+  {
     id: 'streaming',
     title: t('examples.realtimeStream.title'),
     description: t('examples.realtimeStream.description'),
