@@ -77,7 +77,7 @@ const repositories: Repository[] = [
   },
   {
     name: 'AgentOS Skills',
-    description: '16+ curated SKILL.md prompt modules for AgentOS agents. Data-only — zero runtime deps.',
+    description: '18 curated SKILL.md prompt modules for AgentOS agents. Data-only — zero runtime deps.',
     url: 'https://github.com/framersai/agentos-skills',
     category: 'core',
     icon: BookOpen,
