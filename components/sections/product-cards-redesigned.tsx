@@ -10,7 +10,8 @@ import {
   Zap,
   Code,
   Server,
-  Globe
+  Globe,
+  Puzzle
 } from 'lucide-react'
 
 interface ProductCard {
@@ -50,7 +51,7 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       capabilities: [
         { name: 'Multi-Model Support', icon: Brain },
         { name: 'Context Management', icon: Database },
-        { name: 'Adaptive Learning', icon: Zap }
+        { name: 'Skills & Extensions', icon: Puzzle }
       ]
     },
     {
