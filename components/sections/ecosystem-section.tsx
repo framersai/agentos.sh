@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
-  Github, ExternalLink, Package, Shield, Mic,
+  Github, ExternalLink, Package, Mic,
   Puzzle, Database, Users, BookOpen,
   Terminal, Brain, Code2, GitBranch, Globe
 } from 'lucide-react'

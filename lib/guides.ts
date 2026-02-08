@@ -51,6 +51,16 @@ const GUIDE_METADATA: Record<string, { title: string; description: string; categ
     description: 'Vector storage setup and retrieval-augmented generation configuration.',
     category: 'Integration'
   },
+  'PROVENANCE_IMMUTABILITY': {
+    title: 'Provenance & Immutability',
+    description: 'Sealed storage policy, signed event ledger, and optional external anchoring (WORM, Rekor, OpenTimestamps, blockchains).',
+    category: 'Operations'
+  },
+  'IMMUTABLE_AGENTS': {
+    title: 'Immutable Agents (Sealed Mode)',
+    description: 'How sealing works end-to-end: toolset pinning, secret rotation, append-only memory, and tamper evidence.',
+    category: 'Operations'
+  },
   'SQL_STORAGE_QUICKSTART': {
     title: 'SQL Storage Quickstart',
     description: 'Database integration guide for persistent agent storage.',

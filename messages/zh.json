@@ -157,7 +157,7 @@
       "title": "本地优先工作台",
       "description": "使用持久化SQL、时间线刷新器和内置角色市场在浏览器中原型化整个代理机构。",
       "pill": "离线可用",
-      "bullet1": "实时检查推理和遥测",
+      "bullet1": "实时检查推理和OpenTelemetry追踪",
       "bullet2": "将制品同步回云端",
       "bullet3": "将完整代理机构导出为Markdown/JSON包"
     }

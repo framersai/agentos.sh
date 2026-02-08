@@ -157,7 +157,7 @@
       "title": "Workbench local-first",
       "description": "Prototyper des agences complètes dans le navigateur avec SQL persistant, scrubbing de timeline et marketplace intégrée.",
       "pill": "Utilisable hors ligne",
-      "bullet1": "Inspectez raisonnement et télémétrie en direct",
+      "bullet1": "Inspectez raisonnement et traces OpenTelemetry en direct",
       "bullet2": "Synchronisez les artefacts vers le cloud",
       "bullet3": "Exportez l'agence en bundles Markdown/JSON"
     }

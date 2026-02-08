@@ -157,7 +157,7 @@
       "title": "Local-First Workbench",
       "description": "Prototypen Sie ganze Agenturen im Browser mit persistiertem SQL, Timeline-Scrubbern und einem integrierten Marktplatz von Personas.",
       "pill": "Offline-Fähig",
-      "bullet1": "Begründung + Telemetrie live inspizieren",
+      "bullet1": "Begründung + OpenTelemetry-Traces live inspizieren",
       "bullet2": "Artefakte zurück in die Cloud synchronisieren",
       "bullet3": "Vollständige Agenturen als Markdown/JSON-Bundles exportieren"
     }

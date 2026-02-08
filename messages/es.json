@@ -157,7 +157,7 @@
       "title": "Workbench Local-Primero",
       "description": "Prototipa agencias completas en el navegador con SQL persistente, depuradores de línea de tiempo y un mercado integrado de personas.",
       "pill": "Capacidad Sin Conexión",
-      "bullet1": "Inspecciona razonamiento + telemetría en vivo",
+      "bullet1": "Inspecciona razonamiento + trazas OpenTelemetry en vivo",
       "bullet2": "Sincroniza artefactos de vuelta a la nube",
       "bullet3": "Exporta agencias completas como paquetes Markdown/JSON"
     }
