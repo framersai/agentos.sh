@@ -37,6 +37,8 @@
 - [**RAG Memory Configuration**](./RAG_MEMORY_CONFIGURATION.md) — Vector storage and retrieval setup
 - [**SQL Storage Quickstart**](./SQL_STORAGE_QUICKSTART.md) — Database integration guide
 - [**Client-Side Storage**](./CLIENT_SIDE_STORAGE.md) — Browser-based persistence
+- [**Immutable Agents**](./IMMUTABLE_AGENTS.md) — Sealing lifecycle, toolset pinning, secret rotation, and soft-forget
+- [**Provenance & Immutability**](./PROVENANCE_IMMUTABILITY.md) — Signed event ledger, sealed storage policy, and anchoring options
 - [**Migration Guide**](./MIGRATION_TO_STORAGE_ADAPTER.md) — Upgrading storage backends
 
 #### AI & LLM

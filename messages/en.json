@@ -106,7 +106,7 @@
       "title": "Local-First Workbench",
       "description": "Prototype entire agencies in-browser with persisted SQL, timeline scrubbers, and a built-in marketplace of personas.",
       "pill": "Offline Capable",
-      "bullet1": "Inspect reasoning + telemetry live",
+      "bullet1": "Inspect reasoning + OpenTelemetry traces live",
       "bullet2": "Sync artifacts back to the cloud",
       "bullet3": "Export full agencies as Markdown/JSON bundles"
     },

@@ -135,14 +135,14 @@ export default function LandingPageRedesigned() {
                   AgentOS Enterprise
                 </h2>
                 <p className="text-sm text-[var(--color-text-muted)]">
-                  Self-hosting, advanced PII controls, telemetry, and local model hosting. Contact{' '}
+                  Self-hosting, advanced PII controls, OpenTelemetry-compatible telemetry, and local model hosting. Contact{' '}
                   <a className="underline text-[var(--color-accent-primary)] hover:text-[var(--color-accent-secondary)] transition-colors" href="mailto:team@frame.dev">team@frame.dev</a>.
                 </p>
               </header>
               <ul className="space-y-1.5 text-sm text-[var(--color-text-secondary)]" role="list">
                 <li>• CI/CD pipelines & self-hosted deployments</li>
                 <li>• PII handling, anonymization, audit trails</li>
-                <li>• Production telemetry & evaluation</li>
+                <li>• Production telemetry (OpenTelemetry/OTLP) & evaluation</li>
                 <li>• GPU orchestration & local models</li>
                 <li>• SSO, payments & SDK integrations</li>
               </ul>
