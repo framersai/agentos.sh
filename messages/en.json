@@ -112,10 +112,10 @@
     },
     "guardrails": {
       "title": "Guardrails & Safety",
-      "description": "Built-in content moderation, PII detection, and compliance checks. Define approval flows and budget limits for autonomous operations.",
+      "description": "Built-in content moderation, PII detection, and compliance checks. Circuit breakers, cost guards, and stuck detection prevent runaway loops and excessive spending.",
       "pill": "Enterprise Safety",
-      "bullet1": "Content filtering & moderation",
-      "bullet2": "Approval workflows"
+      "bullet1": "Circuit breaker + cost guard + stuck detection",
+      "bullet2": "Content filtering & approval workflows"
     },
     "streaming": {
       "title": "Streaming Runtime",

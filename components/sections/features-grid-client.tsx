@@ -65,14 +65,15 @@ export default function FeaturesGridClient() {
       gradient: 'from-emerald-500 to-green-500',
       bullets: [t('guardrails.bullet1'), t('guardrails.bullet2')],
       codeExample: {
-        title: 'Guardrails Configuration',
+        title: 'Safety Primitives',
         language: 'typescript',
-        code: `agent.use(Guardrails, {
-  piiDetection: true,
-  contentFilter: 'strict',
-  budgetLimit: { tokens: 100000 },
-  approvalRequired: ['code-execution']
-});`
+        code: `import { CircuitBreaker, CostGuard, StuckDetector } from '@framers/agentos';
+
+const breaker = new CircuitBreaker({ failureThreshold: 5 });
+const costs = new CostGuard({ maxDailyCostUsd: 5.00 });
+
+const result = await breaker.execute(() => llm.invoke(messages));
+costs.recordCost(agentId, result.usage.cost);`
       }
     },
     {
