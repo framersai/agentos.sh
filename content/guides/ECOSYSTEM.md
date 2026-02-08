@@ -64,7 +64,7 @@ Only installed extension packages will load — missing ones are skipped silentl
 ---
 
 ### [@framers/agentos-skills](https://github.com/framersai/agentos-skills)
-**Skills Catalog (Data)** — 16+ curated SKILL.md prompt modules for AgentOS agents. Data-only package — zero runtime code, zero dependencies.
+**Skills Catalog (Data)** — 18 curated SKILL.md prompt modules for AgentOS agents. Data-only package — zero runtime code, zero dependencies.
 
 ```bash
 npm install @framers/agentos-skills
