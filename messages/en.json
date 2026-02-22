@@ -130,6 +130,13 @@
       "pill": "Orchestration",
       "bullet1": "Visual workflow builder",
       "bullet2": "Parallel task execution"
+    },
+    "capabilityDiscovery": {
+      "title": "Smart Capability Discovery",
+      "description": "Semantic, tiered discovery engine that reduces capability context by ~90%. Vector search + graph re-ranking finds the right tool, skill, or channel at the right time.",
+      "pill": "~90% Token Reduction",
+      "bullet1": "Three-tier token-budgeted context assembly",
+      "bullet2": "Graph-based relationship re-ranking"
     }
   },
   "marketplace": {

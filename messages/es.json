@@ -160,6 +160,13 @@
       "bullet1": "Inspecciona razonamiento + trazas OpenTelemetry en vivo",
       "bullet2": "Sincroniza artefactos de vuelta a la nube",
       "bullet3": "Exporta agencias completas como paquetes Markdown/JSON"
+    },
+    "capabilityDiscovery": {
+      "title": "Descubrimiento Inteligente de Capacidades",
+      "description": "Motor de descubrimiento semántico y escalonado que reduce el contexto de capacidades en ~90%. Búsqueda vectorial + re-ranking por grafo encuentra la herramienta, habilidad o canal correcto en el momento adecuado.",
+      "pill": "~90% Reducción de Tokens",
+      "bullet1": "Ensamblaje de contexto con presupuesto de tokens en tres niveles",
+      "bullet2": "Re-ranking basado en relaciones de grafo"
     }
   },
   "marketplace": {

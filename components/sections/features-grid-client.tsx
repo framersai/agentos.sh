@@ -2,17 +2,18 @@
 
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { 
-  Code2, 
-  Globe, 
-  Package, 
-  Database, 
-  Terminal, 
-  Users, 
-  Shield, 
-  Zap, 
+import {
+  Code2,
+  Globe,
+  Package,
+  Database,
+  Terminal,
+  Users,
+  Shield,
+  Zap,
   GitBranch,
-  type LucideIcon 
+  Search,
+  type LucideIcon
 } from 'lucide-react'
 import { CodePopover } from '../ui/code-popover'
 import { useTranslations } from 'next-intl'
@@ -182,6 +183,25 @@ agentos dev --port 3000
 
 # Deploy to production
 agentos deploy --env production`
+      }
+    },
+    {
+      icon: Search,
+      title: t('capabilityDiscovery.title'),
+      body: t('capabilityDiscovery.description'),
+      pill: t('capabilityDiscovery.pill'),
+      gradient: 'from-teal-500 to-cyan-500',
+      bullets: [t('capabilityDiscovery.bullet1'), t('capabilityDiscovery.bullet2')],
+      codeExample: {
+        title: 'Capability Discovery',
+        language: 'typescript',
+        code: `const result = await discoveryEngine.discover(
+  'search the web for AI news'
+);
+// Tier 0: Category summaries (~150 tokens)
+// Tier 1: Top-5 relevant capabilities (~200 tokens)
+// Tier 2: Full schemas for top-2 (~1500 tokens)
+// Total: ~1,850 tokens (down from ~20,000)`
       }
     }
   ]
