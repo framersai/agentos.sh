@@ -160,6 +160,13 @@
       "bullet1": "实时检查推理和OpenTelemetry追踪",
       "bullet2": "将制品同步回云端",
       "bullet3": "将完整代理机构导出为Markdown/JSON包"
+    },
+    "capabilityDiscovery": {
+      "title": "智能能力发现",
+      "description": "语义化分层发现引擎，将能力上下文减少约90%。向量搜索+图重排序在正确的时间找到正确的工具、技能或频道。",
+      "pill": "~90% Token 减少",
+      "bullet1": "三层 Token 预算化上下文组装",
+      "bullet2": "基于图的关系重排序"
     }
   },
   "enterprise": {

@@ -160,6 +160,13 @@
       "bullet1": "Inspectez raisonnement et traces OpenTelemetry en direct",
       "bullet2": "Synchronisez les artefacts vers le cloud",
       "bullet3": "Exportez l'agence en bundles Markdown/JSON"
+    },
+    "capabilityDiscovery": {
+      "title": "Découverte Intelligente des Capacités",
+      "description": "Moteur de découverte sémantique et hiérarchisé qui réduit le contexte des capacités de ~90%. Recherche vectorielle + re-ranking par graphe trouve le bon outil, compétence ou canal au bon moment.",
+      "pill": "~90% Réduction de Tokens",
+      "bullet1": "Assemblage de contexte à trois niveaux avec budget de tokens",
+      "bullet2": "Re-ranking basé sur les relations de graphe"
     }
   },
   "marketplace": {

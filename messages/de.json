@@ -160,6 +160,13 @@
       "bullet1": "Begründung + OpenTelemetry-Traces live inspizieren",
       "bullet2": "Artefakte zurück in die Cloud synchronisieren",
       "bullet3": "Vollständige Agenturen als Markdown/JSON-Bundles exportieren"
+    },
+    "capabilityDiscovery": {
+      "title": "Intelligente Capability-Erkennung",
+      "description": "Semantische, gestufte Discovery-Engine, die den Capability-Kontext um ~90% reduziert. Vektorsuche + Graph-Re-Ranking findet das richtige Tool, Skill oder Kanal zur richtigen Zeit.",
+      "pill": "~90% Token-Reduktion",
+      "bullet1": "Dreistufige token-budgetierte Kontextassemblierung",
+      "bullet2": "Graph-basiertes Beziehungs-Re-Ranking"
     }
   },
   "marketplace": {
