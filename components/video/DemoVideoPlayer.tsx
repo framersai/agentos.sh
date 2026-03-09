@@ -25,13 +25,10 @@ const DEMO_VIDEOS: DemoVideo[] = [
     title: 'Real-time Streaming',
     description: 'Token-level response delivery',
     src: '/videos/streaming.mp4',
-    poster: '/videos/streaming-thumb.jpg',
     captions: [
-      { start: 0, end: 3, text: 'Real-time Streaming' },
-      { start: 23, end: 25, text: 'Sending request...' },
-      { start: 27, end: 30, text: 'stream.on("token", render)' },
-      { start: 32, end: 35, text: '< 50ms latency per token' },
-      { start: 36, end: 39, text: '✓ Complete' },
+      { start: 0.5, end: 3, text: 'Type a prompt and send it to the agent' },
+      { start: 3.5, end: 7, text: 'Watch tokens stream back in real-time' },
+      { start: 7.5, end: 10, text: 'Complete response with session timeline' },
     ]
   },
   {
@@ -39,13 +36,13 @@ const DEMO_VIDEOS: DemoVideo[] = [
     title: 'Agent Creation',
     description: 'Build custom AI personas in minutes',
     src: '/videos/agent-creation.mp4',
-    poster: '/videos/agent-creation-thumb.jpg',
     captions: [
-      { start: 0, end: 2, text: 'Create AI Agent' },
-      { start: 3, end: 6, text: 'Choose template or start fresh' },
-      { start: 7, end: 10, text: 'Configure personality & style' },
-      { start: 11, end: 14, text: 'Add tools, memory, guardrails' },
-      { start: 15, end: 18, text: '✓ Ready to deploy' },
+      { start: 0.5, end: 3.5, text: 'Browse the persona catalog — pre-built agents' },
+      { start: 4, end: 7, text: 'Step 1 — Name, description, tags, and traits' },
+      { start: 7.5, end: 11, text: 'Step 2 — System prompt, model, and cost strategy' },
+      { start: 11.5, end: 15.5, text: 'Guardrails and tool extensions' },
+      { start: 16, end: 19, text: 'Market Intelligence Analyst — created' },
+      { start: 19.5, end: 25, text: 'Streaming response from the new persona' },
     ]
   },
   {
@@ -53,27 +50,21 @@ const DEMO_VIDEOS: DemoVideo[] = [
     title: 'Multi-Agent System',
     description: 'Orchestrate agent teams',
     src: '/videos/multi-agent.mp4',
-    poster: '/videos/multi-agent-thumb.jpg',
     captions: [
-      { start: 0, end: 2, text: 'Multi-Agent System' },
-      { start: 3, end: 5, text: 'Building 3-agent team' },
-      { start: 6, end: 9, text: 'Researcher → Analyst → Writer' },
-      { start: 10, end: 12, text: 'Message bus coordination' },
-      { start: 13, end: 16, text: '✓ Collaborative task complete' },
+      { start: 0.5, end: 4, text: 'Agency Manager — Lead, Researcher, Writer seats' },
+      { start: 4.5, end: 8, text: 'Define shared goals for multi-agent coordination' },
+      { start: 8.5, end: 13, text: 'Create and launch new agent teams' },
     ]
   },
   {
     id: 'rag-memory',
     title: 'RAG Memory',
-    description: 'Semantic search and retrieval',
+    description: 'Evaluation suites and quality tracking',
     src: '/videos/rag-memory.mp4',
-    poster: '/videos/rag-memory-thumb.jpg',
     captions: [
-      { start: 0, end: 2, text: 'RAG Memory' },
-      { start: 3, end: 6, text: 'Upload → Chunk → Embed' },
-      { start: 7, end: 10, text: '"What are the key findings?"' },
-      { start: 11, end: 13, text: 'Semantic search retrieval' },
-      { start: 14, end: 17, text: '✓ Context injected' },
+      { start: 0.5, end: 4, text: 'Evaluation Dashboard — run history with scores' },
+      { start: 4.5, end: 8, text: 'Run evaluations and track pass/fail per test case' },
+      { start: 8.5, end: 12, text: 'Compare results across runs — catch regressions early' },
     ]
   },
   {
@@ -81,13 +72,10 @@ const DEMO_VIDEOS: DemoVideo[] = [
     title: 'Planning Engine',
     description: 'Multi-step task decomposition',
     src: '/videos/planning-engine.mp4',
-    poster: '/videos/planning-engine-thumb.jpg',
     captions: [
-      { start: 0, end: 2, text: 'Planning Engine' },
-      { start: 3, end: 6, text: 'Goal: Deploy feature to prod' },
-      { start: 7, end: 10, text: '1. Test → 2. CI/CD → 3. Review' },
-      { start: 11, end: 13, text: '4. Stage → 5. Monitor' },
-      { start: 14, end: 17, text: '✓ Plan executed' },
+      { start: 0.5, end: 4, text: 'Planning Engine — execution plans with confidence scores' },
+      { start: 4.5, end: 7, text: 'Pause, resume, and advance — full execution control' },
+      { start: 7.5, end: 10, text: 'Each step tracked with tool calls and dependencies' },
     ]
   }
 ];
