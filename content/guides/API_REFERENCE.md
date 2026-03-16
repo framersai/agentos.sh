@@ -93,12 +93,100 @@ type MemoryType = 'episodic' | 'semantic' | 'procedural' | 'prospective';
 type MemoryScope = 'thread' | 'user' | 'persona' | 'organization';
 ```
 
-### MemoryObserver / MemoryReflector
+### MemoryObserver
 
-Background agents that compress conversation history into dense observations.
+Source: `src/memory/observation/MemoryObserver.ts`
 
-- **Observer**: Watches conversations, creates observation notes when token threshold (~30K) is reached
-- **Reflector**: Condenses observations when they exceed ~40K tokens — combines related items, reflects on patterns
+Watches conversation token accumulation via an internal `ObservationBuffer`. When the buffer exceeds the activation threshold (default: 30,000 tokens), extracts typed observation notes via a personality-biased LLM call.
+
+```typescript
+import { MemoryObserver, ObservationNote } from '@framers/agentos/memory';
+
+const observer = new MemoryObserver(hexacoTraits, {
+  activationThresholdTokens: 30_000,
+  llmInvoker: async (system, user) => llm.chat(system, user),
+});
+
+// Feed messages — returns notes when threshold is reached, null otherwise
+const notes: ObservationNote[] | null = await observer.observe('user', content, mood?);
+
+// Force extraction regardless of threshold
+const forced: ObservationNote[] = await observer.extractNotes(mood?);
+
+// Inspection
+observer.shouldActivate();     // boolean — has buffer reached threshold?
+observer.getBuffer();          // ObservationBuffer — access pending tokens/messages
+observer.clear();              // Reset buffer
+```
+
+**ObservationNote shape:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `string` | Auto-generated (`obs_{timestamp}_{counter}`) |
+| `type` | `'factual' \| 'emotional' \| 'commitment' \| 'preference' \| 'creative' \| 'correction'` | Category |
+| `content` | `string` | 1-2 sentence summary |
+| `importance` | `number` | 0-1 importance score |
+| `entities` | `string[]` | Key entities mentioned |
+| `emotionalContext` | `{ valence, arousal }?` | PAD snapshot if mood provided |
+| `timestamp` | `number` | Extraction time (Unix ms) |
+
+**Personality bias:** The observer system prompt gains priority focus areas based on HEXACO traits above 0.6: Emotionality adds emotional shift detection, Conscientiousness adds commitment/deadline tracking, Openness adds creative tangent capture, Agreeableness adds preference/rapport tracking, Honesty adds correction/retraction flagging.
+
+### MemoryReflector
+
+Source: `src/memory/observation/MemoryReflector.ts`
+
+Consolidates accumulated observation notes into long-term `MemoryTrace` objects. Activates when pending note tokens exceed the threshold (default: 40,000 tokens). Target compression: 5-40x.
+
+```typescript
+import { MemoryReflector, MemoryReflectionResult } from '@framers/agentos/memory';
+
+const reflector = new MemoryReflector(hexacoTraits, {
+  activationThresholdTokens: 40_000,
+  llmInvoker: async (system, user) => llm.chat(system, user),
+});
+
+// Add notes — returns reflection result when threshold is reached
+const result: MemoryReflectionResult | null = await reflector.addNotes(notes);
+
+// Force reflection over all pending notes
+const forced: MemoryReflectionResult = await reflector.reflect(existingMemoryContext?);
+
+// Inspection
+reflector.shouldActivate();       // boolean
+reflector.getPendingNoteCount();  // number
+reflector.clear();                // Discard pending notes
+```
+
+**MemoryReflectionResult shape:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `traces` | `MemoryTrace[]` (partial) | New long-term traces to store |
+| `supersededTraceIds` | `string[]` | Existing traces to soft-delete |
+| `consumedNoteIds` | `string[]` | Observation notes that were consumed |
+| `compressionRatio` | `number` | Input tokens / output tokens |
+
+**Personality controls:**
+- **Conflict resolution** — High Honesty (>0.6): supersede old with new. High Agreeableness (>0.6): keep both, note discrepancy. Default: prefer higher confidence.
+- **Memory style** — High Conscientiousness: structured traces. High Openness: associative traces with connections. Default: concise factual traces.
+
+### ObservationBuffer
+
+Source: `src/memory/observation/ObservationBuffer.ts`
+
+Token-counting buffer underlying the observer. Tracks messages and approximate token count (~4 chars/token).
+
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `push(role, content)` | `boolean` | Add message; returns true if threshold reached |
+| `shouldActivate()` | `boolean` | Whether pending tokens exceed threshold |
+| `drain()` | `BufferedMessage[]` | Return unprocessed messages, mark consumed |
+| `getTotalTokens()` | `number` | All-time accumulated tokens |
+| `getPendingTokens()` | `number` | Tokens since last drain |
+| `getMessageCount()` | `number` | Total messages buffered |
+| `clear()` | `void` | Reset entirely |
 
 ### CognitiveWorkingMemory
 

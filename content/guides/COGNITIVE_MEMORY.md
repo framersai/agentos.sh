@@ -450,6 +450,41 @@ Personality also controls **memory style**:
 - High openness: rich, associative traces with connections
 - Default: concise, factual traces
 
+### Observation Note Types
+
+Each observation extracted by the observer is typed:
+
+| Type | Description |
+|------|-------------|
+| `factual` | Objective information, facts, data points |
+| `emotional` | Emotional shifts, tone changes, sentiment transitions |
+| `commitment` | Promises, deadlines, action items |
+| `preference` | User preferences, rapport cues, communication style |
+| `creative` | Novel ideas, creative tangents, exploratory topics |
+| `correction` | Retractions, contradictions to prior statements |
+
+### Full Pipeline (CognitiveMemoryManager.observe)
+
+When `CognitiveMemoryManager.observe(role, content, mood?)` is called:
+
+1. Message is pushed into the `ObservationBuffer`
+2. If buffer tokens >= 30K, `MemoryObserver.observe()` extracts `ObservationNote[]` via LLM
+3. Notes are forwarded to `MemoryReflector.addNotes()`
+4. If reflector tokens >= 40K, `MemoryReflector.reflect()` produces `MemoryReflectionResult`
+5. Each reflection trace is encoded into the vector store via `encode()` — making it searchable by RAG/HyDE
+6. Superseded trace IDs are soft-deleted from the store
+
+The result: raw conversation turns are progressively compressed into searchable long-term memory without manual intervention.
+
+### Configuration Thresholds
+
+| Parameter | Default | Component | Effect |
+|-----------|---------|-----------|--------|
+| `observer.activationThresholdTokens` | 30,000 | MemoryObserver | Buffer size before observation extraction |
+| `reflector.activationThresholdTokens` | 40,000 | MemoryReflector | Accumulated note tokens before reflection |
+
+Lower thresholds produce more frequent, granular observations at higher LLM cost. Higher thresholds batch more context but may lose fine-grained detail. Both require an `llmInvoker` callback to be set; without it, the respective component is a no-op.
+
 ---
 
 ## Prospective Memory
