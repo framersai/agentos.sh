@@ -161,6 +161,11 @@ const GUIDE_METADATA: Record<string, { title: string; description: string; categ
     description: 'How tools are discovered, loaded, and invoked during LLM turns — including lazy loading and schema-on-demand.',
     category: 'Features'
   },
+  'VOICE_TTS_STT': {
+    title: 'Voice: TTS & STT',
+    description: 'Multi-provider text-to-speech and speech-to-text tools — OpenAI TTS, ElevenLabs, Whisper STT, and local Ollama.',
+    category: 'Features'
+  },
   'README': {
     title: 'Documentation Index',
     description: 'Quick links and overview of available documentation.',
