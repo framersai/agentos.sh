@@ -14,7 +14,7 @@ export function AgentOSWordmark({ className, size = "md" }: AgentOSWordmarkProps
   const width = size === "lg" ? 192 : 160;
 
   return (
-    <span className={clsx("theme-logo-wordmark", className)} aria-hidden="true">
+    <span className={clsx("theme-logo-wordmark text-gray-900 dark:text-white", className)} aria-hidden="true">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 320 80"
