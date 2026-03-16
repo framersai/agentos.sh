@@ -6,6 +6,7 @@ import Link from 'next/link';
 import type { Route } from 'next';
 import { Menu, X, Globe, Sparkles, ArrowRight, Github } from 'lucide-react';
 import AgentOSWordmark from './branding/AgentOSWordmark';
+import { DocSearch } from './docs/DocSearch';
 import { ModeToggle } from './mode-toggle';
 import { ThemeSelector } from './theme-selector';
 import { LanguageSwitcher } from './language-switcher';
@@ -203,6 +204,10 @@ export function SiteHeader() {
 
         {/* Right side actions */}
         <div className="flex items-center gap-2">
+          {/* Search */}
+          <div className="hidden md:block">
+            <DocSearch triggerLabel="Search" />
+          </div>
           {/* GitHub repo CTA (prominent with subtle hover) */}
           <a
             href="https://github.com/framersai/agentos"
