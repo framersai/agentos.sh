@@ -111,6 +111,56 @@ const GUIDE_METADATA: Record<string, { title: string; description: string; categ
     description: 'Release automation and versioning guidelines.',
     category: 'Reference'
   },
+  'COGNITIVE_MEMORY': {
+    title: 'Cognitive Memory System',
+    description: 'Observational memory with Ebbinghaus decay, working memory (Baddeley model), memory consolidation, and the AgentMemory high-level API.',
+    category: 'Features'
+  },
+  'CAPABILITY_DISCOVERY': {
+    title: 'Capability Discovery',
+    description: 'Tiered semantic discovery engine — agents find tools, skills, and extensions by intent instead of static lists.',
+    category: 'Features'
+  },
+  'GUARDRAILS_USAGE': {
+    title: 'Guardrails & Safety',
+    description: 'Configuring safety guardrails, content filters, and tool restriction policies.',
+    category: 'Operations'
+  },
+  'LOGGING': {
+    title: 'Logging',
+    description: 'Structured logging configuration, log levels, and observability integration.',
+    category: 'Operations'
+  },
+  'MULTIMODAL_RAG': {
+    title: 'Multimodal RAG',
+    description: 'Retrieval-augmented generation with images, documents, and mixed media content.',
+    category: 'Features'
+  },
+  'OAUTH_AUTH': {
+    title: 'OAuth Authentication',
+    description: 'OAuth 2.0 PKCE flows for LLM providers and social channel authentication.',
+    category: 'Integration'
+  },
+  'OBSERVABILITY': {
+    title: 'Observability',
+    description: 'OpenTelemetry integration, distributed tracing, and metrics collection.',
+    category: 'Operations'
+  },
+  'SAFETY_PRIMITIVES': {
+    title: 'Safety Primitives',
+    description: 'Five-tier prompt injection defense, action deduplication, and security tier presets.',
+    category: 'Operations'
+  },
+  'SKILLS': {
+    title: 'Skills System',
+    description: 'Creating, loading, and managing SKILL.md-based agent capabilities.',
+    category: 'Features'
+  },
+  'TOOL_CALLING_AND_LOADING': {
+    title: 'Tool Calling & Loading',
+    description: 'How tools are discovered, loaded, and invoked during LLM turns — including lazy loading and schema-on-demand.',
+    category: 'Features'
+  },
   'README': {
     title: 'Documentation Index',
     description: 'Quick links and overview of available documentation.',
