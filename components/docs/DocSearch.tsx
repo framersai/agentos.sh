@@ -2,24 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-type TypeDocNode = {
-  name?: string;
-  kindString?: string;
-  url?: string;
-  children?: TypeDocNode[];
-  groups?: { children: number[] }[];
-  comment?: {
-    shortText?: string;
-    text?: string;
-    summary?: Array<{ text?: string }>;
-  };
-};
-
 type DocSearchItem = {
   name: string;
   kind: string;
   url: string;
   description?: string;
+  surface: string;
 };
 
 interface DocSearchProps {
@@ -28,32 +16,34 @@ interface DocSearchProps {
 }
 
 const MIN_QUERY_LENGTH = 2;
-const DOCS_BASE_PATH = "/docs";
+const DOCS_INDEX_SOURCES = [
+  {
+    url: "/docs-generated/library/public/search-index.json",
+    surface: "Public API",
+  },
+  {
+    url: "/docs-generated/library/modules/search-index.json",
+    surface: "Module API",
+  },
+] as const;
 
-function extractSummary(node?: TypeDocNode): string | undefined {
-  if (!node) return undefined;
-  if (node.comment?.shortText) return node.comment.shortText.trim();
-  if (node.comment?.text) return node.comment.text.trim();
-  if (node.comment?.summary?.length) {
-    return node.comment.summary.map((entry) => entry.text ?? "").join(" ").trim();
-  }
-  return undefined;
-}
+function scoreItem(item: DocSearchItem, query: string): number {
+  const lowerName = item.name.toLowerCase();
+  const lowerKind = item.kind.toLowerCase();
+  const lowerDescription = (item.description ?? "").toLowerCase();
 
-function flattenTypeDoc(node: TypeDocNode | undefined, items: DocSearchItem[], parentUrl = ""): void {
-  if (!node) return;
-  const url = node.url ? (node.url.startsWith("http") ? node.url : `${DOCS_BASE_PATH}/${node.url}`) : undefined;
-  if (node.name && url) {
-    items.push({
-      name: node.name,
-      kind: node.kindString ?? "Symbol",
-      url,
-      description: extractSummary(node),
-    });
-  }
-  if (node.children?.length) {
-    node.children.forEach((child) => flattenTypeDoc(child, items, url ?? parentUrl));
-  }
+  let score = 0;
+  if (lowerName === query) score += 200;
+  else if (lowerName.startsWith(query)) score += 120;
+  else if (lowerName.includes(query)) score += 80;
+
+  if (lowerKind === query) score += 40;
+  else if (lowerKind.includes(query)) score += 15;
+
+  if (lowerDescription.includes(query)) score += 20;
+  if (item.surface === "Public API") score += 2;
+
+  return score;
 }
 
 export function DocSearch({ triggerClassName, triggerLabel = "Search docs" }: DocSearchProps) {
@@ -68,15 +58,28 @@ export function DocSearch({ triggerClassName, triggerLabel = "Search docs" }: Do
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`${DOCS_BASE_PATH}/docs.json`);
-      if (!response.ok) {
-        throw new Error(`Docs index missing (status ${response.status}). Generate via pnpm --filter @framers/agentos run docs.`);
-      }
-      const data: TypeDocNode = await response.json();
       const collected: DocSearchItem[] = [];
-      flattenTypeDoc(data, collected);
+      const failures: string[] = [];
+
+      for (const source of DOCS_INDEX_SOURCES) {
+        const response = await fetch(source.url);
+        if (!response.ok) {
+          failures.push(`${source.surface}: ${response.status}`);
+          continue;
+        }
+        const data = (await response.json()) as DocSearchItem[];
+        if (!Array.isArray(data)) {
+          failures.push(`${source.surface}: invalid index payload`);
+          continue;
+        }
+        collected.push(...data);
+      }
+
       if (!collected.length) {
-        throw new Error("Docs index is empty. Check TypeDoc configuration.");
+        const detail = failures.length > 0 ? ` (${failures.join(", ")})` : "";
+        throw new Error(
+          `Docs index is empty. Generate via pnpm --filter @framers/agentos run docs.${detail}`,
+        );
       }
       setItems(collected);
     } catch (err) {
@@ -115,10 +118,19 @@ export function DocSearch({ triggerClassName, triggerLabel = "Search docs" }: Do
     if (query.trim().length < MIN_QUERY_LENGTH) return [];
     const lower = query.trim().toLowerCase();
     return items
-      .filter((item) => {
-        const haystack = `${item.name} ${item.kind} ${item.description ?? ""}`.toLowerCase();
-        return haystack.includes(lower);
+      .map((item) => ({ item, score: scoreItem(item, lower) }))
+      .filter((entry) => entry.score > 0)
+      .sort((left, right) => {
+        if (left.score !== right.score) return right.score - left.score;
+        if (left.item.surface !== right.item.surface) {
+          return left.item.surface === "Public API" ? -1 : 1;
+        }
+        if (left.item.name.length !== right.item.name.length) {
+          return left.item.name.length - right.item.name.length;
+        }
+        return left.item.name.localeCompare(right.item.name);
       })
+      .map((entry) => entry.item)
       .slice(0, 20);
   }, [items, query]);
 
@@ -156,7 +168,7 @@ export function DocSearch({ triggerClassName, triggerLabel = "Search docs" }: Do
                 autoFocus
                 className="w-full rounded-2xl border border-slate-200/60 bg-white px-4 py-3 text-sm text-slate-700 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
                 type="search"
-                placeholder="Search TypeDoc (e.g. AgentOSConfig, processRequest)"
+                placeholder="Search API docs (e.g. AgentMemory, CapabilityDiscoveryEngine)"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
               />
@@ -169,7 +181,7 @@ export function DocSearch({ triggerClassName, triggerLabel = "Search docs" }: Do
                   <p className="text-sm text-slate-500 dark:text-slate-400">Loading documentation index…</p>
                 ) : query.trim().length < MIN_QUERY_LENGTH ? (
                   <p className="text-sm text-slate-500 dark:text-slate-400">
-                    Type at least {MIN_QUERY_LENGTH} characters to search the docs. Ensure <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-900">docs/docs.json</code> is generated via <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-900">pnpm --filter @framers/agentos run docs</code>.
+                    Type at least {MIN_QUERY_LENGTH} characters to search the docs. Ensure the public and module API indexes under <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-900">docs-generated/library/*/search-index.json</code> are generated via <code className="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-900">pnpm --filter @framers/agentos run docs</code>.
                   </p>
                 ) : filteredItems.length === 0 ? (
                   <p className="text-sm text-slate-500 dark:text-slate-400">No matches. Try a different keyword.</p>
@@ -184,7 +196,7 @@ export function DocSearch({ triggerClassName, triggerLabel = "Search docs" }: Do
                         >
                           <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{item.name}</p>
                           <p className="text-xs uppercase tracking-[0.35em] text-slate-400 dark:text-slate-500">
-                            {item.kind}
+                            {item.surface} · {item.kind}
                           </p>
                           {item.description ? (
                             <p className="mt-1 text-sm text-slate-600 dark:text-slate-300 overflow-hidden text-ellipsis">
