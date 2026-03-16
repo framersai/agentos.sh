@@ -60,21 +60,32 @@ export default function DocsPage({ params }: Props) {
               <h2 className="text-xl sm:text-2xl font-semibold text-[var(--color-text-primary)]">API Reference</h2>
             </div>
             <p className="text-[var(--color-text-secondary)] mb-6 text-sm sm:text-base">
-              Complete TypeDoc-generated API documentation for @framers/agentos package. Explore all classes,
-              interfaces, types, and methods.
+              Split TypeDoc documentation for @framers/agentos: a stable public API surface for application
+              developers and a deeper module-level reference for internal subsystems.
             </p>
             <div className="flex flex-col gap-3">
-              <a
-                href="https://docs.agentos.sh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl hover:brightness-110"
-              >
-                <BookOpen className="h-4 w-4" aria-hidden="true" />
-                View API Reference
-              </a>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href="https://docs.agentos.sh/api"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:shadow-xl hover:brightness-110"
+                >
+                  <BookOpen className="h-4 w-4" aria-hidden="true" />
+                  Public API
+                </a>
+                <a
+                  href="https://docs.agentos.sh/api/modules/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-[var(--color-border-primary)] bg-[var(--color-background-card)] px-6 py-3 text-sm font-semibold text-[var(--color-text-primary)] shadow-sm transition hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)]"
+                >
+                  <Code2 className="h-4 w-4" aria-hidden="true" />
+                  Module API
+                </a>
+              </div>
               <p className="text-xs text-[var(--color-text-muted)]">
-                TypeDoc documentation for all exported modules and types
+                Public API stays concise; Module API exposes the deeper class and subsystem surface
               </p>
             </div>
           </article>
@@ -178,7 +189,8 @@ await agentos.initialize(config);`}</code>
             Documentation is auto-generated from source code. To regenerate locally:
           </p>
           <pre className="code-block text-xs">
-            <code>pnpm run docs        # Generate all docs{"\n"}pnpm run docs:serve  # Serve at localhost:8080</code>
+            <code>{`pnpm --filter @framers/agentos run docs   # Generate public/module API docs + search index
+pnpm --dir apps/agentos.sh dev:full         # Watch docs and run the site locally`}</code>
           </pre>
         </div>
       </div>

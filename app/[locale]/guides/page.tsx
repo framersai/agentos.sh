@@ -123,17 +123,26 @@ export default function GuidesPage({ params }: Props) {
         <div className="mt-16 holographic-card p-8 text-center">
           <h3 className="text-2xl font-bold text-[var(--color-text-primary)] mb-3">Looking for API Reference?</h3>
           <p className="text-[var(--color-text-secondary)] mb-6 max-w-xl mx-auto">
-            Check out our auto-generated TypeDoc documentation for complete API reference including all classes, interfaces, types, and methods.
+            Check out the split API reference: a concise public surface for application builders and a deeper module reference for internal AgentOS subsystems.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <a
-              href="https://docs.agentos.sh"
+              href="https://docs.agentos.sh/api"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] text-white font-semibold hover:brightness-110 transition-all"
             >
               <BookOpen className="w-4 h-4" />
-              API Reference
+              Public API
+            </a>
+            <a
+              href="https://docs.agentos.sh/api/modules/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-[var(--color-border-primary)] text-[var(--color-text-primary)] font-semibold hover:border-[var(--color-accent-primary)] hover:text-[var(--color-accent-primary)] transition-all"
+            >
+              <FileText className="w-4 h-4" />
+              Module API
             </a>
             <a
               href="https://github.com/framersai/agentos/tree/master/docs"
