@@ -58,13 +58,22 @@ The curated bundle currently includes **40 skills** spanning developer tools, pr
 - Lightweight catalog queries (no `@framers/agentos` peer dependency)
 - Factory helpers that **lazy-load** `@framers/agentos/skills` only when called (to build a `SkillRegistry` or snapshot)
 
-If you’ve installed `@framers/agentos-ext-skills`, agents can inspect these via `skills_read` and enable them into a local skills directory via `skills_enable`.
+When you pass `skills: ['github', 'weather']` to the snapshot helper, it loads only
+those requested curated skills before building the prompt snapshot.
+
+If you’ve installed `@framers/agentos-skills`, agents can inspect and manage
+curated skills via `skills_list`, `skills_read`, `skills_status`,
+`skills_enable`, and `skills_install`.
+
+Catalog loaders like `loadSkillByName()` return the SKILL body, typed frontmatter,
+and parsed `metadata`, so callers can read fields like `primaryEnv`, `emoji`,
+or install requirements without re-parsing `metadata.agentos` manually.
 
 ## Agentic discovery (optional)
 
 If you want agents to **discover and enable** curated skills at runtime (HITL-gated), add:
 
-- `@framers/agentos-ext-skills` — exposes `skills_list`, `skills_read`, and `skills_enable` tools.
+- `@framers/agentos-skills` — exposes `skills_list`, `skills_read`, and `skills_enable` tools.
 
 It also includes:
 
