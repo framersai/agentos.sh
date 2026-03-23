@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "AgentOS | Portable AI Agent Runtime for Adaptive & Emergent Intelligence",
-    "description": "Build adaptive, emergent AI agents with AgentOS—the portable universal runtime for enterprise RAG, multi-agent orchestration, and permanent intelligence.",
-    "ogTitle": "AgentOS | Adaptive AI Intelligence for Enterprise-Ready Agents",
-    "ogDescription": "Build adaptive, emergent AI agents with memory, tools, and agency. Open‑source runtime featuring GMI roles, multi‑agent orchestration, and enterprise guardrails. By Framers (frame.dev).",
-    "twitterTitle": "AgentOS | Adaptive AI Intelligence for Enterprise-Ready Agents",
-    "twitterDescription": "Build adaptive, emergent AI agents with AgentOS. Open‑source runtime with GMI roles, agency orchestration, and enterprise guardrails. By Framers."
+    "title": "AgentOS — Open-Source TypeScript AI Agent Runtime",
+    "description": "AgentOS is an open-source TypeScript AI agent runtime with multi-agent orchestration, multimodal RAG, 37 channels, guardrails, and 21 LLM providers. Free.",
+    "ogTitle": "AgentOS — Open-Source TypeScript AI Agent Runtime",
+    "ogDescription": "Open-source TypeScript runtime for production AI agents. Multimodal RAG, multi-agent orchestration, 37 channel adapters, 5-tier guardrails, 21 LLM providers. Free.",
+    "twitterTitle": "AgentOS — Open-Source TypeScript AI Agent Runtime",
+    "twitterDescription": "Open-source TypeScript runtime for production AI agents. Multimodal RAG, multi-agent orchestration, 37 channels, 5-tier guardrails, 21 LLM providers."
   },
   "nav": {
     "features": "Features",
@@ -20,22 +20,22 @@
     "marketplace": "Marketplace"
   },
   "hero": {
-    "badge": "Open Source · Adaptive · Emergent",
-    "title": "Portable AI Agent Runtime for Adaptive & Emergent Intelligence",
-    "subtitle": "Build adaptive, emergent AI agents with memory, tools, and agency. TypeScript runtime featuring GMI roles, multi-agent orchestration, and enterprise guardrails.",
+    "badge": "Open Source · TypeScript · Production-Ready",
+    "title": "Open-Source TypeScript AI Agent Runtime",
+    "subtitle": "Production-ready TypeScript runtime with multimodal RAG, multi-agent orchestration, 37 channel adapters, 5-tier guardrails, 21 LLM providers, and 40 curated skills. Self-hostable and free.",
     "cycleWords": ["Adaptive","Emergent"],
     "cycleWordsTail": ["emergent","adaptive"],
     "headlinePairs": [
-      { "top": "Adaptive Intelligence", "bottom": "for Autonomous Agents" },
-      { "top": "Emergent Intelligence", "bottom": "for Enterprise Orchestration" },
-      { "top": "Adaptive Intelligence", "bottom": "for Safety-Critical Workflows" },
-      { "top": "Emergent Intelligence", "bottom": "for Parallel AI Teams" }
+      { "top": "Production AI Agents", "bottom": "with Multimodal RAG" },
+      { "top": "Multi-Agent Orchestration", "bottom": "across 37 Channels" },
+      { "top": "5-Tier Guardrails", "bottom": "with Prompt Injection Defense" },
+      { "top": "21 LLM Providers", "bottom": "with 40 Curated Skills" }
     ],
     "technicalHighlights": [
-      { "title": "Streaming-first runtime", "detail": "Token-level delivery across personas, guardrails, and channels." },
-      { "title": "Deterministic orchestration", "detail": "Parallel GMIs with auditable routing, approvals, and budgets." },
-      { "title": "Zero-copy memory fabric", "detail": "Vector, episodic, and working memory stitched together for recall." },
-      { "title": "Portable intelligence capsules", "detail": "Export full AgentOS instances as Markdown or JSON and ingest anywhere." }
+      { "title": "Streaming-first runtime", "detail": "Token-level delivery across 37 channel adapters and guardrails." },
+      { "title": "Multi-agent orchestration", "detail": "Parallel agents with auditable routing, approvals, and budgets." },
+      { "title": "Multimodal RAG", "detail": "Vector, episodic, and cognitive memory with Ebbinghaus decay." },
+      { "title": "Self-hostable", "detail": "Deploy anywhere — your infrastructure, your data, your agents." }
     ],
     "visualStats": [
       { "label": "Agencies live", "value": "128" },
@@ -148,7 +148,7 @@
     "description": "Real-world AgentOS implementations and production deployments"
   },
   "footer": {
-    "tagline": "TypeScript runtime for adaptive AI agents by Frame.dev",
+    "tagline": "Open-source TypeScript AI agent runtime by Frame.dev",
     "resources": "Resources",
     "docsGuides": "Docs (Guides)",
     "apiReferenceTSDoc": "API Reference (TypeDoc/TSDoc)",
@@ -471,7 +471,7 @@
   ,
   "ecosystem": {
     "title": "The AgentOS Ecosystem",
-    "subtitle": "Explore the portable AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.",
+    "subtitle": "Explore the open-source AgentOS ecosystem — multimodal RAG, multi-agent orchestration, 37 channel adapters, 21 LLM providers, and deployment kits for production AI teams.",
     "stats": {
       "repositories": "Repositories",
       "weeklyDownloads": "Weekly Downloads",

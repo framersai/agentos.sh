@@ -99,13 +99,13 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   }, []);
 
   const highlights = [
-    { title: 'Streaming-first', detail: 'Token-level delivery' },
-    { title: 'Deterministic', detail: 'Auditable routing' },
-    { title: 'Zero-copy memory', detail: 'Unified recall' },
-    { title: 'Portable', detail: 'Export anywhere' }
+    { title: '37 Channels', detail: 'Multiplatform delivery' },
+    { title: '21 LLM Providers', detail: 'Any model, anywhere' },
+    { title: 'Multimodal RAG', detail: 'Cognitive memory' },
+    { title: '5-Tier Guardrails', detail: 'Production-ready' }
   ];
 
-  const morphingWords: [string, string] = ['Adaptive', 'Emergent'];
+  const morphingWords: [string, string] = ['Production', 'Open-Source'];
 
   return (
     <section className="relative min-h-screen flex items-center bg-[var(--color-background-primary)] overflow-hidden" itemScope itemType="https://schema.org/SoftwareApplication">
@@ -160,16 +160,16 @@ const HeroSectionInner = memo(function HeroSectionInner() {
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden sm:inline-block lg:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="hidden lg:inline-block" />
               </span>
-              <span className="text-[var(--color-text-primary)]">intelligence</span>
+              <span className="text-[var(--color-text-primary)]">AI agents</span>
             </div>
             <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
-              <span className="text-[var(--color-text-secondary)]">for&nbsp;</span>
+              <span className="text-[var(--color-text-secondary)]">built&nbsp;with&nbsp;</span>
               <span className="inline-block mr-2" style={{ marginTop: '-4px' }}>
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="sm:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={30} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden sm:inline-block lg:hidden" />
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} className="hidden lg:inline-block" />
               </span>
-              <span className="text-[var(--color-text-primary)]">agents</span>
+              <span className="text-[var(--color-text-primary)]">TypeScript</span>
             </div>
           </h1>
 
