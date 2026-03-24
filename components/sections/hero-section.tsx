@@ -153,7 +153,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
-          <h1 className="font-bold tracking-tight mb-4" itemProp="description">
+          <h1 className="font-bold tracking-tight mb-4" itemProp="name">
             <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
               <span className="inline-block mr-2" style={{ marginTop: '-4px' }}>
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={22} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} className="sm:hidden" />

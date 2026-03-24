@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
+import type { Viewport } from 'next';
 import { ThemeProvider } from '../../components/theme-provider';
 import ScrollToTopButton from '../../components/ScrollToTopButton';
 import dynamic from 'next/dynamic';
@@ -54,6 +55,12 @@ type Props = {
   params: { locale: string };
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -74,6 +81,8 @@ export async function resolveLocaleMetadata(locale: Locale) {
         'ja': '/ja',
         'es': '/es',
         'de': '/de',
+        'fr': '/fr',
+        'pt': '/pt',
       },
     },
     keywords: [
@@ -153,10 +162,11 @@ export async function resolveLocaleMetadata(locale: Locale) {
       site: '@framersai',
       images: ['/og-image.png']
     },
-    verification: {
-      google: 'google-site-verification-code',
-      yandex: 'yandex-verification-code',
-    }
+    // TODO: Add real verification codes when obtained
+    // verification: {
+    //   google: 'real-google-site-verification-code',
+    //   yandex: 'real-yandex-verification-code',
+    // }
   };
 }
 
@@ -195,9 +205,6 @@ export default async function LocaleLayout({
           crossOrigin="anonymous"
         />
         
-        {/* Preload LCP image hint */}
-        <link rel="preload" as="image" href="/og-image.png" />
-
         {/* Analytics with consent integration */}
         <GoogleAnalyticsDynamic />
         <MicrosoftClarityDynamic />

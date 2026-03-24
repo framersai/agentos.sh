@@ -1,6 +1,5 @@
 import { CTASection } from '../../components/sections/cta-section'
 import dynamic from 'next/dynamic'
-import ScrollToTopButton from '../../components/ScrollToTopButton'
 import { HeroSection } from '../../components/sections/hero-section'
 import { useTranslations } from 'next-intl'
 
@@ -68,13 +67,8 @@ export default function LandingPageRedesigned() {
       {/* Animated Background - deferred client-side */}
       <AnimatedBackgroundLazy />
 
-      {/* Skip to Content for Accessibility */}
-      <a href="#main-content" className="skip-to-content">
-        {tCommon('skipToMain')}
-      </a>
-
       {/* Main Content */}
-      <main id="main-content">
+      <div>
         {/* Hero Section - SSR enabled for faster LCP */}
         <HeroSection />
 
@@ -154,10 +148,7 @@ export default function LandingPageRedesigned() {
         <div className="lazy-section-sm">
           <CTASection />
         </div>
-      </main>
-
-      {/* Scroll to Top Button */}
-      <ScrollToTopButton />
+      </div>
     </>
   )
 }
