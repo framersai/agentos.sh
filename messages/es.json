@@ -63,7 +63,7 @@
         "detail": "Memoria vectorial, episódica y de trabajo unidas en un mismo flujo recuperable."
       },
       {
-        "title": "Cápsulas de inteligencia portables",
+        "title": "Cápsulas de inteligencia production-ready",
         "detail": "Exporta instancias completas de AgentOS como Markdown/JSON y llévalas a cualquier stack."
       }
     ],
@@ -376,14 +376,14 @@
   },
   "gmiSection": {
     "title": "Parallel Agency",
-    "subtitle": "Build sophisticated AI systems with adaptive personas and emergent, dynamic behaviors. Route inbound support tickets to the right persona, push CRM updates safely, and keep every RAG workflow inside deterministic guardrails. AgentOS GMIs enable autonomous agents that learn, adapt, and evolve—then export those insights as portable intelligence bundles.",
+    "subtitle": "Build sophisticated AI systems with adaptive personas and emergent, dynamic behaviors. Route inbound support tickets to the right persona, push CRM updates safely, and keep every RAG workflow inside deterministic guardrails. AgentOS GMIs enable autonomous agents that learn, adapt, and evolve—then export those insights as production-ready intelligence bundles.",
     "useCaseTitle": "Use case",
     "outcomeTitle": "Outcome",
     "whatYouGetTitle": "What you get",
     "whatYouGetItems": [
       "Persona library for research, analysis, creation, critique, execution, and future GMIs.",
       "Deterministic orchestration with guardrails, budgets, approvals, and SOC2/GDPR-ready event trails.",
-      "Unified memory fabric (working, episodic, vector) plus portable exports for Markdown/JSON ingestion."
+      "Unified memory fabric (working, episodic, vector) plus production-ready exports for Markdown/JSON ingestion."
     ],
     "architectureTitle": "AgentOS Architecture (streaming)",
     "currentlySelected": "Currently selected",
@@ -766,7 +766,7 @@
   },
   "ecosystem": {
     "title": "The AgentOS Ecosystem",
-    "subtitle": "Explore the portable AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.",
+    "subtitle": "Explore the production-ready AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.",
     "stats": {
       "repositories": "Repositories",
       "weeklyDownloads": "Weekly Downloads",
@@ -884,7 +884,7 @@
     "links": {
       "vcaFaq": "VCA.Chat FAQ",
       "frameFaq": "Frame.dev FAQ",
-      "manic": "Manic Agency",
+      "frameDev": "Frame.dev",
       "lookingGlass": "The Looking Glass — AI newsletter & blog"
     }
   }

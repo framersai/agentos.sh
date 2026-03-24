@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "AgentOS | Runtime portable d'agents IA pour l'intelligence adaptative et émergente",
-    "description": "Créez des agents IA adaptatifs et émergents avec AgentOS, le runtime universel portable pour le RAG d'entreprise, l'orchestration multi-agents et l'intelligence permanente.",
+    "title": "AgentOS | Runtime production-ready d'agents IA pour l'intelligence adaptative et émergente",
+    "description": "Créez des agents IA adaptatifs et émergents avec AgentOS, le runtime universel production-ready pour le RAG d'entreprise, l'orchestration multi-agents et l'intelligence permanente.",
     "ogTitle": "AgentOS | Intelligence IA adaptative prête pour l'entreprise",
     "ogDescription": "Déployez des agents IA adaptatifs dotés de mémoire, d'outils et d'autonomie. Runtime open source avec rôles GMI, orchestration multi-agents et garde-fous entreprise. Par Framers (frame.dev).",
     "twitterTitle": "AgentOS | Intelligence IA adaptative prête pour l'entreprise",
@@ -21,7 +21,7 @@
   },
   "hero": {
     "badge": "Open Source · Adaptatif · Émergent",
-    "title": "Runtime portable pour agents IA adaptatifs et émergents",
+    "title": "Runtime production-ready pour agents IA adaptatifs et émergents",
     "subtitle": "Créez des agents IA adaptatifs avec mémoire, outils et autonomie. Runtime TypeScript avec rôles GMI, orchestration multi-agents et garde-fous entreprise.",
     "headlinePairs": [
       {
@@ -55,7 +55,7 @@
         "detail": "Mémoires vectorielle, épisodique et de travail réunies dans un flux réutilisable."
       },
       {
-        "title": "Capsules d'intelligence portables",
+        "title": "Capsules d'intelligence production-ready",
         "detail": "Exportez AgentOS en Markdown/JSON et réimportez-le dans n'importe quelle stack."
       }
     ],
@@ -621,14 +621,14 @@
   },
   "gmiSection": {
     "title": "Parallel Agency",
-    "subtitle": "Build sophisticated AI systems with adaptive personas and emergent, dynamic behaviors. Route inbound support tickets to the right persona, push CRM updates safely, and keep every RAG workflow inside deterministic guardrails. AgentOS GMIs enable autonomous agents that learn, adapt, and evolve—then export those insights as portable intelligence bundles.",
+    "subtitle": "Build sophisticated AI systems with adaptive personas and emergent, dynamic behaviors. Route inbound support tickets to the right persona, push CRM updates safely, and keep every RAG workflow inside deterministic guardrails. AgentOS GMIs enable autonomous agents that learn, adapt, and evolve—then export those insights as production-ready intelligence bundles.",
     "useCaseTitle": "Use case",
     "outcomeTitle": "Outcome",
     "whatYouGetTitle": "What you get",
     "whatYouGetItems": [
       "Persona library for research, analysis, creation, critique, execution, and future GMIs.",
       "Deterministic orchestration with guardrails, budgets, approvals, and SOC2/GDPR-ready event trails.",
-      "Unified memory fabric (working, episodic, vector) plus portable exports for Markdown/JSON ingestion."
+      "Unified memory fabric (working, episodic, vector) plus production-ready exports for Markdown/JSON ingestion."
     ],
     "architectureTitle": "AgentOS Architecture (streaming)",
     "currentlySelected": "Currently selected",
@@ -726,7 +726,7 @@
   },
   "ecosystem": {
     "title": "The AgentOS Ecosystem",
-    "subtitle": "Explore the portable AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.",
+    "subtitle": "Explore the production-ready AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.",
     "stats": {
       "repositories": "Repositories",
       "weeklyDownloads": "Weekly Downloads",
@@ -868,7 +868,7 @@
     "links": {
       "vcaFaq": "VCA.Chat FAQ",
       "frameFaq": "Frame.dev FAQ",
-      "manic": "Manic Agency",
+      "frameDev": "Frame.dev",
       "lookingGlass": "The Looking Glass — AI newsletter & blog"
     }
   },
