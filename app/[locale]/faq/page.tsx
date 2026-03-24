@@ -21,7 +21,7 @@ export async function generateMetadata({ params: { locale } }: { params: { local
       title: `${t('title')} - AgentOS`,
       description: t('subtitle')
     },
-    authors: [{ name: 'Manic Agency', url: 'https://manic.agency' }]
+    authors: [{ name: 'Frame.dev', url: 'https://frame.dev' }]
   }
 }
 
@@ -96,8 +96,8 @@ export default function AgentOSFaqPage() {
         <ul className="mt-3 grid gap-2 underline text-brand">
           <li><a href="https://vca.chat/faq" target="_blank" rel="noopener">{t('links.vcaFaq')}</a></li>
           <li><a href="https://frame.dev/faq" target="_blank" rel="noopener">{t('links.frameFaq')}</a></li>
-          <li><a href="https://manic.agency" target="_blank" rel="noopener">{t('links.manic')}</a></li>
-          <li><a href="https://manic.agency/blog" target="_blank" rel="noopener">{t('links.lookingGlass')}</a></li>
+          <li><a href="https://frame.dev" target="_blank" rel="noopener">{t('links.frameDev')}</a></li>
+          <li><a href="https://frame.dev/blog" target="_blank" rel="noopener">{t('links.lookingGlass')}</a></li>
         </ul>
       </section>
     </main>

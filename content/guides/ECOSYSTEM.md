@@ -64,7 +64,7 @@ Only installed extension packages will load — missing ones are skipped silentl
 ---
 
 ### [@framers/agentos-skills-registry](https://github.com/framersai/agentos-skills-registry)
-**Curated Skills Registry** — 18 SKILL.md prompt modules + typed catalog + lazy-loading factories.
+**Curated Skills Registry** — 40 SKILL.md prompt modules + typed catalog + lazy-loading factories.
 
 ```bash
 npm install @framers/agentos-skills-registry
@@ -72,11 +72,11 @@ npm install @framers/agentos-skills-registry
 
 [![npm](https://img.shields.io/npm/v/@framers/agentos-skills-registry?logo=npm&color=cb3837)](https://www.npmjs.com/package/@framers/agentos-skills-registry)
 
-This is the **single package** for AgentOS skills. It bundles 18 curated SKILL.md prompt modules, a `registry.json` index, typed query helpers, and factory functions for runtime skill loading.
+This is the **catalog package** for AgentOS skills. It bundles 40 curated SKILL.md prompt modules, a `registry.json` index, typed query helpers, and factory functions for runtime skill loading.
 
 Each skill is a directory with a `SKILL.md` file containing YAML frontmatter (metadata, requirements, install specs) and markdown instructions that get injected into an agent's system prompt.
 
-**Available Skills:** weather, github, slack, discord, notion, obsidian, trello, apple-notes, apple-reminders, healthcheck, spotify-player, whisper-transcribe, 1password, image-gen, coding-agent, summarize, git, web-search
+**Available Skills:** weather, github, slack-helper, discord-helper, notion, obsidian, trello, apple-notes, apple-reminders, healthcheck, spotify-player, whisper-transcribe, 1password, image-gen, coding-agent, summarize, git, web-search, deep-research, social-broadcast, twitter-bot, instagram-bot, linkedin-bot, facebook-bot, threads-bot, bluesky-bot, mastodon-bot, youtube-bot, tiktok-bot, pinterest-bot, reddit-bot, blog-publisher, and more.
 
 ```typescript
 // Lightweight — no peer deps needed
@@ -90,6 +90,31 @@ const snapshot = await createCuratedSkillSnapshot({ skills: ['github', 'weather'
 **Two import paths:**
 - `@framers/agentos-skills-registry/catalog` — Zero peer deps. Static queries only.
 - `@framers/agentos-skills-registry` — Lazy-loads `@framers/agentos` for live SkillRegistry + snapshot generation.
+
+---
+
+### [@framers/agentos-skills](https://github.com/framersai/agentos-skills)
+**Skills Runtime** — Standalone runtime package for loading, parsing, filtering, and snapshotting SKILL.md modules.
+
+```bash
+npm install @framers/agentos-skills
+```
+
+[![npm](https://img.shields.io/npm/v/@framers/agentos-skills?logo=npm&color=cb3837)](https://www.npmjs.com/package/@framers/agentos-skills)
+
+This is the **runtime package** for skills. It provides `SkillRegistry`,
+loader/parsing helpers like `loadSkillFromDir()` and `parseSkillFrontmatter()`,
+path resolution helpers, and the canonical frontmatter/metadata parsing logic.
+
+```typescript
+import { SkillRegistry, resolveDefaultSkillsDirs } from '@framers/agentos-skills';
+
+const registry = new SkillRegistry();
+await registry.loadFromDirs(resolveDefaultSkillsDirs());
+
+const snapshot = registry.buildSnapshot({ platform: process.platform, strict: true });
+console.log(snapshot.prompt);
+```
 
 **Contributing:** Community skills are welcome via PR. See the [Contributing Guide](https://github.com/framersai/agentos-skills-registry/blob/main/CONTRIBUTING.md) for the SKILL.md format spec and submission process.
 
