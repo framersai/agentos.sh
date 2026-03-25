@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "AgentOS — Open-Source TypeScript AI Agent Runtime",
-    "description": "AgentOS is an open-source TypeScript AI agent runtime with multi-agent orchestration, multimodal RAG, 37 channels, guardrails, and 21 LLM providers. Free.",
-    "ogTitle": "AgentOS — Open-Source TypeScript AI Agent Runtime",
-    "ogDescription": "Open-source TypeScript runtime for production AI agents. Multimodal RAG, multi-agent orchestration, 37 channel adapters, 5-tier guardrails, 21 LLM providers. Free.",
-    "twitterTitle": "AgentOS — Open-Source TypeScript AI Agent Runtime",
-    "twitterDescription": "Open-source TypeScript runtime for production AI agents. Multimodal RAG, multi-agent orchestration, 37 channels, 5-tier guardrails, 21 LLM providers."
+    "title": "AgentOS — Open-Source AI Agent Framework for TypeScript",
+    "description": "Build production AI agents in TypeScript with multi-agent orchestration, cognitive memory, RAG, 5-tier guardrails, voice pipelines, 37 channels, and 21 LLM providers. Free and self-hostable.",
+    "ogTitle": "AgentOS — Build Production AI Agents in TypeScript",
+    "ogDescription": "Open-source AI agent framework with graph orchestration, cognitive memory, multimodal RAG, 5-tier guardrails, voice pipelines, and 21 LLM providers. Self-hostable and free.",
+    "twitterTitle": "AgentOS — Open-Source AI Agent Framework for TypeScript",
+    "twitterDescription": "Build production AI agents with graph orchestration, cognitive memory, RAG, guardrails, voice, 37 channels, and 21 LLM providers. Free and self-hostable."
   },
   "nav": {
     "features": "Features",

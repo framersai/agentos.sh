@@ -87,30 +87,30 @@ export async function resolveLocaleMetadata(locale: Locale) {
     },
     keywords: [
       'AgentOS',
-      'AI agents',
-      'TypeScript AI agent runtime',
-      'open source AI',
+      'AI agent framework',
+      'build AI agents',
+      'TypeScript AI agents',
       'multi-agent orchestration',
-      'multimodal RAG',
-      'AI framework',
-      'agent runtime',
+      'agentic AI framework',
+      'autonomous AI agents',
       'AI guardrails',
       'prompt injection defense',
-      'LLM providers',
-      'channel adapters',
-      'self-hostable AI',
-      'production AI agents',
       'cognitive memory',
-      'AI orchestration',
-      'Frame.dev',
-      'FramersAI',
-      'AI development',
-      'TypeScript AI',
-      'autonomous agents',
-      'AI skills',
-      'Ebbinghaus decay',
-      'vector search',
-      'GraphRAG'
+      'RAG memory',
+      'voice AI agents',
+      'LLM providers',
+      'graph orchestration',
+      'AI workflow automation',
+      'open source AI framework',
+      'self-hosted AI agents',
+      'production AI agents',
+      'LangGraph alternative',
+      'CrewAI alternative',
+      'agent runtime',
+      'AI SDK TypeScript',
+      'multimodal RAG',
+      'agent extensions',
+      'agent skills',
     ],
     authors: [{ name: 'Framers', url: 'https://frame.dev' }],
     creator: 'Framers',
@@ -309,7 +309,7 @@ export default async function LocaleLayout({
                   <li><a href={locale === 'en' ? '/#code' : `/${locale}/#code`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('examples')}</a></li>
                   <li><a href="https://github.com/framersai/agentos/releases" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('releaseNotes')}</a></li>
                   <li><a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('github')}</a></li>
-                  <li><a href="https://discord.gg/framersai" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('discord')}</a></li>
+                  <li><a href="https://discord.com/invite/KxF9b6HY6h" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('discord')}</a></li>
                 </ul>
               </div>
               <div>
