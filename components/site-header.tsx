@@ -22,7 +22,7 @@ export function SiteHeader() {
   const NAV_LINKS = useMemo(() => [
     { href: '/about', label: t('about') },
     { href: '/#features', label: t('features') },
-    { href: '/blog', label: 'Blog' },
+    { href: 'https://docs.agentos.sh/blog', label: 'Blog' },
     { href: 'https://docs.agentos.sh/', label: t('docs') },
   ], [t]);
 
