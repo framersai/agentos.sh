@@ -20,6 +20,7 @@ export function SiteHeader() {
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const NAV_LINKS = useMemo(() => [
+    { href: '/about', label: t('about') },
     { href: '/#features', label: t('features') },
     { href: 'https://docs.agentos.sh/', label: 'Docs' },
     { href: 'https://docs.agentos.sh/blog', label: 'Blog' },
