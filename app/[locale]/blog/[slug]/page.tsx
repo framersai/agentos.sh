@@ -3,6 +3,11 @@
 import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
+/** Required for `output: 'export'` — no blog posts are statically generated here. */
+export function generateStaticParams() {
+  return [];
+}
+
 export default function BlogPostRedirect() {
   const params = useParams();
   const slug = params?.slug || '';
