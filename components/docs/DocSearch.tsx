@@ -141,7 +141,7 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
   }, []);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    const items = results.length > 0 ? results : (query.trim().length < 2 ? fallbackDocs.slice(0, 6) : []);
+    const items = results;
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelectedIndex((i) => Math.min(i + 1, items.length - 1));
@@ -157,21 +157,13 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
     }
   }, [results, selectedIndex, navigate, query, fallbackDocs]);
 
-  const displayItems = results.length > 0
-    ? results
-    : query.trim().length < 2
-      ? fallbackDocs.slice(0, 6)
-      : [];
+  const displayItems = results.length > 0 ? results : [];
 
   const hint = loading
     ? "Loading..."
     : results.length > 0
       ? `${results.length} result${results.length > 1 ? "s" : ""}`
-      : query.trim().length >= 2
-        ? "No results"
-        : docs.length > 0
-          ? `${docs.length} pages indexed`
-          : "Popular";
+      : "";
 
   return (
     <>
