@@ -63,7 +63,8 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
             entries.push({
               title: item.title || item.t || item.name || "",
               url: item.url || item.u || item.href || "",
-              content: item.content || item.c || item.body || item.description || "",
+              // Docusaurus local-search uses 'd' for body and 's' for section
+              content: item.content || item.c || item.body || item.description || item.d || item.s || "",
             });
           }
         } else if (data.documents) {
@@ -71,7 +72,7 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
             entries.push({
               title: doc.title || doc.t || "",
               url: doc.url || doc.u || "",
-              content: doc.content || doc.body || "",
+              content: doc.content || doc.body || doc.d || doc.s || "",
             });
           }
         }
@@ -85,22 +86,26 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
 
   // Fallback curated list when index fetch fails
   const fallbackDocs: SearchDoc[] = useMemo(() => [
-    { title: "High-Level API", url: "/getting-started/high-level-api", content: "generateText streamText generateImage agent provider" },
-    { title: "Multi-Agent Agency API", url: "/features/agency-api", content: "agency dependsOn graph sequential parallel hierarchical" },
-    { title: "Emergent Capabilities", url: "/features/emergent-capabilities", content: "forge tool sandbox compose LLM judge tiered" },
-    { title: "Voice Pipeline", url: "/features/voice-pipeline", content: "voice stt tts vad barge-in endpoint detection telephony" },
-    { title: "Capability Discovery", url: "/features/capability-discovery", content: "discovery semantic tier token reduction embedding" },
-    { title: "System Architecture", url: "/architecture/system-architecture", content: "diagram gmi orchestrator runtime components" },
-    { title: "Cognitive Memory", url: "/features/cognitive-memory", content: "ebbinghaus decay working memory baddeley consolidation" },
-    { title: "Guardrails", url: "/features/guardrails", content: "pii redaction content filter guardrail pipeline" },
-    { title: "Provenance & Immutability", url: "/features/provenance-immutability", content: "provenance audit ledger tombstone signed event" },
-    { title: "workflow() DSL", url: "/features/workflow-dsl", content: "workflow steps DAG pipeline yaml checkpointing" },
-    { title: "Deep Research", url: "/features/deep-research", content: "deep research query classification multi-source" },
-    { title: "Speech Providers", url: "/features/speech-providers", content: "deepgram whisper elevenlabs speech provider catalog" },
-    { title: "Telephony Providers", url: "/features/telephony-providers", content: "twilio telnyx plivo telephony call webhook" },
-    { title: "Extensions Overview", url: "/extensions/overview", content: "extension catalog registry channel adapter" },
-    { title: "Evaluation Framework", url: "/features/evaluation-framework", content: "eval benchmark grader candidate experiment" },
-    { title: "API Reference", url: "/api/", content: "typedoc api reference class interface" },
+    { title: "High-Level API", url: "/getting-started/high-level-api", content: "generateText streamText generateImage generateAudio agent provider multimodal image text audio vision model llm" },
+    { title: "Multi-Agent Agency API", url: "/features/agency-api", content: "agency dependsOn graph sequential parallel hierarchical multi-agent orchestration coordination" },
+    { title: "Emergent Capabilities", url: "/features/emergent-capabilities", content: "forge tool sandbox compose LLM judge tiered emergent dynamic capability creation runtime" },
+    { title: "Voice Pipeline", url: "/features/voice-pipeline", content: "voice stt tts vad barge-in endpoint detection telephony speech recognition synthesis realtime streaming" },
+    { title: "Capability Discovery", url: "/features/capability-discovery", content: "discovery semantic tier token reduction embedding search capabilities tools skills" },
+    { title: "System Architecture", url: "/architecture/system-architecture", content: "diagram gmi orchestrator runtime components architecture overview design system" },
+    { title: "Cognitive Memory", url: "/features/cognitive-memory", content: "memory cognitive ebbinghaus decay working memory baddeley consolidation recall storage retrieval long-term short-term episodic semantic" },
+    { title: "Guardrails", url: "/features/guardrails", content: "pii redaction content filter guardrail pipeline safety moderation security privacy" },
+    { title: "Provenance & Immutability", url: "/features/provenance-immutability", content: "provenance audit ledger tombstone signed event immutability traceability history" },
+    { title: "workflow() DSL", url: "/features/workflow-dsl", content: "workflow steps DAG pipeline yaml checkpointing orchestration automation" },
+    { title: "Deep Research", url: "/features/deep-research", content: "deep research query classification multi-source investigation analysis RAG retrieval augmented generation" },
+    { title: "Speech Providers", url: "/features/speech-providers", content: "deepgram whisper elevenlabs speech provider catalog stt tts voice recognition synthesis" },
+    { title: "Telephony Providers", url: "/features/telephony-providers", content: "twilio telnyx plivo telephony call webhook phone inbound outbound" },
+    { title: "Extensions Overview", url: "/extensions/overview", content: "extension catalog registry channel adapter plugin integration ecosystem" },
+    { title: "Evaluation Framework", url: "/features/evaluation-framework", content: "eval benchmark grader candidate experiment evaluation testing quality metrics" },
+    { title: "API Reference", url: "/api/", content: "typedoc api reference class interface types sdk typescript" },
+    { title: "Tool Calling", url: "/architecture/tool-calling-and-loading", content: "tool calling function tools loading registration use call invoke schema" },
+    { title: "Skills & Extensions", url: "/skills/skills-extension", content: "skill skills extension registry curated prompt instruction behavior" },
+    { title: "RAG & Retrieval", url: "/features/cognitive-memory", content: "RAG retrieval augmented generation vector embedding similarity search knowledge base context" },
+    { title: "Multimodal", url: "/getting-started/high-level-api", content: "multimodal image vision audio video media file attachment generateImage generateAudio" },
   ], []);
 
   const searchableIndex = docs.length > 0 ? docs : fallbackDocs;
