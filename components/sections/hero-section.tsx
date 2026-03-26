@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import { Toast } from '../ui/toast';
 import { LinkButton } from '../ui/LinkButton';
 import { Button } from '../ui/Button';
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { applyVisualTheme } from '@/lib/visual-design-system';
 import { useTheme } from 'next-themes';
 
@@ -42,7 +43,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   const t = useTranslations('hero');
   const locale = useLocale();
   const { theme: currentTheme, resolvedTheme } = useTheme();
-  const [showToast, setShowToast] = useState(false);
+  const { copied: showToast, copy: copyToClipboard } = useCopyToClipboard();
   const [githubStars, setGithubStars] = useState<number | null>(null);
   const [githubForks, setGithubForks] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -93,10 +94,8 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   }, []);
 
   const copyCommand = useCallback(() => {
-    navigator.clipboard.writeText('npm install @framers/agentos');
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
-  }, []);
+    copyToClipboard('npm install @framers/agentos');
+  }, [copyToClipboard]);
 
   const highlights = [
     { title: '37 Channels', detail: 'Multiplatform delivery' },
@@ -254,7 +253,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
         </article>
       </div>
 
-      <Toast message={t('copiedToClipboard')} isVisible={showToast} onClose={() => setShowToast(false)} />
+      <Toast message="Copied" isVisible={showToast} onClose={() => {}} />
     </section>
   );
 });

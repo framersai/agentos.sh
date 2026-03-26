@@ -1,6 +1,8 @@
 <!-- BRANDING-LOGOS -->
 <p align="center">
-  <a href="https://agentos.sh"><img src="logos/agentos-primary-no-tagline.svg" alt="AgentOS" height="64" /></a>
+  <a href="https://agentos.sh"><img src="public/logos/agentos-primary-no-tagline.svg" alt="AgentOS" height="64" /></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://frame.dev"><img src="public/logos/frame-logo-no-subtitle.svg" alt="Frame.dev" height="40" /></a>
 </p>
 
 # AgentOS Site (agentos.sh)
@@ -74,6 +76,6 @@ If you prefer different names, adjust the `heroVideoSources` / `pipelineImageSou
 
 <p align="center">
   <a href="https://frame.dev">
-    <img src="logos/frame-logo-no-subtitle.svg" alt="Frame" height="40" />
+    <img src="public/logos/frame-logo-no-subtitle.svg" alt="Frame.dev" height="40" />
   </a>
 </p>
