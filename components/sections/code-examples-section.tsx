@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
+import { Toast } from '../ui/toast'
 import { motion } from 'framer-motion'
 import { Copy, Check, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -428,10 +430,11 @@ volumes:
     ? codeExamples
     : codeExamples.filter((ex) => ex.category === activeCategory)
 
+  const { copied: toastVisible, copy: clipboardCopy } = useCopyToClipboard()
   const copyCode = (code: string, id: string) => {
-    navigator.clipboard.writeText(code)
+    clipboardCopy(code)
     setCopied(id)
-    setTimeout(() => setCopied(null), 2000)
+    setTimeout(() => setCopied(null), 1500)
   }
 
   const categoryIcons = {
@@ -718,11 +721,7 @@ volumes:
                 <div className="px-8 py-4 bg-[var(--color-background-elevated)] rounded-xl font-mono text-sm border-2 border-[var(--color-border-interactive)] shadow-lg">
                   <span className="text-[var(--color-text-muted)]">$</span> npm install @framers/agentos
                   <button
-                    onClick={() => {
-                        navigator.clipboard.writeText('npm install @framers/agentos');
-                        // Use a simple alert or reuse toast if available in this context.
-                        // For now, visual feedback on the button is good.
-                    }}
+                    onClick={() => clipboardCopy('npm install @framers/agentos')}
                     className="ml-3 p-1.5 rounded-md hover:bg-[var(--color-background-secondary)] transition-colors text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
                     aria-label="Copy install command"
                   >
@@ -743,6 +742,7 @@ volumes:
           </div>
         </motion.div>
       </div>
+      <Toast message="Copied" isVisible={toastVisible} onClose={() => {}} />
     </section>
   )
 }

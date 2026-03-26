@@ -4,23 +4,22 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Copy, Check } from 'lucide-react';
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useTheme } from 'next-themes';
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 
 interface MarkdownRendererProps {
   content: string;
 }
 
 function CodeBlock({ language, children }: { language: string; children: string }) {
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
 
   const copyCode = useCallback(() => {
-    navigator.clipboard.writeText(children);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }, [children]);
+    copy(children);
+  }, [children, copy]);
 
   return (
     <div className="relative group my-4">

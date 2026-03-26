@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Check, X } from 'lucide-react'
+import { Check } from 'lucide-react'
 
 interface ToastProps {
   message: string
@@ -12,7 +12,7 @@ interface ToastProps {
   duration?: number
 }
 
-export function Toast({ message, type = 'success', isVisible, onClose, duration = 3000 }: ToastProps) {
+export function Toast({ message, type = 'success', isVisible, onClose, duration = 1500 }: ToastProps) {
   useEffect(() => {
     if (isVisible && duration > 0) {
       const timer = setTimeout(onClose, duration)
@@ -20,31 +20,19 @@ export function Toast({ message, type = 'success', isVisible, onClose, duration 
     }
   }, [isVisible, duration, onClose])
 
-  const icons = {
-    success: <Check className="w-5 h-5" />,
-    error: <X className="w-5 h-5" />,
-    info: <Check className="w-5 h-5" />
-  }
-
-  const colors = {
-    success: 'from-green-500 to-emerald-500',
-    error: 'from-red-500 to-rose-500',
-    info: 'from-purple-500 to-pink-500'
-  }
-
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: -50, scale: 0.9 }}
+          initial={{ opacity: 0, y: 8, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -20, scale: 0.95 }}
-          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-          className="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none"
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.15 }}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none"
         >
-          <div className={`flex items-center gap-3 px-6 py-4 rounded-xl bg-gradient-to-r ${colors[type]} text-white shadow-2xl backdrop-blur-md border border-white/30 min-w-[200px]`}>
-            {icons[type]}
-            <span className="font-medium">{message}</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--color-background-secondary,#1e1b4b)] text-[var(--color-text-primary,#e0e7ff)] text-xs font-medium shadow-lg border border-[var(--color-accent-primary,#6366f1)]/20 backdrop-blur-sm">
+            <Check className="w-3 h-3 text-green-400" />
+            {message}
           </div>
         </motion.div>
       )}
@@ -53,4 +41,3 @@ export function Toast({ message, type = 'success', isVisible, onClose, duration 
 }
 
 export default Toast;
-
