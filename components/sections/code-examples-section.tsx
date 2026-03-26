@@ -429,7 +429,7 @@ volumes:
     ? codeExamples
     : codeExamples.filter((ex) => ex.category === activeCategory)
 
-  const { copied: toastVisible, copy: clipboardCopy } = useCopyToClipboard()
+  const { copy: clipboardCopy } = useCopyToClipboard()
   const copyCode = (code: string, id: string) => {
     clipboardCopy(code)
     setCopied(id)
