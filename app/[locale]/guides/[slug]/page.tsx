@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, Clock, BookOpen, ChevronRight, Github } from 'lucide-react';
 import { getAllGuides, getGuideBySlug } from '../../../../lib/guides';
 import { MarkdownRenderer } from '../../../../components/markdown-renderer';
+import { locales } from '../../../../i18n';
 
 type Props = {
   params: {
@@ -13,7 +14,6 @@ type Props = {
 
 export async function generateStaticParams() {
   const guides = getAllGuides();
-  const locales = ['en'];
 
   // Return all locale/slug combinations for static export
   // If no guides found (e.g., in CI), return empty array

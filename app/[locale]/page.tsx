@@ -1,11 +1,9 @@
 import { CTASection } from '../../components/sections/cta-section'
 import dynamic from 'next/dynamic'
 import { HeroSection } from '../../components/sections/hero-section'
-import { useTranslations } from 'next-intl'
 
 // Enable static generation for faster initial loads
 export const dynamicParams = false
-export const revalidate = 3600 // Revalidate every hour
 
 // Lazy load the animated background - client-only, deferred
 const AnimatedBackgroundLazy = dynamic(
@@ -60,8 +58,6 @@ const WorkbenchCTALazy = dynamic(
 )
 
 export default function LandingPageRedesigned() {
-  const _tCommon = useTranslations()
-
   return (
     <>
       {/* Animated Background - deferred client-side */}

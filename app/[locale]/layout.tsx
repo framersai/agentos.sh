@@ -251,12 +251,7 @@ export default async function LocaleLayout({
                 'Multimodal RAG with cognitive memory and Ebbinghaus decay',
                 '5-tier guardrails with prompt injection defense',
                 '21 LLM providers and 40 curated skills'
-              ],
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: '4.9',
-                reviewCount: '40'
-              }
+              ]
             })
           }}
         />
