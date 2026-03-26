@@ -60,7 +60,7 @@ const WorkbenchCTALazy = dynamic(
 )
 
 export default function LandingPageRedesigned() {
-  const tCommon = useTranslations()
+  const _tCommon = useTranslations()
 
   return (
     <>
