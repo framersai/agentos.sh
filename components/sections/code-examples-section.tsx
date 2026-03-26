@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
-import { Toast } from '../ui/toast'
 import { motion } from 'framer-motion'
 import { Copy, Check, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -742,7 +741,6 @@ volumes:
           </div>
         </motion.div>
       </div>
-      <Toast message="Copied" isVisible={toastVisible} onClose={() => {}} />
     </section>
   )
 }

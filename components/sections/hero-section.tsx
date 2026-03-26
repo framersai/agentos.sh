@@ -1,10 +1,10 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState, memo } from 'react';
-import { ArrowRight, Github, Terminal, Star, GitBranch, Shield } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Star, GitBranch, Shield, Check } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
-import { Toast } from '../ui/toast';
+// Toast removed — copy feedback is inline (icon swap + text change)
 import { LinkButton } from '../ui/LinkButton';
 import { Button } from '../ui/Button';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
@@ -193,8 +193,12 @@ const HeroSectionInner = memo(function HeroSectionInner() {
           {/* Install command */}
           <div className="mb-4">
             <Button onClick={copyCommand} variant="secondary" className="gap-2 text-xs sm:text-sm" aria-label="Copy install command">
-              <Terminal className="w-4 h-4 text-[var(--color-accent-primary)]" aria-hidden="true" />
-              <code className="font-mono">npm install @framers/agentos</code>
+              {showToast ? (
+                <Check className="w-4 h-4 text-green-400" aria-hidden="true" />
+              ) : (
+                <Terminal className="w-4 h-4 text-[var(--color-accent-primary)]" aria-hidden="true" />
+              )}
+              <code className="font-mono">{showToast ? 'Copied!' : 'npm install @framers/agentos'}</code>
             </Button>
           </div>
 
@@ -253,7 +257,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
         </article>
       </div>
 
-      <Toast message="Copied" isVisible={showToast} onClose={() => {}} />
+      {/* No toast — copy feedback is inline via icon swap in the button */}
     </section>
   );
 });
