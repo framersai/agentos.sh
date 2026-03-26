@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import type { Route } from 'next';
-import { Menu, X, Github, Search } from 'lucide-react';
+import { Menu, X, Github } from 'lucide-react';
 import AgentOSWordmark from './branding/AgentOSWordmark';
 import { ModeToggle } from './mode-toggle';
 import { LanguageSwitcher } from './language-switcher';
