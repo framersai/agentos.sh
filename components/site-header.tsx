@@ -4,10 +4,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import type { Route } from 'next';
-import { Menu, X, Globe, Sparkles, ArrowRight, Github } from 'lucide-react';
+import { Menu, X, Github } from 'lucide-react';
 import AgentOSWordmark from './branding/AgentOSWordmark';
 import { ModeToggle } from './mode-toggle';
-import { ThemeSelector } from './theme-selector';
+// ThemeSelector removed — ModeToggle handles dark/light switching
 import { LanguageSwitcher } from './language-switcher';
 
 /**
@@ -20,10 +20,9 @@ export function SiteHeader() {
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const NAV_LINKS = useMemo(() => [
-    { href: '/about', label: t('about') },
     { href: '/#features', label: t('features') },
+    { href: 'https://docs.agentos.sh/', label: 'Docs' },
     { href: 'https://docs.agentos.sh/blog', label: 'Blog' },
-    { href: 'https://docs.agentos.sh/', label: t('docs') },
   ], [t]);
 
   const localizeHref = useCallback((href: string) => {
@@ -218,34 +217,10 @@ export function SiteHeader() {
             <Github className="w-4 h-4" />
             <span className="font-semibold">{t('github')}</span>
           </a>
-          {/* Marketplace button - Coming Soon */}
-          <span
-            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl glass-morphism text-sm font-semibold text-[var(--color-text-muted)] cursor-not-allowed opacity-60"
-            title="Marketplace coming soon"
-          >
-            <Globe className="w-4 h-4" />
-            {t('marketplace')}
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-accent-primary)]/20 text-[var(--color-accent-primary)]">Soon</span>
-          </span>
-
-          {/* Frame.dev CTA - Better styled with high contrast, smaller */}
-          <a
-            href="https://frame.dev"
-            className="hidden md:inline-flex items-center gap-2 px-2 py-1.5 rounded-lg text-[var(--color-text-on-accent)] text-xs font-bold transition-all duration-300 group border border-border-subtle hover:scale-105"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ background: 'linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary))' }}
-          >
-            <Sparkles className="w-3 h-3" />
-            Frame.dev
-            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-          </a>
-
-          {/* Theme controls and language switcher */}
-          <div className="flex items-center gap-2">
-            <LanguageSwitcher />
+          {/* Theme controls */}
+          <div className="flex items-center gap-1.5">
             <ModeToggle />
-            <ThemeSelector />
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile GitHub icon */}
@@ -311,16 +286,6 @@ export function SiteHeader() {
               );
             })}
             <a
-              href="https://app.vca.chat/marketplace"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={closeMenu}
-              className="px-6 py-4 text-base font-bold text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/5 transition-all duration-300 ease-out flex items-center gap-2 border-b border-border-subtle/20"
-            >
-              <Globe className="w-5 h-5" />
-              {t('marketplace')}
-            </a>
-            <a
               href="https://github.com/framersai/agentos"
               target="_blank"
               rel="noopener noreferrer"
@@ -330,17 +295,6 @@ export function SiteHeader() {
               <Github className="w-5 h-5" />
               {t('github')}
             </a>
-            <div className="p-4">
-              <a
-                href="https://frame.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={closeMenu}
-                className="block w-full px-4 py-3 rounded-xl bg-gradient-to-r from-accent-primary to-accent-secondary text-white text-base font-bold text-center hover:shadow-modern transition-all"
-              >
-                Visit Frame.dev
-              </a>
-            </div>
           </nav>
         </div>
       </div>
