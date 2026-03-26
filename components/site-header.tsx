@@ -4,11 +4,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import type { Route } from 'next';
-import { Menu, X, Github } from 'lucide-react';
+import { Menu, X, Github, Search } from 'lucide-react';
 import AgentOSWordmark from './branding/AgentOSWordmark';
 import { ModeToggle } from './mode-toggle';
-// ThemeSelector removed — ModeToggle handles dark/light switching
 import { LanguageSwitcher } from './language-switcher';
+import { DocSearch } from './docs/DocSearch';
 
 /**
  * Enhanced SiteHeader with modern design and marketplace link
@@ -202,7 +202,13 @@ export function SiteHeader() {
 
         {/* Right side actions */}
         <div className="flex items-center gap-2">
-          {/* GitHub repo CTA (prominent with subtle hover) */}
+          {/* Search icon — opens DocSearch modal */}
+          <DocSearch
+            triggerClassName="inline-flex items-center justify-center p-2 rounded-xl text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/10 transition-all duration-300"
+            triggerLabel=""
+          />
+
+          {/* GitHub */}
           <a
             href="https://github.com/framersai/agentos"
             className="relative hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-border-subtle text-[var(--color-text-primary)] hover:text-accent-primary transition-all duration-300 hover:-translate-y-0.5 group"

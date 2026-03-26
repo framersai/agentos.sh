@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Search } from "lucide-react";
 
 type DocSearchItem = {
   name: string;
@@ -145,9 +146,16 @@ export function DocSearch({ triggerClassName, triggerLabel = "Search docs" }: Do
         type="button"
         className={triggerClassName ?? "inline-flex items-center gap-2 rounded-full border border-slate-200/70 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand hover:text-brand dark:border-slate-700 dark:text-slate-200 dark:hover:border-brand"}
         onClick={() => setOpen(true)}
+        aria-label="Search documentation"
+        title="Search (/ or Ctrl+K)"
       >
-        {triggerLabel}
-        <span className="hidden text-xs text-slate-400 sm:inline-block dark:text-slate-500">/&nbsp;or&nbsp;Ctrl+K</span>
+        <Search className="w-4 h-4" />
+        {triggerLabel ? (
+          <>
+            {triggerLabel}
+            <span className="hidden text-xs text-slate-400 sm:inline-block dark:text-slate-500">/&nbsp;or&nbsp;Ctrl+K</span>
+          </>
+        ) : null}
       </button>
 
       {open && (
