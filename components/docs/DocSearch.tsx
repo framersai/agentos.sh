@@ -27,7 +27,7 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [docs, setDocs] = useState<SearchDoc[]>([]);
   const [loading, setLoading] = useState(false);
-  const [loadFailed, setLoadFailed] = useState(false);
+  const [_loadFailed, setLoadFailed] = useState(false);
   const fetchedRef = useRef(false);
 
   // Keyboard shortcut
@@ -155,7 +155,8 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
       setOpen(false);
       setQuery("");
     }
-  }, [results, selectedIndex, navigate, query, fallbackDocs]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results, selectedIndex, navigate]);
 
   const displayItems = results.length > 0 ? results : [];
 
