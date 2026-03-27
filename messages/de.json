@@ -825,7 +825,7 @@
       },
       "memory": {
         "title": "Persistent Memory",
-        "description": "Boundless storage with instant recall via advanced vector embeddings and semantic search"
+        "description": "7 vector store backends with 4-tier auto-scaling — SQLite to HNSW to Postgres to Qdrant/Pinecone — plus binary blob storage and one-command migration"
       },
       "streaming": {
         "title": "Real-time Streaming",
