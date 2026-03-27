@@ -3,9 +3,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Code2, Copy, Check, X, Maximize2, Terminal } from 'lucide-react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useTheme } from 'next-themes'
+import React from 'react'
 
 interface CodeExample {
   title: string
@@ -20,6 +19,33 @@ interface CodePopoverProps {
   position?: 'top' | 'bottom' | 'left' | 'right'
 }
 
+/**
+ * Lazy-load react-syntax-highlighter on first open instead of importing
+ * it statically (saves ~200 KB from the initial bundle).
+ */
+function useLazySyntaxHighlighter() {
+  const [SyntaxHighlighter, setSyntaxHighlighter] = useState<null | (typeof import('react-syntax-highlighter').Prism)>(null)
+  const [themes, setThemes] = useState<{ dark: Record<string, React.CSSProperties>; light: Record<string, React.CSSProperties> } | null>(null)
+  const loadedRef = useRef(false)
+
+  const load = () => {
+    if (loadedRef.current) return
+    loadedRef.current = true
+    Promise.all([
+      import('react-syntax-highlighter').then(m => m.Prism),
+      import('react-syntax-highlighter/dist/esm/styles/prism').then(m => ({
+        dark: m.vscDarkPlus,
+        light: m.vs,
+      })),
+    ]).then(([Comp, loadedThemes]) => {
+      setSyntaxHighlighter(() => Comp)
+      setThemes(loadedThemes)
+    }).catch(() => {})
+  }
+
+  return { SyntaxHighlighter, themes, load }
+}
+
 export function CodePopover({ examples, trigger, position = 'bottom' }: CodePopoverProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedExample, setSelectedExample] = useState(0)
@@ -29,6 +55,7 @@ export function CodePopover({ examples, trigger, position = 'bottom' }: CodePopo
   const triggerRef = useRef<HTMLDivElement>(null)
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
+  const { SyntaxHighlighter, themes, load: loadHighlighter } = useLazySyntaxHighlighter()
 
   // Close on click outside
   useEffect(() => {
@@ -51,6 +78,11 @@ export function CodePopover({ examples, trigger, position = 'bottom' }: CodePopo
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [isOpen])
+
+  const handleOpen = () => {
+    loadHighlighter()
+    setIsOpen(!isOpen)
+  }
 
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(examples[selectedExample].code)
@@ -76,7 +108,7 @@ export function CodePopover({ examples, trigger, position = 'bottom' }: CodePopo
     <div className="relative inline-block">
       <div
         ref={triggerRef}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleOpen}
         className="cursor-pointer"
       >
         {trigger}
@@ -192,21 +224,35 @@ export function CodePopover({ examples, trigger, position = 'bottom' }: CodePopo
                       )}
                     </button>
 
-                    {/* Syntax Highlighted Code */}
-                    <SyntaxHighlighter
-                      language={examples[selectedExample].language}
-                      style={isDark ? vscDarkPlus : vs}
-                      customStyle={{
+                    {/* Syntax Highlighted Code — lazy loaded */}
+                    {SyntaxHighlighter && themes ? (
+                      <SyntaxHighlighter
+                        language={examples[selectedExample].language}
+                        style={isDark ? themes.dark : themes.light}
+                        customStyle={{
+                          margin: 0,
+                          padding: '1.5rem',
+                          background: isDark ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.5)',
+                          fontSize: isFullscreen ? '14px' : '12px',
+                          borderRadius: 0
+                        }}
+                        showLineNumbers={isFullscreen}
+                      >
+                        {examples[selectedExample].code}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <pre style={{
                         margin: 0,
                         padding: '1.5rem',
                         background: isDark ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.5)',
                         fontSize: isFullscreen ? '14px' : '12px',
-                        borderRadius: 0
-                      }}
-                      showLineNumbers={isFullscreen}
-                    >
-                      {examples[selectedExample].code}
-                    </SyntaxHighlighter>
+                        fontFamily: 'monospace',
+                        whiteSpace: 'pre-wrap',
+                        color: isDark ? '#d4d4d4' : '#1e1e1e',
+                      }}>
+                        {examples[selectedExample].code}
+                      </pre>
+                    )}
                   </div>
                 </div>
 
@@ -238,11 +284,12 @@ export function InlineCodePopover({ code, language = 'typescript' }: { code: str
   const [isHovered, setIsHovered] = useState(false)
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
+  const { SyntaxHighlighter, themes, load: loadHighlighter } = useLazySyntaxHighlighter()
 
   return (
     <div
       className="relative inline-block"
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => { loadHighlighter(); setIsHovered(true) }}
       onMouseLeave={() => setIsHovered(false)}
     >
       <span className="cursor-help border-b border-dotted border-accent-primary">
@@ -260,18 +307,31 @@ export function InlineCodePopover({ code, language = 'typescript' }: { code: str
             style={{ minWidth: '300px' }}
           >
             <div className="holographic-card rounded-lg p-3">
-              <SyntaxHighlighter
-                language={language}
-                style={isDark ? vscDarkPlus : vs}
-                customStyle={{
+              {SyntaxHighlighter && themes ? (
+                <SyntaxHighlighter
+                  language={language}
+                  style={isDark ? themes.dark : themes.light}
+                  customStyle={{
+                    margin: 0,
+                    padding: '0.5rem',
+                    background: 'transparent',
+                    fontSize: '11px'
+                  }}
+                >
+                  {code}
+                </SyntaxHighlighter>
+              ) : (
+                <pre style={{
                   margin: 0,
                   padding: '0.5rem',
                   background: 'transparent',
-                  fontSize: '11px'
-                }}
-              >
-                {code}
-              </SyntaxHighlighter>
+                  fontSize: '11px',
+                  fontFamily: 'monospace',
+                  color: isDark ? '#d4d4d4' : '#1e1e1e',
+                }}>
+                  {code}
+                </pre>
+              )}
             </div>
           </motion.div>
         )}
