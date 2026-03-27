@@ -34,8 +34,8 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     isMorphing: false,
     nextInterval: interval + (Math.random() - 0.5) * 800 // randomize timing
   });
-  const particlesARef = useRef<{ x: number; y: number; r: number; c: string; seed: number }[]>([]);
-  const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; seed: number }[]>([]);
+  const particlesARef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
+  const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
   const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
 
@@ -63,11 +63,17 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return t < 0.5 ? Math.pow(2, 20 * t - 10) / 2 : (2 - Math.pow(2, -20 * t + 10)) / 2;
   }, []);
 
+  /** Pre-parse an "rgb(r,g,b)" string into a numeric triple. */
+  const parseRgbString = useCallback((rgbStr: string): [number, number, number] => {
+    const m = rgbStr.match(/(\d+)/g);
+    return m ? [Number(m[0]), Number(m[1]), Number(m[2])] : [0, 0, 0];
+  }, []);
+
   const sampleText = useCallback((text: string) => {
     const off = document.createElement('canvas');
     const ctx = off.getContext('2d', { willReadFrequently: true });
     if (!ctx) return [];
-    
+
     off.width = width;
     off.height = height;
     ctx.font = `700 ${fontSize}px Inter, system-ui, sans-serif`;
@@ -75,27 +81,29 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#fff';
     ctx.fillText(text, 0, height / 2);
-    
+
     const data = ctx.getImageData(0, 0, width, height).data;
     const step = Math.max(2, Math.floor(fontSize / 20));
     const c1 = hexToRgb(gradientFrom), c2 = hexToRgb(gradientTo);
-    const particles: { x: number; y: number; r: number; c: string; seed: number }[] = [];
-    
+    const particles: { x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[] = [];
+
     for (let y = 0; y < height; y += step) {
       for (let x = 0; x < width; x += step) {
         const alpha = data[(y * width + x) * 4 + 3];
         if (alpha > 80) {
+          const colorStr = lerp(c1, c2, x / width);
           particles.push({
             x, y,
             r: 1.3,
-            c: lerp(c1, c2, x / width),
-            seed: Math.random() * 1000, // per-particle randomness
+            c: colorStr,
+            rgb: parseRgbString(colorStr),
+            seed: Math.random() * 1000,
           });
         }
       }
     }
     return particles;
-  }, [width, height, fontSize, gradientFrom, gradientTo, hexToRgb, lerp]);
+  }, [width, height, fontSize, gradientFrom, gradientTo, hexToRgb, lerp, parseRgbString]);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -200,11 +208,12 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         const x = fromP.x + (toP.x - fromP.x) * smoothT + wobble;
         const y = fromP.y + (toP.y - fromP.y) * smoothT;
         
-        const fromRgb = fromP.c.match(/\d+/g)!.map(Number);
-        const toRgb = toP.c.match(/\d+/g)!.map(Number);
-        const r = Math.round(fromRgb[0] + (toRgb[0] - fromRgb[0]) * smoothT);
-        const g = Math.round(fromRgb[1] + (toRgb[1] - fromRgb[1]) * smoothT);
-        const b = Math.round(fromRgb[2] + (toRgb[2] - fromRgb[2]) * smoothT);
+        // Use pre-cached RGB values instead of regex parsing per frame
+        const fRgb = fromP.rgb;
+        const tRgb = toP.rgb;
+        const r = Math.round(fRgb[0] + (tRgb[0] - fRgb[0]) * smoothT);
+        const g = Math.round(fRgb[1] + (tRgb[1] - fRgb[1]) * smoothT);
+        const b = Math.round(fRgb[2] + (tRgb[2] - fRgb[2]) * smoothT);
         
         // Smoother alpha transition
         const alpha = s.isMorphing ? 0.85 + 0.15 * Math.cos(s.morphT * Math.PI * 2) : 1;
