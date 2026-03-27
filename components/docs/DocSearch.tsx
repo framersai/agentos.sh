@@ -52,23 +52,36 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
   // ── Fetch lightweight manifest on first open ───────────────────────
   useEffect(() => {
     if (!open || fetchedRef.current) return;
-    fetchedRef.current = true;
     setLoading(true);
+    const controller = new AbortController();
+    let cancelled = false;
 
-    fetch(`${DOCS_BASE}/search-docs.json`)
+    fetch(`${DOCS_BASE}/search-docs.json`, { signal: controller.signal })
       .then(async (res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data: Array<{ t: string; u: string; c?: string }> = await res.json();
+        if (cancelled) return;
+        fetchedRef.current = true;
         setDocs(
           data
             .filter((d) => d.t && d.u)
             .map((d) => ({ title: d.t, url: d.u, content: d.c ?? "" })),
         );
       })
-      .catch(() => {
+      .catch((error) => {
+        if ((error as Error).name === "AbortError") return;
         // Manifest not deployed yet — silently fall back to curated list
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
   }, [open]);
 
   // ── Curated fallback when the manifest hasn't been deployed yet ────
@@ -142,7 +155,7 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
   // ── Navigation ─────────────────────────────────────────────────────
   const navigate = useCallback((doc: SearchDoc) => {
     const url = doc.url.startsWith("http") ? doc.url : `${DOCS_BASE}${doc.url}`;
-    window.open(url, "_blank");
+    window.open(url, "_blank", "noopener,noreferrer");
     setOpen(false);
     setQuery("");
   }, []);

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-// Path to the guides directory in packages/agentos/docs
+// Path to the guide content shipped with the marketing site
 const GUIDES_DIR = path.join(process.cwd(), 'content/guides');
 
 export interface Guide {
@@ -119,6 +119,16 @@ const GUIDE_METADATA: Record<string, { title: string; description: string; categ
   'CAPABILITY_DISCOVERY': {
     title: 'Capability Discovery',
     description: 'Tiered semantic discovery engine — agents find tools, skills, and extensions by intent instead of static lists.',
+    category: 'Features'
+  },
+  'QUERY_ROUTER': {
+    title: 'Query Router',
+    description: 'Tiered query classification, retrieval dispatch, keyword fallback, and grounded answer generation for doc-backed assistants.',
+    category: 'Features'
+  },
+  'STREAMING_SEMANTICS': {
+    title: 'Streaming Semantics',
+    description: 'How raw live chunks, finalized approved output, and structured stream events differ across the Agency API.',
     category: 'Features'
   },
   'GUARDRAILS_USAGE': {

@@ -148,10 +148,10 @@
     },
     "storage": {
       "title": "ストレージとデプロイ",
-      "description": "PostgreSQL、better-sqlite3、sql.js、または独自のデータレイヤー間で切り替え。すべてのエージェントステップは同期され、再生可能。",
+      "description": "4段階オートスケーリング対応の7つのベクトルストアバックエンド（SQLite → HNSW → Postgres+pgvector → Qdrant）。ワンコマンドで全バックエンド間の移行。QdrantとPostgresのDocker自動セットアップ。",
       "pill": "どこでもデプロイ",
-      "bullet1": "リファレンスサーバーテンプレート",
-      "bullet2": "スナップショット+リプレイツール"
+      "bullet1": "ワンコマンドでベクトルバックエンド移行",
+      "bullet2": "Qdrant + PostgresのDocker自動セットアップ"
     },
     "workbench": {
       "title": "ローカルファーストワークベンチ",
@@ -167,6 +167,27 @@
       "pill": "~90% トークン削減",
       "bullet1": "3層トークンバジェット型コンテキストアセンブリ",
       "bullet2": "グラフベースの関係リランキング"
+    },
+    "memoryCompression": {
+      "title": "観測的メモリ圧縮",
+      "description": "LLMベースの3-10倍メモリ圧縮と時間的推論。記憶を統合・剪定・強化する自己改善型コンソリデーション。",
+      "pill": "3-10倍圧縮",
+      "bullet1": "時間的推論が因果連鎖を保持",
+      "bullet2": "自己改善型コンソリデーションサイクル"
+    },
+    "documentIngestion": {
+      "title": "ドキュメント取り込みパイプライン",
+      "description": "マルチモーダル抽出対応の10種類のドキュメントローダー。3段階のPDF処理（基本、OCR、ビジョン）。4つのチャンキング戦略（固定、セマンティック、再帰、スライディングウィンドウ）。",
+      "pill": "10ローダー",
+      "bullet1": "3つのPDFティア：基本、OCR、ビジョン",
+      "bullet2": "セマンティックを含む4つのチャンキング戦略"
+    },
+    "memoryPortability": {
+      "title": "メモリインポート／エクスポート",
+      "description": "Obsidianボールト、ChatGPTエクスポート、Markdown、JSON、CSVを含む10形式でエージェントメモリをインポート・エクスポート。ワンコマンドで全7ベクトルバックエンド間を移行。",
+      "pill": "10形式",
+      "bullet1": "Obsidianボールト + ChatGPTインポート",
+      "bullet2": "ワンコマンドバックエンド移行"
     }
   },
   "marketplace": {
@@ -869,8 +890,8 @@
         "description": "Parallel processing across multiple agents with seamless coordination and load balancing"
       },
       "memory": {
-        "title": "Persistent Memory",
-        "description": "7 vector store backends with 4-tier auto-scaling — SQLite to HNSW to Postgres to Qdrant/Pinecone — plus binary blob storage and one-command migration"
+        "title": "永続メモリ",
+        "description": "4段階オートスケーリング対応の7つのベクトルストアバックエンド（SQLite → HNSW → Postgres+pgvector → Qdrant）。観測的メモリ圧縮（時間的推論による3-10倍）。10種類のドキュメントローダー、3段階PDF処理、4つのチャンキング戦略。10形式でのインポート/エクスポート。ワンコマンドバックエンド移行。QdrantとPostgresのDocker自動セットアップ。"
       },
       "streaming": {
         "title": "Real-time Streaming",

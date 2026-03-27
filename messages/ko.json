@@ -148,10 +148,10 @@
     },
     "storage": {
       "title": "저장 및 배포",
-      "description": "PostgreSQL, better-sqlite3, sql.js 또는 자체 데이터 레이어 간에 전환하세요. 모든 에이전트 단계는 동기화되고 재생 가능합니다.",
+      "description": "4단계 자동 확장이 가능한 7개의 벡터 스토어 백엔드 (SQLite → HNSW → Postgres+pgvector → Qdrant). 모든 백엔드 간 원커맨드 마이그레이션. Qdrant 및 Postgres Docker 자동 설정.",
       "pill": "어디서나 배포",
-      "bullet1": "참조 서버 템플릿",
-      "bullet2": "스냅샷 + 재생 도구"
+      "bullet1": "원커맨드 벡터 백엔드 마이그레이션",
+      "bullet2": "Qdrant + Postgres Docker 자동 설정"
     },
     "workbench": {
       "title": "로컬 우선 워크벤치",
@@ -167,6 +167,27 @@
       "pill": "~90% 토큰 감소",
       "bullet1": "3단계 토큰 예산 기반 컨텍스트 어셈블리",
       "bullet2": "그래프 기반 관계 리랭킹"
+    },
+    "memoryCompression": {
+      "title": "관찰적 메모리 압축",
+      "description": "시간적 추론이 포함된 LLM 기반 3-10배 메모리 압축. 시간이 지남에 따라 기억을 병합, 정리 및 강화하는 자기 개선 통합.",
+      "pill": "3-10배 압축",
+      "bullet1": "시간적 추론이 인과 관계 체인 보존",
+      "bullet2": "자기 개선 통합 사이클"
+    },
+    "documentIngestion": {
+      "title": "문서 수집 파이프라인",
+      "description": "멀티모달 추출을 지원하는 10개의 문서 로더. 3단계 PDF 처리 (기본, OCR, 비전). 4가지 청킹 전략 (고정, 시맨틱, 재귀, 슬라이딩 윈도우).",
+      "pill": "10개 로더",
+      "bullet1": "3단계 PDF: 기본, OCR, 비전",
+      "bullet2": "시맨틱을 포함한 4가지 청킹 전략"
+    },
+    "memoryPortability": {
+      "title": "메모리 가져오기 / 내보내기",
+      "description": "Obsidian 볼트, ChatGPT 내보내기, Markdown, JSON, CSV 등 10가지 형식으로 에이전트 메모리를 가져오고 내보내기. 7개 벡터 백엔드 간 원커맨드 마이그레이션.",
+      "pill": "10개 형식",
+      "bullet1": "Obsidian 볼트 + ChatGPT 가져오기",
+      "bullet2": "원커맨드 백엔드 마이그레이션"
     }
   },
   "marketplace": {
@@ -225,7 +246,7 @@
       },
       "memory": {
         "title": "지속 메모리",
-        "description": "고급 벡터 임베딩과 시맨틱 검색으로 즉시 회상 가능한 무한 저장소"
+        "description": "4단계 자동 확장이 가능한 7개의 벡터 스토어 백엔드 (SQLite → HNSW → Postgres+pgvector → Qdrant). 관찰적 메모리 압축 (시간적 추론을 통한 3-10배). 10개의 문서 로더, 3단계 PDF 처리, 4가지 청킹 전략. 10가지 형식으로 가져오기/내보내기. 원커맨드 백엔드 마이그레이션. Qdrant 및 Postgres Docker 자동 설정."
       },
       "streaming": {
         "title": "실시간 스트리밍",

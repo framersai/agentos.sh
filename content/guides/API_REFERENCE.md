@@ -12,6 +12,108 @@ npm install @framers/agentos
 
 ## High-Level APIs
 
+### agency()
+
+High-level multi-agent factory for coordinated teams, HITL, guardrails, and
+strategy-based orchestration.
+
+```typescript
+import { agency } from '@framers/agentos';
+
+const team = agency({
+  provider: 'openai',
+  strategy: 'sequential',
+  agents: {
+    researcher: { instructions: 'Collect the key facts.' },
+    writer: { instructions: 'Turn the facts into a concise answer.' },
+  },
+});
+
+const result = await team.generate('Summarize HTTP/3 rollout risks.');
+console.log(result.text);
+```
+
+#### `agency().stream()`
+
+`agency().stream()` exposes two different streaming views on purpose:
+
+| Surface | Meaning |
+|--------|---------|
+| `textStream` | Raw live chunks from the running strategy |
+| `fullStream` | Structured lifecycle stream, including a final `final-output` event |
+| `text` | Finalized scalar answer after guardrails and `beforeReturn` HITL |
+| `finalTextStream` | Finalized approved-only text stream |
+| `agentCalls` | Final per-agent execution ledger |
+| `parsed` | Final structured payload when output schema is configured |
+
+```typescript
+const stream = team.stream('Summarize HTTP/3 rollout risks.');
+
+for await (const chunk of stream.textStream) {
+  process.stdout.write(chunk); // raw live output
+}
+
+for await (const approved of stream.finalTextStream) {
+  console.log('Approved answer:', approved);
+}
+
+for await (const part of stream.fullStream) {
+  if (part.type === 'final-output') {
+    console.log(part.text);
+  }
+}
+```
+
+Use `textStream` for low-latency token UX. Use `text`, `finalTextStream`, or
+the `final-output` event when the client must only ever show the finalized
+post-processing result.
+
+### QueryRouter
+
+Standalone classify → retrieve → generate pipeline for grounded Q&A over a
+local markdown corpus.
+
+```typescript
+import { QueryRouter } from '@framers/agentos';
+
+const router = new QueryRouter({
+  knowledgeCorpus: ['./docs', './packages/agentos/docs'],
+  availableTools: ['web_search'],
+});
+
+await router.init();
+console.log(router.getCorpusStats());
+
+const result = await router.route('How does memory retrieval work?');
+console.log(result.answer);
+console.log(result.tiersUsed);
+console.log(result.fallbacksUsed);
+```
+
+#### `router.getCorpusStats()`
+
+Use this after `init()` to inspect what the router actually loaded. It returns
+a `QueryRouterCorpusStats` snapshot that describes which runtime branches are
+real in the current host:
+
+| Field | Meaning |
+|--------|---------|
+| `configuredPathCount` | Number of configured corpus directories |
+| `chunkCount` / `topicCount` / `sourceCount` | Loaded corpus size |
+| `retrievalMode` | `vector+keyword-fallback` or `keyword-only` |
+| `embeddingStatus` | `active`, `disabled-no-key`, or `failed-init` |
+| `graphRuntimeMode` | `disabled`, `heuristic`, or `active` |
+| `rerankRuntimeMode` | `heuristic` or `active` |
+| `deepResearchRuntimeMode` | `disabled`, `heuristic`, or `active` |
+
+`embeddingStatus` tells you whether vector embeddings initialized cleanly,
+were skipped because no embedding credential was available, or failed during
+bootstrap and fell back to keyword-only mode.
+
+`heuristic` means AgentOS has a built-in lightweight implementation. `active`
+means the host injected a real runtime hook or provider-backed implementation.
+`disabled` means that branch is turned off for the current router instance.
+
 ### AgentMemory
 
 Simple facade for the cognitive memory system. No PAD mood or HEXACO knowledge required.
