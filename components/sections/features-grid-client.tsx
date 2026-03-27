@@ -255,10 +255,10 @@ agentos deploy --env production`
           className="text-center mb-16"
         >
           <h2 className="text-4xl sm:text-5xl mb-4 font-bold gradient-text">
-            Developer-First Platform
+            {t('sectionTitle')}
           </h2>
           <p className="text-lg text-[var(--color-text-secondary)] max-w-3xl mx-auto">
-            Building blocks that seamlessly connect to create your AI ecosystem
+            {t('sectionSubtitle')}
           </p>
         </motion.div>
 
