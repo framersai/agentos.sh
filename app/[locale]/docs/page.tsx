@@ -165,10 +165,14 @@ export default function DocsPage({ params }: Props) {
               <pre className="code-block overflow-x-auto text-xs sm:text-sm">
                 <code>{`pnpm add @framers/agentos
 
-import { AgentOS } from "@framers/agentos";
+// package.json must have "type": "module" (ESM required)
+import { generateText } from '@framers/agentos'
 
-const agentos = new AgentOS();
-await agentos.initialize(config);`}</code>
+const result = await generateText({
+  model: 'openai:gpt-4o',
+  prompt: 'Explain quantum computing in one sentence.',
+})
+console.log(result.text)`}</code>
               </pre>
               <Link
                 href={`/${params.locale}/guides/architecture`}

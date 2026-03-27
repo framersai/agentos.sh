@@ -48,14 +48,17 @@ export default function FeaturesGridClient() {
       codeExample: {
         title: 'Multi-Agent Setup',
         language: 'typescript',
-        code: `const agency = new AgentOS.Agency({
-  agents: [
-    { role: 'researcher', model: 'gpt-4' },
-    { role: 'analyst', model: 'claude-3' },
-    { role: 'executor', model: 'llama-3' }
-  ],
-  orchestration: 'parallel'
-});`
+        code: `import { agency } from '@framers/agentos'
+
+const team = agency({
+  strategy: 'parallel',
+  agents: {
+    researcher: { model: 'openai:gpt-4o', instructions: 'Research the topic.' },
+    analyst:    { model: 'anthropic:claude-sonnet-4-20250514', instructions: 'Analyze findings.' },
+    executor:   { model: 'ollama:llama3', instructions: 'Execute the plan.' },
+  },
+})
+const result = await team.generate('Plan a product launch')`
       }
     },
     {
@@ -68,13 +71,17 @@ export default function FeaturesGridClient() {
       codeExample: {
         title: 'Safety Primitives',
         language: 'typescript',
-        code: `import { CircuitBreaker, CostGuard, StuckDetector } from '@framers/agentos';
+        code: `import { agent } from '@framers/agentos'
 
-const breaker = new CircuitBreaker({ failureThreshold: 5 });
-const costs = new CostGuard({ maxDailyCostUsd: 5.00 });
-
-const result = await breaker.execute(() => llm.invoke(messages));
-costs.recordCost(agentId, result.usage.cost);`
+// Guardrails are built into agent configuration
+const safeAgent = agent({
+  model: 'openai:gpt-4o',
+  instructions: 'You are a helpful assistant.',
+  guardrails: ['pii-redaction', 'prompt-injection-defense'],
+  maxSteps: 5,           // limits runaway tool loops
+  maxTokens: 4096,       // caps output length
+})
+const result = await safeAgent.generate('Summarize this document')`
       }
     },
     {
@@ -87,11 +94,16 @@ costs.recordCost(agentId, result.usage.cost);`
       codeExample: {
         title: 'Streaming Response',
         language: 'typescript',
-        code: `const stream = await agent.stream({
+        code: `import { streamText } from '@framers/agentos'
+
+const stream = streamText({
+  model: 'openai:gpt-4o',
   prompt: userInput,
-  onToken: (token) => console.log(token),
-  onComplete: (response) => handleResponse(response)
-});`
+})
+for await (const chunk of stream.textStream) {
+  process.stdout.write(chunk)
+}
+const fullText = await stream.text`
       }
     },
     {
@@ -104,12 +116,19 @@ costs.recordCost(agentId, result.usage.cost);`
       codeExample: {
         title: 'Tool Pack Integration',
         language: 'typescript',
-        code: `import { WebScraper, DataAnalyzer } from '@agentos/tools';
+        code: `import { agent } from '@framers/agentos'
+import { createCuratedManifest } from '@framers/agentos-extensions-registry'
 
-agent.use(WebScraper, {
-  timeout: 5000,
-  maxRetries: 3
-});`
+const manifest = await createCuratedManifest({
+  tools: ['web-search', 'news-search', 'image-generation'],
+  channels: ['telegram', 'discord'],
+})
+
+const myAgent = agent({
+  model: 'openai:gpt-4o',
+  instructions: 'Research assistant with web access.',
+  tools: manifest.tools,
+})`
       }
     },
     {
@@ -122,14 +141,19 @@ agent.use(WebScraper, {
       codeExample: {
         title: 'Workflow Definition',
         language: 'typescript',
-        code: `const workflow = new Workflow({
-  name: 'data-pipeline',
-  steps: [
-    { id: 'fetch', action: 'fetch-data' },
-    { id: 'transform', action: 'process', dependsOn: ['fetch'] },
-    { id: 'store', action: 'save', dependsOn: ['transform'] }
-  ]
-});`
+        code: `import { agency } from '@framers/agentos'
+
+// Use 'graph' strategy with dependsOn for DAG workflows
+const pipeline = agency({
+  model: 'openai:gpt-4o',
+  strategy: 'graph',
+  agents: {
+    fetcher:     { instructions: 'Fetch raw data.', dependsOn: [] },
+    transformer: { instructions: 'Process data.', dependsOn: ['fetcher'] },
+    storer:      { instructions: 'Save results.', dependsOn: ['transformer'] },
+  },
+})
+const result = await pipeline.generate('Run the data pipeline')`
       }
     },
     {
@@ -142,12 +166,15 @@ agent.use(WebScraper, {
       codeExample: {
         title: 'Language Support',
         language: 'typescript',
-        code: `// Supports 50+ languages
-const response = await agent.chat({
-  message: userInput,
-  language: 'ja', // Japanese
-  context: { cultural: true }
-});`
+        code: `import { generateText } from '@framers/agentos'
+
+// The model handles language natively — just prompt in any language
+const result = await generateText({
+  model: 'openai:gpt-4o',
+  system: 'Always reply in the same language the user writes in.',
+  prompt: 'AIの最新動向を教えてください',  // Japanese
+})
+console.log(result.text)  // Responds in Japanese`
       }
     },
     {
@@ -158,14 +185,19 @@ const response = await agent.chat({
       gradient: 'from-green-500 to-emerald-500',
       bullets: [t('storage.bullet1'), t('storage.bullet2')],
       codeExample: {
-        title: 'Memory Fabric',
+        title: 'Session Memory',
         language: 'typescript',
-        code: `const memory = new MemoryFabric({
-  vector: PineconeDB,
-  episodic: Redis,
-  working: InMemory,
-  sync: true
-});`
+        code: `import { agent } from '@framers/agentos'
+
+// Agents have built-in session memory (enabled by default)
+const myAgent = agent({
+  model: 'openai:gpt-4o',
+  instructions: 'You are a persistent assistant.',
+})
+const session = myAgent.session('user-42')
+await session.send('Remember: my favorite color is blue')
+const reply = await session.send('What is my favorite color?')
+// => "Your favorite color is blue."`
       }
     },
     {
