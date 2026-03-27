@@ -262,14 +262,19 @@ export function GMISection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.18 }}
-                className="diagram-tooltip"
-                style={{ left: pos.x, top: pos.y }}
+                className="absolute z-50 w-60 rounded-xl p-3 shadow-lg pointer-events-none"
+                style={{
+                  left: pos.x,
+                  top: pos.y,
+                  background: 'var(--color-background-elevated)',
+                  border: '1px solid var(--color-border-primary)',
+                }}
                 role="tooltip"
               >
-                <div className="text-xs uppercase tracking-wide text-text-muted mb-1">{n.label}</div>
-                <div className="text-sm text-text-primary font-semibold">{n.details}</div>
-                <div className="text-xs text-text-secondary mt-2">
-                  <span className="font-semibold text-accent-primary">Example:</span> {n.example}
+                <div className="text-xs uppercase tracking-wide mb-1" style={{ color: 'var(--color-text-muted)' }}>{n.label}</div>
+                <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>{n.details}</div>
+                <div className="text-xs mt-2" style={{ color: 'var(--color-text-secondary)' }}>
+                  <span className="font-semibold" style={{ color: 'var(--color-accent-primary)' }}>Example:</span> {n.example}
                 </div>
               </motion.div>
             )
@@ -288,7 +293,7 @@ export function GMISection() {
           <h2 id="gmi-heading" className="text-4xl sm:text-5xl font-extrabold mb-4">
             <span className="gradient-text">{t('title')}</span>
           </h2>
-          <p className="text-lg text-text-secondary max-w-3xl mx-auto">
+          <p className="text-lg max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
             {t('subtitle')}
           </p>
                     </div>
@@ -299,11 +304,18 @@ export function GMISection() {
           className="grid md:grid-cols-3 gap-4 mb-10"
         >
           {gmiSnapshots.map((snapshot) => (
-            <div key={snapshot.useCase} className="p-5 rounded-2xl bg-background-glass border border-border-subtle/60 backdrop-blur">
-              <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">{t('useCaseTitle')}</p>
-              <p className="text-base font-semibold text-text-primary mb-3">{snapshot.useCase}</p>
-              <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">{t('outcomeTitle')}</p>
-              <p className="text-sm text-text-secondary leading-relaxed">{snapshot.outcome}</p>
+            <div
+              key={snapshot.useCase}
+              className="p-5 rounded-2xl backdrop-blur"
+              style={{
+                background: 'var(--color-background-glass)',
+                border: '1px solid var(--color-border-primary)',
+              }}
+            >
+              <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--color-accent-primary)' }}>{t('useCaseTitle')}</p>
+              <p className="text-base font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>{snapshot.useCase}</p>
+              <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--color-accent-primary)' }}>{t('outcomeTitle')}</p>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{snapshot.outcome}</p>
             </div>
           ))}
         </motion.div>
@@ -312,16 +324,20 @@ export function GMISection() {
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-14 rounded-3xl border border-border-subtle/70 bg-white/80 dark:bg-white/5 dark:border-white/10 p-6 shadow-sm"
+          className="mb-14 rounded-3xl p-6 shadow-sm"
+          style={{
+            border: '1px solid var(--color-border-primary)',
+            background: 'var(--color-background-secondary)',
+          }}
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-2 w-10 rounded-full bg-gradient-to-r from-accent-primary to-accent-secondary" />
-            <p className="text-sm font-semibold uppercase tracking-wide text-text-muted">{t('whatYouGetTitle')}</p>
+            <div className="h-2 w-10 rounded-full" style={{ background: 'linear-gradient(to right, var(--color-accent-primary), var(--color-accent-secondary))' }} />
+            <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--color-text-muted)' }}>{t('whatYouGetTitle')}</p>
           </div>
-          <ul className="grid md:grid-cols-3 gap-3 text-sm text-text-secondary leading-relaxed">
+          <ul className="grid md:grid-cols-3 gap-3 text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
             {(t.raw('whatYouGetItems') as string[]).map((item) => (
               <li key={item} className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent-primary" aria-hidden="true" />
+                <span className="mt-1 h-1.5 w-1.5 rounded-full" style={{ background: 'var(--color-accent-primary)' }} aria-hidden="true" />
                 <span>{item}</span>
               </li>
             ))}
@@ -336,8 +352,8 @@ export function GMISection() {
           className="mb-16"
         >
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
-            <h3 className="text-2xl sm:text-3xl font-bold text-center mb-2 text-text-primary">Multi‑Agent Collaboration Network</h3>
-            <p className="text-center text-text-muted mb-8">Researcher, Analyst, Creator, Critic, Executor stream insights in parallel; Orchestrator routes, memory persists.</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-center mb-2" style={{ color: 'var(--color-text-primary)' }}>Multi‑Agent Collaboration Network</h3>
+            <p className="text-center mb-8" style={{ color: 'var(--color-text-muted)' }}>Researcher, Analyst, Creator, Critic, Executor stream insights in parallel; Orchestrator routes, memory persists.</p>
 
             <div className="relative aspect-square max-w-2xl mx-auto">
               <svg viewBox="0 0 500 500" className="w-full h-full">
@@ -447,7 +463,7 @@ export function GMISection() {
           className="mb-16"
         >
           <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-text-primary">{t('architectureTitle')}</h3>
+            <h3 className="text-2xl sm:text-3xl font-bold mb-6" style={{ color: 'var(--color-text-primary)' }}>{t('architectureTitle')}</h3>
             <InteractiveArchitecture />
             <motion.div
               key={selectedNodeId}
@@ -458,17 +474,35 @@ export function GMISection() {
             >
               {selectedArchitectureNode && (
                 <div className="grid md:grid-cols-3 gap-4">
-                  <div className="rounded-xl border border-border-subtle/70 bg-gradient-to-br from-accent-primary/5 to-transparent p-4">
-                    <h3 className="text-sm font-semibold text-accent-primary mb-2">{selectedArchitectureNode.label}</h3>
-                    <p className="text-sm text-text-secondary leading-relaxed">{selectedArchitectureNode.details}</p>
+                  <div
+                    className="rounded-xl p-4"
+                    style={{
+                      border: '1px solid var(--color-border-primary)',
+                      background: 'linear-gradient(to bottom right, color-mix(in srgb, var(--color-accent-primary) 8%, transparent), transparent)',
+                    }}
+                  >
+                    <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--color-accent-primary)' }}>{selectedArchitectureNode.label}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{selectedArchitectureNode.details}</p>
                   </div>
-                  <div className="rounded-xl border border-border-subtle/70 bg-white/50 dark:bg-white/5 p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-2">{t('exampleTitle')}</p>
-                    <p className="text-sm text-text-primary">{selectedArchitectureNode.example}</p>
+                  <div
+                    className="rounded-xl p-4"
+                    style={{
+                      border: '1px solid var(--color-border-primary)',
+                      background: 'var(--color-background-secondary)',
+                    }}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--color-accent-primary)' }}>{t('exampleTitle')}</p>
+                    <p className="text-sm" style={{ color: 'var(--color-text-primary)' }}>{selectedArchitectureNode.example}</p>
                   </div>
-                  <div className="rounded-xl border border-border-subtle/70 bg-white/50 dark:bg-white/5 p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-text-muted mb-2">{t('outcomeTitle')}</p>
-                    <p className="text-sm text-text-primary">{selectedArchitectureNode.outcome}</p>
+                  <div
+                    className="rounded-xl p-4"
+                    style={{
+                      border: '1px solid var(--color-border-primary)',
+                      background: 'var(--color-background-secondary)',
+                    }}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--color-accent-primary)' }}>{t('outcomeTitle')}</p>
+                    <p className="text-sm" style={{ color: 'var(--color-text-primary)' }}>{selectedArchitectureNode.outcome}</p>
                   </div>
                 </div>
               )}
