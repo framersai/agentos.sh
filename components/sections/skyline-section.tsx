@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   AlertTriangle,
@@ -104,29 +104,60 @@ export function SkylineSection() {
     }))
   }, [])
 
-  // Animate building windows
+  // Animate building windows — only when visible in viewport
+  const sectionRef = useRef<HTMLElement>(null)
   useEffect(() => {
-    const interval = setInterval(() => {
-      setAnimatedWindows(prev => {
-        const next = { ...prev }
-        skylineFeatures.forEach(feature => {
-          if (!next[feature.id]) {
-            next[feature.id] = Array(feature.height * 3).fill(false).map(() => Math.random() > 0.3)
-          } else {
-            next[feature.id] = next[feature.id].map(state =>
-              Math.random() > 0.95 ? !state : state
-            )
-          }
-        })
-        return next
-      })
-    }, 2000)
+    let interval: ReturnType<typeof setInterval> | null = null
 
-    return () => clearInterval(interval)
+    const startAnimation = () => {
+      if (interval) return
+      interval = setInterval(() => {
+        setAnimatedWindows(prev => {
+          const next = { ...prev }
+          skylineFeatures.forEach(feature => {
+            if (!next[feature.id]) {
+              next[feature.id] = Array(feature.height * 3).fill(false).map(() => Math.random() > 0.3)
+            } else {
+              next[feature.id] = next[feature.id].map(state =>
+                Math.random() > 0.95 ? !state : state
+              )
+            }
+          })
+          return next
+        })
+      }, 2000)
+    }
+
+    const stopAnimation = () => {
+      if (interval) {
+        clearInterval(interval)
+        interval = null
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          startAnimation()
+        } else {
+          stopAnimation()
+        }
+      },
+      { threshold: 0 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      stopAnimation()
+      observer.disconnect()
+    }
   }, [])
 
   return (
-    <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section ref={sectionRef} className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div
