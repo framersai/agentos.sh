@@ -81,27 +81,25 @@ export function MultiAgentCollaboration() {
         pros: t.raw('patterns.consensus.proscons.pros') as string[],
         cons: t.raw('patterns.consensus.proscons.cons') as string[]
       },
-      codeExample: `// Consensus-based decision making
-const consensus = await orchestrator.decide({
-  pattern: 'consensus',
-  agents: ['researcher', 'analyst', 'critic'],
-  input: userQuery,
-  options: {
-    threshold: 0.7,        // 70% agreement required
-    weights: {
-      researcher: 0.3,
-      analyst: 0.5,
-      critic: 0.2
-    },
-    timeout: 500,          // Max 500ms wait
-    fallback: 'majority'   // Fallback to simple majority
-  }
-});
+      codeExample: `import { agency } from '@framers/agentos'
 
-// Execute if consensus reached
-if (consensus.agreement >= 0.7) {
-  await executor.run(consensus.decision);
-}`
+// Debate strategy: agents propose, then a synthesizer picks the best
+const team = agency({
+  model: 'openai:gpt-4o',
+  strategy: 'debate',
+  agents: {
+    researcher: { instructions: 'Gather evidence and propose a decision.' },
+    analyst:    { instructions: 'Analyze data and propose a decision.' },
+    critic:     { instructions: 'Challenge assumptions, find weaknesses.' },
+  },
+  // Controls for resource limits
+  controls: { maxTotalTokens: 30_000, onLimitReached: 'warn' },
+})
+
+// The debate strategy runs all agents, then synthesizes a final answer
+const result = await team.generate(userQuery)
+console.log(result.text)           // Final synthesized decision
+console.log(result.agentCalls)     // Trace of each agent's contribution`
     },
     {
       mode: 'sequential',
@@ -119,28 +117,25 @@ if (consensus.agreement >= 0.7) {
         pros: t.raw('patterns.sequential.proscons.pros') as string[],
         cons: t.raw('patterns.sequential.proscons.cons') as string[]
       },
-      codeExample: `// Sequential processing pipeline
-const pipeline = await orchestrator.pipeline({
-  pattern: 'sequential',
-  stages: [
-    { agent: 'researcher', task: 'gather_context' },
-    { agent: 'analyst', task: 'process_data' },
-    { agent: 'creator', task: 'generate_solution' },
-    { agent: 'critic', task: 'validate_output' },
-    { agent: 'executor', task: 'implement' }
-  ],
-  input: userRequest,
-  options: {
-    passthrough: true,     // Pass all data between stages
-    errorHandling: 'retry', // Retry failed stages
-    maxRetries: 3,
-    timeout: 2000          // 2 second total timeout
-  }
-});
+      codeExample: `import { agency } from '@framers/agentos'
 
-// Access stage outputs
-console.log(pipeline.stages.analyst.output);
-return pipeline.final;`
+// Sequential strategy: each agent runs in order, passing context forward
+const pipeline = agency({
+  model: 'openai:gpt-4o',
+  strategy: 'sequential',
+  agents: {
+    researcher: { instructions: 'Gather context on the topic.' },
+    analyst:    { instructions: 'Analyze the research findings.' },
+    creator:    { instructions: 'Generate a proposed solution.' },
+    critic:     { instructions: 'Validate the solution for correctness.' },
+    executor:   { instructions: 'Produce the final deliverable.' },
+  },
+  controls: { maxTotalTokens: 50_000 },
+})
+
+const result = await pipeline.generate(userRequest)
+console.log(result.text)             // Final output from executor
+console.log(result.agentCalls)       // Trace: researcher -> analyst -> ... -> executor`
     },
     {
       mode: 'parallel',
@@ -158,27 +153,26 @@ return pipeline.final;`
         pros: t.raw('patterns.parallel.proscons.pros') as string[],
         cons: t.raw('patterns.parallel.proscons.cons') as string[]
       },
-      codeExample: `// Parallel multi-agent execution
-const results = await orchestrator.parallel({
-  pattern: 'parallel',
-  agents: {
-    researcher: { task: 'market_data', region: 'US' },
-    analyst: { task: 'technical_analysis', timeframe: '1h' },
-    creator: { task: 'generate_report', format: 'pdf' },
-    critic: { task: 'risk_assessment', threshold: 0.05 },
-    executor: { task: 'place_orders', mode: 'sandbox' }
-  },
-  options: {
-    timeout: 300,           // 300ms max wait
-    partial: true,          // Return partial results
-    aggregation: 'merge',   // Merge all outputs
-    errorTolerance: 0.2     // Allow 20% failure rate
-  }
-});
+      codeExample: `import { agency } from '@framers/agentos'
 
-// Process aggregated results
-const merged = orchestrator.merge(results);
-await notifyClients(merged);`
+// Parallel strategy: all agents run concurrently, results are synthesized
+const team = agency({
+  model: 'openai:gpt-4o',
+  strategy: 'parallel',
+  agents: {
+    researcher: { instructions: 'Gather market data for the US region.' },
+    analyst:    { instructions: 'Run technical analysis on 1h timeframe.' },
+    creator:    { instructions: 'Draft a report from the findings.' },
+    critic:     { instructions: 'Assess risk with a 5% threshold.' },
+    executor:   { instructions: 'Propose trade actions (sandbox mode).' },
+  },
+  controls: { maxTotalTokens: 80_000 },
+})
+
+// All agents execute in parallel; results are merged automatically
+const result = await team.generate('Analyze AAPL stock and recommend action')
+console.log(result.text)             // Synthesized final answer
+console.log(result.agentCalls)       // All 5 agent traces (ran concurrently)`
     }
   ], [agents, t])
 

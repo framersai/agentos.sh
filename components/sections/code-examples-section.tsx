@@ -27,38 +27,45 @@ export function CodeExamplesSection() {
     description: t('examples.basicAgent.description'),
     language: 'typescript',
     category: 'basic',
-    code: `import { Agent, Memory, Tool } from '@framers/agentos'
+    code: `// package.json must have "type": "module" (ESM required)
+import { agent } from '@framers/agentos'
 
-// Define a simple calculator tool
-const calculatorTool = new Tool({
+// Define a simple calculator tool (ITool shape)
+const calculatorTool = {
   name: 'calculator',
   description: 'Performs basic math operations',
-  execute: async ({ operation, a, b }) => {
-    switch(operation) {
-      case 'add': return a + b
-      case 'multiply': return a * b
-      case 'divide': return b !== 0 ? a / b : 'Error: Division by zero'
-      default: return 'Unknown operation'
+  inputSchema: {
+    type: 'object',
+    properties: {
+      operation: { type: 'string', enum: ['add', 'multiply', 'divide'] },
+      a: { type: 'number' },
+      b: { type: 'number' },
+    },
+    required: ['operation', 'a', 'b'],
+  },
+  execute: async (args) => {
+    const { operation, a, b } = args
+    switch (operation) {
+      case 'add':      return { success: true, output: a + b }
+      case 'multiply': return { success: true, output: a * b }
+      case 'divide':   return { success: true, output: b !== 0 ? a / b : 'Division by zero' }
+      default:         return { success: false, error: 'Unknown operation' }
     }
-  }
-})
+  },
+}
 
-// Create an agent with memory and tools
-const agent = new Agent({
-  name: 'MathAssistant',
-  model: 'gpt-4',
-  memory: new Memory({ type: 'persistent' }),
+// Create a stateful agent with tools
+const mathAgent = agent({
+  model: 'openai:gpt-4o',
+  instructions: 'You are a helpful math assistant. Use the calculator tool for computations.',
   tools: [calculatorTool],
-  systemPrompt: 'You are a helpful math assistant. Use the calculator tool for computations.'
+  maxSteps: 5,
 })
 
-// Run the agent
-const response = await agent.run({
-  message: 'What is 42 multiplied by 17?'
-})
-
-console.log(response)
-// Output: "42 multiplied by 17 equals 714."`
+// Generate a response (tool calls happen automatically)
+const result = await mathAgent.generate('What is 42 multiplied by 17?')
+console.log(result.text)
+// => "42 multiplied by 17 equals 714."`
   },
   {
     id: 'gmi-roles',
@@ -66,55 +73,42 @@ console.log(response)
     description: t('examples.gmiRoles.description'),
     language: 'typescript',
     category: 'advanced',
-    code: `import { GMI, Agency, Role } from '@framers/agentos'
+    code: `import { agency, hitl } from '@framers/agentos'
 
-// Define specialized roles
-const researcherRole = new Role({
-  name: 'Researcher',
-  capabilities: ['web_search', 'document_analysis', 'summarization'],
-  constraints: {
-    maxTokens: 4000,
-    allowedDomains: ['*.edu', '*.org', 'scholar.google.com']
-  }
+// Create a multi-agent agency with sequential orchestration
+const researchTeam = agency({
+  model: 'openai:gpt-4o',   // shared default model
+  strategy: 'sequential',    // agents run one after another
+  agents: {
+    researcher: {
+      instructions: \`You are a thorough researcher.
+        Find accurate, well-sourced information on the topic.
+        Include citations where possible.\`,
+    },
+    writer: {
+      instructions: \`You are an academic writer.
+        Take the researcher's findings and write a clear,
+        well-structured article for technical professionals.\`,
+    },
+    reviewer: {
+      instructions: \`You are a fact-checker and editor.
+        Review the article for accuracy, clarity, and tone.
+        Return the polished final version.\`,
+    },
+  },
+  // Optional: resource controls
+  controls: { maxTotalTokens: 50_000, onLimitReached: 'warn' },
+  // Optional: require human approval before certain tools
+  hitl: { approvals: { beforeTool: ['web_search'] }, handler: hitl.autoApprove() },
 })
 
-const writerRole = new Role({
-  name: 'Writer',
-  capabilities: ['content_generation', 'style_adaptation', 'editing'],
-  preferences: {
-    style: 'academic',
-    tone: 'formal',
-    citations: true
-  }
-})
+// The agency exposes the same interface as a single agent
+const result = await researchTeam.generate(
+  'Write a comprehensive article about quantum computing applications'
+)
 
-// Create an Agency with multiple GMI instances
-const researchAgency = new Agency({
-  name: 'ResearchTeam',
-  roles: [researcherRole, writerRole],
-  workflow: {
-    type: 'sequential',
-    steps: [
-      { role: 'Researcher', action: 'gather_information' },
-      { role: 'Writer', action: 'draft_article' },
-      { role: 'Researcher', action: 'fact_check' },
-      { role: 'Writer', action: 'finalize' }
-    ]
-  }
-})
-
-// Execute complex task with the agency
-const article = await researchAgency.execute({
-  task: 'Write a comprehensive article about quantum computing applications',
-  requirements: {
-    length: 2000,
-    includeReferences: true,
-    targetAudience: 'technical professionals'
-  }
-})
-
-console.log(article.content)
-console.log('References:', article.references)`
+console.log(result.text)
+console.log('Agent calls:', result.agentCalls?.length)`
   },
   {
     id: 'memory-system',
@@ -122,66 +116,36 @@ console.log('References:', article.references)`
     description: t('examples.memorySystem.description'),
     language: 'typescript',
     category: 'advanced',
-    code: `import { Agent, VectorMemory, EpisodicMemory, WorkingMemory } from '@framers/agentos'
+    code: `import { agent } from '@framers/agentos'
 
-// Configure multi-tier memory system
-const memorySystem = {
-  working: new WorkingMemory({
-    capacity: 10, // Keep last 10 interactions
-    ttl: 3600 // 1 hour time-to-live
-  }),
-
-  episodic: new EpisodicMemory({
-    storage: 'postgresql',
-    connectionString: process.env.DATABASE_URL,
-    compressionThreshold: 100 // Compress after 100 messages
-  }),
-
-  vector: new VectorMemory({
-    provider: 'pinecone',
-    apiKey: process.env.PINECONE_API_KEY,
-    index: 'agent-knowledge',
-    dimensions: 1536
-  })
-}
-
-// Create agent with advanced memory
-const agent = new Agent({
-  name: 'PersistentAssistant',
-  memory: memorySystem,
-
-  // Memory-aware processing
-  beforeProcess: async (input) => {
-    // Search relevant past interactions
-    const context = await memorySystem.vector.search(input, { limit: 5 })
-
-    // Load recent working memory
-    const recent = await memorySystem.working.getRecent()
-
-    return {
-      input,
-      context: [...context, ...recent]
-    }
-  },
-
-  afterProcess: async (input, output) => {
-    // Store in appropriate memory tier
-    await memorySystem.working.add({ input, output })
-
-    // Index important information
-    if (output.importance > 0.7) {
-      await memorySystem.vector.index({
-        content: output.text,
-        metadata: { timestamp: Date.now(), importance: output.importance }
-      })
-    }
-  }
+// Create an agent with session-based conversation memory.
+// Memory is enabled by default — each session keeps its own history.
+const assistant = agent({
+  model: 'openai:gpt-4o',
+  instructions: 'You are a persistent assistant. Refer to earlier messages in the session.',
 })
 
-// Agent remembers across sessions
-const response = await agent.run({
-  message: 'What did we discuss about project timeline last week?'
-})`
+// Open a named session — history is scoped to this ID
+const session = assistant.session('user-42')
+
+// Conversation turns are automatically remembered within the session
+await session.send('My project deadline is March 30.')
+await session.send('We need to finish the API layer by Friday.')
+
+// The agent recalls earlier context from the same session
+const result = await session.send('What did we discuss about the project timeline?')
+console.log(result.text)
+// => Recalls the March 30 deadline and the Friday API target
+
+// Inspect the full conversation history
+console.log(session.messages())
+
+// Check token usage across the session
+const usage = await session.usage()
+console.log(\`Total tokens: \${usage.totalTokens}\`)
+
+// Wipe session history when done
+session.clear()`
   },
   {
     id: 'tool-integration',
@@ -189,58 +153,56 @@ const response = await agent.run({
     description: t('examples.toolIntegration.description'),
     language: 'typescript',
     category: 'integration',
-    code: `import { Agent, Tool, ToolRegistry } from '@framers/agentos'
-import { WebBrowser, CodeInterpreter, DatabaseQuery } from '@framers/agentos-tools'
+    code: `import { agent, generateText } from '@framers/agentos'
 
-// Create custom API tool
-const weatherTool = new Tool({
-  name: 'weather',
+// Define custom tools using the ITool interface
+const weatherTool = {
+  name: 'get_weather',
   description: 'Get current weather for any location',
-  parameters: {
-    location: { type: 'string', required: true },
-    units: { type: 'string', enum: ['metric', 'imperial'], default: 'metric' }
+  inputSchema: {
+    type: 'object',
+    properties: {
+      location: { type: 'string', description: 'City name' },
+      units: { type: 'string', enum: ['metric', 'imperial'] },
+    },
+    required: ['location'],
   },
-  execute: async ({ location, units }) => {
-    const response = await fetch(
+  execute: async ({ location, units = 'metric' }) => {
+    const res = await fetch(
       \`https://api.weather.com/v1/current?q=\${location}&units=\${units}\`
     )
-    return response.json()
-  }
-})
-
-// Register multiple tools
-const toolRegistry = new ToolRegistry()
-toolRegistry.register(weatherTool)
-toolRegistry.register(new WebBrowser({ headless: true }))
-toolRegistry.register(new CodeInterpreter({ sandbox: true }))
-toolRegistry.register(new DatabaseQuery({
-  connection: process.env.DB_URL,
-  readOnly: true
-}))
-
-// Create multi-tool agent
-const agent = new Agent({
-  name: 'SwissArmyAgent',
-  tools: toolRegistry,
-
-  // Tool selection strategy
-  toolSelector: async (task, availableTools) => {
-    // AI-driven tool selection based on task
-    const analysis = await analyzeTask(task)
-    return availableTools.filter(tool =>
-      analysis.requiredCapabilities.includes(tool.type)
-    )
+    return { success: true, output: await res.json() }
   },
+}
 
-  // Parallel tool execution
-  executionMode: 'parallel',
-  maxConcurrentTools: 3
+const searchTool = {
+  name: 'web_search',
+  description: 'Search the web for recent information',
+  inputSchema: {
+    type: 'object',
+    properties: { query: { type: 'string' } },
+    required: ['query'],
+  },
+  execute: async ({ query }) => {
+    // Your search implementation here
+    return { success: true, output: { results: [\`Results for: \${query}\`] } }
+  },
+}
+
+// Create an agent with multiple tools — it selects the right tool per step
+const travelAgent = agent({
+  model: 'openai:gpt-4o',
+  instructions: 'You are a travel assistant. Use tools to get weather and search for news.',
+  tools: [weatherTool, searchTool],
+  maxSteps: 10,
 })
 
-// Complex task using multiple tools
-const result = await agent.run({
-  message: 'Check the weather in Tokyo, find recent news about it, and create a travel summary'
-})`
+// The agent automatically chains tool calls to fulfill the request
+const result = await travelAgent.generate(
+  'Check the weather in Tokyo, find recent news about it, and create a travel summary'
+)
+console.log(result.text)
+console.log('Tool calls made:', result.toolCalls.length)`
   },
   {
     id: 'skills-integration',
@@ -270,51 +232,47 @@ const manifest = await createCuratedManifest({
     description: t('examples.realtimeStream.description'),
     language: 'typescript',
     category: 'advanced',
-    code: `import { StreamingAgent, StreamProcessor } from '@framers/agentos/streaming'
+    code: `import { streamText, agent } from '@framers/agentos'
 
-// Configure streaming agent
-const streamingAgent = new StreamingAgent({
-  name: 'RealtimeAssistant',
-  model: 'gpt-4',
-  streaming: {
-    enabled: true,
-    chunkSize: 'word', // or 'sentence', 'paragraph'
-    bufferSize: 100
-  }
+// --- Option 1: Stateless streaming with streamText() ---
+const stream = streamText({
+  model: 'openai:gpt-4o',
+  prompt: 'Explain quantum computing in simple terms',
 })
 
-// Set up stream processors
-const processors = [
-  new StreamProcessor.TokenCounter(),
-  new StreamProcessor.SentimentAnalyzer(),
-  new StreamProcessor.SafetyFilter({
-    blockPII: true,
-    moderationLevel: 'medium'
-  })
-]
+// Iterate over raw text deltas as they arrive
+for await (const chunk of stream.textStream) {
+  process.stdout.write(chunk)   // print tokens incrementally
+}
 
-// Handle streaming response
-streamingAgent.stream({
-  message: 'Explain quantum computing in simple terms',
-  onChunk: (chunk) => {
-    // Process each chunk through pipeline
-    const processed = processors.reduce(
-      (data, processor) => processor.process(data),
-      chunk
-    )
+// After the stream finishes, await aggregated results
+const fullText = await stream.text
+const usage = await stream.usage
+console.log('\\nTokens used:', usage.totalTokens)
 
-    // Update UI in real-time
-    updateChatInterface(processed)
-  },
-  onComplete: (fullResponse) => {
-    console.log('Complete response:', fullResponse)
-    console.log('Token count:', fullResponse.metadata.tokens)
-  },
-  onError: (error) => {
-    console.error('Streaming error:', error)
-    fallbackToNonStreaming()
+// --- Option 2: Agent streaming with session memory ---
+const myAgent = agent({
+  model: 'anthropic:claude-sonnet-4-20250514',
+  instructions: 'You are a helpful science tutor.',
+})
+
+// .stream() returns the same StreamTextResult shape
+const agentStream = myAgent.stream('What is quantum entanglement?')
+
+// fullStream yields typed events: text, tool-call, tool-result, error
+for await (const part of agentStream.fullStream) {
+  switch (part.type) {
+    case 'text':
+      process.stdout.write(part.text)
+      break
+    case 'tool-call':
+      console.log('\\nCalling tool:', part.toolName)
+      break
+    case 'tool-result':
+      console.log('Tool result:', part.result)
+      break
   }
-})`
+}`
   },
   {
     id: 'deployment',
