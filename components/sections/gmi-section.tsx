@@ -11,9 +11,6 @@ export function GMISection() {
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
   const hoverTimerRef = useRef<number | undefined>(undefined)
 
-  // Automatic parallel detail cycle (2 agents at a time)
-  const [autoAgents, setAutoAgents] = useState<string[]>([])
-
   const agents = useMemo(() => ([
     { id: 'researcher', name: t('agents.researcher.name'), icon: Brain, description: t('agents.researcher.description'),
       examples: ['Web search and source ranking', 'Literature survey (PDFs, arXiv)', 'Fact extraction to memory'],
@@ -46,17 +43,6 @@ export function GMISection() {
       outcome: t('snapshots.2.outcome')
     }
   ] as const
-
-  useEffect(() => {
-    let idx = 0
-    const tick = () => {
-      setAutoAgents([agents[idx % agents.length].id, agents[(idx + 1) % agents.length].id])
-      idx = (idx + 2) % agents.length
-    }
-    tick()
-    const t = setInterval(tick, 8000) // slow paced
-    return () => clearInterval(t)
-  }, [agents])
 
   // helper to position tooltip with minimal layout thrash
   function computeTooltipPosition(target: Element) {
@@ -251,11 +237,12 @@ export function GMISection() {
                   }
                 }}
               />
-              <text x={n.x + n.w / 2} y={n.y + 40} textAnchor="middle" 
-                    className={`font-semibold ${selectedNodeId === n.id ? 'fill-accent-primary' : 'fill-text-primary'}`}>
+              <text x={n.x + n.w / 2} y={n.y + 40} textAnchor="middle"
+                    fill={selectedNodeId === n.id ? "var(--color-accent-primary)" : "var(--color-text-primary)"}
+                    className="font-semibold">
                 {n.label}
               </text>
-              <text x={n.x + n.w / 2} y={n.y + 60} textAnchor="middle" className="fill-text-muted text-xs">
+              <text x={n.x + n.w / 2} y={n.y + 60} textAnchor="middle" fill="var(--color-text-muted)" className="text-xs">
                 {n.subtitle}
               </text>
             </g>
@@ -375,7 +362,7 @@ export function GMISection() {
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.8 }}
                 />
-                <text x="250" y="250" textAnchor="middle" className="fill-text-primary font-bold text-sm" dy="5">
+                <text x="250" y="250" textAnchor="middle" fill="var(--color-text-primary)" className="font-bold text-sm" dy="5">
                   Agency Core
                 </text>
 
@@ -416,13 +403,13 @@ export function GMISection() {
                           cy={y}
                           r="40"
                           fill="var(--color-background-primary)"
-                          stroke={autoAgents.includes(agent.id) ? "var(--color-accent-primary)" : "var(--color-border-primary)"}
+                          stroke="var(--color-border-primary)"
                           strokeWidth="2"
                         />
-                        <text x={x} y={y - 5} textAnchor="middle" className="fill-text-primary font-semibold text-xs">
+                        <text x={x} y={y - 5} textAnchor="middle" fill="var(--color-text-primary)" className="font-semibold text-xs">
                           {agent.name}
                         </text>
-                        <text x={x} y={y + 10} textAnchor="middle" className="fill-text-muted text-xs">
+                        <text x={x} y={y + 10} textAnchor="middle" fill="var(--color-text-muted)" className="text-xs">
                           GMI
                         </text>
                       </motion.g>
@@ -448,32 +435,6 @@ export function GMISection() {
                 })}
               </svg>
 
-              {/* Automatic parallel agent info boxes */}
-              <AnimatePresence>
-                {autoAgents.map((aid) => {
-                  const agent = agents.find((a) => a.id === aid)!
-                  const i = agents.findIndex((a) => a.id === aid)
-                  const angle = (i / agents.length) * 2 * Math.PI
-                  const x = 250 + 150 * Math.cos(angle)
-                  const y = 250 + 150 * Math.sin(angle)
-                  const cardX = x > 250 ? x - 140 : x + 20
-                  const cardY = y > 250 ? y - 120 : y + 20
-                  return (
-                    <motion.div
-                      key={aid}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 0.95, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 1.2, ease: 'easeOut' }}
-                      className="absolute z-20 w-60 surface-card p-4 border border-border-subtle rounded-2xl shadow-modern"
-                      style={{ left: cardX, top: cardY }}
-                    >
-                      <div className="font-semibold text-text-primary mb-1 text-sm text-center">{agent.name}</div>
-                      <div className="text-xs text-text-secondary mb-2 text-center">{agent.description}</div>
-                    </motion.div>
-                  )
-                })}
-              </AnimatePresence>
             </div>
           </div>
         </motion.div>
