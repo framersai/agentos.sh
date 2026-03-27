@@ -45,13 +45,13 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
         { label: t('stats.inferenceLatency'), value: '< 40ms' },
         { id: 'active-models', label: t('stats.activePersonas'), value: 14, live: true }
       ],
-      features: ['Real-time learning', 'Context retention', 'Behavioral adaptation'],
+      features: [t('cards.adaptive.features.0'), t('cards.adaptive.features.1'), t('cards.adaptive.features.2')],
       bgAnimation: 'neural',
       accentColor: '#FF00FF',
       capabilities: [
-        { name: 'Multi-Model Support', icon: Brain },
-        { name: 'Context Management', icon: Database },
-        { name: 'Skills & Extensions', icon: Puzzle }
+        { name: t('cards.adaptive.capabilities.0'), icon: Brain },
+        { name: t('cards.adaptive.capabilities.1'), icon: Database },
+        { name: t('cards.adaptive.capabilities.2'), icon: Puzzle }
       ]
     },
     {
@@ -64,13 +64,13 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
         { label: t('stats.taskThroughput'), value: '50k/s', trend: 18 },
         { label: t('stats.orchestrationOverhead'), value: '< 2ms' }
       ],
-      features: ['Load balancing', 'Auto-scaling', 'Fault tolerance'],
+      features: [t('cards.distributed.features.0'), t('cards.distributed.features.1'), t('cards.distributed.features.2')],
       bgAnimation: 'flow',
       accentColor: '#00FFFF',
       capabilities: [
-        { name: 'Orchestration', icon: Server },
-        { name: 'Message Queuing', icon: Layers },
-        { name: 'State Management', icon: Database }
+        { name: t('cards.distributed.capabilities.0'), icon: Server },
+        { name: t('cards.distributed.capabilities.1'), icon: Layers },
+        { name: t('cards.distributed.capabilities.2'), icon: Database }
       ]
     },
     {
@@ -83,13 +83,13 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
         { label: t('stats.retrievalSpeed'), value: '< 5ms' },
         { label: t('stats.compressionRatio'), value: '100:1' }
       ],
-      features: ['Vector embeddings', 'Semantic search', 'Version control'],
+      features: [t('cards.memory.features.0'), t('cards.memory.features.1'), t('cards.memory.features.2')],
       bgAnimation: 'grid',
       accentColor: '#FFFF00',
       capabilities: [
-        { name: 'Vector Storage', icon: Database },
-        { name: 'SQL Storage', icon: Database },
-        { name: 'Chain Management', icon: Code }
+        { name: t('cards.memory.capabilities.0'), icon: Database },
+        { name: t('cards.memory.capabilities.1'), icon: Database },
+        { name: t('cards.memory.capabilities.2'), icon: Code }
       ]
     },
     {
@@ -102,13 +102,13 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
         { label: t('stats.streamBandwidth'), value: '10 Gbps' },
         { id: 'uptime', label: t('stats.connectionStability'), value: '99.99%', live: true }
       ],
-      features: ['WebSocket support', 'Event-driven', 'Buffering'],
+      features: [t('cards.streaming.features.0'), t('cards.streaming.features.1'), t('cards.streaming.features.2')],
       bgAnimation: 'pulse',
       accentColor: '#00FF00',
       capabilities: [
-        { name: 'Real-time Comm', icon: Globe },
-        { name: 'RPC Protocol', icon: Zap },
-        { name: 'Event Loop', icon: Server }
+        { name: t('cards.streaming.capabilities.0'), icon: Globe },
+        { name: t('cards.streaming.capabilities.1'), icon: Zap },
+        { name: t('cards.streaming.capabilities.2'), icon: Server }
       ]
     }
   ]

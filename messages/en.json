@@ -222,19 +222,27 @@
     "cards": {
       "adaptive": {
         "title": "Adaptive Intelligence",
-        "description": "Real-time learning and context-aware decision-making that evolves with every interaction"
+        "description": "Real-time learning and context-aware decision-making that evolves with every interaction",
+        "features": ["Real-time learning", "Context retention", "Behavioral adaptation"],
+        "capabilities": ["Multi-Model Support", "Context Management", "Skills & Extensions"]
       },
       "distributed": {
         "title": "Distributed Cognition",
-        "description": "Parallel processing across multiple agents with seamless coordination and load balancing"
+        "description": "Parallel processing across multiple agents with seamless coordination and load balancing",
+        "features": ["Load balancing", "Auto-scaling", "Fault tolerance"],
+        "capabilities": ["Orchestration", "Message Queuing", "State Management"]
       },
       "memory": {
         "title": "Persistent Memory",
-        "description": "7 vector store backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant). Observational memory compression (3-10x via LLM with temporal reasoning). 10 document loaders, 3 PDF tiers, 4 chunking strategies. Memory import/export in 10 formats including Obsidian vault and ChatGPT. One-command migration between all backends. Docker auto-setup for Qdrant and Postgres."
+        "description": "7 vector store backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant). Observational memory compression (3-10x via LLM with temporal reasoning). 10 document loaders, 3 PDF tiers, 4 chunking strategies. Memory import/export in 10 formats including Obsidian vault and ChatGPT. One-command migration between all backends. Docker auto-setup for Qdrant and Postgres.",
+        "features": ["Vector embeddings", "Semantic search", "Version control"],
+        "capabilities": ["Vector Storage", "SQL Storage", "Chain Management"]
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime"
+        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime",
+        "features": ["WebSocket support", "Event-driven", "Buffering"],
+        "capabilities": ["Real-time Comm", "RPC Protocol", "Event Loop"]
       }
     }
   },
@@ -690,9 +698,72 @@
     }
   },
   "videoDemo": {
+    "badge": "Live Demos",
     "title": "See AgentOS in Action",
-    "subtitle": "Watch how easy it is to build adaptive AI agents",
+    "subtitle": "Watch real workflows demonstrating agent creation, multi-agent collaboration, RAG memory, and more.",
+    "comingSoon": "Demo video coming soon",
     "watchButton": "Watch Demo",
-    "duration": "Duration"
+    "duration": "Duration",
+    "videos": {
+      "streaming": {
+        "title": "Real-time Streaming",
+        "description": "Token-level response delivery",
+        "captions": [
+          "Type a prompt and send it to the agent",
+          "Watch tokens stream back in real-time",
+          "Complete response with session timeline"
+        ]
+      },
+      "agentCreation": {
+        "title": "Agent Creation",
+        "description": "Build custom AI personas in minutes",
+        "captions": [
+          "Browse the persona catalog — pre-built agents",
+          "Step 1 — Name, description, tags, and traits",
+          "Step 2 — System prompt, model, and cost strategy",
+          "Guardrails and tool extensions",
+          "Market Intelligence Analyst — created",
+          "Streaming response from the new persona"
+        ]
+      },
+      "multiAgent": {
+        "title": "Multi-Agent System",
+        "description": "Orchestrate agent teams",
+        "captions": [
+          "Agency Manager — Lead, Researcher, Writer seats",
+          "Define shared goals for multi-agent coordination",
+          "Create and launch new agent teams"
+        ]
+      },
+      "ragMemory": {
+        "title": "RAG Memory",
+        "description": "Evaluation suites and quality tracking",
+        "captions": [
+          "Evaluation Dashboard — run history with scores",
+          "Run evaluations and track pass/fail per test case",
+          "Compare results across runs — catch regressions early"
+        ]
+      },
+      "planningEngine": {
+        "title": "Planning Engine",
+        "description": "Multi-step task decomposition",
+        "captions": [
+          "Planning Engine — execution plans with confidence scores",
+          "Pause, resume, and advance — full execution control",
+          "Each step tracked with tool calls and dependencies"
+        ]
+      }
+    }
+  },
+  "workbench": {
+    "title": "AgentOS Workbench",
+    "description": "The official desktop application for building, managing, and interacting with AgentOS experiences. Create powerful AI agents with a visual interface, test in real-time, and deploy anywhere.",
+    "badge1": "MIT Licensed",
+    "badge2": "Open Source",
+    "feature1": "Visual agent builder with drag-and-drop workflows",
+    "feature2": "Real-time testing and debugging tools",
+    "feature3": "One-click deployment to cloud or local",
+    "viewGithub": "View on GitHub",
+    "downloadLatest": "Download Latest"
   }
 }

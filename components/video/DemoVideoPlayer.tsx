@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import { Play, Pause, Volume2, VolumeX, Maximize, SkipBack, SkipForward, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Caption {
@@ -19,66 +20,72 @@ interface DemoVideo {
   duration?: number;
 }
 
-const DEMO_VIDEOS: DemoVideo[] = [
-  {
-    id: 'streaming',
-    title: 'Real-time Streaming',
-    description: 'Token-level response delivery',
-    src: '/videos/streaming.mp4',
-    captions: [
-      { start: 0.5, end: 3, text: 'Type a prompt and send it to the agent' },
-      { start: 3.5, end: 7, text: 'Watch tokens stream back in real-time' },
-      { start: 7.5, end: 10, text: 'Complete response with session timeline' },
-    ]
-  },
-  {
-    id: 'agent-creation',
-    title: 'Agent Creation',
-    description: 'Build custom AI personas in minutes',
-    src: '/videos/agent-creation.mp4',
-    captions: [
-      { start: 0.5, end: 3.5, text: 'Browse the persona catalog — pre-built agents' },
-      { start: 4, end: 7, text: 'Step 1 — Name, description, tags, and traits' },
-      { start: 7.5, end: 11, text: 'Step 2 — System prompt, model, and cost strategy' },
-      { start: 11.5, end: 15.5, text: 'Guardrails and tool extensions' },
-      { start: 16, end: 19, text: 'Market Intelligence Analyst — created' },
-      { start: 19.5, end: 25, text: 'Streaming response from the new persona' },
-    ]
-  },
-  {
-    id: 'multi-agent',
-    title: 'Multi-Agent System',
-    description: 'Orchestrate agent teams',
-    src: '/videos/multi-agent.mp4',
-    captions: [
-      { start: 0.5, end: 4, text: 'Agency Manager — Lead, Researcher, Writer seats' },
-      { start: 4.5, end: 8, text: 'Define shared goals for multi-agent coordination' },
-      { start: 8.5, end: 13, text: 'Create and launch new agent teams' },
-    ]
-  },
-  {
-    id: 'rag-memory',
-    title: 'RAG Memory',
-    description: 'Evaluation suites and quality tracking',
-    src: '/videos/rag-memory.mp4',
-    captions: [
-      { start: 0.5, end: 4, text: 'Evaluation Dashboard — run history with scores' },
-      { start: 4.5, end: 8, text: 'Run evaluations and track pass/fail per test case' },
-      { start: 8.5, end: 12, text: 'Compare results across runs — catch regressions early' },
-    ]
-  },
-  {
-    id: 'planning-engine',
-    title: 'Planning Engine',
-    description: 'Multi-step task decomposition',
-    src: '/videos/planning-engine.mp4',
-    captions: [
-      { start: 0.5, end: 4, text: 'Planning Engine — execution plans with confidence scores' },
-      { start: 4.5, end: 7, text: 'Pause, resume, and advance — full execution control' },
-      { start: 7.5, end: 10, text: 'Each step tracked with tool calls and dependencies' },
-    ]
-  }
-];
+/**
+ * Build video definitions with translated strings from the videoDemo namespace.
+ * Each video's title, description, and captions are pulled from the locale files.
+ */
+function getDemoVideos(t: ReturnType<typeof useTranslations>): DemoVideo[] {
+  return [
+    {
+      id: 'streaming',
+      title: t('videos.streaming.title'),
+      description: t('videos.streaming.description'),
+      src: '/videos/streaming.mp4',
+      captions: [
+        { start: 0.5, end: 3, text: t('videos.streaming.captions.0') },
+        { start: 3.5, end: 7, text: t('videos.streaming.captions.1') },
+        { start: 7.5, end: 10, text: t('videos.streaming.captions.2') },
+      ]
+    },
+    {
+      id: 'agent-creation',
+      title: t('videos.agentCreation.title'),
+      description: t('videos.agentCreation.description'),
+      src: '/videos/agent-creation.mp4',
+      captions: [
+        { start: 0.5, end: 3.5, text: t('videos.agentCreation.captions.0') },
+        { start: 4, end: 7, text: t('videos.agentCreation.captions.1') },
+        { start: 7.5, end: 11, text: t('videos.agentCreation.captions.2') },
+        { start: 11.5, end: 15.5, text: t('videos.agentCreation.captions.3') },
+        { start: 16, end: 19, text: t('videos.agentCreation.captions.4') },
+        { start: 19.5, end: 25, text: t('videos.agentCreation.captions.5') },
+      ]
+    },
+    {
+      id: 'multi-agent',
+      title: t('videos.multiAgent.title'),
+      description: t('videos.multiAgent.description'),
+      src: '/videos/multi-agent.mp4',
+      captions: [
+        { start: 0.5, end: 4, text: t('videos.multiAgent.captions.0') },
+        { start: 4.5, end: 8, text: t('videos.multiAgent.captions.1') },
+        { start: 8.5, end: 13, text: t('videos.multiAgent.captions.2') },
+      ]
+    },
+    {
+      id: 'rag-memory',
+      title: t('videos.ragMemory.title'),
+      description: t('videos.ragMemory.description'),
+      src: '/videos/rag-memory.mp4',
+      captions: [
+        { start: 0.5, end: 4, text: t('videos.ragMemory.captions.0') },
+        { start: 4.5, end: 8, text: t('videos.ragMemory.captions.1') },
+        { start: 8.5, end: 12, text: t('videos.ragMemory.captions.2') },
+      ]
+    },
+    {
+      id: 'planning-engine',
+      title: t('videos.planningEngine.title'),
+      description: t('videos.planningEngine.description'),
+      src: '/videos/planning-engine.mp4',
+      captions: [
+        { start: 0.5, end: 4, text: t('videos.planningEngine.captions.0') },
+        { start: 4.5, end: 7, text: t('videos.planningEngine.captions.1') },
+        { start: 7.5, end: 10, text: t('videos.planningEngine.captions.2') },
+      ]
+    }
+  ];
+}
 
 function VideoControls({
   isPlaying,
@@ -120,16 +127,16 @@ function VideoControls({
              const percent = (e.clientX - rect.left) / rect.width;
              onSeek(percent * duration);
            }}>
-        <div 
+        <div
           className="absolute h-full bg-gradient-to-r from-violet-500 to-cyan-400 rounded-full"
           style={{ width: `${progress}%` }}
         />
-        <div 
+        <div
           className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg opacity-0 group-hover/progress:opacity-100 transition-opacity"
           style={{ left: `${progress}%`, transform: 'translate(-50%, -50%)' }}
         />
       </div>
-      
+
       {/* Controls */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -146,7 +153,7 @@ function VideoControls({
             {formatTime(currentTime)} / {formatTime(duration)}
           </span>
         </div>
-        
+
         <div className="flex items-center gap-2">
           <button onClick={onMute} className="p-2 hover:bg-white/10 rounded-full transition-colors">
             {isMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-white" />}
@@ -161,6 +168,9 @@ function VideoControls({
 }
 
 export function DemoVideoPlayer() {
+  const t = useTranslations('videoDemo');
+  const DEMO_VIDEOS = getDemoVideos(t);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
@@ -171,7 +181,7 @@ export function DemoVideoPlayer() {
   const [videoError, setVideoError] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -181,7 +191,7 @@ export function DemoVideoPlayer() {
   // Lazy load video only when section is visible
   useEffect(() => {
     if (!sectionRef.current) return;
-    
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -191,7 +201,7 @@ export function DemoVideoPlayer() {
       },
       { threshold: 0.1, rootMargin: '100px' }
     );
-    
+
     observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
@@ -207,7 +217,7 @@ export function DemoVideoPlayer() {
   // Update captions based on current time
   useEffect(() => {
     if (!activeVideo.captions) return;
-    
+
     const caption = activeVideo.captions.find(
       c => currentTime >= c.start && currentTime < c.end
     );
@@ -284,14 +294,14 @@ export function DemoVideoPlayer() {
     setIsPlaying(false);
     setProgress(0);
     setCurrentTime(0);
-  }, []);
+  }, [DEMO_VIDEOS.length]);
 
   const goToNext = useCallback(() => {
     setActiveIndex(i => (i + 1) % DEMO_VIDEOS.length);
     setIsPlaying(false);
     setProgress(0);
     setCurrentTime(0);
-  }, []);
+  }, [DEMO_VIDEOS.length]);
 
   return (
     <section ref={sectionRef} className="py-16 md:py-24 bg-[var(--color-background)]">
@@ -299,20 +309,19 @@ export function DemoVideoPlayer() {
         {/* Header */}
         <div className="text-center mb-12">
           <span className="inline-block px-4 py-1.5 mb-4 text-sm font-semibold bg-violet-500/10 text-violet-400 rounded-full border border-violet-500/20">
-            ◆ Live Demos
+            {t('badge')}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text-primary)] mb-4">
-            See AgentOS in Action
+            {t('title')}
           </h2>
           <p className="text-[var(--color-text-secondary)] max-w-2xl mx-auto">
-            Watch real workflows demonstrating agent creation, multi-agent collaboration, 
-            RAG memory, and more.
+            {t('subtitle')}
           </p>
         </div>
 
         {/* Video Player */}
         <div className="max-w-5xl mx-auto">
-          <div 
+          <div
             ref={containerRef}
             className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl shadow-violet-500/10 group"
           >
@@ -324,7 +333,7 @@ export function DemoVideoPlayer() {
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">{activeVideo.title}</h3>
                 <p className="text-slate-400 text-sm mb-4">{activeVideo.description}</p>
-                <p className="text-xs text-slate-500">Demo video coming soon</p>
+                <p className="text-xs text-slate-500">{t('comingSoon')}</p>
               </div>
             ) : (
               <>
@@ -341,7 +350,7 @@ export function DemoVideoPlayer() {
                   className="w-full h-full object-cover"
                   playsInline
                 />
-                
+
                 {/* Caption Overlay */}
                 {currentCaption && (
                   <div className="absolute bottom-20 left-1/2 -translate-x-1/2 pointer-events-none">
@@ -353,7 +362,7 @@ export function DemoVideoPlayer() {
 
                 {/* Play button overlay */}
                 {!isPlaying && (
-                  <button 
+                  <button
                     onClick={togglePlay}
                     className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors cursor-pointer"
                   >
@@ -383,13 +392,13 @@ export function DemoVideoPlayer() {
 
           {/* Video Selector */}
           <div className="mt-6 flex items-center justify-center gap-2">
-            <button 
+            <button
               onClick={goToPrevious}
               className="p-2 hover:bg-slate-800 rounded-full transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-slate-400" />
             </button>
-            
+
             <div className="flex gap-2 overflow-x-auto px-4 py-2 scrollbar-hide">
               {DEMO_VIDEOS.map((video, index) => (
                 <button
@@ -410,8 +419,8 @@ export function DemoVideoPlayer() {
                 </button>
               ))}
             </div>
-            
-            <button 
+
+            <button
               onClick={goToNext}
               className="p-2 hover:bg-slate-800 rounded-full transition-colors"
             >
@@ -425,8 +434,3 @@ export function DemoVideoPlayer() {
 }
 
 export default DemoVideoPlayer;
-
-
-
-
-
