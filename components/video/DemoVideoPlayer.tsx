@@ -394,9 +394,9 @@ export function DemoVideoPlayer() {
           <div className="mt-6 flex items-center justify-center gap-2">
             <button
               onClick={goToPrevious}
-              className="p-2 hover:bg-slate-800 rounded-full transition-colors"
+              className="p-2 hover:bg-[var(--color-background-tertiary)] rounded-full transition-colors"
             >
-              <ChevronLeft className="w-5 h-5 text-slate-400" />
+              <ChevronLeft className="w-5 h-5 text-[var(--color-text-muted)]" />
             </button>
 
             <div className="flex gap-2 overflow-x-auto px-4 py-2 scrollbar-hide">
@@ -412,7 +412,7 @@ export function DemoVideoPlayer() {
                   className={`flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                     index === activeIndex
                       ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/25'
-                      : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700 hover:text-white'
+                      : 'bg-[var(--color-background-secondary)] text-[var(--color-text-muted)] hover:bg-[var(--color-background-tertiary)] hover:text-[var(--color-text-primary)]'
                   }`}
                 >
                   {video.title}
@@ -422,9 +422,9 @@ export function DemoVideoPlayer() {
 
             <button
               onClick={goToNext}
-              className="p-2 hover:bg-slate-800 rounded-full transition-colors"
+              className="p-2 hover:bg-[var(--color-background-tertiary)] rounded-full transition-colors"
             >
-              <ChevronRight className="w-5 h-5 text-slate-400" />
+              <ChevronRight className="w-5 h-5 text-[var(--color-text-muted)]" />
             </button>
           </div>
         </div>
