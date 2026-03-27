@@ -29,6 +29,7 @@ export function AnimatedBackground() {
   const connectionsRef = useRef<Connection[]>([])
   const mouseRef = useRef({ x: 0, y: 0 })
   const isVisibleRef = useRef(true)
+  const isPausedRef = useRef(false)
   const prefersReducedMotion = useRef(false)
   const { theme: currentTheme, resolvedTheme } = useTheme()
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
@@ -53,7 +54,7 @@ export function AnimatedBackground() {
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     prefersReducedMotion.current = mediaQuery.matches
-    
+
     const handleChange = (e: MediaQueryListEvent) => {
       prefersReducedMotion.current = e.matches
     }
@@ -64,16 +65,25 @@ export function AnimatedBackground() {
   // IntersectionObserver to pause animation when not visible
   useEffect(() => {
     if (!canvasRef.current) return
-    
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisibleRef.current = entry.isIntersecting
       },
       { threshold: 0 }
     )
-    
+
     observer.observe(canvasRef.current)
     return () => observer.disconnect()
+  }, [])
+
+  // Pause/resume when tab is hidden
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      isPausedRef.current = document.hidden
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
   }, [])
 
   useEffect(() => {
@@ -107,36 +117,49 @@ export function AnimatedBackground() {
       return
     }
 
-    // Initialize particles with layers for depth - OPTIMIZED COUNT for performance
-    const particleCount = window.matchMedia('(max-width: 640px)').matches ? 30 : 80
+    // Reduced particle count: 40 desktop, 15 mobile (was 80/30)
+    const isMobile = window.matchMedia('(max-width: 640px)').matches
+    const particleCount = isMobile ? 15 : 40
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * dimensions.width,
       y: Math.random() * dimensions.height,
       vx: (Math.random() - 0.5) * 0.2,
-      vy: 0.1 + Math.random() * 0.5, // Falling effect
+      vy: 0.1 + Math.random() * 0.5,
       radius: 1 + Math.random() * 2,
       color: colors[Math.floor(Math.random() * colors.length)],
       pulsePhase: Math.random() * Math.PI * 2,
       connectionStrength: 0.3 + Math.random() * 0.7,
-      layer: Math.floor(Math.random() * 3) // 0: back, 1: middle, 2: front
+      layer: Math.floor(Math.random() * 3)
     }))
 
-    // Create intelligent connections
+    // Pre-parse particle color hex values to avoid string ops per frame
+    const particleRgb = particlesRef.current.map(p => {
+      const hex = p.color.replace('#', '')
+      return {
+        r: parseInt(hex.substring(0, 2), 16),
+        g: parseInt(hex.substring(2, 4), 16),
+        b: parseInt(hex.substring(4, 6), 16),
+      }
+    })
+
+    // Connection recalculation helper (called every N frames, not every frame)
     const updateConnections = () => {
       connectionsRef.current = []
-      const maxDistance = 150 // Reduced max distance for denser look
+      const maxDistance = 150
+      const particles = particlesRef.current
 
-      for (let i = 0; i < particlesRef.current.length; i++) {
-        for (let j = i + 1; j < particlesRef.current.length; j++) {
-          const dx = particlesRef.current[i].x - particlesRef.current[j].x
-          const dy = particlesRef.current[i].y - particlesRef.current[j].y
-          const distance = Math.sqrt(dx * dx + dy * dy)
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x
+          const dy = particles[i].y - particles[j].y
+          const distSq = dx * dx + dy * dy
+          const maxDistSq = maxDistance * maxDistance
 
-          if (distance < maxDistance) {
+          if (distSq < maxDistSq) {
             connectionsRef.current.push({
               from: i,
               to: j,
-              strength: 1 - (distance / maxDistance),
+              strength: 1 - (Math.sqrt(distSq) / maxDistance),
               pulseOffset: Math.random() * Math.PI * 2
             })
           }
@@ -144,140 +167,146 @@ export function AnimatedBackground() {
       }
     }
 
-    // Mouse interaction
+    // Throttled mousemove — update at most every 50ms
+    let lastMouseUpdate = 0
     const handleMouseMove = (e: MouseEvent) => {
+      const now = performance.now()
+      if (now - lastMouseUpdate < 50) return
+      lastMouseUpdate = now
       mouseRef.current = { x: e.clientX, y: e.clientY }
     }
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+
+    // Pre-create the background gradient (reused every frame)
+    const bgGradient = ctx.createRadialGradient(
+      dimensions.width / 2,
+      dimensions.height / 2,
+      0,
+      dimensions.width / 2,
+      dimensions.height / 2,
+      dimensions.width / 2
+    )
+    if (isDark) {
+      bgGradient.addColorStop(0, 'rgba(0, 0, 0, 0)')
+      bgGradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.02)')
+      bgGradient.addColorStop(1, 'rgba(0, 0, 0, 0.05)')
+    } else {
+      bgGradient.addColorStop(0, 'rgba(250, 250, 255, 0.1)')
+      bgGradient.addColorStop(0.5, 'rgba(245, 245, 255, 0.15)')
+      bgGradient.addColorStop(1, 'rgba(240, 240, 255, 0.2)')
+    }
+
+    // Pre-compute color0 for connection midpoints
+    const color0Hex = colors[0].replace('#', '')
+    const color0Rgb = {
+      r: parseInt(color0Hex.substring(0, 2), 16),
+      g: parseInt(color0Hex.substring(2, 4), 16),
+      b: parseInt(color0Hex.substring(4, 6), 16),
+    }
 
     let frame = 0
     const animate = () => {
-      // Skip frame if not visible (performance optimization)
-      if (!isVisibleRef.current) {
+      // Skip frame if tab hidden or canvas not in viewport
+      if (isPausedRef.current || !isVisibleRef.current) {
         animationRef.current = requestAnimationFrame(animate)
         return
       }
 
       ctx.clearRect(0, 0, dimensions.width, dimensions.height)
 
-      // Apply high-fidelity gradient background
-      const gradient = ctx.createRadialGradient(
-        dimensions.width / 2,
-        dimensions.height / 2,
-        0,
-        dimensions.width / 2,
-        dimensions.height / 2,
-        dimensions.width / 2
-      )
-
-      if (isDark) {
-        gradient.addColorStop(0, 'rgba(0, 0, 0, 0)')
-        gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.02)')
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.05)')
-      } else {
-        // Enhanced gradient for light mode with subtle color tints
-        gradient.addColorStop(0, 'rgba(250, 250, 255, 0.1)')
-        gradient.addColorStop(0.5, 'rgba(245, 245, 255, 0.15)')
-        gradient.addColorStop(1, 'rgba(240, 240, 255, 0.2)')
-      }
-
-      ctx.fillStyle = gradient
+      // Reuse pre-created background gradient
+      ctx.fillStyle = bgGradient
       ctx.fillRect(0, 0, dimensions.width, dimensions.height)
 
       frame++
       const time = frame * 0.01
 
-      // Update and render particles by layer
-      for (let layer = 0; layer < 3; layer++) {
-        const layerParticles = particlesRef.current.filter(p => p.layer === layer)
+      // Update and render particles by layer — use solid colors + globalAlpha
+      // instead of creating radial gradients per particle
+      const particles = particlesRef.current
+      for (let idx = 0; idx < particles.length; idx++) {
+        const particle = particles[idx]
 
-        layerParticles.forEach((particle, i) => {
-          // Update particle position with purposeful movement
-          particle.x += particle.vx * (1 + layer * 0.3) // Front layers move faster
-          particle.y += particle.vy * (1 + layer * 0.3)
+        // Update position
+        particle.x += particle.vx * (1 + particle.layer * 0.3)
+        particle.y += particle.vy * (1 + particle.layer * 0.3)
+        particle.x += Math.sin(time + idx) * 0.2
+        particle.y += Math.cos(time + idx * 0.7) * 0.2
 
-          // Add organic floating motion
-          particle.x += Math.sin(time + i) * 0.2
-          particle.y += Math.cos(time + i * 0.7) * 0.2
+        // Mouse interaction
+        const mdx = particle.x - mouseRef.current.x
+        const mdy = particle.y - mouseRef.current.y
+        const mouseDistSq = mdx * mdx + mdy * mdy
 
-          // Mouse interaction - particles attracted/repelled
-          const mouseDistance = Math.sqrt(
-            Math.pow(particle.x - mouseRef.current.x, 2) +
-            Math.pow(particle.y - mouseRef.current.y, 2)
-          )
+        if (mouseDistSq < 22500) { // 150^2
+          const mouseDist = Math.sqrt(mouseDistSq)
+          const angle = Math.atan2(mdy, mdx)
+          const force = (150 - mouseDist) / 150
+          particle.x += Math.cos(angle) * force * 2
+          particle.y += Math.sin(angle) * force * 2
+        }
 
-          if (mouseDistance < 150) {
-            const angle = Math.atan2(
-              particle.y - mouseRef.current.y,
-              particle.x - mouseRef.current.x
-            )
-            const force = (150 - mouseDistance) / 150
-            particle.x += Math.cos(angle) * force * 2
-            particle.y += Math.sin(angle) * force * 2
-          }
+        // Boundary wrap
+        if (particle.x < 0) particle.x = dimensions.width
+        if (particle.x > dimensions.width) particle.x = 0
+        if (particle.y > dimensions.height) particle.y = 0
 
-          // Boundary collision with wrap-around for matrix feel
-          if (particle.x < 0) particle.x = dimensions.width
-          if (particle.x > dimensions.width) particle.x = 0
-          if (particle.y > dimensions.height) particle.y = 0 // Wrap to top
+        particle.pulsePhase += 0.02
 
-          // Update pulse phase
-          particle.pulsePhase += 0.02
+        const pulseSize = 1 + Math.sin(particle.pulsePhase) * 0.3
+        const baseOpacity = isDark ? 0.2 : 0.35
+        const opacity = baseOpacity + particle.layer * 0.1 + Math.sin(particle.pulsePhase) * 0.1
+        const rgb = particleRgb[idx]
 
-          // Render particle with depth effect - enhanced for light mode
-          const pulseSize = 1 + Math.sin(particle.pulsePhase) * 0.3
-          const baseOpacity = isDark ? 0.2 : 0.35 // Higher base opacity for light mode
-          const opacity = baseOpacity + layer * 0.1 + Math.sin(particle.pulsePhase) * 0.1
+        // Outer glow — use solid fill + globalAlpha instead of per-particle gradient
+        const glowRadius = particle.radius * pulseSize * 4
+        ctx.globalAlpha = 0.08
+        ctx.fillStyle = particle.color
+        ctx.beginPath()
+        ctx.arc(particle.x, particle.y, glowRadius, 0, Math.PI * 2)
+        ctx.fill()
 
-          // Outer glow
-          const glowGradient = ctx.createRadialGradient(
-            particle.x,
-            particle.y,
-            0,
-            particle.x,
-            particle.y,
-            particle.radius * pulseSize * 4
-          )
-          glowGradient.addColorStop(0, particle.color + '40')
-          glowGradient.addColorStop(0.5, particle.color + '20')
-          glowGradient.addColorStop(1, particle.color + '00')
-
-          ctx.fillStyle = glowGradient
-          ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.radius * pulseSize * 4, 0, Math.PI * 2)
-          ctx.fill()
-
-          // Core particle
-          ctx.fillStyle = particle.color + Math.floor(opacity * 255).toString(16).padStart(2, '0')
-          ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.radius * pulseSize, 0, Math.PI * 2)
-          ctx.fill()
-        })
+        // Core particle
+        ctx.globalAlpha = opacity
+        ctx.fillStyle = `rgb(${rgb.r},${rgb.g},${rgb.b})`
+        ctx.beginPath()
+        ctx.arc(particle.x, particle.y, particle.radius * pulseSize, 0, Math.PI * 2)
+        ctx.fill()
       }
 
-      // Update and render connections
-      updateConnections()
+      ctx.globalAlpha = 1.0
+
+      // Recalculate connections every 4 frames instead of every frame
+      if (frame % 4 === 0) {
+        updateConnections()
+      }
+
+      // Render cached connections
       connectionsRef.current.forEach(connection => {
-        const p1 = particlesRef.current[connection.from]
-        const p2 = particlesRef.current[connection.to]
+        const p1 = particles[connection.from]
+        const p2 = particles[connection.to]
 
-        // Pulsing connection - adjusted for both modes
         const pulse = Math.sin(time * 2 + connection.pulseOffset) * 0.5 + 0.5
-        const baseConnectionOpacity = isDark ? 0.1 : 0.15 // Slightly higher for light mode
-        const opacity = connection.strength * baseConnectionOpacity * pulse
+        const baseConnectionOpacity = isDark ? 0.1 : 0.15
+        const connOpacity = connection.strength * baseConnectionOpacity * pulse
+        const alpha = Math.floor(connOpacity * 255)
+        if (alpha < 2) return // skip nearly invisible lines
 
-        // Draw gradient connection
+        const alphaHex = alpha.toString(16).padStart(2, '0')
+        const rgb1 = particleRgb[connection.from]
+        const rgb2 = particleRgb[connection.to]
+
+        // Use simple linear gradient for connections (reuses pre-parsed RGB)
         const gradient = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y)
-        gradient.addColorStop(0, p1.color + Math.floor(opacity * 255).toString(16).padStart(2, '0'))
-        gradient.addColorStop(0.5, colors[0] + Math.floor(opacity * 255 * 0.5).toString(16).padStart(2, '0'))
-        gradient.addColorStop(1, p2.color + Math.floor(opacity * 255).toString(16).padStart(2, '0'))
+        gradient.addColorStop(0, `rgba(${rgb1.r},${rgb1.g},${rgb1.b},${connOpacity})`)
+        gradient.addColorStop(0.5, `rgba(${color0Rgb.r},${color0Rgb.g},${color0Rgb.b},${connOpacity * 0.5})`)
+        gradient.addColorStop(1, `rgba(${rgb2.r},${rgb2.g},${rgb2.b},${connOpacity})`)
 
         ctx.strokeStyle = gradient
         ctx.lineWidth = 0.5 + pulse * 0.5
         ctx.beginPath()
         ctx.moveTo(p1.x, p1.y)
 
-        // Create curved connections for more organic feel
         const midX = (p1.x + p2.x) / 2 + Math.sin(time + connection.pulseOffset) * 20
         const midY = (p1.y + p2.y) / 2 + Math.cos(time + connection.pulseOffset) * 20
         ctx.quadraticCurveTo(midX, midY, p2.x, p2.y)
@@ -303,8 +332,8 @@ export function AnimatedBackground() {
       className="fixed inset-0 pointer-events-none"
       style={{
         zIndex: 0,
-        opacity: resolvedTheme === 'dark' ? 0.6 : 0.4, // Lower opacity for light mode
-        mixBlendMode: resolvedTheme === 'dark' ? 'screen' : 'multiply' // Different blend mode for light
+        opacity: resolvedTheme === 'dark' ? 0.6 : 0.4,
+        mixBlendMode: resolvedTheme === 'dark' ? 'screen' : 'multiply'
       }}
     />
   )
