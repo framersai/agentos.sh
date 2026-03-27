@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { motion } from 'framer-motion'
 import {
@@ -331,24 +331,55 @@ function AnimatedSVGBackground({ type, color }: { type: string; color: string })
 export function ProductCardsRedesigned() {
   const t = useTranslations('productCards')
   const [liveData, setLiveData] = useState<Record<string, string | number>>({})
+  const sectionRef = useRef<HTMLElement>(null)
 
   const productCards = useMemo(() => getProductCards(t), [t])
 
-  // Simulate live data updates
+  // Simulate live data updates — only when section is in viewport
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLiveData({
-        'active-models': 12 + Math.floor(Math.random() * 5),
-        'concurrent-tasks': 120 + Math.floor(Math.random() * 20),
-        'uptime': '99.' + (95 + Math.floor(Math.random() * 4)) + '%'
-      })
-    }, 3000)
+    let interval: ReturnType<typeof setInterval> | null = null
 
-    return () => clearInterval(interval)
+    const startInterval = () => {
+      if (interval) return
+      interval = setInterval(() => {
+        setLiveData({
+          'active-models': 12 + Math.floor(Math.random() * 5),
+          'concurrent-tasks': 120 + Math.floor(Math.random() * 20),
+          'uptime': '99.' + (95 + Math.floor(Math.random() * 4)) + '%'
+        })
+      }, 3000)
+    }
+
+    const stopInterval = () => {
+      if (interval) {
+        clearInterval(interval)
+        interval = null
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          startInterval()
+        } else {
+          stopInterval()
+        }
+      },
+      { threshold: 0 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      stopInterval()
+      observer.disconnect()
+    }
   }, [])
 
   return (
-    <section className="py-12 sm:py-14 px-4 sm:px-6 lg:px-8 perspective-1000">
+    <section ref={sectionRef} className="py-12 sm:py-14 px-4 sm:px-6 lg:px-8 perspective-1000">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -376,8 +407,8 @@ export function ProductCardsRedesigned() {
                 {/* FRONT FACE */}
                 <div className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden">
                    <div className="holographic-card h-full p-6 flex flex-col border-2 border-white/10 dark:border-white/10 border-[var(--color-border-subtle)] group-hover:border-accent-primary/50 transition-colors shadow-xl bg-[var(--color-background-glass)] backdrop-blur-xl">
-                    {/* Background Animation */}
-                    <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-30 dark:opacity-40">
+                    {/* Background Animation — content-visibility skips rendering when offscreen */}
+                    <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-30 dark:opacity-40" style={{ contentVisibility: 'auto' }}>
                       <AnimatedSVGBackground type={card.bgAnimation} color={card.accentColor} />
                     </div>
 
