@@ -233,111 +233,151 @@
   "skipToContent": "Zum Inhalt springen",
   "skipToMain": "Zum Hauptinhalt springen",
   "productCards": {
-    "title": "Kernfähigkeiten",
-    "subtitle": "Unternehmensreife Funktionen zum Erstellen, Skalieren und Ausliefern intelligenter KI-Agenten",
+    "title": "Core Capabilities",
+    "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
+    "stats": {
+      "contextWindow": "Kontextfenster",
+      "inferenceLatency": "Inferenz-Latenz",
+      "activePersonas": "Aktive Personas",
+      "parallelTasks": "Parallele Aufgaben",
+      "taskThroughput": "Aufgabendurchsatz",
+      "orchestrationOverhead": "Orchestrierungs-Overhead",
+      "vectorCapacity": "Vektorkapazität",
+      "retrievalSpeed": "Abrufgeschwindigkeit",
+      "compressionRatio": "Kompressionsverhältnis",
+      "endToEndLatency": "End-to-End-Latenz",
+      "streamBandwidth": "Stream-Bandbreite",
+      "connectionStability": "Verbindungsstabilität"
+    },
     "cards": {
       "adaptive": {
-        "title": "Adaptive Intelligenz",
-        "description": "Echtzeitlernen und kontextbewusste Entscheidungen, die sich mit jeder Interaktion weiterentwickeln"
+        "title": "Adaptive Intelligence",
+        "description": "Real-time learning and context-aware decision-making that evolves with every interaction",
+        "features": [
+          "Echtzeit-Lernen",
+          "Kontextbeibehaltung",
+          "Verhaltensanpassung"
+        ],
+        "capabilities": [
+          "Multi-Modell-Unterstützung",
+          "Kontextverwaltung",
+          "Skills & Erweiterungen"
+        ]
       },
       "distributed": {
-        "title": "Verteilte Kognition",
-        "description": "Parallele Verarbeitung über mehrere Agenten mit nahtloser Koordination und Lastverteilung"
+        "title": "Distributed Cognition",
+        "description": "Parallel processing across multiple agents with seamless coordination and load balancing",
+        "features": [
+          "Lastverteilung",
+          "Auto-Skalierung",
+          "Fehlertoleranz"
+        ],
+        "capabilities": [
+          "Orchestrierung",
+          "Nachrichtenwarteschlange",
+          "Zustandsverwaltung"
+        ]
       },
       "memory": {
-        "title": "Persistenter Speicher",
-        "description": "7 Vector-Store-Backends mit 4-stufiger Auto-Skalierung (SQLite → HNSW → Postgres+pgvector → Qdrant). Beobachtungs-Gedächtniskomprimierung (3-10x mit temporalem Reasoning). 10 Dokumenten-Loader, 3 PDF-Stufen, 4 Chunking-Strategien. Import/Export in 10 Formaten. Ein-Befehl-Backend-Migration. Docker-Auto-Setup für Qdrant und Postgres."
+        "title": "Persistent Memory",
+        "description": "7 vector store backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant). Observational memory compression (3-10x via LLM with temporal reasoning). 10 document loaders, 3 PDF tiers, 4 chunking strategies. Memory import/export in 10 formats including Obsidian vault and ChatGPT. One-command migration between all backends. Docker auto-setup for Qdrant and Postgres.",
+        "features": [
+          "Vektor-Embeddings",
+          "Semantische Suche",
+          "Versionskontrolle"
+        ],
+        "capabilities": [
+          "Vektorspeicher",
+          "SQL-Speicher",
+          "Kettenmanagement"
+        ]
       },
       "streaming": {
-        "title": "Echtzeit-Streaming",
-        "description": "Ultra-niedrige Latenz-Eventarchitektur mit WebSocket-Unterstützung und 99,99% Verfügbarkeit"
+        "title": "Real-time Streaming",
+        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime",
+        "features": [
+          "WebSocket-Unterstützung",
+          "Ereignisgesteuert",
+          "Pufferung"
+        ],
+        "capabilities": [
+          "Echtzeit-Kommunikation",
+          "RPC-Protokoll",
+          "Ereignisschleife"
+        ]
       }
-    },
-    "stats": {
-      "contextWindow": "Context Window",
-      "inferenceLatency": "Inference Latency",
-      "activePersonas": "Active Personas",
-      "parallelTasks": "Parallel Tasks",
-      "taskThroughput": "Task Throughput",
-      "orchestrationOverhead": "Orchestration Overhead",
-      "vectorCapacity": "Vector Capacity",
-      "retrievalSpeed": "Retrieval Speed",
-      "compressionRatio": "Compression Ratio",
-      "endToEndLatency": "End-to-End Latency",
-      "streamBandwidth": "Stream Bandwidth",
-      "connectionStability": "Connection Stability"
     }
   },
   "enterprise": {
-    "title": "Unternehmensfertige Funktionen",
-    "subtitle": "Bausteine einer Enterprise-Infrastruktur – jede Ebene erhöht Sicherheit und Skalierung",
+    "title": "Enterprise Ready Features",
+    "subtitle": "Building blocks of enterprise-grade infrastructure, each layer adding security and scale",
     "features": {
       "security": {
-        "title": "Sicherheitsfundament",
+        "title": "Security Foundation",
         "items": [
-          "AES-256-Verschlüsselung",
-          "Zero-Trust-Architektur",
-          "End-to-End-Sicherheit"
+          "AES-256 Encryption",
+          "Zero-Trust Architecture",
+          "End-to-End Security"
         ]
       },
       "compliance": {
-        "title": "Compliance & Datenschutz",
+        "title": "Compliance & Privacy",
         "items": [
-          "GDPR-konform",
-          "PII-Redaktion",
-          "Datenresidenz-Kontrollen"
+          "GDPR Compliant",
+          "PII Redaction",
+          "Data Residency Controls"
         ]
       },
       "auth": {
-        "title": "Authentifizierung",
+        "title": "Authentication",
         "items": [
           "SSO/SAML 2.0",
           "OAuth 2.0",
-          "MFA-Unterstützung"
+          "MFA Support"
         ]
       },
       "audit": {
         "title": "Audit & Monitoring",
         "items": [
-          "Echtzeit-Monitoring",
-          "Audit-Logs",
-          "Anomalieerkennung"
+          "Real-time Monitoring",
+          "Audit Logs",
+          "Anomaly Detection"
         ]
       },
       "soc2": {
-        "title": "SOC2-Compliance",
+        "title": "SOC2 Compliance",
         "items": [
-          "Typ II (in Arbeit)",
-          "Jährliche Audits",
-          "Kontinuierliche Compliance"
+          "Type II (In Progress)",
+          "Annual Audits",
+          "Continuous Compliance"
         ]
       },
       "scale": {
-        "title": "Enterprise-Skalierung",
+        "title": "Enterprise Scale",
         "items": [
-          "Auto-Scaling",
-          "99,99% SLA",
-          "Globales CDN"
+          "Auto-scaling",
+          "99.99% SLA",
+          "Global CDN"
         ]
       }
     },
     "legend": {
       "fullyImplemented": {
-        "title": "Vollständig implementiert",
-        "description": "GDPR-Konformität, PII-Redaktion und Kern-Sicherheitsfunktionen sind produktionsreif"
+        "title": "Fully Implemented",
+        "description": "GDPR compliance, PII redaction, and core security features are production-ready"
       },
       "inProgress": {
-        "title": "In Arbeit",
-        "description": "SOC2 Typ II Zertifizierung läuft, voraussichtlicher Abschluss Q2 2024"
+        "title": "In Progress",
+        "description": "SOC2 Type II certification underway, expected completion Q2 2024"
       },
       "enterpriseSupport": {
-        "title": "Enterprise-Support",
-        "description": "24/7 Support mit vca.chat-Integration und dedizierten Success-Managern"
+        "title": "Enterprise Support",
+        "description": "24/7 support with vca.chat integration and dedicated success managers"
       }
     },
-    "trustBadge": "Vertraut von Branchenführern",
+    "trustBadge": "Trusted by industry leaders",
     "wipLabel": "WIP",
-    "currentlyDevelopment": "Derzeit in Entwicklung"
+    "currentlyDevelopment": "Currently in development"
   },
   "multiAgent": {
     "title": "Multi-Agenten-Kollaborationsnetzwerk",
@@ -813,93 +853,62 @@
     }
   },
   "videoDemo": {
-    "title": "See AgentOS in Action",
-    "subtitle": "Watch how easy it is to build adaptive AI agents",
-    "watchButton": "Watch Demo",
-    "duration": "Duration"
-  },
-  "productCards": {
-    "title": "Core Capabilities",
-    "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
-    "stats": {
-      "contextWindow": "Context Window",
-      "inferenceLatency": "Inference Latency",
-      "activePersonas": "Active Personas",
-      "parallelTasks": "Parallel Tasks",
-      "taskThroughput": "Task Throughput",
-      "orchestrationOverhead": "Orchestration Overhead",
-      "vectorCapacity": "Vector Capacity",
-      "retrievalSpeed": "Retrieval Speed",
-      "compressionRatio": "Compression Ratio",
-      "endToEndLatency": "End-to-End Latency",
-      "streamBandwidth": "Stream Bandwidth",
-      "connectionStability": "Connection Stability"
-    },
-    "cards": {
-      "adaptive": {
-        "title": "Adaptive Intelligence",
-        "description": "Real-time learning and context-aware decision-making that evolves with every interaction"
-      },
-      "distributed": {
-        "title": "Distributed Cognition",
-        "description": "Parallel processing across multiple agents with seamless coordination and load balancing"
-      },
-      "memory": {
-        "title": "Persistent Memory",
-        "description": "7 vector store backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant). Observational memory compression (3-10x via LLM with temporal reasoning). 10 document loaders, 3 PDF tiers, 4 chunking strategies. Memory import/export in 10 formats including Obsidian vault and ChatGPT. One-command migration between all backends. Docker auto-setup for Qdrant and Postgres."
-      },
+    "badge": "Live-Demos",
+    "title": "AgentOS in Aktion",
+    "subtitle": "Echte Workflows, die Agentenerstellung, Multi-Agenten-Zusammenarbeit, RAG-Speicher und mehr demonstrieren.",
+    "comingSoon": "Demo-Video demnächst verfügbar",
+    "watchButton": "Demo ansehen",
+    "duration": "Dauer",
+    "videos": {
       "streaming": {
-        "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime"
+        "title": "Echtzeit-Streaming",
+        "description": "Token-genaue Antwortlieferung",
+        "captions": [
+          "Geben Sie einen Prompt ein und senden Sie ihn an den Agenten",
+          "Beobachten Sie, wie Tokens in Echtzeit zurückkommen",
+          "Vollständige Antwort mit Sitzungs-Timeline"
+        ]
+      },
+      "agentCreation": {
+        "title": "Agentenerstellung",
+        "description": "Erstellen Sie KI-Personas in Minuten",
+        "captions": [
+          "Durchsuchen Sie den Persona-Katalog — vorgefertigte Agenten",
+          "Schritt 1 — Name, Beschreibung, Tags und Eigenschaften",
+          "Schritt 2 — System-Prompt, Modell und Kostenstrategie",
+          "Leitplanken und Tool-Erweiterungen",
+          "Marktintelligenz-Analyst — erstellt",
+          "Streaming-Antwort der neuen Persona"
+        ]
+      },
+      "multiAgent": {
+        "title": "Multi-Agenten-System",
+        "description": "Orchestrieren Sie Agenten-Teams",
+        "captions": [
+          "Agentur-Manager — Lead, Forscher, Autor",
+          "Definieren Sie gemeinsame Ziele für die Multi-Agenten-Koordination",
+          "Erstellen und starten Sie neue Agenten-Teams"
+        ]
+      },
+      "ragMemory": {
+        "title": "RAG-Speicher",
+        "description": "Evaluierungs-Suiten und Qualitätsverfolgung",
+        "captions": [
+          "Evaluierungs-Dashboard — Ausführungsverlauf mit Bewertungen",
+          "Führen Sie Evaluierungen durch und verfolgen Sie Bestehen/Nichtbestehen pro Testfall",
+          "Vergleichen Sie Ergebnisse über Durchläufe hinweg — erkennen Sie Regressionen frühzeitig"
+        ]
+      },
+      "planningEngine": {
+        "title": "Planungs-Engine",
+        "description": "Mehrstufige Aufgabenzerlegung",
+        "captions": [
+          "Planungs-Engine — Ausführungspläne mit Konfidenzwerten",
+          "Pausieren, fortsetzen und voranschreiten — volle Ausführungskontrolle",
+          "Jeder Schritt mit Tool-Aufrufen und Abhängigkeiten verfolgt"
+        ]
       }
     }
-  },
-  "enterprise": {
-    "title": "Enterprise Ready Features",
-    "subtitle": "Building blocks of enterprise-grade infrastructure, each layer adding security and scale",
-    "features": {
-      "security": {
-        "title": "Security Foundation",
-        "items": ["AES-256 Encryption","Zero-Trust Architecture","End-to-End Security"]
-      },
-      "compliance": {
-        "title": "Compliance & Privacy",
-        "items": ["GDPR Compliant","PII Redaction","Data Residency Controls"]
-      },
-      "auth": {
-        "title": "Authentication",
-        "items": ["SSO/SAML 2.0","OAuth 2.0","MFA Support"]
-      },
-      "audit": {
-        "title": "Audit & Monitoring",
-        "items": ["Real-time Monitoring","Audit Logs","Anomaly Detection"]
-      },
-      "soc2": {
-        "title": "SOC2 Compliance",
-        "items": ["Type II (In Progress)","Annual Audits","Continuous Compliance"]
-      },
-      "scale": {
-        "title": "Enterprise Scale",
-        "items": ["Auto-scaling","99.99% SLA","Global CDN"]
-      }
-    },
-    "legend": {
-      "fullyImplemented": {
-        "title": "Fully Implemented",
-        "description": "GDPR compliance, PII redaction, and core security features are production-ready"
-      },
-      "inProgress": {
-        "title": "In Progress",
-        "description": "SOC2 Type II certification underway, expected completion Q2 2024"
-      },
-      "enterpriseSupport": {
-        "title": "Enterprise Support",
-        "description": "24/7 support with vca.chat integration and dedicated success managers"
-      }
-    },
-    "trustBadge": "Trusted by industry leaders",
-    "wipLabel": "WIP",
-    "currentlyDevelopment": "Currently in development"
   },
   "ecosystem": {
     "title": "The AgentOS Ecosystem",
@@ -910,11 +919,26 @@
       "githubStars": "GitHub Stars"
     },
     "categories": {
-      "core": { "title": "Core Framework", "description": "Essential components and protocols" },
-      "tools": { "title": "Developer Tools", "description": "SDKs, clients, and extensions" },
-      "apps": { "title": "Applications", "description": "Ready-to-use applications and platforms" },
-      "infrastructure": { "title": "Infrastructure", "description": "Storage, deployment, and operations" },
-      "community": { "title": "Community", "description": "Forums, discussions, and resources" }
+      "core": {
+        "title": "Core Framework",
+        "description": "Essential components and protocols"
+      },
+      "tools": {
+        "title": "Developer Tools",
+        "description": "SDKs, clients, and extensions"
+      },
+      "apps": {
+        "title": "Applications",
+        "description": "Ready-to-use applications and platforms"
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "description": "Storage, deployment, and operations"
+      },
+      "community": {
+        "title": "Community",
+        "description": "Forums, discussions, and resources"
+      }
     },
     "starsSuffix": "stars",
     "updatedLabel": "Updated {date}",
@@ -981,5 +1005,16 @@
       "button": "Start Building",
       "time": "5 min"
     }
+  },
+  "workbench": {
+    "title": "AgentOS Workbench",
+    "description": "Die offizielle Desktop-Anwendung zum Erstellen, Verwalten und Interagieren mit AgentOS-Erlebnissen. Erstellen Sie leistungsstarke KI-Agenten über eine visuelle Oberfläche, testen Sie in Echtzeit und deployen Sie überall.",
+    "badge1": "MIT-Lizenz",
+    "badge2": "Open Source",
+    "feature1": "Visueller Agenten-Builder mit Drag-and-Drop-Workflows",
+    "feature2": "Echtzeit-Test- und Debug-Tools",
+    "feature3": "Ein-Klick-Deployment in die Cloud oder lokal",
+    "viewGithub": "Auf GitHub ansehen",
+    "downloadLatest": "Neueste Version herunterladen"
   }
 }
