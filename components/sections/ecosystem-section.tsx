@@ -86,9 +86,9 @@ const repositories: Repository[] = [
     lastUpdated: 'recently'
   },
   {
-    name: 'AgentOS Skills Extension',
-    description: 'Extension pack that exposes skills as agent tools: list, read, enable, and install skills at runtime.',
-    url: 'https://github.com/framersai/agentos-ext-skills',
+    name: 'AgentOS Skills Runtime',
+    description: 'Skill registry and tools: list, read, enable, and install SKILL.md prompt modules at runtime.',
+    url: 'https://github.com/framersai/agentos-skills',
     category: 'tools',
     icon: Puzzle,
     language: 'TypeScript',
