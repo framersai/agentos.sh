@@ -34,7 +34,7 @@
     "technicalHighlights": [
       { "title": "Streaming-first runtime", "detail": "Token-level delivery across 37 channel adapters and guardrails." },
       { "title": "Multi-agent orchestration", "detail": "Parallel agents with auditable routing, approvals, and budgets." },
-      { "title": "Multimodal RAG", "detail": "7 vector backends (SQLite → Postgres → Qdrant/Pinecone), episodic, and cognitive memory with Ebbinghaus decay." },
+      { "title": "Multimodal RAG", "detail": "7 vector backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant), observational memory compression, 10 document loaders, and Ebbinghaus decay." },
       { "title": "Self-hostable", "detail": "Deploy anywhere — your infrastructure, your data, your agents." }
     ],
     "visualStats": [
@@ -97,10 +97,10 @@
     },
     "storage": {
       "title": "Storage & Deployment",
-      "description": "Switch between PostgreSQL, better-sqlite3, sql.js, or your own data layers. Every agent step is synced and replayable.",
+      "description": "7 vector store backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant). One-command migration between all backends. Docker auto-setup for Qdrant and Postgres.",
       "pill": "Deploy Anywhere",
-      "bullet1": "Reference server templates",
-      "bullet2": "Snapshot + replay tooling"
+      "bullet1": "One-command vector backend migration",
+      "bullet2": "Docker auto-setup for Qdrant + Postgres"
     },
     "workbench": {
       "title": "Local-First Workbench",
@@ -137,6 +137,27 @@
       "pill": "~90% Token Reduction",
       "bullet1": "Three-tier token-budgeted context assembly",
       "bullet2": "Graph-based relationship re-ranking"
+    },
+    "memoryCompression": {
+      "title": "Observational Memory Compression",
+      "description": "LLM-based 3-10x memory compression with temporal reasoning. Self-improving consolidation that merges, prunes, and strengthens memories over time.",
+      "pill": "3-10x Compression",
+      "bullet1": "Temporal reasoning preserves causal chains",
+      "bullet2": "Self-improving consolidation cycle"
+    },
+    "documentIngestion": {
+      "title": "Document Ingestion Pipeline",
+      "description": "10 document loaders with multimodal extraction. 3 PDF processing tiers (basic, OCR, vision). 4 chunking strategies (fixed, semantic, recursive, sliding window).",
+      "pill": "10 Loaders",
+      "bullet1": "3 PDF tiers: basic, OCR, vision",
+      "bullet2": "4 chunking strategies including semantic"
+    },
+    "memoryPortability": {
+      "title": "Memory Import / Export",
+      "description": "Import and export agent memory in 10 formats including Obsidian vault, ChatGPT exports, Markdown, JSON, and CSV. One-command migration between all 7 vector backends.",
+      "pill": "10 Formats",
+      "bullet1": "Obsidian vault + ChatGPT import",
+      "bullet2": "One-command backend migration"
     }
   },
   "marketplace": {
@@ -209,7 +230,7 @@
       },
       "memory": {
         "title": "Persistent Memory",
-        "description": "7 vector store backends with 4-tier auto-scaling — SQLite to HNSW to Postgres to Qdrant/Pinecone — plus binary blob storage and one-command migration"
+        "description": "7 vector store backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant). Observational memory compression (3-10x via LLM with temporal reasoning). 10 document loaders, 3 PDF tiers, 4 chunking strategies. Memory import/export in 10 formats including Obsidian vault and ChatGPT. One-command migration between all backends. Docker auto-setup for Qdrant and Postgres."
       },
       "streaming": {
         "title": "Real-time Streaming",

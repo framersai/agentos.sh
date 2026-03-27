@@ -148,10 +148,10 @@
     },
     "storage": {
       "title": "Stockage et déploiement",
-      "description": "Basculez entre PostgreSQL, better-sqlite3, sql.js ou votre couche de données. Chaque étape agent est synchronisée et rejouable.",
+      "description": "7 backends de stockage vectoriel avec auto-scaling à 4 niveaux (SQLite → HNSW → Postgres+pgvector → Qdrant). Migration entre tous les backends en une commande. Docker auto-setup pour Qdrant et Postgres.",
       "pill": "Déployez partout",
-      "bullet1": "Modèles de serveurs de référence",
-      "bullet2": "Outils de snapshot & replay"
+      "bullet1": "Migration de backend vectoriel en une commande",
+      "bullet2": "Docker auto-setup pour Qdrant + Postgres"
     },
     "workbench": {
       "title": "Workbench local-first",
@@ -167,6 +167,27 @@
       "pill": "~90% Réduction de Tokens",
       "bullet1": "Assemblage de contexte à trois niveaux avec budget de tokens",
       "bullet2": "Re-ranking basé sur les relations de graphe"
+    },
+    "memoryCompression": {
+      "title": "Compression de Mémoire Observationnelle",
+      "description": "Compression de mémoire 3-10x basée sur LLM avec raisonnement temporel. Consolidation auto-améliorante qui fusionne, élague et renforce les souvenirs au fil du temps.",
+      "pill": "Compression 3-10x",
+      "bullet1": "Le raisonnement temporel préserve les chaînes causales",
+      "bullet2": "Cycle de consolidation auto-améliorant"
+    },
+    "documentIngestion": {
+      "title": "Pipeline d'Ingestion de Documents",
+      "description": "10 chargeurs de documents avec extraction multimodale. 3 niveaux de traitement PDF (basique, OCR, vision). 4 stratégies de découpage (fixe, sémantique, récursif, fenêtre glissante).",
+      "pill": "10 Chargeurs",
+      "bullet1": "3 niveaux PDF : basique, OCR, vision",
+      "bullet2": "4 stratégies de découpage dont sémantique"
+    },
+    "memoryPortability": {
+      "title": "Import / Export de Mémoire",
+      "description": "Importez et exportez la mémoire d'agent en 10 formats dont coffre Obsidian, exports ChatGPT, Markdown, JSON et CSV. Migration en une commande entre les 7 backends vectoriels.",
+      "pill": "10 Formats",
+      "bullet1": "Import coffre Obsidian + ChatGPT",
+      "bullet2": "Migration de backend en une commande"
     }
   },
   "marketplace": {
@@ -225,7 +246,7 @@
       },
       "memory": {
         "title": "Mémoire persistante",
-        "description": "Stockage illimité avec rappel instantané via des embeddings vectoriels avancés et une recherche sémantique"
+        "description": "7 backends de stockage vectoriel avec auto-scaling à 4 niveaux (SQLite → HNSW → Postgres+pgvector → Qdrant). Compression de mémoire observationnelle (3-10x avec raisonnement temporel). 10 chargeurs de documents, 3 niveaux PDF, 4 stratégies de découpage. Import/export en 10 formats. Migration entre backends en une commande. Docker auto-setup pour Qdrant et Postgres."
       },
       "streaming": {
         "title": "Streaming en temps réel",

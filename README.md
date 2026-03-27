@@ -39,13 +39,17 @@ The landing site is intentionally decoupled from the proprietary Voice Chat Assi
 
 ## Documentation Search
 
-The hero includes a documentation search trigger (keyboard `/` or `Ctrl/⌘ + K`). It reads generated search indexes built from the AgentOS TypeDoc output:
+The header search trigger (keyboard `/` or `Ctrl/⌘ + K`) now fetches a lightweight
+`search-docs.json` manifest from `https://docs.agentos.sh` instead of pulling the
+full local-search lunr bundle into the marketing site.
 
-1. Run `pnpm dev:full` whenever you want live doc search; it launches `next dev` + the TypeDoc watcher so the public and module API indexes stay fresh while you work.  
-2. The bundle writes `apps/agentos.sh/public/docs-generated/library/public/search-index.json` and `apps/agentos.sh/public/docs-generated/library/modules/search-index.json`; if they're missing you'll see a reminder banner instead of results.  
-3. For non-interactive generation (CI, etc.) run `pnpm --filter @framers/agentos run docs` before `pnpm build`—the build script already does this automatically.
+1. `apps/agentos-live-docs/plugins/search-manifest.js` walks the built docs HTML and writes `search-docs.json` during the docs-site build.  
+2. `apps/agentos.sh/components/docs/DocSearch.tsx` fetches that manifest, scores title/content matches inline, and falls back to curated quick links if the manifest is unavailable.  
+3. For local docs-site generation, run the docs app build (`npm run build` in `apps/agentos-live-docs`) so the manifest is regenerated alongside the published docs output.
 
-`components/docs/DocSearch.tsx` reads split search indexes from `/docs-generated/library/{public,modules}/search-index.json` and opens the published TypeDoc pages on `https://docs.agentos.sh/api`. Update those paths if you move the generated docs or host them elsewhere.
+The older TypeDoc search indexes under `public/docs-generated/.../search-index.json`
+are still used for the API docs experience on `agentos.sh`, but the marketing-site
+modal search no longer depends on them.
 
 ## Media Assets
 

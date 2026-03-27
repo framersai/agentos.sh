@@ -148,10 +148,10 @@
     },
     "storage": {
       "title": "存储和部署",
-      "description": "在PostgreSQL、better-sqlite3、sql.js或您自己的数据层之间切换。每个代理步骤都同步且可重放。",
+      "description": "7个向量存储后端，支持4级自动扩展（SQLite → HNSW → Postgres+pgvector → Qdrant）。一键迁移所有后端。Qdrant和Postgres的Docker自动设置。",
       "pill": "随处部署",
-      "bullet1": "参考服务器模板",
-      "bullet2": "快照和重放工具"
+      "bullet1": "一键向量后端迁移",
+      "bullet2": "Qdrant + Postgres Docker自动设置"
     },
     "workbench": {
       "title": "本地优先工作台",
@@ -167,6 +167,27 @@
       "pill": "~90% Token 减少",
       "bullet1": "三层 Token 预算化上下文组装",
       "bullet2": "基于图的关系重排序"
+    },
+    "memoryCompression": {
+      "title": "观察性记忆压缩",
+      "description": "基于LLM的3-10倍记忆压缩，配合时间推理。自我改进的整合机制，随时间合并、修剪和强化记忆。",
+      "pill": "3-10倍压缩",
+      "bullet1": "时间推理保留因果链",
+      "bullet2": "自我改进整合周期"
+    },
+    "documentIngestion": {
+      "title": "文档摄入管道",
+      "description": "10个文档加载器，支持多模态提取。3级PDF处理（基础、OCR、视觉）。4种分块策略（固定、语义、递归、滑动窗口）。",
+      "pill": "10个加载器",
+      "bullet1": "3级PDF：基础、OCR、视觉",
+      "bullet2": "包含语义的4种分块策略"
+    },
+    "memoryPortability": {
+      "title": "记忆导入/导出",
+      "description": "以10种格式导入和导出代理记忆，包括Obsidian库、ChatGPT导出、Markdown、JSON和CSV。一键迁移所有7个向量后端。",
+      "pill": "10种格式",
+      "bullet1": "Obsidian库 + ChatGPT导入",
+      "bullet2": "一键后端迁移"
     }
   },
   "enterprise": {
@@ -764,8 +785,8 @@
         "description": "Parallel processing across multiple agents with seamless coordination and load balancing"
       },
       "memory": {
-        "title": "Persistent Memory",
-        "description": "7 vector store backends with 4-tier auto-scaling — SQLite to HNSW to Postgres to Qdrant/Pinecone — plus binary blob storage and one-command migration"
+        "title": "持久记忆",
+        "description": "7个向量存储后端，支持4级自动扩展（SQLite → HNSW → Postgres+pgvector → Qdrant）。观察性记忆压缩（基于时间推理的3-10倍）。10个文档加载器，3级PDF处理，4种分块策略。10种格式导入/导出。一键后端迁移。Qdrant和Postgres的Docker自动设置。"
       },
       "streaming": {
         "title": "Real-time Streaming",
