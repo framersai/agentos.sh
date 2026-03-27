@@ -34,7 +34,7 @@
     "technicalHighlights": [
       { "title": "Streaming-first runtime", "detail": "Token-level delivery across 37 channel adapters and guardrails." },
       { "title": "Multi-agent orchestration", "detail": "Parallel agents with auditable routing, approvals, and budgets." },
-      { "title": "Multimodal RAG", "detail": "Vector, episodic, and cognitive memory with Ebbinghaus decay." },
+      { "title": "Multimodal RAG", "detail": "7 vector backends (SQLite → Postgres → Qdrant/Pinecone), episodic, and cognitive memory with Ebbinghaus decay." },
       { "title": "Self-hostable", "detail": "Deploy anywhere — your infrastructure, your data, your agents." }
     ],
     "visualStats": [
@@ -209,7 +209,7 @@
       },
       "memory": {
         "title": "Persistent Memory",
-        "description": "Boundless storage with instant recall via advanced vector embeddings and semantic search"
+        "description": "7 vector store backends with 4-tier auto-scaling — SQLite to HNSW to Postgres to Qdrant/Pinecone — plus binary blob storage and one-command migration"
       },
       "streaming": {
         "title": "Real-time Streaming",
