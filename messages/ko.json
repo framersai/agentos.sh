@@ -238,34 +238,74 @@
     "cards": {
       "adaptive": {
         "title": "적응형 지능",
-        "description": "모든 상호작용과 함께 진화하는 실시간 학습 및 컨텍스트 인지 의사결정"
+        "description": "모든 상호작용과 함께 진화하는 실시간 학습 및 컨텍스트 인지 의사결정",
+        "features": [
+          "실시간 학습",
+          "컨텍스트 보존",
+          "행동 적응"
+        ],
+        "capabilities": [
+          "다중 모델 지원",
+          "컨텍스트 관리",
+          "스킬 및 확장"
+        ]
       },
       "distributed": {
         "title": "분산 인지",
-        "description": "여러 에이전트 간 병렬 처리와 원활한 조정, 부하 분산"
+        "description": "여러 에이전트 간 병렬 처리와 원활한 조정, 부하 분산",
+        "features": [
+          "로드 밸런싱",
+          "자동 확장",
+          "장애 허용"
+        ],
+        "capabilities": [
+          "오케스트레이션",
+          "메시지 큐잉",
+          "상태 관리"
+        ]
       },
       "memory": {
         "title": "지속 메모리",
-        "description": "4단계 자동 확장이 가능한 7개의 벡터 스토어 백엔드 (SQLite → HNSW → Postgres+pgvector → Qdrant). 관찰적 메모리 압축 (시간적 추론을 통한 3-10배). 10개의 문서 로더, 3단계 PDF 처리, 4가지 청킹 전략. 10가지 형식으로 가져오기/내보내기. 원커맨드 백엔드 마이그레이션. Qdrant 및 Postgres Docker 자동 설정."
+        "description": "4단계 자동 확장이 가능한 7개의 벡터 스토어 백엔드 (SQLite → HNSW → Postgres+pgvector → Qdrant). 관찰적 메모리 압축 (시간적 추론을 통한 3-10배). 10개의 문서 로더, 3단계 PDF 처리, 4가지 청킹 전략. 10가지 형식으로 가져오기/내보내기. 원커맨드 백엔드 마이그레이션. Qdrant 및 Postgres Docker 자동 설정.",
+        "features": [
+          "벡터 임베딩",
+          "시맨틱 검색",
+          "버전 관리"
+        ],
+        "capabilities": [
+          "벡터 스토리지",
+          "SQL 스토리지",
+          "체인 관리"
+        ]
       },
       "streaming": {
         "title": "실시간 스트리밍",
-        "description": "WebSocket 지원과 99.99% 가용성의 초저지연 이벤트 아키텍처"
+        "description": "WebSocket 지원과 99.99% 가용성의 초저지연 이벤트 아키텍처",
+        "features": [
+          "WebSocket 지원",
+          "이벤트 기반",
+          "버퍼링"
+        ],
+        "capabilities": [
+          "실시간 통신",
+          "RPC 프로토콜",
+          "이벤트 루프"
+        ]
       }
     },
     "stats": {
-      "contextWindow": "Context Window",
-      "inferenceLatency": "Inference Latency",
-      "activePersonas": "Active Personas",
-      "parallelTasks": "Parallel Tasks",
-      "taskThroughput": "Task Throughput",
-      "orchestrationOverhead": "Orchestration Overhead",
-      "vectorCapacity": "Vector Capacity",
-      "retrievalSpeed": "Retrieval Speed",
-      "compressionRatio": "Compression Ratio",
-      "endToEndLatency": "End-to-End Latency",
-      "streamBandwidth": "Stream Bandwidth",
-      "connectionStability": "Connection Stability"
+      "contextWindow": "컨텍스트 윈도우",
+      "inferenceLatency": "추론 지연 시간",
+      "activePersonas": "활성 페르소나",
+      "parallelTasks": "병렬 작업",
+      "taskThroughput": "작업 처리량",
+      "orchestrationOverhead": "오케스트레이션 오버헤드",
+      "vectorCapacity": "벡터 용량",
+      "retrievalSpeed": "검색 속도",
+      "compressionRatio": "압축률",
+      "endToEndLatency": "엔드투엔드 지연 시간",
+      "streamBandwidth": "스트림 대역폭",
+      "connectionStability": "연결 안정성"
     }
   },
   "enterprise": {
@@ -813,10 +853,62 @@
     }
   },
   "videoDemo": {
-    "title": "See AgentOS in Action",
-    "subtitle": "Watch how easy it is to build adaptive AI agents",
-    "watchButton": "Watch Demo",
-    "duration": "Duration"
+    "badge": "라이브 데모",
+    "title": "AgentOS를 직접 확인하세요",
+    "subtitle": "에이전트 생성, 다중 에이전트 협업, RAG 메모리 등을 보여주는 실제 워크플로를 확인하세요.",
+    "comingSoon": "데모 영상 곧 공개",
+    "watchButton": "데모 보기",
+    "duration": "재생 시간",
+    "videos": {
+      "streaming": {
+        "title": "실시간 스트리밍",
+        "description": "토큰 단위 응답 전달",
+        "captions": [
+          "프롬프트를 입력하고 에이전트에 전송",
+          "실시간으로 토큰이 반환되는 것을 확인",
+          "세션 타임라인이 포함된 완전한 응답"
+        ]
+      },
+      "agentCreation": {
+        "title": "에이전트 생성",
+        "description": "몇 분 만에 맞춤 AI 페르소나 구축",
+        "captions": [
+          "페르소나 카탈로그 탐색 — 사전 구축된 에이전트",
+          "1단계 — 이름, 설명, 태그 및 특성",
+          "2단계 — 시스템 프롬프트, 모델 및 비용 전략",
+          "가드레일 및 도구 확장",
+          "시장 인텔리전스 분석가 — 생성 완료",
+          "새 페르소나의 스트리밍 응답"
+        ]
+      },
+      "multiAgent": {
+        "title": "다중 에이전트 시스템",
+        "description": "에이전트 팀 오케스트레이션",
+        "captions": [
+          "에이전시 매니저 — 리더, 연구원, 작성자",
+          "다중 에이전트 조정을 위한 공유 목표 정의",
+          "새 에이전트 팀 생성 및 시작"
+        ]
+      },
+      "ragMemory": {
+        "title": "RAG 메모리",
+        "description": "평가 도구 및 품질 추적",
+        "captions": [
+          "평가 대시보드 — 점수가 포함된 실행 이력",
+          "평가 실행 및 테스트 케이스별 통과/실패 추적",
+          "실행 간 결과 비교 — 회귀를 조기에 발견"
+        ]
+      },
+      "planningEngine": {
+        "title": "플래닝 엔진",
+        "description": "다단계 작업 분해",
+        "captions": [
+          "플래닝 엔진 — 신뢰도 점수가 포함된 실행 계획",
+          "일시정지, 재개 및 진행 — 완전한 실행 제어",
+          "각 단계를 도구 호출 및 종속성과 함께 추적"
+        ]
+      }
+    }
   },
   "ecosystem": {
     "title": "The AgentOS Ecosystem",
@@ -827,11 +919,26 @@
       "githubStars": "GitHub Stars"
     },
     "categories": {
-      "core": { "title": "Core Framework", "description": "Essential components and protocols" },
-      "tools": { "title": "Developer Tools", "description": "SDKs, clients, and extensions" },
-      "apps": { "title": "Applications", "description": "Ready-to-use applications and platforms" },
-      "infrastructure": { "title": "Infrastructure", "description": "Storage, deployment, and operations" },
-      "community": { "title": "Community", "description": "Forums, discussions, and resources" }
+      "core": {
+        "title": "Core Framework",
+        "description": "Essential components and protocols"
+      },
+      "tools": {
+        "title": "Developer Tools",
+        "description": "SDKs, clients, and extensions"
+      },
+      "apps": {
+        "title": "Applications",
+        "description": "Ready-to-use applications and platforms"
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "description": "Storage, deployment, and operations"
+      },
+      "community": {
+        "title": "Community",
+        "description": "Forums, discussions, and resources"
+      }
     },
     "starsSuffix": "stars",
     "updatedLabel": "Updated {date}",
@@ -898,5 +1005,16 @@
       "button": "Start Building",
       "time": "5 min"
     }
+  },
+  "workbench": {
+    "title": "AgentOS Workbench",
+    "description": "AgentOS 경험을 구축, 관리 및 상호작용하기 위한 공식 데스크톱 애플리케이션입니다. 비주얼 인터페이스로 강력한 AI 에이전트를 만들고, 실시간으로 테스트하고, 어디서든 배포하세요.",
+    "badge1": "MIT 라이선스",
+    "badge2": "오픈소스",
+    "feature1": "드래그 앤 드롭 워크플로가 포함된 비주얼 에이전트 빌더",
+    "feature2": "실시간 테스트 및 디버깅 도구",
+    "feature3": "원클릭으로 클라우드 또는 로컬에 배포",
+    "viewGithub": "GitHub에서 보기",
+    "downloadLatest": "최신 버전 다운로드"
   }
 }

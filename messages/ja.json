@@ -718,11 +718,26 @@
       "githubStars": "GitHub Stars"
     },
     "categories": {
-      "core": { "title": "Core Framework", "description": "Essential components and protocols" },
-      "tools": { "title": "Developer Tools", "description": "SDKs, clients, and extensions" },
-      "apps": { "title": "Applications", "description": "Ready-to-use applications and platforms" },
-      "infrastructure": { "title": "Infrastructure", "description": "Storage, deployment, and operations" },
-      "community": { "title": "Community", "description": "Forums, discussions, and resources" }
+      "core": {
+        "title": "Core Framework",
+        "description": "Essential components and protocols"
+      },
+      "tools": {
+        "title": "Developer Tools",
+        "description": "SDKs, clients, and extensions"
+      },
+      "apps": {
+        "title": "Applications",
+        "description": "Ready-to-use applications and platforms"
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "description": "Storage, deployment, and operations"
+      },
+      "community": {
+        "title": "Community",
+        "description": "Forums, discussions, and resources"
+      }
     },
     "starsSuffix": "stars",
     "updatedLabel": "Updated {date}",
@@ -858,45 +873,148 @@
     }
   },
   "videoDemo": {
-    "title": "See AgentOS in Action",
-    "subtitle": "Watch how easy it is to build adaptive AI agents",
-    "watchButton": "Watch Demo",
-    "duration": "Duration"
+    "badge": "ライブデモ",
+    "title": "AgentOSの動作を確認",
+    "subtitle": "エージェント作成、マルチエージェント連携、RAGメモリなどの実際のワークフローをご覧ください。",
+    "comingSoon": "デモ動画は近日公開",
+    "watchButton": "デモを見る",
+    "duration": "再生時間",
+    "videos": {
+      "streaming": {
+        "title": "リアルタイムストリーミング",
+        "description": "トークン単位のレスポンス配信",
+        "captions": [
+          "プロンプトを入力してエージェントに送信",
+          "トークンがリアルタイムで返されるのを確認",
+          "セッションタイムライン付きの完全なレスポンス"
+        ]
+      },
+      "agentCreation": {
+        "title": "エージェント作成",
+        "description": "数分でカスタムAIペルソナを構築",
+        "captions": [
+          "ペルソナカタログを閲覧 — 事前構築済みエージェント",
+          "ステップ1 — 名前、説明、タグ、特性",
+          "ステップ2 — システムプロンプト、モデル、コスト戦略",
+          "ガードレールとツール拡張機能",
+          "マーケットインテリジェンスアナリスト — 作成完了",
+          "新しいペルソナからのストリーミングレスポンス"
+        ]
+      },
+      "multiAgent": {
+        "title": "マルチエージェントシステム",
+        "description": "エージェントチームをオーケストレーション",
+        "captions": [
+          "エージェンシーマネージャー — リーダー、リサーチャー、ライター",
+          "マルチエージェント連携の共有目標を定義",
+          "新しいエージェントチームを作成・起動"
+        ]
+      },
+      "ragMemory": {
+        "title": "RAGメモリ",
+        "description": "評価スイートと品質トラッキング",
+        "captions": [
+          "評価ダッシュボード — スコア付き実行履歴",
+          "評価を実行し、テストケースごとの合否を追跡",
+          "実行間で結果を比較 — リグレッションを早期発見"
+        ]
+      },
+      "planningEngine": {
+        "title": "プランニングエンジン",
+        "description": "マルチステップタスク分解",
+        "captions": [
+          "プランニングエンジン — 信頼度スコア付き実行計画",
+          "一時停止・再開・進行 — 完全な実行制御",
+          "各ステップをツール呼び出しと依存関係で追跡"
+        ]
+      }
+    }
   },
   "productCards": {
     "title": "Core Capabilities",
     "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
     "stats": {
-      "contextWindow": "Context Window",
-      "inferenceLatency": "Inference Latency",
-      "activePersonas": "Active Personas",
-      "parallelTasks": "Parallel Tasks",
-      "taskThroughput": "Task Throughput",
-      "orchestrationOverhead": "Orchestration Overhead",
-      "vectorCapacity": "Vector Capacity",
-      "retrievalSpeed": "Retrieval Speed",
-      "compressionRatio": "Compression Ratio",
-      "endToEndLatency": "End-to-End Latency",
-      "streamBandwidth": "Stream Bandwidth",
-      "connectionStability": "Connection Stability"
+      "contextWindow": "コンテキストウィンドウ",
+      "inferenceLatency": "推論レイテンシ",
+      "activePersonas": "アクティブペルソナ",
+      "parallelTasks": "並列タスク",
+      "taskThroughput": "タスクスループット",
+      "orchestrationOverhead": "オーケストレーションオーバーヘッド",
+      "vectorCapacity": "ベクトル容量",
+      "retrievalSpeed": "検索速度",
+      "compressionRatio": "圧縮率",
+      "endToEndLatency": "エンドツーエンドレイテンシ",
+      "streamBandwidth": "ストリーム帯域幅",
+      "connectionStability": "接続安定性"
     },
     "cards": {
       "adaptive": {
         "title": "Adaptive Intelligence",
-        "description": "Real-time learning and context-aware decision-making that evolves with every interaction"
+        "description": "Real-time learning and context-aware decision-making that evolves with every interaction",
+        "features": [
+          "リアルタイム学習",
+          "コンテキスト保持",
+          "行動適応"
+        ],
+        "capabilities": [
+          "マルチモデル対応",
+          "コンテキスト管理",
+          "スキルと拡張機能"
+        ]
       },
       "distributed": {
         "title": "Distributed Cognition",
-        "description": "Parallel processing across multiple agents with seamless coordination and load balancing"
+        "description": "Parallel processing across multiple agents with seamless coordination and load balancing",
+        "features": [
+          "ロードバランシング",
+          "オートスケーリング",
+          "フォールトトレランス"
+        ],
+        "capabilities": [
+          "オーケストレーション",
+          "メッセージキューイング",
+          "状態管理"
+        ]
       },
       "memory": {
         "title": "永続メモリ",
-        "description": "4段階オートスケーリング対応の7つのベクトルストアバックエンド（SQLite → HNSW → Postgres+pgvector → Qdrant）。観測的メモリ圧縮（時間的推論による3-10倍）。10種類のドキュメントローダー、3段階PDF処理、4つのチャンキング戦略。10形式でのインポート/エクスポート。ワンコマンドバックエンド移行。QdrantとPostgresのDocker自動セットアップ。"
+        "description": "4段階オートスケーリング対応の7つのベクトルストアバックエンド（SQLite → HNSW → Postgres+pgvector → Qdrant）。観測的メモリ圧縮（時間的推論による3-10倍）。10種類のドキュメントローダー、3段階PDF処理、4つのチャンキング戦略。10形式でのインポート/エクスポート。ワンコマンドバックエンド移行。QdrantとPostgresのDocker自動セットアップ。",
+        "features": [
+          "ベクトルエンベディング",
+          "セマンティック検索",
+          "バージョン管理"
+        ],
+        "capabilities": [
+          "ベクトルストレージ",
+          "SQLストレージ",
+          "チェーン管理"
+        ]
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime"
+        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime",
+        "features": [
+          "WebSocket対応",
+          "イベント駆動",
+          "バッファリング"
+        ],
+        "capabilities": [
+          "リアルタイム通信",
+          "RPCプロトコル",
+          "イベントループ"
+        ]
       }
     }
+  },
+  "workbench": {
+    "title": "AgentOS Workbench",
+    "description": "AgentOS体験の構築、管理、操作のための公式デスクトップアプリケーション。ビジュアルインターフェースで強力なAIエージェントを作成し、リアルタイムでテストし、どこにでもデプロイできます。",
+    "badge1": "MITライセンス",
+    "badge2": "オープンソース",
+    "feature1": "ドラッグ＆ドロップで操作するビジュアルエージェントビルダー",
+    "feature2": "リアルタイムテスト＆デバッグツール",
+    "feature3": "ワンクリックでクラウドまたはローカルにデプロイ",
+    "viewGithub": "GitHubで表示",
+    "downloadLatest": "最新版をダウンロード"
   }
 }

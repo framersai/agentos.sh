@@ -718,11 +718,26 @@
       "githubStars": "GitHub Stars"
     },
     "categories": {
-      "core": { "title": "Core Framework", "description": "Essential components and protocols" },
-      "tools": { "title": "Developer Tools", "description": "SDKs, clients, and extensions" },
-      "apps": { "title": "Applications", "description": "Ready-to-use applications and platforms" },
-      "infrastructure": { "title": "Infrastructure", "description": "Storage, deployment, and operations" },
-      "community": { "title": "Community", "description": "Forums, discussions, and resources" }
+      "core": {
+        "title": "Core Framework",
+        "description": "Essential components and protocols"
+      },
+      "tools": {
+        "title": "Developer Tools",
+        "description": "SDKs, clients, and extensions"
+      },
+      "apps": {
+        "title": "Applications",
+        "description": "Ready-to-use applications and platforms"
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "description": "Storage, deployment, and operations"
+      },
+      "community": {
+        "title": "Community",
+        "description": "Forums, discussions, and resources"
+      }
     },
     "starsSuffix": "stars",
     "updatedLabel": "Updated {date}",
@@ -858,45 +873,148 @@
     }
   },
   "videoDemo": {
-    "title": "See AgentOS in Action",
-    "subtitle": "Watch how easy it is to build adaptive AI agents",
-    "watchButton": "Watch Demo",
-    "duration": "Duration"
+    "badge": "Demos ao Vivo",
+    "title": "Veja o AgentOS em Ação",
+    "subtitle": "Fluxos de trabalho reais demonstrando criação de agentes, colaboração multiagente, memória RAG e mais.",
+    "comingSoon": "Vídeo de demonstração em breve",
+    "watchButton": "Ver Demo",
+    "duration": "Duração",
+    "videos": {
+      "streaming": {
+        "title": "Streaming em Tempo Real",
+        "description": "Entrega de respostas por token",
+        "captions": [
+          "Digite um prompt e envie para o agente",
+          "Veja os tokens chegando em tempo real",
+          "Resposta completa com linha do tempo da sessão"
+        ]
+      },
+      "agentCreation": {
+        "title": "Criação de Agentes",
+        "description": "Crie personas de IA em minutos",
+        "captions": [
+          "Navegue pelo catálogo de personas — agentes pré-configurados",
+          "Passo 1 — Nome, descrição, tags e traços",
+          "Passo 2 — Prompt de sistema, modelo e estratégia de custos",
+          "Guardrails e extensões de ferramentas",
+          "Analista de Inteligência de Mercado — criado",
+          "Resposta em streaming da nova persona"
+        ]
+      },
+      "multiAgent": {
+        "title": "Sistema Multiagente",
+        "description": "Orquestre equipes de agentes",
+        "captions": [
+          "Gestor de Agência — Líder, Pesquisador, Redator",
+          "Defina objetivos compartilhados para coordenação multiagente",
+          "Crie e lance novas equipes de agentes"
+        ]
+      },
+      "ragMemory": {
+        "title": "Memória RAG",
+        "description": "Suítes de avaliação e rastreamento de qualidade",
+        "captions": [
+          "Painel de Avaliação — histórico de execuções com pontuações",
+          "Execute avaliações e acompanhe aprovação/falha por caso de teste",
+          "Compare resultados entre execuções — detecte regressões cedo"
+        ]
+      },
+      "planningEngine": {
+        "title": "Motor de Planejamento",
+        "description": "Decomposição de tarefas multi-passo",
+        "captions": [
+          "Motor de Planejamento — planos de execução com pontuações de confiança",
+          "Pausar, retomar e avançar — controle total da execução",
+          "Cada passo rastreado com chamadas de ferramentas e dependências"
+        ]
+      }
+    }
   },
   "productCards": {
     "title": "Core Capabilities",
     "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
     "stats": {
-      "contextWindow": "Context Window",
-      "inferenceLatency": "Inference Latency",
-      "activePersonas": "Active Personas",
-      "parallelTasks": "Parallel Tasks",
-      "taskThroughput": "Task Throughput",
-      "orchestrationOverhead": "Orchestration Overhead",
-      "vectorCapacity": "Vector Capacity",
-      "retrievalSpeed": "Retrieval Speed",
-      "compressionRatio": "Compression Ratio",
-      "endToEndLatency": "End-to-End Latency",
-      "streamBandwidth": "Stream Bandwidth",
-      "connectionStability": "Connection Stability"
+      "contextWindow": "Janela de Contexto",
+      "inferenceLatency": "Latência de Inferência",
+      "activePersonas": "Personas Ativas",
+      "parallelTasks": "Tarefas Paralelas",
+      "taskThroughput": "Throughput de Tarefas",
+      "orchestrationOverhead": "Overhead de Orquestração",
+      "vectorCapacity": "Capacidade Vetorial",
+      "retrievalSpeed": "Velocidade de Recuperação",
+      "compressionRatio": "Taxa de Compressão",
+      "endToEndLatency": "Latência Ponta a Ponta",
+      "streamBandwidth": "Largura de Banda do Stream",
+      "connectionStability": "Estabilidade de Conexão"
     },
     "cards": {
       "adaptive": {
         "title": "Adaptive Intelligence",
-        "description": "Real-time learning and context-aware decision-making that evolves with every interaction"
+        "description": "Real-time learning and context-aware decision-making that evolves with every interaction",
+        "features": [
+          "Aprendizado em tempo real",
+          "Retenção de contexto",
+          "Adaptação comportamental"
+        ],
+        "capabilities": [
+          "Suporte Multi-Modelo",
+          "Gestão de Contexto",
+          "Skills e Extensões"
+        ]
       },
       "distributed": {
         "title": "Distributed Cognition",
-        "description": "Parallel processing across multiple agents with seamless coordination and load balancing"
+        "description": "Parallel processing across multiple agents with seamless coordination and load balancing",
+        "features": [
+          "Balanceamento de carga",
+          "Auto-scaling",
+          "Tolerância a falhas"
+        ],
+        "capabilities": [
+          "Orquestração",
+          "Fila de Mensagens",
+          "Gestão de Estado"
+        ]
       },
       "memory": {
         "title": "Memória Persistente",
-        "description": "7 backends de armazenamento vetorial com auto-scaling de 4 níveis (SQLite → HNSW → Postgres+pgvector → Qdrant). Compressão de memória observacional (3-10x com raciocínio temporal). 10 carregadores de documentos, 3 níveis PDF, 4 estratégias de chunking. Importação/exportação em 10 formatos. Migração entre backends com um comando. Docker auto-setup para Qdrant e Postgres."
+        "description": "7 backends de armazenamento vetorial com auto-scaling de 4 níveis (SQLite → HNSW → Postgres+pgvector → Qdrant). Compressão de memória observacional (3-10x com raciocínio temporal). 10 carregadores de documentos, 3 níveis PDF, 4 estratégias de chunking. Importação/exportação em 10 formatos. Migração entre backends com um comando. Docker auto-setup para Qdrant e Postgres.",
+        "features": [
+          "Embeddings vetoriais",
+          "Busca semântica",
+          "Controle de versão"
+        ],
+        "capabilities": [
+          "Armazenamento Vetorial",
+          "Armazenamento SQL",
+          "Gestão de Cadeias"
+        ]
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime"
+        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime",
+        "features": [
+          "Suporte WebSocket",
+          "Baseado em eventos",
+          "Buffering"
+        ],
+        "capabilities": [
+          "Comunicação em Tempo Real",
+          "Protocolo RPC",
+          "Loop de Eventos"
+        ]
       }
     }
+  },
+  "workbench": {
+    "title": "AgentOS Workbench",
+    "description": "O aplicativo de desktop oficial para criar, gerenciar e interagir com experiências AgentOS. Crie agentes de IA poderosos com uma interface visual, teste em tempo real e implante em qualquer lugar.",
+    "badge1": "Licença MIT",
+    "badge2": "Código Aberto",
+    "feature1": "Construtor visual de agentes com workflows drag-and-drop",
+    "feature2": "Ferramentas de teste e depuração em tempo real",
+    "feature3": "Implantação em um clique para nuvem ou local",
+    "viewGithub": "Ver no GitHub",
+    "downloadLatest": "Baixar Última Versão"
   }
 }

@@ -238,34 +238,74 @@
     "cards": {
       "adaptive": {
         "title": "Inteligencia Adaptativa",
-        "description": "Aprendizaje en tiempo real y toma de decisiones consciente del contexto que evoluciona con cada interacción"
+        "description": "Aprendizaje en tiempo real y toma de decisiones consciente del contexto que evoluciona con cada interacción",
+        "features": [
+          "Aprendizaje en tiempo real",
+          "Retención de contexto",
+          "Adaptación conductual"
+        ],
+        "capabilities": [
+          "Soporte Multi-Modelo",
+          "Gestión de Contexto",
+          "Skills y Extensiones"
+        ]
       },
       "distributed": {
         "title": "Cognición Distribuida",
-        "description": "Procesamiento paralelo entre múltiples agentes con coordinación perfecta y balanceo de carga"
+        "description": "Procesamiento paralelo entre múltiples agentes con coordinación perfecta y balanceo de carga",
+        "features": [
+          "Balanceo de carga",
+          "Auto-escalado",
+          "Tolerancia a fallos"
+        ],
+        "capabilities": [
+          "Orquestación",
+          "Cola de Mensajes",
+          "Gestión de Estado"
+        ]
       },
       "memory": {
         "title": "Memoria Persistente",
-        "description": "7 backends de almacenamiento vectorial con auto-escalado de 4 niveles (SQLite → HNSW → Postgres+pgvector → Qdrant). Compresión de memoria observacional (3-10x con razonamiento temporal). 10 cargadores de documentos, 3 niveles PDF, 4 estrategias de fragmentación. Importación/exportación en 10 formatos. Migración entre backends con un comando. Docker auto-setup para Qdrant y Postgres."
+        "description": "7 backends de almacenamiento vectorial con auto-escalado de 4 niveles (SQLite → HNSW → Postgres+pgvector → Qdrant). Compresión de memoria observacional (3-10x con razonamiento temporal). 10 cargadores de documentos, 3 niveles PDF, 4 estrategias de fragmentación. Importación/exportación en 10 formatos. Migración entre backends con un comando. Docker auto-setup para Qdrant y Postgres.",
+        "features": [
+          "Embeddings vectoriales",
+          "Búsqueda semántica",
+          "Control de versiones"
+        ],
+        "capabilities": [
+          "Almacenamiento Vectorial",
+          "Almacenamiento SQL",
+          "Gestión de Cadenas"
+        ]
       },
       "streaming": {
         "title": "Streaming en Tiempo Real",
-        "description": "Arquitectura de eventos de latencia ultra baja con soporte WebSocket y 99.99% de tiempo de actividad"
+        "description": "Arquitectura de eventos de latencia ultra baja con soporte WebSocket y 99.99% de tiempo de actividad",
+        "features": [
+          "Soporte WebSocket",
+          "Basado en eventos",
+          "Buffering"
+        ],
+        "capabilities": [
+          "Comunicación en Tiempo Real",
+          "Protocolo RPC",
+          "Bucle de Eventos"
+        ]
       }
     },
     "stats": {
-      "contextWindow": "Context Window",
-      "inferenceLatency": "Inference Latency",
-      "activePersonas": "Active Personas",
-      "parallelTasks": "Parallel Tasks",
-      "taskThroughput": "Task Throughput",
-      "orchestrationOverhead": "Orchestration Overhead",
-      "vectorCapacity": "Vector Capacity",
-      "retrievalSpeed": "Retrieval Speed",
-      "compressionRatio": "Compression Ratio",
-      "endToEndLatency": "End-to-End Latency",
-      "streamBandwidth": "Stream Bandwidth",
-      "connectionStability": "Connection Stability"
+      "contextWindow": "Ventana de Contexto",
+      "inferenceLatency": "Latencia de Inferencia",
+      "activePersonas": "Personas Activas",
+      "parallelTasks": "Tareas Paralelas",
+      "taskThroughput": "Rendimiento de Tareas",
+      "orchestrationOverhead": "Sobrecarga de Orquestación",
+      "vectorCapacity": "Capacidad Vectorial",
+      "retrievalSpeed": "Velocidad de Recuperación",
+      "compressionRatio": "Ratio de Compresión",
+      "endToEndLatency": "Latencia de Extremo a Extremo",
+      "streamBandwidth": "Ancho de Banda de Stream",
+      "connectionStability": "Estabilidad de Conexión"
     }
   },
   "enterprise": {
@@ -794,11 +834,26 @@
       "githubStars": "GitHub Stars"
     },
     "categories": {
-      "core": { "title": "Core Framework", "description": "Essential components and protocols" },
-      "tools": { "title": "Developer Tools", "description": "SDKs, clients, and extensions" },
-      "apps": { "title": "Applications", "description": "Ready-to-use applications and platforms" },
-      "infrastructure": { "title": "Infrastructure", "description": "Storage, deployment, and operations" },
-      "community": { "title": "Community", "description": "Forums, discussions, and resources" }
+      "core": {
+        "title": "Core Framework",
+        "description": "Essential components and protocols"
+      },
+      "tools": {
+        "title": "Developer Tools",
+        "description": "SDKs, clients, and extensions"
+      },
+      "apps": {
+        "title": "Applications",
+        "description": "Ready-to-use applications and platforms"
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "description": "Storage, deployment, and operations"
+      },
+      "community": {
+        "title": "Community",
+        "description": "Forums, discussions, and resources"
+      }
     },
     "starsSuffix": "stars",
     "updatedLabel": "Updated {date}",
@@ -837,10 +892,62 @@
     }
   },
   "videoDemo": {
+    "badge": "Demos en Vivo",
     "title": "Ver AgentOS en Acción",
-    "subtitle": "Ve lo fácil que es construir agentes de IA adaptativos",
+    "subtitle": "Flujos de trabajo reales demostrando creación de agentes, colaboración multi-agente, memoria RAG y más.",
+    "comingSoon": "Video de demostración próximamente",
     "watchButton": "Ver Demo",
-    "duration": "Duración"
+    "duration": "Duración",
+    "videos": {
+      "streaming": {
+        "title": "Streaming en Tiempo Real",
+        "description": "Entrega de respuestas a nivel de token",
+        "captions": [
+          "Escribe un prompt y envíalo al agente",
+          "Observa los tokens llegar en tiempo real",
+          "Respuesta completa con línea de tiempo de sesión"
+        ]
+      },
+      "agentCreation": {
+        "title": "Creación de Agentes",
+        "description": "Crea personas de IA personalizadas en minutos",
+        "captions": [
+          "Explora el catálogo de personas — agentes prediseñados",
+          "Paso 1 — Nombre, descripción, etiquetas y rasgos",
+          "Paso 2 — Prompt del sistema, modelo y estrategia de costos",
+          "Guardrails y extensiones de herramientas",
+          "Analista de Inteligencia de Mercado — creado",
+          "Respuesta en streaming de la nueva persona"
+        ]
+      },
+      "multiAgent": {
+        "title": "Sistema Multi-Agente",
+        "description": "Orquesta equipos de agentes",
+        "captions": [
+          "Gestor de Agencia — Líder, Investigador, Escritor",
+          "Define objetivos compartidos para coordinación multi-agente",
+          "Crea y lanza nuevos equipos de agentes"
+        ]
+      },
+      "ragMemory": {
+        "title": "Memoria RAG",
+        "description": "Suites de evaluación y seguimiento de calidad",
+        "captions": [
+          "Panel de Evaluación — historial de ejecuciones con puntuaciones",
+          "Ejecuta evaluaciones y rastrea aprobado/fallido por caso",
+          "Compara resultados entre ejecuciones — detecta regresiones temprano"
+        ]
+      },
+      "planningEngine": {
+        "title": "Motor de Planificación",
+        "description": "Descomposición de tareas multi-paso",
+        "captions": [
+          "Motor de Planificación — planes de ejecución con puntuaciones de confianza",
+          "Pausar, reanudar y avanzar — control total de ejecución",
+          "Cada paso rastreado con llamadas a herramientas y dependencias"
+        ]
+      }
+    }
   },
   "about": {
     "hero": {
@@ -908,5 +1015,16 @@
       "frameDev": "Frame.dev",
       "lookingGlass": "The Looking Glass — AI newsletter & blog"
     }
+  },
+  "workbench": {
+    "title": "AgentOS Workbench",
+    "description": "La aplicación de escritorio oficial para construir, gestionar e interactuar con experiencias AgentOS. Crea agentes de IA potentes con una interfaz visual, prueba en tiempo real y despliega en cualquier lugar.",
+    "badge1": "Licencia MIT",
+    "badge2": "Código Abierto",
+    "feature1": "Constructor visual de agentes con flujos drag-and-drop",
+    "feature2": "Herramientas de prueba y depuración en tiempo real",
+    "feature3": "Despliegue en un clic a la nube o local",
+    "viewGithub": "Ver en GitHub",
+    "downloadLatest": "Descargar Última Versión"
   }
 }

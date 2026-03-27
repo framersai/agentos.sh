@@ -196,27 +196,51 @@
     "features": {
       "security": {
         "title": "Security Foundation",
-        "items": ["AES-256 Encryption","Zero-Trust Architecture","End-to-End Security"]
+        "items": [
+          "AES-256 Encryption",
+          "Zero-Trust Architecture",
+          "End-to-End Security"
+        ]
       },
       "compliance": {
         "title": "Compliance & Privacy",
-        "items": ["GDPR Compliant","PII Redaction","Data Residency Controls"]
+        "items": [
+          "GDPR Compliant",
+          "PII Redaction",
+          "Data Residency Controls"
+        ]
       },
       "auth": {
         "title": "Authentication",
-        "items": ["SSO/SAML 2.0","OAuth 2.0","MFA Support"]
+        "items": [
+          "SSO/SAML 2.0",
+          "OAuth 2.0",
+          "MFA Support"
+        ]
       },
       "audit": {
         "title": "Audit & Monitoring",
-        "items": ["Real-time Monitoring","Audit Logs","Anomaly Detection"]
+        "items": [
+          "Real-time Monitoring",
+          "Audit Logs",
+          "Anomaly Detection"
+        ]
       },
       "soc2": {
         "title": "SOC2 Compliance",
-        "items": ["Type II (In Progress)","Annual Audits","Continuous Compliance"]
+        "items": [
+          "Type II (In Progress)",
+          "Annual Audits",
+          "Continuous Compliance"
+        ]
       },
       "scale": {
         "title": "Enterprise Scale",
-        "items": ["Auto-scaling","99.99% SLA","Global CDN"]
+        "items": [
+          "Auto-scaling",
+          "99.99% SLA",
+          "Global CDN"
+        ]
       }
     },
     "legend": {
@@ -753,44 +777,136 @@
     }
   },
   "videoDemo": {
-    "title": "See AgentOS in Action",
-    "subtitle": "Watch how easy it is to build adaptive AI agents",
-    "watchButton": "Watch Demo",
-    "duration": "Duration"
+    "badge": "在线演示",
+    "title": "体验 AgentOS 实际效果",
+    "subtitle": "观看代理创建、多代理协作、RAG 记忆等真实工作流演示。",
+    "comingSoon": "演示视频即将推出",
+    "watchButton": "观看演示",
+    "duration": "时长",
+    "videos": {
+      "streaming": {
+        "title": "实时流式传输",
+        "description": "Token级响应交付",
+        "captions": [
+          "输入提示词并发送给代理",
+          "实时观看Token流式返回",
+          "带会话时间线的完整响应"
+        ]
+      },
+      "agentCreation": {
+        "title": "代理创建",
+        "description": "几分钟内构建自定义AI角色",
+        "captions": [
+          "浏览角色目录 — 预构建的代理",
+          "步骤1 — 名称、描述、标签和特征",
+          "步骤2 — 系统提示词、模型和成本策略",
+          "护栏和工具扩展",
+          "市场情报分析师 — 已创建",
+          "新角色的流式响应"
+        ]
+      },
+      "multiAgent": {
+        "title": "多代理系统",
+        "description": "编排代理团队",
+        "captions": [
+          "代理机构管理器 — 负责人、研究员、撰稿人",
+          "定义多代理协调的共享目标",
+          "创建并启动新的代理团队"
+        ]
+      },
+      "ragMemory": {
+        "title": "RAG 记忆",
+        "description": "评估套件和质量跟踪",
+        "captions": [
+          "评估仪表板 — 带评分的运行历史",
+          "运行评估并跟踪每个测试用例的通过/失败",
+          "跨运行比较结果 — 尽早发现回归"
+        ]
+      },
+      "planningEngine": {
+        "title": "规划引擎",
+        "description": "多步骤任务分解",
+        "captions": [
+          "规划引擎 — 带置信度评分的执行计划",
+          "暂停、恢复和推进 — 完全执行控制",
+          "每一步都追踪工具调用和依赖关系"
+        ]
+      }
+    }
   },
   "productCards": {
     "title": "Core Capabilities",
     "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
     "stats": {
-      "contextWindow": "Context Window",
-      "inferenceLatency": "Inference Latency",
-      "activePersonas": "Active Personas",
-      "parallelTasks": "Parallel Tasks",
-      "taskThroughput": "Task Throughput",
-      "orchestrationOverhead": "Orchestration Overhead",
-      "vectorCapacity": "Vector Capacity",
-      "retrievalSpeed": "Retrieval Speed",
-      "compressionRatio": "Compression Ratio",
-      "endToEndLatency": "End-to-End Latency",
-      "streamBandwidth": "Stream Bandwidth",
-      "connectionStability": "Connection Stability"
+      "contextWindow": "上下文窗口",
+      "inferenceLatency": "推理延迟",
+      "activePersonas": "活跃角色",
+      "parallelTasks": "并行任务",
+      "taskThroughput": "任务吞吐量",
+      "orchestrationOverhead": "编排开销",
+      "vectorCapacity": "向量容量",
+      "retrievalSpeed": "检索速度",
+      "compressionRatio": "压缩比",
+      "endToEndLatency": "端到端延迟",
+      "streamBandwidth": "流带宽",
+      "connectionStability": "连接稳定性"
     },
     "cards": {
       "adaptive": {
         "title": "Adaptive Intelligence",
-        "description": "Real-time learning and context-aware decision-making that evolves with every interaction"
+        "description": "Real-time learning and context-aware decision-making that evolves with every interaction",
+        "features": [
+          "实时学习",
+          "上下文保留",
+          "行为适应"
+        ],
+        "capabilities": [
+          "多模型支持",
+          "上下文管理",
+          "技能与扩展"
+        ]
       },
       "distributed": {
         "title": "Distributed Cognition",
-        "description": "Parallel processing across multiple agents with seamless coordination and load balancing"
+        "description": "Parallel processing across multiple agents with seamless coordination and load balancing",
+        "features": [
+          "负载均衡",
+          "自动扩展",
+          "容错"
+        ],
+        "capabilities": [
+          "编排",
+          "消息队列",
+          "状态管理"
+        ]
       },
       "memory": {
         "title": "持久记忆",
-        "description": "7个向量存储后端，支持4级自动扩展（SQLite → HNSW → Postgres+pgvector → Qdrant）。观察性记忆压缩（基于时间推理的3-10倍）。10个文档加载器，3级PDF处理，4种分块策略。10种格式导入/导出。一键后端迁移。Qdrant和Postgres的Docker自动设置。"
+        "description": "7个向量存储后端，支持4级自动扩展（SQLite → HNSW → Postgres+pgvector → Qdrant）。观察性记忆压缩（基于时间推理的3-10倍）。10个文档加载器，3级PDF处理，4种分块策略。10种格式导入/导出。一键后端迁移。Qdrant和Postgres的Docker自动设置。",
+        "features": [
+          "向量嵌入",
+          "语义搜索",
+          "版本控制"
+        ],
+        "capabilities": [
+          "向量存储",
+          "SQL存储",
+          "链管理"
+        ]
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime"
+        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime",
+        "features": [
+          "WebSocket 支持",
+          "事件驱动",
+          "缓冲"
+        ],
+        "capabilities": [
+          "实时通信",
+          "RPC 协议",
+          "事件循环"
+        ]
       }
     }
   },
@@ -803,11 +919,26 @@
       "githubStars": "GitHub Stars"
     },
     "categories": {
-      "core": { "title": "Core Framework", "description": "Essential components and protocols" },
-      "tools": { "title": "Developer Tools", "description": "SDKs, clients, and extensions" },
-      "apps": { "title": "Applications", "description": "Ready-to-use applications and platforms" },
-      "infrastructure": { "title": "Infrastructure", "description": "Storage, deployment, and operations" },
-      "community": { "title": "Community", "description": "Forums, discussions, and resources" }
+      "core": {
+        "title": "Core Framework",
+        "description": "Essential components and protocols"
+      },
+      "tools": {
+        "title": "Developer Tools",
+        "description": "SDKs, clients, and extensions"
+      },
+      "apps": {
+        "title": "Applications",
+        "description": "Ready-to-use applications and platforms"
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "description": "Storage, deployment, and operations"
+      },
+      "community": {
+        "title": "Community",
+        "description": "Forums, discussions, and resources"
+      }
     },
     "starsSuffix": "stars",
     "updatedLabel": "Updated {date}",
@@ -874,5 +1005,16 @@
       "button": "Start Building",
       "time": "5 min"
     }
+  },
+  "workbench": {
+    "title": "AgentOS Workbench",
+    "description": "用于构建、管理和体验 AgentOS 的官方桌面应用。通过可视化界面创建强大的AI代理，实时测试，部署到任何地方。",
+    "badge1": "MIT 许可证",
+    "badge2": "开源",
+    "feature1": "拖放式可视化代理构建器",
+    "feature2": "实时测试和调试工具",
+    "feature3": "一键部署到云端或本地",
+    "viewGithub": "在 GitHub 上查看",
+    "downloadLatest": "下载最新版本"
   }
 }
