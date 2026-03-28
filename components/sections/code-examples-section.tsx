@@ -687,7 +687,7 @@ volumes:
                 </div>
 
                 <a
-                  href="https://docs.agentos.sh/quickstart"
+                  href="https://docs.agentos.sh/getting-started/getting-started"
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] text-[var(--color-text-on-accent)] shadow-lg shadow-[var(--color-accent-primary)]/20 hover:shadow-xl hover:brightness-110 transition-all duration-[var(--duration-fast)]"
                 >
                   <Sparkles className="w-5 h-5" />
