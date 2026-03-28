@@ -86,7 +86,7 @@ export default function JobPostPage({ params }: Props) {
         
         <div className="mt-12 pt-8 border-t border-white/10 text-center">
              <a 
-                href={`mailto:careers@frame.dev?subject=Application: ${job.title}`}
+                href={`mailto:team@manic.agency?subject=Application: ${job.title}`}
                 className="inline-block px-8 py-4 rounded-xl bg-gradient-to-r from-accent-primary to-accent-secondary text-white font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
              >
                  Apply for this Position
