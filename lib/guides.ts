@@ -7,7 +7,7 @@ import matter from 'gray-matter';
 const CANONICAL_DOCS = path.join(process.cwd(), '../../packages/agentos/docs');
 const FALLBACK_DOCS = path.join(process.cwd(), 'content/guides');
 const GUIDES_DIR = fs.existsSync(CANONICAL_DOCS) ? CANONICAL_DOCS : FALLBACK_DOCS;
-const IS_CANONICAL = GUIDES_DIR === CANONICAL_DOCS;
+const _IS_CANONICAL = GUIDES_DIR === CANONICAL_DOCS;
 
 /** Recursively collect all .md files from a directory tree. */
 function collectMarkdownFiles(dir: string): string[] {

@@ -292,7 +292,6 @@ export function AnimatedBackground() {
         const alpha = Math.floor(connOpacity * 255)
         if (alpha < 2) return // skip nearly invisible lines
 
-        const alphaHex = alpha.toString(16).padStart(2, '0')
         const rgb1 = particleRgb[connection.from]
         const rgb2 = particleRgb[connection.to]
 
