@@ -50,8 +50,8 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
   const connectLinks = [
     { label: t('connect.github'), href: 'https://github.com/framersai/agentos', icon: Github },
-    { label: t('connect.linkedin'), href: 'https://www.linkedin.com/company/framersai', icon: Linkedin },
-    { label: t('connect.twitter'), href: 'https://twitter.com/framersai', icon: Twitter },
+    { label: t('connect.linkedin'), href: 'https://www.linkedin.com/company/manicinc', icon: Linkedin },
+    { label: t('connect.twitter'), href: 'https://x.com/rabbitholewun', icon: Twitter },
     { label: t('connect.frameDev'), href: 'https://frame.dev', icon: Globe },
   ];
 
