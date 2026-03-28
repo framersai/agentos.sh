@@ -2,8 +2,27 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-// Path to the guide content shipped with the marketing site
-const GUIDES_DIR = path.join(process.cwd(), 'content/guides');
+// Canonical docs live in packages/agentos/docs/ (the source of truth).
+// Falls back to content/guides/ for standalone CI builds without the monorepo.
+const CANONICAL_DOCS = path.join(process.cwd(), '../../packages/agentos/docs');
+const FALLBACK_DOCS = path.join(process.cwd(), 'content/guides');
+const GUIDES_DIR = fs.existsSync(CANONICAL_DOCS) ? CANONICAL_DOCS : FALLBACK_DOCS;
+const IS_CANONICAL = GUIDES_DIR === CANONICAL_DOCS;
+
+/** Recursively collect all .md files from a directory tree. */
+function collectMarkdownFiles(dir: string): string[] {
+  if (!fs.existsSync(dir)) return [];
+  const results: string[] = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...collectMarkdownFiles(full));
+    } else if (entry.name.endsWith('.md') && entry.name !== 'README.md') {
+      results.push(full);
+    }
+  }
+  return results;
+}
 
 export interface Guide {
   slug: string;
@@ -190,13 +209,13 @@ export function getAllGuides(): Guide[] {
       return [];
     }
 
-    const files = fs.readdirSync(GUIDES_DIR).filter(file =>
-      file.endsWith('.md') && file !== 'README.md'
-    );
+    // Canonical docs are organized into subfolders — scan recursively.
+    // Fallback (content/guides/) is flat — still works with recursive scan.
+    const filePaths = collectMarkdownFiles(GUIDES_DIR);
 
-    const guides = files.map(file => {
+    const guides = filePaths.map(filePath => {
+      const file = path.basename(filePath);
       const slug = file.replace('.md', '');
-      const filePath = path.join(GUIDES_DIR, file);
       const fileContent = fs.readFileSync(filePath, 'utf-8');
       const { content } = matter(fileContent);
       const stats = fs.statSync(filePath);
@@ -232,19 +251,12 @@ export function getAllGuides(): Guide[] {
 
 export function getGuideBySlug(slug: string): Guide | null {
   try {
-    // Convert slug back to filename format
-    const filename = slug.toUpperCase() + '.md';
-    const filePath = path.join(GUIDES_DIR, filename);
+    // Search recursively for the file (canonical docs are in subfolders).
+    const target = slug.toUpperCase() + '.md';
+    const allFiles = collectMarkdownFiles(GUIDES_DIR);
+    const filePath = allFiles.find(f => path.basename(f).toLowerCase() === target.toLowerCase());
 
-    if (!fs.existsSync(filePath)) {
-      // Try with different case variations
-      const files = fs.readdirSync(GUIDES_DIR);
-      const matchingFile = files.find(f =>
-        f.toLowerCase() === slug.toLowerCase() + '.md'
-      );
-      if (!matchingFile) return null;
-      return getGuideBySlug(matchingFile.replace('.md', ''));
-    }
+    if (!filePath) return null;
 
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const { content } = matter(fileContent);
