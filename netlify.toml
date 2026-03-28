@@ -49,6 +49,16 @@
   to = "/en/legal/:splat"
   status = 301
 
+[[redirects]]
+  from = "/terms"
+  to = "/en/legal/terms/"
+  status = 301
+
+[[redirects]]
+  from = "/privacy"
+  to = "/en/legal/privacy/"
+  status = 301
+
 # Root path to English homepage
 [[redirects]]
   from = "/"

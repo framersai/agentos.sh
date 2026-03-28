@@ -49,6 +49,16 @@
       "source": "/legal/:path*",
       "destination": "/en/legal/:path*",
       "permanent": true
+    },
+    {
+      "source": "/terms",
+      "destination": "/en/legal/terms/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/en/legal/privacy/",
+      "permanent": true
     }
   ],
   "rewrites": [

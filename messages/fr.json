@@ -885,7 +885,7 @@
     "hero": {
       "weAreFramers": "we are the framers",
       "title": "About AgentOS",
-      "description": "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. Built by {link}, AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails."
+      "description": "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. Built by <link>Frame.dev</link>, AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails."
     },
     "mission": {
       "title": "Our Mission",
@@ -894,7 +894,7 @@
     },
     "team": {
       "title": "The Team",
-      "description": "AgentOS is developed by the team at {link}, a company focused on building the future of AI‑powered development tools. We're a distributed team of engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.",
+      "description": "AgentOS is developed by the team at <link>Frame.dev</link>, a company focused on building the future of AI‑powered development tools. We're a distributed team of engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.",
       "generalInquiries": "General Inquiries",
       "enterpriseSupport": "Enterprise & Support",
       "enterpriseSupportDesc": "For production deployments, enterprise licensing, and dedicated support",
@@ -915,7 +915,7 @@
       "coreDesc": "The core AgentOS runtime, GMI orchestration, and infrastructure",
       "extensions": "Extensions & Agents",
       "extensionsDesc": "Community-built agents, extensions, and guardrails",
-      "footer": "We believe in open source. AgentOS is free to use, modify, and distribute. For enterprise support and production deployments, contact us at {link}"
+      "footer": "AgentOS is open source under the Apache 2.0 license. For enterprise support and production deployments, contact us at <link>hi@rabbithole.inc</link>."
     },
     "cta": {
       "title": "Ready to Build?",

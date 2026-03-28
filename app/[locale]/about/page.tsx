@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 import type { Route } from 'next';
 import { ArrowLeft, ArrowRight, Github, Linkedin, Twitter, Globe, Mail } from 'lucide-react';
@@ -38,6 +39,15 @@ export default async function AboutPage({ params: { locale } }: Props) {
   const t = await getTranslations({ locale: locale as Locale, namespace: 'about' });
   const homeHref = locale === 'en' ? '/' : `/${locale}`;
 
+  /** Reusable rich-text component map for next-intl's t.rich() */
+  const frameDevLink = {
+    link: (chunks: ReactNode) => (
+      <a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline font-semibold">
+        {chunks}
+      </a>
+    ),
+  };
+
   const connectLinks = [
     { label: t('connect.github'), href: 'https://github.com/framersai/agentos', icon: Github },
     { label: t('connect.linkedin'), href: 'https://www.linkedin.com/company/framersai', icon: Linkedin },
@@ -48,7 +58,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
   const contactCards = [
     {
       title: t('team.generalInquiries'),
-      description: t('team.description'),
+      description: t.rich('team.description', frameDevLink),
       email: 'team@frame.dev',
     },
     {
@@ -80,7 +90,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
             {t('hero.title')}
           </h1>
           <p className="text-lg sm:text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto">
-            {t('hero.description')}
+            {t.rich('hero.description', frameDevLink)}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -114,7 +124,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
         <section className="space-y-8">
           <div className="space-y-4">
             <h2 className="text-3xl font-bold">{t('team.title')}</h2>
-            <p className="text-[var(--color-text-secondary)] max-w-3xl">{t('team.description')}</p>
+            <p className="text-[var(--color-text-secondary)] max-w-3xl">{t.rich('team.description', frameDevLink)}</p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {contactCards.map((card) => (
@@ -169,7 +179,15 @@ export default async function AboutPage({ params: { locale } }: Props) {
               <p className="text-[var(--color-text-secondary)]">{t('license.extensionsDesc')}</p>
             </div>
           </div>
-          <p className="text-sm text-[var(--color-text-secondary)]">{t('license.footer')}</p>
+          <p className="text-sm text-[var(--color-text-secondary)]">
+            {t.rich('license.footer', {
+              link: (chunks) => (
+                <a href="mailto:hi@rabbithole.inc" className="text-accent-primary hover:underline font-semibold">
+                  {chunks}
+                </a>
+              ),
+            })}
+          </p>
         </section>
       </div>
     </main>
