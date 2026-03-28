@@ -1,42 +1,135 @@
 # RAG and Memory Configuration
 
-AgentOS provides two levels of memory API:
+AgentOS provides three levels of memory API:
 
-1. **`AgentMemory`** — High-level facade with simple `remember()`, `recall()`, `observe()`, `search()` methods. No knowledge of PAD mood models or HEXACO traits required.
-2. **Low-level RAG primitives** — `EmbeddingManager`, `VectorStoreManager`, `RetrievalAugmentor`, `HydeRetriever`, `GraphRAGEngine` for custom pipelines.
+1. **`Memory`** — Primary SQLite-first facade for persistent local memory, ingestion, import/export, graph memory, and self-improving consolidation.
+2. **`AgentMemory`** — Compatibility facade that can wrap either `CognitiveMemoryManager` or the standalone `Memory` engine.
+3. **Low-level RAG primitives** — `EmbeddingManager`, `VectorStoreManager`, `RetrievalAugmentor`, `GraphRAGEngine` for custom pipelines.
+
+`Memory.create()` currently supports the SQLite-backed standalone memory facade at runtime. Postgres, Qdrant, Pinecone, and other backends are available through the lower-level RAG/vector-store layer.
+
+## Standalone Memory Facade
+
+```ts
+import { Memory } from '@framers/agentos';
+
+const mem = await Memory.create({
+  path: './brain.sqlite',
+  graph: true,
+  selfImprove: true,
+});
+
+await mem.remember('User prefers dark mode', { type: 'semantic', tags: ['prefs'] });
+await mem.ingest('./docs');
+await mem.importFrom('./notes.csv', { format: 'csv' });
+
+const hits = await mem.recall('dark mode');
+await mem.export('./vault', { format: 'obsidian' });
+await mem.close();
+```
+
+To expose the memory editor tools to AgentOS at runtime, either register the
+tools directly or load them through the extension system:
+
+```ts
+import { createMemoryToolsPack, Memory } from '@framers/agentos';
+
+const memory = await Memory.create({ path: './brain.sqlite', selfImprove: true });
+
+// Direct registration
+for (const tool of memory.createTools()) {
+  await agentos.getToolOrchestrator().registerTool(tool);
+}
+
+// Or extension-based registration through the shared tool registry
+await agentos.getExtensionManager().loadPackFromFactory(
+  createMemoryToolsPack(memory),
+  'memory-tools',
+);
+```
+
+If you already bootstrap `AgentOS`, you can auto-load the same pack directly
+from `AgentOS.initialize()`:
+
+```ts
+import { AgentOS, Memory } from '@framers/agentos';
+
+const memory = await Memory.create({ path: './brain.sqlite', selfImprove: true });
+const agentos = new AgentOS();
+
+await agentos.initialize({
+  // ...standard AgentOS config...
+  memoryTools: {
+    memory,
+    includeReflect: true,
+    identifier: 'primary-memory-tools',
+    manageLifecycle: true,
+  },
+});
+```
+
+`manageLifecycle` is optional. Leave it unset when your app owns the
+`Memory` instance and closes it outside `AgentOS`.
+
+`memoryTools` only registers the tool pack. It does not automatically make the
+same `Memory` instance the prompt-time `longTermMemoryRetriever` or
+`rollingSummaryMemorySink`.
+
+If you want one standalone `Memory` backend to power all three paths, use the
+unified `standaloneMemory` config bridge:
+
+```ts
+import { AgentOS, Memory } from '@framers/agentos';
+
+const memory = await Memory.create({ path: './brain.sqlite', selfImprove: true });
+const agentos = new AgentOS();
+
+await agentos.initialize({
+  // ...standard AgentOS config...
+  standaloneMemory: {
+    memory,
+    manageLifecycle: true,
+    tools: { includeReflect: true },
+    longTermRetriever: true,
+    rollingSummarySink: true,
+  },
+});
+```
+
+This keeps memory tools available to agents while also reusing the same store
+for long-term prompt injection and rolling-summary persistence.
 
 ## High-Level API: AgentMemory
 
 ```ts
 import { AgentMemory } from '@framers/agentos';
 
-// Wrap an existing CognitiveMemoryManager (e.g., in wunderland)
-const memory = AgentMemory.wrap(existingManager);
+// Option A: wrap an existing CognitiveMemoryManager
+const cognitive = AgentMemory.wrap(existingManager);
 
-// Or create standalone
-const memory = new AgentMemory();
-await memory.initialize(cognitiveMemoryConfig);
+// Option B: create a standalone SQLite-backed adapter
+const memory = await AgentMemory.sqlite({ path: './brain.sqlite' });
 
 // Store information
-await memory.remember(“User prefers dark mode”);
-await memory.remember(“Deploy by Friday”, { type: 'prospective', tags: ['deadline'] });
+await memory.remember('User prefers dark mode');
+await memory.remember('Deploy by Friday', { type: 'prospective', tags: ['deadline'] });
 
-// Recall relevant memories (uses HyDE when enabled)
-const results = await memory.recall(“what does the user prefer?”);
+// Recall relevant memories
+const results = await memory.recall('what does the user prefer?');
 for (const m of results.memories) {
   console.log(m.content, m.retrievalScore);
 }
 
-// Observe conversation turns (observational memory)
-await memory.observe('user', “Can you help me debug this?”);
-await memory.observe('assistant', “Sure! The issue is in your useEffect...”);
+// Standalone-only extras from the new Memory engine
+await memory.ingest('./docs');
+await memory.export('./vault', { format: 'obsidian' });
 
-// Get assembled context for prompt injection
-const context = await memory.getContext(“TMJ treatment”, { tokenBudget: 2000 });
+// Cognitive-only APIs remain available on the wrapped manager path
+await cognitive.observe('user', 'Can you help me debug this?');
+const context = await cognitive.getContext('TMJ treatment', { tokenBudget: 2000 });
 
-// Set reminders (prospective memory)
-await memory.remind({
-  content: “Remind about deploy deadline”,
+await cognitive.remind({
+  content: 'Remind about deploy deadline',
   triggerType: 'time',
   triggerAt: Date.now() + 3600000,
 });
@@ -47,9 +140,12 @@ await memory.consolidate();
 // Health diagnostics
 const health = await memory.health();
 
-// Access underlying CognitiveMemoryManager for advanced usage
-const raw = memory.raw;
+// Access underlying backends when needed
+const rawManager = cognitive.raw;
+const rawMemory = memory.rawMemory;
 ```
+
+Use `Memory` directly for most local-first or ingestion-heavy workloads. Use `AgentMemory` when you want a compatibility facade across both backends, or when you specifically need cognitive-only APIs such as `observe()`, `getContext()`, or `remind()`.
 
 ## Observational Memory
 
@@ -117,7 +213,7 @@ The concrete RAG APIs live under `@framers/agentos/rag`:
 - **`HydeRetriever`** — Hypothetical Document Embedding for better recall (generates pseudo-answers before searching)
 - **`GraphRAGEngine`** — TypeScript-native graph-based RAG with knowledge graph traversal
 
-For most use cases, prefer `AgentMemory` over direct RAG primitive usage.
+For most standalone and local-first use cases, prefer `Memory`. Use `AgentMemory` when you need the compatibility layer or the cognitive observer/reflector APIs.
 
 ## Enabling RAG In AgentOS
 
@@ -253,6 +349,63 @@ Notes:
 - `ragConfig.manageLifecycle` defaults to `true`.
 - `ragConfig.bindToStorageAdapter` defaults to `true` and will inject AgentOS’ `storageAdapter` into **SQL vector store providers that did not specify `adapter` or `storage`**.
 
+## Long-Term Memory Recall (Aggressive Default)
+
+Prompt-injected durable memory retrieval (`longTermMemoryRetriever`) is controlled by `orchestratorConfig.longTermMemoryRecall`.
+
+Default profile is intentionally **aggressive** for higher recall and task success:
+
+- `profile: "aggressive"`
+- `cadenceTurns: 2`
+- `forceOnCompaction: true`
+- `maxContextChars: 4200`
+- `topKByScope: { user: 8, persona: 8, organization: 8 }`
+
+Example:
+
+```ts
+await agentos.initialize({
+  // ...
+  orchestratorConfig: {
+    longTermMemoryRecall: {
+      profile: 'aggressive',     // default
+      // Optional explicit overrides:
+      cadenceTurns: 2,
+      forceOnCompaction: true,
+      maxContextChars: 4200,
+      topKByScope: { user: 8, persona: 8, organization: 8 },
+    },
+  },
+});
+```
+
+If you need lower token usage, switch to:
+
+- `profile: "balanced"`
+- `profile: "conservative"`
+
+## Single-Tenant vs Multi-Tenant Routing
+
+`organizationId` routing behavior is controlled by `orchestratorConfig.tenantRouting`:
+
+- `multi_tenant` (default): uses request-scoped `organizationId` when provided.
+- `single_tenant`: collapses all turns to one org context (optional strict mode).
+
+```ts
+await agentos.initialize({
+  // ...
+  orchestratorConfig: {
+    tenantRouting: {
+      mode: 'single_tenant',
+      defaultOrganizationId: 'acme-org',
+      strictOrganizationIsolation: true,
+    },
+  },
+});
+```
+
+With strict single-tenant isolation enabled, mismatched `organizationId` values are rejected.
+
 ## Persona `memoryConfig.ragConfig` (Triggers and Data Sources)
 
 RAG retrieval/ingestion in the GMI is driven by persona configuration. At minimum:
@@ -326,7 +479,7 @@ AgentOS currently ships these vector-store implementations:
 
 - `InMemoryVectorStore` (ephemeral, dev/testing)
 - `SqlVectorStore` (persistent via `@framers/sql-storage-adapter`; embeddings stored as JSON blobs; optional SQLite FTS for hybrid)
-- `HnswlibVectorStore` (ANN search via `hnswlib-node`, optional peer dependency)
+- `HnswlibVectorStore` (ANN search via `hnswlib-node`, optional peer dependency; optional file persistence via `persistDirectory`)
 - `QdrantVectorStore` (remote/self-hosted Qdrant via HTTP; optional BM25 sparse vectors + hybrid fusion)
 
 If you want “true” large-scale vector DB behavior (tens of millions of vectors, filtered search at scale, etc.), add a provider implementation and wire it into `VectorStoreManager`.
@@ -361,16 +514,103 @@ const vsmConfig: VectorStoreManagerConfig = {
 `GraphRAGEngine` exists as a TypeScript-native implementation (graphology + Louvain community detection). It is not automatically used by GMIs by default; treat it as an advanced subsystem you opt into when your problem benefits from entity/relationship structure.
 
 - If you use non-OpenAI embedding models (e.g., Ollama), set `GraphRAGConfig.embeddingDimension`, or provide an `embeddingManager` so the engine can probe the embedding dimension at runtime.
+- `GraphRAGEngine` can run without embeddings and/or without an LLM:
+  - No embeddings: falls back to text matching (lower quality; no vector search).
+  - No LLM: falls back to pattern-based extraction (no model calls).
+- `GraphRAGEngine.ingestDocuments()` supports update semantics when you re-ingest the same `documentId` with new content (it subtracts prior per-document contributions before applying the new extraction).
+- To keep a GraphRAG index consistent with deletes or category/collection moves, call `GraphRAGEngine.removeDocuments([documentId, ...])`.
+
+Minimal lifecycle example:
+
+```ts
+import { GraphRAGEngine } from '@framers/agentos/rag/graphrag';
+
+const engine = new GraphRAGEngine({
+  // Optional:
+  // - vectorStore
+  // - embeddingManager
+  // - llmProvider
+  // - persistenceAdapter
+});
+
+await engine.initialize({ engineId: 'graphrag-demo' });
+
+// Ingest (or update) using a stable documentId.
+await engine.ingestDocuments([{ id: 'doc-1', content: 'Alice founded Wonderland Inc.' }]);
+await engine.ingestDocuments([{ id: 'doc-1', content: 'Bob founded Wonderland Inc.' }]); // update
+
+// Delete or move out of GraphRAG policy scope.
+await engine.removeDocuments(['doc-1']);
+```
+
+Troubleshooting updates:
+
+- If you see warnings about missing previous contribution records, you upgraded from an older persistence format.
+  - Fix: rebuild the GraphRAG index (clear its persisted state and re-ingest documents).
 
 ## Immutability Notes (Sealed Agents)
 
 If you run with an append-only / sealed storage policy, avoid hard deletes of memory or history.
 Prefer append-only tombstones/redactions so retrieval can ignore forgotten items while the audit trail remains verifiable.
 
+## Combined Vector + GraphRAG Search
+
+The HTTP API supports running vector retrieval and GraphRAG in a single request via `includeGraphRag: true`. This combines:
+
+1. **Vector + BM25 hybrid** — standard chunk retrieval with Reciprocal Rank Fusion
+2. **GraphRAG local search** — entity/relationship/community traversal
+
+The response includes both `chunks` (ranked vector results) and `graphContext` (entities, relationships, community context) in one payload.
+
+```bash
+curl -s -X POST http://localhost:3001/api/agentos/rag/query \
+  -H ‘content-type: application/json’ \
+  -d ‘{“query”:”agent security model”,”includeGraphRag”:true,”topK”:5}’ | jq
+```
+
+CLI: `wunderland rag query “agent security model” --graph`
+
+When to use combined search:
+- Questions requiring both textual similarity AND relational/structural context
+- Queries about how entities relate to each other (e.g., “how does X affect Y”)
+- When you want chunk-level evidence plus knowledge graph context in a single call
+
+## Debug Pipeline Tracing
+
+Set `debug: true` in the query request (or use `--debug` CLI flag) to get a step-by-step trace of the retrieval pipeline. Each step reports timing and relevant metrics:
+
+| Step | Data |
+|------|------|
+| `query_received` | query text, preset, topK, vectorProvider, collectionIds |
+| `variants_resolved` | base query, variant count, variant texts |
+| `vector_search` | provider (sql/hnswlib/qdrant), candidate count, latency, embedding model |
+| `keyword_search` | enabled, match count, latency |
+| `fusion` | strategy (RRF), vector/keyword/merged counts |
+| `graphrag` | entities found, relationships, communities, search time |
+| `pipeline_complete` | total latency, results returned |
+
+Enable globally via `AGENTOS_RAG_DEBUG=true` environment variable, or per-request with the `debug` flag.
+
+CLI: `wunderland rag query “security tiers” --debug`
+
+## HNSW Vector Store Configuration
+
+When using `AGENTOS_RAG_VECTOR_PROVIDER=hnswlib`, the following environment variables configure the HNSW index:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AGENTOS_RAG_HNSWLIB_M` | `16` | Max number of connections per node (higher = better recall, more memory) |
+| `AGENTOS_RAG_HNSWLIB_EF_CONSTRUCTION` | `200` | Construction-time search depth (higher = better index quality, slower build) |
+| `AGENTOS_RAG_HNSWLIB_EF_SEARCH` | `100` | Query-time search depth (higher = better recall, slower query) |
+| `AGENTOS_RAG_HNSWLIB_PERSIST_DIR` | `./db_data/agentos_rag_hnswlib` | Directory for persisted HNSW index files |
+
+The health endpoint (`/api/agentos/rag/health`) reports the active `vectorProvider` and HNSW params when applicable.
+
 ## Practical Guidance
 
 - Default recommendation: start with **vector (dense) retrieval**, then add **keyword (BM25/FTS)** for recall, then add a **reranker** only where it’s worth the latency/cost.
 - GraphRAG tends to pay off when questions depend on multi-hop relationships and “global summaries” (org structures, timelines, dependency graphs), not for everyday chat retrieval.
+- Use `--debug` to understand pipeline behavior and identify bottlenecks before tuning parameters.
 
 ## Retrieval Strategies (Implemented)
 
@@ -395,3 +635,14 @@ If `RetrievalAugmentorServiceConfig.rerankerServiceConfig` is provided, AgentOS 
   - `local` (offline cross-encoder, requires installing Transformers.js: `@huggingface/transformers` preferred, or `@xenova/transformers`)
 
 Reranking is **still opt-in per request** via `RagRetrievalOptions.rerankerConfig.enabled=true`.
+
+## Multimodal RAG (Image + Audio)
+
+AgentOS’ core RAG APIs are text-first. The recommended multimodal pattern is:
+
+- Persist asset metadata (and optionally bytes).
+- Derive a **text representation** (caption/transcript/OCR/etc).
+- Index that text as a normal RAG document (so the same vector/BM25/rerank pipeline applies).
+- Optionally add modality embeddings (image-to-image / audio-to-audio) as an acceleration path.
+
+See [MULTIMODAL_RAG.md](./MULTIMODAL_RAG.md) for the reference implementation and HTTP API.

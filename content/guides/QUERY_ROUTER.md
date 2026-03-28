@@ -38,6 +38,8 @@ mode.
 
 ## Example
 
+Runnable source: `packages/agentos/examples/query-router.mjs`
+
 ```ts
 import { QueryRouter } from '@framers/agentos';
 

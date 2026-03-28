@@ -1,5 +1,9 @@
 # Guardrails Usage Guide
 
+:::tip See also
+For CLI usage and guardrail configuration, see [Guardrails on docs.wunderland.sh](https://docs.wunderland.sh/guides/guardrails).
+:::
+
 Guardrails are safety mechanisms that intercept and evaluate content before it enters or exits the AgentOS pipeline. They enable content filtering, PII redaction, policy enforcement, and mid-stream decision overrides.
 
 ## Overview
@@ -13,6 +17,25 @@ Guardrails intercept content at two points:
 User Input → [Input Guardrails] → Orchestration → [Output Guardrails] → Client
 ```
 
+When multiple guardrails are active, AgentOS uses a **two-phase dispatcher**:
+
+1. **Phase 1 (sequential sanitizers)** - Guardrails with `config.canSanitize === true` run in registration order so each sanitizer sees the cumulative sanitized text
+2. **Phase 2 (parallel classifiers)** - All remaining guardrails run concurrently via `Promise.allSettled`, with worst-action aggregation (`BLOCK > FLAG > ALLOW`)
+
+This keeps redaction deterministic while still allowing heavyweight classifiers and grounding checks to run in parallel.
+
+## Built-in Guardrail Packs
+
+AgentOS ships five official guardrail extension packs as standalone packages:
+
+| Pack | Package | What It Does |
+|------|---------|-------------|
+| **PII Redaction** | `@framers/agentos-ext-pii-redaction` | Four-tier PII detection (regex + NLP + NER + LLM). Tools: `pii_scan`, `pii_redact` |
+| **ML Classifiers** | `@framers/agentos-ext-ml-classifiers` | Toxicity, injection, jailbreak via ONNX BERT models. Tool: `classify_content` |
+| **Topicality** | `@framers/agentos-ext-topicality` | Embedding-based topic enforcement + drift detection. Tool: `check_topic` |
+| **Code Safety** | `@framers/agentos-ext-code-safety` | OWASP Top 10 code scanning (25 regex rules). Tool: `scan_code` |
+| **Grounding Guard** | `@framers/agentos-ext-grounding-guard` | RAG-grounded hallucination detection via NLI. Tool: `check_grounding` |
+
 ## Quick Start
 
 ```typescript
@@ -24,7 +47,7 @@ import {
   type GuardrailInputPayload,
   type GuardrailOutputPayload,
   type GuardrailEvaluationResult,
-} from '@framers/agentos/core/guardrails';
+} from '@framers/agentos/safety/guardrails';
 
 // Simple content filter
 class ContentFilter implements IGuardrailService {
@@ -107,13 +130,40 @@ class CostCeilingGuardrail implements IGuardrailService {
 
 ### Example 2: Real-Time PII Redaction
 
-Redact sensitive information as it streams:
+AgentOS provides a first-class PII redaction extension with four-tier detection (regex + NLP + NER + LLM-as-judge), covering 50+ country ID formats, person names, organizations, and context-dependent PII. See the [PII Redaction extension docs](/docs/extensions/built-in/pii-redaction) for full configuration reference.
 
 ```typescript
-class PIIRedactionGuardrail implements IGuardrailService {
+import { createPiiRedactionGuardrail } from '@framers/agentos-ext-pii-redaction';
+
+const piiPack = createPiiRedactionGuardrail({
+  confidenceThreshold: 0.5,
+  redactionStyle: 'placeholder',  // also: 'mask', 'hash', 'category-tag'
+  enableNerModel: true,            // BERT NER for person/org/location names
+  llmJudge: {                      // optional: resolve ambiguous cases
+    provider: 'anthropic',
+    model: 'claude-haiku-4-5-20251001',
+    apiKey: process.env.ANTHROPIC_API_KEY,
+  },
+});
+
+const agent = new AgentOS();
+await agent.initialize({
+  ...config,
+  manifest: { packs: [{ factory: () => piiPack }] },
+});
+```
+
+The extension provides two agent-callable tools (`pii_scan` and `pii_redact`) and a streaming guardrail that automatically redacts PII from input and output. It sets `canSanitize: true` so it runs in Phase 1 (sequential) of the parallel dispatcher.
+
+#### Custom regex-only PII guardrail
+
+If you only need simple regex patterns (no NER, no LLM), you can write a lightweight custom guardrail instead. This demonstrates the `IGuardrailService` interface with `SANITIZE` action:
+
+```typescript
+class SimpleRegexPiiGuardrail implements IGuardrailService {
   config = {
     evaluateStreamingChunks: true,
-    maxStreamingEvaluations: 200
+    canSanitize: true,  // Phase 1: runs before parallel classifiers
   };
 
   private readonly patterns = [
@@ -123,33 +173,25 @@ class PIIRedactionGuardrail implements IGuardrailService {
   ];
 
   async evaluateOutput({ chunk }: GuardrailOutputPayload): Promise<GuardrailEvaluationResult | null> {
-    if (chunk.type !== 'TEXT_DELTA' || !chunk.textDelta) {
-      return null;
-    }
+    if (chunk.type !== 'TEXT_DELTA' || !chunk.textDelta) return null;
 
     let text = chunk.textDelta;
     let modified = false;
 
     for (const { regex, replacement } of this.patterns) {
       const newText = text.replace(regex, replacement);
-      if (newText !== text) {
-        text = newText;
-        modified = true;
-      }
+      if (newText !== text) { text = newText; modified = true; }
     }
 
     if (modified) {
-      return {
-        action: GuardrailAction.SANITIZE,
-        modifiedText: text,
-        reasonCode: 'PII_REDACTED',
-      };
+      return { action: GuardrailAction.SANITIZE, modifiedText: text, reasonCode: 'PII_REDACTED' };
     }
-
     return null;
   }
 }
 ```
+
+> **Note:** For production use, the `@framers/agentos-ext-pii-redaction` extension is strongly recommended over custom regex. It catches names, organizations, locations, and 50+ country-specific ID formats that regex alone misses.
 
 ### Example 3: Content Policy Mid-Stream
 
@@ -203,7 +245,7 @@ import {
   GuardrailAction,
   type CrossAgentOutputPayload,
   type GuardrailEvaluationResult,
-} from '@framers/agentos/core/guardrails';
+} from '@framers/agentos/safety/guardrails';
 
 class SupervisorGuardrail implements ICrossAgentGuardrailService {
   // Observe specific worker agents (empty = all agents)
@@ -282,6 +324,12 @@ class QualityGateGuardrail implements ICrossAgentGuardrailService {
 |--------|------|---------|-------------|
 | `evaluateStreamingChunks` | `boolean` | `false` | Evaluate TEXT_DELTA chunks (real-time) vs only FINAL_RESPONSE |
 | `maxStreamingEvaluations` | `number` | `undefined` | Rate limit streaming evaluations per request |
+| `canSanitize` | `boolean` | `false` | Run this guardrail in Phase 1 so SANITIZE results chain deterministically |
+| `timeoutMs` | `number` | `undefined` | Per-guardrail timeout. On timeout/error the dispatcher fails open for that guardrail |
+
+### Output Payload Extras
+
+`GuardrailOutputPayload` includes `ragSources?: RagRetrievedChunk[]` for output-time grounding checks. This field is populated when the response was generated with RAG retrieval, and is what the grounding guard uses to compare claims against retrieved evidence.
 
 ### Performance Considerations
 
@@ -292,24 +340,56 @@ class QualityGateGuardrail implements ICrossAgentGuardrailService {
 
 ## Using Multiple Guardrails
 
-Multiple guardrails are evaluated in sequence. Each can modify the content before passing to the next:
+Multiple guardrails are dispatched in two phases: sanitizers first, then parallel classifiers:
 
 ```typescript
-const guardrails = [
-  new PIIRedactionGuardrail(),     // First: redact PII
-  new ContentPolicyGuardrail(),    // Second: check policy
-  new CostCeilingGuardrail(),      // Third: enforce budget
-];
+import { createPiiRedactionGuardrail } from '@framers/agentos-ext-pii-redaction';
+import { createMLClassifierGuardrail } from '@framers/agentos-ext-ml-classifiers';
+import { createTopicalityGuardrail, TOPIC_PRESETS } from '@framers/agentos-ext-topicality';
+import { createCodeSafetyGuardrail } from '@framers/agentos-ext-code-safety';
+import { createGroundingGuardrail } from '@framers/agentos-ext-grounding-guard';
 
-// AgentOSConfig.guardrailService is a single guardrail instance. To use multiple,
-// register them as extension-pack descriptors (recommended) or wrap them in a composite.
+const piiPack = createPiiRedactionGuardrail({
+  redactionStyle: 'placeholder',
+  confidenceThreshold: 0.5,
+});
+
+const mlPack = createMLClassifierGuardrail({
+  guardrailScope: 'both',
+});
+
+const topicalityPack = createTopicalityGuardrail({
+  allowedTopics: TOPIC_PRESETS.customerSupport,
+  forbiddenTopics: TOPIC_PRESETS.commonUnsafe,
+  guardrailScope: 'input',
+});
+
+const codeSafetyPack = createCodeSafetyGuardrail();
+
+const groundingPack = createGroundingGuardrail({
+  contradictionAction: 'flag',
+});
+
+await agent.initialize({
+  ...config,
+  manifest: {
+    packs: [
+      { factory: () => piiPack },
+      { factory: () => mlPack },
+      { factory: () => topicalityPack },
+      { factory: () => codeSafetyPack },
+      { factory: () => groundingPack },
+    ],
+  },
+});
 ```
 
 **Evaluation Order:**
-1. Input guardrails run in array order before orchestration
-2. If any returns `BLOCK`, processing stops
-3. If any returns `SANITIZE`, modified input passes to next guardrail
-4. Output guardrails wrap the stream in array order
+1. Phase 1 sanitizers run first in registration order
+2. If any sanitizer returns `BLOCK`, processing stops immediately
+3. Sanitized text from Phase 1 becomes the input to all Phase 2 guardrails
+4. Phase 2 guardrails run concurrently, and the worst action wins
+5. `SANITIZE` returned from Phase 2 is downgraded to `FLAG` to preserve deterministic output
 
 ## API Reference
 
@@ -355,6 +435,10 @@ interface GuardrailEvaluationResult {
   modifiedText?: string | null;  // For SANITIZE action
 }
 ```
+
+### Shared Heavyweight Services
+
+Extension packs that need expensive resources (NER models, ONNX classifiers, embedding functions, NLI pipelines) should load them through `ExtensionLifecycleContext.services`, which is an `ISharedServiceRegistry`. The extension manager provides a shared registry instance so one agent can reuse the same heavyweight dependency across multiple packs instead of loading it once per guardrail.
 
 ## Best Practices
 

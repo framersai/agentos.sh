@@ -1,5 +1,9 @@
 # Cognitive Memory System
 
+:::tip See also
+For CLI usage and agent configuration, see [Memory System on docs.wunderland.sh](https://docs.wunderland.sh/guides/memory-system).
+:::
+
 > Personality-modulated, decay-aware memory grounded in cognitive science — replacing flat key-value memory with Ebbinghaus forgetting curves, Baddeley's working memory, spreading activation, and HEXACO-driven encoding biases.
 
 ---
@@ -450,41 +454,6 @@ Personality also controls **memory style**:
 - High openness: rich, associative traces with connections
 - Default: concise, factual traces
 
-### Observation Note Types
-
-Each observation extracted by the observer is typed:
-
-| Type | Description |
-|------|-------------|
-| `factual` | Objective information, facts, data points |
-| `emotional` | Emotional shifts, tone changes, sentiment transitions |
-| `commitment` | Promises, deadlines, action items |
-| `preference` | User preferences, rapport cues, communication style |
-| `creative` | Novel ideas, creative tangents, exploratory topics |
-| `correction` | Retractions, contradictions to prior statements |
-
-### Full Pipeline (CognitiveMemoryManager.observe)
-
-When `CognitiveMemoryManager.observe(role, content, mood?)` is called:
-
-1. Message is pushed into the `ObservationBuffer`
-2. If buffer tokens >= 30K, `MemoryObserver.observe()` extracts `ObservationNote[]` via LLM
-3. Notes are forwarded to `MemoryReflector.addNotes()`
-4. If reflector tokens >= 40K, `MemoryReflector.reflect()` produces `MemoryReflectionResult`
-5. Each reflection trace is encoded into the vector store via `encode()` — making it searchable by RAG/HyDE
-6. Superseded trace IDs are soft-deleted from the store
-
-The result: raw conversation turns are progressively compressed into searchable long-term memory without manual intervention.
-
-### Configuration Thresholds
-
-| Parameter | Default | Component | Effect |
-|-----------|---------|-----------|--------|
-| `observer.activationThresholdTokens` | 30,000 | MemoryObserver | Buffer size before observation extraction |
-| `reflector.activationThresholdTokens` | 40,000 | MemoryReflector | Accumulated note tokens before reflection |
-
-Lower thresholds produce more frequent, granular observations at higher LLM cost. Higher thresholds batch more context but may lose fine-grained detail. Both require an `llmInvoker` callback to be set; without it, the respective component is a no-op.
-
 ---
 
 ## Prospective Memory
@@ -865,3 +834,19 @@ All source lives in `packages/agentos/src/memory/`:
 | `observation/ObservationBuffer.ts` | `ObservationBuffer` |
 | `prospective/ProspectiveMemoryManager.ts` | `ProspectiveMemoryManager`, `ProspectiveMemoryItem` |
 | `consolidation/ConsolidationPipeline.ts` | `ConsolidationPipeline`, `ConsolidationResult` |
+
+---
+
+## Relationship to Persistent Working Memory
+
+AgentOS provides two complementary working memory systems:
+
+| | Baddeley Cognitive Working Memory | Persistent Markdown Working Memory |
+|---|---|---|
+| Purpose | In-session attention modeling | Cross-session user context |
+| Lifespan | Single session (in-memory) | Persists on disk (~/.wunderland/agents/{id}/working-memory.md) |
+| Updates | Automatic activation decay | Agent calls `update_working_memory` tool |
+| Format | Capacity-limited slots (7±2) | Free-form markdown template |
+| Budget | 15% of prompt tokens | 5% of prompt tokens |
+
+Both are injected into the system prompt simultaneously. The persistent memory appears as `## Persistent Memory` before the cognitive slots. See [Persistent Working Memory](./WORKING_MEMORY.md) for details.
