@@ -510,7 +510,7 @@ export function EcosystemSection() {
               {t('cta.joinDiscord')}
             </a>
             <a
-              href="https://docs.agentos.sh/contributing"
+              href="https://github.com/framersai/agentos"
               className="px-6 py-3 bg-background-glass backdrop-blur-md rounded-xl font-semibold border border-border-interactive hover:border-accent-primary transition-all flex items-center justify-center gap-2"
             >
               <Code2 className="w-5 h-5" />
