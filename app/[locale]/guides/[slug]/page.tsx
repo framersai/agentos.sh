@@ -59,8 +59,6 @@ export default function GuidePage({ params }: Props) {
     const id = text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
     return { level, text, id };
   }).filter(h => h.level <= 3);
-  const guideFileName = `${guide.slug.toUpperCase()}.md`;
-
   return (
     <div className="min-h-screen bg-[var(--color-background-primary)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16">
@@ -181,7 +179,7 @@ export default function GuidePage({ params }: Props) {
                 </h3>
                 <div className="space-y-2">
                   <a
-                    href={`https://github.com/framersai/agentos/blob/master/docs/${guideFileName}`}
+                    href={`https://github.com/framersai/agentos/blob/master/docs/${guide.docsRelativePath}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)] transition-colors"

@@ -31,6 +31,8 @@ export interface Guide {
   category: string;
   content: string;
   lastModified?: string;
+  /** Path relative to the docs root, e.g. "architecture/ARCHITECTURE.md". */
+  docsRelativePath: string;
 }
 
 // Map filenames to metadata
@@ -232,7 +234,8 @@ export function getAllGuides(): Guide[] {
         description: metadata.description,
         category: metadata.category,
         content,
-        lastModified: stats.mtime.toISOString()
+        lastModified: stats.mtime.toISOString(),
+        docsRelativePath: path.relative(GUIDES_DIR, filePath),
       };
     });
 
@@ -275,7 +278,8 @@ export function getGuideBySlug(slug: string): Guide | null {
       description: metadata.description,
       category: metadata.category,
       content,
-      lastModified: stats.mtime.toISOString()
+      lastModified: stats.mtime.toISOString(),
+      docsRelativePath: path.relative(GUIDES_DIR, filePath),
     };
   } catch (error) {
     console.error('Error loading guide:', slug, error);
