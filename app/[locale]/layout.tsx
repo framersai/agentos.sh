@@ -321,6 +321,8 @@ export default async function LocaleLayout({
                 <ul className="space-y-2 text-sm">
                   <li><a href={locale === 'en' ? '/legal/terms' : `/${locale}/legal/terms`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('terms')}</a></li>
                   <li><a href={locale === 'en' ? '/legal/privacy' : `/${locale}/legal/privacy`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('privacy')}</a></li>
+                  <li><a href={locale === 'en' ? '/legal/security' : `/${locale}/legal/security`} className="text-text-secondary hover:text-accent-primary transition-colors">Security</a></li>
+                  <li><a href={locale === 'en' ? '/legal/cookies' : `/${locale}/legal/cookies`} className="text-text-secondary hover:text-accent-primary transition-colors">Cookies</a></li>
                   <li><span className="text-text-secondary">{tFooter('license')}</span></li>
                 </ul>
               </div>
