@@ -203,16 +203,8 @@ export function SkylineSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
-            style={{
-              background: isDark 
-                ? 'linear-gradient(135deg, #a78bfa 0%, #67e8f9 50%, #f472b6 100%)'
-                : 'linear-gradient(135deg, #8b5cf6 0%, #06b6d4 50%, #ec4899 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
+          <h2
+            className={`text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}
           >
             {t('title')}
           </h2>
