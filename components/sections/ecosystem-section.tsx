@@ -148,38 +148,6 @@ const repositories: Repository[] = [
     lastUpdated: '2 weeks ago'
   },
 
-  // OpenStrand Ecosystem
-  {
-    name: 'OpenStrand',
-    description: 'Open-source protocols and datasets for shifting technological landscapes.',
-    url: 'https://github.com/framersai/openstrand',
-    category: 'core',
-    icon: GitBranch,
-    language: 'Protocol',
-    status: 'experimental',
-    lastUpdated: '5 days ago'
-  },
-  {
-    name: 'OpenStrand App',
-    description: 'Desktop and mobile client for OpenStrand community and teams editions.',
-    url: 'https://github.com/framersai/openstrand-app',
-    category: 'apps',
-    icon: Package,
-    language: 'TypeScript',
-    status: 'beta',
-    lastUpdated: '33 minutes ago'
-  },
-  {
-    name: 'OpenStrand SDK',
-    description: 'TypeScript SDK for working with OpenStrand documents and protocols.',
-    url: 'https://github.com/framersai/openstrand-sdk',
-    category: 'tools',
-    icon: Code2,
-    language: 'TypeScript',
-    status: 'stable',
-    lastUpdated: '1 hour ago'
-  },
-
   // Infrastructure
   {
     name: 'SQL Storage Adapter',
