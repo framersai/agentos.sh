@@ -518,7 +518,7 @@ export function GMISection() {
           className="text-center"
         >
           <a
-            href="https://docs.agentos.sh/concepts/gmi"
+            href="https://docs.agentos.sh/architecture/system-architecture"
             className="btn-primary inline-flex items-center gap-2"
           >
             <GitBranch className="w-5 h-5" />
