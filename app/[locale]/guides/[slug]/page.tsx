@@ -12,13 +12,16 @@ type Props = {
   };
 };
 
+/** Disable dynamic route fallback — only pre-rendered slugs are served. */
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const guides = getAllGuides();
 
-  // Return all locale/slug combinations for static export
-  // If no guides found (e.g., in CI), return empty array
+  // In standalone CI (no monorepo), no guides are available.
+  // Return a placeholder so static export doesn't fail on zero params.
   if (guides.length === 0) {
-    return [];
+    return locales.map((locale) => ({ locale, slug: 'placeholder' }));
   }
 
   return locales.flatMap((locale) =>
