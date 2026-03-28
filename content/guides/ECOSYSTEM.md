@@ -64,7 +64,7 @@ Only installed extension packages will load — missing ones are skipped silentl
 ---
 
 ### [@framers/agentos-skills-registry](https://github.com/framersai/agentos-skills-registry)
-**Curated Skills Registry** — 40 SKILL.md prompt modules + typed catalog + lazy-loading factories.
+**Curated Skills Catalog SDK** — typed catalog (SKILLS_CATALOG), query helpers, and lazy-loading factories.
 
 ```bash
 npm install @framers/agentos-skills-registry
@@ -72,7 +72,7 @@ npm install @framers/agentos-skills-registry
 
 [![npm](https://img.shields.io/npm/v/@framers/agentos-skills-registry?logo=npm&color=cb3837)](https://www.npmjs.com/package/@framers/agentos-skills-registry)
 
-This is the **catalog package** for AgentOS skills. It bundles 40 curated SKILL.md prompt modules, a `registry.json` index, typed query helpers, and factory functions for runtime skill loading.
+This is the **catalog SDK** for AgentOS skills. It provides typed query helpers (SKILLS_CATALOG, `searchSkills`, `getSkillsByCategory`), and factory functions that wire the content from `@framers/agentos-skills` with the engine from `@framers/agentos/skills`.
 
 Each skill is a directory with a `SKILL.md` file containing YAML frontmatter (metadata, requirements, install specs) and markdown instructions that get injected into an agent's system prompt.
 
@@ -94,7 +94,7 @@ const snapshot = await createCuratedSkillSnapshot({ skills: ['github', 'weather'
 ---
 
 ### [@framers/agentos-skills](https://github.com/framersai/agentos-skills)
-**Skills Runtime** — Standalone runtime package for loading, parsing, filtering, and snapshotting SKILL.md modules.
+**Skills Content** — 69 curated SKILL.md prompt modules + `registry.json` index.
 
 ```bash
 npm install @framers/agentos-skills
@@ -102,18 +102,19 @@ npm install @framers/agentos-skills
 
 [![npm](https://img.shields.io/npm/v/@framers/agentos-skills?logo=npm&color=cb3837)](https://www.npmjs.com/package/@framers/agentos-skills)
 
-This is the **runtime package** for skills. It provides `SkillRegistry`,
-loader/parsing helpers like `loadSkillFromDir()` and `parseSkillFrontmatter()`,
-path resolution helpers, and the canonical frontmatter/metadata parsing logic.
+This is the **content package** for skills. It ships the curated SKILL.md files that agents consume. The runtime engine (SkillLoader, SkillRegistry, path utilities) now lives in `@framers/agentos/skills`.
 
-```typescript
-import { SkillRegistry, resolveDefaultSkillsDirs } from '@framers/agentos-skills';
+```
+@framers/agentos/skills               <- Engine (SkillLoader, SkillRegistry, path utils)
+@framers/agentos-skills               <- Content (69 SKILL.md files + registry.json)
+@framers/agentos-skills-registry      <- Catalog SDK (SKILLS_CATALOG, query helpers, factories)
+```
 
-const registry = new SkillRegistry();
-await registry.loadFromDirs(resolveDefaultSkillsDirs());
+This mirrors the extensions layout:
 
-const snapshot = registry.buildSnapshot({ platform: process.platform, strict: true });
-console.log(snapshot.prompt);
+```
+@framers/agentos-extensions            <- Content (107 extension implementations)
+@framers/agentos-extensions-registry   <- Catalog SDK (CHANNEL_CATALOG, TOOL_CATALOG, etc.)
 ```
 
 **Contributing:** Community skills are welcome via PR. See the [Contributing Guide](https://github.com/framersai/agentos-skills-registry/blob/main/CONTRIBUTING.md) for the SKILL.md format spec and submission process.
@@ -206,15 +207,16 @@ We welcome contributions to any repository in the ecosystem:
 ┌──────────┐ ┌──────────────┐ ┌──────────────┐ ┌───────────┐
 │ sql-     │ │   agentos-   │ │   agentos-   │ │   LLM     │
 │ storage- │ │  extensions  │ │ skills-      │ │ Providers │
-│ adapter  │ │              │ │ registry     │ │           │
-└──────────┘ └──────────────┘ └──────────────┘ └───────────┘
-                                    │
-                                    ▼
-                              ┌──────────────┐
-                              │   agentos-   │
-                              │    skills    │
-                              │ (SKILL.md)   │
-                              └──────────────┘
+│ adapter  │ │  (content)   │ │ registry     │ │           │
+└──────────┘ └──────────────┘ │  (catalog)   │ └───────────┘
+                    │         └──────────────┘
+                    ▼                │
+              ┌──────────────┐       ▼
+              │   agentos-   │ ┌──────────────┐
+              │  extensions- │ │   agentos-   │
+              │  registry    │ │    skills    │
+              │  (catalog)   │ │  (content)   │
+              └──────────────┘ └──────────────┘
 ```
 
 ---

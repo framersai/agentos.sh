@@ -49,9 +49,10 @@ console.log(snapshot.prompt);
 
 ## Curated registry (optional)
 
-- `@framers/agentos-skills-registry` — 40 curated SKILL.md files + typed catalog + helpers to load and build snapshots
+- `@framers/agentos-skills-registry` — catalog SDK with typed query helpers and snapshot factories
+- `@framers/agentos-skills` — 69 curated SKILL.md files + registry.json
 
-The curated bundle currently includes **40 skills** spanning developer tools, productivity, information, communication, memory, and voice. See `@framers/agentos-skills-registry/registry.json` for the canonical list.
+The curated content currently includes **69 skills** spanning developer tools, productivity, information, communication, memory, social media, and voice. See `@framers/agentos-skills/registry.json` for the canonical list.
 
 `@framers/agentos-skills-registry` supports two usage modes:
 
@@ -61,9 +62,9 @@ The curated bundle currently includes **40 skills** spanning developer tools, pr
 When you pass `skills: ['github', 'weather']` to the snapshot helper, it loads only
 those requested curated skills before building the prompt snapshot.
 
-If you’ve installed `@framers/agentos-skills`, agents can inspect and manage
-curated skills via `skills_list`, `skills_read`, `skills_status`,
-`skills_enable`, and `skills_install`.
+The skills engine (`@framers/agentos/skills`) provides `SkillRegistry`, which exposes
+`skills_list`, `skills_read`, `skills_status`, `skills_enable`, and `skills_install`
+tools. Curated skill content (the actual SKILL.md files) ships in `@framers/agentos-skills`.
 
 Catalog loaders like `loadSkillByName()` return the SKILL body, typed frontmatter,
 and parsed `metadata`, so callers can read fields like `primaryEnv`, `emoji`,
@@ -71,11 +72,7 @@ or install requirements without re-parsing `metadata.agentos` manually.
 
 ## Agentic discovery (optional)
 
-If you want agents to **discover and enable** curated skills at runtime (HITL-gated), add:
+If you want agents to **discover and enable** curated skills at runtime (HITL-gated):
 
-- `@framers/agentos-skills` — exposes `skills_list`, `skills_read`, and `skills_enable` tools.
-
-It also includes:
-
-- `skills_status` — eligibility report + install options
-- `skills_install` — runs `metadata.install` commands (side effects)
+- `@framers/agentos/skills` — the engine that exposes `skills_list`, `skills_read`, `skills_enable`, `skills_status`, and `skills_install` tools via `SkillRegistry`.
+- `@framers/agentos-skills` — the content package (69 SKILL.md files + registry.json).
