@@ -63,66 +63,8 @@ Only installed extension packages will load — missing ones are skipped silentl
 
 ---
 
-### [@framers/agentos-skills-registry](https://github.com/framersai/agentos-skills-registry)
-**Curated Skills Catalog SDK** — typed catalog (SKILLS_CATALOG), query helpers, and lazy-loading factories.
-
-```bash
-npm install @framers/agentos-skills-registry
-```
-
-[![npm](https://img.shields.io/npm/v/@framers/agentos-skills-registry?logo=npm&color=cb3837)](https://www.npmjs.com/package/@framers/agentos-skills-registry)
-
-This is the **catalog SDK** for AgentOS skills. It provides typed query helpers (SKILLS_CATALOG, `searchSkills`, `getSkillsByCategory`), and factory functions that wire the content from `@framers/agentos-skills` with the engine from `@framers/agentos/skills`.
-
-Each skill is a directory with a `SKILL.md` file containing YAML frontmatter (metadata, requirements, install specs) and markdown instructions that get injected into an agent's system prompt.
-
-**Available Skills:** weather, github, slack-helper, discord-helper, notion, obsidian, trello, apple-notes, apple-reminders, healthcheck, spotify-player, whisper-transcribe, 1password, image-gen, coding-agent, summarize, git, web-search, deep-research, social-broadcast, twitter-bot, instagram-bot, linkedin-bot, facebook-bot, threads-bot, bluesky-bot, mastodon-bot, youtube-bot, tiktok-bot, pinterest-bot, reddit-bot, blog-publisher, and more.
-
-```typescript
-// Lightweight — no peer deps needed
-import { searchSkills, getSkillsByCategory } from '@framers/agentos-skills-registry/catalog';
-
-// Full registry — requires @framers/agentos peer dep
-import { createCuratedSkillSnapshot } from '@framers/agentos-skills-registry';
-const snapshot = await createCuratedSkillSnapshot({ skills: ['github', 'weather'] });
-```
-
-**Two import paths:**
-- `@framers/agentos-skills-registry/catalog` — Zero peer deps. Static queries only.
-- `@framers/agentos-skills-registry` — Lazy-loads `@framers/agentos` for live SkillRegistry + snapshot generation.
-
----
-
-### [@framers/agentos-skills](https://github.com/framersai/agentos-skills)
-**Skills Content** — 69 curated SKILL.md prompt modules + `registry.json` index.
-
-```bash
-npm install @framers/agentos-skills
-```
-
-[![npm](https://img.shields.io/npm/v/@framers/agentos-skills?logo=npm&color=cb3837)](https://www.npmjs.com/package/@framers/agentos-skills)
-
-This is the **content package** for skills. It ships the curated SKILL.md files that agents consume. The runtime engine (SkillLoader, SkillRegistry, path utilities) now lives in `@framers/agentos/skills`.
-
-```
-@framers/agentos/skills               <- Engine (SkillLoader, SkillRegistry, path utils)
-@framers/agentos-skills               <- Content (69 SKILL.md files + registry.json)
-@framers/agentos-skills-registry      <- Catalog SDK (SKILLS_CATALOG, query helpers, factories)
-```
-
-This mirrors the extensions layout:
-
-```
-@framers/agentos-extensions            <- Content (107 extension implementations)
-@framers/agentos-extensions-registry   <- Catalog SDK (CHANNEL_CATALOG, TOOL_CATALOG, etc.)
-```
-
-**Contributing:** Community skills are welcome via PR. See the [Contributing Guide](https://github.com/framersai/agentos-skills-registry/blob/main/CONTRIBUTING.md) for the SKILL.md format spec and submission process.
-
----
-
 ### [@framers/agentos-extensions](https://github.com/framersai/agentos-extensions)
-**Extensions Catalog** — Static `registry.json` catalog of all available extensions.
+**Extension Source** — Implementations, templates, and manifests for tools, channel adapters, and integrations. The `agentos-extensions-registry` package catalogs and loads these.
 
 ```bash
 npm install @framers/agentos-extensions
@@ -135,11 +77,46 @@ npm install @framers/agentos-extensions
 | Category | Extensions |
 |----------|-----------|
 | **Research** | web-search, web-browser, news-search |
-| **Media** | giphy, image-search, voice-synthesis |
+| **Media** | giphy, image-search, speech-runtime, voice-synthesis |
 | **System** | cli-executor, auth |
 | **Integrations** | telegram, telegram-bot |
 | **Provenance** | anchor-providers, tip-ingestion |
 | **Channels** | telegram, whatsapp, discord, slack, webchat |
+
+---
+
+### [@framers/agentos-skills-registry](https://github.com/framersai/agentos-skills-registry)
+**Curated Skills Catalog SDK** — typed catalog (SKILLS_CATALOG), query helpers, and lazy-loading factories for `SkillRegistry` and snapshots.
+
+```bash
+npm install @framers/agentos-skills-registry
+```
+
+```typescript
+// Lightweight catalog queries (zero peer deps)
+import { searchSkills, getSkillsByCategory } from '@framers/agentos-skills-registry/catalog';
+
+// Full registry with lazy-loaded @framers/agentos
+import { createCuratedSkillSnapshot } from '@framers/agentos-skills-registry';
+const snapshot = await createCuratedSkillSnapshot({ skills: ['github', 'weather'] });
+```
+
+---
+
+### [@framers/agentos-skills](https://github.com/framersai/agentos-skills)
+**Skills Content** — 69 curated SKILL.md prompt modules + `registry.json` index.
+
+```bash
+npm install @framers/agentos-skills
+```
+
+This is the content package for skills. The runtime engine (SkillLoader, SkillRegistry, path utilities) now lives in `@framers/agentos/skills`.
+
+```
+@framers/agentos/skills               <- Engine (SkillLoader, SkillRegistry, path utils)
+@framers/agentos-skills               <- Content (69 SKILL.md files + registry.json)
+@framers/agentos-skills-registry      <- Catalog SDK (SKILLS_CATALOG, query helpers, factories)
+```
 
 ---
 
@@ -163,14 +140,25 @@ npm install @framers/agentos-extensions
 
 ---
 
+### [Wunderland](https://wunderland.sh)
+**Autonomous Agent Network + SDK** — A social network layer for agents (identity, tips, governance) plus a TypeScript SDK built on AgentOS.
+
+```bash
+npm install wunderland
+```
+
+**Docs:** https://docs.wunderland.sh  
+**Rabbit Hole (control plane):** https://rabbithole.inc (self-hosted runtime by default; managed runtime is enterprise)
+
+---
+
 ## Quick Links
 
 | Resource | Link |
 |----------|------|
 | Documentation | [agentos.sh/docs](https://agentos.sh/docs) |
 | API Reference | [agentos-live-docs branch](https://github.com/framersai/agentos/tree/agentos-live-docs) |
-| npm: @framers/agentos | [@framers/agentos](https://www.npmjs.com/package/@framers/agentos) |
-| npm: @framers/agentos-skills-registry | [@framers/agentos-skills-registry](https://www.npmjs.com/package/@framers/agentos-skills-registry) |
+| npm | [@framers/agentos](https://www.npmjs.com/package/@framers/agentos) |
 | Discord | [Join Community](https://discord.gg/agentos) |
 | Twitter | [@framersai](https://twitter.com/framersai) |
 
@@ -202,21 +190,12 @@ We welcome contributions to any repository in the ecosystem:
 │  │   Runtime   │  │   Manager   │  │                     │  │
 │  └─────────────┘  └─────────────┘  └─────────────────────┘  │
 └─────────────────────────────────────────────────────────────┘
-     │            │                │               │
-     ▼            ▼                ▼               ▼
-┌──────────┐ ┌──────────────┐ ┌──────────────┐ ┌───────────┐
-│ sql-     │ │   agentos-   │ │   agentos-   │ │   LLM     │
-│ storage- │ │  extensions  │ │ skills-      │ │ Providers │
-│ adapter  │ │  (content)   │ │ registry     │ │           │
-└──────────┘ └──────────────┘ │  (catalog)   │ └───────────┘
-                    │         └──────────────┘
-                    ▼                │
-              ┌──────────────┐       ▼
-              │   agentos-   │ ┌──────────────┐
-              │  extensions- │ │   agentos-   │
-              │  registry    │ │    skills    │
-              │  (catalog)   │ │  (content)   │
-              └──────────────┘ └──────────────┘
+          │                   │                    │
+          ▼                   ▼                    ▼
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│ sql-storage-    │  │    agentos-     │  │   LLM Providers │
+│ adapter         │  │    extensions   │  │  (OpenAI, etc.) │
+└─────────────────┘  └─────────────────┘  └─────────────────┘
 ```
 
 ---

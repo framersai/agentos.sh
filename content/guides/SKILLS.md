@@ -59,20 +59,12 @@ The curated content currently includes **69 skills** spanning developer tools, p
 - Lightweight catalog queries (no `@framers/agentos` peer dependency)
 - Factory helpers that **lazy-load** `@framers/agentos/skills` only when called (to build a `SkillRegistry` or snapshot)
 
-When you pass `skills: ['github', 'weather']` to the snapshot helper, it loads only
-those requested curated skills before building the prompt snapshot.
+Agents can discover curated skills via the **Capability Discovery Engine** (`@framers/agentos/discovery`), which indexes them as `CapabilityDescriptor` entries with `kind: ‘skill’`. The `SkillRegistry` from `@framers/agentos/skills` (the engine) provides `skills_list`, `skills_read`, `skills_enable`, `skills_status`, and `skills_install` tools directly. Curated skill content (the SKILL.md files) ships in `@framers/agentos-skills`.
 
-The skills engine (`@framers/agentos/skills`) provides `SkillRegistry`, which exposes
-`skills_list`, `skills_read`, `skills_status`, `skills_enable`, and `skills_install`
-tools. Curated skill content (the actual SKILL.md files) ships in `@framers/agentos-skills`.
+## Agentic discovery
 
-Catalog loaders like `loadSkillByName()` return the SKILL body, typed frontmatter,
-and parsed `metadata`, so callers can read fields like `primaryEnv`, `emoji`,
-or install requirements without re-parsing `metadata.agentos` manually.
-
-## Agentic discovery (optional)
-
-If you want agents to **discover and enable** curated skills at runtime (HITL-gated):
+Skills are discoverable at runtime via:
 
 - `@framers/agentos/skills` — the engine that exposes `skills_list`, `skills_read`, `skills_enable`, `skills_status`, and `skills_install` tools via `SkillRegistry`.
 - `@framers/agentos-skills` — the content package (69 SKILL.md files + registry.json).
+- `@framers/agentos-skills-registry` — catalog SDK with typed query helpers and snapshot factories.
