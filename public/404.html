@@ -3,132 +3,163 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Not Found - AgentOS</title>
+  <title>Page Not Found — AgentOS</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: hsl(220, 30%, 98%);
+      --text: hsl(222, 47%, 8%);
+      --muted: hsl(220, 15%, 45%);
+      --accent: hsl(250, 95%, 55%);
+      --border: hsl(220, 20%, 88%);
+      --card-bg: rgba(255, 255, 255, 0.7);
     }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: hsl(240, 20%, 3%);
+        --text: hsl(220, 30%, 98%);
+        --muted: hsl(220, 15%, 60%);
+        --accent: hsl(250, 100%, 70%);
+        --border: hsl(260, 20%, 18%);
+        --card-bg: rgba(255, 255, 255, 0.04);
+      }
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 20px;
+      padding: 2rem;
     }
-    .container {
-      max-width: 600px;
-    }
+
+    .container { max-width: 520px; }
+
     h1 {
-      font-size: 6rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: linear-gradient(45deg, #fff, rgba(255,255,255,0.8));
+      font-size: 5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--accent), hsl(280, 100%, 65%));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
     h2 {
       font-size: 1.5rem;
-      margin-bottom: 1rem;
       font-weight: 600;
+      margin-bottom: 0.75rem;
     }
+
     p {
-      font-size: 1.125rem;
-      opacity: 0.9;
-      margin-bottom: 2rem;
+      font-size: 1rem;
+      color: var(--muted);
       line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 480px;
     }
+
+    .actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
     .btn {
       display: inline-block;
-      padding: 12px 32px;
-      background: white;
-      color: #667eea;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
       text-decoration: none;
-      border-radius: 8px;
       font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      font-size: 0.9375rem;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(128, 90, 213, 0.3);
+    }
+    .btn-primary:hover { box-shadow: 0 6px 20px rgba(128, 90, 213, 0.4); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    .redirecting {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-top: 1.25rem;
+      display: none;
     }
     .spinner {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,0.3);
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
       border-radius: 50%;
-      border-top-color: white;
-      animation: spin 0.8s linear infinite;
-      margin-right: 10px;
+      border-top-color: var(--accent);
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    .redirecting {
-      opacity: 0.8;
-      font-size: 0.875rem;
-      margin-top: 1rem;
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>404</h1>
     <h2>Page Not Found</h2>
-    <p id="message">Looking for the right page...</p>
-    <div id="redirect-notice" class="redirecting" style="display:none;">
-      <div class="spinner"></div>
+    <p id="message">The page you are looking for does not exist or has been moved.</p>
+    <div class="actions" id="actions">
+      <a href="/" class="btn btn-primary" id="home-link">Go Home</a>
+      <a href="https://docs.agentos.sh" class="btn btn-secondary">View Docs</a>
+      <a href="https://github.com/wearetheframers/agentos" class="btn btn-secondary">GitHub</a>
+    </div>
+    <div class="redirecting" id="redirect-notice">
+      <span class="spinner"></span>
       <span id="redirect-text">Redirecting...</span>
     </div>
-    <a href="/" class="btn" id="home-link">Go to Home</a>
   </div>
 
   <script>
-    (function() {
-      // Get current path
-      const currentPath = window.location.pathname;
-      const locales = ['en', 'es', 'fr', 'de', 'pt', 'ja', 'ko', 'zh'];
-      
-      // Detect browser language
-      const browserLang = navigator.language.slice(0, 2);
-      const preferredLocale = locales.includes(browserLang) ? browserLang : 'en';
-      
-      // Check if path starts with a locale
-      const pathSegments = currentPath.split('/').filter(Boolean);
-      const firstSegment = pathSegments[0];
-      
-      // If path doesn't start with a locale, redirect to locale version
-      if (!locales.includes(firstSegment)) {
-        const localizedPath = `/${preferredLocale}${currentPath}`;
-        
-        document.getElementById('message').textContent = 
-          `This page should be accessed with a language prefix.`;
+    (function () {
+      var path = window.location.pathname;
+      var locales = ['en', 'es', 'fr', 'de', 'pt', 'ja', 'ko', 'zh'];
+      var segments = path.split('/').filter(Boolean);
+      var first = segments[0];
+
+      /* If the path has no locale prefix, try adding one and redirecting */
+      if (first && !locales.includes(first)) {
+        var lang = (navigator.language || 'en').slice(0, 2);
+        var locale = locales.includes(lang) ? lang : 'en';
+        var dest = '/' + locale + path;
+
+        document.getElementById('message').textContent =
+          'This page should be accessed with a language prefix.';
         document.getElementById('redirect-notice').style.display = 'block';
-        document.getElementById('redirect-text').textContent = 
-          `Redirecting to ${localizedPath}...`;
-        document.getElementById('home-link').style.display = 'none';
-        
-        // Redirect after brief delay
-        setTimeout(() => {
-          window.location.href = localizedPath;
-        }, 500);
-      } else {
-        // Path has locale but page doesn't exist
-        document.getElementById('message').textContent = 
-          `Sorry, we couldn't find that page.`;
-        document.getElementById('home-link').href = 
-          firstSegment === 'en' ? '/' : `/${firstSegment}`;
+        document.getElementById('redirect-text').textContent =
+          'Redirecting to ' + dest + '...';
+        document.getElementById('actions').style.display = 'none';
+
+        setTimeout(function () { window.location.href = dest; }, 500);
+      } else if (first && locales.includes(first)) {
+        /* Locale prefix present but page missing */
+        document.getElementById('home-link').href =
+          first === 'en' ? '/' : '/' + first;
       }
     })();
   </script>
 </body>
 </html>
-
