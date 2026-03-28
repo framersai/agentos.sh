@@ -54,12 +54,12 @@ export default async function AboutPage({ params: { locale } }: Props) {
     {
       title: t('team.enterpriseSupport'),
       description: t('team.enterpriseSupportDesc'),
-      email: 'enterprise@frame.dev',
+      email: 'hi@rabbithole.inc',
     },
     {
       title: t('team.hiring'),
       description: t('team.joinUs'),
-      email: 'careers@frame.dev',
+      email: 'team@manic.agency',
     },
   ];
 
