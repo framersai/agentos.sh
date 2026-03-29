@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
-  Github, ExternalLink, Package, Mic,
+  Github, ExternalLink, Package,
   Puzzle, Database, Users, BookOpen,
   Terminal, Brain, Code2, GitBranch, Globe
 } from 'lucide-react'
@@ -34,7 +34,7 @@ type RepoStat = {
 }
 
 const repositories: Repository[] = [
-  // Core
+  /* ── Core Frameworks ─────────────────────────────────────────────── */
   {
     name: 'AgentOS',
     description: 'TypeScript runtime for adaptive AI agent intelligence. Core framework for building autonomous agents.',
@@ -46,15 +46,59 @@ const repositories: Repository[] = [
     lastUpdated: '12 hours ago'
   },
   {
+    name: 'AgentOS Skills',
+    description: '69 curated SKILL.md prompt modules -- web search, coding, research, social media, and more. Data-only package with zero runtime dependencies.',
+    url: 'https://github.com/framersai/agentos-skills',
+    category: 'core',
+    icon: BookOpen,
+    language: 'Markdown',
+    status: 'stable',
+    lastUpdated: 'recently'
+  },
+  {
     name: 'AgentOS Extensions',
-    description: '12 tool extensions (web-search, voice-synthesis, news, images, Giphy, CLI executor) and 5 channel adapters (Telegram, Discord, Slack, WhatsApp, WebChat).',
+    description: '45+ tool extensions, channel adapters, voice providers, and browser automation packs.',
     url: 'https://github.com/framersai/agentos-extensions',
-    category: 'tools',
+    category: 'core',
     icon: Puzzle,
     language: 'TypeScript',
     status: 'stable',
     lastUpdated: '6 hours ago'
   },
+
+  /* ── Infrastructure ──────────────────────────────────────────────── */
+  {
+    name: 'SQL Storage Adapter',
+    description: `Universal SQL storage for cross-platform builds with smart fallbacks and syncing.${process.env.NEXT_PUBLIC_SQL_ADAPTER_VERSION ? ` Latest: v${process.env.NEXT_PUBLIC_SQL_ADAPTER_VERSION}` : ''}`,
+    url: 'https://github.com/framersai/sql-storage-adapter',
+    category: 'infrastructure',
+    icon: Database,
+    language: 'TypeScript',
+    status: 'stable',
+    lastUpdated: '12 hours ago'
+  },
+  {
+    name: 'AgentOS Skills Registry',
+    description: 'Catalog SDK -- SKILLS_CATALOG, query helpers, factories, and workspace discovery for lazy-loading skills into agents.',
+    url: 'https://github.com/framersai/agentos-skills-registry',
+    category: 'infrastructure',
+    icon: Package,
+    language: 'TypeScript',
+    status: 'stable',
+    lastUpdated: 'recently'
+  },
+  {
+    name: 'AgentOS Extensions Registry',
+    description: 'Extension catalog -- channel, tool, and provider metadata with createCuratedManifest() for dynamic loading.',
+    url: 'https://github.com/framersai/agentos-extensions-registry',
+    category: 'infrastructure',
+    icon: Package,
+    language: 'TypeScript',
+    status: 'stable',
+    lastUpdated: 'recently'
+  },
+
+  /* ── Tools ───────────────────────────────────────────────────────── */
   {
     name: 'AgentOS Workbench',
     description: 'Developer cockpit for AgentOS sessions: inspect personas, debug tool calls, and replay streaming transcripts.',
@@ -65,48 +109,8 @@ const repositories: Repository[] = [
     status: 'stable',
     lastUpdated: 'yesterday'
   },
-  {
-    name: 'AgentOS Skills',
-    description: '18 curated SKILL.md prompt modules — weather, GitHub, Slack, Notion, Spotify, coding-agent, and more. Data-only package with zero runtime dependencies.',
-    url: 'https://github.com/framersai/agentos-skills',
-    category: 'core',
-    icon: BookOpen,
-    language: 'Markdown',
-    status: 'stable',
-    lastUpdated: 'recently'
-  },
-  {
-    name: 'AgentOS Skills Registry',
-    description: 'Typed SDK for the skills catalog. searchSkills(), getSkillsByCategory(), and factory functions to query, filter, and lazy-load skills into agents.',
-    url: 'https://github.com/framersai/agentos-skills-registry',
-    category: 'tools',
-    icon: Package,
-    language: 'TypeScript',
-    status: 'stable',
-    lastUpdated: 'recently'
-  },
-  {
-    name: 'AgentOS Skills Runtime',
-    description: 'Skill registry and tools: list, read, enable, and install SKILL.md prompt modules at runtime.',
-    url: 'https://github.com/framersai/agentos-skills',
-    category: 'tools',
-    icon: Puzzle,
-    language: 'TypeScript',
-    status: 'stable',
-    lastUpdated: 'recently'
-  },
 
-  // Apps
-  {
-    name: 'Voice Chat Assistants',
-    description: 'Marketplace for Voice Chat Assistants. Browse and deploy pre-built voice agents.',
-    url: 'https://github.com/framersai/voice-chat-assistants',
-    category: 'apps',
-    icon: Mic,
-    language: 'TypeScript',
-    status: 'beta',
-    lastUpdated: '3 days ago'
-  },
+  /* ── Apps ─────────────────────────────────────────────────────────── */
   {
     name: 'Wunderland',
     description: 'Wunderbot SDK + autonomous agent social network (wunderland.sh). Built on AgentOS.',
@@ -137,30 +141,8 @@ const repositories: Repository[] = [
     status: 'stable',
     lastUpdated: '48 minutes ago'
   },
-  {
-    name: 'Codex',
-    description: 'AI and human-curated knowledge store mapping humanity\'s best knowledge.',
-    url: 'https://github.com/framersai/codex',
-    category: 'apps',
-    icon: BookOpen,
-    language: 'Mixed',
-    status: 'experimental',
-    lastUpdated: '2 weeks ago'
-  },
 
-  // Infrastructure
-  {
-    name: 'SQL Storage Adapter',
-    description: `Universal SQL storage for cross-platform builds with smart fallbacks and syncing.${process.env.NEXT_PUBLIC_SQL_ADAPTER_VERSION ? ` Latest: v${process.env.NEXT_PUBLIC_SQL_ADAPTER_VERSION}` : ''}`,
-    url: 'https://github.com/framersai/sql-storage-adapter',
-    category: 'infrastructure',
-    icon: Database,
-    language: 'TypeScript',
-    status: 'stable',
-    lastUpdated: '12 hours ago'
-  },
-
-  // Community
+  /* ── Community ───────────────────────────────────────────────────── */
   {
     name: 'Discussions',
     description: 'Public discourse forum for the Framers community. Ask questions and share ideas.',
@@ -295,9 +277,9 @@ export function EcosystemSection() {
 
   const categoryInfo = useMemo(() => ({
     core: { title: t('categories.core.title'), description: t('categories.core.description'), color: CATEGORY_COLORS.core },
+    infrastructure: { title: t('categories.infrastructure.title'), description: t('categories.infrastructure.description'), color: CATEGORY_COLORS.infrastructure },
     tools: { title: t('categories.tools.title'), description: t('categories.tools.description'), color: CATEGORY_COLORS.tools },
     apps: { title: t('categories.apps.title'), description: t('categories.apps.description'), color: CATEGORY_COLORS.apps },
-    infrastructure: { title: t('categories.infrastructure.title'), description: t('categories.infrastructure.description'), color: CATEGORY_COLORS.infrastructure },
     community: { title: t('categories.community.title'), description: t('categories.community.description'), color: CATEGORY_COLORS.community }
   }), [t])
 

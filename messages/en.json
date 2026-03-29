@@ -507,10 +507,10 @@
       "githubStars": "GitHub Stars"
     },
     "categories": {
-      "core": { "title": "Core Framework", "description": "Essential components and protocols" },
-      "tools": { "title": "Developer Tools", "description": "SDKs, clients, and extensions" },
-      "apps": { "title": "Applications", "description": "Ready-to-use applications and platforms" },
-      "infrastructure": { "title": "Infrastructure", "description": "Storage, deployment, and operations" },
+      "core": { "title": "Core Frameworks", "description": "Runtime, skills content, and extension source code" },
+      "infrastructure": { "title": "Infrastructure", "description": "Storage adapters, registries, and catalog SDKs" },
+      "tools": { "title": "Tools", "description": "Developer tooling and debugging" },
+      "apps": { "title": "Apps", "description": "Production applications and platforms" },
       "community": { "title": "Community", "description": "Forums, discussions, and resources" }
     },
     "starsSuffix": "stars",
