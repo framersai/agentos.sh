@@ -328,7 +328,7 @@ function AnimatedSVGBackground({ type, color }: { type: string; color: string })
   }
 }
 
-export function ProductCardsRedesigned() {
+export function ProductCards() {
   const t = useTranslations('productCards')
   const [liveData, setLiveData] = useState<Record<string, string | number>>({})
   const sectionRef = useRef<HTMLElement>(null)
