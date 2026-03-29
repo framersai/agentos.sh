@@ -192,7 +192,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
           {/* Install command */}
           <div className="mb-4">
-            <Button onClick={copyCommand} variant="secondary" className="gap-2 text-xs sm:text-sm" aria-label="Copy install command">
+            <Button type="button" onClick={copyCommand} variant="secondary" className="gap-2 text-xs sm:text-sm" aria-label="Copy install command">
               {showToast ? (
                 <Check className="w-4 h-4 text-green-400" aria-hidden="true" />
               ) : (
