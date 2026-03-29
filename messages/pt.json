@@ -778,12 +778,12 @@
         "description": "Implementing Generalised Mind Instance roles"
       },
       "memorySystem": {
-        "title": "Advanced Memory Management",
-        "description": "Implementing persistent and contextual memory"
+        "title": "Personality & Cognitive Memory",
+        "description": "HEXACO personality traits with Ebbinghaus decay and session history"
       },
       "toolIntegration": {
-        "title": "External Tool Integration",
-        "description": "Connect APIs and services as agent tools"
+        "title": "RAG Pipeline",
+        "description": "Ingest documents and retrieve context with HyDE embeddings"
       },
       "skillsIntegration": {
         "title": "Skills & Extensions",
@@ -938,13 +938,13 @@
       "inferenceLatency": "Latência de Inferência",
       "activePersonas": "Personas Ativas",
       "parallelTasks": "Tarefas Paralelas",
-      "taskThroughput": "Throughput de Tarefas",
+      "concurrencyModel": "Modelo de Concorrência",
       "orchestrationOverhead": "Overhead de Orquestração",
       "vectorCapacity": "Capacidade Vetorial",
       "retrievalSpeed": "Velocidade de Recuperação",
       "compressionRatio": "Taxa de Compressão",
       "endToEndLatency": "Latência Ponta a Ponta",
-      "streamBandwidth": "Largura de Banda do Stream",
+      "timeToFirstByte": "Tempo até o Primeiro Byte",
       "connectionStability": "Estabilidade de Conexão"
     },
     "cards": {
@@ -992,7 +992,7 @@
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime",
+        "description": "Ultra-low latency event architecture with WebSocket support and real-time streaming",
         "features": [
           "Suporte WebSocket",
           "Baseado em eventos",

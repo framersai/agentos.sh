@@ -778,12 +778,12 @@
         "description": "Implementing Generalised Mind Instance roles"
       },
       "memorySystem": {
-        "title": "Advanced Memory Management",
-        "description": "Implementing persistent and contextual memory"
+        "title": "Personality & Cognitive Memory",
+        "description": "HEXACO personality traits with Ebbinghaus decay and session history"
       },
       "toolIntegration": {
-        "title": "External Tool Integration",
-        "description": "Connect APIs and services as agent tools"
+        "title": "RAG Pipeline",
+        "description": "Ingest documents and retrieve context with HyDE embeddings"
       },
       "skillsIntegration": {
         "title": "Skills & Extensions",
@@ -938,13 +938,13 @@
       "inferenceLatency": "推論レイテンシ",
       "activePersonas": "アクティブペルソナ",
       "parallelTasks": "並列タスク",
-      "taskThroughput": "タスクスループット",
+      "concurrencyModel": "並行処理モデル",
       "orchestrationOverhead": "オーケストレーションオーバーヘッド",
       "vectorCapacity": "ベクトル容量",
       "retrievalSpeed": "検索速度",
       "compressionRatio": "圧縮率",
       "endToEndLatency": "エンドツーエンドレイテンシ",
-      "streamBandwidth": "ストリーム帯域幅",
+      "timeToFirstByte": "最初のバイトまでの時間",
       "connectionStability": "接続安定性"
     },
     "cards": {
@@ -992,7 +992,7 @@
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime",
+        "description": "Ultra-low latency event architecture with WebSocket support and real-time streaming",
         "features": [
           "WebSocket対応",
           "イベント駆動",

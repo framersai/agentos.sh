@@ -210,13 +210,13 @@
       "inferenceLatency": "Inference Latency",
       "activePersonas": "Active Personas",
       "parallelTasks": "Parallel Tasks",
-      "taskThroughput": "Task Throughput",
+      "concurrencyModel": "Concurrency Model",
       "orchestrationOverhead": "Orchestration Overhead",
       "vectorCapacity": "Vector Capacity",
       "retrievalSpeed": "Retrieval Speed",
       "compressionRatio": "Compression Ratio",
       "endToEndLatency": "End-to-End Latency",
-      "streamBandwidth": "Stream Bandwidth",
+      "timeToFirstByte": "Time to First Byte",
       "connectionStability": "Connection Stability"
     },
     "cards": {
@@ -240,7 +240,7 @@
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and 99.99% uptime",
+        "description": "Ultra-low latency event architecture with WebSocket support and real-time streaming",
         "features": ["WebSocket support", "Event-driven", "Buffering"],
         "capabilities": ["Real-time Comm", "RPC Protocol", "Event Loop"]
       }
@@ -552,12 +552,12 @@
         "description": "Implementing Generalised Mind Instance roles"
       },
       "memorySystem": {
-        "title": "Advanced Memory Management",
-        "description": "Implementing persistent and contextual memory"
+        "title": "Personality & Cognitive Memory",
+        "description": "HEXACO personality traits with Ebbinghaus decay and session history"
       },
       "toolIntegration": {
-        "title": "External Tool Integration",
-        "description": "Connect APIs and services as agent tools"
+        "title": "RAG Pipeline",
+        "description": "Ingest documents and retrieve context with HyDE embeddings"
       },
       "skillsIntegration": {
         "title": "Skills & Extensions",
@@ -584,8 +584,8 @@
         "description": "Build a cyclic review workflow with human approval gates"
       },
       "imageGeneration": {
-        "title": "Image Generation",
-        "description": "Generate and edit images across providers with a unified API"
+        "title": "Structured Output (Zod)",
+        "description": "Extract typed, validated data from unstructured text with any provider"
       }
     },
     "cta": {

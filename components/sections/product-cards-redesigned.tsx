@@ -42,7 +42,7 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       icon: Brain,
       stats: [
         { label: t('stats.contextWindow'), value: '128k', trend: 0 },
-        { label: t('stats.inferenceLatency'), value: '< 40ms' },
+        { label: t('stats.inferenceLatency'), value: '< 200ms' },
         { id: 'active-models', label: t('stats.activePersonas'), value: 14, live: true }
       ],
       features: [t('cards.adaptive.features.0'), t('cards.adaptive.features.1'), t('cards.adaptive.features.2')],
@@ -60,8 +60,8 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.distributed.description'),
       icon: Layers,
       stats: [
-        { id: 'concurrent-tasks', label: t('stats.parallelTasks'), value: 512, live: true },
-        { label: t('stats.taskThroughput'), value: '50k/s', trend: 18 },
+        { id: 'concurrent-tasks', label: t('stats.parallelTasks'), value: 'unlimited', live: true },
+        { label: t('stats.concurrencyModel'), value: 'async' },
         { label: t('stats.orchestrationOverhead'), value: '< 2ms' }
       ],
       features: [t('cards.distributed.features.0'), t('cards.distributed.features.1'), t('cards.distributed.features.2')],
@@ -80,8 +80,8 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       icon: Database,
       stats: [
         { label: t('stats.vectorCapacity'), value: '1B+', trend: 0 },
-        { label: t('stats.retrievalSpeed'), value: '< 5ms' },
-        { label: t('stats.compressionRatio'), value: '100:1' }
+        { label: t('stats.retrievalSpeed'), value: '< 50ms' },
+        { label: t('stats.compressionRatio'), value: '10:1' }
       ],
       features: [t('cards.memory.features.0'), t('cards.memory.features.1'), t('cards.memory.features.2')],
       bgAnimation: 'grid',
@@ -99,8 +99,8 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       icon: Zap,
       stats: [
         { label: t('stats.endToEndLatency'), value: '< 100ms', trend: -8 },
-        { label: t('stats.streamBandwidth'), value: '10 Gbps' },
-        { id: 'uptime', label: t('stats.connectionStability'), value: '99.99%', live: true }
+        { label: t('stats.timeToFirstByte'), value: '< 1ms' },
+        { id: 'uptime', label: t('stats.connectionStability'), value: '99.9%', live: true }
       ],
       features: [t('cards.streaming.features.0'), t('cards.streaming.features.1'), t('cards.streaming.features.2')],
       bgAnimation: 'pulse',
@@ -345,7 +345,7 @@ export function ProductCardsRedesigned() {
         setLiveData({
           'active-models': 12 + Math.floor(Math.random() * 5),
           'concurrent-tasks': 120 + Math.floor(Math.random() * 20),
-          'uptime': '99.' + (95 + Math.floor(Math.random() * 4)) + '%'
+          'uptime': '99.' + (88 + Math.floor(Math.random() * 10)) + '%'
         })
       }, 3000)
     }
