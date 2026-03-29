@@ -32,6 +32,11 @@ const GMISectionLazy = dynamic(
   { ssr: true }
 )
 
+const AgencySectionLazy = dynamic(
+  () => import('../../components/sections/agency-section').then(m => m.AgencySection),
+  { ssr: true }
+)
+
 const EmergentSectionLazy = dynamic(
   () => import('../../components/sections/emergent-section').then(m => m.EmergentSection),
   { ssr: true }
@@ -96,6 +101,11 @@ export default function LandingPageRedesigned() {
         {/* GMI Section with architecture diagrams */}
         <div className="lazy-section-lg">
           <GMISectionLazy />
+        </div>
+
+        {/* Parallel Agency — 6 multi-agent orchestration strategies */}
+        <div className="lazy-section-lg">
+          <AgencySectionLazy />
         </div>
 
         {/* Emergent Capabilities — runtime tool forging, agent synthesis, self-improvement */}

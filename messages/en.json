@@ -927,5 +927,68 @@
       "description": "Agents learn from failures and adapt their approach over time. Tool failure tracking triggers circuit breakers to avoid repeated errors. Style adaptation learns user preferences for formality, verbosity, and technicality. Memory consolidation strengthens useful memories and lets irrelevant ones decay via Ebbinghaus curves."
     },
     "ctaExploreDocs": "Explore Emergent Capabilities"
+  },
+  "agencySection": {
+    "badge": "Multi-Agent Orchestration",
+    "title": "Parallel Agency",
+    "subtitle": "Coordinate teams of specialized GMIs with 6 built-in execution strategies. Agents share memory, communicate through structured channels, and execute tasks in sequential, parallel, or dependency-based order.",
+    "codeExampleLabel": "Code Example",
+    "sharedCapabilitiesTitle": "Shared Across All Strategies",
+    "strategies": {
+      "sequential": {
+        "name": "Sequential",
+        "description": "Agents run one after another in a linear pipeline. Each agent receives the previous agent's output as context, forming a progressive refinement chain."
+      },
+      "parallel": {
+        "name": "Parallel",
+        "description": "All agents run concurrently. Their outputs are merged by a synthesis step that combines perspectives into a single coherent response."
+      },
+      "debate": {
+        "name": "Debate",
+        "description": "Agents argue and refine a shared answer over multiple rounds. A judge evaluates arguments and selects the strongest position."
+      },
+      "reviewLoop": {
+        "name": "Review Loop",
+        "description": "One agent produces output, another reviews and requests revisions. The loop continues until the reviewer approves or max rounds are reached."
+      },
+      "hierarchical": {
+        "name": "Hierarchical",
+        "description": "A coordinator agent dispatches sub-tasks to specialist agents via tool calls. The coordinator decides which agents to invoke and in what order at runtime."
+      },
+      "graph": {
+        "name": "Graph (DAG)",
+        "description": "Agents declare explicit dependencies via dependsOn. The orchestrator topologically sorts agents into tiers and runs each tier concurrently."
+      }
+    },
+    "diagrams": {
+      "agentA": "Agent A",
+      "agentB": "Agent B",
+      "agentC": "Agent C",
+      "input": "Input",
+      "synthesis": "Synthesis",
+      "proponent": "Proponent",
+      "critic": "Critic",
+      "judge": "Judge",
+      "roundN": "Round N",
+      "drafter": "Drafter",
+      "reviewer": "Reviewer",
+      "approved": "OK?",
+      "output": "Out",
+      "orchestrator": "Orchestrator",
+      "specialistA": "Researcher",
+      "specialistB": "Coder",
+      "specialistC": "Writer",
+      "researcher": "Researcher",
+      "writer": "Writer",
+      "illustrator": "Illustrator"
+    },
+    "sharedCapabilities": {
+      "sharedMemory": "Shared Memory",
+      "hitlGates": "HITL Approval Gates",
+      "streamingOutput": "Streaming Output",
+      "resourceControls": "Resource Controls",
+      "perAgentGuardrails": "Per-Agent Guardrails"
+    },
+    "ctaExploreDocs": "Explore Agency API"
   }
 }
