@@ -26,6 +26,29 @@ interface AgentRole {
   color: string
 }
 
+/** Hover tooltip for agent nodes in SVG diagrams. */
+function AgentTooltip({ agent, x, y, visible }: { agent: AgentRole; x: number; y: number; visible: boolean }) {
+  if (!visible) return null
+  return (
+    <g>
+      <rect
+        x={x - 90} y={y - 70} width={180} height={52} rx={8}
+        fill="var(--color-bg-primary)" stroke={agent.color} strokeWidth={1.5}
+        opacity={0.95}
+      />
+      <text x={x} y={y - 50} textAnchor="middle" className="text-xs font-semibold fill-current">
+        Example: {agent.name}
+      </text>
+      <text x={x} y={y - 34} textAnchor="middle" className="text-[10px] fill-current" opacity={0.7}>
+        {agent.role}
+      </text>
+      <text x={x} y={y - 20} textAnchor="middle" className="text-[9px] fill-current" opacity={0.5}>
+        You define your own agent roles
+      </text>
+    </g>
+  )
+}
+
 interface CollaborationPattern {
   mode: CollaborationMode
   title: string
@@ -54,6 +77,7 @@ export function MultiAgentCollaboration() {
   const [selectedPattern, setSelectedPattern] = useState<CollaborationMode>('consensus')
   const [activeUseCase, setActiveUseCase] = useState(0)
   const [showCode, setShowCode] = useState(false)
+  const [hoveredAgent, setHoveredAgent] = useState<number | null>(null)
 
   const agents = useMemo<AgentRole[]>(() => [
     { name: t('agents.researcher'), role: 'Information gathering', icon: Users, color: '#00FFFF' },
@@ -252,37 +276,51 @@ console.log(result.agentCalls)       // All 5 agent traces (ran concurrently)`
                     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 250">
                       {currentPattern.mode === 'consensus' && (
                         <>
-                          {/* Central consensus point */}
-                          <circle cx="200" cy="125" r="30" fill="var(--color-accent-primary)" opacity="0.2" />
-                          {/* Agents around the center */}
+                          {/* Central orchestrator */}
+                          <circle cx="200" cy="125" r="35" fill="var(--color-accent-primary)" opacity="0.15" />
+                          <circle cx="200" cy="125" r="25" fill="var(--color-accent-primary)" opacity="0.25" />
+                          <text x="200" y="121" textAnchor="middle" className="text-[10px] font-semibold fill-current">agency()</text>
+                          <text x="200" y="134" textAnchor="middle" className="text-[8px] fill-current" opacity={0.5}>orchestrator</text>
+                          {/* Example agents around the center */}
                           {currentPattern.agents.map((agent, i) => {
                             const angle = (Math.PI * 2 / currentPattern.agents.length) * i - Math.PI / 2
-                            const x = 200 + Math.cos(angle) * 80
-                            const y = 125 + Math.sin(angle) * 80
+                            const x = 200 + Math.cos(angle) * 85
+                            const y = 125 + Math.sin(angle) * 85
                             return (
-                              <g key={i}>
+                              <g
+                                key={i}
+                                onMouseEnter={() => setHoveredAgent(i)}
+                                onMouseLeave={() => setHoveredAgent(null)}
+                                className="cursor-pointer"
+                              >
                                 <line
                                   x1="200"
                                   y1="125"
                                   x2={x}
                                   y2={y}
                                   stroke={agent.color}
-                                  strokeWidth="2"
-                                  opacity="0.5"
+                                  strokeWidth={hoveredAgent === i ? 3 : 2}
+                                  opacity={hoveredAgent === i ? 0.8 : 0.4}
                                 />
-                                <circle cx={x} cy={y} r="25" fill={agent.color} opacity="0.3" />
-                                <circle cx={x} cy={y} r="20" fill={agent.color} opacity="0.5" />
+                                <circle cx={x} cy={y} r={hoveredAgent === i ? 28 : 22} fill={agent.color} opacity={hoveredAgent === i ? 0.5 : 0.3} />
+                                <circle cx={x} cy={y} r={hoveredAgent === i ? 22 : 17} fill={agent.color} opacity={hoveredAgent === i ? 0.7 : 0.5} />
                                 <text
                                   x={x}
-                                  y={y + 40}
+                                  y={y + 38}
                                   textAnchor="middle"
                                   className="text-xs fill-current"
+                                  opacity={hoveredAgent === i ? 1 : 0.7}
                                 >
                                   {agent.name}
                                 </text>
+                                <AgentTooltip agent={agent} x={x} y={y} visible={hoveredAgent === i} />
                               </g>
                             )
                           })}
+                          {/* Annotation */}
+                          <text x="200" y="240" textAnchor="middle" className="text-[9px] fill-current" opacity={0.4}>
+                            Hover agents for details — roles are examples, you define your own
+                          </text>
                         </>
                       )}
                       {currentPattern.mode === 'sequential' && (
@@ -292,7 +330,12 @@ console.log(result.agentCalls)       // All 5 agent traces (ran concurrently)`
                             const x = 50 + (300 / (currentPattern.agents.length - 1)) * i
                             const y = 125
                             return (
-                              <g key={i}>
+                              <g
+                                key={i}
+                                onMouseEnter={() => setHoveredAgent(i)}
+                                onMouseLeave={() => setHoveredAgent(null)}
+                                className="cursor-pointer"
+                              >
                                 {i < currentPattern.agents.length - 1 && (
                                   <line
                                     x1={x + 25}
@@ -300,13 +343,13 @@ console.log(result.agentCalls)       // All 5 agent traces (ran concurrently)`
                                     x2={x + (300 / (currentPattern.agents.length - 1)) - 25}
                                     y2={y}
                                     stroke={agent.color}
-                                    strokeWidth="2"
+                                    strokeWidth={hoveredAgent === i ? 3 : 2}
                                     opacity="0.5"
                                     markerEnd="url(#arrowhead)"
                                   />
                                 )}
-                                <circle cx={x} cy={y} r="25" fill={agent.color} opacity="0.3" />
-                                <circle cx={x} cy={y} r="20" fill={agent.color} opacity="0.5" />
+                                <circle cx={x} cy={y} r={hoveredAgent === i ? 28 : 25} fill={agent.color} opacity={hoveredAgent === i ? 0.5 : 0.3} />
+                                <circle cx={x} cy={y} r={hoveredAgent === i ? 22 : 20} fill={agent.color} opacity={hoveredAgent === i ? 0.7 : 0.5} />
                                 <text
                                   x={x}
                                   y={y + 40}
@@ -315,6 +358,7 @@ console.log(result.agentCalls)       // All 5 agent traces (ran concurrently)`
                                 >
                                   {agent.name}
                                 </text>
+                                <AgentTooltip agent={agent} x={x} y={y} visible={hoveredAgent === i} />
                               </g>
                             )
                           })}
@@ -344,19 +388,24 @@ console.log(result.agentCalls)       // All 5 agent traces (ran concurrently)`
                             const x = i < 3 ? 100 : 300
                             const y = 50 + ((i % 3) * 70)
                             return (
-                              <g key={i}>
+                              <g
+                                key={i}
+                                onMouseEnter={() => setHoveredAgent(i)}
+                                onMouseLeave={() => setHoveredAgent(null)}
+                                className="cursor-pointer"
+                              >
                                 <line
                                   x1={x > 200 ? 230 : 170}
                                   y1={y}
                                   x2={x > 200 ? x - 25 : x + 25}
                                   y2={y}
                                   stroke={agent.color}
-                                  strokeWidth="2"
+                                  strokeWidth={hoveredAgent === i ? 3 : 2}
                                   opacity="0.5"
                                   strokeDasharray={x > 200 ? "none" : "5,5"}
                                 />
-                                <circle cx={x} cy={y} r="20" fill={agent.color} opacity="0.3" />
-                                <circle cx={x} cy={y} r="15" fill={agent.color} opacity="0.5" />
+                                <circle cx={x} cy={y} r={hoveredAgent === i ? 23 : 20} fill={agent.color} opacity={hoveredAgent === i ? 0.5 : 0.3} />
+                                <circle cx={x} cy={y} r={hoveredAgent === i ? 18 : 15} fill={agent.color} opacity={hoveredAgent === i ? 0.7 : 0.5} />
                                 <text
                                   x={x}
                                   y={y + 35}
@@ -365,6 +414,7 @@ console.log(result.agentCalls)       // All 5 agent traces (ran concurrently)`
                                 >
                                   {agent.name}
                                 </text>
+                                <AgentTooltip agent={agent} x={x} y={y} visible={hoveredAgent === i} />
                               </g>
                             )
                           })}
