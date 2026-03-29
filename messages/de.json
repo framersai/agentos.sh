@@ -233,78 +233,82 @@
   "skipToContent": "Zum Inhalt springen",
   "skipToMain": "Zum Hauptinhalt springen",
   "productCards": {
-    "title": "Core Capabilities",
-    "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
+    "title": "Kernfähigkeiten",
+    "subtitle": "Alles, was Sie brauchen, um produktionsreife KI-Agenten mit Gedächtnis, Persönlichkeit und Autonomie zu erstellen",
     "stats": {
-      "contextWindow": "Kontextfenster",
-      "inferenceLatency": "Inferenz-Latenz",
-      "activePersonas": "Aktive Personas",
-      "parallelTasks": "Parallele Aufgaben",
-      "concurrencyModel": "Nebenläufigkeitsmodell",
-      "orchestrationOverhead": "Orchestrierungs-Overhead",
-      "vectorCapacity": "Vektorkapazität",
-      "retrievalSpeed": "Abrufgeschwindigkeit",
-      "compressionRatio": "Kompressionsverhältnis",
-      "endToEndLatency": "End-to-End-Latenz",
-      "timeToFirstByte": "Zeit zum ersten Byte",
-      "connectionStability": "Verbindungsstabilität"
+      "mechanisms": "Mechanismen",
+      "personalityAxes": "Persönlichkeitsachsen",
+      "decayCurve": "Vergessenskurve",
+      "vectorBackends": "Vektor-Backends",
+      "docLoaders": "Dokument-Loader",
+      "chunkStrategies": "Chunk-Strategien",
+      "strategies": "Strategien",
+      "planningEngine": "Planungsmodul",
+      "workflowDsl": "Workflow DSL",
+      "protocols": "Protokolle",
+      "guardrailMode": "Guardrail-Modus",
+      "connectionStability": "Verbindungsstabilität",
+      "dimensions": "Dimensionen",
+      "presets": "Agenten-Vorlagen",
+      "styleAdaptation": "Stilanpassung",
+      "securityTiers": "Sicherheitsstufen",
+      "piiLayers": "PII-Schichten",
+      "mlClassifiers": "ML-Klassifikatoren",
+      "sttProviders": "STT-Anbieter",
+      "ttsProviders": "TTS-Anbieter",
+      "telephony": "Telefonie",
+      "providers": "LLM-Anbieter",
+      "fallbackChain": "Fallback-Kette",
+      "cliProviders": "CLI-Anbieter"
     },
     "cards": {
-      "adaptive": {
-        "title": "Adaptive Intelligence",
-        "description": "Real-time learning and context-aware decision-making that evolves with every interaction",
-        "features": [
-          "Echtzeit-Lernen",
-          "Kontextbeibehaltung",
-          "Verhaltensanpassung"
-        ],
-        "capabilities": [
-          "Multi-Modell-Unterstützung",
-          "Kontextverwaltung",
-          "Skills & Erweiterungen"
-        ]
+      "cognitiveMemory": {
+        "title": "Cognitive Memory",
+        "description": "8 neurowissenschaftlich fundierte Mechanismen, moduliert durch HEXACO-Persönlichkeitsmerkmale mit Ebbinghaus-Vergessenskurve",
+        "features": ["Rekonsolidierung & RIF", "Unwillkürlicher Abruf & FOK", "Temporale Gist-Extraktion", "Quellvertrauensverfall"],
+        "capabilities": ["Gedächtnis-Rekonsolidierung", "Emotionsregulierung", "Schema-Kodierung"]
       },
-      "distributed": {
-        "title": "Distributed Cognition",
-        "description": "Parallel processing across multiple agents with seamless coordination and load balancing",
-        "features": [
-          "Lastverteilung",
-          "Auto-Skalierung",
-          "Fehlertoleranz"
-        ],
-        "capabilities": [
-          "Orchestrierung",
-          "Nachrichtenwarteschlange",
-          "Zustandsverwaltung"
-        ]
+      "graphRag": {
+        "title": "Graph-Based RAG",
+        "description": "7 Vektor-Store-Backends mit HyDE-Retrieval, GraphRAG-Community-Erkennung und 10 Dokument-Ladern",
+        "features": ["HyDE hypothetische Embeddings", "Louvain Community Detection", "4 Chunking-Strategien", "SQLite bis Neo4j Backends"],
+        "capabilities": ["HyDE Retrieval", "GraphRAG Pipeline", "Multi-Backend Storage"]
       },
-      "memory": {
-        "title": "Persistent Memory",
-        "description": "7 vector store backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant). Observational memory compression (3-10x via LLM with temporal reasoning). 10 document loaders, 3 PDF tiers, 4 chunking strategies. Memory import/export in 10 formats including Obsidian vault and ChatGPT. One-command migration between all backends. Docker auto-setup for Qdrant and Postgres.",
-        "features": [
-          "Vektor-Embeddings",
-          "Semantische Suche",
-          "Versionskontrolle"
-        ],
-        "capabilities": [
-          "Vektorspeicher",
-          "SQL-Speicher",
-          "Kettenmanagement"
-        ]
+      "orchestration": {
+        "title": "Multi-Agent Orchestration",
+        "description": "6 Strategien von sequenziell bis graphbasiert mit Mission API, Tree-of-Thought-Planung und Workflow DSL",
+        "features": ["Sequenziell & parallel", "Debatte & Review-Loop", "Workflow DSL + Checkpointing", "AgentGraph DAGs"],
+        "capabilities": ["Mission API", "Workflow Engine", "Agent Graphs"]
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and real-time streaming",
-        "features": [
-          "WebSocket-Unterstützung",
-          "Ereignisgesteuert",
-          "Pufferung"
-        ],
-        "capabilities": [
-          "Echtzeit-Kommunikation",
-          "RPC-Protokoll",
-          "Ereignisschleife"
-        ]
+        "description": "SSE- und WebSocket-Unterstützung mit Streaming-Guardrails, partiellem JSON-Output und Tool-Call-Fortschrittsereignissen",
+        "features": ["SSE + WebSocket", "In-Flight Guardrails", "Partielles JSON-Streaming", "Tool-Fortschrittsereignisse"],
+        "capabilities": ["Event Streaming", "Streaming Guards", "Progress Tracking"]
+      },
+      "hexaco": {
+        "title": "HEXACO Personality",
+        "description": "6-dimensionale Persönlichkeitsmodellierung, die Gedächtnis, Kommunikationsstil und Entscheidungsverhalten formt",
+        "features": ["6-Achsen-Trait-Modellierung", "Gedächtnismodulation", "Stilanpassung", "9 Agenten-Vorlagen"],
+        "capabilities": ["Trait Engine", "Kognitive Modulation", "Adaptiver Stil"]
+      },
+      "guardrails": {
+        "title": "5-Tier Guardrails",
+        "description": "Sicherheitsstufen von gefährlich bis paranoid mit PII-Redaktion, ML-Klassifikatoren und Halluzinationserkennung",
+        "features": ["4-stufige PII-Redaktion", "ONNX BERT Klassifikatoren", "Grounding Guard (NLI)", "OWASP Top 10 Scanning"],
+        "capabilities": ["Sicherheitsstufen", "Inhaltsklassifikatoren", "Code-Sicherheit"]
+      },
+      "voice": {
+        "title": "Voice Pipeline",
+        "description": "12 STT- und 12 TTS-Anbieter mit Echtzeit-Streaming, VAD, Sprecherdiarisierung und Telefonie-Unterstützung",
+        "features": ["12 STT + 12 TTS", "VAD + Diarisierung", "Echtzeit-Streaming", "Twilio/Telnyx/Plivo"],
+        "capabilities": ["Spracherkennung", "Sprachaktivitätserkennung", "Telefonie-Integration"]
+      },
+      "providers": {
+        "title": "21 LLM Providers",
+        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq und 16 weitere mit automatischen Fallback-Ketten und Provider-First-API",
+        "features": ["Auto Fallback (402/429/5xx)", "Provider-First API", "CLI Providers", "OpenRouter Bridge"],
+        "capabilities": ["Provider Registry", "Fallback Chains", "Model Resolution"]
       }
     }
   },

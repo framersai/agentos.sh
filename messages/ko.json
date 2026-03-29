@@ -234,78 +234,82 @@
   "skipToMain": "메인 콘텐츠로 건너뛰기",
   "productCards": {
     "title": "핵심 역량",
-    "subtitle": "지능형 AI 에이전트를 구축·확장·배포하기 위한 엔터프라이즈급 기능",
+    "subtitle": "메모리, 성격, 자율성을 갖춘 프로덕션급 AI 에이전트 구축에 필요한 모든 것",
+    "stats": {
+      "mechanisms": "메커니즘",
+      "personalityAxes": "성격 축",
+      "decayCurve": "망각 곡선",
+      "vectorBackends": "벡터 백엔드",
+      "docLoaders": "문서 로더",
+      "chunkStrategies": "청킹 전략",
+      "strategies": "전략",
+      "planningEngine": "계획 엔진",
+      "workflowDsl": "워크플로 DSL",
+      "protocols": "프로토콜",
+      "guardrailMode": "가드레일 모드",
+      "connectionStability": "연결 안정성",
+      "dimensions": "차원",
+      "presets": "에이전트 프리셋",
+      "styleAdaptation": "스타일 적응",
+      "securityTiers": "보안 단계",
+      "piiLayers": "PII 계층",
+      "mlClassifiers": "ML 분류기",
+      "sttProviders": "STT 제공자",
+      "ttsProviders": "TTS 제공자",
+      "telephony": "전화",
+      "providers": "LLM 제공자",
+      "fallbackChain": "폴백 체인",
+      "cliProviders": "CLI 제공자"
+    },
     "cards": {
-      "adaptive": {
-        "title": "적응형 지능",
-        "description": "모든 상호작용과 함께 진화하는 실시간 학습 및 컨텍스트 인지 의사결정",
-        "features": [
-          "실시간 학습",
-          "컨텍스트 보존",
-          "행동 적응"
-        ],
-        "capabilities": [
-          "다중 모델 지원",
-          "컨텍스트 관리",
-          "스킬 및 확장"
-        ]
+      "cognitiveMemory": {
+        "title": "Cognitive Memory",
+        "description": "에빙하우스 망각 곡선 감소를 포함한 HEXACO 성격 특성에 의해 조절되는 8개의 신경과학 기반 메커니즘",
+        "features": ["재강화 및 RIF", "비자발적 회상 및 FOK", "시간적 요약 추출", "출처 신뢰도 감소"],
+        "capabilities": ["기억 재강화", "감정 조절", "스키마 인코딩"]
       },
-      "distributed": {
-        "title": "분산 인지",
-        "description": "여러 에이전트 간 병렬 처리와 원활한 조정, 부하 분산",
-        "features": [
-          "로드 밸런싱",
-          "자동 확장",
-          "장애 허용"
-        ],
-        "capabilities": [
-          "오케스트레이션",
-          "메시지 큐잉",
-          "상태 관리"
-        ]
+      "graphRag": {
+        "title": "Graph-Based RAG",
+        "description": "HyDE 검색, GraphRAG 커뮤니티 탐지 및 10개 문서 로더를 갖춘 7개의 벡터 스토어 백엔드",
+        "features": ["HyDE 가설적 임베딩", "Louvain 커뮤니티 탐지", "4가지 청킹 전략", "SQLite에서 Neo4j 백엔드"],
+        "capabilities": ["HyDE Retrieval", "GraphRAG Pipeline", "Multi-Backend Storage"]
       },
-      "memory": {
-        "title": "지속 메모리",
-        "description": "4단계 자동 확장이 가능한 7개의 벡터 스토어 백엔드 (SQLite → HNSW → Postgres+pgvector → Qdrant). 관찰적 메모리 압축 (시간적 추론을 통한 3-10배). 10개의 문서 로더, 3단계 PDF 처리, 4가지 청킹 전략. 10가지 형식으로 가져오기/내보내기. 원커맨드 백엔드 마이그레이션. Qdrant 및 Postgres Docker 자동 설정.",
-        "features": [
-          "벡터 임베딩",
-          "시맨틱 검색",
-          "버전 관리"
-        ],
-        "capabilities": [
-          "벡터 스토리지",
-          "SQL 스토리지",
-          "체인 관리"
-        ]
+      "orchestration": {
+        "title": "Multi-Agent Orchestration",
+        "description": "순차에서 그래프 기반까지 6가지 전략과 Mission API, Tree-of-Thought 계획, 워크플로 DSL",
+        "features": ["순차 및 병렬", "토론 및 리뷰 루프", "워크플로 DSL + 체크포인팅", "AgentGraph DAGs"],
+        "capabilities": ["Mission API", "Workflow Engine", "Agent Graphs"]
       },
       "streaming": {
-        "title": "실시간 스트리밍",
-        "description": "WebSocket 지원과 실시간 스트리밍의 초저지연 이벤트 아키텍처",
-        "features": [
-          "WebSocket 지원",
-          "이벤트 기반",
-          "버퍼링"
-        ],
-        "capabilities": [
-          "실시간 통신",
-          "RPC 프로토콜",
-          "이벤트 루프"
-        ]
+        "title": "Real-time Streaming",
+        "description": "스트리밍 가드레일, 부분 JSON 출력 및 도구 호출 진행 이벤트가 포함된 SSE 및 WebSocket 지원",
+        "features": ["SSE + WebSocket", "비행 중 가드레일", "부분 JSON 스트리밍", "도구 진행 이벤트"],
+        "capabilities": ["Event Streaming", "Streaming Guards", "Progress Tracking"]
+      },
+      "hexaco": {
+        "title": "HEXACO Personality",
+        "description": "기억, 커뮤니케이션 스타일, 의사결정 행동을 형성하는 6차원 성격 모델링",
+        "features": ["6축 특성 모델링", "기억 조절", "스타일 적응", "9개 에이전트 프리셋"],
+        "capabilities": ["Trait Engine", "인지 조절", "적응형 스타일"]
+      },
+      "guardrails": {
+        "title": "5-Tier Guardrails",
+        "description": "위험에서 편집증까지의 보안 단계와 PII 삭제, ML 분류기, 환각 탐지",
+        "features": ["4단계 PII 삭제", "ONNX BERT 분류기", "그라운딩 가드 (NLI)", "OWASP Top 10 스캔"],
+        "capabilities": ["보안 단계", "콘텐츠 분류기", "코드 보안"]
+      },
+      "voice": {
+        "title": "Voice Pipeline",
+        "description": "실시간 스트리밍, VAD, 화자 분할 및 전화 지원을 포함한 12개 STT 및 12개 TTS 제공자",
+        "features": ["12 STT + 12 TTS", "VAD + 화자 분할", "실시간 스트리밍", "Twilio/Telnyx/Plivo"],
+        "capabilities": ["음성 인식", "음성 활동 탐지", "전화 통합"]
+      },
+      "providers": {
+        "title": "21 LLM Providers",
+        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq 외 16개 더, 자동 폴백 체인 및 provider-first API",
+        "features": ["자동 폴백 (402/429/5xx)", "Provider-first API", "CLI providers", "OpenRouter bridge"],
+        "capabilities": ["Provider Registry", "Fallback Chains", "Model Resolution"]
       }
-    },
-    "stats": {
-      "contextWindow": "컨텍스트 윈도우",
-      "inferenceLatency": "추론 지연 시간",
-      "activePersonas": "활성 페르소나",
-      "parallelTasks": "병렬 작업",
-      "concurrencyModel": "동시성 모델",
-      "orchestrationOverhead": "오케스트레이션 오버헤드",
-      "vectorCapacity": "벡터 용량",
-      "retrievalSpeed": "검색 속도",
-      "compressionRatio": "압축률",
-      "endToEndLatency": "엔드투엔드 지연 시간",
-      "timeToFirstByte": "첫 바이트까지 시간",
-      "connectionStability": "연결 안정성"
     }
   },
   "enterprise": {

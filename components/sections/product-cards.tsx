@@ -8,10 +8,18 @@ import {
   Layers,
   Database,
   Zap,
-  Code,
+  Shield,
+  Mic,
   Server,
   Globe,
-  Puzzle
+  Puzzle,
+  Network,
+  AudioWaveform,
+  Fingerprint,
+  Activity,
+  Search,
+  GitBranch,
+  Radio
 } from 'lucide-react'
 
 interface ProductCard {
@@ -36,60 +44,60 @@ interface ProductCard {
 function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
   return [
     {
-      id: 'adaptive-intelligence',
-      title: t('cards.adaptive.title'),
-      description: t('cards.adaptive.description'),
+      id: 'cognitive-memory',
+      title: t('cards.cognitiveMemory.title'),
+      description: t('cards.cognitiveMemory.description'),
       icon: Brain,
       stats: [
-        { label: t('stats.contextWindow'), value: '128k', trend: 0 },
-        { label: t('stats.inferenceLatency'), value: '< 200ms' },
-        { id: 'active-models', label: t('stats.activePersonas'), value: 14, live: true }
+        { label: t('stats.mechanisms'), value: '8' },
+        { label: t('stats.personalityAxes'), value: '6 HEXACO' },
+        { label: t('stats.decayCurve'), value: 'Ebbinghaus' }
       ],
-      features: [t('cards.adaptive.features.0'), t('cards.adaptive.features.1'), t('cards.adaptive.features.2')],
+      features: [t('cards.cognitiveMemory.features.0'), t('cards.cognitiveMemory.features.1'), t('cards.cognitiveMemory.features.2'), t('cards.cognitiveMemory.features.3')],
       bgAnimation: 'neural',
       accentColor: '#FF00FF',
       capabilities: [
-        { name: t('cards.adaptive.capabilities.0'), icon: Brain },
-        { name: t('cards.adaptive.capabilities.1'), icon: Database },
-        { name: t('cards.adaptive.capabilities.2'), icon: Puzzle }
+        { name: t('cards.cognitiveMemory.capabilities.0'), icon: Brain },
+        { name: t('cards.cognitiveMemory.capabilities.1'), icon: Activity },
+        { name: t('cards.cognitiveMemory.capabilities.2'), icon: Fingerprint }
       ]
     },
     {
-      id: 'distributed-cognition',
-      title: t('cards.distributed.title'),
-      description: t('cards.distributed.description'),
-      icon: Layers,
-      stats: [
-        { id: 'concurrent-tasks', label: t('stats.parallelTasks'), value: 'unlimited', live: true },
-        { label: t('stats.concurrencyModel'), value: 'async' },
-        { label: t('stats.orchestrationOverhead'), value: '< 2ms' }
-      ],
-      features: [t('cards.distributed.features.0'), t('cards.distributed.features.1'), t('cards.distributed.features.2')],
-      bgAnimation: 'flow',
-      accentColor: '#00FFFF',
-      capabilities: [
-        { name: t('cards.distributed.capabilities.0'), icon: Server },
-        { name: t('cards.distributed.capabilities.1'), icon: Layers },
-        { name: t('cards.distributed.capabilities.2'), icon: Database }
-      ]
-    },
-    {
-      id: 'persistent-memory',
-      title: t('cards.memory.title'),
-      description: t('cards.memory.description'),
+      id: 'graph-rag',
+      title: t('cards.graphRag.title'),
+      description: t('cards.graphRag.description'),
       icon: Database,
       stats: [
-        { label: t('stats.vectorCapacity'), value: '1B+', trend: 0 },
-        { label: t('stats.retrievalSpeed'), value: '< 50ms' },
-        { label: t('stats.compressionRatio'), value: '10:1' }
+        { label: t('stats.vectorBackends'), value: '7' },
+        { label: t('stats.docLoaders'), value: '10' },
+        { label: t('stats.chunkStrategies'), value: '4' }
       ],
-      features: [t('cards.memory.features.0'), t('cards.memory.features.1'), t('cards.memory.features.2')],
+      features: [t('cards.graphRag.features.0'), t('cards.graphRag.features.1'), t('cards.graphRag.features.2'), t('cards.graphRag.features.3')],
       bgAnimation: 'grid',
       accentColor: '#FFFF00',
       capabilities: [
-        { name: t('cards.memory.capabilities.0'), icon: Database },
-        { name: t('cards.memory.capabilities.1'), icon: Database },
-        { name: t('cards.memory.capabilities.2'), icon: Code }
+        { name: t('cards.graphRag.capabilities.0'), icon: Search },
+        { name: t('cards.graphRag.capabilities.1'), icon: Network },
+        { name: t('cards.graphRag.capabilities.2'), icon: Database }
+      ]
+    },
+    {
+      id: 'multi-agent-orchestration',
+      title: t('cards.orchestration.title'),
+      description: t('cards.orchestration.description'),
+      icon: Layers,
+      stats: [
+        { label: t('stats.strategies'), value: '6' },
+        { label: t('stats.planningEngine'), value: 'ToT' },
+        { label: t('stats.workflowDsl'), value: 'YAML + TS' }
+      ],
+      features: [t('cards.orchestration.features.0'), t('cards.orchestration.features.1'), t('cards.orchestration.features.2'), t('cards.orchestration.features.3')],
+      bgAnimation: 'flow',
+      accentColor: '#00FFFF',
+      capabilities: [
+        { name: t('cards.orchestration.capabilities.0'), icon: Layers },
+        { name: t('cards.orchestration.capabilities.1'), icon: GitBranch },
+        { name: t('cards.orchestration.capabilities.2'), icon: Puzzle }
       ]
     },
     {
@@ -98,17 +106,93 @@ function getProductCards(t: ReturnType<typeof useTranslations>): ProductCard[] {
       description: t('cards.streaming.description'),
       icon: Zap,
       stats: [
-        { label: t('stats.endToEndLatency'), value: '< 100ms', trend: -8 },
-        { label: t('stats.timeToFirstByte'), value: '< 1ms' },
+        { label: t('stats.protocols'), value: 'SSE + WS' },
+        { label: t('stats.guardrailMode'), value: 'In-flight' },
         { id: 'uptime', label: t('stats.connectionStability'), value: '99.9%', live: true }
       ],
-      features: [t('cards.streaming.features.0'), t('cards.streaming.features.1'), t('cards.streaming.features.2')],
+      features: [t('cards.streaming.features.0'), t('cards.streaming.features.1'), t('cards.streaming.features.2'), t('cards.streaming.features.3')],
       bgAnimation: 'pulse',
       accentColor: '#00FF00',
       capabilities: [
-        { name: t('cards.streaming.capabilities.0'), icon: Globe },
+        { name: t('cards.streaming.capabilities.0'), icon: Radio },
         { name: t('cards.streaming.capabilities.1'), icon: Zap },
         { name: t('cards.streaming.capabilities.2'), icon: Server }
+      ]
+    },
+    {
+      id: 'hexaco-personality',
+      title: t('cards.hexaco.title'),
+      description: t('cards.hexaco.description'),
+      icon: Fingerprint,
+      stats: [
+        { label: t('stats.dimensions'), value: '6' },
+        { label: t('stats.presets'), value: '9' },
+        { label: t('stats.styleAdaptation'), value: 'Auto' }
+      ],
+      features: [t('cards.hexaco.features.0'), t('cards.hexaco.features.1'), t('cards.hexaco.features.2'), t('cards.hexaco.features.3')],
+      bgAnimation: 'neural',
+      accentColor: '#FF6B6B',
+      capabilities: [
+        { name: t('cards.hexaco.capabilities.0'), icon: Fingerprint },
+        { name: t('cards.hexaco.capabilities.1'), icon: Brain },
+        { name: t('cards.hexaco.capabilities.2'), icon: Activity }
+      ]
+    },
+    {
+      id: 'guardrails',
+      title: t('cards.guardrails.title'),
+      description: t('cards.guardrails.description'),
+      icon: Shield,
+      stats: [
+        { label: t('stats.securityTiers'), value: '5' },
+        { label: t('stats.piiLayers'), value: '4-tier' },
+        { label: t('stats.mlClassifiers'), value: 'ONNX BERT' }
+      ],
+      features: [t('cards.guardrails.features.0'), t('cards.guardrails.features.1'), t('cards.guardrails.features.2'), t('cards.guardrails.features.3')],
+      bgAnimation: 'grid',
+      accentColor: '#4ECDC4',
+      capabilities: [
+        { name: t('cards.guardrails.capabilities.0'), icon: Shield },
+        { name: t('cards.guardrails.capabilities.1'), icon: Search },
+        { name: t('cards.guardrails.capabilities.2'), icon: Puzzle }
+      ]
+    },
+    {
+      id: 'voice-pipeline',
+      title: t('cards.voice.title'),
+      description: t('cards.voice.description'),
+      icon: Mic,
+      stats: [
+        { label: t('stats.sttProviders'), value: '12' },
+        { label: t('stats.ttsProviders'), value: '12' },
+        { label: t('stats.telephony'), value: '3 carriers' }
+      ],
+      features: [t('cards.voice.features.0'), t('cards.voice.features.1'), t('cards.voice.features.2'), t('cards.voice.features.3')],
+      bgAnimation: 'pulse',
+      accentColor: '#A78BFA',
+      capabilities: [
+        { name: t('cards.voice.capabilities.0'), icon: Mic },
+        { name: t('cards.voice.capabilities.1'), icon: AudioWaveform },
+        { name: t('cards.voice.capabilities.2'), icon: Globe }
+      ]
+    },
+    {
+      id: 'llm-providers',
+      title: t('cards.providers.title'),
+      description: t('cards.providers.description'),
+      icon: Server,
+      stats: [
+        { label: t('stats.providers'), value: '21' },
+        { label: t('stats.fallbackChain'), value: 'Auto' },
+        { label: t('stats.cliProviders'), value: '2' }
+      ],
+      features: [t('cards.providers.features.0'), t('cards.providers.features.1'), t('cards.providers.features.2'), t('cards.providers.features.3')],
+      bgAnimation: 'flow',
+      accentColor: '#F97316',
+      capabilities: [
+        { name: t('cards.providers.capabilities.0'), icon: Server },
+        { name: t('cards.providers.capabilities.1'), icon: Globe },
+        { name: t('cards.providers.capabilities.2'), icon: Zap }
       ]
     }
   ]
@@ -397,7 +481,7 @@ export function ProductCards() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {productCards.map((card, index) => (
-            <div key={card.id} className="relative group h-[420px] cursor-pointer perspective-1000">
+            <div key={card.id} className="relative group h-[440px] cursor-pointer perspective-1000">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
