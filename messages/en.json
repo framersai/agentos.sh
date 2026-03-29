@@ -951,6 +951,10 @@
         "name": "Review Loop",
         "description": "One agent produces output, another reviews and requests revisions. The loop continues until the reviewer approves or max rounds are reached."
       },
+      "review-loop": {
+        "name": "Review Loop",
+        "description": "One agent produces output, another reviews and requests revisions. The loop continues until the reviewer approves or max rounds are reached."
+      },
       "hierarchical": {
         "name": "Hierarchical",
         "description": "A coordinator agent dispatches sub-tasks to specialist agents via tool calls. The coordinator decides which agents to invoke and in what order at runtime."
