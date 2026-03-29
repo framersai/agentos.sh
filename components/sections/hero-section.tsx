@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState, memo } from 'react';
-import { ArrowRight, Github, Terminal, Star, GitBranch, Shield, Check } from 'lucide-react';
+import { ArrowRight, Github, Terminal, Star, GitBranch, Shield, Check, Code2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 // Toast removed — copy feedback is inline (icon swap + text change)
@@ -201,8 +201,10 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               <code className="font-mono">{showToast ? 'Copied!' : 'npm install @framers/agentos'}</code>
             </Button>
             <a href="#code" onClick={(e) => { e.preventDefault(); document.getElementById('code')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-               className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer">
-              See examples <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold border border-violet-500/30 bg-violet-500/10 text-violet-300 hover:bg-violet-500/20 hover:border-violet-500/50 transition-all cursor-pointer group">
+              <Code2 className="w-4 h-4" aria-hidden="true" />
+              See code examples
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
             </a>
           </div>
 
