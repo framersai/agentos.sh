@@ -7,6 +7,7 @@ import type { Route } from 'next';
 import { Menu, X, Github } from 'lucide-react';
 import AgentOSWordmark from './branding/AgentOSWordmark';
 import { ModeToggle } from './mode-toggle';
+import { ThemeSelector } from './theme-selector';
 import { LanguageSwitcher } from './language-switcher';
 import { DocSearch } from './docs/DocSearch';
 
@@ -226,6 +227,7 @@ export function SiteHeader() {
           </a>
           {/* Theme controls */}
           <div className="flex items-center gap-1.5">
+            <ThemeSelector />
             <ModeToggle />
             <LanguageSwitcher />
           </div>
