@@ -48,15 +48,27 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   const [githubForks, setGithubForks] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
   const [contentReady, setContentReady] = useState(false);
+  const [morphFontSize, setMorphFontSize] = useState(40);
   const isDark = resolvedTheme === 'dark';
 
   // Mark as mounted after hydration, then trigger content ready
-  useEffect(() => { 
+  useEffect(() => {
     setMounted(true);
-    // Small delay for smooth fade-in
     const timer = setTimeout(() => setContentReady(true), 50);
     return () => clearTimeout(timer);
   }, []);
+
+  // Match ParticleMorphText font size to the CSS text breakpoints
+  useEffect(() => {
+    if (!mounted) return;
+    const update = () => {
+      const w = window.innerWidth;
+      setMorphFontSize(w >= 1024 ? 40 : w >= 640 ? 30 : 22);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -152,21 +164,17 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
-          {/* Single ParticleMorphText per word (2 total, not 6).
-              Rendered at lg size (40px) and CSS-scaled down at smaller breakpoints.
-              scale(0.55) = 22/40, scale(0.75) = 30/40. transform-origin: left center
-              keeps text left-aligned. Wrapper width is also scaled proportionally. */}
-          <h1 className="font-bold tracking-tight mb-4" itemProp="name">
+          <h1 className="font-bold tracking-tight mb-2" itemProp="name">
             <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-tight flex items-baseline gap-1">
-              <span className="inline-block origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100 shrink-0 w-[132px] sm:w-[180px] lg:w-[240px]" style={{ marginTop: '-2px' }}>
-                <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
+              <span className="inline-block shrink-0">
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
               </span>
               <span className="text-[var(--color-text-primary)]">intelligence</span>
             </div>
             <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-tight flex items-baseline gap-1">
               <span className="text-[var(--color-text-secondary)]">for</span>
-              <span className="inline-block origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100 shrink-0 w-[132px] sm:w-[180px] lg:w-[240px]" style={{ marginTop: '-2px' }}>
-                <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} />
+              <span className="inline-block shrink-0">
+                <ParticleMorphText words={morphingWords} interval={2500} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} />
               </span>
               <span className="text-[var(--color-text-primary)]">agents</span>
             </div>
