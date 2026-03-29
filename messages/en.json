@@ -570,6 +570,22 @@
       "deployment": {
         "title": "Production Deployment",
         "description": "Deploy AgentOS with Docker and Kubernetes"
+      },
+      "missionOrchestrator": {
+        "title": "Mission Orchestrator",
+        "description": "Describe a goal in natural language — the planner decomposes it into agents"
+      },
+      "voiceAgent": {
+        "title": "Voice Agent with Tools",
+        "description": "Build a voice-enabled agent with STT, TTS, and function calling"
+      },
+      "orchestrationGraph": {
+        "title": "Execution Graph (Review Loop)",
+        "description": "Build a cyclic review workflow with human approval gates"
+      },
+      "imageGeneration": {
+        "title": "Image Generation",
+        "description": "Generate and edit images across providers with a unified API"
       }
     },
     "cta": {
