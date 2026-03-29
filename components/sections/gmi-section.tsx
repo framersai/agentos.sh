@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight } from 'lucide-react'
+import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight, Fingerprint, Database, Shield } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 export function GMISection() {
@@ -296,7 +296,62 @@ export function GMISection() {
           <p className="text-lg max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
             {t('subtitle')}
           </p>
-                    </div>
+        </div>
+
+        {/* GMI Explainer Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          className="mb-10 max-w-4xl mx-auto"
+        >
+          <div
+            className="rounded-2xl p-[1px]"
+            style={{
+              background: 'linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary))',
+            }}
+          >
+            <div
+              className="rounded-2xl px-6 py-5 backdrop-blur-xl"
+              style={{
+                background: 'var(--color-background-glass)',
+              }}
+            >
+              <div className="flex flex-wrap items-center gap-3 mb-3">
+                <span
+                  className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
+                  style={{
+                    background: 'color-mix(in srgb, var(--color-accent-primary) 15%, transparent)',
+                    color: 'var(--color-accent-primary)',
+                    border: '1px solid color-mix(in srgb, var(--color-accent-primary) 30%, transparent)',
+                  }}
+                >
+                  Core Concept
+                </span>
+                <h3 className="text-lg font-bold" style={{ color: 'var(--color-text-primary)' }}>
+                  What is a GMI?
+                </h3>
+              </div>
+              <p className="text-sm font-medium mb-4" style={{ color: 'var(--color-text-secondary)' }}>
+                {t('whatIsGmi')}
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {[
+                  { icon: Brain, label: 'Persistent cognitive state' },
+                  { icon: Fingerprint, label: 'HEXACO personality identity' },
+                  { icon: Database, label: 'Episodic + semantic memory' },
+                  { icon: Shield, label: 'Per-instance guardrails' },
+                ].map(({ icon: Icon, label }) => (
+                  <div key={label} className="flex items-center gap-2">
+                    <Icon className="w-4 h-4 shrink-0" style={{ color: 'var(--color-accent-primary)' }} />
+                    <span className="text-xs font-medium" style={{ color: 'var(--color-text-primary)' }}>{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}

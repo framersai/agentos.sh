@@ -25,7 +25,7 @@ function ForgeParticles() {
       r: 1.5 + Math.random() * 2.5,
       delay: Math.random() * 6,
       dur: 4 + Math.random() * 4,
-      color: i % 3 === 0 ? '#22d3ee' : i % 3 === 1 ? '#34d399' : '#60a5fa',
+      color: i % 3 === 0 ? 'var(--color-accent-primary)' : i % 3 === 1 ? 'var(--color-accent-secondary)' : 'var(--color-accent-primary)',
     })),
   [])
 
@@ -93,9 +93,9 @@ function ToolForgingDiagram({ steps }: { steps: string[] }) {
     <svg viewBox="0 0 870 180" className="w-full h-auto" role="img" aria-label="Tool forging pipeline">
       <defs>
         <linearGradient id="forge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#22d3ee" />
-          <stop offset="50%" stopColor="#34d399" />
-          <stop offset="100%" stopColor="#60a5fa" />
+          <stop offset="0%" stopColor="var(--color-accent-primary)" />
+          <stop offset="50%" stopColor="var(--color-accent-secondary)" />
+          <stop offset="100%" stopColor="var(--color-accent-primary)" />
         </linearGradient>
         <filter id="forge-glow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="6" result="glow" />
@@ -105,13 +105,13 @@ function ToolForgingDiagram({ steps }: { steps: string[] }) {
           </feMerge>
         </filter>
         <marker id="forge-arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
-          <path d="M0,0 L8,4 L0,8 z" fill="#22d3ee" />
+          <path d="M0,0 L8,4 L0,8 z" fill="var(--color-accent-primary)" />
         </marker>
       </defs>
 
       {/* Ambient glow blobs */}
-      <circle cx="130" cy="90" r="80" fill="#22d3ee" opacity="0.06" filter="url(#forge-glow)" />
-      <circle cx="540" cy="90" r="100" fill="#34d399" opacity="0.05" filter="url(#forge-glow)" />
+      <circle cx="130" cy="90" r="80" fill="var(--color-accent-primary)" opacity="0.06" filter="url(#forge-glow)" />
+      <circle cx="540" cy="90" r="100" fill="var(--color-accent-secondary)" opacity="0.05" filter="url(#forge-glow)" />
 
       {/* Connection lines */}
       {nodePositions.slice(0, -1).map((from, i) => {
@@ -130,7 +130,7 @@ function ToolForgingDiagram({ steps }: { steps: string[] }) {
               markerEnd="url(#forge-arrow)"
             />
             {/* Animated flow dot */}
-            <circle r="3.5" fill="#22d3ee" opacity="0.9">
+            <circle r="3.5" fill="var(--color-accent-primary)" opacity="0.9">
               <animate
                 attributeName="cx"
                 values={`${from.x + 120};${to.x}`}
@@ -168,7 +168,7 @@ function ToolForgingDiagram({ steps }: { steps: string[] }) {
             height={58}
             rx="18"
             fill="none"
-            stroke="#22d3ee"
+            stroke="var(--color-accent-primary)"
             strokeWidth="1"
             opacity="0.15"
           >
@@ -195,7 +195,7 @@ function ToolForgingDiagram({ steps }: { steps: string[] }) {
             x={pos.x + 60}
             y={pos.y + 20}
             textAnchor="middle"
-            fill="#22d3ee"
+            fill="var(--color-accent-primary)"
             fontSize="9"
             fontWeight="700"
           >
@@ -239,12 +239,12 @@ function AgentSynthesisDiagram({ labels }: { labels: { orchestrator: string; spe
     <svg viewBox="0 0 800 340" className="w-full h-auto" role="img" aria-label="Agent synthesis diagram">
       <defs>
         <radialGradient id="synth-center" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#34d399" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="#34d399" stopOpacity="0" />
+          <stop offset="0%" stopColor="var(--color-accent-secondary)" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="var(--color-accent-secondary)" stopOpacity="0" />
         </radialGradient>
         <linearGradient id="synth-edge" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#34d399" />
-          <stop offset="100%" stopColor="#22d3ee" />
+          <stop offset="0%" stopColor="var(--color-accent-secondary)" />
+          <stop offset="100%" stopColor="var(--color-accent-primary)" />
         </linearGradient>
       </defs>
 
@@ -257,10 +257,10 @@ function AgentSynthesisDiagram({ labels }: { labels: { orchestrator: string; spe
         cy={cy}
         r="44"
         fill="var(--color-background-primary)"
-        stroke="#34d399"
+        stroke="var(--color-accent-secondary)"
         strokeWidth="2"
       />
-      <text x={cx} y={cy + 4} textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="700">
+      <text x={cx} y={cy + 4} textAnchor="middle" fill="var(--color-accent-secondary)" fontSize="11" fontWeight="700">
         {labels.orchestrator}
       </text>
 
@@ -284,7 +284,7 @@ function AgentSynthesisDiagram({ labels }: { labels: { orchestrator: string; spe
               opacity="0.4"
             />
             {/* Animated pulse dot */}
-            <circle r="3" fill="#34d399">
+            <circle r="3" fill="var(--color-accent-secondary)">
               <animate
                 attributeName="cx"
                 values={`${cx};${sx};${cx}`}
@@ -311,7 +311,7 @@ function AgentSynthesisDiagram({ labels }: { labels: { orchestrator: string; spe
             >
               <animate
                 attributeName="stroke"
-                values="var(--color-border-primary);#34d399;var(--color-border-primary)"
+                values="var(--color-border-primary);var(--color-accent-secondary);var(--color-border-primary)"
                 dur={`${3 + i * 0.3}s`}
                 repeatCount="indefinite"
               />
@@ -339,7 +339,7 @@ function AgentSynthesisDiagram({ labels }: { labels: { orchestrator: string; spe
         y1={cy + 50}
         x2={cx}
         y2={cy + r + 55}
-        stroke="#34d399"
+        stroke="var(--color-accent-secondary)"
         strokeWidth="1.5"
         strokeDasharray="4,4"
         opacity="0.4"
@@ -366,16 +366,16 @@ function FeedbackLoopDiagram({ steps }: { steps: string[] }) {
     <svg viewBox="0 0 800 340" className="w-full h-auto" role="img" aria-label="Self-improving feedback loop">
       <defs>
         <linearGradient id="loop-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#60a5fa" />
-          <stop offset="100%" stopColor="#a78bfa" />
+          <stop offset="0%" stopColor="var(--color-accent-primary)" />
+          <stop offset="100%" stopColor="var(--color-accent-secondary)" />
         </linearGradient>
       </defs>
 
       {/* Central label */}
-      <text x={cx} y={cy - 6} textAnchor="middle" fill="#60a5fa" fontSize="12" fontWeight="700">
+      <text x={cx} y={cy - 6} textAnchor="middle" fill="var(--color-accent-primary)" fontSize="12" fontWeight="700">
         Self-Improving
       </text>
-      <text x={cx} y={cy + 10} textAnchor="middle" fill="#60a5fa" fontSize="12" fontWeight="700">
+      <text x={cx} y={cy + 10} textAnchor="middle" fill="var(--color-accent-primary)" fontSize="12" fontWeight="700">
         Loop
       </text>
 
@@ -383,7 +383,7 @@ function FeedbackLoopDiagram({ steps }: { steps: string[] }) {
       <circle cx={cx} cy={cy} r={r} fill="none" stroke="url(#loop-grad)" strokeWidth="2" strokeDasharray="8,6" opacity="0.35" />
 
       {/* Animated orbiting dot */}
-      <circle r="5" fill="#60a5fa">
+      <circle r="5" fill="var(--color-accent-primary)">
         <animateMotion
           dur="6s"
           repeatCount="indefinite"
@@ -406,7 +406,7 @@ function FeedbackLoopDiagram({ steps }: { steps: string[] }) {
               y1={cy + r * Math.sin(angle)}
               x2={nx}
               y2={ny}
-              stroke="#60a5fa"
+              stroke="var(--color-accent-primary)"
               strokeWidth="1"
               strokeDasharray="3,3"
               opacity="0.3"
@@ -522,18 +522,18 @@ export function EmergentSection() {
       id="emergent"
       className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
       style={{
-        background: 'linear-gradient(175deg, var(--color-background-primary) 0%, color-mix(in srgb, var(--color-background-secondary) 85%, #0c1222) 100%)',
+        background: 'linear-gradient(175deg, var(--color-background-primary) 0%, var(--color-background-elevated) 100%)',
       }}
       aria-labelledby="emergent-heading"
     >
       {/* Ambient gradient blurs */}
       <div
         className="absolute top-[-100px] right-1/4 w-[600px] h-[600px] rounded-full blur-3xl opacity-[0.07] pointer-events-none"
-        style={{ background: '#22d3ee' }}
+        style={{ background: 'var(--color-accent-primary)' }}
       />
       <div
         className="absolute bottom-[-80px] left-1/3 w-[500px] h-[500px] rounded-full blur-3xl opacity-[0.06] pointer-events-none"
-        style={{ background: '#34d399' }}
+        style={{ background: 'var(--color-accent-secondary)' }}
       />
 
       {/* Forge spark particles */}
@@ -576,9 +576,9 @@ export function EmergentSection() {
               key={pill}
               className="px-4 py-2 rounded-full text-xs font-bold tracking-wide"
               style={{
-                background: 'linear-gradient(135deg, color-mix(in srgb, #22d3ee 12%, transparent), color-mix(in srgb, #34d399 8%, transparent))',
-                border: '1px solid color-mix(in srgb, #22d3ee 25%, transparent)',
-                color: '#22d3ee',
+                background: 'linear-gradient(135deg, color-mix(in srgb, var(--color-accent-primary) 12%, transparent), color-mix(in srgb, var(--color-accent-secondary) 8%, transparent))',
+                border: '1px solid color-mix(in srgb, var(--color-accent-primary) 25%, transparent)',
+                color: 'var(--color-accent-primary)',
               }}
             >
               {pill}
@@ -608,11 +608,10 @@ export function EmergentSection() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-4 text-sm font-bold transition-all relative ${
-                      isActive
-                        ? 'text-[#22d3ee]'
-                        : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]'
-                    }`}
+                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-4 text-sm font-bold transition-all relative`}
+                    style={{
+                      color: isActive ? 'var(--color-accent-primary)' : 'var(--color-text-muted)',
+                    }}
                     aria-selected={isActive}
                     role="tab"
                   >
@@ -622,7 +621,7 @@ export function EmergentSection() {
                       <motion.div
                         layoutId="emergent-tab-indicator"
                         className="absolute bottom-0 left-0 right-0 h-0.5"
-                        style={{ background: 'linear-gradient(to right, #22d3ee, #34d399)' }}
+                        style={{ background: 'linear-gradient(to right, var(--color-accent-primary), var(--color-accent-secondary))' }}
                       />
                     )}
                   </button>
@@ -661,7 +660,7 @@ export function EmergentSection() {
                           >
                             <span
                               className="mt-1 h-1.5 w-1.5 rounded-full shrink-0"
-                              style={{ background: '#22d3ee' }}
+                              style={{ background: 'var(--color-accent-primary)' }}
                               aria-hidden="true"
                             />
                             <span>{detail}</span>
