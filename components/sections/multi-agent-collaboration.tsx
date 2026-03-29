@@ -272,8 +272,8 @@ console.log(result.agentCalls)       // All 5 agent traces (ran concurrently)`
                   </h3>
 
                   {/* Agent Flow Diagram */}
-                  <div className="relative h-64 flex items-center justify-center">
-                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 250">
+                  <div className="relative h-64 flex items-center justify-center" style={{ maxWidth: '100%', overflowX: 'hidden' }}>
+                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid meet">
                       {currentPattern.mode === 'consensus' && (
                         <>
                           {/* Central orchestrator */}
