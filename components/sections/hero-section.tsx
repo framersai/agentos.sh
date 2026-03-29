@@ -201,7 +201,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               <code className="font-mono">{showToast ? 'Copied!' : 'npm install @framers/agentos'}</code>
             </Button>
             <a href="#code" onClick={(e) => { e.preventDefault(); document.getElementById('code')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold border border-violet-500/30 bg-violet-500/10 text-violet-300 hover:bg-violet-500/20 hover:border-violet-500/50 transition-all cursor-pointer group">
+               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold border border-[var(--color-accent-primary)] bg-[var(--color-accent-primary)]/10 text-[var(--color-accent-primary)] hover:bg-[var(--color-accent-primary)]/20 transition-all cursor-pointer group">
               <Code2 className="w-4 h-4" aria-hidden="true" />
               See code examples
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
