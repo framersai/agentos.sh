@@ -22,14 +22,14 @@
   "hero": {
     "badge": "Open Source · TypeScript · Production-Ready",
     "title": "Open-Source TypeScript AI Agent Runtime",
-    "subtitle": "Production-ready TypeScript runtime with multimodal RAG, multi-agent orchestration, 37 channel adapters, 5-tier guardrails, 21 LLM providers, and 40 curated skills. Self-hostable and free.",
+    "subtitle": "Production-ready TypeScript runtime with multimodal RAG, multi-agent orchestration, 37 channel adapters, 5-tier guardrails, 21 LLM providers, and 72 curated skills. Self-hostable and free.",
     "cycleWords": ["Adaptive","Emergent"],
     "cycleWordsTail": ["emergent","adaptive"],
     "headlinePairs": [
       { "top": "Production AI Agents", "bottom": "with Multimodal RAG" },
       { "top": "Multi-Agent Orchestration", "bottom": "across 37 Channels" },
       { "top": "5-Tier Guardrails", "bottom": "with Prompt Injection Defense" },
-      { "top": "21 LLM Providers", "bottom": "with 40 Curated Skills" }
+      { "top": "21 LLM Providers", "bottom": "with 72 Curated Skills" }
     ],
     "technicalHighlights": [
       { "title": "Streaming-first runtime", "detail": "Token-level delivery across 37 channel adapters and guardrails." },
