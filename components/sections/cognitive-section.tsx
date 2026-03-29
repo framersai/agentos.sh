@@ -1,591 +1,547 @@
 'use client'
 
-import { useRef, useMemo } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useState, useRef, useMemo } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { ArrowRight } from 'lucide-react'
+import { SectionLabel } from '../ui/section-label'
 
 /* ------------------------------------------------------------------ */
-/*  Subsection 1 — Cognitive Memory Mechanisms (radial SVG diagram)   */
+/*  Custom SVG icon components (stroke-based line art, 24x24 viewBox)  */
 /* ------------------------------------------------------------------ */
 
-/** Static layout for the 8 cognitive mechanism nodes arranged radially. */
-const MECHANISM_ICONS = [
-  '\u{1F504}', // Reconsolidation — rotate arrows
-  '\u{1F6AB}', // RIF — prohibited
-  '\u{26A1}',  // Involuntary Recall — lightning
-  '\u{1F9E0}', // FOK — brain
-  '\u{23F3}',  // Temporal Gist — hourglass
-  '\u{1F9E9}', // Schema Encoding — puzzle
-  '\u{1F50D}', // Source Confidence Decay — magnifying glass
-  '\u{2764}',  // Emotion Regulation — heart
-]
-
-/** Edge pairs (indices into the 8-node array) showing relatedness. */
-const MECHANISM_EDGES: [number, number][] = [
-  [0, 4], // reconsolidation <-> temporal gist
-  [0, 5], // reconsolidation <-> schema encoding
-  [1, 4], // RIF <-> temporal gist
-  [2, 7], // involuntary recall <-> emotion regulation
-  [3, 6], // FOK <-> source confidence decay
-  [5, 6], // schema encoding <-> source confidence
-  [4, 7], // temporal gist <-> emotion regulation
-  [1, 3], // RIF <-> FOK
-]
-
-function CognitiveDiagram({ mechanismNames }: { mechanismNames: string[] }) {
-  const cx = 250
-  const cy = 200
-  const r = 145
-
-  const nodes = mechanismNames.map((name, i) => {
-    const angle = (i / 8) * 2 * Math.PI - Math.PI / 2
-    return {
-      x: cx + r * Math.cos(angle),
-      y: cy + r * Math.sin(angle),
-      name,
-      icon: MECHANISM_ICONS[i],
-    }
-  })
-
+/**
+ * Reconsolidation icon: two circular arrows forming a continuous loop,
+ * representing the rewriting of memories upon recall.
+ */
+function IconReconsolidation({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 500 400" className="w-full h-auto max-w-2xl mx-auto" role="img" aria-label="Cognitive mechanisms diagram">
-      <defs>
-        <radialGradient id="cog-center-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="var(--color-accent-primary)" stopOpacity="0.15" />
-          <stop offset="100%" stopColor="var(--color-accent-primary)" stopOpacity="0" />
-        </radialGradient>
-        <filter id="cog-soft-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="6" result="glow" />
-          <feMerge>
-            <feMergeNode in="glow" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
-      {/* Ambient center glow */}
-      <circle cx={cx} cy={cy} r="90" fill="url(#cog-center-glow)" />
-
-      {/* Edges between related mechanisms */}
-      {MECHANISM_EDGES.map(([a, b], i) => (
-        <line
-          key={`edge-${i}`}
-          x1={nodes[a].x}
-          y1={nodes[a].y}
-          x2={nodes[b].x}
-          y2={nodes[b].y}
-          stroke="var(--color-accent-primary)"
-          strokeWidth="1"
-          strokeDasharray="4,6"
-          opacity="0.25"
-        />
-      ))}
-
-      {/* Node circles + labels */}
-      {nodes.map((node, i) => (
-        <g key={i}>
-          {/* Outer ring */}
-          <circle
-            cx={node.x}
-            cy={node.y}
-            r="36"
-            fill="var(--color-background-primary)"
-            stroke="var(--color-border-primary)"
-            strokeWidth="1.5"
-          />
-          {/* Accent ring on hover via CSS */}
-          <circle
-            cx={node.x}
-            cy={node.y}
-            r="36"
-            fill="none"
-            stroke="var(--color-accent-primary)"
-            strokeWidth="2"
-            opacity="0.15"
-          >
-            <animate
-              attributeName="opacity"
-              values="0.1;0.3;0.1"
-              dur={`${3 + i * 0.4}s`}
-              repeatCount="indefinite"
-            />
-          </circle>
-          {/* Icon */}
-          <text
-            x={node.x}
-            y={node.y - 4}
-            textAnchor="middle"
-            fontSize="18"
-            dominantBaseline="central"
-          >
-            {node.icon}
-          </text>
-          {/* Label */}
-          <text
-            x={node.x}
-            y={node.y + 18}
-            textAnchor="middle"
-            fill="var(--color-text-primary)"
-            fontSize="8"
-            fontWeight="600"
-            className="select-none"
-          >
-            {node.name.length > 18 ? `${node.name.slice(0, 16)}...` : node.name}
-          </text>
-        </g>
-      ))}
-
-      {/* Center label */}
-      <text x={cx} y={cy - 6} textAnchor="middle" fill="var(--color-accent-primary)" fontSize="11" fontWeight="700">
-        Cognitive
-      </text>
-      <text x={cx} y={cy + 8} textAnchor="middle" fill="var(--color-accent-primary)" fontSize="11" fontWeight="700">
-        Memory
-      </text>
+    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2a10 10 0 0 1 7.07 2.93" />
+      <path d="M19.07 4.93l-2.12.5.5-2.12" />
+      <path d="M22 12a10 10 0 0 1-2.93 7.07" />
+      <path d="M19.07 19.07l-.5-2.12 2.12.5" />
+      <path d="M12 22a10 10 0 0 1-7.07-2.93" />
+      <path d="M4.93 19.07l2.12-.5-.5 2.12" />
+      <path d="M2 12A10 10 0 0 1 4.93 4.93" />
+      <path d="M4.93 4.93l.5 2.12-2.12-.5" />
     </svg>
   )
 }
 
+/**
+ * Retrieval-Induced Forgetting icon: a funnel shape with items
+ * dropping out through the bottom, representing suppression
+ * of competing memories during retrieval.
+ */
+function IconRIF({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 4h16l-5 7v5l-2 3v-8L8 4" />
+      <circle cx="16" cy="16" r="1" fill="currentColor" stroke="none" opacity="0.5" />
+      <circle cx="18" cy="19" r="0.8" fill="currentColor" stroke="none" opacity="0.35" />
+      <circle cx="14.5" cy="18.5" r="0.6" fill="currentColor" stroke="none" opacity="0.2" />
+      <line x1="15" y1="14" x2="17" y2="15" opacity="0.4" />
+      <line x1="16.5" y1="16.5" x2="18.5" y2="18" opacity="0.3" />
+    </svg>
+  )
+}
+
+/**
+ * Involuntary Recall icon: a lightning bolt striking a thought bubble,
+ * representing spontaneous memory activation by contextual cues.
+ */
+function IconInvoluntaryRecall({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15 3h-4l-1 5h3l-2 7 6-8h-3.5L15 3z" />
+      <path d="M6 14c-2.5 0-4 1.5-4 3.5S3.5 21 6 21h2c1 0 1.5-.5 1.5-.5" />
+      <circle cx="4.5" cy="12.5" r="1" />
+      <circle cx="3" cy="11" r="0.6" />
+    </svg>
+  )
+}
+
+/**
+ * Feeling of Knowing icon: a question mark with a subtle glow/halo,
+ * representing the metacognitive sense of a retrievable answer.
+ */
+function IconFOK({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" opacity="0.2" strokeDasharray="2,3" />
+      <circle cx="12" cy="12" r="6" opacity="0.12" strokeDasharray="1.5,2" />
+      <path d="M9.5 9a3 3 0 0 1 5.2-1.5c.8 1 .6 2.3-.3 3.2L12 12.5v1.5" />
+      <circle cx="12" cy="17" r="0.5" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+/**
+ * Temporal Gist icon: an hourglass with content dissolving from sharp
+ * particles at top into abstract blurred shapes at bottom, representing
+ * how specific details fade while meaning is preserved.
+ */
+function IconTemporalGist({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 2h10M7 22h10" />
+      <path d="M8 2v4c0 2 4 4 4 4s4-2 4-4V2" />
+      <path d="M8 22v-4c0-2 4-4 4-4s4 2 4 4v4" />
+      {/* Sharp detail particles at top */}
+      <rect x="10" y="4" width="1" height="1" fill="currentColor" stroke="none" opacity="0.6" />
+      <rect x="12.5" y="4.5" width="0.8" height="0.8" fill="currentColor" stroke="none" opacity="0.5" />
+      {/* Fuzzy blobs at bottom — gist preserved */}
+      <circle cx="11" cy="19" r="1.2" fill="currentColor" stroke="none" opacity="0.15" />
+      <circle cx="13" cy="18.5" r="1" fill="currentColor" stroke="none" opacity="0.12" />
+    </svg>
+  )
+}
+
+/**
+ * Schema Encoding icon: a grid/lattice structure with a highlighted
+ * new node being integrated, representing how new information is
+ * encoded relative to existing knowledge structures.
+ */
+function IconSchemaEncoding({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Lattice edges */}
+      <line x1="6" y1="6" x2="12" y2="4" />
+      <line x1="12" y1="4" x2="18" y2="6" />
+      <line x1="6" y1="6" x2="6" y2="14" />
+      <line x1="18" y1="6" x2="18" y2="14" />
+      <line x1="6" y1="14" x2="12" y2="16" />
+      <line x1="12" y1="16" x2="18" y2="14" />
+      <line x1="12" y1="4" x2="12" y2="16" />
+      {/* Existing lattice nodes */}
+      <circle cx="6" cy="6" r="2" fill="var(--color-background-primary)" />
+      <circle cx="18" cy="6" r="2" fill="var(--color-background-primary)" />
+      <circle cx="6" cy="14" r="2" fill="var(--color-background-primary)" />
+      <circle cx="18" cy="14" r="2" fill="var(--color-background-primary)" />
+      <circle cx="12" cy="4" r="2" fill="var(--color-background-primary)" />
+      <circle cx="12" cy="16" r="2" fill="var(--color-background-primary)" />
+      {/* New node being integrated — highlighted */}
+      <line x1="12" y1="16" x2="12" y2="21" strokeDasharray="2,2" opacity="0.5" />
+      <circle cx="12" cy="21" r="2" fill="currentColor" opacity="0.25" strokeWidth="2" />
+    </svg>
+  )
+}
+
+/**
+ * Source Confidence Decay icon: a document with a fading stamp/seal,
+ * representing how certainty about information provenance decays
+ * faster than the information itself.
+ */
+function IconSourceConfidence({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Document */}
+      <path d="M6 3h8l4 4v14H6V3z" />
+      <path d="M14 3v4h4" />
+      {/* Text lines */}
+      <line x1="8" y1="10" x2="16" y2="10" opacity="0.4" />
+      <line x1="8" y1="13" x2="14" y2="13" opacity="0.4" />
+      {/* Fading circular seal/stamp */}
+      <circle cx="14" cy="17" r="3" opacity="0.3" strokeDasharray="1.5,1.5" />
+      <path d="M13 17l1 1 2-2" opacity="0.25" />
+    </svg>
+  )
+}
+
+/**
+ * Emotion Regulation icon: a wave/oscillation being dampened,
+ * representing how emotional valence of memories is modulated
+ * and smoothed over time.
+ */
+function IconEmotionRegulation({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* High-amplitude wave (raw emotion) */}
+      <path d="M2 12c1-4 2.5-8 4-8s2.5 8 4 8 2.5-8 4-8" opacity="0.3" />
+      {/* Dampened wave (regulated) */}
+      <path d="M14 12c1-2 2-4 3-4s2 4 3 4 1.5-2 2-2" strokeWidth="2" />
+      {/* Dampening arrow */}
+      <line x1="11" y1="6" x2="14" y2="9" opacity="0.5" />
+      <path d="M13 6l1 3-3-1" opacity="0.5" fill="none" />
+    </svg>
+  )
+}
+
+/** Map mechanism index to its custom SVG icon component. */
+const MECHANISM_ICONS = [
+  IconReconsolidation,
+  IconRIF,
+  IconInvoluntaryRecall,
+  IconFOK,
+  IconTemporalGist,
+  IconSchemaEncoding,
+  IconSourceConfidence,
+  IconEmotionRegulation,
+]
+
+/** Translation keys for each mechanism (order matches MECHANISM_ICONS). */
+const MECHANISM_KEYS = [
+  'reconsolidation',
+  'rif',
+  'involuntaryRecall',
+  'fok',
+  'temporalGist',
+  'schemaEncoding',
+  'sourceConfidence',
+  'emotionRegulation',
+] as const
+
 /* ------------------------------------------------------------------ */
-/*  Subsection 2 — HEXACO Personality Radar (SVG)                     */
+/*  Ebbinghaus Forgetting Curve — animated SVG                         */
 /* ------------------------------------------------------------------ */
 
-function HexacoRadar({ traitNames, traitDescriptions }: { traitNames: string[]; traitDescriptions: string[] }) {
-  const cx = 200
-  const cy = 200
-  const maxR = 140
-  const levels = 4
-
-  // Default demo values (0..1)
-  const values = [0.72, 0.55, 0.81, 0.63, 0.88, 0.76]
-
-  const pointAt = (i: number, radius: number) => {
-    const angle = (i / 6) * 2 * Math.PI - Math.PI / 2
-    return { x: cx + radius * Math.cos(angle), y: cy + radius * Math.sin(angle) }
-  }
-
-  const polygonPoints = values.map((v, i) => {
-    const p = pointAt(i, v * maxR)
-    return `${p.x},${p.y}`
-  }).join(' ')
+/**
+ * Classic Ebbinghaus forgetting curve rendered as an animated SVG.
+ * Uses stroke-dashoffset for a line-drawing reveal effect on mount.
+ * X-axis = time (1h, 1d, 1w, 1mo), Y-axis = retention %.
+ */
+function EbbinghausCurve({ annotation }: { annotation: string }) {
+  const ref = useRef<SVGSVGElement>(null)
+  const isInView = useInView(ref, { once: true, amount: 0.5 })
 
   return (
-    <svg viewBox="0 0 400 400" className="w-full h-auto max-w-md mx-auto" role="img" aria-label="HEXACO radar chart">
-      <defs>
-        <linearGradient id="hexaco-fill" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="var(--color-accent-primary)" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="var(--color-accent-secondary)" stopOpacity="0.1" />
-        </linearGradient>
-      </defs>
+    <div className="mt-16">
+      <svg
+        ref={ref}
+        viewBox="0 0 500 220"
+        className="w-full h-auto max-w-2xl mx-auto"
+        role="img"
+        aria-label="Ebbinghaus forgetting curve"
+      >
+        <defs>
+          <linearGradient id="curve-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="var(--color-accent-primary)" />
+            <stop offset="100%" stopColor="var(--color-accent-secondary)" />
+          </linearGradient>
+          <linearGradient id="curve-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="var(--color-accent-primary)" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="var(--color-accent-primary)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
 
-      {/* Grid rings */}
-      {Array.from({ length: levels }).map((_, lvl) => {
-        const r = ((lvl + 1) / levels) * maxR
-        const pts = Array.from({ length: 6 }).map((_, i) => {
-          const p = pointAt(i, r)
-          return `${p.x},${p.y}`
-        }).join(' ')
-        return (
-          <polygon
-            key={lvl}
-            points={pts}
-            fill="none"
-            stroke="var(--color-border-primary)"
-            strokeWidth="0.75"
-            opacity={0.3 + lvl * 0.1}
-          />
-        )
-      })}
+        {/* Grid lines */}
+        {[0, 25, 50, 75, 100].map((pct) => {
+          const y = 190 - (pct / 100) * 160
+          return (
+            <g key={`grid-${pct}`}>
+              <line
+                x1="60" y1={y} x2="470" y2={y}
+                stroke="var(--color-border-primary)" strokeWidth="0.5" opacity="0.3"
+              />
+              <text
+                x="52" y={y + 4}
+                textAnchor="end" fill="var(--color-text-muted)"
+                fontSize="9" fontFamily="inherit"
+              >
+                {pct}%
+              </text>
+            </g>
+          )
+        })}
 
-      {/* Axis spokes */}
-      {Array.from({ length: 6 }).map((_, i) => {
-        const p = pointAt(i, maxR)
-        return (
-          <line
-            key={i}
-            x1={cx}
-            y1={cy}
-            x2={p.x}
-            y2={p.y}
-            stroke="var(--color-border-primary)"
-            strokeWidth="0.75"
-            opacity="0.3"
-          />
-        )
-      })}
-
-      {/* Data polygon */}
-      <polygon
-        points={polygonPoints}
-        fill="url(#hexaco-fill)"
-        stroke="var(--color-accent-primary)"
-        strokeWidth="2"
-        opacity="0.9"
-      />
-
-      {/* Data points */}
-      {values.map((v, i) => {
-        const p = pointAt(i, v * maxR)
-        return (
-          <circle
-            key={i}
-            cx={p.x}
-            cy={p.y}
-            r="5"
-            fill="var(--color-accent-primary)"
-            stroke="var(--color-background-primary)"
-            strokeWidth="2"
+        {/* X-axis labels */}
+        {[
+          { x: 80, label: '1h' },
+          { x: 180, label: '1d' },
+          { x: 320, label: '1w' },
+          { x: 450, label: '1mo' },
+        ].map(({ x, label }) => (
+          <text
+            key={label} x={x} y={208}
+            textAnchor="middle" fill="var(--color-text-muted)"
+            fontSize="9" fontFamily="inherit"
           >
-            <animate
-              attributeName="r"
-              values="4;6;4"
-              dur={`${2.5 + i * 0.3}s`}
-              repeatCount="indefinite"
-            />
-          </circle>
-        )
-      })}
+            {label}
+          </text>
+        ))}
 
-      {/* Trait labels */}
-      {traitNames.map((name, i) => {
-        const labelR = maxR + 28
-        const p = pointAt(i, labelR)
-        return (
-          <g key={i}>
+        {/* Axis lines */}
+        <line x1="60" y1="30" x2="60" y2="190" stroke="var(--color-border-primary)" strokeWidth="1" />
+        <line x1="60" y1="190" x2="470" y2="190" stroke="var(--color-border-primary)" strokeWidth="1" />
+
+        {/* Filled area under curve */}
+        <path
+          d="M80,38 C100,70 130,130 180,150 C230,162 280,170 320,175 C380,180 430,183 450,184 L450,190 L80,190 Z"
+          fill="url(#curve-fill)"
+          opacity={isInView ? 1 : 0}
+          style={{ transition: 'opacity 1s ease-out 0.5s' }}
+        />
+
+        {/* Main forgetting curve */}
+        <path
+          d="M80,38 C100,70 130,130 180,150 C230,162 280,170 320,175 C380,180 430,183 450,184"
+          fill="none"
+          stroke="url(#curve-gradient)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray="600"
+          strokeDashoffset={isInView ? 0 : 600}
+          style={{ transition: 'stroke-dashoffset 1.8s ease-out' }}
+        />
+
+        {/* Key data points */}
+        {[
+          { x: 80, y: 38, label: '100%' },
+          { x: 180, y: 150, label: '20%' },
+          { x: 320, y: 175, label: '~12%' },
+          { x: 450, y: 184, label: '~8%' },
+        ].map(({ x, y, label }, i) => (
+          <g key={`pt-${i}`} opacity={isInView ? 1 : 0} style={{ transition: `opacity 0.4s ease-out ${0.8 + i * 0.3}s` }}>
+            <circle cx={x} cy={y} r="4" fill="var(--color-accent-primary)" />
+            <circle cx={x} cy={y} r="7" fill="none" stroke="var(--color-accent-primary)" strokeWidth="1" opacity="0.3" />
             <text
-              x={p.x}
-              y={p.y - 6}
-              textAnchor="middle"
-              fill="var(--color-text-primary)"
-              fontSize="10"
-              fontWeight="700"
+              x={x} y={y - 12}
+              textAnchor="middle" fill="var(--color-accent-primary)"
+              fontSize="9" fontWeight="600" fontFamily="inherit"
             >
-              {name}
-            </text>
-            <text
-              x={p.x}
-              y={p.y + 6}
-              textAnchor="middle"
-              fill="var(--color-text-muted)"
-              fontSize="7"
-              className="hidden sm:inline"
-            >
-              {traitDescriptions[i].length > 30
-                ? `${traitDescriptions[i].slice(0, 28)}...`
-                : traitDescriptions[i]}
+              {label}
             </text>
           </g>
-        )
-      })}
-    </svg>
-  )
-}
-
-/* ------------------------------------------------------------------ */
-/*  Subsection 3 — Multimodal RAG Pipeline                            */
-/* ------------------------------------------------------------------ */
-
-const VECTOR_BACKENDS = [
-  'SQLite',
-  'HNSW',
-  'Postgres + pgvector',
-  'Qdrant',
-  'Pinecone',
-  'In-Memory',
-  'Neo4j',
-]
-
-function RAGPipeline({ stageNames }: { stageNames: string[] }) {
-  return (
-    <div className="space-y-8">
-      {/* Horizontal pipeline flow */}
-      <div className="relative overflow-x-auto pb-2">
-        <div className="flex items-center gap-0 min-w-[700px] mx-auto justify-center">
-          {stageNames.map((stage, i) => (
-            <div key={i} className="flex items-center">
-              {/* Stage node */}
-              <div
-                className="flex flex-col items-center justify-center px-3 py-3 rounded-xl text-center min-w-[90px]"
-                style={{
-                  background: 'var(--color-background-glass)',
-                  border: '1px solid var(--color-border-primary)',
-                }}
-              >
-                <span
-                  className="text-[10px] font-bold uppercase tracking-wide"
-                  style={{ color: 'var(--color-accent-primary)' }}
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span
-                  className="text-xs font-semibold mt-1"
-                  style={{ color: 'var(--color-text-primary)' }}
-                >
-                  {stage}
-                </span>
-              </div>
-              {/* Arrow connector */}
-              {i < stageNames.length - 1 && (
-                <svg width="28" height="20" viewBox="0 0 28 20" className="shrink-0 mx-0.5">
-                  <line x1="2" y1="10" x2="22" y2="10" stroke="var(--color-accent-primary)" strokeWidth="1.5" strokeDasharray="3,3" />
-                  <polygon points="20,5 28,10 20,15" fill="var(--color-accent-primary)" opacity="0.7" />
-                </svg>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Vector store backend cards */}
-      <div className="flex flex-wrap justify-center gap-2">
-        {VECTOR_BACKENDS.map((backend) => (
-          <span
-            key={backend}
-            className="px-3 py-1.5 rounded-lg text-xs font-semibold"
-            style={{
-              background: 'var(--color-background-secondary)',
-              border: '1px solid var(--color-border-primary)',
-              color: 'var(--color-text-primary)',
-            }}
-          >
-            {backend}
-          </span>
         ))}
-      </div>
+
+        {/* Axis labels */}
+        <text x="260" y="220" textAnchor="middle" fill="var(--color-text-muted)" fontSize="10" fontFamily="inherit">
+          Time
+        </text>
+        <text
+          x="14" y="110"
+          textAnchor="middle" fill="var(--color-text-muted)"
+          fontSize="10" fontFamily="inherit"
+          transform="rotate(-90,14,110)"
+        >
+          Retention
+        </text>
+      </svg>
+
+      {/* Annotation text */}
+      <p
+        className="text-sm text-center max-w-2xl mx-auto mt-4 leading-relaxed"
+        style={{ color: 'var(--color-text-muted)' }}
+      >
+        {annotation}
+      </p>
     </div>
   )
 }
 
 /* ------------------------------------------------------------------ */
-/*  Main Export                                                         */
+/*  Main exported component                                            */
 /* ------------------------------------------------------------------ */
 
+/**
+ * **Cognitive Memory Section**
+ *
+ * Showcases the 8 neuroscience-backed memory mechanisms built into AgentOS,
+ * each modulated by HEXACO personality traits. Features:
+ *
+ * - Badge + title/subtitle header
+ * - 4x2 grid of mechanism cards with custom SVG line-art icons
+ * - HEXACO modulator badges on each card
+ * - Expandable cards revealing research basis and APA citations
+ * - Animated Ebbinghaus forgetting curve with retention annotations
+ * - Full theme-aware styling using CSS custom properties
+ */
 export function CognitiveSection() {
   const t = useTranslations('cognitive')
   const sectionRef = useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.15 })
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
+  const [expandedCard, setExpandedCard] = useState<number | null>(null)
 
-  const mechanismNames = useMemo(() => [
-    t('mechanisms.reconsolidation'),
-    t('mechanisms.rif'),
-    t('mechanisms.involuntaryRecall'),
-    t('mechanisms.fok'),
-    t('mechanisms.temporalGist'),
-    t('mechanisms.schemaEncoding'),
-    t('mechanisms.sourceConfidence'),
-    t('mechanisms.emotionRegulation'),
-  ], [t])
-
-  const mechanismDescriptions = useMemo(() => [
-    t('mechanismDescriptions.reconsolidation'),
-    t('mechanismDescriptions.rif'),
-    t('mechanismDescriptions.involuntaryRecall'),
-    t('mechanismDescriptions.fok'),
-    t('mechanismDescriptions.temporalGist'),
-    t('mechanismDescriptions.schemaEncoding'),
-    t('mechanismDescriptions.sourceConfidence'),
-    t('mechanismDescriptions.emotionRegulation'),
-  ], [t])
-
-  const traitNames = useMemo(() => [
-    t('traits.honesty'),
-    t('traits.emotionality'),
-    t('traits.extraversion'),
-    t('traits.agreeableness'),
-    t('traits.conscientiousness'),
-    t('traits.openness'),
-  ], [t])
-
-  const traitDescriptions = useMemo(() => [
-    t('traitDescriptions.honesty'),
-    t('traitDescriptions.emotionality'),
-    t('traitDescriptions.extraversion'),
-    t('traitDescriptions.agreeableness'),
-    t('traitDescriptions.conscientiousness'),
-    t('traitDescriptions.openness'),
-  ], [t])
-
-  const pipelineStages = useMemo(() => [
-    t('pipeline.ingest'),
-    t('pipeline.chunk'),
-    t('pipeline.embed'),
-    t('pipeline.store'),
-    t('pipeline.hyde'),
-    t('pipeline.rerank'),
-    t('pipeline.context'),
-  ], [t])
+  /** Toggle a card's expanded state. */
+  const toggleCard = (index: number) => {
+    setExpandedCard((prev) => (prev === index ? null : index))
+  }
 
   const fadeUp = {
     hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } },
   }
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: 'easeOut', delay: i * 0.07 },
+    }),
+  }
+
   return (
     <section
       ref={sectionRef}
       id="cognitive"
-      className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
-      style={{ background: 'var(--color-background-secondary)' }}
+      className="py-12 sm:py-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme section-gradient"
       aria-labelledby="cognitive-heading"
     >
-      {/* Subtle ambient blurs */}
-      <div
-        className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl opacity-10 pointer-events-none"
-        style={{ background: 'var(--color-accent-primary)' }}
-      />
-      <div
-        className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full blur-3xl opacity-10 pointer-events-none"
-        style={{ background: 'var(--color-accent-secondary)' }}
-      />
+      {/* Subtle organic gradient background */}
+      <div className="absolute inset-0 organic-gradient opacity-20" />
 
       <div className="max-w-7xl mx-auto relative z-10">
 
-        {/* ——— Subsection 1: Cognitive Memory Mechanisms ——— */}
+        {/* ---- Header ---- */}
         <motion.div
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
           variants={fadeUp}
-          className="mb-20"
+          className="text-center mb-10"
         >
-          <div className="text-center mb-10">
-            <h2 id="cognitive-heading" className="text-4xl sm:text-5xl font-extrabold mb-4">
-              <span className="gradient-text">{t('memoryTitle')}</span>
-            </h2>
-            <p className="text-lg max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
-              {t('memorySubtitle')}
-            </p>
-          </div>
-
-          <div
-            className="rounded-3xl p-6 sm:p-8 shadow-sm"
-            style={{
-              border: '1px solid var(--color-border-primary)',
-              background: 'var(--color-background-primary)',
-            }}
+          <SectionLabel icon={
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="w-3.5 h-3.5">
+              <path d="M7 1a6 6 0 1 1 0 12A6 6 0 0 1 7 1" />
+              <path d="M4.5 7c.5-2 1.5-3 2.5-3s2 1 2.5 3-1 3-2.5 3S4 9 4.5 7" />
+            </svg>
+          }>
+            {t('badge')}
+          </SectionLabel>
+          <h2
+            id="cognitive-heading"
+            className="text-4xl sm:text-5xl font-extrabold mt-4 mb-4"
           >
-            <CognitiveDiagram mechanismNames={mechanismNames} />
-
-            {/* Mechanism description cards */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-8">
-              {mechanismNames.map((name, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl p-3"
-                  style={{
-                    background: 'var(--color-background-glass)',
-                    border: '1px solid var(--color-border-primary)',
-                  }}
-                >
-                  <span className="text-lg mr-2">{MECHANISM_ICONS[i]}</span>
-                  <span className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
-                    {name}
-                  </span>
-                  <p className="text-xs mt-1 leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
-                    {mechanismDescriptions[i]}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+            <span className="gradient-text">{t('title')}</span>
+          </h2>
+          <p
+            className="text-lg max-w-3xl mx-auto"
+            style={{ color: 'var(--color-text-secondary)' }}
+          >
+            {t('subtitle')}
+          </p>
         </motion.div>
 
-        {/* ——— Subsection 2: HEXACO Personality ——— */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.15 } } }}
-          className="mb-20"
-        >
-          <div className="text-center mb-10">
-            <h3 className="text-3xl sm:text-4xl font-extrabold mb-4">
-              <span className="gradient-text">{t('hexacoTitle')}</span>
-            </h3>
-            <p className="text-lg max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
-              {t('hexacoSubtitle')}
-            </p>
-          </div>
+        {/* ---- 4x2 Mechanism Cards Grid ---- */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {MECHANISM_KEYS.map((key, i) => {
+            const Icon = MECHANISM_ICONS[i]
+            const isExpanded = expandedCard === i
 
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            {/* Radar visualization */}
-            <div
-              className="rounded-3xl p-6 shadow-sm"
-              style={{
-                border: '1px solid var(--color-border-primary)',
-                background: 'var(--color-background-primary)',
-              }}
-            >
-              <HexacoRadar traitNames={traitNames} traitDescriptions={traitDescriptions} />
-            </div>
-
-            {/* Trait → Mechanism mapping */}
-            <div className="space-y-3">
-              {traitNames.map((name, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-4 rounded-xl p-4"
+            return (
+              <motion.div
+                key={key}
+                custom={i}
+                initial="hidden"
+                animate={isInView ? 'visible' : 'hidden'}
+                variants={cardVariants}
+              >
+                <button
+                  onClick={() => toggleCard(i)}
+                  className="w-full text-left rounded-2xl p-5 transition-all duration-200 cursor-pointer group"
                   style={{
-                    background: 'var(--color-background-glass)',
-                    border: '1px solid var(--color-border-primary)',
+                    background: isExpanded
+                      ? 'linear-gradient(135deg, color-mix(in srgb, var(--color-accent-primary) 8%, var(--color-background-secondary)), var(--color-background-secondary))'
+                      : 'var(--color-background-secondary)',
+                    border: `1px solid ${isExpanded ? 'color-mix(in srgb, var(--color-accent-primary) 30%, transparent)' : 'var(--color-border-primary)'}`,
+                    boxShadow: isExpanded ? '0 4px 20px color-mix(in srgb, var(--color-accent-primary) 10%, transparent)' : 'none',
                   }}
+                  aria-expanded={isExpanded}
                 >
-                  <div
-                    className="w-10 h-10 shrink-0 rounded-lg flex items-center justify-center text-sm font-bold"
+                  {/* Icon + Title row */}
+                  <div className="flex items-start gap-3 mb-3">
+                    <div
+                      className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center"
+                      style={{
+                        background: 'linear-gradient(135deg, color-mix(in srgb, var(--color-accent-primary) 15%, transparent), color-mix(in srgb, var(--color-accent-secondary) 8%, transparent))',
+                        border: '1px solid color-mix(in srgb, var(--color-accent-primary) 20%, transparent)',
+                      }}
+                    >
+                      <Icon className="w-5 h-5" style={{ color: 'var(--color-accent-primary)' } as React.CSSProperties} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3
+                        className="text-sm font-bold leading-tight"
+                        style={{ color: 'var(--color-text-primary)' }}
+                      >
+                        {t(`mechanisms.${key}`)}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p
+                    className="text-xs leading-relaxed mb-3"
+                    style={{ color: 'var(--color-text-muted)' }}
+                  >
+                    {t(`mechanismDescriptions.${key}`)}
+                  </p>
+
+                  {/* HEXACO modulator badge */}
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide"
                     style={{
-                      background: 'linear-gradient(135deg, color-mix(in srgb, var(--color-accent-primary) 20%, transparent), color-mix(in srgb, var(--color-accent-secondary) 10%, transparent))',
+                      background: 'color-mix(in srgb, var(--color-accent-primary) 10%, transparent)',
                       color: 'var(--color-accent-primary)',
-                      border: '1px solid color-mix(in srgb, var(--color-accent-primary) 30%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--color-accent-primary) 20%, transparent)',
                     }}
                   >
-                    {name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold" style={{ color: 'var(--color-text-primary)' }}>{name}</p>
-                    <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-                      {traitDescriptions[i]}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+                    <svg viewBox="0 0 10 10" fill="currentColor" className="w-2 h-2" aria-hidden="true">
+                      <polygon points="5,0 6.5,3.5 10,4 7.5,6.5 8,10 5,8.5 2,10 2.5,6.5 0,4 3.5,3.5" />
+                    </svg>
+                    {t(`modulators.${key}`)}
+                  </span>
 
-        {/* ——— Subsection 3: Multimodal RAG Pipeline ——— */}
+                  {/* Expanded detail (research basis + citation) */}
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="overflow-hidden"
+                      >
+                        <div
+                          className="mt-4 pt-3"
+                          style={{ borderTop: '1px solid var(--color-border-primary)' }}
+                        >
+                          <p
+                            className="text-xs leading-relaxed mb-2"
+                            style={{ color: 'var(--color-text-secondary)' }}
+                          >
+                            {t(`research.${key}`)}
+                          </p>
+                          <p
+                            className="text-[10px] italic"
+                            style={{ color: 'var(--color-text-muted)' }}
+                          >
+                            {t(`citations.${key}`)}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </button>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        {/* ---- Ebbinghaus Forgetting Curve ---- */}
         <motion.div
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.3 } } }}
+          variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.4 } } }}
         >
-          <div className="text-center mb-10">
-            <h3 className="text-3xl sm:text-4xl font-extrabold mb-4">
-              <span className="gradient-text">{t('ragTitle')}</span>
-            </h3>
-            <p className="text-lg max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
-              {t('ragSubtitle')}
-            </p>
-          </div>
+          <EbbinghausCurve annotation={t('ebbinghausAnnotation')} />
+        </motion.div>
 
-          <div
-            className="rounded-3xl p-6 sm:p-8 shadow-sm"
-            style={{
-              border: '1px solid var(--color-border-primary)',
-              background: 'var(--color-background-primary)',
-            }}
+        {/* ---- CTA ---- */}
+        <motion.div
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.55 } } }}
+          className="text-center mt-10"
+        >
+          <a
+            href="https://docs.agentos.sh/features/cognitive-memory"
+            className="btn-primary inline-flex items-center gap-2"
           >
-            <RAGPipeline stageNames={pipelineStages} />
-          </div>
-
-          {/* CTA link */}
-          <div className="text-center mt-8">
-            <a
-              href="https://docs.agentos.sh/features/cognitive-memory"
-              className="btn-primary inline-flex items-center gap-2"
-            >
-              {t('ctaLearnMore')}
-              <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
+            {t('ctaLearnMore')}
+            <ArrowRight className="w-4 h-4" />
+          </a>
         </motion.div>
 
       </div>

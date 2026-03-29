@@ -1059,58 +1059,61 @@
     "downloadLatest": "최신 버전 다운로드"
   },
   "cognitive": {
-    "memoryTitle": "Cognitive Memory Architecture",
-    "memorySubtitle": "8 neuroscience-backed memory mechanisms, all modulated by HEXACO personality traits",
+    "badge": "\uc2e0\uacbd\uacfc\ud559 \uae30\ubc18",
+    "title": "\uc778\uc9c0 \uae30\uc5b5",
+    "subtitle": "\uc778\uc9c0\uacfc\ud559 \uc5f0\uad6c\uc5d0\uc11c \uc601\uac10\uc744 \ubc1b\uc740 8\uac00\uc9c0 \uae30\uc5b5 \uba54\ucee4\ub2c8\uc998. \ubaa8\ub450 \uc5d0\uc774\uc804\ud2b8\uc758 HEXACO \uc131\uaca9 \ud2b9\uc131\uc5d0 \uc758\ud574 \uc870\uc808\ub429\ub2c8\ub2e4.",
     "mechanisms": {
-      "reconsolidation": "Reconsolidation",
-      "rif": "Retrieval-Induced Forgetting",
-      "involuntaryRecall": "Involuntary Recall",
-      "fok": "Feeling of Knowing",
-      "temporalGist": "Temporal Gist",
-      "schemaEncoding": "Schema Encoding",
-      "sourceConfidence": "Source Confidence Decay",
-      "emotionRegulation": "Emotion Regulation"
+      "reconsolidation": "\uc7ac\uace0\uc815\ud654",
+      "rif": "\uac80\uc0c9 \uc720\ub3c4 \ub9dd\uac01",
+      "involuntaryRecall": "\ube44\uc790\ubc1c\uc801 \ud68c\uc0c1",
+      "fok": "\uc54c\uace0 \uc788\ub294 \ub290\ub08c",
+      "temporalGist": "\uc2dc\uac04\uc801 \uc694\uc9c0",
+      "schemaEncoding": "\uc2a4\ud0a4\ub9c8 \ubd80\ud638\ud654",
+      "sourceConfidence": "\ucd9c\ucc98 \uc2e0\ub8b0 \uac10\uc18c",
+      "emotionRegulation": "\uac10\uc815 \uc870\uc808"
     },
     "mechanismDescriptions": {
-      "reconsolidation": "Memories update when recalled",
-      "rif": "Recalling one memory suppresses related ones",
-      "involuntaryRecall": "Unexpected memory surfacing via associative triggers",
-      "fok": "Metacognitive confidence estimation",
-      "temporalGist": "Details fade, gist persists",
-      "schemaEncoding": "New info organized around existing mental models",
-      "sourceConfidence": "Provenance trust erodes over time",
-      "emotionRegulation": "Emotional state modulates encoding and retrieval"
+      "reconsolidation": "\uae30\uc5b5\uc740 \ud68c\uc0c1\ud560 \ub54c\ub9c8\ub2e4 \uc0c8\ub85c\uc6b4 \ub9e5\ub77d\uc73c\ub85c \uc5c5\ub370\uc774\ud2b8\ub418\uba70 \ub2e4\uc2dc \uc4f0\uc5ec\uc9d1\ub2c8\ub2e4",
+      "rif": "\ud558\ub098\uc758 \uae30\uc5b5\uc744 \uac80\uc0c9\ud558\uba74 \uad00\ub828 \uacbd\uc7c1 \uae30\uc5b5\uc774 \uc5b5\uc81c\ub429\ub2c8\ub2e4",
+      "involuntaryRecall": "\ub9e5\ub77d\uc801 \ub2e8\uc11c\uc5d0 \uc758\ud574 \ucd09\ubc1c\ub418\ub294 \uc790\ubc1c\uc801 \uae30\uc5b5 \ud65c\uc131\ud654",
+      "fok": "\uc989\uc2dc \uac80\uc0c9\ud560 \uc218 \uc5c6\uc5b4\ub3c4 \ub2f5\uc774 \uc874\uc7ac\ud55c\ub2e4\ub294 \uba54\ud0c0\uc778\uc9c0\uc801 \uac10\uac01",
+      "temporalGist": "\uad6c\uccb4\uc801\uc778 \uc138\ubd80 \uc0ac\ud56d\uc740 \uc0ac\ub77c\uc9c0\uc9c0\ub9cc \uc694\uc9c0\uc640 \uc758\ubbf8\ub294 \uc2dc\uac04\uc774 \uc9c0\ub098\ub3c4 \ubcf4\uc874\ub429\ub2c8\ub2e4",
+      "schemaEncoding": "\uc0c8\ub85c\uc6b4 \uc815\ubcf4\ub294 \uae30\uc874 \uc9c0\uc2dd \uad6c\uc870\uc5d0 \ub300\ud574 \ubd80\ud638\ud654\ub429\ub2c8\ub2e4",
+      "sourceConfidence": "\uc815\ubcf4\uc758 \ucd9c\ucc98\uc5d0 \ub300\ud55c \ud655\uc2e0\uc740 \uc815\ubcf4 \uc790\uccb4\ubcf4\ub2e4 \ub354 \ube60\ub974\uac8c \uac10\uc18c\ud569\ub2c8\ub2e4",
+      "emotionRegulation": "\uae30\uc5b5\uc758 \uac10\uc815\uc801 \uac00\uce58\ub294 \uc2dc\uac04\uc774 \uc9c0\ub0a8\uc5d0 \ub530\ub77c \uc870\uc808\ub429\ub2c8\ub2e4"
     },
-    "hexacoTitle": "HEXACO Personality Modeling",
-    "hexacoSubtitle": "6-dimensional personality traits that shape agent communication, memory, and decision-making",
-    "traits": {
-      "honesty": "Honesty-Humility",
-      "emotionality": "Emotionality",
-      "extraversion": "Extraversion",
-      "agreeableness": "Agreeableness",
-      "conscientiousness": "Conscientiousness",
-      "openness": "Openness"
+    "modulators": {
+      "reconsolidation": "\uac1c\ubc29\uc131",
+      "rif": "\uc131\uc2e4\uc131",
+      "involuntaryRecall": "\uac1c\ubc29\uc131",
+      "fok": "\uc678\ud5a5\uc131",
+      "temporalGist": "\uc131\uc2e4\uc131",
+      "schemaEncoding": "\uac1c\ubc29\uc131",
+      "sourceConfidence": "\uc815\uc9c1\uc131-\uacb8\uc190\uc131",
+      "emotionRegulation": "\uce5c\ud654\uc131"
     },
-    "traitDescriptions": {
-      "honesty": "Affects source skepticism, trust calibration",
-      "emotionality": "Modulates memory drift, encoding intensity",
-      "extraversion": "Affects FOK confidence, social recall",
-      "agreeableness": "Influences emotion regulation, empathy",
-      "conscientiousness": "Drives RIF strength, detail retention",
-      "openness": "Modulates involuntary recall, novelty seeking"
+    "research": {
+      "reconsolidation": "\uac01 \uac80\uc0c9 \ud589\uc704\ub294 \uae30\uc5b5 \ud754\uc801\uc744 \ubd88\uc548\uc815\ud654\uc2dc\ucf1c \ud604\uc7ac \ub9e5\ub77d\uc73c\ub85c \uc5c5\ub370\uc774\ud2b8\ud55c \ud6c4 \uc7ac\uc548\uc815\ud654\ud569\ub2c8\ub2e4. \uac1c\ubc29\uc131\uc774 \ub192\uc744\uc218\ub85d \uc7ac\uc791\uc131 \uc815\ub3c4\uac00 \uc99d\ud3ed\ub429\ub2c8\ub2e4.",
+      "rif": "\ubaa9\ud45c \uae30\uc5b5\uc758 \uac80\uc0c9\uc740 \uce21\ubc29 \uc5b5\uc81c\ub97c \ud1b5\ud574 \uad00\ub828 \uacbd\uc7c1\uc790\ub97c \uc801\uadf9\uc801\uc73c\ub85c \uc5b5\uc81c\ud569\ub2c8\ub2e4. \uc131\uc2e4\uc131\uc774 \ub192\uc744\uc218\ub85d \uc774 \uc5b5\uc81c\uac00 \uac15\ud654\ub429\ub2c8\ub2e4.",
+      "involuntaryRecall": "\ub9e5\ub77d\uc801 \ub2e8\uc11c\ub294 \uc758\ub3c4\uc801 \uac80\uc0c9 \uc5c6\uc774 \uad00\ub828 \uae30\uc5b5\uc758 \uc790\ubc1c\uc801 \ud65c\uc131\ud654\ub97c \uc720\ubc1c\ud560 \uc218 \uc788\uc2b5\ub2c8\ub2e4. \uac1c\ubc29\uc131\uc774 \ub192\uc744\uc218\ub85d \ud65c\uc131\ud654 \uc784\uacc4\uac12\uc774 \ub0ae\uc544\uc9d1\ub2c8\ub2e4.",
+      "fok": "\uc131\uacf5\uc801\uc778 \uac80\uc0c9 \uac00\ub2a5\uc131\uc5d0 \ub300\ud55c \uba54\ud0c0\uc778\uc9c0\uc801 \ud310\ub2e8. \uc678\ud5a5\uc131\uc774 \ub192\uc744\uc218\ub85d FOK \uc2e0\ud638\uac00 \uc99d\ud3ed\ub429\ub2c8\ub2e4.",
+      "temporalGist": "\uc2dc\uac04\uc774 \uc9c0\ub0a8\uc5d0 \ub530\ub77c \ucd95\uc5b4\uc801 \uc138\ubd80 \uc0ac\ud56d\uc774 \uac10\uc18c\ud558\uace0 \uc758\ubbf8\uc801 \uc694\uc9c0\uac00 \ucd94\uc0c1\ud654\ub97c \ud1b5\ud574 \ubcf4\uc874\ub429\ub2c8\ub2e4. \uc131\uc2e4\uc131\uc774 \ub0ae\uc744\uc218\ub85d \uc138\ubd80 \uc0ac\ud56d \uc190\uc2e4\uc774 \uac00\uc18d\ud654\ub429\ub2c8\ub2e4.",
+      "schemaEncoding": "\uc0c8\ub85c\uc6b4 \uc815\ubcf4\ub294 \uae30\uc874 \uc9c0\uc2dd \uc2a4\ud0a4\ub9c8\uc5d0 \ub3d9\ud654\ub429\ub2c8\ub2e4. \uac1c\ubc29\uc131\uc774 \ub192\uc744\uc218\ub85d \ub354 \uc720\uc5f0\ud55c \uc2a4\ud0a4\ub9c8 \uc218\uc815\uc774 \uac00\ub2a5\ud569\ub2c8\ub2e4.",
+      "sourceConfidence": "\uc815\ubcf4 \ucd9c\ucc98\uc5d0 \ub300\ud55c \uae30\uc5b5\uc740 \uc815\ubcf4 \ub0b4\uc6a9 \uc790\uccb4\ubcf4\ub2e4 \ub354 \ube68\ub9ac \uac10\uc18c\ud569\ub2c8\ub2e4. \uc815\uc9c1\uc131-\uacb8\uc190\uc131\uc774 \ub192\uc744\uc218\ub85d \ubd88\ud655\uc2e4\ud55c \ucd9c\ucc98\uc5d0 \ub300\ud55c \ud68c\uc758\uc774 \uc99d\uac00\ud569\ub2c8\ub2e4.",
+      "emotionRegulation": "\uae30\uc5b5\uc5d0 \ubd80\ucc29\ub41c \uac10\uc815\uc801 \uac15\ub3c4\ub294 \uac80\uc0c9\uacfc \uace0\uc815\ud654 \uc911\uc5d0 \uc801\uadf9\uc801\uc73c\ub85c \uc870\uc808\ub429\ub2c8\ub2e4. \uce5c\ud654\uc131\uc774 \ub192\uc744\uc218\ub85d \uac10\uc815 \ud3c9\ud65c\ud654\uac00 \uc99d\uac00\ud569\ub2c8\ub2e4."
     },
-    "ragTitle": "Multimodal RAG with HyDE Retrieval",
-    "ragSubtitle": "Ingest documents, images, audio — retrieve with hypothetical document embeddings",
-    "pipeline": {
-      "ingest": "Ingest",
-      "chunk": "Chunking",
-      "embed": "Embedding",
-      "store": "Vector Store",
-      "hyde": "HyDE Query",
-      "rerank": "Reranking",
-      "context": "Agent Context"
+    "citations": {
+      "reconsolidation": "Nader, Schafe & LeDoux (2000). Nature, 406, 722-726.",
+      "rif": "Anderson, Bjork & Bjork (1994). Journal of Experimental Psychology: Learning, Memory, and Cognition, 20, 1063-1087.",
+      "involuntaryRecall": "Berntsen (2010). Current Directions in Psychological Science, 19, 138-142.",
+      "fok": "Koriat (1993). Psychological Review, 100, 609-639.",
+      "temporalGist": "Reyna & Brainerd (1995). Learning and Individual Differences, 7, 1-75.",
+      "schemaEncoding": "Bartlett (1932). Remembering. Cambridge University Press.",
+      "sourceConfidence": "Johnson, Hashtroudi & Lindsay (1993). Psychological Bulletin, 114, 3-28.",
+      "emotionRegulation": "Gross (1998). Review of General Psychology, 2, 271-299."
     },
-    "ctaLearnMore": "Learn more"
+    "ebbinghausAnnotation": "\ubcf5\uc2b5 \uc5c6\uc774\ub294 24\uc2dc\uac04 \uc774\ub0b4\uc5d0 \uc815\ubcf4\uc758 80%\uac00 \uc190\uc2e4\ub429\ub2c8\ub2e4. AgentOS\uc758 \uc778\uc9c0 \uae30\uc5b5\uc740 \uac04\uaca9 \ubc18\ubcf5\uacfc \uace0\uc815\ud654\ub97c \uc801\uc6a9\ud558\uc5ec \uace1\uc120\uc744 \ud3c9\ud0c4\ud654\ud569\ub2c8\ub2e4.",
+    "ctaLearnMore": "\uc778\uc9c0 \uae30\uc5b5 \ud0d0\uc0c9"
   },
   "emergent": {
     "badge": "Runtime Intelligence",
