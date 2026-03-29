@@ -70,7 +70,7 @@ export default async function CareersPage({ params: { locale } }: { params: { lo
         
         <div className="mt-16 text-center">
             <p className="text-muted mb-4">Don&apos;t see a fit?</p>
-            <a href="mailto:team@manic.agency" className="text-accent-primary hover:underline">
+            <a href="mailto:team@frame.dev" className="text-accent-primary hover:underline">
                 Email us your resume anyway
             </a>
         </div>

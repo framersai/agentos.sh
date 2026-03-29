@@ -50,8 +50,8 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
   const connectLinks = [
     { label: t('connect.github'), href: 'https://github.com/framersai/agentos', icon: Github },
-    { label: t('connect.linkedin'), href: 'https://www.linkedin.com/company/manicinc', icon: Linkedin },
-    { label: t('connect.twitter'), href: 'https://x.com/rabbitholewun', icon: Twitter },
+    { label: t('connect.linkedin'), href: 'https://www.linkedin.com/company/framersai', icon: Linkedin },
+    { label: t('connect.twitter'), href: 'https://twitter.com/framersai', icon: Twitter },
     { label: t('connect.frameDev'), href: 'https://frame.dev', icon: Globe },
   ];
 
@@ -64,12 +64,12 @@ export default async function AboutPage({ params: { locale } }: Props) {
     {
       title: t('team.enterpriseSupport'),
       description: t('team.enterpriseSupportDesc'),
-      email: 'hi@rabbithole.inc',
+      email: 'team@frame.dev',
     },
     {
       title: t('team.hiring'),
       description: t('team.joinUs'),
-      email: 'team@manic.agency',
+      email: 'team@frame.dev',
     },
   ];
 
@@ -182,7 +182,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
           <p className="text-sm text-[var(--color-text-secondary)]">
             {t.rich('license.footer', {
               link: (chunks) => (
-                <a href="mailto:hi@rabbithole.inc" className="text-accent-primary hover:underline font-semibold">
+                <a href="mailto:team@frame.dev" className="text-accent-primary hover:underline font-semibold">
                   {chunks}
                 </a>
               ),
