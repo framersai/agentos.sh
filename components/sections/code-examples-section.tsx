@@ -275,67 +275,201 @@ for await (const part of agentStream.fullStream) {
 }`
   },
   {
+    id: 'mission-orchestrator',
+    title: t('examples.missionOrchestrator.title'),
+    description: t('examples.missionOrchestrator.description'),
+    language: 'typescript',
+    category: 'advanced',
+    code: `import { mission } from '@framers/agentos/orchestration'
+import { z } from 'zod'
+
+// Describe a goal — the Tree of Thought planner handles the rest.
+// It generates 3 candidate decompositions, scores each on
+// feasibility/cost/latency/robustness, and picks the best one.
+const research = mission('competitor-analysis')
+  .input(z.object({ topic: z.string() }))
+  .goal('Research {{topic}}, compare the top 5 solutions, and write a report')
+  .returns(z.object({ report: z.string(), sources: z.array(z.string()) }))
+  .planner({ strategy: 'adaptive', maxSteps: 8 })
+  .autonomy('guardrailed')        // auto-approve below thresholds
+  .providerStrategy('balanced')   // strong models for reasoning, cheap for routing
+  .costCap(5.00)                  // hard spending limit
+  .compile()
+
+// Stream execution events in real time
+for await (const event of research.stream({ topic: 'vector databases' })) {
+  if (event.type === 'text_delta') process.stdout.write(event.content)
+  if (event.type === 'mission:agent_spawned')
+    console.log(\`\\nAgent spawned: \${event.role} (\${event.provider}/\${event.model})\`)
+  if (event.type === 'mission:cost_update')
+    console.log(\`Cost: $\${event.totalSpent.toFixed(2)} / $\${event.costCap.toFixed(2)}\`)
+}
+
+const result = await research.invoke({ topic: 'vector databases' })
+console.log(result.report)`
+  },
+  {
+    id: 'voice-agent',
+    title: t('examples.voiceAgent.title'),
+    description: t('examples.voiceAgent.description'),
+    language: 'typescript',
+    category: 'integration',
+    code: `import { agent } from '@framers/agentos'
+
+// Voice agent with tool calling — speaks, listens, and acts.
+// Deepgram for STT (streaming), ElevenLabs for TTS (low latency).
+const concierge = agent({
+  provider: 'anthropic',
+  model: 'claude-sonnet-4-20250514',
+  instructions: \`You are a hotel concierge. Help guests with reservations,
+    local recommendations, and room service orders. Be warm and concise —
+    you're speaking, not writing.\`,
+  tools: [
+    {
+      name: 'book_restaurant',
+      description: 'Book a table at a local restaurant',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          restaurant: { type: 'string' },
+          guests: { type: 'number' },
+          time: { type: 'string' },
+        },
+        required: ['restaurant', 'guests', 'time'],
+      },
+      execute: async ({ restaurant, guests, time }) => ({
+        success: true,
+        output: \`Booked \${guests} guests at \${restaurant} for \${time}\`,
+      }),
+    },
+  ],
+  voice: {
+    enabled: true,
+    stt: { provider: 'deepgram', model: 'nova-2' },
+    tts: { provider: 'elevenlabs', voice: 'rachel' },
+    endpointDetection: 'heuristic',
+    bargein: 'hard_cut',           // stop speaking when user interrupts
+    silenceTimeoutMs: 1400,
+  },
+})
+
+// Start a live voice session
+const session = await concierge.startVoiceSession()
+console.log('Listening... (Ctrl+C to stop)')`
+  },
+  {
+    id: 'orchestration-graph',
+    title: t('examples.orchestrationGraph.title'),
+    description: t('examples.orchestrationGraph.description'),
+    language: 'typescript',
+    category: 'advanced',
+    code: `import { AgentGraph } from '@framers/agentos/orchestration'
+
+// Build a cyclic review loop: draft -> review -> revise (until quality passes)
+// then human approval gate -> publish. Full graph control with typed edges.
+const reviewPipeline = new AgentGraph('content-review')
+  .addNode('draft', {
+    type: 'gmi',
+    instructions: 'Write a blog post about the given topic. Be thorough.',
+  })
+  .addNode('review', {
+    type: 'judge',
+    rubric: 'Score 1-10 on accuracy, clarity, engagement. Explain issues.',
+    threshold: 7,
+  })
+  .addNode('revise', {
+    type: 'gmi',
+    instructions: 'Revise the draft based on the reviewer feedback.',
+  })
+  .addNode('approve', {
+    type: 'human',
+    prompt: 'The draft scored 7+. Approve for publication?',
+  })
+  .addNode('publish', {
+    type: 'tool',
+    toolName: 'publish_post',
+  })
+  // Wire the graph — note the cycle: revise loops back to review
+  .addEdge('draft', 'review')
+  .addEdge('review', 'revise', { condition: 'score < 7' })
+  .addEdge('review', 'approve', { condition: 'score >= 7' })
+  .addEdge('revise', 'review')      // cycle until quality passes
+  .addEdge('approve', 'publish')
+  .compile()
+
+// Execute with streaming events
+for await (const event of reviewPipeline.stream({ topic: 'AI agents' })) {
+  if (event.type === 'node_start') console.log(\`\\n[\${event.nodeId}] started\`)
+  if (event.type === 'text_delta') process.stdout.write(event.content)
+  if (event.type === 'interrupt') console.log('\\nWaiting for human approval...')
+}`
+  },
+  {
+    id: 'image-generation',
+    title: t('examples.imageGeneration.title'),
+    description: t('examples.imageGeneration.description'),
+    language: 'typescript',
+    category: 'integration',
+    code: `import { generateImage, generateText } from '@framers/agentos'
+
+// Generate an image with any provider — unified API
+const { url, revisedPrompt } = await generateImage({
+  provider: 'openai',           // or 'stability', 'replicate', 'bfl'
+  prompt: 'A cyberpunk cityscape at sunset, neon signs in Japanese, rain',
+  size: '1024x1024',
+})
+console.log('Image:', url)
+console.log('Revised prompt:', revisedPrompt)
+
+// Chain with text generation — analyze the image with vision
+const analysis = await generateText({
+  provider: 'openai',
+  model: 'gpt-4o',
+  prompt: [
+    { type: 'text', text: 'Describe this image in one sentence.' },
+    { type: 'image', url },
+  ],
+})
+console.log('Description:', analysis.text)
+
+// Generate multiple images in parallel with different providers
+const [openaiImg, stabilityImg, fluxImg] = await Promise.all([
+  generateImage({ provider: 'openai', prompt: 'A minimalist logo for an AI company' }),
+  generateImage({ provider: 'stability', prompt: 'A minimalist logo for an AI company' }),
+  generateImage({ provider: 'bfl', prompt: 'A minimalist logo for an AI company' }),
+])
+console.log('Compare:', openaiImg.url, stabilityImg.url, fluxImg.url)`
+  },
+  {
     id: 'deployment',
     title: t('examples.deployment.title'),
     description: t('examples.deployment.description'),
-    language: 'yaml',
+    language: 'bash',
     category: 'deployment',
-    code: `# docker-compose.yml
-version: '3.8'
+    code: `# Install the Wunderland CLI
+npm install -g @framers/wunderland
 
-services:
-  agentos:
-    image: framersai/agentos:latest
-    environment:
-      - NODE_ENV=production
-      - OPENAI_API_KEY=\${OPENAI_API_KEY}
-      - DATABASE_URL=postgresql://postgres@db:5432/agentos
-      - REDIS_URL=redis://cache:6379
-      - VECTOR_DB_URL=http://vectordb:8000
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
-      - cache
-      - vectordb
-    deploy:
-      replicas: 3
-      resources:
-        limits:
-          memory: 2G
-        reservations:
-          memory: 1G
+# Create an agent from natural language
+wunderland create "A research assistant that finds papers and writes summaries"
 
-  db:
-    image: postgres:15
-    environment:
-      - POSTGRES_DB=agentos
-      - POSTGRES_PASSWORD=<PASSWORD>
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+# Chat with your agent
+wunderland chat --provider anthropic
 
-  cache:
-    image: redis:7-alpine
-    command: redis-server --appendonly yes
-    volumes:
-      - redis_data:/data
+# Run a mission (Tree of Thought planning + multi-agent execution)
+wunderland mission "Research the top 5 AI frameworks, compare architectures, write a report" \\
+  --autonomy guardrailed \\
+  --provider-strategy balanced \\
+  --cost-cap 5.00
 
-  vectordb:
-    image: qdrant/qdrant
-    volumes:
-      - qdrant_data:/qdrant/storage
+# Generate deployment artifacts
+wunderland deploy --target docker
 
-  monitoring:
-    image: grafana/grafana
-    ports:
-      - "3001:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+# Or deploy directly
+docker compose up -d
 
-volumes:
-  postgres_data:
-  redis_data:
-  qdrant_data:`
+# Monitor running agents
+wunderland status
+wunderland monitor`
   }
 ]), [t])
   const [activeExample, setActiveExample] = useState(codeExamples[0])
