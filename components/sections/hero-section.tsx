@@ -157,15 +157,15 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               scale(0.55) = 22/40, scale(0.75) = 30/40. transform-origin: left center
               keeps text left-aligned. Wrapper width is also scaled proportionally. */}
           <h1 className="font-bold tracking-tight mb-4" itemProp="name">
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center flex-wrap">
-              <span className="inline-block mr-2 origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100 min-w-0 shrink-0" style={{ marginTop: '-4px', width: 'max-content' }}>
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
+              <span className="inline-block mr-2 origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100 shrink-0" style={{ marginTop: '-4px', width: '240px' }}>
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
               </span>
               <span className="text-[var(--color-text-primary)]">intelligence</span>
             </div>
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center flex-wrap">
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
               <span className="text-[var(--color-text-secondary)]">for&nbsp;</span>
-              <span className="inline-block mr-2 origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100 min-w-0 shrink-0" style={{ marginTop: '-4px', width: 'max-content' }}>
+              <span className="inline-block mr-2 origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100 shrink-0" style={{ marginTop: '-4px', width: '240px' }}>
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} />
               </span>
               <span className="text-[var(--color-text-primary)]">agents</span>
@@ -190,8 +190,8 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             </a>
           </nav>
 
-          {/* Install command */}
-          <div className="mb-4">
+          {/* Install command + scroll CTA */}
+          <div className="flex flex-wrap items-center gap-2 mb-4">
             <Button type="button" onClick={copyCommand} variant="secondary" className="gap-2 text-xs sm:text-sm" aria-label="Copy install command">
               {showToast ? (
                 <Check className="w-4 h-4 text-green-400" aria-hidden="true" />
@@ -200,6 +200,10 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               )}
               <code className="font-mono">{showToast ? 'Copied!' : 'npm install @framers/agentos'}</code>
             </Button>
+            <a href="#code" onClick={(e) => { e.preventDefault(); document.getElementById('code')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+               className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors cursor-pointer">
+              See examples <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+            </a>
           </div>
 
           {/* Stats */}
