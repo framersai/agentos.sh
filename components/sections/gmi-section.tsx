@@ -1,571 +1,556 @@
 'use client'
 
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Brain, Network, GitBranch, Cpu, Activity, Code, ArrowRight, Fingerprint, Database, Shield } from 'lucide-react'
+import {
+  ArrowRight,
+  Brain,
+  Shield,
+  Wrench,
+  Workflow,
+  Database,
+  Fingerprint,
+  Cpu,
+  Radio,
+  Check,
+  X,
+} from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { SectionLabel } from '../ui/section-label'
 
+/* ------------------------------------------------------------------ */
+/*  Layer definitions                                                   */
+/* ------------------------------------------------------------------ */
+
+type LayerId =
+  | 'channels'
+  | 'guardrails'
+  | 'tools'
+  | 'orchestration'
+  | 'memory'
+  | 'personality'
+  | 'llmCore'
+
+interface LayerDef {
+  id: LayerId
+  icon: typeof Brain
+  /** CSS color — will use site variables where possible */
+  color: string
+  /** Radius of this ring in the SVG (outermost → innermost) */
+  radius: number
+  /** Ring thickness */
+  thickness: number
+}
+
+/**
+ * Seven concentric layers from outermost (channels) to innermost (LLM core).
+ * Radii are tuned for a 500x500 SVG viewBox.
+ */
+const LAYERS: LayerDef[] = [
+  { id: 'channels',      icon: Radio,       color: '#60a5fa', radius: 220, thickness: 28 },
+  { id: 'guardrails',    icon: Shield,      color: '#f59e0b', radius: 188, thickness: 26 },
+  { id: 'tools',         icon: Wrench,      color: '#34d399', radius: 158, thickness: 24 },
+  { id: 'orchestration', icon: Workflow,     color: '#a78bfa', radius: 130, thickness: 22 },
+  { id: 'memory',        icon: Database,    color: '#22d3ee', radius: 104, thickness: 20 },
+  { id: 'personality',   icon: Fingerprint, color: '#f472b6', radius: 80,  thickness: 18 },
+  { id: 'llmCore',       icon: Cpu,         color: '#fbbf24', radius: 52,  thickness: 30 },
+]
+
+/* ------------------------------------------------------------------ */
+/*  Flow dot — data flowing between concentric rings                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * A small circle that orbits along a circular path, creating
+ * a "data flowing between layers" effect.
+ */
+function FlowDot({
+  cx,
+  cy,
+  radius,
+  delay = 0,
+  duration = 6,
+  color = 'var(--color-accent-primary)',
+}: {
+  cx: number
+  cy: number
+  radius: number
+  delay?: number
+  duration?: number
+  color?: string
+}) {
+  return (
+    <circle r="2.5" fill={color} opacity="0.7">
+      <animateMotion
+        path={`M${cx + radius},${cy} A${radius},${radius} 0 1,1 ${cx + radius - 0.01},${cy}`}
+        dur={`${duration}s`}
+        begin={`${delay}s`}
+        repeatCount="indefinite"
+      />
+      <animate
+        attributeName="opacity"
+        values="0;0.8;0.8;0"
+        dur={`${duration}s`}
+        begin={`${delay}s`}
+        repeatCount="indefinite"
+      />
+    </circle>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/*  Comparison rows                                                     */
+/* ------------------------------------------------------------------ */
+
+const COMPARISON_KEYS = [
+  'identity',
+  'memory',
+  'behavior',
+  'providers',
+  'tools',
+  'safety',
+] as const
+
+/* ------------------------------------------------------------------ */
+/*  Code example                                                        */
+/* ------------------------------------------------------------------ */
+
+const CODE_EXAMPLE = `import { agent } from '@framers/agentos';
+
+const gmi = agent({
+  provider: 'anthropic',
+  instructions: 'You are a thorough research analyst.',
+  personality: {
+    conscientiousness: 0.95,
+    openness: 0.85,
+    agreeableness: 0.7,
+  },
+  memory: { enabled: true, consolidation: true },
+  guardrails: ['pii-redaction', 'grounding-guard'],
+});
+
+const session = gmi.session('research-q1');
+const reply = await session.send(
+  'Analyze Q1 market trends in AI infrastructure.'
+);
+console.log(reply.text);`
+
+/* ------------------------------------------------------------------ */
+/*  Main exported component                                             */
+/* ------------------------------------------------------------------ */
+
+/**
+ * **Anatomy of a GMI Section**
+ *
+ * Focused "What is a GMI?" explainer with:
+ * - 7-layer interactive concentric ring diagram
+ * - GMI vs Traditional Agent comparison
+ * - Code example showing `agent()` with personality, memory, guardrails
+ * - CTA to docs
+ */
 export function GMISection() {
   const t = useTranslations('gmiSection')
-  const [activeNode, setActiveNode] = useState<string | null>(null)
-  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
-  const hoverTimerRef = useRef<number | undefined>(undefined)
+  const [activeLayer, setActiveLayer] = useState<LayerId>('llmCore')
 
-  const agents = useMemo(() => ([
-    { id: 'researcher', name: t('agents.researcher.name'), icon: Brain, description: t('agents.researcher.description'),
-      examples: ['Web search and source ranking', 'Literature survey (PDFs, arXiv)', 'Fact extraction to memory'],
-      tools: ['WebBrowser', 'PDFReader', 'Search API'], persona: t('agents.researcher.persona') },
-    { id: 'analyst', name: t('agents.analyst.name'), icon: Activity, description: t('agents.analyst.description'),
-      examples: ['Summarize and compare sources', 'Quant/qual trend analysis', 'Sanity checks and flags'],
-      tools: ['DataFrame', 'Calculator', 'Validator'], persona: t('agents.analyst.persona') },
-    { id: 'creator', name: t('agents.creator.name'), icon: Code, description: t('agents.creator.description'),
-      examples: ['Drafts and revisions', 'Artifact generation (docs, code)', 'Style adaptation'],
-      tools: ['Writer', 'Formatter', 'TemplateKit'], persona: t('agents.creator.persona') },
-    { id: 'executor', name: t('agents.executor.name'), icon: Cpu, description: t('agents.executor.description'),
-      examples: ['Call external APIs', 'Create issues/PRs', 'Schedule tasks'],
-      tools: ['HTTP', 'GitHub', 'Scheduler'], persona: t('agents.executor.persona') },
-    { id: 'orchestrator', name: t('agents.orchestrator.name'), icon: Network, description: t('agents.orchestrator.description'),
-      examples: ['Route tasks to roles', 'Resolve conflicts', 'Approve/reject gates'],
-      tools: ['Router', 'Guardrails', 'PolicyEngine'], persona: t('agents.orchestrator.persona') }
-  ]), [t])
+  const activeLayerDef = LAYERS.find((l) => l.id === activeLayer)!
+  const ActiveIcon = activeLayerDef.icon
 
-  const gmiSnapshots = [
-    {
-      useCase: t('snapshots.0.useCase'),
-      outcome: t('snapshots.0.outcome')
-    },
-    {
-      useCase: t('snapshots.1.useCase'),
-      outcome: t('snapshots.1.outcome')
-    },
-    {
-      useCase: t('snapshots.2.useCase'),
-      outcome: t('snapshots.2.outcome')
-    }
-  ] as const
+  const CX = 250
+  const CY = 250
 
-  // helper to position tooltip with minimal layout thrash
-  function computeTooltipPosition(target: Element) {
-    const svgElement =
-      (target as SVGGraphicsElement).ownerSVGElement ??
-      target.closest('svg')
-    if (!svgElement) {
-      // fallback to basic positioning relative to viewport if SVG context missing
-      const rect = target.getBoundingClientRect()
-      return { x: rect.left, y: rect.top }
-    }
-    const svgRect = svgElement.getBoundingClientRect()
-    const rect = target.getBoundingClientRect()
-    const tooltipWidth = 240
-    const left = rect.left - svgRect.left + rect.width / 2 - tooltipWidth / 2
-    const top = rect.top - svgRect.top - 16
-    return { x: Math.max(8, left), y: Math.max(8, top) }
-  }
-
-  useEffect(() => {
-    const onEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setActiveNode(null)
-    }
-    window.addEventListener('keydown', onEsc)
-    return () => window.removeEventListener('keydown', onEsc)
-  }, [])
-
-  const architectureNodes = [
-    {
-      id: 'ui',
-      label: t('architecture.ui.label'),
-      subtitle: t('architecture.ui.subtitle'),
-      x: 20, y: 40, w: 160, h: 80,
-      details: t('architecture.ui.details'),
-      example: t('architecture.ui.example'),
-      outcome: t('architecture.ui.outcome')
-    },
-    {
-      id: 'gateway',
-      label: t('architecture.gateway.label'),
-      subtitle: t('architecture.gateway.subtitle'),
-      x: 210, y: 40, w: 160, h: 80,
-      details: t('architecture.gateway.details'),
-      example: t('architecture.gateway.example'),
-      outcome: t('architecture.gateway.outcome')
-    },
-    {
-      id: 'orchestrator',
-      label: t('architecture.orchestrator.label'),
-      subtitle: t('architecture.orchestrator.subtitle'),
-      x: 390, y: 30, w: 190, h: 100,
-      details: t('architecture.orchestrator.details'),
-      example: t('architecture.orchestrator.example'),
-      outcome: t('architecture.orchestrator.outcome')
-    },
-    {
-      id: 'agents',
-      label: t('architecture.agents.label'),
-      subtitle: t('architecture.agents.subtitle'),
-      x: 600, y: 10, w: 270, h: 140,
-      details: t('architecture.agents.details'),
-      example: t('architecture.agents.example'),
-      outcome: t('architecture.agents.outcome')
-    },
-    {
-      id: 'memory',
-      label: t('architecture.memory.label'),
-      subtitle: t('architecture.memory.subtitle'),
-      x: 390, y: 160, w: 200, h: 90,
-      details: t('architecture.memory.details'),
-      example: t('architecture.memory.example'),
-      outcome: t('architecture.memory.outcome')
-    },
-    {
-      id: 'events',
-      label: t('architecture.events.label'),
-      subtitle: t('architecture.events.subtitle'),
-      x: 610, y: 170, w: 180, h: 80,
-      details: t('architecture.events.details'),
-      example: t('architecture.events.example'),
-      outcome: t('architecture.events.outcome')
-    }
-  ] as const
-
-  const [selectedNodeId, setSelectedNodeId] = useState<(typeof architectureNodes)[number]['id']>(architectureNodes[0].id)
-  const selectedArchitectureNode = architectureNodes.find((node) => node.id === selectedNodeId)
-
-  function InteractiveArchitecture() {
-    return (
-      <div className="relative w-full overflow-x-auto">
-        <svg viewBox="0 0 900 280" className="min-w-[800px] w-full h-auto">
-          <defs>
-            <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="var(--color-accent-primary)" />
-              <stop offset="100%" stopColor="var(--color-accent-secondary)" />
-            </linearGradient>
-            <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="8" result="coloredBlur" />
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <marker id="arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 z" fill="var(--color-accent-primary)" />
-            </marker>
-          </defs>
-
-          {/* Ambient blobs */}
-          <g opacity="0.25" filter="url(#soft-glow)">
-            <circle cx="140" cy="30" r="80" fill="var(--color-accent-primary)" />
-            <circle cx="760" cy="260" r="90" fill="var(--color-accent-secondary)" />
-          </g>
-
-          {/* Flows (bezier) */}
-          <g stroke="url(#flow-gradient)" strokeWidth="2" fill="none" markerEnd="url(#arrow)" opacity="0.9">
-            <path d="M180,80 C195,80 205,80 210,80" />
-            <path d="M370,80 C380,60 385,60 390,80" />
-            <path d="M580,70 C590,40 595,40 600,70" />
-            <path d="M485,130 C485,145 490,150 490,160" />
-            <path d="M590,205 C600,205 606,205 610,205" />
-            <path d="M780,150 C820,150 820,180 790,170" />
-          </g>
-
-          {/* Streaming dots */}
-          {[
-            { x: [180, 210], y: [80, 80], delay: 0 },
-            { x: [370, 390], y: [70, 80], delay: 0.4 },
-            { x: [580, 600], y: [65, 70], delay: 0.8 },
-            { x: [485, 490], y: [130, 160], delay: 1.2 },
-            { x: [590, 610], y: [205, 205], delay: 1.6 },
-            { x: [780, 790], y: [150, 170], delay: 2.0 },
-          ].map((seg, i) => (
-            <motion.circle
-              key={`spark-${i}`}
-              r="3"
-              fill="var(--color-accent-primary)"
-              initial={{ cx: seg.x[0], cy: seg.y[0] }}
-              animate={{ cx: seg.x[1], cy: seg.y[1] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'linear', delay: seg.delay }}
-            />
-          ))}
-
-          {/* Nodes with interactive tooltips (click to select) */}
-          {architectureNodes.map((n) => (
-            <g key={n.id}>
-              {/* glow plate for selected state */}
-              {selectedNodeId === n.id && (
-                <rect x={n.x - 8} y={n.y - 8} width={n.w + 16} height={n.h + 16} rx="22"
-                      fill="var(--color-accent-primary)" opacity="0.15" 
-                      className="animate-pulse" />
-              )}
-              <rect x={n.x - 6} y={n.y - 6} width={n.w + 12} height={n.h + 12} rx="20"
-                    fill="var(--color-accent-primary)" opacity="0.05" />
-              <rect
-                x={n.x}
-                y={n.y}
-                width={n.w}
-                height={n.h}
-                rx="16"
-                fill={selectedNodeId === n.id ? "var(--color-background-secondary)" : "var(--color-background-primary)"}
-                stroke={selectedNodeId === n.id ? "var(--color-accent-primary)" : "var(--color-border-primary)"}
-                strokeWidth={selectedNodeId === n.id ? 2 : 1}
-                className="cursor-pointer transition-all"
-                onMouseEnter={(e) => {
-                  // debounce hover reveal; measure in rAF to avoid sync reflow after state change
-                  if (hoverTimerRef.current) window.clearTimeout(hoverTimerRef.current)
-                  const target = e.currentTarget as Element
-                  hoverTimerRef.current = window.setTimeout(() => {
-                    requestAnimationFrame(() => {
-                    setActiveNode(n.id)
-                      setTooltipPos(computeTooltipPosition(target))
-                    })
-                  }, 100)
-                }}
-                onMouseLeave={() => {
-                  if (hoverTimerRef.current) window.clearTimeout(hoverTimerRef.current)
-                  setActiveNode((prev) => (prev === n.id ? null : prev))
-                }}
-                tabIndex={0}
-                role="button"
-                aria-label={`${n.label}. ${n.subtitle}. ${n.details}`}
-                aria-pressed={selectedNodeId === n.id}
-                onClick={() => setSelectedNodeId(n.id)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    const target = e.currentTarget as Element
-                    setActiveNode(n.id)
-                    setTooltipPos(computeTooltipPosition(target))
-                    setSelectedNodeId(n.id)
-                  }
-                }}
-              />
-              <text x={n.x + n.w / 2} y={n.y + 40} textAnchor="middle"
-                    fill={selectedNodeId === n.id ? "var(--color-accent-primary)" : "var(--color-text-primary)"}
-                    className="font-semibold">
-                {n.label}
-              </text>
-              <text x={n.x + n.w / 2} y={n.y + 60} textAnchor="middle" fill="var(--color-text-muted)" className="text-xs">
-                {n.subtitle}
-              </text>
-            </g>
-          ))}
-        </svg>
-
-        {/* Portal-like tooltip (positioned absolute over SVG container) */}
-        <AnimatePresence>
-          {activeNode && (() => {
-            const n = architectureNodes.find((x) => x.id === activeNode)!
-            const pos = tooltipPos ?? { x: n.x + n.w + 8, y: n.y + 8 }
-            return (
-              <motion.div
-                key={`tt-${n.id}`}
-                id={`tt-${n.id}`}
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.18 }}
-                className="absolute z-50 w-60 rounded-xl p-3 shadow-lg pointer-events-none"
-                style={{
-                  left: pos.x,
-                  top: pos.y,
-                  background: 'var(--color-background-elevated)',
-                  border: '1px solid var(--color-border-primary)',
-                }}
-                role="tooltip"
-              >
-                <div className="text-xs uppercase tracking-wide mb-1" style={{ color: 'var(--color-text-muted)' }}>{n.label}</div>
-                <div className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>{n.details}</div>
-                <div className="text-xs mt-2" style={{ color: 'var(--color-text-secondary)' }}>
-                  <span className="font-semibold" style={{ color: 'var(--color-accent-primary)' }}>Example:</span> {n.example}
-                </div>
-              </motion.div>
-            )
-          })()}
-        </AnimatePresence>
-      </div>
-    )
-  }
   return (
-    <section id="gmis" className="py-12 sm:py-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme section-gradient" aria-labelledby="gmi-heading">
+    <section
+      id="gmis"
+      className="py-12 sm:py-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-theme section-gradient"
+      aria-labelledby="gmi-heading"
+    >
       {/* Subtle organic gradient */}
       <div className="absolute inset-0 organic-gradient opacity-20" />
 
       <div className="max-w-7xl mx-auto relative z-10">
+        {/* ---- Header ---- */}
         <div className="text-center mb-10">
-          <h2 id="gmi-heading" className="text-4xl sm:text-5xl font-extrabold mb-4">
+          <SectionLabel icon={<Brain className="w-3.5 h-3.5" />}>
+            {t('badge')}
+          </SectionLabel>
+          <h2
+            id="gmi-heading"
+            className="text-4xl sm:text-5xl font-extrabold mt-4 mb-4"
+          >
             <span className="gradient-text">{t('title')}</span>
           </h2>
-          <p className="text-lg max-w-3xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
+          <p
+            className="text-lg max-w-3xl mx-auto"
+            style={{ color: 'var(--color-text-secondary)' }}
+          >
             {t('subtitle')}
           </p>
         </div>
 
-        {/* GMI Explainer Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          className="mb-10 max-w-4xl mx-auto"
-        >
-          <div
-            className="rounded-2xl p-[1px]"
-            style={{
-              background: 'linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary))',
-            }}
-          >
-            <div
-              className="rounded-2xl px-6 py-5 backdrop-blur-xl"
-              style={{
-                background: 'var(--color-background-glass)',
-              }}
-            >
-              <div className="flex flex-wrap items-center gap-3 mb-3">
-                <span
-                  className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
-                  style={{
-                    background: 'color-mix(in srgb, var(--color-accent-primary) 15%, transparent)',
-                    color: 'var(--color-accent-primary)',
-                    border: '1px solid color-mix(in srgb, var(--color-accent-primary) 30%, transparent)',
-                  }}
-                >
-                  Core Concept
-                </span>
-                <h3 className="text-lg font-bold" style={{ color: 'var(--color-text-primary)' }}>
-                  What is a GMI?
-                </h3>
-              </div>
-              <p className="text-sm font-medium mb-4" style={{ color: 'var(--color-text-secondary)' }}>
-                {t('whatIsGmi')}
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {[
-                  { icon: Brain, label: 'Persistent cognitive state' },
-                  { icon: Fingerprint, label: 'HEXACO personality identity' },
-                  { icon: Database, label: 'Episodic + semantic memory' },
-                  { icon: Shield, label: 'Per-instance guardrails' },
-                ].map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 shrink-0" style={{ color: 'var(--color-accent-primary)' }} />
-                    <span className="text-xs font-medium" style={{ color: 'var(--color-text-primary)' }}>{label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          className="grid md:grid-cols-3 gap-4 mb-10"
-        >
-          {gmiSnapshots.map((snapshot) => (
-            <div
-              key={snapshot.useCase}
-              className="p-5 rounded-2xl backdrop-blur"
-              style={{
-                background: 'var(--color-background-glass)',
-                border: '1px solid var(--color-border-primary)',
-              }}
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--color-accent-primary)' }}>{t('useCaseTitle')}</p>
-              <p className="text-base font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>{snapshot.useCase}</p>
-              <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--color-accent-primary)' }}>{t('outcomeTitle')}</p>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{snapshot.outcome}</p>
-            </div>
-          ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-14 rounded-3xl p-6 shadow-sm"
-          style={{
-            border: '1px solid var(--color-border-primary)',
-            background: 'var(--color-background-secondary)',
-          }}
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="h-2 w-10 rounded-full" style={{ background: 'linear-gradient(to right, var(--color-accent-primary), var(--color-accent-secondary))' }} />
-            <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--color-text-muted)' }}>{t('whatYouGetTitle')}</p>
-          </div>
-          <ul className="grid md:grid-cols-3 gap-3 text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
-            {(t.raw('whatYouGetItems') as string[]).map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full" style={{ background: 'var(--color-accent-primary)' }} aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* Interactive Agent Network Diagram (slower, more detailed, visible popovers) */}
+        {/* ---- Interactive Layered Diagram ---- */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="glass-morphism rounded-3xl p-6 sm:p-8 shadow-modern-lg mb-14"
         >
-          <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
-            <h3 className="text-2xl sm:text-3xl font-bold text-center mb-2" style={{ color: 'var(--color-text-primary)' }}>Multi‑Agent Collaboration Network</h3>
-            <p className="text-center mb-8" style={{ color: 'var(--color-text-muted)' }}>Researcher, Analyst, Creator, Critic, Executor stream insights in parallel; Orchestrator routes, memory persists.</p>
-
-            <div className="relative aspect-square max-w-2xl mx-auto">
+          <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-center">
+            {/* SVG diagram */}
+            <div className="relative aspect-square max-w-lg mx-auto w-full">
               <svg viewBox="0 0 500 500" className="w-full h-full">
                 <defs>
-                  <radialGradient id="agent-gradient">
-                    <stop offset="0%" stopColor="var(--color-accent-primary)" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="var(--color-accent-secondary)" stopOpacity="0.1" />
-                  </radialGradient>
-                  <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="var(--color-accent-primary)" />
-                    <stop offset="100%" stopColor="var(--color-accent-secondary)" />
-                  </linearGradient>
+                  {/* Soft glow filter for the LLM core pulse */}
+                  <filter id="gmi-core-glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="6" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
                 </defs>
 
-                {/* Central hub */}
-                <motion.circle
-                  cx="250"
-                  cy="250"
-                  r="60"
-                  fill="url(#agent-gradient)"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.8 }}
-                />
-                <text x="250" y="250" textAnchor="middle" fill="var(--color-text-primary)" className="font-bold text-sm" dy="5">
-                  Agency Core
-                </text>
-
-                {/* Agent nodes */}
-                {[
-                  ...agents,
-                  { id: 'critic', name: t('agents.critic.name'), icon: Activity, description: t('agents.critic.description') },
-                ].map((agent, i) => {
-                  const angle = (i / agents.length) * 2 * Math.PI
-                  const x = 250 + 150 * Math.cos(angle)
-                  const y = 250 + 150 * Math.sin(angle)
+                {/* Concentric ring layers (outermost first so innermost paints on top) */}
+                {LAYERS.map((layer) => {
+                  const isActive = activeLayer === layer.id
+                  const isCore = layer.id === 'llmCore'
+                  const innerR = layer.radius - layer.thickness / 2
+                  const outerR = layer.radius + layer.thickness / 2
 
                   return (
-                    <g key={agent.id}>
-                      {/* Connection lines */}
-                      <motion.line
-                        x1="250"
-                        y1="250"
-                        x2={x}
-                        y2={y}
-                        stroke="url(#flow-gradient)"
-                        strokeWidth="1"
-                        strokeDasharray="5,5"
-                        opacity="0.35"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ duration: 2.2, delay: i * 0.05 }}
+                    <g key={layer.id}>
+                      {/* Ring (as a thick circle stroke) */}
+                      <circle
+                        cx={CX}
+                        cy={CY}
+                        r={layer.radius}
+                        fill="none"
+                        stroke={layer.color}
+                        strokeWidth={layer.thickness}
+                        opacity={isActive ? 0.35 : 0.12}
+                        className="transition-all duration-300"
+                        style={{
+                          filter: isCore && isActive ? 'url(#gmi-core-glow)' : undefined,
+                        }}
                       />
 
-                      {/* Agent node */}
-                      <motion.g
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 0.7, delay: i * 0.05 }}
-                      >
-                        <circle
-                          cx={x}
-                          cy={y}
-                          r="40"
-                          fill="var(--color-background-primary)"
-                          stroke="var(--color-border-primary)"
-                          strokeWidth="2"
+                      {/* Clickable transparent hit area */}
+                      <circle
+                        cx={CX}
+                        cy={CY}
+                        r={layer.radius}
+                        fill="none"
+                        stroke="transparent"
+                        strokeWidth={layer.thickness + 8}
+                        className="cursor-pointer"
+                        onClick={() => setActiveLayer(layer.id)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={t(`layers.${layer.id}.name`)}
+                        aria-pressed={isActive}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault()
+                            setActiveLayer(layer.id)
+                          }
+                        }}
+                      />
+
+                      {/* Active ring highlight */}
+                      {isActive && (
+                        <motion.circle
+                          cx={CX}
+                          cy={CY}
+                          r={layer.radius}
+                          fill="none"
+                          stroke={layer.color}
+                          strokeWidth={2}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: [0.4, 0.8, 0.4] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          style={{ filter: 'url(#gmi-core-glow)' }}
                         />
-                        <text x={x} y={y - 5} textAnchor="middle" fill="var(--color-text-primary)" className="font-semibold text-xs">
-                          {agent.name}
-                        </text>
-                        <text x={x} y={y + 10} textAnchor="middle" fill="var(--color-text-muted)" className="text-xs">
-                          GMI
-                        </text>
-                      </motion.g>
+                      )}
 
-                      {/* Data flow animation */}
-                      <motion.circle
-                        r="3"
-                        fill="var(--color-accent-primary)"
-                        initial={{ x: 250, y: 250 }}
-                        animate={{
-                          x: [250, x, 250],
-                          y: [250, y, 250]
-                        }}
-                        transition={{
-                          duration: 8,
-                          delay: i * 0.3,
-                          repeat: Infinity,
-                          ease: "linear"
-                        }}
-                      />
+                      {/* Label on the ring */}
+                      <text
+                        x={CX}
+                        y={CY - layer.radius - (isCore ? -4 : layer.thickness / 2 + 6)}
+                        textAnchor="middle"
+                        fill={isActive ? layer.color : 'var(--color-text-muted)'}
+                        fontSize={isCore ? 11 : 9}
+                        fontWeight={isActive ? 700 : 400}
+                        fontFamily="inherit"
+                        className="transition-all duration-300 pointer-events-none select-none"
+                        style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}
+                      >
+                        {t(`layers.${layer.id}.name`)}
+                      </text>
                     </g>
                   )
                 })}
-              </svg>
 
+                {/* LLM Core filled center */}
+                <motion.circle
+                  cx={CX}
+                  cy={CY}
+                  r={LAYERS[LAYERS.length - 1].radius - LAYERS[LAYERS.length - 1].thickness / 2}
+                  fill="#fbbf24"
+                  opacity={0.08}
+                  animate={{ opacity: [0.06, 0.14, 0.06] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                />
+
+                {/* Pulse animation on LLM core */}
+                <motion.circle
+                  cx={CX}
+                  cy={CY}
+                  r={20}
+                  fill="#fbbf24"
+                  opacity={0.3}
+                  animate={{
+                    r: [18, 28, 18],
+                    opacity: [0.4, 0.1, 0.4],
+                  }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                  filter="url(#gmi-core-glow)"
+                />
+                <circle cx={CX} cy={CY} r={8} fill="#fbbf24" opacity={0.6} />
+
+                {/* Streaming flow dots orbiting between layers */}
+                <FlowDot cx={CX} cy={CY} radius={220} delay={0} duration={12} color="#60a5fa" />
+                <FlowDot cx={CX} cy={CY} radius={188} delay={1} duration={10} color="#f59e0b" />
+                <FlowDot cx={CX} cy={CY} radius={158} delay={2} duration={9} color="#34d399" />
+                <FlowDot cx={CX} cy={CY} radius={130} delay={0.5} duration={8} color="#a78bfa" />
+                <FlowDot cx={CX} cy={CY} radius={104} delay={1.5} duration={7} color="#22d3ee" />
+                <FlowDot cx={CX} cy={CY} radius={80} delay={0.8} duration={6} color="#f472b6" />
+
+                {/* Radial flow dots (data moving inward) */}
+                {[0, 90, 180, 270].map((angle, i) => {
+                  const rad = (angle * Math.PI) / 180
+                  const x1 = CX + 230 * Math.cos(rad)
+                  const y1 = CY + 230 * Math.sin(rad)
+                  const x2 = CX + 50 * Math.cos(rad)
+                  const y2 = CY + 50 * Math.sin(rad)
+                  return (
+                    <circle key={`radial-${i}`} r="2" fill="var(--color-accent-primary)" opacity="0.6">
+                      <animateMotion
+                        path={`M${x1 - CX},${y1 - CY} L${x2 - CX},${y2 - CY}`}
+                        dur="4s"
+                        begin={`${i * 1}s`}
+                        repeatCount="indefinite"
+                      />
+                      <animate
+                        attributeName="opacity"
+                        values="0;0.7;0.7;0"
+                        dur="4s"
+                        begin={`${i * 1}s`}
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  )
+                })}
+              </svg>
+            </div>
+
+            {/* Detail panel */}
+            <div className="flex flex-col gap-4">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeLayer}
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -12 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div
+                    className="rounded-2xl p-5"
+                    style={{
+                      background: `linear-gradient(135deg, color-mix(in srgb, ${activeLayerDef.color} 10%, transparent), transparent)`,
+                      border: `1px solid color-mix(in srgb, ${activeLayerDef.color} 30%, transparent)`,
+                    }}
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <div
+                        className="w-9 h-9 rounded-xl flex items-center justify-center"
+                        style={{
+                          background: `color-mix(in srgb, ${activeLayerDef.color} 20%, transparent)`,
+                        }}
+                      >
+                        <ActiveIcon className="w-5 h-5" style={{ color: activeLayerDef.color }} />
+                      </div>
+                      <h3
+                        className="text-lg font-bold"
+                        style={{ color: activeLayerDef.color }}
+                      >
+                        {t(`layers.${activeLayer}.name`)}
+                      </h3>
+                    </div>
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: 'var(--color-text-secondary)' }}
+                    >
+                      {t(`layers.${activeLayer}.description`)}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Layer quick-nav pills */}
+              <div className="flex flex-wrap gap-1.5">
+                {LAYERS.map((layer) => {
+                  const isActive = activeLayer === layer.id
+                  return (
+                    <button
+                      key={layer.id}
+                      onClick={() => setActiveLayer(layer.id)}
+                      className="rounded-full px-3 py-1 text-xs font-medium transition-all duration-200 cursor-pointer"
+                      style={{
+                        background: isActive
+                          ? `color-mix(in srgb, ${layer.color} 20%, transparent)`
+                          : 'var(--color-background-glass)',
+                        color: isActive ? layer.color : 'var(--color-text-muted)',
+                        border: `1px solid ${isActive ? layer.color : 'var(--color-border-primary)'}`,
+                      }}
+                    >
+                      {t(`layers.${layer.id}.name`)}
+                    </button>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Custom Architecture Diagram (SVG) with interactive tooltips */}
+        {/* ---- GMI vs Traditional Agents ---- */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-14"
         >
-          <div className="glass-morphism rounded-3xl p-8 shadow-modern-lg">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-6" style={{ color: 'var(--color-text-primary)' }}>{t('architectureTitle')}</h3>
-            <InteractiveArchitecture />
-            <motion.div
-              key={selectedNodeId}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="mt-8"
+          <div className="text-center mb-8">
+            <h3
+              className="text-2xl sm:text-3xl font-bold"
+              style={{ color: 'var(--color-text-primary)' }}
             >
-              {selectedArchitectureNode && (
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div
-                    className="rounded-xl p-4"
-                    style={{
-                      border: '1px solid var(--color-border-primary)',
-                      background: 'linear-gradient(to bottom right, color-mix(in srgb, var(--color-accent-primary) 8%, transparent), transparent)',
-                    }}
+              {t('comparisonTitle')}
+            </h3>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-2">
+            {COMPARISON_KEYS.map((key, i) => (
+              <motion.div
+                key={key}
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="grid grid-cols-2 gap-3 rounded-xl overflow-hidden"
+              >
+                {/* Traditional */}
+                <div
+                  className="flex items-start gap-3 p-4 rounded-l-xl"
+                  style={{
+                    background:
+                      i % 2 === 0
+                        ? 'var(--color-background-secondary)'
+                        : 'var(--color-background-glass)',
+                    borderTop: '1px solid var(--color-border-primary)',
+                    borderBottom: '1px solid var(--color-border-primary)',
+                    borderLeft: '1px solid var(--color-border-primary)',
+                  }}
+                >
+                  <X
+                    className="w-4 h-4 mt-0.5 shrink-0"
+                    style={{ color: 'var(--color-text-muted)' }}
+                  />
+                  <span
+                    className="text-sm"
+                    style={{ color: 'var(--color-text-muted)' }}
                   >
-                    <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--color-accent-primary)' }}>{selectedArchitectureNode.label}</h3>
-                    <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{selectedArchitectureNode.details}</p>
-                  </div>
-                  <div
-                    className="rounded-xl p-4"
-                    style={{
-                      border: '1px solid var(--color-border-primary)',
-                      background: 'var(--color-background-secondary)',
-                    }}
-                  >
-                    <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--color-accent-primary)' }}>{t('exampleTitle')}</p>
-                    <p className="text-sm" style={{ color: 'var(--color-text-primary)' }}>{selectedArchitectureNode.example}</p>
-                  </div>
-                  <div
-                    className="rounded-xl p-4"
-                    style={{
-                      border: '1px solid var(--color-border-primary)',
-                      background: 'var(--color-background-secondary)',
-                    }}
-                  >
-                    <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--color-accent-primary)' }}>{t('outcomeTitle')}</p>
-                    <p className="text-sm" style={{ color: 'var(--color-text-primary)' }}>{selectedArchitectureNode.outcome}</p>
-                  </div>
+                    {t(`comparison.${key}.traditional`)}
+                  </span>
                 </div>
-              )}
-            </motion.div>
+
+                {/* GMI */}
+                <div
+                  className="flex items-start gap-3 p-4 rounded-r-xl"
+                  style={{
+                    background:
+                      i % 2 === 0
+                        ? 'linear-gradient(135deg, color-mix(in srgb, var(--color-accent-primary) 8%, transparent), transparent)'
+                        : 'linear-gradient(135deg, color-mix(in srgb, var(--color-accent-primary) 5%, transparent), transparent)',
+                    borderTop: '1px solid color-mix(in srgb, var(--color-accent-primary) 20%, transparent)',
+                    borderBottom: '1px solid color-mix(in srgb, var(--color-accent-primary) 20%, transparent)',
+                    borderRight: '1px solid color-mix(in srgb, var(--color-accent-primary) 20%, transparent)',
+                  }}
+                >
+                  <Check
+                    className="w-4 h-4 mt-0.5 shrink-0"
+                    style={{ color: 'var(--color-accent-primary)' }}
+                  />
+                  <span
+                    className="text-sm font-medium"
+                    style={{ color: 'var(--color-text-primary)' }}
+                  >
+                    {t(`comparison.${key}.gmi`)}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Column headers — placed after rows for visual clarity on small screens */}
+          <div className="max-w-3xl mx-auto grid grid-cols-2 gap-3 mt-3">
+            <p
+              className="text-xs font-semibold uppercase tracking-wide text-center"
+              style={{ color: 'var(--color-text-muted)' }}
+            >
+              {t('comparisonTraditionalLabel')}
+            </p>
+            <p
+              className="text-xs font-semibold uppercase tracking-wide text-center"
+              style={{ color: 'var(--color-accent-primary)' }}
+            >
+              {t('comparisonGmiLabel')}
+            </p>
           </div>
         </motion.div>
 
-        {/* CTA */}
+        {/* ---- Code example ---- */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-14"
+        >
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center gap-2 mb-3">
+              <div
+                className="h-2 w-2 rounded-full"
+                style={{ background: 'var(--color-accent-primary)' }}
+              />
+              <span
+                className="text-xs font-semibold uppercase tracking-wide"
+                style={{ color: 'var(--color-text-muted)' }}
+              >
+                {t('codeExampleLabel')}
+              </span>
+            </div>
+            <div
+              className="rounded-2xl p-5 font-mono text-xs sm:text-sm leading-relaxed overflow-auto"
+              style={{
+                background: 'var(--color-background-primary)',
+                border: '1px solid var(--color-border-primary)',
+                color: 'var(--color-text-secondary)',
+              }}
+            >
+              <pre className="whitespace-pre-wrap">{CODE_EXAMPLE}</pre>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ---- CTA ---- */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -573,10 +558,10 @@ export function GMISection() {
           className="text-center"
         >
           <a
-            href="https://docs.agentos.sh/architecture/system-architecture"
+            href="https://docs.agentos.sh/architecture/gmi"
             className="btn-primary inline-flex items-center gap-2"
           >
-            <GitBranch className="w-5 h-5" />
+            <Brain className="w-5 h-5" />
             {t('ctaExploreDocs')}
             <ArrowRight className="w-4 h-4" />
           </a>

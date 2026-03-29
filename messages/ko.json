@@ -265,50 +265,122 @@
       "cognitiveMemory": {
         "title": "Cognitive Memory",
         "description": "에빙하우스 망각 곡선 감소를 포함한 HEXACO 성격 특성에 의해 조절되는 8개의 신경과학 기반 메커니즘",
-        "features": ["재강화 및 RIF", "비자발적 회상 및 FOK", "시간적 요약 추출", "출처 신뢰도 감소"],
-        "capabilities": ["기억 재강화", "감정 조절", "스키마 인코딩"]
+        "features": [
+          "재강화 및 RIF",
+          "비자발적 회상 및 FOK",
+          "시간적 요약 추출",
+          "출처 신뢰도 감소"
+        ],
+        "capabilities": [
+          "기억 재강화",
+          "감정 조절",
+          "스키마 인코딩"
+        ]
       },
       "graphRag": {
         "title": "Graph-Based RAG",
         "description": "HyDE 검색, GraphRAG 커뮤니티 탐지 및 10개 문서 로더를 갖춘 7개의 벡터 스토어 백엔드",
-        "features": ["HyDE 가설적 임베딩", "Louvain 커뮤니티 탐지", "4가지 청킹 전략", "SQLite에서 Neo4j 백엔드"],
-        "capabilities": ["HyDE Retrieval", "GraphRAG Pipeline", "Multi-Backend Storage"]
+        "features": [
+          "HyDE 가설적 임베딩",
+          "Louvain 커뮤니티 탐지",
+          "4가지 청킹 전략",
+          "SQLite에서 Neo4j 백엔드"
+        ],
+        "capabilities": [
+          "HyDE Retrieval",
+          "GraphRAG Pipeline",
+          "Multi-Backend Storage"
+        ]
       },
       "orchestration": {
         "title": "Multi-Agent Orchestration",
         "description": "순차에서 그래프 기반까지 6가지 전략과 Mission API, Tree-of-Thought 계획, 워크플로 DSL",
-        "features": ["순차 및 병렬", "토론 및 리뷰 루프", "워크플로 DSL + 체크포인팅", "AgentGraph DAGs"],
-        "capabilities": ["Mission API", "Workflow Engine", "Agent Graphs"]
+        "features": [
+          "순차 및 병렬",
+          "토론 및 리뷰 루프",
+          "워크플로 DSL + 체크포인팅",
+          "AgentGraph DAGs"
+        ],
+        "capabilities": [
+          "Mission API",
+          "Workflow Engine",
+          "Agent Graphs"
+        ]
       },
       "streaming": {
         "title": "Real-time Streaming",
         "description": "스트리밍 가드레일, 부분 JSON 출력 및 도구 호출 진행 이벤트가 포함된 SSE 및 WebSocket 지원",
-        "features": ["SSE + WebSocket", "비행 중 가드레일", "부분 JSON 스트리밍", "도구 진행 이벤트"],
-        "capabilities": ["Event Streaming", "Streaming Guards", "Progress Tracking"]
+        "features": [
+          "SSE + WebSocket",
+          "비행 중 가드레일",
+          "부분 JSON 스트리밍",
+          "도구 진행 이벤트"
+        ],
+        "capabilities": [
+          "Event Streaming",
+          "Streaming Guards",
+          "Progress Tracking"
+        ]
       },
       "hexaco": {
         "title": "HEXACO Personality",
         "description": "기억, 커뮤니케이션 스타일, 의사결정 행동을 형성하는 6차원 성격 모델링",
-        "features": ["6축 특성 모델링", "기억 조절", "스타일 적응", "9개 에이전트 프리셋"],
-        "capabilities": ["Trait Engine", "인지 조절", "적응형 스타일"]
+        "features": [
+          "6축 특성 모델링",
+          "기억 조절",
+          "스타일 적응",
+          "9개 에이전트 프리셋"
+        ],
+        "capabilities": [
+          "Trait Engine",
+          "인지 조절",
+          "적응형 스타일"
+        ]
       },
       "guardrails": {
         "title": "5-Tier Guardrails",
         "description": "위험에서 편집증까지의 보안 단계와 PII 삭제, ML 분류기, 환각 탐지",
-        "features": ["4단계 PII 삭제", "ONNX BERT 분류기", "그라운딩 가드 (NLI)", "OWASP Top 10 스캔"],
-        "capabilities": ["보안 단계", "콘텐츠 분류기", "코드 보안"]
+        "features": [
+          "4단계 PII 삭제",
+          "ONNX BERT 분류기",
+          "그라운딩 가드 (NLI)",
+          "OWASP Top 10 스캔"
+        ],
+        "capabilities": [
+          "보안 단계",
+          "콘텐츠 분류기",
+          "코드 보안"
+        ]
       },
       "voice": {
         "title": "Voice Pipeline",
         "description": "실시간 스트리밍, VAD, 화자 분할 및 전화 지원을 포함한 12개 STT 및 12개 TTS 제공자",
-        "features": ["12 STT + 12 TTS", "VAD + 화자 분할", "실시간 스트리밍", "Twilio/Telnyx/Plivo"],
-        "capabilities": ["음성 인식", "음성 활동 탐지", "전화 통합"]
+        "features": [
+          "12 STT + 12 TTS",
+          "VAD + 화자 분할",
+          "실시간 스트리밍",
+          "Twilio/Telnyx/Plivo"
+        ],
+        "capabilities": [
+          "음성 인식",
+          "음성 활동 탐지",
+          "전화 통합"
+        ]
       },
       "providers": {
         "title": "21 LLM Providers",
         "description": "OpenAI, Anthropic, Gemini, Ollama, Groq 외 16개 더, 자동 폴백 체인 및 provider-first API",
-        "features": ["자동 폴백 (402/429/5xx)", "Provider-first API", "CLI providers", "OpenRouter bridge"],
-        "capabilities": ["Provider Registry", "Fallback Chains", "Model Resolution"]
+        "features": [
+          "자동 폴백 (402/429/5xx)",
+          "Provider-first API",
+          "CLI providers",
+          "OpenRouter bridge"
+        ],
+        "capabilities": [
+          "Provider Registry",
+          "Fallback Chains",
+          "Model Resolution"
+        ]
       }
     }
   },
@@ -685,108 +757,68 @@
     }
   },
   "gmiSection": {
+    "badge": "Core Concept",
     "title": "Generalized Mind Instances",
-    "subtitle": "A GMI (Generalized Mind Instance) is the cognitive core of every AgentOS agent — a stateful reasoning unit with its own personality, memory, tool access, and guardrails. Each GMI maintains a persistent identity across sessions, learns from interactions via cognitive memory mechanisms, and adapts its communication style through HEXACO personality traits. GMIs can operate solo or coordinate in multi-agent teams via the agency() API.",
-    "whatIsGmi": "GMI = Generalized Mind Instance — the atomic unit of intelligence in AgentOS",
-    "useCaseTitle": "Use case",
-    "outcomeTitle": "Outcome",
-    "whatYouGetTitle": "What you get",
-    "whatYouGetItems": [
-      "Persona library for research, analysis, creation, critique, execution, and future GMIs.",
-      "Deterministic orchestration with guardrails, budgets, approvals, and SOC 2/GDPR-ready event trails.",
-      "Unified memory fabric (working, episodic, vector) plus production-ready exports for Markdown/JSON ingestion."
-    ],
-    "architectureTitle": "AgentOS Architecture (streaming)",
-    "currentlySelected": "Currently selected",
-    "exampleTitle": "Example",
-    "ctaExploreDocs": "Explore GMI Documentation",
-    "agents": {
-      "researcher": {
-        "name": "Researcher",
-        "description": "Discovers and analyzes information",
-        "persona": "curious, precise"
+    "subtitle": "Every agent in AgentOS is powered by a GMI — a persistent cognitive core with personality, memory, and autonomous decision-making. Not just a prompt wrapper: a mind.",
+    "ctaExploreDocs": "Learn More",
+    "codeExampleLabel": "Create a GMI",
+    "comparisonTitle": "GMI vs Traditional Agents",
+    "comparisonTraditionalLabel": "Traditional Agent",
+    "comparisonGmiLabel": "AgentOS GMI",
+    "layers": {
+      "channels": {
+        "name": "Channels & I/O",
+        "description": "Telegram, Discord, Slack, WhatsApp, Twitter, and 32 more. Voice via 12 STT + 12 TTS providers. Every channel adapter streams tokens in real-time through a unified protocol."
       },
-      "analyst": {
-        "name": "Analyst",
-        "description": "Processes and interprets data",
-        "persona": "skeptical, methodical"
+      "guardrails": {
+        "name": "Guardrails & Safety",
+        "description": "Streaming guardrails evaluate every chunk. PII redaction, toxicity detection, grounding guard, code safety scanner. Five security tiers from permissive to paranoid."
       },
-      "creator": {
-        "name": "Creator",
-        "description": "Generates content and solutions",
-        "persona": "clear, persuasive"
+      "tools": {
+        "name": "Tools & Extensions",
+        "description": "Web search, browser automation, image generation, shell execution, social posting. 107 extensions and 72 curated skills. Capability discovery finds the right tool semantically."
       },
-      "executor": {
-        "name": "Executor",
-        "description": "Takes actions and implements",
-        "persona": "reliable, action-oriented"
-      },
-      "orchestrator": {
-        "name": "Orchestrator",
-        "description": "Coordinates multi-agent tasks",
-        "persona": "balanced, gatekeeper"
-      },
-      "critic": {
-        "name": "Critic",
-        "description": "Reviews outputs and flags issues"
-      }
-    },
-    "snapshots": [
-      {
-        "useCase": "Route support + CRM updates",
-        "outcome": "Researcher gathers context, Analyst verifies facts, and Executor pushes the outcome into Salesforce or Linear automatically."
-      },
-      {
-        "useCase": "Safety-critical approvals",
-        "outcome": "Orchestrator enforces guardrails, memory logs every decision, and Event Stream keeps auditors in the loop for SOC 2/GDPR."
-      },
-      {
-        "useCase": "RAG-powered expansion packs",
-        "outcome": "Creator + Executor personas adapt content by locale while Gateway throttles workloads and exports full runs as Markdown/JSON."
-      }
-    ],
-    "architecture": {
-      "ui": {
-        "label": "User Interfaces",
-        "subtitle": "Voice • Web • CLI",
-        "details": "Entrypoints where users speak, type, and automate tasks.",
-        "example": "Capture a voice prompt for a real‑time, fact‑checked briefing.",
-        "outcome": "Every interface streams into the same shared AgentOS memory and policy store."
-      },
-      "gateway": {
-        "label": "API Gateway",
-        "subtitle": "Auth • Rate‑limit",
-        "details": "Front door for requests; applies auth, quotas, and routing.",
-        "example": "Throttle bursty inputs; attach tenant identity to requests.",
-        "outcome": "Tenants, rate budgets, and approvals stay deterministic even when agents spawn in parallel."
-      },
-      "orchestrator": {
-        "label": "GMI Orchestrator",
-        "subtitle": "Routing • Guardrails",
-        "details": "Coordinates agent roles, tools, and safety policies.",
-        "example": "Parallelize research, analysis, creation, and critique.",
-        "outcome": "Adaptive and deterministic agency modes keep emergent intelligence auditable."
-      },
-      "agents": {
-        "label": "Agent Pool",
-        "subtitle": "Researcher • Analyst • Creator • Critic • Executor",
-        "details": "Specialized GMIs stream outputs; orchestrator merges.",
-        "example": "Researcher fetches sources while Analyst verifies claims.",
-        "outcome": "Each persona can be exported as Markdown/JSON capsules and ingested into other runtimes."
+      "orchestration": {
+        "name": "Orchestration",
+        "description": "Sequential, parallel, debate, hierarchical, review-loop, and graph strategies. Tree-of-Thought planning. Mission checkpointing with fork and resume semantics."
       },
       "memory": {
-        "label": "Memory System",
-        "subtitle": "Vector DB • Knowledge Graph",
-        "details": "Long‑term memory stores facts, embeddings, and relations.",
-        "example": "Semantic search recalls prior decisions and context.",
-        "outcome": "Zero-copy working, episodic, and vector layers keep adaptive and permanent intelligence aligned."
+        "name": "Memory",
+        "description": "Ebbinghaus decay, reconsolidation, retrieval-induced forgetting, involuntary recall, feeling-of-knowing, temporal gist, schema encoding, source confidence decay. HyDE + GraphRAG retrieval across 7 vector backends."
       },
-      "events": {
-        "label": "Event Stream",
-        "subtitle": "Monitoring • Analytics",
-        "details": "Observability and compliance pipeline for every step.",
-        "example": "Emit spans for audits; alert on policy violations.",
-        "outcome": "Every action is replayable for SOC 2, GDPR, and custom guardrails."
+      "personality": {
+        "name": "Personality (HEXACO)",
+        "description": "Honesty-Humility, Emotionality, Extraversion, Agreeableness, Conscientiousness, Openness. Traits modulate memory encoding, communication style, and risk tolerance."
+      },
+      "llmCore": {
+        "name": "LLM Core",
+        "description": "21 LLM providers with automatic fallback chains. Provider-first API design. The thinking engine at the heart of every GMI."
+      }
+    },
+    "comparison": {
+      "identity": {
+        "traditional": "Stateless prompt",
+        "gmi": "Persistent identity with HEXACO personality"
+      },
+      "memory": {
+        "traditional": "No memory between sessions",
+        "gmi": "Cognitive memory with Ebbinghaus decay + 8 mechanisms"
+      },
+      "behavior": {
+        "traditional": "Fixed behavior",
+        "gmi": "Style adaptation — learns your preferences"
+      },
+      "providers": {
+        "traditional": "Single model",
+        "gmi": "21 providers with automatic fallback"
+      },
+      "tools": {
+        "traditional": "Manual tool wiring",
+        "gmi": "Capability discovery — finds tools semantically"
+      },
+      "safety": {
+        "traditional": "No safety",
+        "gmi": "5-tier guardrails with streaming evaluation"
       }
     }
   },
