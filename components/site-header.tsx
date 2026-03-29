@@ -110,18 +110,18 @@ export function SiteHeader() {
   const closeMenu = () => setMenuOpen(false);
 
   const handleHashClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // Extract the hash from href (e.g., "/#features" -> "features")
     const hashMatch = href.match(/#(.+)$/);
     if (hashMatch) {
       const targetId = hashMatch[1];
       const element = document.getElementById(targetId);
       if (element) {
+        // On the same page — smooth scroll
         e.preventDefault();
         closeMenu();
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Update URL without triggering navigation
         window.history.pushState(null, '', href);
       }
+      // else: element not on this page — let the browser navigate to /#hash
     }
   };
 
