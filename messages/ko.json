@@ -685,8 +685,9 @@
     }
   },
   "gmiSection": {
-    "title": "Parallel Agency",
-    "subtitle": "Build sophisticated AI systems with adaptive personas and emergent, dynamic behaviors. Route inbound support tickets to the right persona, push CRM updates safely, and keep every RAG workflow inside deterministic guardrails. AgentOS GMIs enable autonomous agents that learn, adapt, and evolve—then export those insights as production-ready intelligence bundles.",
+    "title": "Generalized Mind Instances",
+    "subtitle": "A GMI (Generalized Mind Instance) is the cognitive core of every AgentOS agent — a stateful reasoning unit with its own personality, memory, tool access, and guardrails. Each GMI maintains a persistent identity across sessions, learns from interactions via cognitive memory mechanisms, and adapts its communication style through HEXACO personality traits. GMIs can operate solo or coordinate in multi-agent teams via the agency() API.",
+    "whatIsGmi": "GMI = Generalized Mind Instance — the atomic unit of intelligence in AgentOS",
     "useCaseTitle": "Use case",
     "outcomeTitle": "Outcome",
     "whatYouGetTitle": "What you get",
