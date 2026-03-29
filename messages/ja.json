@@ -931,78 +931,82 @@
     }
   },
   "productCards": {
-    "title": "Core Capabilities",
-    "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
+    "title": "コア機能",
+    "subtitle": "メモリ、パーソナリティ、自律性を備えたプロダクションレベルのAIエージェント構築に必要な全て",
     "stats": {
-      "contextWindow": "コンテキストウィンドウ",
-      "inferenceLatency": "推論レイテンシ",
-      "activePersonas": "アクティブペルソナ",
-      "parallelTasks": "並列タスク",
-      "concurrencyModel": "並行処理モデル",
-      "orchestrationOverhead": "オーケストレーションオーバーヘッド",
-      "vectorCapacity": "ベクトル容量",
-      "retrievalSpeed": "検索速度",
-      "compressionRatio": "圧縮率",
-      "endToEndLatency": "エンドツーエンドレイテンシ",
-      "timeToFirstByte": "最初のバイトまでの時間",
-      "connectionStability": "接続安定性"
+      "mechanisms": "メカニズム",
+      "personalityAxes": "パーソナリティ軸",
+      "decayCurve": "忘却曲線",
+      "vectorBackends": "ベクトルバックエンド",
+      "docLoaders": "ドキュメントローダー",
+      "chunkStrategies": "チャンキング戦略",
+      "strategies": "戦略",
+      "planningEngine": "計画エンジン",
+      "workflowDsl": "ワークフローDSL",
+      "protocols": "プロトコル",
+      "guardrailMode": "ガードレールモード",
+      "connectionStability": "接続安定性",
+      "dimensions": "次元",
+      "presets": "エージェントプリセット",
+      "styleAdaptation": "スタイル適応",
+      "securityTiers": "セキュリティ段階",
+      "piiLayers": "PII階層",
+      "mlClassifiers": "ML分類器",
+      "sttProviders": "STTプロバイダー",
+      "ttsProviders": "TTSプロバイダー",
+      "telephony": "テレフォニー",
+      "providers": "LLMプロバイダー",
+      "fallbackChain": "フォールバックチェーン",
+      "cliProviders": "CLIプロバイダー"
     },
     "cards": {
-      "adaptive": {
-        "title": "Adaptive Intelligence",
-        "description": "Real-time learning and context-aware decision-making that evolves with every interaction",
-        "features": [
-          "リアルタイム学習",
-          "コンテキスト保持",
-          "行動適応"
-        ],
-        "capabilities": [
-          "マルチモデル対応",
-          "コンテキスト管理",
-          "スキルと拡張機能"
-        ]
+      "cognitiveMemory": {
+        "title": "Cognitive Memory",
+        "description": "エビングハウス忘却曲線減衰を伴うHEXACOパーソナリティ特性によって調整される8つの神経科学に基づくメカニズム",
+        "features": ["再固定化とRIF", "不随意想起とFOK", "時間的要点抽出", "ソース信頼性減衰"],
+        "capabilities": ["記憶再固定化", "感情調節", "スキーマエンコーディング"]
       },
-      "distributed": {
-        "title": "Distributed Cognition",
-        "description": "Parallel processing across multiple agents with seamless coordination and load balancing",
-        "features": [
-          "ロードバランシング",
-          "オートスケーリング",
-          "フォールトトレランス"
-        ],
-        "capabilities": [
-          "オーケストレーション",
-          "メッセージキューイング",
-          "状態管理"
-        ]
+      "graphRag": {
+        "title": "Graph-Based RAG",
+        "description": "HyDE検索、GraphRAGコミュニティ検出、10のドキュメントローダーを備えた7つのベクトルストアバックエンド",
+        "features": ["HyDE仮説的エンベディング", "Louvainコミュニティ検出", "4つのチャンキング戦略", "SQLiteからNeo4jバックエンド"],
+        "capabilities": ["HyDE Retrieval", "GraphRAG Pipeline", "Multi-Backend Storage"]
       },
-      "memory": {
-        "title": "永続メモリ",
-        "description": "4段階オートスケーリング対応の7つのベクトルストアバックエンド（SQLite → HNSW → Postgres+pgvector → Qdrant）。観測的メモリ圧縮（時間的推論による3-10倍）。10種類のドキュメントローダー、3段階PDF処理、4つのチャンキング戦略。10形式でのインポート/エクスポート。ワンコマンドバックエンド移行。QdrantとPostgresのDocker自動セットアップ。",
-        "features": [
-          "ベクトルエンベディング",
-          "セマンティック検索",
-          "バージョン管理"
-        ],
-        "capabilities": [
-          "ベクトルストレージ",
-          "SQLストレージ",
-          "チェーン管理"
-        ]
+      "orchestration": {
+        "title": "Multi-Agent Orchestration",
+        "description": "シーケンシャルからグラフベースまで6つの戦略とMission API、Tree-of-Thought計画、ワークフローDSL",
+        "features": ["シーケンシャルとパラレル", "ディベートとレビューループ", "ワークフローDSL + チェックポイント", "AgentGraph DAGs"],
+        "capabilities": ["Mission API", "Workflow Engine", "Agent Graphs"]
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and real-time streaming",
-        "features": [
-          "WebSocket対応",
-          "イベント駆動",
-          "バッファリング"
-        ],
-        "capabilities": [
-          "リアルタイム通信",
-          "RPCプロトコル",
-          "イベントループ"
-        ]
+        "description": "ストリーミングガードレール、部分的JSON出力、ツールコール進行イベント付きのSSEとWebSocketサポート",
+        "features": ["SSE + WebSocket", "飛行中ガードレール", "部分JSONストリーミング", "ツール進行イベント"],
+        "capabilities": ["Event Streaming", "Streaming Guards", "Progress Tracking"]
+      },
+      "hexaco": {
+        "title": "HEXACO Personality",
+        "description": "記憶、コミュニケーションスタイル、意思決定行動を形成する6次元パーソナリティモデリング",
+        "features": ["6軸特性モデリング", "記憶調整", "スタイル適応", "9エージェントプリセット"],
+        "capabilities": ["Trait Engine", "認知調整", "適応スタイル"]
+      },
+      "guardrails": {
+        "title": "5-Tier Guardrails",
+        "description": "危険からパラノイドまでのセキュリティ段階とPII削除、ML分類器、幻覚検出",
+        "features": ["4段階PII削除", "ONNX BERT分類器", "グラウンディングガード (NLI)", "OWASP Top 10スキャン"],
+        "capabilities": ["セキュリティ段階", "コンテンツ分類器", "コードセキュリティ"]
+      },
+      "voice": {
+        "title": "Voice Pipeline",
+        "description": "リアルタイムストリーミング、VAD、話者ダイアライゼーション、テレフォニーサポート付きの12 STTと12 TTSプロバイダー",
+        "features": ["12 STT + 12 TTS", "VAD + ダイアライゼーション", "リアルタイムストリーミング", "Twilio/Telnyx/Plivo"],
+        "capabilities": ["音声認識", "音声アクティビティ検出", "テレフォニー統合"]
+      },
+      "providers": {
+        "title": "21 LLM Providers",
+        "description": "OpenAI、Anthropic、Gemini、Ollama、Groq他16以上、自動フォールバックチェーンとプロバイダーファーストAPI",
+        "features": ["自動フォールバック (402/429/5xx)", "Provider-first API", "CLIプロバイダー", "OpenRouter bridge"],
+        "capabilities": ["Provider Registry", "Fallback Chains", "Model Resolution"]
       }
     }
   },

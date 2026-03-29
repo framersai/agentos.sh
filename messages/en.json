@@ -204,45 +204,81 @@
   "skipToMain": "Skip to main content",
   "productCards": {
     "title": "Core Capabilities",
-    "subtitle": "Enterprise-grade features to build, scale, and ship intelligent AI agents",
+    "subtitle": "Everything you need to build production-grade AI agents with memory, personality, and autonomy",
     "stats": {
-      "contextWindow": "Context Window",
-      "inferenceLatency": "Inference Latency",
-      "activePersonas": "Active Personas",
-      "parallelTasks": "Parallel Tasks",
-      "concurrencyModel": "Concurrency Model",
-      "orchestrationOverhead": "Orchestration Overhead",
-      "vectorCapacity": "Vector Capacity",
-      "retrievalSpeed": "Retrieval Speed",
-      "compressionRatio": "Compression Ratio",
-      "endToEndLatency": "End-to-End Latency",
-      "timeToFirstByte": "Time to First Byte",
-      "connectionStability": "Connection Stability"
+      "mechanisms": "Mechanisms",
+      "personalityAxes": "Personality Axes",
+      "decayCurve": "Decay Curve",
+      "vectorBackends": "Vector Backends",
+      "docLoaders": "Doc Loaders",
+      "chunkStrategies": "Chunk Strategies",
+      "strategies": "Strategies",
+      "planningEngine": "Planning Engine",
+      "workflowDsl": "Workflow DSL",
+      "protocols": "Protocols",
+      "guardrailMode": "Guardrail Mode",
+      "connectionStability": "Connection Stability",
+      "dimensions": "Dimensions",
+      "presets": "Agent Presets",
+      "styleAdaptation": "Style Adaptation",
+      "securityTiers": "Security Tiers",
+      "piiLayers": "PII Layers",
+      "mlClassifiers": "ML Classifiers",
+      "sttProviders": "STT Providers",
+      "ttsProviders": "TTS Providers",
+      "telephony": "Telephony",
+      "providers": "LLM Providers",
+      "fallbackChain": "Fallback Chain",
+      "cliProviders": "CLI Providers"
     },
     "cards": {
-      "adaptive": {
-        "title": "Adaptive Intelligence",
-        "description": "Real-time learning and context-aware decision-making that evolves with every interaction",
-        "features": ["Real-time learning", "Context retention", "Behavioral adaptation"],
-        "capabilities": ["Multi-Model Support", "Context Management", "Skills & Extensions"]
+      "cognitiveMemory": {
+        "title": "Cognitive Memory",
+        "description": "8 neuroscience-backed mechanisms modulated by HEXACO personality traits with Ebbinghaus forgetting curve decay",
+        "features": ["Reconsolidation & RIF", "Involuntary recall & FOK", "Temporal gist extraction", "Source confidence decay"],
+        "capabilities": ["Memory Reconsolidation", "Emotion Regulation", "Schema Encoding"]
       },
-      "distributed": {
-        "title": "Distributed Cognition",
-        "description": "Parallel processing across multiple agents with seamless coordination and load balancing",
-        "features": ["Load balancing", "Auto-scaling", "Fault tolerance"],
-        "capabilities": ["Orchestration", "Message Queuing", "State Management"]
+      "graphRag": {
+        "title": "Graph-Based RAG",
+        "description": "7 vector store backends with HyDE retrieval, GraphRAG community detection, and 10 document loaders",
+        "features": ["HyDE hypothetical embeddings", "Louvain community detection", "4 chunking strategies", "SQLite to Neo4j backends"],
+        "capabilities": ["HyDE Retrieval", "GraphRAG Pipeline", "Multi-Backend Storage"]
       },
-      "memory": {
-        "title": "Persistent Memory",
-        "description": "7 vector store backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant). Observational memory compression (3-10x via LLM with temporal reasoning). 10 document loaders, 3 PDF tiers, 4 chunking strategies. Memory import/export in 10 formats including Obsidian vault and ChatGPT. One-command migration between all backends. Docker auto-setup for Qdrant and Postgres.",
-        "features": ["Vector embeddings", "Semantic search", "Version control"],
-        "capabilities": ["Vector Storage", "SQL Storage", "Chain Management"]
+      "orchestration": {
+        "title": "Multi-Agent Orchestration",
+        "description": "6 strategies from sequential to graph-based with Mission API, Tree-of-Thought planning, and workflow DSL",
+        "features": ["Sequential & parallel", "Debate & review-loop", "Workflow DSL + checkpointing", "AgentGraph DAGs"],
+        "capabilities": ["Mission API", "Workflow Engine", "Agent Graphs"]
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "Ultra-low latency event architecture with WebSocket support and real-time streaming",
-        "features": ["WebSocket support", "Event-driven", "Buffering"],
-        "capabilities": ["Real-time Comm", "RPC Protocol", "Event Loop"]
+        "description": "SSE and WebSocket support with streaming guardrails, partial JSON output, and tool call progress events",
+        "features": ["SSE + WebSocket", "In-flight guardrails", "Partial JSON streaming", "Tool progress events"],
+        "capabilities": ["Event Streaming", "Streaming Guards", "Progress Tracking"]
+      },
+      "hexaco": {
+        "title": "HEXACO Personality",
+        "description": "6-dimensional personality modeling that shapes memory, communication style, and decision-making behavior",
+        "features": ["6-axis trait modeling", "Memory modulation", "Style adaptation", "9 agent presets"],
+        "capabilities": ["Trait Engine", "Cognitive Modulation", "Adaptive Style"]
+      },
+      "guardrails": {
+        "title": "5-Tier Guardrails",
+        "description": "Security tiers from dangerous to paranoid with PII redaction, ML classifiers, and hallucination detection",
+        "features": ["4-tier PII redaction", "ONNX BERT classifiers", "Grounding guard (NLI)", "OWASP Top 10 scanning"],
+        "capabilities": ["Security Tiers", "Content Classifiers", "Code Safety"]
+      },
+      "voice": {
+        "title": "Voice Pipeline",
+        "description": "12 STT and 12 TTS providers with real-time streaming, VAD, speaker diarization, and telephony support",
+        "features": ["12 STT + 12 TTS", "VAD + diarization", "Real-time streaming", "Twilio/Telnyx/Plivo"],
+        "capabilities": ["Speech Recognition", "Voice Activity Detection", "Telephony Integration"]
+      },
+      "providers": {
+        "title": "21 LLM Providers",
+        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq, and 16 more with automatic fallback chains and provider-first API",
+        "features": ["Auto fallback (402/429/5xx)", "Provider-first API", "CLI providers", "OpenRouter bridge"],
+        "capabilities": ["Provider Registry", "Fallback Chains", "Model Resolution"]
       }
     }
   },

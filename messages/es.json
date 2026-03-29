@@ -234,78 +234,82 @@
   "skipToMain": "Saltar al contenido principal",
   "productCards": {
     "title": "Capacidades Principales",
-    "subtitle": "Funciones de nivel empresarial para construir, escalar e implementar agentes de IA inteligentes",
+    "subtitle": "Todo lo que necesitas para construir agentes de IA con memoria, personalidad y autonomia",
+    "stats": {
+      "mechanisms": "Mecanismos",
+      "personalityAxes": "Ejes de Personalidad",
+      "decayCurve": "Curva de Olvido",
+      "vectorBackends": "Backends Vectoriales",
+      "docLoaders": "Cargadores de Docs",
+      "chunkStrategies": "Estrategias de Chunking",
+      "strategies": "Estrategias",
+      "planningEngine": "Motor de Planificacion",
+      "workflowDsl": "Workflow DSL",
+      "protocols": "Protocolos",
+      "guardrailMode": "Modo Guardrail",
+      "connectionStability": "Estabilidad de Conexion",
+      "dimensions": "Dimensiones",
+      "presets": "Presets de Agente",
+      "styleAdaptation": "Adaptacion de Estilo",
+      "securityTiers": "Niveles de Seguridad",
+      "piiLayers": "Capas PII",
+      "mlClassifiers": "Clasificadores ML",
+      "sttProviders": "Proveedores STT",
+      "ttsProviders": "Proveedores TTS",
+      "telephony": "Telefonia",
+      "providers": "Proveedores LLM",
+      "fallbackChain": "Cadena de Respaldo",
+      "cliProviders": "Proveedores CLI"
+    },
     "cards": {
-      "adaptive": {
-        "title": "Inteligencia Adaptativa",
-        "description": "Aprendizaje en tiempo real y toma de decisiones consciente del contexto que evoluciona con cada interacción",
-        "features": [
-          "Aprendizaje en tiempo real",
-          "Retención de contexto",
-          "Adaptación conductual"
-        ],
-        "capabilities": [
-          "Soporte Multi-Modelo",
-          "Gestión de Contexto",
-          "Skills y Extensiones"
-        ]
+      "cognitiveMemory": {
+        "title": "Cognitive Memory",
+        "description": "8 mecanismos respaldados por neurociencia modulados por rasgos de personalidad HEXACO con curva de olvido de Ebbinghaus",
+        "features": ["Reconsolidacion y RIF", "Recuerdo involuntario y FOK", "Extraccion de gist temporal", "Decaimiento de confianza de fuente"],
+        "capabilities": ["Reconsolidacion de Memoria", "Regulacion Emocional", "Codificacion de Esquema"]
       },
-      "distributed": {
-        "title": "Cognición Distribuida",
-        "description": "Procesamiento paralelo entre múltiples agentes con coordinación perfecta y balanceo de carga",
-        "features": [
-          "Balanceo de carga",
-          "Auto-escalado",
-          "Tolerancia a fallos"
-        ],
-        "capabilities": [
-          "Orquestación",
-          "Cola de Mensajes",
-          "Gestión de Estado"
-        ]
+      "graphRag": {
+        "title": "Graph-Based RAG",
+        "description": "7 backends de almacenamiento vectorial con recuperacion HyDE, deteccion de comunidades GraphRAG y 10 cargadores de documentos",
+        "features": ["Embeddings hipoteticos HyDE", "Deteccion de comunidades Louvain", "4 estrategias de chunking", "Backends SQLite a Neo4j"],
+        "capabilities": ["HyDE Retrieval", "GraphRAG Pipeline", "Multi-Backend Storage"]
       },
-      "memory": {
-        "title": "Memoria Persistente",
-        "description": "7 backends de almacenamiento vectorial con auto-escalado de 4 niveles (SQLite → HNSW → Postgres+pgvector → Qdrant). Compresión de memoria observacional (3-10x con razonamiento temporal). 10 cargadores de documentos, 3 niveles PDF, 4 estrategias de fragmentación. Importación/exportación en 10 formatos. Migración entre backends con un comando. Docker auto-setup para Qdrant y Postgres.",
-        "features": [
-          "Embeddings vectoriales",
-          "Búsqueda semántica",
-          "Control de versiones"
-        ],
-        "capabilities": [
-          "Almacenamiento Vectorial",
-          "Almacenamiento SQL",
-          "Gestión de Cadenas"
-        ]
+      "orchestration": {
+        "title": "Multi-Agent Orchestration",
+        "description": "6 estrategias desde secuencial hasta basada en grafos con Mission API, planificacion Tree-of-Thought y workflow DSL",
+        "features": ["Secuencial y paralelo", "Debate y review-loop", "Workflow DSL + checkpointing", "AgentGraph DAGs"],
+        "capabilities": ["Mission API", "Workflow Engine", "Agent Graphs"]
       },
       "streaming": {
-        "title": "Streaming en Tiempo Real",
-        "description": "Arquitectura de eventos de latencia ultra baja con soporte WebSocket y streaming en tiempo real",
-        "features": [
-          "Soporte WebSocket",
-          "Basado en eventos",
-          "Buffering"
-        ],
-        "capabilities": [
-          "Comunicación en Tiempo Real",
-          "Protocolo RPC",
-          "Bucle de Eventos"
-        ]
+        "title": "Real-time Streaming",
+        "description": "Soporte SSE y WebSocket con guardrails de streaming, salida JSON parcial y eventos de progreso de tool calls",
+        "features": ["SSE + WebSocket", "Guardrails en vuelo", "Streaming JSON parcial", "Eventos de progreso de tools"],
+        "capabilities": ["Event Streaming", "Streaming Guards", "Progress Tracking"]
+      },
+      "hexaco": {
+        "title": "HEXACO Personality",
+        "description": "Modelado de personalidad 6-dimensional que moldea memoria, estilo de comunicacion y comportamiento de decision",
+        "features": ["Modelado de 6 ejes de rasgos", "Modulacion de memoria", "Adaptacion de estilo", "9 presets de agente"],
+        "capabilities": ["Trait Engine", "Modulacion Cognitiva", "Estilo Adaptativo"]
+      },
+      "guardrails": {
+        "title": "5-Tier Guardrails",
+        "description": "Niveles de seguridad de peligroso a paranoico con redaccion PII, clasificadores ML y deteccion de alucinaciones",
+        "features": ["Redaccion PII de 4 niveles", "Clasificadores ONNX BERT", "Grounding guard (NLI)", "Escaneo OWASP Top 10"],
+        "capabilities": ["Niveles de Seguridad", "Clasificadores de Contenido", "Seguridad de Codigo"]
+      },
+      "voice": {
+        "title": "Voice Pipeline",
+        "description": "12 proveedores STT y 12 TTS con streaming en tiempo real, VAD, diarizacion de hablantes y soporte de telefonia",
+        "features": ["12 STT + 12 TTS", "VAD + diarizacion", "Streaming en tiempo real", "Twilio/Telnyx/Plivo"],
+        "capabilities": ["Reconocimiento de Voz", "Deteccion de Actividad de Voz", "Integracion de Telefonia"]
+      },
+      "providers": {
+        "title": "21 LLM Providers",
+        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq y 16 mas con cadenas de respaldo automaticas y API provider-first",
+        "features": ["Auto fallback (402/429/5xx)", "Provider-first API", "CLI providers", "OpenRouter bridge"],
+        "capabilities": ["Provider Registry", "Fallback Chains", "Model Resolution"]
       }
-    },
-    "stats": {
-      "contextWindow": "Ventana de Contexto",
-      "inferenceLatency": "Latencia de Inferencia",
-      "activePersonas": "Personas Activas",
-      "parallelTasks": "Tareas Paralelas",
-      "concurrencyModel": "Modelo de Concurrencia",
-      "orchestrationOverhead": "Sobrecarga de Orquestación",
-      "vectorCapacity": "Capacidad Vectorial",
-      "retrievalSpeed": "Velocidad de Recuperación",
-      "compressionRatio": "Ratio de Compresión",
-      "endToEndLatency": "Latencia de Extremo a Extremo",
-      "timeToFirstByte": "Tiempo al Primer Byte",
-      "connectionStability": "Estabilidad de Conexión"
     }
   },
   "enterprise": {
