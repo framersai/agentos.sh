@@ -1059,58 +1059,61 @@
     "downloadLatest": "Télécharger la dernière version"
   },
   "cognitive": {
-    "memoryTitle": "Cognitive Memory Architecture",
-    "memorySubtitle": "8 neuroscience-backed memory mechanisms, all modulated by HEXACO personality traits",
+    "badge": "Fond\u00e9 sur les neurosciences",
+    "title": "M\u00e9moire Cognitive",
+    "subtitle": "8 m\u00e9canismes de m\u00e9moire inspir\u00e9s de la recherche en sciences cognitives. Tous modul\u00e9s par les traits de personnalit\u00e9 HEXACO de l'agent.",
     "mechanisms": {
       "reconsolidation": "Reconsolidation",
-      "rif": "Retrieval-Induced Forgetting",
-      "involuntaryRecall": "Involuntary Recall",
-      "fok": "Feeling of Knowing",
-      "temporalGist": "Temporal Gist",
-      "schemaEncoding": "Schema Encoding",
-      "sourceConfidence": "Source Confidence Decay",
-      "emotionRegulation": "Emotion Regulation"
+      "rif": "Oubli Induit par la R\u00e9cup\u00e9ration",
+      "involuntaryRecall": "Rappel Involontaire",
+      "fok": "Sentiment de Savoir",
+      "temporalGist": "Essence Temporelle",
+      "schemaEncoding": "Encodage par Sch\u00e9mas",
+      "sourceConfidence": "D\u00e9clin de Confiance en la Source",
+      "emotionRegulation": "R\u00e9gulation \u00c9motionnelle"
     },
     "mechanismDescriptions": {
-      "reconsolidation": "Memories update when recalled",
-      "rif": "Recalling one memory suppresses related ones",
-      "involuntaryRecall": "Unexpected memory surfacing via associative triggers",
-      "fok": "Metacognitive confidence estimation",
-      "temporalGist": "Details fade, gist persists",
-      "schemaEncoding": "New info organized around existing mental models",
-      "sourceConfidence": "Provenance trust erodes over time",
-      "emotionRegulation": "Emotional state modulates encoding and retrieval"
+      "reconsolidation": "Les souvenirs sont r\u00e9\u00e9crits \u00e0 chaque rappel, mis \u00e0 jour avec un nouveau contexte",
+      "rif": "La r\u00e9cup\u00e9ration d'un souvenir supprime les souvenirs concurrents associ\u00e9s",
+      "involuntaryRecall": "Activation spontan\u00e9e de la m\u00e9moire d\u00e9clench\u00e9e par des indices contextuels",
+      "fok": "Sens m\u00e9tacognitif qu'une r\u00e9ponse existe m\u00eame si elle n'est pas imm\u00e9diatement r\u00e9cup\u00e9rable",
+      "temporalGist": "Les d\u00e9tails sp\u00e9cifiques s'estompent tandis que l'essentiel et le sens sont pr\u00e9serv\u00e9s dans le temps",
+      "schemaEncoding": "Les nouvelles informations sont encod\u00e9es par rapport aux structures de connaissances existantes",
+      "sourceConfidence": "La certitude sur l'origine d'une information d\u00e9cline plus vite que l'information elle-m\u00eame",
+      "emotionRegulation": "La valence \u00e9motionnelle des souvenirs est modul\u00e9e au fil du temps"
     },
-    "hexacoTitle": "HEXACO Personality Modeling",
-    "hexacoSubtitle": "6-dimensional personality traits that shape agent communication, memory, and decision-making",
-    "traits": {
-      "honesty": "Honesty-Humility",
-      "emotionality": "Emotionality",
-      "extraversion": "Extraversion",
-      "agreeableness": "Agreeableness",
-      "conscientiousness": "Conscientiousness",
-      "openness": "Openness"
+    "modulators": {
+      "reconsolidation": "Ouverture",
+      "rif": "Conscienciosit\u00e9",
+      "involuntaryRecall": "Ouverture",
+      "fok": "Extraversion",
+      "temporalGist": "Conscienciosit\u00e9",
+      "schemaEncoding": "Ouverture",
+      "sourceConfidence": "Honn\u00eat\u00e9t\u00e9-Humilit\u00e9",
+      "emotionRegulation": "Agr\u00e9abilit\u00e9"
     },
-    "traitDescriptions": {
-      "honesty": "Affects source skepticism, trust calibration",
-      "emotionality": "Modulates memory drift, encoding intensity",
-      "extraversion": "Affects FOK confidence, social recall",
-      "agreeableness": "Influences emotion regulation, empathy",
-      "conscientiousness": "Drives RIF strength, detail retention",
-      "openness": "Modulates involuntary recall, novelty seeking"
+    "research": {
+      "reconsolidation": "Chaque acte de r\u00e9cup\u00e9ration d\u00e9stabilise la trace mn\u00e9sique, permettant sa mise \u00e0 jour avec le contexte actuel. Une Ouverture plus \u00e9lev\u00e9e amplifie le degr\u00e9 de r\u00e9\u00e9criture.",
+      "rif": "R\u00e9cup\u00e9rer un souvenir cible inhibe activement les concurrents associ\u00e9s par suppression lat\u00e9rale. Une Conscienciosit\u00e9 plus \u00e9lev\u00e9e renforce cette suppression.",
+      "involuntaryRecall": "Les indices contextuels peuvent d\u00e9clencher l'activation spontan\u00e9e de souvenirs associ\u00e9s sans recherche d\u00e9lib\u00e9r\u00e9e. Une Ouverture plus \u00e9lev\u00e9e abaisse le seuil d'activation.",
+      "fok": "Un jugement m\u00e9tacognitif sur la probabilit\u00e9 d'une r\u00e9cup\u00e9ration r\u00e9ussie. Une Extraversion plus \u00e9lev\u00e9e amplifie les signaux FOK.",
+      "temporalGist": "Au fil du temps, les d\u00e9tails verbatim d\u00e9clinent tandis que l'essentiel s\u00e9mantique est pr\u00e9serv\u00e9 par abstraction. Une Conscienciosit\u00e9 plus faible acc\u00e9l\u00e8re la perte de d\u00e9tails.",
+      "schemaEncoding": "Les nouvelles informations sont assimil\u00e9es dans les sch\u00e9mas de connaissances existants. Une Ouverture plus \u00e9lev\u00e9e permet une modification de sch\u00e9mas plus flexible.",
+      "sourceConfidence": "La m\u00e9moire de la source d'information d\u00e9cline plus vite que le contenu informationnel. Une Honn\u00eat\u00e9t\u00e9-Humilit\u00e9 plus \u00e9lev\u00e9e augmente le scepticisme envers les sources incertaines.",
+      "emotionRegulation": "L'intensit\u00e9 \u00e9motionnelle attach\u00e9e aux souvenirs est activement modul\u00e9e lors de la r\u00e9cup\u00e9ration et de la consolidation. Une Agr\u00e9abilit\u00e9 plus \u00e9lev\u00e9e augmente le lissage \u00e9motionnel."
     },
-    "ragTitle": "Multimodal RAG with HyDE Retrieval",
-    "ragSubtitle": "Ingest documents, images, audio — retrieve with hypothetical document embeddings",
-    "pipeline": {
-      "ingest": "Ingest",
-      "chunk": "Chunking",
-      "embed": "Embedding",
-      "store": "Vector Store",
-      "hyde": "HyDE Query",
-      "rerank": "Reranking",
-      "context": "Agent Context"
+    "citations": {
+      "reconsolidation": "Nader, Schafe & LeDoux (2000). Nature, 406, 722-726.",
+      "rif": "Anderson, Bjork & Bjork (1994). Journal of Experimental Psychology: Learning, Memory, and Cognition, 20, 1063-1087.",
+      "involuntaryRecall": "Berntsen (2010). Current Directions in Psychological Science, 19, 138-142.",
+      "fok": "Koriat (1993). Psychological Review, 100, 609-639.",
+      "temporalGist": "Reyna & Brainerd (1995). Learning and Individual Differences, 7, 1-75.",
+      "schemaEncoding": "Bartlett (1932). Remembering. Cambridge University Press.",
+      "sourceConfidence": "Johnson, Hashtroudi & Lindsay (1993). Psychological Bulletin, 114, 3-28.",
+      "emotionRegulation": "Gross (1998). Review of General Psychology, 2, 271-299."
     },
-    "ctaLearnMore": "Learn more"
+    "ebbinghausAnnotation": "Sans r\u00e9vision, 80% des informations sont perdues en 24 heures. La m\u00e9moire cognitive d'AgentOS applique la r\u00e9p\u00e9tition espac\u00e9e et la consolidation pour aplatir la courbe.",
+    "ctaLearnMore": "Explorer la M\u00e9moire Cognitive"
   },
   "emergent": {
     "badge": "Runtime Intelligence",

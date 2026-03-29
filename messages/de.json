@@ -1059,58 +1059,61 @@
     "downloadLatest": "Neueste Version herunterladen"
   },
   "cognitive": {
-    "memoryTitle": "Cognitive Memory Architecture",
-    "memorySubtitle": "8 neuroscience-backed memory mechanisms, all modulated by HEXACO personality traits",
+    "badge": "Neurowissenschaftlich fundiert",
+    "title": "Kognitives Ged\u00e4chtnis",
+    "subtitle": "8 Ged\u00e4chtnismechanismen inspiriert von kognitionswissenschaftlicher Forschung. Alle moduliert durch die HEXACO-Pers\u00f6nlichkeitsmerkmale des Agenten.",
     "mechanisms": {
-      "reconsolidation": "Reconsolidation",
-      "rif": "Retrieval-Induced Forgetting",
-      "involuntaryRecall": "Involuntary Recall",
-      "fok": "Feeling of Knowing",
-      "temporalGist": "Temporal Gist",
-      "schemaEncoding": "Schema Encoding",
-      "sourceConfidence": "Source Confidence Decay",
-      "emotionRegulation": "Emotion Regulation"
+      "reconsolidation": "Rekonsolidierung",
+      "rif": "Abrufinduziertes Vergessen",
+      "involuntaryRecall": "Unwillk\u00fcrliche Erinnerung",
+      "fok": "Wissensvorausahnung",
+      "temporalGist": "Zeitliche Abstraktion",
+      "schemaEncoding": "Schema-Kodierung",
+      "sourceConfidence": "Quellenvertrauensverfall",
+      "emotionRegulation": "Emotionsregulation"
     },
     "mechanismDescriptions": {
-      "reconsolidation": "Memories update when recalled",
-      "rif": "Recalling one memory suppresses related ones",
-      "involuntaryRecall": "Unexpected memory surfacing via associative triggers",
-      "fok": "Metacognitive confidence estimation",
-      "temporalGist": "Details fade, gist persists",
-      "schemaEncoding": "New info organized around existing mental models",
-      "sourceConfidence": "Provenance trust erodes over time",
-      "emotionRegulation": "Emotional state modulates encoding and retrieval"
+      "reconsolidation": "Erinnerungen werden bei jedem Abruf neu geschrieben und mit neuem Kontext aktualisiert",
+      "rif": "Das Abrufen einer Erinnerung unterdr\u00fcckt verwandte konkurrierende Erinnerungen",
+      "involuntaryRecall": "Spontane Ged\u00e4chtnisaktivierung durch kontextuelle Hinweise ausgel\u00f6st",
+      "fok": "Metakognitives Gef\u00fchl, dass eine Antwort existiert, auch wenn sie nicht sofort abrufbar ist",
+      "temporalGist": "Spezifische Details verblassen, w\u00e4hrend der Kern und die Bedeutung \u00fcber die Zeit erhalten bleiben",
+      "schemaEncoding": "Neue Informationen werden relativ zu bestehenden Wissensstrukturen kodiert",
+      "sourceConfidence": "Die Gewissheit \u00fcber die Herkunft von Informationen verf\u00e4llt schneller als die Information selbst",
+      "emotionRegulation": "Die emotionale Valenz von Erinnerungen wird \u00fcber die Zeit moduliert"
     },
-    "hexacoTitle": "HEXACO Personality Modeling",
-    "hexacoSubtitle": "6-dimensional personality traits that shape agent communication, memory, and decision-making",
-    "traits": {
-      "honesty": "Honesty-Humility",
-      "emotionality": "Emotionality",
-      "extraversion": "Extraversion",
-      "agreeableness": "Agreeableness",
-      "conscientiousness": "Conscientiousness",
-      "openness": "Openness"
+    "modulators": {
+      "reconsolidation": "Offenheit",
+      "rif": "Gewissenhaftigkeit",
+      "involuntaryRecall": "Offenheit",
+      "fok": "Extraversion",
+      "temporalGist": "Gewissenhaftigkeit",
+      "schemaEncoding": "Offenheit",
+      "sourceConfidence": "Ehrlichkeit-Bescheidenheit",
+      "emotionRegulation": "Vertr\u00e4glichkeit"
     },
-    "traitDescriptions": {
-      "honesty": "Affects source skepticism, trust calibration",
-      "emotionality": "Modulates memory drift, encoding intensity",
-      "extraversion": "Affects FOK confidence, social recall",
-      "agreeableness": "Influences emotion regulation, empathy",
-      "conscientiousness": "Drives RIF strength, detail retention",
-      "openness": "Modulates involuntary recall, novelty seeking"
+    "research": {
+      "reconsolidation": "Jeder Abrufakt destabilisiert die Ged\u00e4chtnisspur und erm\u00f6glicht eine Aktualisierung mit aktuellem Kontext vor der Restabilisierung. H\u00f6here Offenheit verst\u00e4rkt den Grad der Umschreibung.",
+      "rif": "Das Abrufen einer Zielerinnerung hemmt aktiv verwandte Konkurrenten durch laterale Suppression. H\u00f6here Gewissenhaftigkeit verst\u00e4rkt diese Unterdr\u00fcckung.",
+      "involuntaryRecall": "Kontextuelle Hinweise k\u00f6nnen spontane Aktivierung assoziierter Erinnerungen ohne bewusste Suche ausl\u00f6sen. H\u00f6here Offenheit senkt die Aktivierungsschwelle.",
+      "fok": "Ein metakognitives Urteil \u00fcber die Wahrscheinlichkeit eines erfolgreichen Abrufs. H\u00f6here Extraversion verst\u00e4rkt FOK-Signale.",
+      "temporalGist": "\u00dcber die Zeit verfallen w\u00f6rtliche Details, w\u00e4hrend der semantische Kern durch Abstraktion erhalten bleibt. Geringere Gewissenhaftigkeit beschleunigt den Detailverlust.",
+      "schemaEncoding": "Neue Informationen werden in bestehende Wissensschemata assimiliert. H\u00f6here Offenheit erm\u00f6glicht flexiblere Schema-Modifikation.",
+      "sourceConfidence": "Das Ged\u00e4chtnis f\u00fcr die Quelle von Informationen verf\u00e4llt schneller als der Informationsinhalt selbst. H\u00f6here Ehrlichkeit-Bescheidenheit erh\u00f6ht die Skepsis gegen\u00fcber unsicheren Quellen.",
+      "emotionRegulation": "Die an Erinnerungen gebundene emotionale Intensit\u00e4t wird bei Abruf und Konsolidierung aktiv moduliert. H\u00f6here Vertr\u00e4glichkeit erh\u00f6ht die emotionale Gl\u00e4ttung."
     },
-    "ragTitle": "Multimodal RAG with HyDE Retrieval",
-    "ragSubtitle": "Ingest documents, images, audio — retrieve with hypothetical document embeddings",
-    "pipeline": {
-      "ingest": "Ingest",
-      "chunk": "Chunking",
-      "embed": "Embedding",
-      "store": "Vector Store",
-      "hyde": "HyDE Query",
-      "rerank": "Reranking",
-      "context": "Agent Context"
+    "citations": {
+      "reconsolidation": "Nader, Schafe & LeDoux (2000). Nature, 406, 722-726.",
+      "rif": "Anderson, Bjork & Bjork (1994). Journal of Experimental Psychology: Learning, Memory, and Cognition, 20, 1063-1087.",
+      "involuntaryRecall": "Berntsen (2010). Current Directions in Psychological Science, 19, 138-142.",
+      "fok": "Koriat (1993). Psychological Review, 100, 609-639.",
+      "temporalGist": "Reyna & Brainerd (1995). Learning and Individual Differences, 7, 1-75.",
+      "schemaEncoding": "Bartlett (1932). Remembering. Cambridge University Press.",
+      "sourceConfidence": "Johnson, Hashtroudi & Lindsay (1993). Psychological Bulletin, 114, 3-28.",
+      "emotionRegulation": "Gross (1998). Review of General Psychology, 2, 271-299."
     },
-    "ctaLearnMore": "Learn more"
+    "ebbinghausAnnotation": "Ohne Wiederholung gehen 80% der Informationen innerhalb von 24 Stunden verloren. Das kognitive Ged\u00e4chtnis von AgentOS nutzt verteilte Wiederholung und Konsolidierung, um die Kurve abzuflachen.",
+    "ctaLearnMore": "Kognitives Ged\u00e4chtnis erkunden"
   },
   "emergent": {
     "badge": "Runtime Intelligence",

@@ -1059,58 +1059,61 @@
     "downloadLatest": "Baixar Última Versão"
   },
   "cognitive": {
-    "memoryTitle": "Cognitive Memory Architecture",
-    "memorySubtitle": "8 neuroscience-backed memory mechanisms, all modulated by HEXACO personality traits",
+    "badge": "Baseado em Neuroci\u00eancia",
+    "title": "Mem\u00f3ria Cognitiva",
+    "subtitle": "8 mecanismos de mem\u00f3ria inspirados em pesquisa de ci\u00eancia cognitiva. Todos modulados pelos tra\u00e7os de personalidade HEXACO do agente.",
     "mechanisms": {
-      "reconsolidation": "Reconsolidation",
-      "rif": "Retrieval-Induced Forgetting",
-      "involuntaryRecall": "Involuntary Recall",
-      "fok": "Feeling of Knowing",
-      "temporalGist": "Temporal Gist",
-      "schemaEncoding": "Schema Encoding",
-      "sourceConfidence": "Source Confidence Decay",
-      "emotionRegulation": "Emotion Regulation"
+      "reconsolidation": "Reconsolida\u00e7\u00e3o",
+      "rif": "Esquecimento Induzido pela Recupera\u00e7\u00e3o",
+      "involuntaryRecall": "Recorda\u00e7\u00e3o Involunt\u00e1ria",
+      "fok": "Sensa\u00e7\u00e3o de Saber",
+      "temporalGist": "Ess\u00eancia Temporal",
+      "schemaEncoding": "Codifica\u00e7\u00e3o por Esquemas",
+      "sourceConfidence": "Decaimento da Confian\u00e7a na Fonte",
+      "emotionRegulation": "Regula\u00e7\u00e3o Emocional"
     },
     "mechanismDescriptions": {
-      "reconsolidation": "Memories update when recalled",
-      "rif": "Recalling one memory suppresses related ones",
-      "involuntaryRecall": "Unexpected memory surfacing via associative triggers",
-      "fok": "Metacognitive confidence estimation",
-      "temporalGist": "Details fade, gist persists",
-      "schemaEncoding": "New info organized around existing mental models",
-      "sourceConfidence": "Provenance trust erodes over time",
-      "emotionRegulation": "Emotional state modulates encoding and retrieval"
+      "reconsolidation": "As mem\u00f3rias s\u00e3o reescritas cada vez que s\u00e3o recuperadas, atualizando-se com novo contexto",
+      "rif": "Recuperar uma mem\u00f3ria suprime mem\u00f3rias concorrentes relacionadas",
+      "involuntaryRecall": "Ativa\u00e7\u00e3o espont\u00e2nea de mem\u00f3ria desencadeada por pistas contextuais",
+      "fok": "Sensa\u00e7\u00e3o metacognitiva de que uma resposta existe mesmo quando n\u00e3o \u00e9 imediatamente recuper\u00e1vel",
+      "temporalGist": "Detalhes espec\u00edficos desaparecem enquanto a ess\u00eancia e o significado s\u00e3o preservados ao longo do tempo",
+      "schemaEncoding": "Novas informa\u00e7\u00f5es s\u00e3o codificadas em rela\u00e7\u00e3o a estruturas de conhecimento existentes",
+      "sourceConfidence": "A certeza sobre a origem da informa\u00e7\u00e3o decai mais r\u00e1pido que a pr\u00f3pria informa\u00e7\u00e3o",
+      "emotionRegulation": "A val\u00eancia emocional das mem\u00f3rias \u00e9 modulada ao longo do tempo"
     },
-    "hexacoTitle": "HEXACO Personality Modeling",
-    "hexacoSubtitle": "6-dimensional personality traits that shape agent communication, memory, and decision-making",
-    "traits": {
-      "honesty": "Honesty-Humility",
-      "emotionality": "Emotionality",
-      "extraversion": "Extraversion",
-      "agreeableness": "Agreeableness",
-      "conscientiousness": "Conscientiousness",
-      "openness": "Openness"
+    "modulators": {
+      "reconsolidation": "Abertura",
+      "rif": "Conscienciosidade",
+      "involuntaryRecall": "Abertura",
+      "fok": "Extravers\u00e3o",
+      "temporalGist": "Conscienciosidade",
+      "schemaEncoding": "Abertura",
+      "sourceConfidence": "Honestidade-Humildade",
+      "emotionRegulation": "Amabilidade"
     },
-    "traitDescriptions": {
-      "honesty": "Affects source skepticism, trust calibration",
-      "emotionality": "Modulates memory drift, encoding intensity",
-      "extraversion": "Affects FOK confidence, social recall",
-      "agreeableness": "Influences emotion regulation, empathy",
-      "conscientiousness": "Drives RIF strength, detail retention",
-      "openness": "Modulates involuntary recall, novelty seeking"
+    "research": {
+      "reconsolidation": "Cada ato de recupera\u00e7\u00e3o desestabiliza o tra\u00e7o de mem\u00f3ria, permitindo atualiza\u00e7\u00e3o com o contexto atual antes da reestabiliza\u00e7\u00e3o. Maior Abertura amplifica o grau de reescrita.",
+      "rif": "Recuperar uma mem\u00f3ria alvo inibe ativamente concorrentes relacionados por supress\u00e3o lateral. Maior Conscienciosidade fortalece essa supress\u00e3o.",
+      "involuntaryRecall": "Pistas contextuais podem desencadear ativa\u00e7\u00e3o espont\u00e2nea de mem\u00f3rias associadas sem busca deliberada. Maior Abertura reduz o limiar de ativa\u00e7\u00e3o.",
+      "fok": "Um julgamento metacognitivo sobre a probabilidade de recupera\u00e7\u00e3o bem-sucedida. Maior Extravers\u00e3o amplifica os sinais FOK.",
+      "temporalGist": "Ao longo do tempo, detalhes literais decaem enquanto a ess\u00eancia sem\u00e2ntica \u00e9 preservada por abstra\u00e7\u00e3o. Menor Conscienciosidade acelera a perda de detalhes.",
+      "schemaEncoding": "Novas informa\u00e7\u00f5es s\u00e3o assimiladas em esquemas de conhecimento existentes. Maior Abertura permite modifica\u00e7\u00e3o de esquemas mais flex\u00edvel.",
+      "sourceConfidence": "A mem\u00f3ria da fonte de informa\u00e7\u00e3o decai mais r\u00e1pido que o conte\u00fado informacional. Maior Honestidade-Humildade aumenta o ceticismo em rela\u00e7\u00e3o a fontes incertas.",
+      "emotionRegulation": "A intensidade emocional ligada \u00e0s mem\u00f3rias \u00e9 ativamente modulada durante a recupera\u00e7\u00e3o e consolida\u00e7\u00e3o. Maior Amabilidade aumenta a suaviza\u00e7\u00e3o emocional."
     },
-    "ragTitle": "Multimodal RAG with HyDE Retrieval",
-    "ragSubtitle": "Ingest documents, images, audio — retrieve with hypothetical document embeddings",
-    "pipeline": {
-      "ingest": "Ingest",
-      "chunk": "Chunking",
-      "embed": "Embedding",
-      "store": "Vector Store",
-      "hyde": "HyDE Query",
-      "rerank": "Reranking",
-      "context": "Agent Context"
+    "citations": {
+      "reconsolidation": "Nader, Schafe & LeDoux (2000). Nature, 406, 722-726.",
+      "rif": "Anderson, Bjork & Bjork (1994). Journal of Experimental Psychology: Learning, Memory, and Cognition, 20, 1063-1087.",
+      "involuntaryRecall": "Berntsen (2010). Current Directions in Psychological Science, 19, 138-142.",
+      "fok": "Koriat (1993). Psychological Review, 100, 609-639.",
+      "temporalGist": "Reyna & Brainerd (1995). Learning and Individual Differences, 7, 1-75.",
+      "schemaEncoding": "Bartlett (1932). Remembering. Cambridge University Press.",
+      "sourceConfidence": "Johnson, Hashtroudi & Lindsay (1993). Psychological Bulletin, 114, 3-28.",
+      "emotionRegulation": "Gross (1998). Review of General Psychology, 2, 271-299."
     },
-    "ctaLearnMore": "Learn more"
+    "ebbinghausAnnotation": "Sem revis\u00e3o, 80% das informa\u00e7\u00f5es s\u00e3o perdidas em 24 horas. A mem\u00f3ria cognitiva do AgentOS aplica repeti\u00e7\u00e3o espa\u00e7ada e consolida\u00e7\u00e3o para achatar a curva.",
+    "ctaLearnMore": "Explorar Mem\u00f3ria Cognitiva"
   },
   "emergent": {
     "badge": "Runtime Intelligence",

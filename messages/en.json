@@ -852,8 +852,9 @@
     "downloadLatest": "Download Latest"
   },
   "cognitive": {
-    "memoryTitle": "Cognitive Memory Architecture",
-    "memorySubtitle": "8 neuroscience-backed memory mechanisms, all modulated by HEXACO personality traits",
+    "badge": "Neuroscience-Backed",
+    "title": "Cognitive Memory",
+    "subtitle": "8 memory mechanisms inspired by cognitive science research. All modulated by the agent's HEXACO personality traits.",
     "mechanisms": {
       "reconsolidation": "Reconsolidation",
       "rif": "Retrieval-Induced Forgetting",
@@ -865,45 +866,47 @@
       "emotionRegulation": "Emotion Regulation"
     },
     "mechanismDescriptions": {
-      "reconsolidation": "Memories update when recalled",
-      "rif": "Recalling one memory suppresses related ones",
-      "involuntaryRecall": "Unexpected memory surfacing via associative triggers",
-      "fok": "Metacognitive confidence estimation",
-      "temporalGist": "Details fade, gist persists",
-      "schemaEncoding": "New info organized around existing mental models",
-      "sourceConfidence": "Provenance trust erodes over time",
-      "emotionRegulation": "Emotional state modulates encoding and retrieval"
+      "reconsolidation": "Memories are rewritten each time they're recalled, updating with new context",
+      "rif": "Retrieving one memory suppresses related competing memories",
+      "involuntaryRecall": "Spontaneous memory activation triggered by contextual cues",
+      "fok": "Metacognitive sense that an answer exists even when not immediately retrievable",
+      "temporalGist": "Specific details fade while the gist and meaning is preserved over time",
+      "schemaEncoding": "New information is encoded relative to existing knowledge structures",
+      "sourceConfidence": "Certainty about where information came from decays faster than the information itself",
+      "emotionRegulation": "Emotional valence of memories is modulated over time"
     },
-    "hexacoTitle": "HEXACO Personality Modeling",
-    "hexacoSubtitle": "6-dimensional personality traits that shape agent communication, memory, and decision-making",
-    "traits": {
-      "honesty": "Honesty-Humility",
-      "emotionality": "Emotionality",
-      "extraversion": "Extraversion",
-      "agreeableness": "Agreeableness",
-      "conscientiousness": "Conscientiousness",
-      "openness": "Openness"
+    "modulators": {
+      "reconsolidation": "Openness",
+      "rif": "Conscientiousness",
+      "involuntaryRecall": "Openness",
+      "fok": "Extraversion",
+      "temporalGist": "Conscientiousness",
+      "schemaEncoding": "Openness",
+      "sourceConfidence": "Honesty-Humility",
+      "emotionRegulation": "Agreeableness"
     },
-    "traitDescriptions": {
-      "honesty": "Affects source skepticism, trust calibration",
-      "emotionality": "Modulates memory drift, encoding intensity",
-      "extraversion": "Affects FOK confidence, social recall",
-      "agreeableness": "Influences emotion regulation, empathy",
-      "conscientiousness": "Drives RIF strength, detail retention",
-      "openness": "Modulates involuntary recall, novelty seeking"
+    "research": {
+      "reconsolidation": "Each act of retrieval destabilizes the memory trace, allowing it to be updated with current context before re-stabilizing. Higher Openness amplifies the degree of rewrite, making memories more adaptive but less stable.",
+      "rif": "Retrieving a target memory actively inhibits related competitors via lateral suppression. Higher Conscientiousness strengthens this suppression, keeping retrieval focused but increasing forgetting of peripheral associations.",
+      "involuntaryRecall": "Contextual cues can trigger spontaneous activation of associated memories without deliberate search. Higher Openness lowers the activation threshold, producing more frequent involuntary recalls and serendipitous connections.",
+      "fok": "A metacognitive judgment about the likelihood of successful retrieval, even before the answer surfaces. Higher Extraversion amplifies FOK signals, making the agent more confident in its sense of 'almost knowing.'",
+      "temporalGist": "Over time, verbatim details decay while the semantic gist is preserved through abstraction. Lower Conscientiousness accelerates detail loss, leaving only the core meaning behind.",
+      "schemaEncoding": "New information is assimilated into existing knowledge schemas, with schema-consistent material encoded more readily. Higher Openness allows more flexible schema modification, enabling novel information to reshape existing structures.",
+      "sourceConfidence": "Memory for the source of information (who said it, where it was read) decays faster than the information content itself. Higher Honesty-Humility increases skepticism toward uncertain sources, treating low-confidence provenance as unreliable.",
+      "emotionRegulation": "The emotional intensity attached to memories is actively modulated during retrieval and consolidation. Higher Agreeableness increases emotional smoothing, dampening extreme valence over time for more balanced recall."
     },
-    "ragTitle": "Multimodal RAG with HyDE Retrieval",
-    "ragSubtitle": "Ingest documents, images, audio — retrieve with hypothetical document embeddings",
-    "pipeline": {
-      "ingest": "Ingest",
-      "chunk": "Chunking",
-      "embed": "Embedding",
-      "store": "Vector Store",
-      "hyde": "HyDE Query",
-      "rerank": "Reranking",
-      "context": "Agent Context"
+    "citations": {
+      "reconsolidation": "Nader, Schafe & LeDoux (2000). Fear memories require protein synthesis in the amygdala for reconsolidation after retrieval. Nature, 406, 722-726.",
+      "rif": "Anderson, Bjork & Bjork (1994). Remembering can cause forgetting: Retrieval dynamics in long-term memory. Journal of Experimental Psychology: Learning, Memory, and Cognition, 20, 1063-1087.",
+      "involuntaryRecall": "Berntsen (2010). The unbidden past: Involuntary autobiographical memories as a basic mode of remembering. Current Directions in Psychological Science, 19, 138-142.",
+      "fok": "Koriat (1993). How do we know that we know? The accessibility model of the feeling of knowing. Psychological Review, 100, 609-639.",
+      "temporalGist": "Reyna & Brainerd (1995). Fuzzy-trace theory: An interim synthesis. Learning and Individual Differences, 7, 1-75.",
+      "schemaEncoding": "Bartlett (1932). Remembering: A Study in Experimental and Social Psychology. Cambridge University Press.",
+      "sourceConfidence": "Johnson, Hashtroudi & Lindsay (1993). Source monitoring. Psychological Bulletin, 114, 3-28.",
+      "emotionRegulation": "Gross (1998). The emerging field of emotion regulation: An integrative review. Review of General Psychology, 2, 271-299."
     },
-    "ctaLearnMore": "Learn more"
+    "ebbinghausAnnotation": "Without rehearsal, 80% of information is lost within 24 hours. AgentOS cognitive memory applies spaced repetition and consolidation to flatten the curve.",
+    "ctaLearnMore": "Explore Cognitive Memory"
   },
   "emergent": {
     "badge": "Runtime Intelligence",
