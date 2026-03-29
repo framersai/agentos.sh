@@ -68,15 +68,12 @@ export function WorkbenchCTA() {
                   <GitBranch className="w-5 h-5" />
                   {t('viewGithub')}
                 </a>
-                <a
-                  href="https://github.com/framersai/agentos-workbench/releases"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold border-2 border-[var(--color-accent-primary)] text-[var(--color-accent-primary)] hover:bg-[var(--color-accent-primary)]/10 transition-all"
+                <span
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold border-2 border-[var(--color-accent-primary)]/40 text-[var(--color-accent-primary)]/60 cursor-default"
                 >
                   <Play className="w-5 h-5" />
-                  {t('downloadLatest')}
-                </a>
+                  Try Live (Coming Soon)
+                </span>
               </div>
             </div>
           </div>
