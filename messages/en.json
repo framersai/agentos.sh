@@ -60,7 +60,7 @@
     },
     "compliance": {
       "gdpr": "GDPR & PII Compliant",
-      "soc2": "SOC2 (Coming Soon)",
+      "soc2": "SOC 2 \u2014 Planned",
       "enterpriseSupport": "Enterprise Support Available"
     },
     "capabilities": {
@@ -267,8 +267,8 @@
         "items": ["Real-time Monitoring","Audit Logs","Anomaly Detection"]
       },
       "soc2": {
-        "title": "SOC2 Compliance",
-        "items": ["Type II (In Progress)","Annual Audits","Continuous Compliance"]
+        "title": "SOC 2 Compliance",
+        "items": ["Type II (Planned)","Annual Audits","Continuous Compliance"]
       },
       "scale": {
         "title": "Enterprise Scale",
@@ -281,8 +281,8 @@
         "description": "GDPR compliance, PII redaction, and core security features are production-ready"
       },
       "inProgress": {
-        "title": "In Progress",
-        "description": "SOC2 Type II certification underway, expected completion Q2 2024"
+        "title": "Planned",
+        "description": "SOC 2 Type II certification planned"
       },
       "enterpriseSupport": {
         "title": "Enterprise Support",
@@ -601,7 +601,7 @@
     "whatYouGetTitle": "What you get",
     "whatYouGetItems": [
       "Persona library for research, analysis, creation, critique, execution, and future GMIs.",
-      "Deterministic orchestration with guardrails, budgets, approvals, and SOC2/GDPR-ready event trails.",
+      "Deterministic orchestration with guardrails, budgets, approvals, and SOC 2/GDPR-ready event trails.",
       "Unified memory fabric (working, episodic, vector) plus production-ready exports for Markdown/JSON ingestion."
     ],
     "architectureTitle": "AgentOS Architecture (streaming)",
@@ -618,7 +618,7 @@
     },
     "snapshots": [
       { "useCase": "Route support + CRM updates", "outcome": "Researcher gathers context, Analyst verifies facts, and Executor pushes the outcome into Salesforce or Linear automatically." },
-      { "useCase": "Safety-critical approvals", "outcome": "Orchestrator enforces guardrails, memory logs every decision, and Event Stream keeps auditors in the loop for SOC2/GDPR." },
+      { "useCase": "Safety-critical approvals", "outcome": "Orchestrator enforces guardrails, memory logs every decision, and Event Stream keeps auditors in the loop for SOC 2/GDPR." },
       { "useCase": "RAG-powered expansion packs", "outcome": "Creator + Executor personas adapt content by locale while Gateway throttles workloads and exports full runs as Markdown/JSON." }
     ],
     "architecture": {
@@ -627,7 +627,7 @@
       "orchestrator": { "label": "GMI Orchestrator", "subtitle": "Routing • Guardrails", "details": "Coordinates agent roles, tools, and safety policies.", "example": "Parallelize research, analysis, creation, and critique.", "outcome": "Adaptive and deterministic agency modes keep emergent intelligence auditable." },
       "agents": { "label": "Agent Pool", "subtitle": "Researcher • Analyst • Creator • Critic • Executor", "details": "Specialized GMIs stream outputs; orchestrator merges.", "example": "Researcher fetches sources while Analyst verifies claims.", "outcome": "Each persona can be exported as Markdown/JSON capsules and ingested into other runtimes." },
       "memory": { "label": "Memory System", "subtitle": "Vector DB • Knowledge Graph", "details": "Long‑term memory stores facts, embeddings, and relations.", "example": "Semantic search recalls prior decisions and context.", "outcome": "Zero-copy working, episodic, and vector layers keep adaptive and permanent intelligence aligned." },
-      "events": { "label": "Event Stream", "subtitle": "Monitoring • Analytics", "details": "Observability and compliance pipeline for every step.", "example": "Emit spans for audits; alert on policy violations.", "outcome": "Every action is replayable for SOC2, GDPR, and custom guardrails." }
+      "events": { "label": "Event Stream", "subtitle": "Monitoring • Analytics", "details": "Observability and compliance pipeline for every step.", "example": "Emit spans for audits; alert on policy violations.", "outcome": "Every action is replayable for SOC 2, GDPR, and custom guardrails." }
     }
   },
   "faq": {
@@ -689,7 +689,7 @@
       "coreDesc": "The core AgentOS runtime, GMI orchestration, and infrastructure",
       "extensions": "Extensions & Agents",
       "extensionsDesc": "Community-built agents, extensions, and guardrails",
-      "footer": "AgentOS is open source under the Apache 2.0 license. For enterprise support and production deployments, contact us at <link>hi@rabbithole.inc</link>."
+      "footer": "AgentOS is open source under the Apache 2.0 license. For enterprise support and production deployments, contact us at <link>team@frame.dev</link>."
     },
     "cta": {
       "title": "Ready to Build?",

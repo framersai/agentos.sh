@@ -291,8 +291,8 @@ export const seoDefaults = {
   },
   twitter: {
     card: 'summary_large_image',
-    creator: '@agentos',
-    site: '@agentos',
+    creator: '@framersai',
+    site: '@framersai',
   },
 }
 
@@ -305,8 +305,8 @@ export const structuredData = {
     url: 'https://agentos.sh',
     logo: 'https://agentos.sh/logo.png',
     sameAs: [
-      'https://github.com/agentosai',
-      'https://twitter.com/agentos',
+      'https://github.com/framersai',
+      'https://twitter.com/framersai',
     ],
   },
 

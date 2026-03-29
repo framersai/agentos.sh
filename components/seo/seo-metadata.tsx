@@ -66,7 +66,7 @@ export const seoMetadata: Metadata = {
     card: 'summary_large_image',
     title: 'AgentOS - Adaptive Intelligence for Emergent Agents',
     description: 'Enterprise-grade AI agent orchestration platform. Open source, TypeScript, production-ready.',
-    creator: '@agentos',
+    creator: '@framersai',
     images: ['/og-image.png'],
   },
   robots: {
@@ -96,12 +96,12 @@ export function SchemaMarkup() {
     logo: 'https://agentos.sh/logo.png',
     description: 'Enterprise-grade AI agent orchestration platform',
     sameAs: [
-      'https://github.com/agentos-project/agentos',
-      'https://twitter.com/agentos'
+      'https://github.com/framersai/agentos',
+      'https://twitter.com/framersai'
     ],
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'support@agentos.sh',
+      email: 'team@frame.dev',
       contactType: 'technical support',
       availableLanguage: ['English', 'Spanish', 'French', 'German', 'Portuguese', 'Japanese', 'Korean', 'Chinese']
     }
