@@ -32,6 +32,11 @@ const GMISectionLazy = dynamic(
   { ssr: true }
 )
 
+const EmergentSectionLazy = dynamic(
+  () => import('../../components/sections/emergent-section').then(m => m.EmergentSection),
+  { ssr: true }
+)
+
 const CognitiveSectionLazy = dynamic(
   () => import('../../components/sections/cognitive-section').then(m => m.CognitiveSection),
   { ssr: true }
@@ -91,6 +96,11 @@ export default function LandingPageRedesigned() {
         {/* GMI Section with architecture diagrams */}
         <div className="lazy-section-lg">
           <GMISectionLazy />
+        </div>
+
+        {/* Emergent Capabilities — runtime tool forging, agent synthesis, self-improvement */}
+        <div className="lazy-section-lg">
+          <EmergentSectionLazy />
         </div>
 
         {/* Cognitive Mechanisms + HEXACO + RAG Pipeline */}

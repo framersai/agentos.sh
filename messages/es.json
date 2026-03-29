@@ -430,6 +430,10 @@
       "deployment": {
         "title": "Production Deployment",
         "description": "Deploy AgentOS with Docker and Kubernetes"
+      },
+      "emergentTools": {
+        "title": "Emergent Tools",
+        "description": "Enable runtime tool forging — agents create new tools when they hit capability gaps"
       }
     },
     "cta": {
@@ -1084,5 +1088,56 @@
       "context": "Agent Context"
     },
     "ctaLearnMore": "Learn more"
+  },
+  "emergent": {
+    "badge": "Runtime Intelligence",
+    "title": "Emergent Capabilities",
+    "subtitle": "Agents that forge their own tools and spawn specialist sub-agents at runtime",
+    "statPills": [
+      "Lifetime tiers: session / agent / shared",
+      "Judge approval required",
+      "Sandbox-executed",
+      "Auto-promotion on reliability"
+    ],
+    "tabs": {
+      "toolForging": "Runtime Tool Forging",
+      "agentSynthesis": "Agent Synthesis",
+      "selfImproving": "Self-Improving Patterns"
+    },
+    "forging": {
+      "step1": "Identify Gap",
+      "step2": "Write Spec",
+      "step3": "Judge Evaluates",
+      "step4": "Tool Activated",
+      "step5": "Agent Uses It",
+      "description": "When an agent encounters a task it cannot handle with existing tools, it writes a new tool definition on the fly. A judge agent evaluates safety and correctness before activation. Approved tools are sandbox-executed and tracked for reliability-based promotion.",
+      "details": [
+        "Composable mode: chains existing tools via pipeline steps — safe by construction",
+        "Sandbox mode: agent-written code runs in memory/time-bounded isolation",
+        "Three-tier lifecycle: session-scoped, agent-scoped, or promoted to shared registry",
+        "Dual-judge promotion panel: safety auditor + correctness reviewer must both approve",
+        "Usage tracking with automatic tier promotion when reliability thresholds are met"
+      ]
+    },
+    "synthesis": {
+      "orchestrator": "Orchestrator",
+      "specialist1": "Data Analyst",
+      "specialist2": "Code Reviewer",
+      "specialist3": "Content Writer",
+      "specialist4": "Fact Checker",
+      "resultsMerge": "Results merge back to orchestrator",
+      "description": "Agencies dynamically spawn new agents with specific personas and skills when the existing roster cannot cover a sub-task. The orchestrator identifies the capability gap, synthesises a specialist agent with tailored instructions, and merges its output back into the main workflow. Requires approval when HITL gates are configured."
+    },
+    "loop": {
+      "execute": "Execute",
+      "observe": "Observe Outcome",
+      "update": "Update Strategy",
+      "executeBetter": "Execute Better",
+      "circuitBreaker": "Circuit breaker on failures",
+      "styleAdaptation": "Style adaptation (user prefs)",
+      "memoryConsolidation": "Memory consolidation",
+      "description": "Agents learn from failures and adapt their approach over time. Tool failure tracking triggers circuit breakers to avoid repeated errors. Style adaptation learns user preferences for formality, verbosity, and technicality. Memory consolidation strengthens useful memories and lets irrelevant ones decay via Ebbinghaus curves."
+    },
+    "ctaExploreDocs": "Explore Emergent Capabilities"
   }
 }
