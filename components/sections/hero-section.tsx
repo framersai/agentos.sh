@@ -157,15 +157,15 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               scale(0.55) = 22/40, scale(0.75) = 30/40. transform-origin: left center
               keeps text left-aligned. Wrapper width is also scaled proportionally. */}
           <h1 className="font-bold tracking-tight mb-4" itemProp="name">
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
-              <span className="inline-block mr-2 origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100" style={{ marginTop: '-4px' }}>
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center flex-wrap">
+              <span className="inline-block mr-2 origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100 min-w-0 shrink-0" style={{ marginTop: '-4px', width: 'max-content' }}>
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
               </span>
               <span className="text-[var(--color-text-primary)]">intelligence</span>
             </div>
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center">
+            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-normal flex items-center flex-wrap">
               <span className="text-[var(--color-text-secondary)]">for&nbsp;</span>
-              <span className="inline-block mr-2 origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100" style={{ marginTop: '-4px' }}>
+              <span className="inline-block mr-2 origin-left scale-[0.55] sm:scale-[0.75] lg:scale-100 min-w-0 shrink-0" style={{ marginTop: '-4px', width: 'max-content' }}>
                 <ParticleMorphText words={morphingWords} interval={2500} fontSize={40} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} />
               </span>
               <span className="text-[var(--color-text-primary)]">agents</span>
