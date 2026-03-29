@@ -256,10 +256,15 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             </a>
           </div>
 
-          {/* Features */}
+          {/* Features — click scrolls to Core Capabilities */}
           <ul className="grid grid-cols-2 lg:grid-cols-4 gap-2 list-none p-0" aria-label="Key features">
             {highlights.map((h) => (
-              <li key={h.title} className="p-2 rounded-md bg-[var(--color-background-secondary)]/40 border border-[var(--color-border-subtle)]/30">
+              <li key={h.title}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => document.getElementById('capabilities')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') document.getElementById('capabilities')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+                  className="p-2 rounded-md bg-[var(--color-background-secondary)]/40 border border-[var(--color-border-subtle)]/30 cursor-pointer hover:border-[var(--color-accent-primary)]/40 hover:bg-[var(--color-accent-primary)]/5 transition-all">
                 <div className="text-xs font-medium text-[var(--color-text-primary)]">{h.title}</div>
                 <div className="text-[10px] text-[var(--color-text-muted)]">{h.detail}</div>
               </li>
