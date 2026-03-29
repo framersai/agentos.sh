@@ -280,7 +280,7 @@
       },
       "streaming": {
         "title": "실시간 스트리밍",
-        "description": "WebSocket 지원과 99.99% 가용성의 초저지연 이벤트 아키텍처",
+        "description": "WebSocket 지원과 실시간 스트리밍의 초저지연 이벤트 아키텍처",
         "features": [
           "WebSocket 지원",
           "이벤트 기반",
@@ -298,13 +298,13 @@
       "inferenceLatency": "추론 지연 시간",
       "activePersonas": "활성 페르소나",
       "parallelTasks": "병렬 작업",
-      "taskThroughput": "작업 처리량",
+      "concurrencyModel": "동시성 모델",
       "orchestrationOverhead": "오케스트레이션 오버헤드",
       "vectorCapacity": "벡터 용량",
       "retrievalSpeed": "검색 속도",
       "compressionRatio": "압축률",
       "endToEndLatency": "엔드투엔드 지연 시간",
-      "streamBandwidth": "스트림 대역폭",
+      "timeToFirstByte": "첫 바이트까지 시간",
       "connectionStability": "연결 안정성"
     }
   },
@@ -979,12 +979,12 @@
         "description": "Implementing Generalised Mind Instance roles"
       },
       "memorySystem": {
-        "title": "Advanced Memory Management",
-        "description": "Implementing persistent and contextual memory"
+        "title": "Personality & Cognitive Memory",
+        "description": "HEXACO personality traits with Ebbinghaus decay and session history"
       },
       "toolIntegration": {
-        "title": "External Tool Integration",
-        "description": "Connect APIs and services as agent tools"
+        "title": "RAG Pipeline",
+        "description": "Ingest documents and retrieve context with HyDE embeddings"
       },
       "skillsIntegration": {
         "title": "Skills & Extensions",

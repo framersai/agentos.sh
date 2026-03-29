@@ -298,13 +298,13 @@
       "inferenceLatency": "Latence d'inférence",
       "activePersonas": "Personas actives",
       "parallelTasks": "Tâches parallèles",
-      "taskThroughput": "Débit de tâches",
+      "concurrencyModel": "Modèle de concurrence",
       "orchestrationOverhead": "Surcoût d'orchestration",
       "vectorCapacity": "Capacité vectorielle",
       "retrievalSpeed": "Vitesse de récupération",
       "compressionRatio": "Ratio de compression",
       "endToEndLatency": "Latence bout en bout",
-      "streamBandwidth": "Bande passante du flux",
+      "timeToFirstByte": "Temps au premier octet",
       "connectionStability": "Stabilité de connexion"
     }
   },
@@ -854,12 +854,12 @@
         "description": "Implementing Generalised Mind Instance roles"
       },
       "memorySystem": {
-        "title": "Advanced Memory Management",
-        "description": "Implementing persistent and contextual memory"
+        "title": "Personality & Cognitive Memory",
+        "description": "HEXACO personality traits with Ebbinghaus decay and session history"
       },
       "toolIntegration": {
-        "title": "External Tool Integration",
-        "description": "Connect APIs and services as agent tools"
+        "title": "RAG Pipeline",
+        "description": "Ingest documents and retrieve context with HyDE embeddings"
       },
       "skillsIntegration": {
         "title": "Skills & Extensions",

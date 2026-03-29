@@ -280,7 +280,7 @@
       },
       "streaming": {
         "title": "Streaming en Tiempo Real",
-        "description": "Arquitectura de eventos de latencia ultra baja con soporte WebSocket y 99.99% de tiempo de actividad",
+        "description": "Arquitectura de eventos de latencia ultra baja con soporte WebSocket y streaming en tiempo real",
         "features": [
           "Soporte WebSocket",
           "Basado en eventos",
@@ -298,13 +298,13 @@
       "inferenceLatency": "Latencia de Inferencia",
       "activePersonas": "Personas Activas",
       "parallelTasks": "Tareas Paralelas",
-      "taskThroughput": "Rendimiento de Tareas",
+      "concurrencyModel": "Modelo de Concurrencia",
       "orchestrationOverhead": "Sobrecarga de Orquestación",
       "vectorCapacity": "Capacidad Vectorial",
       "retrievalSpeed": "Velocidad de Recuperación",
       "compressionRatio": "Ratio de Compresión",
       "endToEndLatency": "Latencia de Extremo a Extremo",
-      "streamBandwidth": "Ancho de Banda de Stream",
+      "timeToFirstByte": "Tiempo al Primer Byte",
       "connectionStability": "Estabilidad de Conexión"
     }
   },
@@ -408,12 +408,12 @@
         "description": "Implementing Generalised Mind Instance roles"
       },
       "memorySystem": {
-        "title": "Advanced Memory Management",
-        "description": "Implementing persistent and contextual memory"
+        "title": "Personality & Cognitive Memory",
+        "description": "HEXACO personality traits with Ebbinghaus decay and session history"
       },
       "toolIntegration": {
-        "title": "External Tool Integration",
-        "description": "Connect APIs and services as agent tools"
+        "title": "RAG Pipeline",
+        "description": "Ingest documents and retrieve context with HyDE embeddings"
       },
       "skillsIntegration": {
         "title": "Skills & Extensions",

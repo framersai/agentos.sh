@@ -27,10 +27,9 @@ export function CodeExamplesSection() {
     description: t('examples.basicAgent.description'),
     language: 'typescript',
     category: 'basic',
-    code: `// package.json must have "type": "module" (ESM required)
-import { agent } from '@framers/agentos'
+    code: `import { agent } from '@framers/agentos'
 
-// Define a simple calculator tool (ITool shape)
+// Define a tool — any object matching the ITool shape works
 const calculatorTool = {
   name: 'calculator',
   description: 'Performs basic math operations',
@@ -54,18 +53,18 @@ const calculatorTool = {
   },
 }
 
-// Create a stateful agent with tools
+// Create an agent — just set the provider, AgentOS picks the best model
 const mathAgent = agent({
-  model: 'openai:gpt-4o',
-  instructions: 'You are a helpful math assistant. Use the calculator tool for computations.',
-  tools: [calculatorTool],
-  maxSteps: 5,
+  provider: 'anthropic',           // or 'openai', 'gemini', etc. (16 supported)
+  instructions: 'You are a helpful math assistant. Use the calculator tool.',
+  tools: [calculatorTool],         // agent auto-selects the right tool per step
+  maxSteps: 5,                     // cap agentic loops at 5 iterations
 })
 
-// Generate a response (tool calls happen automatically)
+// .generate() runs the full tool-use loop and returns the final answer
 const result = await mathAgent.generate('What is 42 multiplied by 17?')
-console.log(result.text)
-// => "42 multiplied by 17 equals 714."`
+console.log(result.text)           // => "42 multiplied by 17 equals 714."
+console.log(result.toolCalls)      // => [{ toolName: 'calculator', args: { ... }, result: 714 }]`
   },
   {
     id: 'gmi-roles',
@@ -73,42 +72,39 @@ console.log(result.text)
     description: t('examples.gmiRoles.description'),
     language: 'typescript',
     category: 'advanced',
-    code: `import { agency, hitl } from '@framers/agentos'
+    code: `import { agency } from '@framers/agentos'
 
-// Create a multi-agent agency with sequential orchestration
+// Multi-agent team — each agent gets its own provider + personality
 const researchTeam = agency({
-  model: 'openai:gpt-4o',   // shared default model
-  strategy: 'sequential',    // agents run one after another
+  strategy: 'graph',              // dependency-based DAG execution
+  memory: { shared: true },       // agents share conversation context
   agents: {
     researcher: {
-      instructions: \`You are a thorough researcher.
-        Find accurate, well-sourced information on the topic.
-        Include citations where possible.\`,
+      provider: 'anthropic',      // Claude for deep reasoning
+      instructions: 'Find accurate, well-sourced information on the topic.',
     },
     writer: {
-      instructions: \`You are an academic writer.
-        Take the researcher's findings and write a clear,
-        well-structured article for technical professionals.\`,
+      provider: 'openai',         // GPT for natural prose
+      instructions: 'Write a clear, well-structured article for professionals.',
+      dependsOn: ['researcher'],  // runs after researcher finishes
     },
     reviewer: {
-      instructions: \`You are a fact-checker and editor.
-        Review the article for accuracy, clarity, and tone.
-        Return the polished final version.\`,
+      provider: 'gemini',         // Gemini for cross-checking facts
+      instructions: 'Review the article for accuracy, clarity, and tone.',
+      dependsOn: ['writer'],
     },
   },
-  // Optional: resource controls
-  controls: { maxTotalTokens: 50_000, onLimitReached: 'warn' },
-  // Optional: require human approval before certain tools
-  hitl: { approvals: { beforeTool: ['web_search'] }, handler: hitl.autoApprove() },
 })
 
-// The agency exposes the same interface as a single agent
+// Same .generate() interface as a single agent
 const result = await researchTeam.generate(
-  'Write a comprehensive article about quantum computing applications'
+  'Compare TCP vs UDP for real-time game networking'
 )
 
-console.log(result.text)
-console.log('Agent calls:', result.agentCalls?.length)`
+console.log(result.text)           // final polished article
+console.log(result.agentCalls)     // trace of which agent did what
+
+// 6 strategies: sequential, parallel, debate, review-loop, hierarchical, graph`
   },
   {
     id: 'memory-system',
@@ -118,34 +114,37 @@ console.log('Agent calls:', result.agentCalls?.length)`
     category: 'advanced',
     code: `import { agent } from '@framers/agentos'
 
-// Create an agent with session-based conversation memory.
-// Memory is enabled by default — each session keeps its own history.
-const assistant = agent({
-  model: 'openai:gpt-4o',
-  instructions: 'You are a persistent assistant. Refer to earlier messages in the session.',
+// Personality traits (HEXACO model) shape tone, verbosity, creativity
+const tutor = agent({
+  provider: 'anthropic',
+  instructions: 'You are a patient computer science tutor.',
+  personality: {
+    openness: 0.9,                // creative, exploratory answers
+    conscientiousness: 0.95,      // thorough, well-structured
+    agreeableness: 0.85,          // warm, encouraging tone
+  },
+  memory: {
+    enabled: true,                // session history persists automatically
+    cognitive: true,              // Ebbinghaus decay, reconsolidation, involuntary recall
+  },
 })
 
-// Open a named session — history is scoped to this ID
-const session = assistant.session('user-42')
+// Sessions scope conversation history by ID
+const session = tutor.session('student-1')
 
-// Conversation turns are automatically remembered within the session
-await session.send('My project deadline is March 30.')
-await session.send('We need to finish the API layer by Friday.')
+// The agent remembers everything within the session
+await session.send('My exam is on distributed systems next Thursday.')
+await session.send('I struggle with consensus algorithms.')
 
-// The agent recalls earlier context from the same session
-const result = await session.send('What did we discuss about the project timeline?')
-console.log(result.text)
-// => Recalls the March 30 deadline and the Friday API target
+// Context from earlier turns is recalled automatically
+const reply = await session.send('What should I focus on this week?')
+console.log(reply.text)
+// => References the Thursday exam and suggests Paxos/Raft study plan
 
-// Inspect the full conversation history
+// Inspect conversation history and token usage
 console.log(session.messages())
-
-// Check token usage across the session
 const usage = await session.usage()
-console.log(\`Total tokens: \${usage.totalTokens}\`)
-
-// Wipe session history when done
-session.clear()`
+console.log(\`Total tokens: \${usage.totalTokens}\`)`
   },
   {
     id: 'tool-integration',
@@ -153,56 +152,34 @@ session.clear()`
     description: t('examples.toolIntegration.description'),
     language: 'typescript',
     category: 'integration',
-    code: `import { agent, generateText } from '@framers/agentos'
+    code: `import { agent } from '@framers/agentos'
 
-// Define custom tools using the ITool interface
-const weatherTool = {
-  name: 'get_weather',
-  description: 'Get current weather for any location',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      location: { type: 'string', description: 'City name' },
-      units: { type: 'string', enum: ['metric', 'imperial'] },
-    },
-    required: ['location'],
+// RAG agent — ingest documents, retrieve with HyDE before answering
+const analyst = agent({
+  provider: 'openai',
+  instructions: 'You are a financial analyst. Answer using provided documents.',
+  rag: {
+    enabled: true,                // activate retrieval-augmented generation
+    mode: 'aggressive',           // always retrieves before answering
+    topK: 10,                     // return top 10 matching chunks
+    strategy: 'hyde',             // hypothetical document embeddings for better recall
   },
-  execute: async ({ location, units = 'metric' }) => {
-    const res = await fetch(
-      \`https://api.weather.com/v1/current?q=\${location}&units=\${units}\`
-    )
-    return { success: true, output: await res.json() }
-  },
-}
-
-const searchTool = {
-  name: 'web_search',
-  description: 'Search the web for recent information',
-  inputSchema: {
-    type: 'object',
-    properties: { query: { type: 'string' } },
-    required: ['query'],
-  },
-  execute: async ({ query }) => {
-    // Your search implementation here
-    return { success: true, output: { results: [\`Results for: \${query}\`] } }
-  },
-}
-
-// Create an agent with multiple tools — it selects the right tool per step
-const travelAgent = agent({
-  model: 'openai:gpt-4o',
-  instructions: 'You are a travel assistant. Use tools to get weather and search for news.',
-  tools: [weatherTool, searchTool],
-  maxSteps: 10,
 })
 
-// The agent automatically chains tool calls to fulfill the request
-const result = await travelAgent.generate(
-  'Check the weather in Tokyo, find recent news about it, and create a travel summary'
-)
-console.log(result.text)
-console.log('Tool calls made:', result.toolCalls.length)`
+// Open a session and ingest source material
+const session = analyst.session('q4-review')
+
+// Ingest plain text or files — chunking + embedding happens automatically
+await session.ingest('Q4 revenue grew 23% YoY to $4.2B driven by cloud services...')
+await session.ingest({ type: 'file', path: './earnings-report.pdf' })
+await session.ingest({ type: 'file', path: './competitor-analysis.csv' })
+
+// The agent retrieves relevant passages before generating its answer
+const answer = await session.send('What drove revenue growth in Q4?')
+console.log(answer.text)          // cites specific passages from ingested docs
+console.log(answer.sources)       // which chunks were retrieved
+
+// Works with 10 document loaders, 3 PDF tiers, 4 chunking strategies`
   },
   {
     id: 'skills-integration',
@@ -234,15 +211,15 @@ const manifest = await createCuratedManifest({
     category: 'advanced',
     code: `import { streamText, agent } from '@framers/agentos'
 
-// --- Option 1: Stateless streaming with streamText() ---
+// --- Option 1: Stateless streaming (no agent, no memory) ---
 const stream = streamText({
-  model: 'openai:gpt-4o',
+  provider: 'openai',             // provider handles model selection
   prompt: 'Explain quantum computing in simple terms',
 })
 
-// Iterate over raw text deltas as they arrive
+// Iterate over text deltas as they arrive from the LLM
 for await (const chunk of stream.textStream) {
-  process.stdout.write(chunk)   // print tokens incrementally
+  process.stdout.write(chunk)     // print tokens incrementally
 }
 
 // After the stream finishes, await aggregated results
@@ -250,9 +227,9 @@ const fullText = await stream.text
 const usage = await stream.usage
 console.log('\\nTokens used:', usage.totalTokens)
 
-// --- Option 2: Agent streaming with session memory ---
+// --- Option 2: Agent streaming (with memory + tool calls) ---
 const myAgent = agent({
-  model: 'anthropic:claude-sonnet-4-20250514',
+  provider: 'anthropic',          // Claude for reasoning
   instructions: 'You are a helpful science tutor.',
 })
 
@@ -283,30 +260,33 @@ for await (const part of agentStream.fullStream) {
     code: `import { mission } from '@framers/agentos/orchestration'
 import { z } from 'zod'
 
-// Describe a goal — the Tree of Thought planner handles the rest.
-// It generates 3 candidate decompositions, scores each on
-// feasibility/cost/latency/robustness, and picks the best one.
+// Describe a goal in plain English — the planner decomposes it.
+// Tree of Thought: generates 3 candidate plans, scores each on
+// feasibility/cost/latency, and picks the best decomposition.
 const research = mission('competitor-analysis')
-  .input(z.object({ topic: z.string() }))
-  .goal('Research {{topic}}, compare the top 5 solutions, and write a report')
-  .returns(z.object({ report: z.string(), sources: z.array(z.string()) }))
-  .planner({ strategy: 'adaptive', maxSteps: 8 })
-  .autonomy('guardrailed')        // auto-approve below thresholds
+  .input(z.object({ topic: z.string() }))          // typed input schema
+  .goal('Research {{topic}}, compare the top 5 solutions, write a report')
+  .returns(z.object({                                // typed output schema
+    report: z.string(),
+    sources: z.array(z.string()),
+  }))
+  .planner({ strategy: 'adaptive', maxSteps: 8 })   // auto-decomposition
+  .autonomy('guardrailed')        // auto-approve below safety thresholds
   .providerStrategy('balanced')   // strong models for reasoning, cheap for routing
-  .costCap(5.00)                  // hard spending limit
+  .costCap(5.00)                  // hard spending limit in USD
   .compile()
 
 // Stream execution events in real time
 for await (const event of research.stream({ topic: 'vector databases' })) {
   if (event.type === 'text_delta') process.stdout.write(event.content)
   if (event.type === 'mission:agent_spawned')
-    console.log(\`\\nAgent spawned: \${event.role} (\${event.provider}/\${event.model})\`)
+    console.log(\`\\nAgent: \${event.role} (\${event.provider})\`)
   if (event.type === 'mission:cost_update')
-    console.log(\`Cost: $\${event.totalSpent.toFixed(2)} / $\${event.costCap.toFixed(2)}\`)
+    console.log(\`Cost: $\${event.totalSpent.toFixed(2)} / $5.00\`)
 }
 
 const result = await research.invoke({ topic: 'vector databases' })
-console.log(result.report)`
+console.log(result.report)        // structured output matching .returns() schema`
   },
   {
     id: 'voice-agent',
@@ -316,14 +296,11 @@ console.log(result.report)`
     category: 'integration',
     code: `import { agent } from '@framers/agentos'
 
-// Voice agent with tool calling — speaks, listens, and acts.
-// Deepgram for STT (streaming), ElevenLabs for TTS (low latency).
+// Voice agent — speaks, listens, and calls tools in real time
 const concierge = agent({
-  provider: 'anthropic',
-  model: 'claude-sonnet-4-20250514',
-  instructions: \`You are a hotel concierge. Help guests with reservations,
-    local recommendations, and room service orders. Be warm and concise —
-    you're speaking, not writing.\`,
+  provider: 'openai',             // GPT for fast, natural conversation
+  instructions: \`You are a hotel concierge. Help guests with reservations
+    and recommendations. Be warm and concise — you're speaking, not writing.\`,
   tools: [
     {
       name: 'book_restaurant',
@@ -344,18 +321,14 @@ const concierge = agent({
     },
   ],
   voice: {
-    enabled: true,
-    stt: { provider: 'deepgram', model: 'nova-2' },
-    tts: { provider: 'elevenlabs', voice: 'rachel' },
-    endpointDetection: 'heuristic',
-    bargein: 'hard_cut',           // stop speaking when user interrupts
-    silenceTimeoutMs: 1400,
+    tts: { provider: 'elevenlabs', voice: 'rachel' },  // low-latency TTS
+    stt: { provider: 'deepgram' },                      // streaming STT
   },
 })
 
-// Start a live voice session
-const session = await concierge.startVoiceSession()
-console.log('Listening... (Ctrl+C to stop)')`
+// Start a live voice session — audio streams bidirectionally
+const call = concierge.voiceSession('lobby-1')
+await call.start()                 // begins listening on default mic`
   },
   {
     id: 'orchestration-graph',
@@ -410,35 +383,43 @@ for await (const event of reviewPipeline.stream({ topic: 'AI agents' })) {
     description: t('examples.imageGeneration.description'),
     language: 'typescript',
     category: 'integration',
-    code: `import { generateImage, generateText } from '@framers/agentos'
+    code: `import { generateObject } from '@framers/agentos'
+import { z } from 'zod'
 
-// Generate an image with any provider — unified API
-const { url, revisedPrompt } = await generateImage({
-  provider: 'openai',           // or 'stability', 'replicate', 'bfl'
-  prompt: 'A cyberpunk cityscape at sunset, neon signs in Japanese, rain',
-  size: '1024x1024',
+// Structured output — extract typed data from unstructured text.
+// The LLM output is validated against the Zod schema automatically.
+const { object } = await generateObject({
+  provider: 'gemini',            // Gemini for fast structured extraction
+  schema: z.object({
+    name: z.string(),
+    sentiment: z.enum(['positive', 'negative', 'neutral', 'mixed']),
+    topics: z.array(z.string()),
+    confidence: z.number().min(0).max(1),
+  }),
+  prompt: 'Analyze: "The new iPhone camera is incredible but battery disappointing."',
 })
-console.log('Image:', url)
-console.log('Revised prompt:', revisedPrompt)
 
-// Chain with text generation — analyze the image with vision
-const analysis = await generateText({
-  provider: 'openai',
-  model: 'gpt-4o',
-  prompt: [
-    { type: 'text', text: 'Describe this image in one sentence.' },
-    { type: 'image', url },
-  ],
+console.log(object)
+// => { name: "iPhone Review", sentiment: "mixed",
+//      topics: ["camera", "battery"], confidence: 0.92 }
+
+// Works with any provider — just swap the provider string
+const { object: recipe } = await generateObject({
+  provider: 'anthropic',
+  schema: z.object({
+    title: z.string(),
+    ingredients: z.array(z.object({
+      name: z.string(),
+      amount: z.string(),
+    })),
+    steps: z.array(z.string()),
+    prepTimeMinutes: z.number(),
+  }),
+  prompt: 'Give me a recipe for chocolate chip cookies.',
 })
-console.log('Description:', analysis.text)
 
-// Generate multiple images in parallel with different providers
-const [openaiImg, stabilityImg, fluxImg] = await Promise.all([
-  generateImage({ provider: 'openai', prompt: 'A minimalist logo for an AI company' }),
-  generateImage({ provider: 'stability', prompt: 'A minimalist logo for an AI company' }),
-  generateImage({ provider: 'bfl', prompt: 'A minimalist logo for an AI company' }),
-])
-console.log('Compare:', openaiImg.url, stabilityImg.url, fluxImg.url)`
+console.log(recipe.title)         // fully typed — recipe.ingredients[0].name works
+console.log(\`Prep: \${recipe.prepTimeMinutes} min\`)`
   },
   {
     id: 'deployment',
