@@ -20,12 +20,13 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
+  const localePrefix = locale === 'en' ? '' : `/${locale}`;
   const NAV_LINKS = useMemo(() => [
-    { href: '/about', label: t('about') },
-    { href: '/#features', label: t('features') },
+    { href: `${localePrefix}/about`, label: t('about') },
+    { href: `${localePrefix}/#features`, label: t('features') },
     { href: 'https://docs.agentos.sh/', label: 'Docs' },
     { href: 'https://docs.agentos.sh/blog', label: 'Blog' },
-  ], [t]);
+  ], [t, localePrefix]);
 
   const localizeHref = useCallback((href: string) => {
     // Handle empty/root paths – always prefix locale for consistency
