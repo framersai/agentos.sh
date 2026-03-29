@@ -18,7 +18,7 @@ const DemoVideoPlayerLazy = dynamic(
 )
 
 const ProductCardsLazy = dynamic(
-  () => import('../../components/sections/product-cards-redesigned').then(m => m.ProductCardsRedesigned),
+  () => import('../../components/sections/product-cards').then(m => m.ProductCards),
   { ssr: true }
 )
 
@@ -29,6 +29,11 @@ const SkylineSectionLazy = dynamic(
 
 const GMISectionLazy = dynamic(
   () => import('../../components/sections/gmi-section').then(m => m.GMISection),
+  { ssr: true }
+)
+
+const CognitiveSectionLazy = dynamic(
+  () => import('../../components/sections/cognitive-section').then(m => m.CognitiveSection),
   { ssr: true }
 )
 
@@ -86,6 +91,11 @@ export default function LandingPageRedesigned() {
         {/* GMI Section with architecture diagrams */}
         <div className="lazy-section-lg">
           <GMISectionLazy />
+        </div>
+
+        {/* Cognitive Mechanisms + HEXACO + RAG Pipeline */}
+        <div className="lazy-section-lg">
+          <CognitiveSectionLazy />
         </div>
 
         {/* Enhanced Features Grid with Code Popovers */}

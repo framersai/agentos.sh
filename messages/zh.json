@@ -118,7 +118,7 @@
     },
     "compliance": {
       "gdpr": "符合GDPR和PII",
-      "soc2": "SOC 2 \u2014 Planned",
+      "soc2": "SOC 2 — Planned",
       "enterpriseSupport": "企业支持可用"
     }
   },
@@ -1016,5 +1016,59 @@
     "feature3": "一键部署到云端或本地",
     "viewGithub": "在 GitHub 上查看",
     "downloadLatest": "下载最新版本"
+  },
+  "cognitive": {
+    "memoryTitle": "Cognitive Memory Architecture",
+    "memorySubtitle": "8 neuroscience-backed memory mechanisms, all modulated by HEXACO personality traits",
+    "mechanisms": {
+      "reconsolidation": "Reconsolidation",
+      "rif": "Retrieval-Induced Forgetting",
+      "involuntaryRecall": "Involuntary Recall",
+      "fok": "Feeling of Knowing",
+      "temporalGist": "Temporal Gist",
+      "schemaEncoding": "Schema Encoding",
+      "sourceConfidence": "Source Confidence Decay",
+      "emotionRegulation": "Emotion Regulation"
+    },
+    "mechanismDescriptions": {
+      "reconsolidation": "Memories update when recalled",
+      "rif": "Recalling one memory suppresses related ones",
+      "involuntaryRecall": "Unexpected memory surfacing via associative triggers",
+      "fok": "Metacognitive confidence estimation",
+      "temporalGist": "Details fade, gist persists",
+      "schemaEncoding": "New info organized around existing mental models",
+      "sourceConfidence": "Provenance trust erodes over time",
+      "emotionRegulation": "Emotional state modulates encoding and retrieval"
+    },
+    "hexacoTitle": "HEXACO Personality Modeling",
+    "hexacoSubtitle": "6-dimensional personality traits that shape agent communication, memory, and decision-making",
+    "traits": {
+      "honesty": "Honesty-Humility",
+      "emotionality": "Emotionality",
+      "extraversion": "Extraversion",
+      "agreeableness": "Agreeableness",
+      "conscientiousness": "Conscientiousness",
+      "openness": "Openness"
+    },
+    "traitDescriptions": {
+      "honesty": "Affects source skepticism, trust calibration",
+      "emotionality": "Modulates memory drift, encoding intensity",
+      "extraversion": "Affects FOK confidence, social recall",
+      "agreeableness": "Influences emotion regulation, empathy",
+      "conscientiousness": "Drives RIF strength, detail retention",
+      "openness": "Modulates involuntary recall, novelty seeking"
+    },
+    "ragTitle": "Multimodal RAG with HyDE Retrieval",
+    "ragSubtitle": "Ingest documents, images, audio — retrieve with hypothetical document embeddings",
+    "pipeline": {
+      "ingest": "Ingest",
+      "chunk": "Chunking",
+      "embed": "Embedding",
+      "store": "Vector Store",
+      "hyde": "HyDE Query",
+      "rerank": "Reranking",
+      "context": "Agent Context"
+    },
+    "ctaLearnMore": "Learn more"
   }
 }
