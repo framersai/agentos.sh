@@ -451,6 +451,40 @@ docker compose up -d
 # Monitor running agents
 wunderland status
 wunderland monitor`
+  },
+  {
+    id: 'emergent-tools',
+    title: t('examples.emergentTools.title'),
+    description: t('examples.emergentTools.description'),
+    language: 'typescript',
+    category: 'advanced',
+    code: `import { agent } from '@framers/agentos'
+
+// Enable emergent tool forging — the agent can create
+// new tools at runtime when it encounters capability gaps
+const researcher = agent({
+  provider: 'anthropic',
+  instructions: 'You are a research analyst.',
+  emergent: {
+    enabled: true,
+    judge: 'strict',          // judge evaluates forged tools before use
+    lifetime: 'session',      // tools exist only for this session
+    maxForgedTools: 5,        // cap runtime-created tools
+  },
+})
+
+const session = researcher.session('market-analysis')
+
+// The agent may forge a "scrape_financial_data" tool
+// if web_search alone isn't sufficient for the task
+const report = await session.send(
+  'Analyze Q4 earnings trends for the top 5 AI companies.'
+)
+console.log(report.text)
+
+// Check what tools were forged during the session
+console.log(session.forgedTools())
+// [{ name: "extract_earnings_table", forgedAt: "...", approved: true }]`
   }
 ]), [t])
   const [activeExample, setActiveExample] = useState(codeExamples[0])
