@@ -237,7 +237,8 @@ export function GMISection() {
                         fill="none"
                         stroke="transparent"
                         strokeWidth={layer.thickness + 8}
-                        className="cursor-pointer"
+                        className="cursor-pointer focus:outline-none"
+                        style={{ outline: 'none' }}
                         onClick={() => setActiveLayer(layer.id)}
                         role="button"
                         tabIndex={0}
