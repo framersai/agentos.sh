@@ -621,7 +621,7 @@ console.log(session.forgedTools())
                     <div className="flex items-center gap-3 pl-2">
                       <div className={`p-2 rounded-lg shrink-0 ${
                         activeExample.id === example.id
-                          ? 'bg-accent-primary text-white shadow-md'
+                          ? 'bg-accent-primary text-[var(--color-background-primary)] shadow-md'
                           : 'bg-accent-primary/10 text-accent-primary'
                       }`}>
                         <Icon className="w-4 h-4" />
@@ -817,13 +817,13 @@ console.log(session.forgedTools())
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                 <div className="px-8 py-4 bg-[var(--color-background-elevated)] rounded-xl font-mono text-sm border-2 border-[var(--color-border-interactive)] shadow-lg">
-                  <span className="text-[var(--color-text-muted)]">$</span> npm install @framers/agentos
+                  <span className="text-[var(--color-text-muted)]">$</span> {copied === 'cta-install' ? <span className="text-[var(--color-accent-primary)] font-semibold">Copied!</span> : <>npm install @framers/agentos</>}
                   <button
-                    onClick={() => clipboardCopy('npm install @framers/agentos')}
+                    onClick={() => copyCode('npm install @framers/agentos', 'cta-install')}
                     className="ml-3 p-1.5 rounded-md hover:bg-[var(--color-background-secondary)] transition-colors text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
                     aria-label="Copy install command"
                   >
-                    <Copy className="w-4 h-4" />
+                    {copied === 'cta-install' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
 
