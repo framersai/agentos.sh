@@ -1059,48 +1059,48 @@
     "downloadLatest": "최신 버전 다운로드"
   },
   "cognitive": {
-    "badge": "\uc2e0\uacbd\uacfc\ud559 \uae30\ubc18",
-    "title": "\uc778\uc9c0 \uae30\uc5b5",
-    "subtitle": "\uc778\uc9c0\uacfc\ud559 \uc5f0\uad6c\uc5d0\uc11c \uc601\uac10\uc744 \ubc1b\uc740 8\uac00\uc9c0 \uae30\uc5b5 \uba54\ucee4\ub2c8\uc998. \ubaa8\ub450 \uc5d0\uc774\uc804\ud2b8\uc758 HEXACO \uc131\uaca9 \ud2b9\uc131\uc5d0 \uc758\ud574 \uc870\uc808\ub429\ub2c8\ub2e4.",
+    "badge": "신경과학 기반",
+    "title": "인지 기억",
+    "subtitle": "인지과학 연구에서 영감을 받은 8가지 기억 메커니즘. 모두 에이전트의 HEXACO 성격 특성에 의해 조절됩니다.",
     "mechanisms": {
-      "reconsolidation": "\uc7ac\uace0\uc815\ud654",
-      "rif": "\uac80\uc0c9 \uc720\ub3c4 \ub9dd\uac01",
-      "involuntaryRecall": "\ube44\uc790\ubc1c\uc801 \ud68c\uc0c1",
-      "fok": "\uc54c\uace0 \uc788\ub294 \ub290\ub08c",
-      "temporalGist": "\uc2dc\uac04\uc801 \uc694\uc9c0",
-      "schemaEncoding": "\uc2a4\ud0a4\ub9c8 \ubd80\ud638\ud654",
-      "sourceConfidence": "\ucd9c\ucc98 \uc2e0\ub8b0 \uac10\uc18c",
-      "emotionRegulation": "\uac10\uc815 \uc870\uc808"
+      "reconsolidation": "재고정화",
+      "rif": "검색 유도 망각",
+      "involuntaryRecall": "비자발적 회상",
+      "fok": "알고 있는 느낌",
+      "temporalGist": "시간적 요지",
+      "schemaEncoding": "스키마 부호화",
+      "sourceConfidence": "출처 신뢰 감소",
+      "emotionRegulation": "감정 조절"
     },
     "mechanismDescriptions": {
-      "reconsolidation": "\uae30\uc5b5\uc740 \ud68c\uc0c1\ud560 \ub54c\ub9c8\ub2e4 \uc0c8\ub85c\uc6b4 \ub9e5\ub77d\uc73c\ub85c \uc5c5\ub370\uc774\ud2b8\ub418\uba70 \ub2e4\uc2dc \uc4f0\uc5ec\uc9d1\ub2c8\ub2e4",
-      "rif": "\ud558\ub098\uc758 \uae30\uc5b5\uc744 \uac80\uc0c9\ud558\uba74 \uad00\ub828 \uacbd\uc7c1 \uae30\uc5b5\uc774 \uc5b5\uc81c\ub429\ub2c8\ub2e4",
-      "involuntaryRecall": "\ub9e5\ub77d\uc801 \ub2e8\uc11c\uc5d0 \uc758\ud574 \ucd09\ubc1c\ub418\ub294 \uc790\ubc1c\uc801 \uae30\uc5b5 \ud65c\uc131\ud654",
-      "fok": "\uc989\uc2dc \uac80\uc0c9\ud560 \uc218 \uc5c6\uc5b4\ub3c4 \ub2f5\uc774 \uc874\uc7ac\ud55c\ub2e4\ub294 \uba54\ud0c0\uc778\uc9c0\uc801 \uac10\uac01",
-      "temporalGist": "\uad6c\uccb4\uc801\uc778 \uc138\ubd80 \uc0ac\ud56d\uc740 \uc0ac\ub77c\uc9c0\uc9c0\ub9cc \uc694\uc9c0\uc640 \uc758\ubbf8\ub294 \uc2dc\uac04\uc774 \uc9c0\ub098\ub3c4 \ubcf4\uc874\ub429\ub2c8\ub2e4",
-      "schemaEncoding": "\uc0c8\ub85c\uc6b4 \uc815\ubcf4\ub294 \uae30\uc874 \uc9c0\uc2dd \uad6c\uc870\uc5d0 \ub300\ud574 \ubd80\ud638\ud654\ub429\ub2c8\ub2e4",
-      "sourceConfidence": "\uc815\ubcf4\uc758 \ucd9c\ucc98\uc5d0 \ub300\ud55c \ud655\uc2e0\uc740 \uc815\ubcf4 \uc790\uccb4\ubcf4\ub2e4 \ub354 \ube60\ub974\uac8c \uac10\uc18c\ud569\ub2c8\ub2e4",
-      "emotionRegulation": "\uae30\uc5b5\uc758 \uac10\uc815\uc801 \uac00\uce58\ub294 \uc2dc\uac04\uc774 \uc9c0\ub0a8\uc5d0 \ub530\ub77c \uc870\uc808\ub429\ub2c8\ub2e4"
+      "reconsolidation": "기억은 회상할 때마다 새로운 맥락으로 업데이트되며 다시 쓰여집니다",
+      "rif": "하나의 기억을 검색하면 관련 경쟁 기억이 억제됩니다",
+      "involuntaryRecall": "맥락적 단서에 의해 촉발되는 자발적 기억 활성화",
+      "fok": "즉시 검색할 수 없어도 답이 존재한다는 메타인지적 감각",
+      "temporalGist": "구체적인 세부 사항은 사라지지만 요지와 의미는 시간이 지나도 보존됩니다",
+      "schemaEncoding": "새로운 정보는 기존 지식 구조에 대해 부호화됩니다",
+      "sourceConfidence": "정보의 출처에 대한 확신은 정보 자체보다 더 빠르게 감소합니다",
+      "emotionRegulation": "기억의 감정적 가치는 시간이 지남에 따라 조절됩니다"
     },
     "modulators": {
-      "reconsolidation": "\uac1c\ubc29\uc131",
-      "rif": "\uc131\uc2e4\uc131",
-      "involuntaryRecall": "\uac1c\ubc29\uc131",
-      "fok": "\uc678\ud5a5\uc131",
-      "temporalGist": "\uc131\uc2e4\uc131",
-      "schemaEncoding": "\uac1c\ubc29\uc131",
-      "sourceConfidence": "\uc815\uc9c1\uc131-\uacb8\uc190\uc131",
-      "emotionRegulation": "\uce5c\ud654\uc131"
+      "reconsolidation": "개방성",
+      "rif": "성실성",
+      "involuntaryRecall": "개방성",
+      "fok": "외향성",
+      "temporalGist": "성실성",
+      "schemaEncoding": "개방성",
+      "sourceConfidence": "정직성-겸손성",
+      "emotionRegulation": "친화성"
     },
     "research": {
-      "reconsolidation": "\uac01 \uac80\uc0c9 \ud589\uc704\ub294 \uae30\uc5b5 \ud754\uc801\uc744 \ubd88\uc548\uc815\ud654\uc2dc\ucf1c \ud604\uc7ac \ub9e5\ub77d\uc73c\ub85c \uc5c5\ub370\uc774\ud2b8\ud55c \ud6c4 \uc7ac\uc548\uc815\ud654\ud569\ub2c8\ub2e4. \uac1c\ubc29\uc131\uc774 \ub192\uc744\uc218\ub85d \uc7ac\uc791\uc131 \uc815\ub3c4\uac00 \uc99d\ud3ed\ub429\ub2c8\ub2e4.",
-      "rif": "\ubaa9\ud45c \uae30\uc5b5\uc758 \uac80\uc0c9\uc740 \uce21\ubc29 \uc5b5\uc81c\ub97c \ud1b5\ud574 \uad00\ub828 \uacbd\uc7c1\uc790\ub97c \uc801\uadf9\uc801\uc73c\ub85c \uc5b5\uc81c\ud569\ub2c8\ub2e4. \uc131\uc2e4\uc131\uc774 \ub192\uc744\uc218\ub85d \uc774 \uc5b5\uc81c\uac00 \uac15\ud654\ub429\ub2c8\ub2e4.",
-      "involuntaryRecall": "\ub9e5\ub77d\uc801 \ub2e8\uc11c\ub294 \uc758\ub3c4\uc801 \uac80\uc0c9 \uc5c6\uc774 \uad00\ub828 \uae30\uc5b5\uc758 \uc790\ubc1c\uc801 \ud65c\uc131\ud654\ub97c \uc720\ubc1c\ud560 \uc218 \uc788\uc2b5\ub2c8\ub2e4. \uac1c\ubc29\uc131\uc774 \ub192\uc744\uc218\ub85d \ud65c\uc131\ud654 \uc784\uacc4\uac12\uc774 \ub0ae\uc544\uc9d1\ub2c8\ub2e4.",
-      "fok": "\uc131\uacf5\uc801\uc778 \uac80\uc0c9 \uac00\ub2a5\uc131\uc5d0 \ub300\ud55c \uba54\ud0c0\uc778\uc9c0\uc801 \ud310\ub2e8. \uc678\ud5a5\uc131\uc774 \ub192\uc744\uc218\ub85d FOK \uc2e0\ud638\uac00 \uc99d\ud3ed\ub429\ub2c8\ub2e4.",
-      "temporalGist": "\uc2dc\uac04\uc774 \uc9c0\ub0a8\uc5d0 \ub530\ub77c \ucd95\uc5b4\uc801 \uc138\ubd80 \uc0ac\ud56d\uc774 \uac10\uc18c\ud558\uace0 \uc758\ubbf8\uc801 \uc694\uc9c0\uac00 \ucd94\uc0c1\ud654\ub97c \ud1b5\ud574 \ubcf4\uc874\ub429\ub2c8\ub2e4. \uc131\uc2e4\uc131\uc774 \ub0ae\uc744\uc218\ub85d \uc138\ubd80 \uc0ac\ud56d \uc190\uc2e4\uc774 \uac00\uc18d\ud654\ub429\ub2c8\ub2e4.",
-      "schemaEncoding": "\uc0c8\ub85c\uc6b4 \uc815\ubcf4\ub294 \uae30\uc874 \uc9c0\uc2dd \uc2a4\ud0a4\ub9c8\uc5d0 \ub3d9\ud654\ub429\ub2c8\ub2e4. \uac1c\ubc29\uc131\uc774 \ub192\uc744\uc218\ub85d \ub354 \uc720\uc5f0\ud55c \uc2a4\ud0a4\ub9c8 \uc218\uc815\uc774 \uac00\ub2a5\ud569\ub2c8\ub2e4.",
-      "sourceConfidence": "\uc815\ubcf4 \ucd9c\ucc98\uc5d0 \ub300\ud55c \uae30\uc5b5\uc740 \uc815\ubcf4 \ub0b4\uc6a9 \uc790\uccb4\ubcf4\ub2e4 \ub354 \ube68\ub9ac \uac10\uc18c\ud569\ub2c8\ub2e4. \uc815\uc9c1\uc131-\uacb8\uc190\uc131\uc774 \ub192\uc744\uc218\ub85d \ubd88\ud655\uc2e4\ud55c \ucd9c\ucc98\uc5d0 \ub300\ud55c \ud68c\uc758\uc774 \uc99d\uac00\ud569\ub2c8\ub2e4.",
-      "emotionRegulation": "\uae30\uc5b5\uc5d0 \ubd80\ucc29\ub41c \uac10\uc815\uc801 \uac15\ub3c4\ub294 \uac80\uc0c9\uacfc \uace0\uc815\ud654 \uc911\uc5d0 \uc801\uadf9\uc801\uc73c\ub85c \uc870\uc808\ub429\ub2c8\ub2e4. \uce5c\ud654\uc131\uc774 \ub192\uc744\uc218\ub85d \uac10\uc815 \ud3c9\ud65c\ud654\uac00 \uc99d\uac00\ud569\ub2c8\ub2e4."
+      "reconsolidation": "각 검색 행위는 기억 흔적을 불안정화시켜 현재 맥락으로 업데이트한 후 재안정화합니다. 개방성이 높을수록 재작성 정도가 증폭됩니다.",
+      "rif": "목표 기억의 검색은 측방 억제를 통해 관련 경쟁자를 적극적으로 억제합니다. 성실성이 높을수록 이 억제가 강화됩니다.",
+      "involuntaryRecall": "맥락적 단서는 의도적 검색 없이 관련 기억의 자발적 활성화를 유발할 수 있습니다. 개방성이 높을수록 활성화 임계값이 낮아집니다.",
+      "fok": "성공적인 검색 가능성에 대한 메타인지적 판단. 외향성이 높을수록 FOK 신호가 증폭됩니다.",
+      "temporalGist": "시간이 지남에 따라 축어적 세부 사항이 감소하고 의미적 요지가 추상화를 통해 보존됩니다. 성실성이 낮을수록 세부 사항 손실이 가속화됩니다.",
+      "schemaEncoding": "새로운 정보는 기존 지식 스키마에 동화됩니다. 개방성이 높을수록 더 유연한 스키마 수정이 가능합니다.",
+      "sourceConfidence": "정보 출처에 대한 기억은 정보 내용 자체보다 더 빨리 감소합니다. 정직성-겸손성이 높을수록 불확실한 출처에 대한 회의이 증가합니다.",
+      "emotionRegulation": "기억에 부착된 감정적 강도는 검색과 고정화 중에 적극적으로 조절됩니다. 친화성이 높을수록 감정 평활화가 증가합니다."
     },
     "citations": {
       "reconsolidation": "Nader, Schafe & LeDoux (2000). Nature, 406, 722-726.",
@@ -1112,8 +1112,119 @@
       "sourceConfidence": "Johnson, Hashtroudi & Lindsay (1993). Psychological Bulletin, 114, 3-28.",
       "emotionRegulation": "Gross (1998). Review of General Psychology, 2, 271-299."
     },
-    "ebbinghausAnnotation": "\ubcf5\uc2b5 \uc5c6\uc774\ub294 24\uc2dc\uac04 \uc774\ub0b4\uc5d0 \uc815\ubcf4\uc758 80%\uac00 \uc190\uc2e4\ub429\ub2c8\ub2e4. AgentOS\uc758 \uc778\uc9c0 \uae30\uc5b5\uc740 \uac04\uaca9 \ubc18\ubcf5\uacfc \uace0\uc815\ud654\ub97c \uc801\uc6a9\ud558\uc5ec \uace1\uc120\uc744 \ud3c9\ud0c4\ud654\ud569\ub2c8\ub2e4.",
-    "ctaLearnMore": "\uc778\uc9c0 \uae30\uc5b5 \ud0d0\uc0c9"
+    "ebbinghausAnnotation": "복습 없이는 24시간 이내에 정보의 80%가 손실됩니다. AgentOS의 인지 기억은 간격 반복과 고정화를 적용하여 곡선을 평탄화합니다.",
+    "ctaLearnMore": "인지 기억 탐색",
+    "memoryTypes": {
+      "title": "4계층 메모리 아키텍처",
+      "subtitle": "휘발성 작업 메모리에서 영구 지식 그래프까지 — 각 계층이 자동으로 통합됩니다.",
+      "working": {
+        "name": "작업 메모리",
+        "description": "현재 대화 턴을 위한 단기 메모. 세션 간 초기화됩니다.",
+        "detail": "~128k 토큰, 휘발성"
+      },
+      "episodic": {
+        "name": "에피소드 기억",
+        "description": "시간 컨텍스트와 함께 대화 에피소드 저장. 에빙하우스 곡선으로 자동 감쇠.",
+        "detail": "SQLite, Postgres, 벡터 스토어"
+      },
+      "semantic": {
+        "name": "의미 기억",
+        "description": "에피소드에서 추출된 장기 지식. Louvain 커뮤니티 감지 GraphRAG.",
+        "detail": "벡터 임베딩 + 지식 그래프"
+      },
+      "observational": {
+        "name": "관찰 기억",
+        "description": "과거 상호작용의 압축 요약. LLM을 통한 3-10배 압축.",
+        "detail": "에피소드에서 자동 통합"
+      },
+      "flowLabel": "통합 파이프라인"
+    },
+    "ragPipeline": {
+      "title": "멀티모달 RAG 파이프라인",
+      "subtitle": "문서, 이미지, 오디오 수집 — 다양한 전략으로 검색.",
+      "steps": {
+        "ingest": {
+          "name": "수집",
+          "description": "10개 문서 로더: PDF, DOCX, Markdown, HTML, CSV, JSON, TXT, 이미지, 오디오, 비디오"
+        },
+        "chunk": {
+          "name": "청크",
+          "description": "4가지 전략: 고정 크기, 문장, 재귀, 의미적"
+        },
+        "embed": {
+          "name": "임베딩",
+          "description": "OpenAI, Ollama, Cohere, 사용자 정의 임베딩"
+        },
+        "store": {
+          "name": "저장",
+          "description": "7개 벡터 스토어 백엔드 — 클릭하여 탐색"
+        },
+        "retrieve": {
+          "name": "검색",
+          "description": "다양한 사용 사례를 위한 복수 검색 전략"
+        },
+        "rerank": {
+          "name": "리랭킹",
+          "description": "정밀도를 위한 크로스 인코더 리랭킹"
+        },
+        "context": {
+          "name": "컨텍스트",
+          "description": "출처 귀속과 함께 에이전트 컨텍스트에 조립"
+        }
+      },
+      "backends": {
+        "sqlite": {
+          "name": "SQLite",
+          "description": "설정 불필요, 파일 기반. 개발 및 단일 에이전트에 적합."
+        },
+        "hnsw": {
+          "name": "HNSW",
+          "description": "프로세스 내 근사 최근접 탐색. 빠르고 서버 불필요."
+        },
+        "pgvector": {
+          "name": "Postgres+pgvector",
+          "description": "pgvector 확장으로 프로덕션 급. 수백만 벡터까지 확장."
+        },
+        "qdrant": {
+          "name": "Qdrant",
+          "description": "전용 벡터 DB. 고스루풋, 멀티테넌트에 최적."
+        },
+        "pinecone": {
+          "name": "Pinecone",
+          "description": "관리형 클라우드 벡터 DB. 제로 운영, 자동 스케일링."
+        },
+        "inmemory": {
+          "name": "In-Memory",
+          "description": "최고 속도. 임시 또는 테스트 워크로드용."
+        },
+        "neo4j": {
+          "name": "Neo4j",
+          "description": "그래프 네이티브. 관계 인식 검색 GraphRAG에 최적."
+        }
+      },
+      "strategies": {
+        "semantic": {
+          "name": "의미적",
+          "description": "벡터 임베딩 코사인 유사도 검색. 대부분의 사용 사례에 기본.",
+          "badge": "기본"
+        },
+        "hyde": {
+          "name": "HyDE",
+          "description": "가상 답변 생성으로 추상적 쿼리 리콜 향상.",
+          "badge": "선택적"
+        },
+        "graphrag": {
+          "name": "GraphRAG",
+          "description": "Louvain 클러스터링 지식 그래프를 통한 커뮤니티 인식 검색.",
+          "badge": ""
+        },
+        "hybrid": {
+          "name": "하이브리드",
+          "description": "키워드 + 의미적 융합. 양쪽의 장점.",
+          "badge": ""
+        }
+      }
+    }
   },
   "emergent": {
     "badge": "Runtime Intelligence",

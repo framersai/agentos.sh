@@ -23,24 +23,63 @@
     "badge": "Open Source · TypeScript · Production-Ready",
     "title": "Open-Source TypeScript AI Agent Runtime",
     "subtitle": "Production-ready TypeScript runtime with multimodal RAG, multi-agent orchestration, 37 channel adapters, 5-tier guardrails, 21 LLM providers, and 72 curated skills. Self-hostable and free.",
-    "cycleWords": ["Adaptive","Emergent"],
-    "cycleWordsTail": ["emergent","adaptive"],
+    "cycleWords": [
+      "Adaptive",
+      "Emergent"
+    ],
+    "cycleWordsTail": [
+      "emergent",
+      "adaptive"
+    ],
     "headlinePairs": [
-      { "top": "Production AI Agents", "bottom": "with Multimodal RAG" },
-      { "top": "Multi-Agent Orchestration", "bottom": "across 37 Channels" },
-      { "top": "5-Tier Guardrails", "bottom": "with Prompt Injection Defense" },
-      { "top": "21 LLM Providers", "bottom": "with 72 Curated Skills" }
+      {
+        "top": "Production AI Agents",
+        "bottom": "with Multimodal RAG"
+      },
+      {
+        "top": "Multi-Agent Orchestration",
+        "bottom": "across 37 Channels"
+      },
+      {
+        "top": "5-Tier Guardrails",
+        "bottom": "with Prompt Injection Defense"
+      },
+      {
+        "top": "21 LLM Providers",
+        "bottom": "with 72 Curated Skills"
+      }
     ],
     "technicalHighlights": [
-      { "title": "Streaming-first runtime", "detail": "Token-level delivery across 37 channel adapters and guardrails." },
-      { "title": "Multi-agent orchestration", "detail": "Parallel agents with auditable routing, approvals, and budgets." },
-      { "title": "Multimodal RAG", "detail": "7 vector backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant), observational memory compression, 10 document loaders, and Ebbinghaus decay." },
-      { "title": "Self-hostable", "detail": "Deploy anywhere — your infrastructure, your data, your agents." }
+      {
+        "title": "Streaming-first runtime",
+        "detail": "Token-level delivery across 37 channel adapters and guardrails."
+      },
+      {
+        "title": "Multi-agent orchestration",
+        "detail": "Parallel agents with auditable routing, approvals, and budgets."
+      },
+      {
+        "title": "Multimodal RAG",
+        "detail": "7 vector backends with 4-tier auto-scaling (SQLite → HNSW → Postgres+pgvector → Qdrant), observational memory compression, 10 document loaders, and Ebbinghaus decay."
+      },
+      {
+        "title": "Self-hostable",
+        "detail": "Deploy anywhere — your infrastructure, your data, your agents."
+      }
     ],
     "visualStats": [
-      { "label": "Agencies live", "value": "128" },
-      { "label": "Approval SLA", "value": "3.2 min" },
-      { "label": "Guardrail coverage", "value": "98%" }
+      {
+        "label": "Agencies live",
+        "value": "128"
+      },
+      {
+        "label": "Approval SLA",
+        "value": "3.2 min"
+      },
+      {
+        "label": "Guardrail coverage",
+        "value": "98%"
+      }
     ],
     "ctaPrimary": "Try Voice Chat Assistant",
     "ctaSecondary": "Star on GitHub",
@@ -60,14 +99,26 @@
     },
     "compliance": {
       "gdpr": "GDPR & PII Compliant",
-      "soc2": "SOC 2 \u2014 Planned",
+      "soc2": "SOC 2 — Planned",
       "enterpriseSupport": "Enterprise Support Available"
     },
     "capabilities": {
-      "ts": { "label": "TypeScript Native", "value": "Type-Safe" },
-      "oss": { "label": "Open Source", "value": "Apache 2.0" },
-      "streaming": { "label": "Real-time Streaming", "value": "Async Ready" },
-      "memory": { "label": "Persistent Memory", "value": "Built-in" }
+      "ts": {
+        "label": "TypeScript Native",
+        "value": "Type-Safe"
+      },
+      "oss": {
+        "label": "Open Source",
+        "value": "Apache 2.0"
+      },
+      "streaming": {
+        "label": "Real-time Streaming",
+        "value": "Async Ready"
+      },
+      "memory": {
+        "label": "Persistent Memory",
+        "value": "Built-in"
+      }
     },
     "heroVisualAlt": "AgentOS orchestration workspace preview"
   },
@@ -235,50 +286,122 @@
       "cognitiveMemory": {
         "title": "Cognitive Memory",
         "description": "8 neuroscience-backed mechanisms modulated by HEXACO personality traits with Ebbinghaus forgetting curve decay",
-        "features": ["Reconsolidation & RIF", "Involuntary recall & FOK", "Temporal gist extraction", "Source confidence decay"],
-        "capabilities": ["Memory Reconsolidation", "Emotion Regulation", "Schema Encoding"]
+        "features": [
+          "Reconsolidation & RIF",
+          "Involuntary recall & FOK",
+          "Temporal gist extraction",
+          "Source confidence decay"
+        ],
+        "capabilities": [
+          "Memory Reconsolidation",
+          "Emotion Regulation",
+          "Schema Encoding"
+        ]
       },
       "graphRag": {
         "title": "Graph-Based RAG",
         "description": "7 vector store backends with HyDE retrieval, GraphRAG community detection, and 10 document loaders",
-        "features": ["HyDE hypothetical embeddings", "Louvain community detection", "4 chunking strategies", "SQLite to Neo4j backends"],
-        "capabilities": ["HyDE Retrieval", "GraphRAG Pipeline", "Multi-Backend Storage"]
+        "features": [
+          "HyDE hypothetical embeddings",
+          "Louvain community detection",
+          "4 chunking strategies",
+          "SQLite to Neo4j backends"
+        ],
+        "capabilities": [
+          "HyDE Retrieval",
+          "GraphRAG Pipeline",
+          "Multi-Backend Storage"
+        ]
       },
       "orchestration": {
         "title": "Multi-Agent Orchestration",
         "description": "6 strategies from sequential to graph-based with Mission API, Tree-of-Thought planning, and workflow DSL",
-        "features": ["Sequential & parallel", "Debate & review-loop", "Workflow DSL + checkpointing", "AgentGraph DAGs"],
-        "capabilities": ["Mission API", "Workflow Engine", "Agent Graphs"]
+        "features": [
+          "Sequential & parallel",
+          "Debate & review-loop",
+          "Workflow DSL + checkpointing",
+          "AgentGraph DAGs"
+        ],
+        "capabilities": [
+          "Mission API",
+          "Workflow Engine",
+          "Agent Graphs"
+        ]
       },
       "streaming": {
         "title": "Real-time Streaming",
         "description": "SSE and WebSocket support with streaming guardrails, partial JSON output, and tool call progress events",
-        "features": ["SSE + WebSocket", "In-flight guardrails", "Partial JSON streaming", "Tool progress events"],
-        "capabilities": ["Event Streaming", "Streaming Guards", "Progress Tracking"]
+        "features": [
+          "SSE + WebSocket",
+          "In-flight guardrails",
+          "Partial JSON streaming",
+          "Tool progress events"
+        ],
+        "capabilities": [
+          "Event Streaming",
+          "Streaming Guards",
+          "Progress Tracking"
+        ]
       },
       "hexaco": {
         "title": "HEXACO Personality",
         "description": "6-dimensional personality modeling that shapes memory, communication style, and decision-making behavior",
-        "features": ["6-axis trait modeling", "Memory modulation", "Style adaptation", "9 agent presets"],
-        "capabilities": ["Trait Engine", "Cognitive Modulation", "Adaptive Style"]
+        "features": [
+          "6-axis trait modeling",
+          "Memory modulation",
+          "Style adaptation",
+          "9 agent presets"
+        ],
+        "capabilities": [
+          "Trait Engine",
+          "Cognitive Modulation",
+          "Adaptive Style"
+        ]
       },
       "guardrails": {
         "title": "5-Tier Guardrails",
         "description": "Security tiers from dangerous to paranoid with PII redaction, ML classifiers, and hallucination detection",
-        "features": ["4-tier PII redaction", "ONNX BERT classifiers", "Grounding guard (NLI)", "OWASP Top 10 scanning"],
-        "capabilities": ["Security Tiers", "Content Classifiers", "Code Safety"]
+        "features": [
+          "4-tier PII redaction",
+          "ONNX BERT classifiers",
+          "Grounding guard (NLI)",
+          "OWASP Top 10 scanning"
+        ],
+        "capabilities": [
+          "Security Tiers",
+          "Content Classifiers",
+          "Code Safety"
+        ]
       },
       "voice": {
         "title": "Voice Pipeline",
         "description": "12 STT and 12 TTS providers with real-time streaming, VAD, speaker diarization, and telephony support",
-        "features": ["12 STT + 12 TTS", "VAD + diarization", "Real-time streaming", "Twilio/Telnyx/Plivo"],
-        "capabilities": ["Speech Recognition", "Voice Activity Detection", "Telephony Integration"]
+        "features": [
+          "12 STT + 12 TTS",
+          "VAD + diarization",
+          "Real-time streaming",
+          "Twilio/Telnyx/Plivo"
+        ],
+        "capabilities": [
+          "Speech Recognition",
+          "Voice Activity Detection",
+          "Telephony Integration"
+        ]
       },
       "providers": {
         "title": "21 LLM Providers",
         "description": "OpenAI, Anthropic, Gemini, Ollama, Groq, and 16 more with automatic fallback chains and provider-first API",
-        "features": ["Auto fallback (402/429/5xx)", "Provider-first API", "CLI providers", "OpenRouter bridge"],
-        "capabilities": ["Provider Registry", "Fallback Chains", "Model Resolution"]
+        "features": [
+          "Auto fallback (402/429/5xx)",
+          "Provider-first API",
+          "CLI providers",
+          "OpenRouter bridge"
+        ],
+        "capabilities": [
+          "Provider Registry",
+          "Fallback Chains",
+          "Model Resolution"
+        ]
       }
     }
   },
@@ -288,27 +411,51 @@
     "features": {
       "security": {
         "title": "Security Foundation",
-        "items": ["AES-256 Encryption","Zero-Trust Architecture","End-to-End Security"]
+        "items": [
+          "AES-256 Encryption",
+          "Zero-Trust Architecture",
+          "End-to-End Security"
+        ]
       },
       "compliance": {
         "title": "Compliance & Privacy",
-        "items": ["GDPR Compliant","PII Redaction","Data Residency Controls"]
+        "items": [
+          "GDPR Compliant",
+          "PII Redaction",
+          "Data Residency Controls"
+        ]
       },
       "auth": {
         "title": "Authentication",
-        "items": ["SSO/SAML 2.0","OAuth 2.0","MFA Support"]
+        "items": [
+          "SSO/SAML 2.0",
+          "OAuth 2.0",
+          "MFA Support"
+        ]
       },
       "audit": {
         "title": "Audit & Monitoring",
-        "items": ["Real-time Monitoring","Audit Logs","Anomaly Detection"]
+        "items": [
+          "Real-time Monitoring",
+          "Audit Logs",
+          "Anomaly Detection"
+        ]
       },
       "soc2": {
         "title": "SOC 2 Compliance",
-        "items": ["Type II (Planned)","Annual Audits","Continuous Compliance"]
+        "items": [
+          "Type II (Planned)",
+          "Annual Audits",
+          "Continuous Compliance"
+        ]
       },
       "scale": {
         "title": "Enterprise Scale",
-        "items": ["Auto-scaling","99.99% SLA","Global CDN"]
+        "items": [
+          "Auto-scaling",
+          "99.99% SLA",
+          "Global CDN"
+        ]
       }
     },
     "legend": {
@@ -353,27 +500,54 @@
             "title": "Financial Trading Decisions",
             "description": "Multiple AI analysts vote on trade recommendations",
             "metrics": [
-              { "label": "Accuracy", "value": "94%" },
-              { "label": "Consensus Time", "value": "< 200ms" },
-              { "label": "Risk Reduction", "value": "67%" }
+              {
+                "label": "Accuracy",
+                "value": "94%"
+              },
+              {
+                "label": "Consensus Time",
+                "value": "< 200ms"
+              },
+              {
+                "label": "Risk Reduction",
+                "value": "67%"
+              }
             ]
           },
           {
             "title": "Content Moderation",
             "description": "Multiple agents evaluate content for policy violations",
             "metrics": [
-              { "label": "False Positives", "value": "-82%" },
-              { "label": "Coverage", "value": "99.9%" },
-              { "label": "Review Speed", "value": "10k/hour" }
+              {
+                "label": "False Positives",
+                "value": "-82%"
+              },
+              {
+                "label": "Coverage",
+                "value": "99.9%"
+              },
+              {
+                "label": "Review Speed",
+                "value": "10k/hour"
+              }
             ]
           },
           {
             "title": "Medical Diagnosis Support",
             "description": "Specialist agents collaborate on patient diagnosis",
             "metrics": [
-              { "label": "Diagnostic Accuracy", "value": "97%" },
-              { "label": "Second Opinion Rate", "value": "100%" },
-              { "label": "Time to Diagnosis", "value": "-45%" }
+              {
+                "label": "Diagnostic Accuracy",
+                "value": "97%"
+              },
+              {
+                "label": "Second Opinion Rate",
+                "value": "100%"
+              },
+              {
+                "label": "Time to Diagnosis",
+                "value": "-45%"
+              }
             ]
           }
         ],
@@ -411,27 +585,54 @@
             "title": "Document Processing Pipeline",
             "description": "Extract → Analyze → Summarize → Format → Deliver",
             "metrics": [
-              { "label": "Accuracy", "value": "96%" },
-              { "label": "Processing Time", "value": "1.2s/doc" },
-              { "label": "Error Rate", "value": "< 0.1%" }
+              {
+                "label": "Accuracy",
+                "value": "96%"
+              },
+              {
+                "label": "Processing Time",
+                "value": "1.2s/doc"
+              },
+              {
+                "label": "Error Rate",
+                "value": "< 0.1%"
+              }
             ]
           },
           {
             "title": "Customer Support Escalation",
             "description": "Triage → Research → Solution → Review → Response",
             "metrics": [
-              { "label": "Resolution Rate", "value": "89%" },
-              { "label": "Avg Handle Time", "value": "45s" },
-              { "label": "Customer Satisfaction", "value": "4.7/5" }
+              {
+                "label": "Resolution Rate",
+                "value": "89%"
+              },
+              {
+                "label": "Avg Handle Time",
+                "value": "45s"
+              },
+              {
+                "label": "Customer Satisfaction",
+                "value": "4.7/5"
+              }
             ]
           },
           {
             "title": "Code Review & Refactoring",
             "description": "Analyze → Identify Issues → Suggest Fixes → Test → Deploy",
             "metrics": [
-              { "label": "Bug Detection", "value": "92%" },
-              { "label": "Code Quality", "value": "+35%" },
-              { "label": "Review Time", "value": "-60%" }
+              {
+                "label": "Bug Detection",
+                "value": "92%"
+              },
+              {
+                "label": "Code Quality",
+                "value": "+35%"
+              },
+              {
+                "label": "Review Time",
+                "value": "-60%"
+              }
             ]
           }
         ],
@@ -469,27 +670,54 @@
             "title": "Real-time Market Analysis",
             "description": "Analyze stocks, bonds, forex, crypto simultaneously",
             "metrics": [
-              { "label": "Coverage", "value": "10k assets" },
-              { "label": "Update Frequency", "value": "100ms" },
-              { "label": "Parallel Streams", "value": "128" }
+              {
+                "label": "Coverage",
+                "value": "10k assets"
+              },
+              {
+                "label": "Update Frequency",
+                "value": "100ms"
+              },
+              {
+                "label": "Parallel Streams",
+                "value": "128"
+              }
             ]
           },
           {
             "title": "Multi-language Translation",
             "description": "Translate content into multiple languages at once",
             "metrics": [
-              { "label": "Languages", "value": "50+" },
-              { "label": "Speed", "value": "< 500ms" },
-              { "label": "Consistency", "value": "98%" }
+              {
+                "label": "Languages",
+                "value": "50+"
+              },
+              {
+                "label": "Speed",
+                "value": "< 500ms"
+              },
+              {
+                "label": "Consistency",
+                "value": "98%"
+              }
             ]
           },
           {
             "title": "A/B Testing & Optimization",
             "description": "Test multiple variations simultaneously",
             "metrics": [
-              { "label": "Variants", "value": "100+" },
-              { "label": "Decision Time", "value": "< 1s" },
-              { "label": "Confidence", "value": "95%" }
+              {
+                "label": "Variants",
+                "value": "100+"
+              },
+              {
+                "label": "Decision Time",
+                "value": "< 1s"
+              },
+              {
+                "label": "Confidence",
+                "value": "95%"
+              }
             ]
           }
         ],
@@ -532,8 +760,7 @@
       "executor": "Executor",
       "orchestrator": "Orchestrator"
     }
-  }
-  ,
+  },
   "ecosystem": {
     "title": "The AgentOS Ecosystem",
     "subtitle": "Explore the open-source AgentOS ecosystem — multimodal RAG, multi-agent orchestration, 37 channel adapters, 21 LLM providers, and deployment kits for production AI teams.",
@@ -543,11 +770,26 @@
       "githubStars": "GitHub Stars"
     },
     "categories": {
-      "core": { "title": "Core Frameworks", "description": "Runtime, skills content, and extension source code" },
-      "infrastructure": { "title": "Infrastructure", "description": "Storage adapters, registries, and catalog SDKs" },
-      "tools": { "title": "Tools", "description": "Developer tooling and debugging" },
-      "apps": { "title": "Apps", "description": "Production applications and platforms" },
-      "community": { "title": "Community", "description": "Forums, discussions, and resources" }
+      "core": {
+        "title": "Core Frameworks",
+        "description": "Runtime, skills content, and extension source code"
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "description": "Storage adapters, registries, and catalog SDKs"
+      },
+      "tools": {
+        "title": "Tools",
+        "description": "Developer tooling and debugging"
+      },
+      "apps": {
+        "title": "Apps",
+        "description": "Production applications and platforms"
+      },
+      "community": {
+        "title": "Community",
+        "description": "Forums, discussions, and resources"
+      }
     },
     "starsSuffix": "stars",
     "updatedLabel": "Updated {date}",
@@ -642,7 +884,9 @@
     "reveal": "Reveal #{index}",
     "comingSoon": "Coming soon",
     "latestUpdates": "Latest updates",
-    "cta": { "ask": "Want to be featured?" },
+    "cta": {
+      "ask": "Want to be featured?"
+    },
     "placeholders": {
       "helios": "Multi-market research pods (coming soon)",
       "northwind": "Product localization + CRM sync (coming soon)",
@@ -906,7 +1150,118 @@
       "emotionRegulation": "Gross (1998). The emerging field of emotion regulation: An integrative review. Review of General Psychology, 2, 271-299."
     },
     "ebbinghausAnnotation": "Without rehearsal, 80% of information is lost within 24 hours. AgentOS cognitive memory applies spaced repetition and consolidation to flatten the curve.",
-    "ctaLearnMore": "Explore Cognitive Memory"
+    "ctaLearnMore": "Explore Cognitive Memory",
+    "memoryTypes": {
+      "title": "4-Tier Memory Hierarchy",
+      "subtitle": "From volatile scratchpads to permanent knowledge graphs — each tier consolidates upward automatically.",
+      "working": {
+        "name": "Working Memory",
+        "description": "Short-term scratchpad for the current conversation turn. Cleared between sessions.",
+        "detail": "~128k tokens, volatile"
+      },
+      "episodic": {
+        "name": "Episodic Memory",
+        "description": "Stores conversation episodes with temporal context. Auto-decays via Ebbinghaus curve.",
+        "detail": "SQLite, Postgres, vector store"
+      },
+      "semantic": {
+        "name": "Semantic Memory",
+        "description": "Long-term knowledge extracted from episodes. GraphRAG with Louvain community detection.",
+        "detail": "Vector embeddings + knowledge graph"
+      },
+      "observational": {
+        "name": "Observational Memory",
+        "description": "Compressed summaries of past interactions. 3-10x compression via LLM with temporal reasoning.",
+        "detail": "Auto-consolidation from episodic"
+      },
+      "flowLabel": "Consolidation Pipeline"
+    },
+    "ragPipeline": {
+      "title": "Multimodal RAG Pipeline",
+      "subtitle": "Ingest documents, images, audio — retrieve with multiple strategies.",
+      "steps": {
+        "ingest": {
+          "name": "Ingest",
+          "description": "10 document loaders: PDF, DOCX, Markdown, HTML, CSV, JSON, TXT, images, audio, video"
+        },
+        "chunk": {
+          "name": "Chunk",
+          "description": "4 strategies: fixed-size, sentence, recursive, semantic"
+        },
+        "embed": {
+          "name": "Embed",
+          "description": "OpenAI, Ollama, Cohere, custom embeddings"
+        },
+        "store": {
+          "name": "Store",
+          "description": "7 vector store backends — click to explore"
+        },
+        "retrieve": {
+          "name": "Retrieve",
+          "description": "Multiple retrieval strategies for different use cases"
+        },
+        "rerank": {
+          "name": "Rerank",
+          "description": "Cross-encoder reranking for precision"
+        },
+        "context": {
+          "name": "Context",
+          "description": "Assembled into agent context with source attribution"
+        }
+      },
+      "backends": {
+        "sqlite": {
+          "name": "SQLite",
+          "description": "Zero-config, file-based. Great for development and single-agent deployments."
+        },
+        "hnsw": {
+          "name": "HNSW",
+          "description": "In-process approximate nearest neighbor. Fast, no server needed."
+        },
+        "pgvector": {
+          "name": "Postgres+pgvector",
+          "description": "Production-grade with pgvector extension. Scales to millions of vectors."
+        },
+        "qdrant": {
+          "name": "Qdrant",
+          "description": "Dedicated vector DB. Best for high-throughput, multi-tenant deployments."
+        },
+        "pinecone": {
+          "name": "Pinecone",
+          "description": "Managed cloud vector DB. Zero-ops, automatic scaling."
+        },
+        "inmemory": {
+          "name": "In-Memory",
+          "description": "Fastest possible. For ephemeral or test workloads."
+        },
+        "neo4j": {
+          "name": "Neo4j",
+          "description": "Graph-native. Best for GraphRAG with relationship-aware retrieval."
+        }
+      },
+      "strategies": {
+        "semantic": {
+          "name": "Semantic",
+          "description": "Cosine similarity search over vector embeddings. The default for most use cases.",
+          "badge": "default"
+        },
+        "hyde": {
+          "name": "HyDE",
+          "description": "Generates hypothetical answers to improve recall on abstract queries.",
+          "badge": "optional"
+        },
+        "graphrag": {
+          "name": "GraphRAG",
+          "description": "Community-aware retrieval via knowledge graph with Louvain clustering.",
+          "badge": ""
+        },
+        "hybrid": {
+          "name": "Hybrid",
+          "description": "Keyword + semantic fusion using reciprocal rank. Best of both worlds.",
+          "badge": ""
+        }
+      }
+    }
   },
   "emergent": {
     "badge": "Runtime Intelligence",
