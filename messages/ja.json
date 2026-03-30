@@ -824,19 +824,154 @@
   },
   "faq": {
     "title": "Frequently Asked Questions",
-    "subtitle": "Answers about AgentOS, orchestration concepts, and how it powers the OS family.",
-    "questions": {
+    "subtitle": "Everything you need to know about AgentOS — from first install to production deployment.",
+    "sections": {
+      "general": "General",
+      "technical": "Technical",
+      "gettingStarted": "Getting Started",
+      "enterprise": "Enterprise",
+      "references": "Academic References"
+    },
+    "general": {
       "whatIsAgentOS": {
         "question": "What is AgentOS?",
-        "answer": "AgentOS is a modular platform for building adaptive, policy‑aware agents with tooling, memory, and multi‑agent collaboration."
+        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents. It provides multi-agent orchestration, cognitive memory with 8 neuroscience-backed mechanisms, multimodal RAG with 7 vector store backends, 5-tier guardrails, voice pipelines, 37 channel adapters, and 21 LLM provider integrations. It is designed to be self-hostable and free."
       },
-      "integration": {
-        "question": "How does it integrate with VCA?",
-        "answer": "VCA.Chat runs on AgentOS; it showcases agents, extensions, and streaming interactions."
+      "isOpenSource": {
+        "question": "Is AgentOS free and open source?",
+        "answer": "Yes. The core runtime is licensed under Apache 2.0. Agent presets, extensions, and guardrails are MIT-licensed. You can use AgentOS commercially, modify it, and redistribute it under these license terms."
       },
-      "customPersonas": {
-        "question": "Can I build custom personas and agencies?",
-        "answer": "Yes. Define personas, agencies, and workflows with evolution rules, guardrails, and extensions."
+      "llmProviders": {
+        "question": "What LLM providers are supported?",
+        "answer": "AgentOS supports 21 LLM providers including OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Ollama, OpenRouter, Together AI, Fireworks AI, Groq, Perplexity, DeepSeek, xAI (Grok), Replicate, Anyscale, AI21 Labs, Aleph Alpha, AWS Bedrock, Azure OpenAI, Cloudflare Workers AI, and HuggingFace Inference. Provider fallback chains allow automatic failover."
+      },
+      "language": {
+        "question": "What programming language is AgentOS built in?",
+        "answer": "AgentOS is written entirely in TypeScript and runs on Node.js. The npm package is @framers/agentos. It works with any TypeScript or JavaScript project."
+      },
+      "comparison": {
+        "question": "How is AgentOS different from LangChain, CrewAI, or AutoGen?",
+        "answer": "AgentOS is TypeScript-native (not Python), includes cognitive memory with Ebbinghaus decay curves and HEXACO personality modeling, offers 5 security tiers instead of basic prompt filtering, provides 37 built-in channel adapters (Discord, Telegram, Slack, email, and more), and supports 6 orchestration strategies including graph-based agent DAGs. It also ships with 72 curated skills and a capability discovery engine that reduces token usage by roughly 90%."
+      }
+    },
+    "technical": {
+      "whatIsGMI": {
+        "question": "What is a GMI?",
+        "answer": "GMI stands for General Machine Intelligence — it is the cognitive core of each AgentOS agent. A GMI encapsulates the agent's personality traits (via HEXACO), memory systems, tool access, guardrail configuration, and communication style into a single persistent identity. GMIs maintain state across sessions and adapt their behavior based on accumulated experience."
+      },
+      "hexaco": {
+        "question": "What is HEXACO personality?",
+        "answer": "HEXACO is a 6-factor personality model from psychology research (Ashton & Lee, 2004). The six dimensions are Honesty-Humility, Emotionality, Extraversion, Agreeableness, Conscientiousness, and Openness to Experience. In AgentOS, HEXACO traits modulate how agents communicate, remember, and make decisions. For example, high Openness increases memory reconsolidation during recall, while high Conscientiousness strengthens retrieval-induced forgetting of irrelevant associations."
+      },
+      "cognitiveMemory": {
+        "question": "How does cognitive memory work?",
+        "answer": "AgentOS cognitive memory implements 8 mechanisms from cognitive science research: reconsolidation, retrieval-induced forgetting, involuntary recall, feeling-of-knowing, temporal gist extraction, schema encoding, source confidence decay, and emotion regulation. Memories decay over time following Ebbinghaus forgetting curves (Ebbinghaus, 1885), with spaced repetition and consolidation to preserve important information. Working memory follows Baddeley's multi-component model (Baddeley, 2000) with a volatile scratchpad for the current turn that consolidates upward into episodic, semantic, and observational memory tiers."
+      },
+      "guardrails": {
+        "question": "What guardrails are available?",
+        "answer": "AgentOS provides 5 security tiers (dangerous, permissive, balanced, strict, paranoid) and 6 guardrail extension types: PII redaction (names, emails, phone numbers, SSNs), ML classifiers for prompt injection detection, code safety analysis, grounding verification against source documents, topicality enforcement to keep agents on-task, and content policy filtering for harmful or inappropriate output."
+      },
+      "capabilityDiscovery": {
+        "question": "What is the capability discovery system?",
+        "answer": "The capability discovery engine replaces static tool and skill dumps with 3-tier semantic search, reducing token usage by roughly 90%. Tier 0 provides category summaries in about 150 tokens (always included). Tier 1 returns the top-5 semantic matches in about 200 tokens. Tier 2 delivers full schemas in about 1,500 tokens, loaded on demand. A meta-tool called discover_capabilities lets agents self-discover available tools at runtime."
+      },
+      "queryRouter": {
+        "question": "How does the QueryRouter work?",
+        "answer": "The QueryRouter classifies incoming queries into 4 tiers: T0 (direct answer from context), T1 (single-tool invocation), T2 (multi-step plan requiring a planning engine), and T3 (multi-agent delegation requiring orchestration). This classification determines the execution strategy and resource allocation for each request."
+      }
+    },
+    "gettingStarted": {
+      "install": {
+        "question": "How do I install AgentOS?",
+        "answer": "Install via npm: npm install @framers/agentos. AgentOS requires Node.js 18 or higher. For the CLI tools, install the companion package: npm install -g @framers/wunderland."
+      },
+      "firstAgent": {
+        "question": "How do I create my first agent?",
+        "answer": "Import the agent function and configure it with a provider, instructions, and optional personality traits. Here is a minimal example:\n\nimport { agent } from '@framers/agentos'\n\nconst myAgent = agent({\n  provider: 'openai',\n  instructions: 'You are a helpful assistant.',\n  personality: { openness: 0.8, conscientiousness: 0.9 },\n  memory: { enabled: true },\n})\n\nconst reply = await myAgent.send('Hello!')\nconsole.log(reply.text)"
+      },
+      "voice": {
+        "question": "How do I add voice capabilities?",
+        "answer": "AgentOS supports multiple STT (speech-to-text) and TTS (text-to-speech) providers. Configure a voice pipeline by specifying STT and TTS providers in your agent configuration. Supported STT providers include Whisper (OpenAI), Deepgram, and AssemblyAI. TTS providers include ElevenLabs, OpenAI TTS, and Google Cloud TTS. Telephony integration is available for real-time voice interactions."
+      },
+      "deploy": {
+        "question": "How do I deploy AgentOS?",
+        "answer": "AgentOS is self-hostable and runs anywhere Node.js runs. Deploy on your own infrastructure with Docker, on cloud providers like AWS, GCP, or Azure, or use platforms like Vercel, Railway, or Fly.io. The runtime uses SQLite by default for zero-config setup, with optional migration to Postgres, pgvector, Qdrant, or Neo4j for production scale."
+      },
+      "offline": {
+        "question": "Does AgentOS work offline?",
+        "answer": "Yes. AgentOS works fully offline when paired with Ollama for local LLM inference. Ollama provides access to open-weight models like Llama, Mistral, and Phi locally. The SQLite storage backend and in-memory vector store require no external services. The CLI auto-detects Ollama and configures the agent to use it."
+      }
+    },
+    "enterprise": {
+      "productionReady": {
+        "question": "Is AgentOS production-ready?",
+        "answer": "Yes. AgentOS includes 5 named security tiers (dangerous, permissive, balanced, strict, paranoid) for fine-grained control over agent behavior. The balanced tier is recommended for production. Features include streaming guardrails, tool call approval workflows, budget limits, auditable routing, circuit breakers for tool failures, and rate limiting."
+      },
+      "compliance": {
+        "question": "What compliance standards does AgentOS address?",
+        "answer": "AgentOS is designed with GDPR readiness in mind — PII redaction guardrails can strip personal data before it reaches LLM providers. All data stays on your infrastructure when self-hosted. SOC 2 compliance documentation is planned. The memory system supports data deletion and export for right-to-access requests."
+      },
+      "support": {
+        "question": "Is there enterprise support available?",
+        "answer": "Yes. For production deployments, enterprise licensing, dedicated support, and custom integrations, contact the team at team@frame.dev. Enterprise support includes priority issue resolution, architecture consulting, and deployment assistance."
+      },
+      "selfHosted": {
+        "question": "Can I use AgentOS with my own infrastructure?",
+        "answer": "Absolutely. AgentOS is designed to be self-hosted from the ground up. Your data never leaves your infrastructure. The runtime supports SQLite for development, with one-command migration to Postgres, pgvector, Qdrant, Pinecone, or Neo4j for production. Docker Compose configurations are provided for all supported backends."
+      }
+    },
+    "references": {
+      "title": "Academic References",
+      "subtitle": "AgentOS cognitive memory and personality systems are grounded in peer-reviewed research.",
+      "papers": {
+        "ebbinghaus": {
+          "label": "Ebbinghaus, H. (1885)",
+          "title": "Memory: A Contribution to Experimental Psychology.",
+          "detail": "The foundational study establishing the forgetting curve. AgentOS uses Ebbinghaus decay functions for automatic memory consolidation.",
+          "url": "https://psychclassics.yorku.ca/Ebbinghaus/index.htm"
+        },
+        "baddeley": {
+          "label": "Baddeley, A. D. (2000)",
+          "title": "The episodic buffer: a new component of working memory?",
+          "detail": "Introduced the 4-component model of working memory. AgentOS working memory is modeled on this architecture.",
+          "url": "https://doi.org/10.1016/S1364-6613(00)01538-2"
+        },
+        "hexaco": {
+          "label": "Ashton, M. C., & Lee, K. (2004)",
+          "title": "Empirical, theoretical, and practical advantages of the HEXACO model of personality structure.",
+          "detail": "The HEXACO model provides the 6-factor personality dimensions used in AgentOS agent identity.",
+          "url": "https://doi.org/10.1207/s15327957pspr0802_1"
+        },
+        "louvain": {
+          "label": "Blondel, V. D., Guillaume, J.-L., Lambiotte, R., & Lefebvre, E. (2008)",
+          "title": "Fast unfolding of communities in large networks.",
+          "detail": "The Louvain algorithm is used in AgentOS GraphRAG for community detection in knowledge graphs.",
+          "url": "https://doi.org/10.1088/1742-5468/2008/10/P10008"
+        },
+        "hnsw": {
+          "label": "Malkov, Y. A., & Yashunin, D. A. (2018)",
+          "title": "Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs.",
+          "detail": "HNSW is one of 7 vector store backends supported by AgentOS for efficient similarity search.",
+          "url": "https://doi.org/10.1109/TPAMI.2018.2889473"
+        },
+        "reconsolidation": {
+          "label": "Nader, K., Schafe, G. E., & LeDoux, J. E. (2000)",
+          "title": "Fear memories require protein synthesis in the amygdala for reconsolidation after retrieval.",
+          "detail": "Basis for the memory reconsolidation mechanism — memories are rewritten each time they are recalled.",
+          "url": "https://doi.org/10.1038/35021052"
+        },
+        "rif": {
+          "label": "Anderson, M. C., Bjork, R. A., & Bjork, E. L. (1994)",
+          "title": "Remembering can cause forgetting: Retrieval dynamics in long-term memory.",
+          "detail": "Basis for retrieval-induced forgetting — retrieving one memory suppresses related competing memories.",
+          "url": "https://doi.org/10.1037/0278-7393.20.5.1063"
+        },
+        "involuntaryRecall": {
+          "label": "Berntsen, D. (2010)",
+          "title": "The unbidden past: Involuntary autobiographical memories as a basic mode of remembering.",
+          "detail": "Basis for involuntary recall — contextual cues trigger spontaneous memory activation.",
+          "url": "https://doi.org/10.1177/0963721410370301"
+        }
       }
     },
     "seeAlso": "See also",
