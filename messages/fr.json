@@ -1059,48 +1059,48 @@
     "downloadLatest": "Télécharger la dernière version"
   },
   "cognitive": {
-    "badge": "Fond\u00e9 sur les neurosciences",
-    "title": "M\u00e9moire Cognitive",
-    "subtitle": "8 m\u00e9canismes de m\u00e9moire inspir\u00e9s de la recherche en sciences cognitives. Tous modul\u00e9s par les traits de personnalit\u00e9 HEXACO de l'agent.",
+    "badge": "Fondé sur les neurosciences",
+    "title": "Mémoire Cognitive",
+    "subtitle": "8 mécanismes de mémoire inspirés de la recherche en sciences cognitives. Tous modulés par les traits de personnalité HEXACO de l'agent.",
     "mechanisms": {
       "reconsolidation": "Reconsolidation",
-      "rif": "Oubli Induit par la R\u00e9cup\u00e9ration",
+      "rif": "Oubli Induit par la Récupération",
       "involuntaryRecall": "Rappel Involontaire",
       "fok": "Sentiment de Savoir",
       "temporalGist": "Essence Temporelle",
-      "schemaEncoding": "Encodage par Sch\u00e9mas",
-      "sourceConfidence": "D\u00e9clin de Confiance en la Source",
-      "emotionRegulation": "R\u00e9gulation \u00c9motionnelle"
+      "schemaEncoding": "Encodage par Schémas",
+      "sourceConfidence": "Déclin de Confiance en la Source",
+      "emotionRegulation": "Régulation Émotionnelle"
     },
     "mechanismDescriptions": {
-      "reconsolidation": "Les souvenirs sont r\u00e9\u00e9crits \u00e0 chaque rappel, mis \u00e0 jour avec un nouveau contexte",
-      "rif": "La r\u00e9cup\u00e9ration d'un souvenir supprime les souvenirs concurrents associ\u00e9s",
-      "involuntaryRecall": "Activation spontan\u00e9e de la m\u00e9moire d\u00e9clench\u00e9e par des indices contextuels",
-      "fok": "Sens m\u00e9tacognitif qu'une r\u00e9ponse existe m\u00eame si elle n'est pas imm\u00e9diatement r\u00e9cup\u00e9rable",
-      "temporalGist": "Les d\u00e9tails sp\u00e9cifiques s'estompent tandis que l'essentiel et le sens sont pr\u00e9serv\u00e9s dans le temps",
-      "schemaEncoding": "Les nouvelles informations sont encod\u00e9es par rapport aux structures de connaissances existantes",
-      "sourceConfidence": "La certitude sur l'origine d'une information d\u00e9cline plus vite que l'information elle-m\u00eame",
-      "emotionRegulation": "La valence \u00e9motionnelle des souvenirs est modul\u00e9e au fil du temps"
+      "reconsolidation": "Les souvenirs sont réécrits à chaque rappel, mis à jour avec un nouveau contexte",
+      "rif": "La récupération d'un souvenir supprime les souvenirs concurrents associés",
+      "involuntaryRecall": "Activation spontanée de la mémoire déclenchée par des indices contextuels",
+      "fok": "Sens métacognitif qu'une réponse existe même si elle n'est pas immédiatement récupérable",
+      "temporalGist": "Les détails spécifiques s'estompent tandis que l'essentiel et le sens sont préservés dans le temps",
+      "schemaEncoding": "Les nouvelles informations sont encodées par rapport aux structures de connaissances existantes",
+      "sourceConfidence": "La certitude sur l'origine d'une information décline plus vite que l'information elle-même",
+      "emotionRegulation": "La valence émotionnelle des souvenirs est modulée au fil du temps"
     },
     "modulators": {
       "reconsolidation": "Ouverture",
-      "rif": "Conscienciosit\u00e9",
+      "rif": "Conscienciosité",
       "involuntaryRecall": "Ouverture",
       "fok": "Extraversion",
-      "temporalGist": "Conscienciosit\u00e9",
+      "temporalGist": "Conscienciosité",
       "schemaEncoding": "Ouverture",
-      "sourceConfidence": "Honn\u00eat\u00e9t\u00e9-Humilit\u00e9",
-      "emotionRegulation": "Agr\u00e9abilit\u00e9"
+      "sourceConfidence": "Honnêtété-Humilité",
+      "emotionRegulation": "Agréabilité"
     },
     "research": {
-      "reconsolidation": "Chaque acte de r\u00e9cup\u00e9ration d\u00e9stabilise la trace mn\u00e9sique, permettant sa mise \u00e0 jour avec le contexte actuel. Une Ouverture plus \u00e9lev\u00e9e amplifie le degr\u00e9 de r\u00e9\u00e9criture.",
-      "rif": "R\u00e9cup\u00e9rer un souvenir cible inhibe activement les concurrents associ\u00e9s par suppression lat\u00e9rale. Une Conscienciosit\u00e9 plus \u00e9lev\u00e9e renforce cette suppression.",
-      "involuntaryRecall": "Les indices contextuels peuvent d\u00e9clencher l'activation spontan\u00e9e de souvenirs associ\u00e9s sans recherche d\u00e9lib\u00e9r\u00e9e. Une Ouverture plus \u00e9lev\u00e9e abaisse le seuil d'activation.",
-      "fok": "Un jugement m\u00e9tacognitif sur la probabilit\u00e9 d'une r\u00e9cup\u00e9ration r\u00e9ussie. Une Extraversion plus \u00e9lev\u00e9e amplifie les signaux FOK.",
-      "temporalGist": "Au fil du temps, les d\u00e9tails verbatim d\u00e9clinent tandis que l'essentiel s\u00e9mantique est pr\u00e9serv\u00e9 par abstraction. Une Conscienciosit\u00e9 plus faible acc\u00e9l\u00e8re la perte de d\u00e9tails.",
-      "schemaEncoding": "Les nouvelles informations sont assimil\u00e9es dans les sch\u00e9mas de connaissances existants. Une Ouverture plus \u00e9lev\u00e9e permet une modification de sch\u00e9mas plus flexible.",
-      "sourceConfidence": "La m\u00e9moire de la source d'information d\u00e9cline plus vite que le contenu informationnel. Une Honn\u00eat\u00e9t\u00e9-Humilit\u00e9 plus \u00e9lev\u00e9e augmente le scepticisme envers les sources incertaines.",
-      "emotionRegulation": "L'intensit\u00e9 \u00e9motionnelle attach\u00e9e aux souvenirs est activement modul\u00e9e lors de la r\u00e9cup\u00e9ration et de la consolidation. Une Agr\u00e9abilit\u00e9 plus \u00e9lev\u00e9e augmente le lissage \u00e9motionnel."
+      "reconsolidation": "Chaque acte de récupération déstabilise la trace mnésique, permettant sa mise à jour avec le contexte actuel. Une Ouverture plus élevée amplifie le degré de réécriture.",
+      "rif": "Récupérer un souvenir cible inhibe activement les concurrents associés par suppression latérale. Une Conscienciosité plus élevée renforce cette suppression.",
+      "involuntaryRecall": "Les indices contextuels peuvent déclencher l'activation spontanée de souvenirs associés sans recherche délibérée. Une Ouverture plus élevée abaisse le seuil d'activation.",
+      "fok": "Un jugement métacognitif sur la probabilité d'une récupération réussie. Une Extraversion plus élevée amplifie les signaux FOK.",
+      "temporalGist": "Au fil du temps, les détails verbatim déclinent tandis que l'essentiel sémantique est préservé par abstraction. Une Conscienciosité plus faible accélère la perte de détails.",
+      "schemaEncoding": "Les nouvelles informations sont assimilées dans les schémas de connaissances existants. Une Ouverture plus élevée permet une modification de schémas plus flexible.",
+      "sourceConfidence": "La mémoire de la source d'information décline plus vite que le contenu informationnel. Une Honnêtété-Humilité plus élevée augmente le scepticisme envers les sources incertaines.",
+      "emotionRegulation": "L'intensité émotionnelle attachée aux souvenirs est activement modulée lors de la récupération et de la consolidation. Une Agréabilité plus élevée augmente le lissage émotionnel."
     },
     "citations": {
       "reconsolidation": "Nader, Schafe & LeDoux (2000). Nature, 406, 722-726.",
@@ -1112,8 +1112,119 @@
       "sourceConfidence": "Johnson, Hashtroudi & Lindsay (1993). Psychological Bulletin, 114, 3-28.",
       "emotionRegulation": "Gross (1998). Review of General Psychology, 2, 271-299."
     },
-    "ebbinghausAnnotation": "Sans r\u00e9vision, 80% des informations sont perdues en 24 heures. La m\u00e9moire cognitive d'AgentOS applique la r\u00e9p\u00e9tition espac\u00e9e et la consolidation pour aplatir la courbe.",
-    "ctaLearnMore": "Explorer la M\u00e9moire Cognitive"
+    "ebbinghausAnnotation": "Sans révision, 80% des informations sont perdues en 24 heures. La mémoire cognitive d'AgentOS applique la répétition espacée et la consolidation pour aplatir la courbe.",
+    "ctaLearnMore": "Explorer la Mémoire Cognitive",
+    "memoryTypes": {
+      "title": "Hierarchie de Memoire a 4 Niveaux",
+      "subtitle": "Des tampons volatils aux graphes de connaissances permanents — chaque niveau se consolide automatiquement.",
+      "working": {
+        "name": "Memoire de Travail",
+        "description": "Bloc-notes a court terme pour le tour de conversation actuel. Efface entre les sessions.",
+        "detail": "~128k tokens, volatile"
+      },
+      "episodic": {
+        "name": "Memoire Episodique",
+        "description": "Stocke les episodes de conversation avec contexte temporel. Decroit automatiquement via la courbe d'Ebbinghaus.",
+        "detail": "SQLite, Postgres, stockage vectoriel"
+      },
+      "semantic": {
+        "name": "Memoire Semantique",
+        "description": "Connaissances a long terme extraites des episodes. GraphRAG avec detection de communautes Louvain.",
+        "detail": "Embeddings vectoriels + graphe de connaissances"
+      },
+      "observational": {
+        "name": "Memoire Observationnelle",
+        "description": "Resumes comprimes des interactions passees. Compression 3-10x via LLM.",
+        "detail": "Auto-consolidation depuis episodique"
+      },
+      "flowLabel": "Pipeline de Consolidation"
+    },
+    "ragPipeline": {
+      "title": "Pipeline RAG Multimodal",
+      "subtitle": "Ingestion de documents, images, audio — recuperation avec strategies multiples.",
+      "steps": {
+        "ingest": {
+          "name": "Ingerer",
+          "description": "10 chargeurs: PDF, DOCX, Markdown, HTML, CSV, JSON, TXT, images, audio, video"
+        },
+        "chunk": {
+          "name": "Decouper",
+          "description": "4 strategies: taille fixe, phrase, recursif, semantique"
+        },
+        "embed": {
+          "name": "Encoder",
+          "description": "OpenAI, Ollama, Cohere, embeddings personnalises"
+        },
+        "store": {
+          "name": "Stocker",
+          "description": "7 backends de stockage vectoriel — cliquez pour explorer"
+        },
+        "retrieve": {
+          "name": "Recuperer",
+          "description": "Strategies de recuperation multiples pour differents cas d'usage"
+        },
+        "rerank": {
+          "name": "Re-classer",
+          "description": "Re-classement par cross-encoder pour la precision"
+        },
+        "context": {
+          "name": "Contexte",
+          "description": "Assemble dans le contexte de l'agent avec attribution des sources"
+        }
+      },
+      "backends": {
+        "sqlite": {
+          "name": "SQLite",
+          "description": "Sans configuration, base fichier. Ideal pour le developpement et les agents individuels."
+        },
+        "hnsw": {
+          "name": "HNSW",
+          "description": "Plus proche voisin approximatif en processus. Rapide, sans serveur."
+        },
+        "pgvector": {
+          "name": "Postgres+pgvector",
+          "description": "Production avec extension pgvector. Passe a l'echelle jusqu'a des millions de vecteurs."
+        },
+        "qdrant": {
+          "name": "Qdrant",
+          "description": "BD vectorielle dediee. Ideal pour le haut debit et le multi-tenant."
+        },
+        "pinecone": {
+          "name": "Pinecone",
+          "description": "BD vectorielle cloud geree. Zero ops, mise a l'echelle automatique."
+        },
+        "inmemory": {
+          "name": "In-Memory",
+          "description": "Le plus rapide possible. Pour les charges ephemeres ou de test."
+        },
+        "neo4j": {
+          "name": "Neo4j",
+          "description": "Natif graphe. Ideal pour GraphRAG avec recuperation relationnelle."
+        }
+      },
+      "strategies": {
+        "semantic": {
+          "name": "Semantique",
+          "description": "Recherche par similarite cosinus sur les embeddings vectoriels. Par defaut.",
+          "badge": "defaut"
+        },
+        "hyde": {
+          "name": "HyDE",
+          "description": "Genere des reponses hypothetiques pour ameliorer le recall sur les requetes abstraites.",
+          "badge": "optionnel"
+        },
+        "graphrag": {
+          "name": "GraphRAG",
+          "description": "Recuperation par communautes via graphe de connaissances avec clustering Louvain.",
+          "badge": ""
+        },
+        "hybrid": {
+          "name": "Hybride",
+          "description": "Fusion mots-cles + semantique avec rang reciproque.",
+          "badge": ""
+        }
+      }
+    }
   },
   "emergent": {
     "badge": "Runtime Intelligence",

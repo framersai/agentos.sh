@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { ArrowRight } from 'lucide-react'
@@ -14,9 +14,9 @@ import { SectionLabel } from '../ui/section-label'
  * Reconsolidation icon: two circular arrows forming a continuous loop,
  * representing the rewriting of memories upon recall.
  */
-function IconReconsolidation({ className }: { className?: string }) {
+function IconReconsolidation({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 2a10 10 0 0 1 7.07 2.93" />
       <path d="M19.07 4.93l-2.12.5.5-2.12" />
       <path d="M22 12a10 10 0 0 1-2.93 7.07" />
@@ -34,9 +34,9 @@ function IconReconsolidation({ className }: { className?: string }) {
  * dropping out through the bottom, representing suppression
  * of competing memories during retrieval.
  */
-function IconRIF({ className }: { className?: string }) {
+function IconRIF({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 4h16l-5 7v5l-2 3v-8L8 4" />
       <circle cx="16" cy="16" r="1" fill="currentColor" stroke="none" opacity="0.5" />
       <circle cx="18" cy="19" r="0.8" fill="currentColor" stroke="none" opacity="0.35" />
@@ -51,9 +51,9 @@ function IconRIF({ className }: { className?: string }) {
  * Involuntary Recall icon: a lightning bolt striking a thought bubble,
  * representing spontaneous memory activation by contextual cues.
  */
-function IconInvoluntaryRecall({ className }: { className?: string }) {
+function IconInvoluntaryRecall({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M15 3h-4l-1 5h3l-2 7 6-8h-3.5L15 3z" />
       <path d="M6 14c-2.5 0-4 1.5-4 3.5S3.5 21 6 21h2c1 0 1.5-.5 1.5-.5" />
       <circle cx="4.5" cy="12.5" r="1" />
@@ -66,9 +66,9 @@ function IconInvoluntaryRecall({ className }: { className?: string }) {
  * Feeling of Knowing icon: a question mark with a subtle glow/halo,
  * representing the metacognitive sense of a retrievable answer.
  */
-function IconFOK({ className }: { className?: string }) {
+function IconFOK({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="9" opacity="0.2" strokeDasharray="2,3" />
       <circle cx="12" cy="12" r="6" opacity="0.12" strokeDasharray="1.5,2" />
       <path d="M9.5 9a3 3 0 0 1 5.2-1.5c.8 1 .6 2.3-.3 3.2L12 12.5v1.5" />
@@ -82,9 +82,9 @@ function IconFOK({ className }: { className?: string }) {
  * particles at top into abstract blurred shapes at bottom, representing
  * how specific details fade while meaning is preserved.
  */
-function IconTemporalGist({ className }: { className?: string }) {
+function IconTemporalGist({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M7 2h10M7 22h10" />
       <path d="M8 2v4c0 2 4 4 4 4s4-2 4-4V2" />
       <path d="M8 22v-4c0-2 4-4 4-4s4 2 4 4v4" />
@@ -103,9 +103,9 @@ function IconTemporalGist({ className }: { className?: string }) {
  * new node being integrated, representing how new information is
  * encoded relative to existing knowledge structures.
  */
-function IconSchemaEncoding({ className }: { className?: string }) {
+function IconSchemaEncoding({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       {/* Lattice edges */}
       <line x1="6" y1="6" x2="12" y2="4" />
       <line x1="12" y1="4" x2="18" y2="6" />
@@ -133,9 +133,9 @@ function IconSchemaEncoding({ className }: { className?: string }) {
  * representing how certainty about information provenance decays
  * faster than the information itself.
  */
-function IconSourceConfidence({ className }: { className?: string }) {
+function IconSourceConfidence({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       {/* Document */}
       <path d="M6 3h8l4 4v14H6V3z" />
       <path d="M14 3v4h4" />
@@ -154,9 +154,9 @@ function IconSourceConfidence({ className }: { className?: string }) {
  * representing how emotional valence of memories is modulated
  * and smoothed over time.
  */
-function IconEmotionRegulation({ className }: { className?: string }) {
+function IconEmotionRegulation({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       {/* High-amplitude wave (raw emotion) */}
       <path d="M2 12c1-4 2.5-8 4-8s2.5 8 4 8 2.5-8 4-8" opacity="0.3" />
       {/* Dampened wave (regulated) */}
@@ -191,6 +191,92 @@ const MECHANISM_KEYS = [
   'sourceConfidence',
   'emotionRegulation',
 ] as const
+
+/* ------------------------------------------------------------------ */
+/*  Memory Tier icon components (stroke-based line art, 24x24 viewBox) */
+/* ------------------------------------------------------------------ */
+
+/** Working Memory icon: clipboard with a blinking cursor line. */
+function IconWorkingMemory({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+      <path d="M9 2h6v2H9z" />
+      <line x1="9" y1="9" x2="15" y2="9" opacity="0.5" />
+      <line x1="9" y1="12" x2="13" y2="12" opacity="0.5" />
+      <line x1="9" y1="15" x2="11" y2="15" strokeWidth="2" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1.2s" repeatCount="indefinite" />
+      </line>
+    </svg>
+  )
+}
+
+/** Episodic Memory icon: timeline journal with timestamped entries. */
+function IconEpisodicMemory({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="6" y1="4" x2="6" y2="20" />
+      <circle cx="6" cy="6" r="2" fill="var(--color-background-primary)" />
+      <circle cx="6" cy="12" r="2" fill="var(--color-background-primary)" />
+      <circle cx="6" cy="18" r="2" fill="var(--color-background-primary)" />
+      <line x1="10" y1="6" x2="20" y2="6" opacity="0.5" />
+      <line x1="10" y1="12" x2="18" y2="12" opacity="0.5" />
+      <line x1="10" y1="18" x2="16" y2="18" opacity="0.4" strokeDasharray="2,2" />
+    </svg>
+  )
+}
+
+/** Semantic Memory icon: interconnected graph of concept nodes. */
+function IconSemanticMemory({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="7" y1="7" x2="17" y2="7" opacity="0.4" />
+      <line x1="7" y1="7" x2="12" y2="17" opacity="0.4" />
+      <line x1="17" y1="7" x2="12" y2="17" opacity="0.4" />
+      <line x1="7" y1="7" x2="3" y2="12" opacity="0.3" />
+      <line x1="17" y1="7" x2="21" y2="12" opacity="0.3" />
+      <circle cx="7" cy="7" r="2.5" fill="var(--color-background-primary)" />
+      <circle cx="17" cy="7" r="2.5" fill="var(--color-background-primary)" />
+      <circle cx="12" cy="17" r="2.5" fill="var(--color-background-primary)" />
+      <circle cx="3" cy="12" r="1.5" fill="var(--color-background-primary)" opacity="0.6" />
+      <circle cx="21" cy="12" r="1.5" fill="var(--color-background-primary)" opacity="0.6" />
+    </svg>
+  )
+}
+
+/** Observational Memory icon: eye with recording indicator. */
+function IconObservationalMemory({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} style={style} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" />
+      <circle cx="12" cy="12" r="3" />
+      <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="5" r="2" fill="currentColor" stroke="none" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  )
+}
+
+/** Translation keys for each memory tier (order matters for rendering). */
+const MEMORY_TIER_KEYS = ['working', 'episodic', 'semantic', 'observational'] as const
+
+/** Map memory tier index to its custom SVG icon component. */
+const MEMORY_TIER_ICONS = [
+  IconWorkingMemory,
+  IconEpisodicMemory,
+  IconSemanticMemory,
+  IconObservationalMemory,
+]
+
+/** RAG pipeline step keys in order. */
+const RAG_STEP_KEYS = ['ingest', 'chunk', 'embed', 'store', 'retrieve', 'rerank', 'context'] as const
+
+/** Vector store backend keys. */
+const BACKEND_KEYS = ['sqlite', 'hnsw', 'pgvector', 'qdrant', 'pinecone', 'inmemory', 'neo4j'] as const
+
+/** Retrieval strategy keys. */
+const STRATEGY_KEYS = ['semantic', 'hyde', 'graphrag', 'hybrid'] as const
 
 /* ------------------------------------------------------------------ */
 /*  Ebbinghaus Forgetting Curve — animated SVG                         */
@@ -352,11 +438,13 @@ export function CognitiveSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
   const [expandedCard, setExpandedCard] = useState<number | null>(null)
+  const [selectedBackend, setSelectedBackend] = useState<typeof BACKEND_KEYS[number]>('sqlite')
+  const [activeStrategy, setActiveStrategy] = useState<typeof STRATEGY_KEYS[number]>('semantic')
 
   /** Toggle a card's expanded state. */
-  const toggleCard = (index: number) => {
+  const toggleCard = useCallback((index: number) => {
     setExpandedCard((prev) => (prev === index ? null : index))
-  }
+  }, [])
 
   const fadeUp = {
     hidden: { opacity: 0, y: 24 },
@@ -528,11 +616,349 @@ export function CognitiveSection() {
           <EbbinghausCurve annotation={t('ebbinghausAnnotation')} />
         </motion.div>
 
+        {/* ---- Subsection 2: 4-Tier Memory Hierarchy ---- */}
+        <motion.div
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.5 } } }}
+          className="mt-20"
+        >
+          <div className="text-center mb-8">
+            <h3
+              className="text-2xl sm:text-3xl font-extrabold mb-2"
+              style={{ color: 'var(--color-text-primary)' }}
+            >
+              {t('memoryTypes.title')}
+            </h3>
+            <p
+              className="text-base max-w-2xl mx-auto"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
+              {t('memoryTypes.subtitle')}
+            </p>
+          </div>
+
+          {/* Memory tier cards with flow arrows */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 relative">
+            {MEMORY_TIER_KEYS.map((key, i) => {
+              const TierIcon = MEMORY_TIER_ICONS[i]
+              return (
+                <motion.div
+                  key={key}
+                  custom={i}
+                  initial="hidden"
+                  animate={isInView ? 'visible' : 'hidden'}
+                  variants={cardVariants}
+                  className="relative"
+                >
+                  <div
+                    className="rounded-2xl p-5 h-full transition-all duration-200"
+                    style={{
+                      background: 'var(--color-background-secondary)',
+                      border: '1px solid var(--color-border-primary)',
+                    }}
+                  >
+                    {/* Icon */}
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
+                      style={{
+                        background: 'linear-gradient(135deg, color-mix(in srgb, var(--color-accent-primary) 15%, transparent), color-mix(in srgb, var(--color-accent-secondary) 8%, transparent))',
+                        border: '1px solid color-mix(in srgb, var(--color-accent-primary) 20%, transparent)',
+                      }}
+                    >
+                      <TierIcon className="w-5 h-5" style={{ color: 'var(--color-accent-primary)' } as React.CSSProperties} />
+                    </div>
+
+                    {/* Name */}
+                    <h4
+                      className="text-sm font-bold mb-1"
+                      style={{ color: 'var(--color-text-primary)' }}
+                    >
+                      {t(`memoryTypes.${key}.name`)}
+                    </h4>
+
+                    {/* Description */}
+                    <p
+                      className="text-xs leading-relaxed mb-3"
+                      style={{ color: 'var(--color-text-muted)' }}
+                    >
+                      {t(`memoryTypes.${key}.description`)}
+                    </p>
+
+                    {/* Detail badge */}
+                    <span
+                      className="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold"
+                      style={{
+                        background: 'color-mix(in srgb, var(--color-accent-secondary) 10%, transparent)',
+                        color: 'var(--color-accent-secondary)',
+                        border: '1px solid color-mix(in srgb, var(--color-accent-secondary) 20%, transparent)',
+                      }}
+                    >
+                      {t(`memoryTypes.${key}.detail`)}
+                    </span>
+                  </div>
+
+                  {/* Flow arrow between cards (hidden on last card) */}
+                  {i < 3 && (
+                    <div className="hidden lg:flex absolute -right-2 top-1/2 -translate-y-1/2 z-10">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path
+                          d="M4 8h8M9 5l3 3-3 3"
+                          stroke="var(--color-accent-primary)"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          opacity="0.5"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                </motion.div>
+              )
+            })}
+          </div>
+
+          {/* Consolidation pipeline label */}
+          <p
+            className="text-xs text-center mt-4 uppercase tracking-widest font-semibold"
+            style={{ color: 'var(--color-text-muted)' }}
+          >
+            {t('memoryTypes.flowLabel')}
+          </p>
+        </motion.div>
+
+        {/* ---- Subsection 3: RAG Pipeline ---- */}
+        <motion.div
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.6 } } }}
+          className="mt-20"
+        >
+          <div className="text-center mb-8">
+            <h3
+              className="text-2xl sm:text-3xl font-extrabold mb-2"
+              style={{ color: 'var(--color-text-primary)' }}
+            >
+              {t('ragPipeline.title')}
+            </h3>
+            <p
+              className="text-base max-w-2xl mx-auto"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
+              {t('ragPipeline.subtitle')}
+            </p>
+          </div>
+
+          {/* Pipeline steps as numbered horizontal flow */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-7 gap-3">
+            {RAG_STEP_KEYS.map((stepKey, i) => (
+              <motion.div
+                key={stepKey}
+                custom={i}
+                initial="hidden"
+                animate={isInView ? 'visible' : 'hidden'}
+                variants={cardVariants}
+                className="relative"
+              >
+                <div
+                  className="rounded-xl p-4 h-full text-center transition-all duration-200"
+                  style={{
+                    background: 'var(--color-background-secondary)',
+                    border: '1px solid var(--color-border-primary)',
+                  }}
+                >
+                  {/* Step number badge */}
+                  <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center mx-auto mb-2 text-xs font-bold"
+                    style={{
+                      background: 'var(--color-accent-primary)',
+                      color: 'var(--color-background-primary)',
+                    }}
+                  >
+                    {i + 1}
+                  </div>
+
+                  <h4
+                    className="text-xs font-bold mb-1"
+                    style={{ color: 'var(--color-text-primary)' }}
+                  >
+                    {t(`ragPipeline.steps.${stepKey}.name`)}
+                  </h4>
+
+                  <p
+                    className="text-[10px] leading-snug"
+                    style={{ color: 'var(--color-text-muted)' }}
+                  >
+                    {t(`ragPipeline.steps.${stepKey}.description`)}
+                  </p>
+                </div>
+
+                {/* Arrow between steps */}
+                {i < RAG_STEP_KEYS.length - 1 && (
+                  <div className="hidden lg:flex absolute -right-1.5 top-1/2 -translate-y-1/2 z-10">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path
+                        d="M3 6h6M7 4l2 2-2 2"
+                        stroke="var(--color-accent-primary)"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        opacity="0.4"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Vector store backends — selectable pills */}
+          <div className="mt-10">
+            <h4
+              className="text-sm font-bold mb-3 text-center"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
+              {t('ragPipeline.steps.store.name')}: 7 Backends
+            </h4>
+            <div className="flex flex-wrap justify-center gap-2 mb-4">
+              {BACKEND_KEYS.map((bk) => {
+                const isActive = selectedBackend === bk
+                return (
+                  <button
+                    key={bk}
+                    onClick={() => setSelectedBackend(bk)}
+                    className="rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer"
+                    style={{
+                      background: isActive
+                        ? 'linear-gradient(135deg, color-mix(in srgb, #3b82f6 90%, var(--color-accent-primary)), #2563eb)'
+                        : 'color-mix(in srgb, #3b82f6 10%, var(--color-background-secondary))',
+                      color: isActive ? '#fff' : 'color-mix(in srgb, #3b82f6 80%, var(--color-text-secondary))',
+                      border: `1px solid ${isActive ? '#2563eb' : 'color-mix(in srgb, #3b82f6 25%, var(--color-border-primary))'}`,
+                      boxShadow: isActive ? '0 2px 8px rgba(59, 130, 246, 0.25)' : 'none',
+                    }}
+                  >
+                    {t(`ragPipeline.backends.${bk}.name`)}
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Selected backend description */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedBackend}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="rounded-xl p-4 max-w-lg mx-auto text-center"
+                style={{
+                  background: 'color-mix(in srgb, #3b82f6 5%, var(--color-background-secondary))',
+                  border: '1px solid color-mix(in srgb, #3b82f6 20%, var(--color-border-primary))',
+                }}
+              >
+                <p
+                  className="text-sm font-bold mb-1"
+                  style={{ color: 'var(--color-text-primary)' }}
+                >
+                  {t(`ragPipeline.backends.${selectedBackend}.name`)}
+                </p>
+                <p
+                  className="text-xs leading-relaxed"
+                  style={{ color: 'var(--color-text-muted)' }}
+                >
+                  {t(`ragPipeline.backends.${selectedBackend}.description`)}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Retrieval strategies — tab selector */}
+          <div className="mt-10">
+            <h4
+              className="text-sm font-bold mb-3 text-center"
+              style={{ color: 'var(--color-text-secondary)' }}
+            >
+              {t('ragPipeline.steps.retrieve.name')}
+            </h4>
+
+            {/* Strategy tabs */}
+            <div
+              className="flex border-b max-w-2xl mx-auto"
+              style={{ borderColor: 'var(--color-border-primary)' }}
+            >
+              {STRATEGY_KEYS.map((sk) => {
+                const isActive = activeStrategy === sk
+                const badge = t(`ragPipeline.strategies.${sk}.badge`)
+                return (
+                  <button
+                    key={sk}
+                    onClick={() => setActiveStrategy(sk)}
+                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-3 text-xs font-bold transition-all relative cursor-pointer"
+                    style={{
+                      color: isActive ? 'var(--color-accent-primary)' : 'var(--color-text-muted)',
+                    }}
+                  >
+                    {t(`ragPipeline.strategies.${sk}.name`)}
+                    {badge && (
+                      <span
+                        className="text-[9px] font-semibold uppercase rounded px-1 py-0.5"
+                        style={{
+                          background: badge.toLowerCase().includes('optional') || badge.toLowerCase().includes('optionnel') || badge.toLowerCase().includes('opcional')
+                            ? 'color-mix(in srgb, #f59e0b 15%, transparent)'
+                            : 'color-mix(in srgb, var(--color-accent-primary) 15%, transparent)',
+                          color: badge.toLowerCase().includes('optional') || badge.toLowerCase().includes('optionnel') || badge.toLowerCase().includes('opcional')
+                            ? '#f59e0b'
+                            : 'var(--color-accent-primary)',
+                        }}
+                      >
+                        {badge}
+                      </span>
+                    )}
+                    {/* Active underline */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="strategy-tab-underline"
+                        className="absolute bottom-0 left-0 right-0 h-0.5"
+                        style={{ background: 'var(--color-accent-primary)' }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                      />
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Strategy description */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeStrategy}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="rounded-xl p-5 max-w-2xl mx-auto mt-4"
+                style={{
+                  background: 'var(--color-background-secondary)',
+                  border: '1px solid var(--color-border-primary)',
+                }}
+              >
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: 'var(--color-text-secondary)' }}
+                >
+                  {t(`ragPipeline.strategies.${activeStrategy}.description`)}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
+
         {/* ---- CTA ---- */}
         <motion.div
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.55 } } }}
+          variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.7 } } }}
           className="text-center mt-10"
         >
           <a

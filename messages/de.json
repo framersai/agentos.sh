@@ -1060,12 +1060,12 @@
   },
   "cognitive": {
     "badge": "Neurowissenschaftlich fundiert",
-    "title": "Kognitives Ged\u00e4chtnis",
-    "subtitle": "8 Ged\u00e4chtnismechanismen inspiriert von kognitionswissenschaftlicher Forschung. Alle moduliert durch die HEXACO-Pers\u00f6nlichkeitsmerkmale des Agenten.",
+    "title": "Kognitives Gedächtnis",
+    "subtitle": "8 Gedächtnismechanismen inspiriert von kognitionswissenschaftlicher Forschung. Alle moduliert durch die HEXACO-Persönlichkeitsmerkmale des Agenten.",
     "mechanisms": {
       "reconsolidation": "Rekonsolidierung",
       "rif": "Abrufinduziertes Vergessen",
-      "involuntaryRecall": "Unwillk\u00fcrliche Erinnerung",
+      "involuntaryRecall": "Unwillkürliche Erinnerung",
       "fok": "Wissensvorausahnung",
       "temporalGist": "Zeitliche Abstraktion",
       "schemaEncoding": "Schema-Kodierung",
@@ -1074,13 +1074,13 @@
     },
     "mechanismDescriptions": {
       "reconsolidation": "Erinnerungen werden bei jedem Abruf neu geschrieben und mit neuem Kontext aktualisiert",
-      "rif": "Das Abrufen einer Erinnerung unterdr\u00fcckt verwandte konkurrierende Erinnerungen",
-      "involuntaryRecall": "Spontane Ged\u00e4chtnisaktivierung durch kontextuelle Hinweise ausgel\u00f6st",
-      "fok": "Metakognitives Gef\u00fchl, dass eine Antwort existiert, auch wenn sie nicht sofort abrufbar ist",
-      "temporalGist": "Spezifische Details verblassen, w\u00e4hrend der Kern und die Bedeutung \u00fcber die Zeit erhalten bleiben",
+      "rif": "Das Abrufen einer Erinnerung unterdrückt verwandte konkurrierende Erinnerungen",
+      "involuntaryRecall": "Spontane Gedächtnisaktivierung durch kontextuelle Hinweise ausgelöst",
+      "fok": "Metakognitives Gefühl, dass eine Antwort existiert, auch wenn sie nicht sofort abrufbar ist",
+      "temporalGist": "Spezifische Details verblassen, während der Kern und die Bedeutung über die Zeit erhalten bleiben",
       "schemaEncoding": "Neue Informationen werden relativ zu bestehenden Wissensstrukturen kodiert",
-      "sourceConfidence": "Die Gewissheit \u00fcber die Herkunft von Informationen verf\u00e4llt schneller als die Information selbst",
-      "emotionRegulation": "Die emotionale Valenz von Erinnerungen wird \u00fcber die Zeit moduliert"
+      "sourceConfidence": "Die Gewissheit über die Herkunft von Informationen verfällt schneller als die Information selbst",
+      "emotionRegulation": "Die emotionale Valenz von Erinnerungen wird über die Zeit moduliert"
     },
     "modulators": {
       "reconsolidation": "Offenheit",
@@ -1090,17 +1090,17 @@
       "temporalGist": "Gewissenhaftigkeit",
       "schemaEncoding": "Offenheit",
       "sourceConfidence": "Ehrlichkeit-Bescheidenheit",
-      "emotionRegulation": "Vertr\u00e4glichkeit"
+      "emotionRegulation": "Verträglichkeit"
     },
     "research": {
-      "reconsolidation": "Jeder Abrufakt destabilisiert die Ged\u00e4chtnisspur und erm\u00f6glicht eine Aktualisierung mit aktuellem Kontext vor der Restabilisierung. H\u00f6here Offenheit verst\u00e4rkt den Grad der Umschreibung.",
-      "rif": "Das Abrufen einer Zielerinnerung hemmt aktiv verwandte Konkurrenten durch laterale Suppression. H\u00f6here Gewissenhaftigkeit verst\u00e4rkt diese Unterdr\u00fcckung.",
-      "involuntaryRecall": "Kontextuelle Hinweise k\u00f6nnen spontane Aktivierung assoziierter Erinnerungen ohne bewusste Suche ausl\u00f6sen. H\u00f6here Offenheit senkt die Aktivierungsschwelle.",
-      "fok": "Ein metakognitives Urteil \u00fcber die Wahrscheinlichkeit eines erfolgreichen Abrufs. H\u00f6here Extraversion verst\u00e4rkt FOK-Signale.",
-      "temporalGist": "\u00dcber die Zeit verfallen w\u00f6rtliche Details, w\u00e4hrend der semantische Kern durch Abstraktion erhalten bleibt. Geringere Gewissenhaftigkeit beschleunigt den Detailverlust.",
-      "schemaEncoding": "Neue Informationen werden in bestehende Wissensschemata assimiliert. H\u00f6here Offenheit erm\u00f6glicht flexiblere Schema-Modifikation.",
-      "sourceConfidence": "Das Ged\u00e4chtnis f\u00fcr die Quelle von Informationen verf\u00e4llt schneller als der Informationsinhalt selbst. H\u00f6here Ehrlichkeit-Bescheidenheit erh\u00f6ht die Skepsis gegen\u00fcber unsicheren Quellen.",
-      "emotionRegulation": "Die an Erinnerungen gebundene emotionale Intensit\u00e4t wird bei Abruf und Konsolidierung aktiv moduliert. H\u00f6here Vertr\u00e4glichkeit erh\u00f6ht die emotionale Gl\u00e4ttung."
+      "reconsolidation": "Jeder Abrufakt destabilisiert die Gedächtnisspur und ermöglicht eine Aktualisierung mit aktuellem Kontext vor der Restabilisierung. Höhere Offenheit verstärkt den Grad der Umschreibung.",
+      "rif": "Das Abrufen einer Zielerinnerung hemmt aktiv verwandte Konkurrenten durch laterale Suppression. Höhere Gewissenhaftigkeit verstärkt diese Unterdrückung.",
+      "involuntaryRecall": "Kontextuelle Hinweise können spontane Aktivierung assoziierter Erinnerungen ohne bewusste Suche auslösen. Höhere Offenheit senkt die Aktivierungsschwelle.",
+      "fok": "Ein metakognitives Urteil über die Wahrscheinlichkeit eines erfolgreichen Abrufs. Höhere Extraversion verstärkt FOK-Signale.",
+      "temporalGist": "Über die Zeit verfallen wörtliche Details, während der semantische Kern durch Abstraktion erhalten bleibt. Geringere Gewissenhaftigkeit beschleunigt den Detailverlust.",
+      "schemaEncoding": "Neue Informationen werden in bestehende Wissensschemata assimiliert. Höhere Offenheit ermöglicht flexiblere Schema-Modifikation.",
+      "sourceConfidence": "Das Gedächtnis für die Quelle von Informationen verfällt schneller als der Informationsinhalt selbst. Höhere Ehrlichkeit-Bescheidenheit erhöht die Skepsis gegenüber unsicheren Quellen.",
+      "emotionRegulation": "Die an Erinnerungen gebundene emotionale Intensität wird bei Abruf und Konsolidierung aktiv moduliert. Höhere Verträglichkeit erhöht die emotionale Glättung."
     },
     "citations": {
       "reconsolidation": "Nader, Schafe & LeDoux (2000). Nature, 406, 722-726.",
@@ -1112,8 +1112,119 @@
       "sourceConfidence": "Johnson, Hashtroudi & Lindsay (1993). Psychological Bulletin, 114, 3-28.",
       "emotionRegulation": "Gross (1998). Review of General Psychology, 2, 271-299."
     },
-    "ebbinghausAnnotation": "Ohne Wiederholung gehen 80% der Informationen innerhalb von 24 Stunden verloren. Das kognitive Ged\u00e4chtnis von AgentOS nutzt verteilte Wiederholung und Konsolidierung, um die Kurve abzuflachen.",
-    "ctaLearnMore": "Kognitives Ged\u00e4chtnis erkunden"
+    "ebbinghausAnnotation": "Ohne Wiederholung gehen 80% der Informationen innerhalb von 24 Stunden verloren. Das kognitive Gedächtnis von AgentOS nutzt verteilte Wiederholung und Konsolidierung, um die Kurve abzuflachen.",
+    "ctaLearnMore": "Kognitives Gedächtnis erkunden",
+    "memoryTypes": {
+      "title": "4-stufige Speicherhierarchie",
+      "subtitle": "Von fluechtigem Arbeitsspeicher bis zu permanenten Wissensgraphen — jede Stufe konsolidiert automatisch nach oben.",
+      "working": {
+        "name": "Arbeitsspeicher",
+        "description": "Kurzzeit-Zwischenspeicher fuer den aktuellen Gespraechszug. Wird zwischen Sitzungen geleert.",
+        "detail": "~128k Token, fluechtig"
+      },
+      "episodic": {
+        "name": "Episodisches Gedaechtnis",
+        "description": "Speichert Gespraeche mit zeitlichem Kontext. Automatischer Verfall ueber Ebbinghaus-Kurve.",
+        "detail": "SQLite, Postgres, Vektorspeicher"
+      },
+      "semantic": {
+        "name": "Semantisches Gedaechtnis",
+        "description": "Langzeitwissen aus Episoden extrahiert. GraphRAG mit Louvain-Gemeinschaftserkennung.",
+        "detail": "Vektoreinbettungen + Wissensgraph"
+      },
+      "observational": {
+        "name": "Beobachtungsgedaechtnis",
+        "description": "Komprimierte Zusammenfassungen vergangener Interaktionen. 3-10x Kompression via LLM.",
+        "detail": "Autokonsolidierung aus episodisch"
+      },
+      "flowLabel": "Konsolidierungspipeline"
+    },
+    "ragPipeline": {
+      "title": "Multimodale RAG-Pipeline",
+      "subtitle": "Dokumente, Bilder, Audio einlesen — mit mehreren Strategien abrufen.",
+      "steps": {
+        "ingest": {
+          "name": "Einlesen",
+          "description": "10 Dokumentlader: PDF, DOCX, Markdown, HTML, CSV, JSON, TXT, Bilder, Audio, Video"
+        },
+        "chunk": {
+          "name": "Aufteilen",
+          "description": "4 Strategien: Feste Groesse, Satz, rekursiv, semantisch"
+        },
+        "embed": {
+          "name": "Einbetten",
+          "description": "OpenAI, Ollama, Cohere, benutzerdefinierte Einbettungen"
+        },
+        "store": {
+          "name": "Speichern",
+          "description": "7 Vektorspeicher-Backends — klicken zum Erkunden"
+        },
+        "retrieve": {
+          "name": "Abrufen",
+          "description": "Mehrere Abrufstrategien fuer verschiedene Anwendungsfaelle"
+        },
+        "rerank": {
+          "name": "Neuordnen",
+          "description": "Cross-Encoder-Neuordnung fuer Praezision"
+        },
+        "context": {
+          "name": "Kontext",
+          "description": "In Agentenkontext mit Quellenangabe zusammengesetzt"
+        }
+      },
+      "backends": {
+        "sqlite": {
+          "name": "SQLite",
+          "description": "Ohne Konfiguration, dateibasiert. Ideal fuer Entwicklung und Einzelagenten."
+        },
+        "hnsw": {
+          "name": "HNSW",
+          "description": "In-Process-Naechster-Nachbar-Suche. Schnell, kein Server noetig."
+        },
+        "pgvector": {
+          "name": "Postgres+pgvector",
+          "description": "Produktionsreif mit pgvector-Erweiterung. Skaliert bis Millionen Vektoren."
+        },
+        "qdrant": {
+          "name": "Qdrant",
+          "description": "Dedizierte Vektor-DB. Ideal fuer Hochdurchsatz und Mandantenfaehigkeit."
+        },
+        "pinecone": {
+          "name": "Pinecone",
+          "description": "Verwaltete Cloud-Vektor-DB. Kein Betrieb, automatische Skalierung."
+        },
+        "inmemory": {
+          "name": "In-Memory",
+          "description": "Schnellstmoeglich. Fuer fluechtige oder Test-Workloads."
+        },
+        "neo4j": {
+          "name": "Neo4j",
+          "description": "Graph-nativ. Ideal fuer GraphRAG mit beziehungsbewusstem Abruf."
+        }
+      },
+      "strategies": {
+        "semantic": {
+          "name": "Semantisch",
+          "description": "Kosinus-Aehnlichkeitssuche ueber Vektoreinbettungen. Standard fuer die meisten Faelle.",
+          "badge": "Standard"
+        },
+        "hyde": {
+          "name": "HyDE",
+          "description": "Generiert hypothetische Antworten fuer besseren Recall bei abstrakten Anfragen.",
+          "badge": "optional"
+        },
+        "graphrag": {
+          "name": "GraphRAG",
+          "description": "Gemeinschaftsbewusster Abruf ueber Wissensgraph mit Louvain-Clustering.",
+          "badge": ""
+        },
+        "hybrid": {
+          "name": "Hybrid",
+          "description": "Keyword- + semantische Fusion mit reziprokem Rang.",
+          "badge": ""
+        }
+      }
+    }
   },
   "emergent": {
     "badge": "Runtime Intelligence",

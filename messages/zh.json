@@ -1059,48 +1059,48 @@
     "downloadLatest": "下载最新版本"
   },
   "cognitive": {
-    "badge": "\u795e\u7ecf\u79d1\u5b66\u652f\u6491",
-    "title": "\u8ba4\u77e5\u8bb0\u5fc6",
-    "subtitle": "8\u79cd\u53d7\u8ba4\u77e5\u79d1\u5b66\u7814\u7a76\u542f\u53d1\u7684\u8bb0\u5fc6\u673a\u5236\u3002\u5168\u90e8\u7531\u667a\u80fd\u4f53\u7684HEXACO\u4eba\u683c\u7279\u8d28\u8c03\u8282\u3002",
+    "badge": "神经科学支撑",
+    "title": "认知记忆",
+    "subtitle": "8种受认知科学研究启发的记忆机制。全部由智能体的HEXACO人格特质调节。",
     "mechanisms": {
-      "reconsolidation": "\u518d\u5de9\u56fa",
-      "rif": "\u68c0\u7d22\u8bf1\u5bfc\u6027\u9057\u5fd8",
-      "involuntaryRecall": "\u975e\u81ea\u4e3b\u56de\u5fc6",
-      "fok": "\u77e5\u9053\u611f",
-      "temporalGist": "\u65f6\u95f4\u8981\u65e8",
-      "schemaEncoding": "\u56fe\u5f0f\u7f16\u7801",
-      "sourceConfidence": "\u6765\u6e90\u4fe1\u5fc3\u8870\u51cf",
-      "emotionRegulation": "\u60c5\u7eea\u8c03\u8282"
+      "reconsolidation": "再巩固",
+      "rif": "检索诱导性遗忘",
+      "involuntaryRecall": "非自主回忆",
+      "fok": "知道感",
+      "temporalGist": "时间要旨",
+      "schemaEncoding": "图式编码",
+      "sourceConfidence": "来源信心衰减",
+      "emotionRegulation": "情绪调节"
     },
     "mechanismDescriptions": {
-      "reconsolidation": "\u6bcf\u6b21\u56de\u5fc6\u65f6\uff0c\u8bb0\u5fc6\u90fd\u4f1a\u88ab\u91cd\u5199\uff0c\u7528\u65b0\u7684\u4e0a\u4e0b\u6587\u8fdb\u884c\u66f4\u65b0",
-      "rif": "\u68c0\u7d22\u4e00\u4e2a\u8bb0\u5fc6\u4f1a\u6291\u5236\u76f8\u5173\u7684\u7ade\u4e89\u6027\u8bb0\u5fc6",
-      "involuntaryRecall": "\u7531\u4e0a\u4e0b\u6587\u7ebf\u7d22\u89e6\u53d1\u7684\u81ea\u53d1\u6027\u8bb0\u5fc6\u6fc0\u6d3b",
-      "fok": "\u5373\u4f7f\u65e0\u6cd5\u7acb\u5373\u68c0\u7d22\uff0c\u4e5f\u80fd\u611f\u77e5\u7b54\u6848\u5b58\u5728\u7684\u5143\u8ba4\u77e5\u611f\u89c9",
-      "temporalGist": "\u5177\u4f53\u7ec6\u8282\u9010\u6e10\u6d88\u9000\uff0c\u800c\u8981\u65e8\u548c\u610f\u4e49\u968f\u65f6\u95f4\u5f97\u4ee5\u4fdd\u7559",
-      "schemaEncoding": "\u65b0\u4fe1\u606f\u76f8\u5bf9\u4e8e\u73b0\u6709\u77e5\u8bc6\u7ed3\u6784\u8fdb\u884c\u7f16\u7801",
-      "sourceConfidence": "\u5bf9\u4fe1\u606f\u6765\u6e90\u7684\u786e\u5b9a\u6027\u6bd4\u4fe1\u606f\u672c\u8eab\u8870\u51cf\u5f97\u66f4\u5feb",
-      "emotionRegulation": "\u8bb0\u5fc6\u7684\u60c5\u7eea\u4ef7\u503c\u968f\u65f6\u95f4\u88ab\u8c03\u8282"
+      "reconsolidation": "每次回忆时，记忆都会被重写，用新的上下文进行更新",
+      "rif": "检索一个记忆会抑制相关的竞争性记忆",
+      "involuntaryRecall": "由上下文线索触发的自发性记忆激活",
+      "fok": "即使无法立即检索，也能感知答案存在的元认知感觉",
+      "temporalGist": "具体细节逐渐消退，而要旨和意义随时间得以保留",
+      "schemaEncoding": "新信息相对于现有知识结构进行编码",
+      "sourceConfidence": "对信息来源的确定性比信息本身衰减得更快",
+      "emotionRegulation": "记忆的情绪价值随时间被调节"
     },
     "modulators": {
-      "reconsolidation": "\u5f00\u653e\u6027",
-      "rif": "\u5c3d\u8d23\u6027",
-      "involuntaryRecall": "\u5f00\u653e\u6027",
-      "fok": "\u5916\u5411\u6027",
-      "temporalGist": "\u5c3d\u8d23\u6027",
-      "schemaEncoding": "\u5f00\u653e\u6027",
-      "sourceConfidence": "\u8bda\u5b9e-\u8c26\u900a",
-      "emotionRegulation": "\u5b9c\u4eba\u6027"
+      "reconsolidation": "开放性",
+      "rif": "尽责性",
+      "involuntaryRecall": "开放性",
+      "fok": "外向性",
+      "temporalGist": "尽责性",
+      "schemaEncoding": "开放性",
+      "sourceConfidence": "诚实-谦逊",
+      "emotionRegulation": "宜人性"
     },
     "research": {
-      "reconsolidation": "\u6bcf\u6b21\u68c0\u7d22\u884c\u4e3a\u90fd\u4f1a\u4e0d\u7a33\u5b9a\u8bb0\u5fc6\u75d5\u8ff9\uff0c\u5141\u8bb8\u7528\u5f53\u524d\u4e0a\u4e0b\u6587\u66f4\u65b0\u540e\u518d\u7a33\u5b9a\u3002\u5f00\u653e\u6027\u8d8a\u9ad8\uff0c\u91cd\u5199\u7a0b\u5ea6\u8d8a\u5927\u3002",
-      "rif": "\u68c0\u7d22\u76ee\u6807\u8bb0\u5fc6\u901a\u8fc7\u4fa7\u5411\u6291\u5236\u79ef\u6781\u5730\u6291\u5236\u76f8\u5173\u7ade\u4e89\u8005\u3002\u5c3d\u8d23\u6027\u8d8a\u9ad8\uff0c\u8fd9\u79cd\u6291\u5236\u8d8a\u5f3a\u3002",
-      "involuntaryRecall": "\u4e0a\u4e0b\u6587\u7ebf\u7d22\u53ef\u4ee5\u5728\u6ca1\u6709\u523b\u610f\u641c\u7d22\u7684\u60c5\u51b5\u4e0b\u89e6\u53d1\u76f8\u5173\u8bb0\u5fc6\u7684\u81ea\u53d1\u6fc0\u6d3b\u3002\u5f00\u653e\u6027\u8d8a\u9ad8\uff0c\u6fc0\u6d3b\u9608\u503c\u8d8a\u4f4e\u3002",
-      "fok": "\u5bf9\u6210\u529f\u68c0\u7d22\u53ef\u80fd\u6027\u7684\u5143\u8ba4\u77e5\u5224\u65ad\u3002\u5916\u5411\u6027\u8d8a\u9ad8\uff0cFOK\u4fe1\u53f7\u8d8a\u5f3a\u3002",
-      "temporalGist": "\u968f\u65f6\u95f4\u63a8\u79fb\uff0c\u9010\u5b57\u7ec6\u8282\u8870\u51cf\uff0c\u800c\u8bed\u4e49\u8981\u65e8\u901a\u8fc7\u62bd\u8c61\u5f97\u4ee5\u4fdd\u7559\u3002\u5c3d\u8d23\u6027\u8d8a\u4f4e\uff0c\u7ec6\u8282\u4e22\u5931\u8d8a\u5feb\u3002",
-      "schemaEncoding": "\u65b0\u4fe1\u606f\u88ab\u540c\u5316\u5230\u73b0\u6709\u77e5\u8bc6\u56fe\u5f0f\u4e2d\u3002\u5f00\u653e\u6027\u8d8a\u9ad8\uff0c\u56fe\u5f0f\u4fee\u6539\u8d8a\u7075\u6d3b\u3002",
-      "sourceConfidence": "\u5bf9\u4fe1\u606f\u6765\u6e90\u7684\u8bb0\u5fc6\u6bd4\u4fe1\u606f\u5185\u5bb9\u672c\u8eab\u8870\u51cf\u5f97\u66f4\u5feb\u3002\u8bda\u5b9e-\u8c26\u900a\u8d8a\u9ad8\uff0c\u5bf9\u4e0d\u786e\u5b9a\u6765\u6e90\u7684\u6000\u7591\u8d8a\u591a\u3002",
-      "emotionRegulation": "\u9644\u7740\u5728\u8bb0\u5fc6\u4e0a\u7684\u60c5\u7eea\u5f3a\u5ea6\u5728\u68c0\u7d22\u548c\u5de9\u56fa\u8fc7\u7a0b\u4e2d\u88ab\u79ef\u6781\u8c03\u8282\u3002\u5b9c\u4eba\u6027\u8d8a\u9ad8\uff0c\u60c5\u7eea\u5e73\u6ed1\u8d8a\u591a\u3002"
+      "reconsolidation": "每次检索行为都会不稳定记忆痕迹，允许用当前上下文更新后再稳定。开放性越高，重写程度越大。",
+      "rif": "检索目标记忆通过侧向抑制积极地抑制相关竞争者。尽责性越高，这种抑制越强。",
+      "involuntaryRecall": "上下文线索可以在没有刻意搜索的情况下触发相关记忆的自发激活。开放性越高，激活阈值越低。",
+      "fok": "对成功检索可能性的元认知判断。外向性越高，FOK信号越强。",
+      "temporalGist": "随时间推移，逐字细节衰减，而语义要旨通过抽象得以保留。尽责性越低，细节丢失越快。",
+      "schemaEncoding": "新信息被同化到现有知识图式中。开放性越高，图式修改越灵活。",
+      "sourceConfidence": "对信息来源的记忆比信息内容本身衰减得更快。诚实-谦逊越高，对不确定来源的怀疑越多。",
+      "emotionRegulation": "附着在记忆上的情绪强度在检索和巩固过程中被积极调节。宜人性越高，情绪平滑越多。"
     },
     "citations": {
       "reconsolidation": "Nader, Schafe & LeDoux (2000). Nature, 406, 722-726.",
@@ -1112,8 +1112,119 @@
       "sourceConfidence": "Johnson, Hashtroudi & Lindsay (1993). Psychological Bulletin, 114, 3-28.",
       "emotionRegulation": "Gross (1998). Review of General Psychology, 2, 271-299."
     },
-    "ebbinghausAnnotation": "\u6ca1\u6709\u590d\u4e60\uff0c80%\u7684\u4fe1\u606f\u4f1a\u572824\u5c0f\u65f6\u5185\u4e22\u5931\u3002AgentOS\u7684\u8ba4\u77e5\u8bb0\u5fc6\u5e94\u7528\u95f4\u9694\u91cd\u590d\u548c\u5de9\u56fa\u6765\u62c9\u5e73\u66f2\u7ebf\u3002",
-    "ctaLearnMore": "\u63a2\u7d22\u8ba4\u77e5\u8bb0\u5fc6"
+    "ebbinghausAnnotation": "没有复习，80%的信息会在24小时内丢失。AgentOS的认知记忆应用间隔重复和巩固来拉平曲线。",
+    "ctaLearnMore": "探索认知记忆",
+    "memoryTypes": {
+      "title": "4层记忆架构",
+      "subtitle": "从易失的工作记忆到永久知识图谱——每层自动向上合并。",
+      "working": {
+        "name": "工作记忆",
+        "description": "当前对话轮次的短期记事本。会话间清除。",
+        "detail": "约128k token，易失性"
+      },
+      "episodic": {
+        "name": "情景记忆",
+        "description": "存储带时间上下文的对话情景。通过艾宾浩斯曲线自动衰减。",
+        "detail": "SQLite、Postgres、向量存储"
+      },
+      "semantic": {
+        "name": "语义记忆",
+        "description": "从情景中提取的长期知识。Louvain社区检测GraphRAG。",
+        "detail": "向量嵌入 + 知识图谱"
+      },
+      "observational": {
+        "name": "观察记忆",
+        "description": "过去交互的压缩摘要。LLM 3-10倍压缩。",
+        "detail": "从情景记忆自动合并"
+      },
+      "flowLabel": "合并管道"
+    },
+    "ragPipeline": {
+      "title": "多模态RAG管道",
+      "subtitle": "摄取文档、图像、音频——多种策略检索。",
+      "steps": {
+        "ingest": {
+          "name": "摄取",
+          "description": "10种文档加载器: PDF, DOCX, Markdown, HTML, CSV, JSON, TXT, 图像, 音频, 视频"
+        },
+        "chunk": {
+          "name": "分块",
+          "description": "4种策略: 固定大小、句子、递归、语义"
+        },
+        "embed": {
+          "name": "嵌入",
+          "description": "OpenAI、Ollama、Cohere、自定义嵌入"
+        },
+        "store": {
+          "name": "存储",
+          "description": "7种向量存储后端——点击探索"
+        },
+        "retrieve": {
+          "name": "检索",
+          "description": "针对不同用例的多种检索策略"
+        },
+        "rerank": {
+          "name": "重排序",
+          "description": "交叉编码器重排序提高精度"
+        },
+        "context": {
+          "name": "上下文",
+          "description": "带来源归属组装到代理上下文"
+        }
+      },
+      "backends": {
+        "sqlite": {
+          "name": "SQLite",
+          "description": "零配置，文件式。适合开发和单代理部署。"
+        },
+        "hnsw": {
+          "name": "HNSW",
+          "description": "进程内近似最近邻搜索。快速，无需服务器。"
+        },
+        "pgvector": {
+          "name": "Postgres+pgvector",
+          "description": "生产级pgvector扩展。可扩展至数百万向量。"
+        },
+        "qdrant": {
+          "name": "Qdrant",
+          "description": "专用向量DB。高吞吐量、多租户最佳。"
+        },
+        "pinecone": {
+          "name": "Pinecone",
+          "description": "托管云向量DB。零运维，自动扩展。"
+        },
+        "inmemory": {
+          "name": "In-Memory",
+          "description": "最快速度。适合临时或测试工作负载。"
+        },
+        "neo4j": {
+          "name": "Neo4j",
+          "description": "图原生。关系感知检索GraphRAG最佳。"
+        }
+      },
+      "strategies": {
+        "semantic": {
+          "name": "语义",
+          "description": "向量嵌入余弦相似度搜索。大多数用例的默认选择。",
+          "badge": "默认"
+        },
+        "hyde": {
+          "name": "HyDE",
+          "description": "生成假设回答以提高抽象查询的召回率。",
+          "badge": "可选"
+        },
+        "graphrag": {
+          "name": "GraphRAG",
+          "description": "通过Louvain聚类知识图谱进行社区感知检索。",
+          "badge": ""
+        },
+        "hybrid": {
+          "name": "混合",
+          "description": "关键词 + 语义融合。两者兼得。",
+          "badge": ""
+        }
+      }
+    }
   },
   "emergent": {
     "badge": "Runtime Intelligence",
