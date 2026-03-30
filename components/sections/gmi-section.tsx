@@ -16,7 +16,6 @@ import {
   X,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { SectionLabel } from '../ui/section-label'
 
 /* ------------------------------------------------------------------ */
 /*  Layer definitions                                                   */
@@ -170,9 +169,6 @@ export function GMISection() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* ---- Header ---- */}
         <div className="text-center mb-10">
-          <SectionLabel icon={<Brain className="w-3.5 h-3.5" />}>
-            {t('badge')}
-          </SectionLabel>
           <h2
             id="gmi-heading"
             className="text-4xl sm:text-5xl font-extrabold mt-4 mb-4"

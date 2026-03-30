@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import {
   ArrowRight,
-  Network,
   Layers,
   Brain,
   Shield,
@@ -18,7 +17,6 @@ import {
   TreePine,
   Workflow,
 } from 'lucide-react'
-import { SectionLabel } from '../ui/section-label'
 
 /* ------------------------------------------------------------------ */
 /*  Strategy type definitions                                          */
@@ -28,7 +26,7 @@ type StrategyId = 'sequential' | 'parallel' | 'debate' | 'review-loop' | 'hierar
 
 interface StrategyDef {
   id: StrategyId
-  icon: typeof Network
+  icon: typeof ArrowRight
   color: string
 }
 
@@ -509,9 +507,6 @@ export function AgencySection() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* ---- Header ---- */}
         <div className="text-center mb-10">
-          <SectionLabel icon={<Network className="w-3.5 h-3.5" />}>
-            {t('badge')}
-          </SectionLabel>
           <h2
             id="agency-heading"
             className="text-4xl sm:text-5xl font-extrabold mt-4 mb-4"

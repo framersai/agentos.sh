@@ -4,7 +4,6 @@ import { useState, useRef, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { ArrowRight } from 'lucide-react'
-import { SectionLabel } from '../ui/section-label'
 
 /* ------------------------------------------------------------------ */
 /*  Custom SVG icon components (stroke-based line art, 24x24 viewBox)  */
@@ -479,14 +478,6 @@ export function CognitiveSection() {
           variants={fadeUp}
           className="text-center mb-10"
         >
-          <SectionLabel icon={
-            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="w-3.5 h-3.5">
-              <path d="M7 1a6 6 0 1 1 0 12A6 6 0 0 1 7 1" />
-              <path d="M4.5 7c.5-2 1.5-3 2.5-3s2 1 2.5 3-1 3-2.5 3S4 9 4.5 7" />
-            </svg>
-          }>
-            {t('badge')}
-          </SectionLabel>
           <h2
             id="cognitive-heading"
             className="text-4xl sm:text-5xl font-extrabold mt-4 mb-4"
