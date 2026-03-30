@@ -120,6 +120,10 @@ export function AnimatedBackground() {
     // Reduced particle count: 40 desktop, 15 mobile (was 80/30)
     const isMobile = window.matchMedia('(max-width: 640px)').matches
     const particleCount = isMobile ? 15 : 40
+    // Clear stale connections immediately so the render loop doesn't
+    // access particle indices from the old (possibly larger) array.
+    connectionsRef.current = []
+
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * dimensions.width,
       y: Math.random() * dimensions.height,
@@ -285,6 +289,11 @@ export function AnimatedBackground() {
       connectionsRef.current.forEach(connection => {
         const p1 = particles[connection.from]
         const p2 = particles[connection.to]
+
+        // Guard against stale connection indices after resize (particle
+        // count can shrink from 40 to 15 on mobile, but connections are
+        // only recalculated every 4th frame).
+        if (!p1 || !p2) return
 
         const pulse = Math.sin(time * 2 + connection.pulseOffset) * 0.5 + 0.5
         const baseConnectionOpacity = isDark ? 0.1 : 0.15

@@ -196,15 +196,6 @@ export default async function LocaleLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         
-        {/* Preload critical fonts */}
-        <link
-          rel="preload"
-          href="/fonts/space-grotesk.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        
         {/* Analytics with consent integration */}
         <GoogleAnalyticsDynamic />
         <MicrosoftClarityDynamic />
