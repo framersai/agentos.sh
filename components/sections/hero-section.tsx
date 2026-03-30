@@ -19,24 +19,10 @@ function safeJsonParse<T>(value: string): T | null {
   }
 }
 
-// Skeleton placeholder for morphing text
-const TextSkeleton = ({ width }: { width: string }) => (
-  <span 
-    className="inline-block rounded bg-gradient-to-r from-violet-500/20 to-cyan-500/20 animate-pulse"
-    style={{ width, height: '1em', verticalAlign: 'middle' }}
-  />
-);
-
 // Lazy load heavy animation components - deferred for better LCP
-// Use ResponsiveNeuralConstellation for a single scalable instance instead of 4 separate ones
 const ResponsiveNeuralConstellation = dynamic(() => import('../hero/neural-constellation').then(m => ({ default: m.ResponsiveNeuralConstellation })), {
   ssr: false,
   loading: () => null
-});
-
-const ParticleMorphText = dynamic(() => import('../hero/particle-morph-text').then(m => ({ default: m.ParticleMorphText })), {
-  ssr: false,
-  loading: () => <TextSkeleton width="120px" />
 });
 
 const HeroSectionInner = memo(function HeroSectionInner() {
@@ -48,7 +34,6 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   const [githubForks, setGithubForks] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
   const [contentReady, setContentReady] = useState(false);
-  const [morphFontSize, setMorphFontSize] = useState(40);
   const isDark = resolvedTheme === 'dark';
 
   // Mark as mounted after hydration, then trigger content ready
@@ -57,18 +42,6 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     const timer = setTimeout(() => setContentReady(true), 50);
     return () => clearTimeout(timer);
   }, []);
-
-  // Match ParticleMorphText font size to the CSS text breakpoints
-  useEffect(() => {
-    if (!mounted) return;
-    const update = () => {
-      const w = window.innerWidth;
-      setMorphFontSize(w >= 1024 ? 40 : w >= 640 ? 30 : 22);
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -116,7 +89,6 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     { title: '5-Tier Guardrails', detail: 'Production-ready' }
   ];
 
-  const morphingWords: [string, string] = ['Adaptive', 'Emergent'];
 
   return (
     <section className="relative min-h-screen flex items-center bg-[var(--color-background-primary)] overflow-hidden" itemScope itemType="https://schema.org/SoftwareApplication">
