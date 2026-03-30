@@ -123,7 +123,7 @@
     }
   },
   "features": {
-    "sectionTitle": "Características Listas para Empresas",
+    "sectionTitle": "Capacidades Principales",
     "sectionSubtitle": "Infraestructura de grado de producción para construir, desplegar y escalar agentes de IA",
     "multiAgent": {
       "title": "Coordinación Multi-Agente Emergente",
@@ -385,71 +385,81 @@
     }
   },
   "enterprise": {
-    "title": "Características Listas para Empresas",
-    "subtitle": "Bloques de construcción de infraestructura de nivel empresarial, cada capa añadiendo seguridad y escala",
+    "title": "Infraestructura Lista para Empresas",
+    "subtitle": "Seguridad de 5 niveles, 6 extensiones de guardrails, 21 proveedores LLM, 37 canales y memoria cognitiva — listo para producción desde el primer día",
     "features": {
       "security": {
-        "title": "Fundamento de Seguridad",
+        "title": "Seguridad de 5 Niveles",
         "items": [
-          "Cifrado AES-256",
-          "Arquitectura de Confianza Cero",
-          "Seguridad de extremo a extremo"
+          "Niveles Dangerous, Permissive, Balanced, Strict, Paranoid",
+          "Análisis de sentimiento LLM con fallback de keywords",
+          "Presets de seguridad configurables por agente",
+          "Defensa contra inyección de prompts integrada"
+        ]
+      },
+      "guardrails": {
+        "title": "6 Extensiones de Guardrails",
+        "items": [
+          "Redacción y anonimización de PII",
+          "Moderación de contenido con clasificador ML",
+          "Seguridad de código y ejecución en sandbox",
+          "Grounding guard, filtro de topicality, reescritor de política de contenido"
         ]
       },
       "compliance": {
         "title": "Cumplimiento y Privacidad",
         "items": [
-          "Compatible con GDPR",
-          "Redacción de PII",
-          "Controles de Residencia de Datos"
-        ]
-      },
-      "auth": {
-        "title": "Autenticación",
-        "items": [
-          "SSO/SAML 2.0",
-          "OAuth 2.0",
-          "Soporte MFA"
+          "Manejo de PII conforme a GDPR",
+          "Seguimiento de procedencia y linaje de datos",
+          "Memoria cognitiva con curvas de decaimiento de Ebbinghaus",
+          "Decaimiento de confianza de fuente para conocimiento antiguo"
         ]
       },
       "audit": {
-        "title": "Auditoría y Monitoreo",
+        "title": "Auditoría y Observabilidad",
         "items": [
-          "Monitoreo en tiempo real",
-          "Registros de auditoría",
-          "Detección de anomalías"
+          "Telemetría compatible con OpenTelemetry (OTLP)",
+          "Registro de auditoría completo de cada acción de agente",
+          "Monitoreo en tiempo real y detección de anomalías",
+          "Guardas de costo, circuit breakers, detección de bloqueo"
         ]
       },
       "soc2": {
-        "title": "SOC 2 Compliance",
+        "title": "Preparación SOC 2",
         "items": [
-          "Type II (Planned)",
-          "Auditorías anuales",
-          "Cumplimiento continuo"
+          "Certificación Tipo II planificada",
+          "Monitoreo continuo de cumplimiento",
+          "Soporte para despliegue self-hosted"
         ]
       },
       "scale": {
-        "title": "Escala Empresarial",
+        "title": "Escala de Producción",
         "items": [
-          "Auto-escalado",
-          "99.99% SLA",
-          "CDN Global"
+          "105+ extensiones, 80 skills curados",
+          "21 proveedores LLM, 37 adaptadores de canal",
+          "Generación de video, audio e imagen",
+          "Agentes auto-mejorantes con forja de herramientas"
         ]
       }
     },
     "legend": {
       "fullyImplemented": {
-        "title": "Completamente Implementado",
-        "description": "Cumplimiento de GDPR, redacción de PII y funciones de seguridad principales están listas para producción"
+        "title": "Totalmente Implementado",
+        "description": "Seguridad de 5 niveles, 6 guardrails, redacción PII, registro de auditoría, memoria cognitiva y 105+ extensiones están listos para producción hoy"
       },
       "inProgress": {
-        "title": "Planned",
-        "description": "SOC 2 Type II certification planned"
+        "title": "Planificado",
+        "description": "La certificación SOC 2 Tipo II y las auditorías formales de cumplimiento están en progreso"
       },
       "enterpriseSupport": {
         "title": "Soporte Empresarial",
-        "description": "Soporte 24/7 con integración vca.chat y gerentes de éxito dedicados"
+        "description": "Self-hosting, orquestación GPU, hosting de modelos locales, SSO y soporte dedicado disponibles"
       }
+    },
+    "cta": {
+      "title": "AgentOS Enterprise",
+      "description": "Self-hosting, controles avanzados de PII, telemetría OpenTelemetry, hosting de modelos locales, pipelines CI/CD, orquestación GPU, SSO y soporte dedicado para despliegues en producción.",
+      "contact": "Contactar team@frame.dev"
     },
     "trustBadge": "Confiado por líderes de la industria",
     "wipLabel": "WIP",

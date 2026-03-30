@@ -123,7 +123,7 @@
     }
   },
   "features": {
-    "sectionTitle": "エンタープライズ対応機能",
+    "sectionTitle": "コア機能",
     "sectionSubtitle": "AIエージェントの構築、デプロイ、スケーリングのためのプロダクショングレードインフラストラクチャ",
     "multiAgent": {
       "title": "創発型マルチエージェント調整",
@@ -233,75 +233,85 @@
   "skipToContent": "コンテンツにスキップ",
   "skipToMain": "メインコンテンツにスキップ",
   "enterprise": {
-    "title": "Enterprise-Ready Features",
-    "subtitle": "Enterprise infrastructure building blocks, each layer adding security and scale",
+    "title": "エンタープライズ対応インフラストラクチャ",
+    "subtitle": "5段階セキュリティ、6つのガードレール拡張、21のLLMプロバイダー、37チャネル、認知メモリ — 初日から本番対応",
     "features": {
       "security": {
-        "title": "Security Foundation",
+        "title": "5段階セキュリティ",
         "items": [
-          "AES-256 encryption",
-          "Zero-Trust architecture",
-          "End-to-end security"
+          "Dangerous、Permissive、Balanced、Strict、Paranoidティア",
+          "キーワードフォールバック付きLLMベースの感情分析",
+          "エージェントごとに設定可能なセキュリティプリセット",
+          "プロンプトインジェクション防御を内蔵"
+        ]
+      },
+      "guardrails": {
+        "title": "6つのガードレール拡張",
+        "items": [
+          "PII編集と匿名化",
+          "MLクラシファイアによるコンテンツモデレーション",
+          "コード安全性とサンドボックス実行",
+          "Grounding Guard、Topicalityフィルター、コンテンツポリシーリライター"
         ]
       },
       "compliance": {
-        "title": "Compliance & Privacy",
+        "title": "コンプライアンスとプライバシー",
         "items": [
-          "GDPR compliance",
-          "PII redaction",
-          "Data residency controls"
-        ]
-      },
-      "auth": {
-        "title": "Authentication",
-        "items": [
-          "SSO/SAML 2.0",
-          "OAuth 2.0",
-          "MFA support"
+          "GDPR準拠のPII処理",
+          "データ来歴とリネージ追跡",
+          "エビングハウス忘却曲線による認知メモリ",
+          "古い知識に対するソース信頼度の減衰"
         ]
       },
       "audit": {
-        "title": "Audit & Monitoring",
+        "title": "監査とオブザーバビリティ",
         "items": [
-          "Real-time monitoring",
-          "Audit logs",
-          "Anomaly detection"
+          "OpenTelemetry互換テレメトリ (OTLP)",
+          "すべてのエージェントアクションの完全な監査ログ",
+          "リアルタイム監視と異常検知",
+          "コストガード、サーキットブレーカー、スタック検出"
         ]
       },
       "soc2": {
-        "title": "SOC 2 Compliance",
+        "title": "SOC 2対応準備",
         "items": [
-          "Type II (Planned)",
-          "Annual audits",
-          "Continuous compliance"
+          "Type II認証を計画中",
+          "継続的なコンプライアンス監視",
+          "セルフホストデプロイメントサポート"
         ]
       },
       "scale": {
-        "title": "Enterprise Scale",
+        "title": "本番スケール",
         "items": [
-          "Auto-scaling",
-          "99.99% SLA",
-          "Global CDN"
+          "105以上の拡張機能、80のキュレーション済みスキル",
+          "21のLLMプロバイダー、37のチャネルアダプター",
+          "動画、音声、画像生成",
+          "ツールフォージングによる自己改善エージェント"
         ]
       }
     },
     "legend": {
       "fullyImplemented": {
-        "title": "Fully Implemented",
-        "description": "GDPR compliance, PII redaction, and core security features are production-ready"
+        "title": "完全実装済み",
+        "description": "5段階セキュリティ、6つのガードレール、PII編集、監査ログ、認知メモリ、105以上の拡張機能が本番対応済み"
       },
       "inProgress": {
-        "title": "Planned",
-        "description": "SOC 2 Type II certification planned"
+        "title": "計画中",
+        "description": "SOC 2 Type II認証と正式なコンプライアンス監査を進行中"
       },
       "enterpriseSupport": {
-        "title": "Enterprise Support",
-        "description": "24/7 support with vca.chat integration and dedicated success managers"
+        "title": "エンタープライズサポート",
+        "description": "セルフホスティング、GPUオーケストレーション、ローカルモデルホスティング、SSO、専任サポートを提供"
       }
     },
-    "trustBadge": "Trusted by industry leaders",
+    "cta": {
+      "title": "AgentOS Enterprise",
+      "description": "セルフホスティング、高度なPII制御、OpenTelemetryテレメトリ、ローカルモデルホスティング、CI/CDパイプライン、GPUオーケストレーション、SSO、本番デプロイメント向け専任サポート。",
+      "contact": "team@frame.dev にお問い合わせ"
+    },
+    "trustBadge": "業界リーダーに信頼されています",
     "wipLabel": "WIP",
-    "currentlyDevelopment": "Currently in development"
+    "currentlyDevelopment": "現在開発中"
   },
   "multiAgent": {
     "title": "マルチエージェント協調ネットワーク",

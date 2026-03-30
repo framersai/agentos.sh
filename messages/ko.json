@@ -123,7 +123,7 @@
     "heroVisualAlt": "AgentOS 오케스트레이션 작업 공간 미리보기"
   },
   "features": {
-    "sectionTitle": "엔터프라이즈급 기능",
+    "sectionTitle": "핵심 기능",
     "sectionSubtitle": "AI 에이전트를 구축, 배포 및 확장하기 위한 프로덕션급 인프라",
     "multiAgent": {
       "title": "창발형 다중 에이전트 조정",
@@ -385,73 +385,83 @@
     }
   },
   "enterprise": {
-    "title": "엔터프라이즈 준비 기능",
-    "subtitle": "보안과 확장을 더하는 엔터프라이즈 인프라의 구성 블록",
+    "title": "엔터프라이즈 대응 인프라",
+    "subtitle": "5단계 보안, 6개 가드레일 확장, 21개 LLM 제공자, 37개 채널, 인지 메모리 — 첫날부터 프로덕션 준비",
     "features": {
       "security": {
-        "title": "보안 기반",
+        "title": "5단계 보안",
         "items": [
-          "AES-256 암호화",
-          "제로 트러스트 아키텍처",
-          "엔드투엔드 보안"
+          "Dangerous, Permissive, Balanced, Strict, Paranoid 티어",
+          "키워드 폴백이 있는 LLM 기반 감성 분석",
+          "에이전트별 구성 가능한 보안 프리셋",
+          "프롬프트 인젝션 방어 내장"
+        ]
+      },
+      "guardrails": {
+        "title": "6개 가드레일 확장",
+        "items": [
+          "PII 수정 및 익명화",
+          "ML 분류기 콘텐츠 모더레이션",
+          "코드 안전성 및 샌드박스 실행",
+          "Grounding Guard, Topicality 필터, 콘텐츠 정책 리라이터"
         ]
       },
       "compliance": {
-        "title": "컴플라이언스 & 프라이버시",
+        "title": "규정 준수 및 개인정보 보호",
         "items": [
-          "GDPR 준수",
-          "PII 마스킹",
-          "데이터 거주지 제어"
-        ]
-      },
-      "auth": {
-        "title": "인증",
-        "items": [
-          "SSO/SAML 2.0",
-          "OAuth 2.0",
-          "MFA 지원"
+          "GDPR 준수 PII 처리",
+          "데이터 출처 및 계보 추적",
+          "에빙하우스 감쇠 곡선 인지 메모리",
+          "오래된 지식에 대한 소스 신뢰도 감쇠"
         ]
       },
       "audit": {
-        "title": "감사 & 모니터링",
+        "title": "감사 및 관측성",
         "items": [
-          "실시간 모니터링",
-          "감사 로그",
-          "이상 탐지"
+          "OpenTelemetry 호환 텔레메트리 (OTLP)",
+          "모든 에이전트 동작의 전체 감사 로깅",
+          "실시간 모니터링 및 이상 감지",
+          "비용 가드, 서킷 브레이커, 스턱 감지"
         ]
       },
       "soc2": {
-        "title": "SOC 2 Compliance",
+        "title": "SOC 2 준비",
         "items": [
-          "Type II (Planned)",
-          "연간 감사",
-          "지속 컴플라이언스"
+          "Type II 인증 계획 중",
+          "지속적인 규정 준수 모니터링",
+          "셀프 호스팅 배포 지원"
         ]
       },
       "scale": {
-        "title": "엔터프라이즈 스케일",
+        "title": "프로덕션 규모",
         "items": [
-          "오토스케일링",
-          "99.99% SLA",
-          "글로벌 CDN"
+          "105+ 확장, 80개 큐레이션 스킬",
+          "21개 LLM 제공자, 37개 채널 어댑터",
+          "비디오, 오디오, 이미지 생성",
+          "도구 포징을 통한 자기 개선 에이전트"
         ]
       }
     },
     "legend": {
       "fullyImplemented": {
-        "title": "완전 구현",
-        "description": "GDPR 준수, PII 마스킹, 핵심 보안 기능이 프로덕션 준비 완료"
+        "title": "완전히 구현됨",
+        "description": "5단계 보안, 6개 가드레일, PII 수정, 감사 로깅, 인지 메모리, 105+ 확장이 오늘 프로덕션 준비 완료"
       },
       "inProgress": {
-        "title": "Planned",
-        "description": "SOC 2 Type II certification planned"
+        "title": "계획 중",
+        "description": "SOC 2 Type II 인증 및 정식 규정 준수 감사가 진행 중"
       },
       "enterpriseSupport": {
         "title": "엔터프라이즈 지원",
-        "description": "vca.chat 연동 및 전담 성공 매니저 포함 24/7 지원"
+        "description": "셀프 호스팅, GPU 오케스트레이션, 로컬 모델 호스팅, SSO 및 전담 지원 제공"
       }
     },
-    "trustBadge": "업계 리더들이 신뢰합니다",
+    "cta": {
+      "title": "AgentOS Enterprise",
+      "description": "셀프 호스팅, 고급 PII 제어, OpenTelemetry 텔레메트리, 로컬 모델 호스팅, CI/CD 파이프라인, GPU 오케스트레이션, SSO 및 프로덕션 배포를 위한 전담 지원.",
+      "contact": "team@frame.dev 문의하기"
+    },
+    "trustBadge": "업계 리더들의 신뢰",
     "wipLabel": "WIP",
     "currentlyDevelopment": "현재 개발 중"
   },
