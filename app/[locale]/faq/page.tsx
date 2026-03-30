@@ -130,6 +130,14 @@ function FAQJsonLd({ locale: _locale }: { locale: string }) {
       q: 'Is there enterprise support?',
       a: 'Yes. Contact team@frame.dev for production deployments, enterprise licensing, and dedicated support.',
     },
+    {
+      q: 'What is adaptive intelligence?',
+      a: 'Adaptive intelligence in AgentOS means agents continuously improve their behavior without retraining — via meta-reflective prompt adaptation, self-evaluating response quality, HEXACO personality-modulated cognition, autonomous memory consolidation, and tiered query routing.',
+    },
+    {
+      q: 'What are emergent behaviors?',
+      a: 'Emergent behaviors are capabilities agents develop at runtime — including runtime tool forging, self-improving personality traits, dynamic skill management, composable workflow creation, and tiered tool promotion for cross-agent reuse.',
+    },
   ];
 
   const ld = {
@@ -319,6 +327,12 @@ export default async function FAQPage({ params: { locale } }: Props) {
           </FAQItem>
           <FAQItem question={t('technical.queryRouter.question')}>
             <p>{t('technical.queryRouter.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('technical.adaptiveIntelligence.question')}>
+            <p>{t('technical.adaptiveIntelligence.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('technical.emergentBehaviors.question')}>
+            <p>{t('technical.emergentBehaviors.answer')}</p>
           </FAQItem>
         </FAQSection>
 
