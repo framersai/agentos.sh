@@ -213,8 +213,8 @@ export function GMISection() {
                 {LAYERS.map((layer) => {
                   const isActive = activeLayer === layer.id
                   const isCore = layer.id === 'llmCore'
-                  const innerR = layer.radius - layer.thickness / 2
-                  const outerR = layer.radius + layer.thickness / 2
+                  const _innerR = layer.radius - layer.thickness / 2
+                  const _outerR = layer.radius + layer.thickness / 2
 
                   return (
                     <g key={layer.id}>
