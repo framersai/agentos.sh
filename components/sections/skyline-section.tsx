@@ -7,19 +7,24 @@ import {
   CheckCircle,
   Cpu,
   Database,
-  Globe
+  Globe,
+  Mail
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useTranslations } from 'next-intl'
-import { 
-  ShieldIcon, 
-  LockIcon, 
-  CertificateIcon, 
-  GraphIcon, 
-  SkylineIcon, 
-  DocumentCheckIcon 
+import {
+  ShieldIcon,
+  LockIcon,
+  CertificateIcon,
+  GraphIcon,
+  SkylineIcon,
+  DocumentCheckIcon
 } from '../icons/brand-icons'
 
+/**
+ * Enterprise feature represented as a building in the skyline visualization.
+ * Height determines visual prominence; status drives WIP badge rendering.
+ */
 interface BuildingFeature {
   id: string
   height: number // 1-10 scale
@@ -29,26 +34,30 @@ interface BuildingFeature {
   glow: string
 }
 
+/**
+ * Six enterprise pillars, each rendered as a building in the animated skyline.
+ * Heights reflect implementation maturity; SOC 2 is the only WIP item.
+ */
 const skylineFeatures: BuildingFeature[] = [
   {
     id: 'security',
-    height: 3,
+    height: 8,
     position: 10,
     icon: ShieldIcon,
     status: 'complete',
     glow: '#22c55e'
   },
   {
-    id: 'compliance',
-    height: 5,
+    id: 'guardrails',
+    height: 6,
     position: 25,
     icon: DocumentCheckIcon,
     status: 'complete',
     glow: '#06b6d4'
   },
   {
-    id: 'auth',
-    height: 4,
+    id: 'compliance',
+    height: 5,
     position: 40,
     icon: LockIcon,
     status: 'complete',
@@ -56,7 +65,7 @@ const skylineFeatures: BuildingFeature[] = [
   },
   {
     id: 'audit',
-    height: 6,
+    height: 7,
     position: 55,
     icon: GraphIcon,
     status: 'complete',
@@ -64,7 +73,7 @@ const skylineFeatures: BuildingFeature[] = [
   },
   {
     id: 'soc2',
-    height: 7,
+    height: 4,
     position: 70,
     icon: CertificateIcon,
     status: 'building',
@@ -80,6 +89,15 @@ const skylineFeatures: BuildingFeature[] = [
   }
 ]
 
+/**
+ * SkylineSection — consolidated enterprise section for the homepage.
+ *
+ * Renders an animated city-skyline visualization where each building represents
+ * an enterprise capability pillar (security tiers, guardrails, compliance,
+ * audit/observability, SOC 2 readiness, and production scale). Below the
+ * skyline sit three legend cards (Fully Implemented / Planned / Enterprise
+ * Support) and an enterprise contact CTA.
+ */
 export function SkylineSection() {
   const t = useTranslations('enterprise')
   const [hoveredBuilding, setHoveredBuilding] = useState<string | null>(null)
@@ -87,7 +105,7 @@ export function SkylineSection() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
 
-  // Deterministic star field
+  /** Deterministic star field (dark mode only) */
   const stars = useMemo(() => {
     let seed = 1337 >>> 0
     const rand = () => {
@@ -104,7 +122,10 @@ export function SkylineSection() {
     }))
   }, [])
 
-  // Animate building windows — only when visible in viewport
+  /**
+   * Animate building windows — flicker effect runs only when the section
+   * is visible in the viewport (IntersectionObserver gated).
+   */
   const sectionRef = useRef<HTMLElement>(null)
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null
@@ -216,10 +237,10 @@ export function SkylineSection() {
         {/* Skyline Visualization */}
         <div className="relative h-[400px] mb-16">
           {/* Ground line */}
-          <div 
+          <div
             className="absolute bottom-0 left-0 right-0 h-[2px]"
             style={{
-              background: isDark 
+              background: isDark
                 ? 'linear-gradient(90deg, transparent 0%, rgba(139,92,246,0.5) 50%, transparent 100%)'
                 : 'linear-gradient(90deg, transparent 0%, rgba(139,92,246,0.3) 50%, transparent 100%)'
             }}
@@ -287,14 +308,14 @@ export function SkylineSection() {
                   {feature.status === 'building' && (
                     <div className="absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-orange-500/90 text-white px-2 py-0.5 rounded text-xs font-medium">
                       <AlertTriangle className="w-3 h-3" />
-                      WIP
+                      {t('wipLabel')}
                     </div>
                   )}
 
                   {/* Antenna for tall buildings */}
                   {feature.height >= 7 && (
                     <div className="absolute -top-6 left-1/2 -translate-x-1/2">
-                      <div 
+                      <div
                         className="w-0.5 h-6"
                         style={{ background: `linear-gradient(to top, ${feature.glow}, transparent)` }}
                       />
@@ -309,22 +330,22 @@ export function SkylineSection() {
                 </div>
 
                 {/* Label below building */}
-                <motion.div 
+                <motion.div
                   className="absolute -bottom-16 left-1/2 -translate-x-1/2 text-center whitespace-nowrap"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.15 + 0.5 }}
                 >
-                  <div 
+                  <div
                     className="w-8 h-8 mx-auto mb-1 transition-transform duration-300"
                     style={{ transform: hoveredBuilding === feature.id ? 'scale(1.2)' : 'scale(1)' }}
                   >
                     <feature.icon id={feature.id} className="w-full h-full" />
                   </div>
-                  <span 
+                  <span
                     className={`text-xs font-medium transition-colors duration-300 ${
-                      hoveredBuilding === feature.id 
+                      hoveredBuilding === feature.id
                         ? (isDark ? 'text-white' : 'text-slate-900')
                         : (isDark ? 'text-slate-400' : 'text-slate-600')
                     }`}
@@ -343,7 +364,7 @@ export function SkylineSection() {
                       className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 z-30"
                       style={{ minWidth: '220px' }}
                     >
-                      <div 
+                      <div
                         className="p-4 rounded-lg shadow-xl"
                         style={{
                           background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.98)',
@@ -368,7 +389,7 @@ export function SkylineSection() {
                         {feature.status === 'building' && (
                           <div className={`mt-3 pt-2 border-t ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>
                             <p className="text-xs text-orange-500 font-medium">
-                              🚧 {t('currentlyDevelopment')}
+                              {t('currentlyDevelopment')}
                             </p>
                           </div>
                         )}
@@ -381,7 +402,7 @@ export function SkylineSection() {
           })}
         </div>
 
-        {/* Legend Cards - Solid opaque backgrounds for readability */}
+        {/* Legend Cards */}
         <div className="relative z-20 grid grid-cols-1 md:grid-cols-3 gap-6 mt-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -390,7 +411,7 @@ export function SkylineSection() {
             transition={{ delay: 0.1 }}
             className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-lg"
             style={{
-              background: isDark 
+              background: isDark
                 ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.90) 100%)'
                 : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
               border: `2px solid ${isDark ? 'rgba(34, 197, 94, 0.5)' : 'rgba(34, 197, 94, 0.4)'}`,
@@ -417,7 +438,7 @@ export function SkylineSection() {
             transition={{ delay: 0.2 }}
             className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-lg"
             style={{
-              background: isDark 
+              background: isDark
                 ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.90) 100%)'
                 : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
               border: `2px solid ${isDark ? 'rgba(249, 115, 22, 0.5)' : 'rgba(249, 115, 22, 0.4)'}`,
@@ -444,7 +465,7 @@ export function SkylineSection() {
             transition={{ delay: 0.3 }}
             className="p-6 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-lg"
             style={{
-              background: isDark 
+              background: isDark
                 ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.90) 100%)'
                 : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
               border: `2px solid ${isDark ? 'rgba(59, 130, 246, 0.5)' : 'rgba(59, 130, 246, 0.4)'}`,
@@ -464,6 +485,53 @@ export function SkylineSection() {
             </p>
           </motion.div>
         </div>
+
+        {/* Enterprise Contact CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="relative z-20 mt-10"
+        >
+          <div
+            className="p-6 sm:p-8 rounded-xl shadow-lg"
+            style={{
+              background: isDark
+                ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.90) 100%)'
+                : 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
+              border: `1px solid ${isDark ? 'rgba(139, 92, 246, 0.3)' : 'rgba(139, 92, 246, 0.2)'}`,
+              backdropFilter: 'blur(8px)',
+            }}
+          >
+            <div className="grid md:grid-cols-2 gap-6 items-center">
+              <div>
+                <h3 className={`text-xl sm:text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  {t('cta.title')}
+                </h3>
+                <p className={`text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                  {t('cta.description')}
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
+                <a
+                  href="mailto:team@frame.dev"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-300 hover:scale-[1.03]"
+                  style={{
+                    background: isDark
+                      ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.6) 0%, rgba(59, 130, 246, 0.6) 100%)'
+                      : 'linear-gradient(135deg, rgba(139, 92, 246, 0.8) 0%, rgba(59, 130, 246, 0.8) 100%)',
+                    color: 'white',
+                    boxShadow: '0 4px 14px rgba(139, 92, 246, 0.25)',
+                  }}
+                >
+                  <Mail className="w-4 h-4" />
+                  {t('cta.contact')}
+                </a>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

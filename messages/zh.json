@@ -123,7 +123,7 @@
     }
   },
   "features": {
-    "sectionTitle": "企业级功能",
+    "sectionTitle": "核心功能",
     "sectionSubtitle": "用于构建、部署和扩展AI代理的生产级基础设施",
     "multiAgent": {
       "title": "涌现式多代理协调",
@@ -191,75 +191,85 @@
     }
   },
   "enterprise": {
-    "title": "Enterprise Ready Features",
-    "subtitle": "Building blocks of enterprise-grade infrastructure, each layer adding security and scale",
+    "title": "企业级基础设施",
+    "subtitle": "5级安全、6个护栏扩展、21个LLM提供商、37个通道和认知记忆 — 从第一天起就可用于生产环境",
     "features": {
       "security": {
-        "title": "Security Foundation",
+        "title": "5级安全体系",
         "items": [
-          "AES-256 Encryption",
-          "Zero-Trust Architecture",
-          "End-to-End Security"
+          "Dangerous、Permissive、Balanced、Strict、Paranoid五个安全等级",
+          "基于LLM的情感分析，带关键词回退",
+          "每个代理可配置的安全预设",
+          "内置提示注入防御"
+        ]
+      },
+      "guardrails": {
+        "title": "6个护栏扩展",
+        "items": [
+          "PII编辑和匿名化",
+          "ML分类器内容审核",
+          "代码安全和沙箱执行",
+          "Grounding Guard、主题过滤器、内容策略重写器"
         ]
       },
       "compliance": {
-        "title": "Compliance & Privacy",
+        "title": "合规与隐私",
         "items": [
-          "GDPR Compliant",
-          "PII Redaction",
-          "Data Residency Controls"
-        ]
-      },
-      "auth": {
-        "title": "Authentication",
-        "items": [
-          "SSO/SAML 2.0",
-          "OAuth 2.0",
-          "MFA Support"
+          "符合GDPR的PII处理",
+          "数据来源和血统追踪",
+          "采用艾宾浩斯遗忘曲线的认知记忆",
+          "旧知识的来源可信度衰减"
         ]
       },
       "audit": {
-        "title": "Audit & Monitoring",
+        "title": "审计与可观测性",
         "items": [
-          "Real-time Monitoring",
-          "Audit Logs",
-          "Anomaly Detection"
+          "兼容OpenTelemetry的遥测 (OTLP)",
+          "所有代理操作的完整审计日志",
+          "实时监控和异常检测",
+          "成本保护、断路器、卡顿检测"
         ]
       },
       "soc2": {
-        "title": "SOC 2 Compliance",
+        "title": "SOC 2就绪",
         "items": [
-          "Type II (Planned)",
-          "Annual Audits",
-          "Continuous Compliance"
+          "Type II认证计划中",
+          "持续合规监控",
+          "自托管部署支持"
         ]
       },
       "scale": {
-        "title": "Enterprise Scale",
+        "title": "生产规模",
         "items": [
-          "Auto-scaling",
-          "99.99% SLA",
-          "Global CDN"
+          "105+扩展，80个精选技能",
+          "21个LLM提供商，37个通道适配器",
+          "视频、音频和图像生成",
+          "通过工具锻造实现自我改进的代理"
         ]
       }
     },
     "legend": {
       "fullyImplemented": {
-        "title": "Fully Implemented",
-        "description": "GDPR compliance, PII redaction, and core security features are production-ready"
+        "title": "完全实现",
+        "description": "5级安全、6个护栏、PII编辑、审计日志、认知记忆和105+扩展今天已可用于生产环境"
       },
       "inProgress": {
-        "title": "Planned",
-        "description": "SOC 2 Type II certification planned"
+        "title": "计划中",
+        "description": "SOC 2 Type II认证和正式合规审计正在进行中"
       },
       "enterpriseSupport": {
-        "title": "Enterprise Support",
-        "description": "24/7 support with vca.chat integration and dedicated success managers"
+        "title": "企业支持",
+        "description": "提供自托管、GPU编排、本地模型托管、SSO和专属支持"
       }
     },
-    "trustBadge": "Trusted by industry leaders",
+    "cta": {
+      "title": "AgentOS Enterprise",
+      "description": "自托管、高级PII控制、OpenTelemetry遥测、本地模型托管、CI/CD管道、GPU编排、SSO和面向生产部署的专属支持。",
+      "contact": "联系 team@frame.dev"
+    },
+    "trustBadge": "受到行业领导者的信赖",
     "wipLabel": "WIP",
-    "currentlyDevelopment": "Currently in development"
+    "currentlyDevelopment": "目前正在开发中"
   },
   "marketplace": {
     "comingSoon": "代理市场即将推出",

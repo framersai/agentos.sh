@@ -123,7 +123,7 @@ export default function LandingPageRedesigned() {
           <FeaturesGridClient />
         </div>
 
-        {/* Skyline Section */}
+        {/* Enterprise-Ready Infrastructure — skyline visualization */}
         <div className="lazy-section">
           <SkylineSectionLazy />
         </div>
@@ -142,33 +142,6 @@ export default function LandingPageRedesigned() {
         <div className="lazy-section">
           <EcosystemSectionLazy />
         </div>
-
-        {/* Enterprise Edition Info */}
-        <section 
-          className="lazy-section-sm py-10 sm:py-12 px-4 sm:px-6 lg:px-8 relative"
-          aria-labelledby="enterprise-heading"
-        >
-          <article className="max-w-6xl mx-auto holographic-card p-6 sm:p-8">
-            <div className="grid md:grid-cols-2 gap-6">
-              <header>
-                <h2 id="enterprise-heading" className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)] mb-2">
-                  AgentOS Enterprise
-                </h2>
-                <p className="text-sm text-[var(--color-text-muted)]">
-                  Self-hosting, advanced PII controls, OpenTelemetry-compatible telemetry, and local model hosting. Contact{' '}
-                  <a className="underline text-[var(--color-accent-primary)] hover:text-[var(--color-accent-secondary)] transition-colors" href="mailto:team@frame.dev">team@frame.dev</a>.
-                </p>
-              </header>
-              <ul className="space-y-1.5 text-sm text-[var(--color-text-secondary)]" role="list">
-                <li>• CI/CD pipelines & self-hosted deployments</li>
-                <li>• PII handling, anonymization, audit trails</li>
-                <li>• Production telemetry (OpenTelemetry/OTLP) & evaluation</li>
-                <li>• GPU orchestration & local models</li>
-                <li>• SSO, payments & SDK integrations</li>
-              </ul>
-            </div>
-          </article>
-        </section>
 
         {/* CTA Section */}
         <div className="lazy-section-sm">

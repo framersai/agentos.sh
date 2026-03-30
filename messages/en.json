@@ -123,7 +123,7 @@
     "heroVisualAlt": "AgentOS orchestration workspace preview"
   },
   "features": {
-    "sectionTitle": "Enterprise‑Ready Features",
+    "sectionTitle": "Core Capabilities",
     "sectionSubtitle": "Production-grade infrastructure for building, deploying, and scaling AI agents",
     "multiAgent": {
       "title": "Emergent Multi-Agent Coordination",
@@ -406,71 +406,81 @@
     }
   },
   "enterprise": {
-    "title": "Enterprise Ready Features",
-    "subtitle": "Building blocks of enterprise-grade infrastructure, each layer adding security and scale",
+    "title": "Enterprise-Ready Infrastructure",
+    "subtitle": "5-tier security, 6 guardrail extensions, 21 LLM providers, 37 channels, and cognitive memory — production-grade from day one",
     "features": {
       "security": {
-        "title": "Security Foundation",
+        "title": "5-Tier Security",
         "items": [
-          "AES-256 Encryption",
-          "Zero-Trust Architecture",
-          "End-to-End Security"
+          "Dangerous, Permissive, Balanced, Strict, Paranoid tiers",
+          "LLM-based sentiment analysis with keyword fallback",
+          "Configurable per-agent security presets",
+          "Prompt injection defense built-in"
+        ]
+      },
+      "guardrails": {
+        "title": "6 Guardrail Extensions",
+        "items": [
+          "PII redaction and anonymization",
+          "ML classifier content moderation",
+          "Code safety and sandboxed execution",
+          "Grounding guard, topicality filter, content-policy rewriter"
         ]
       },
       "compliance": {
         "title": "Compliance & Privacy",
         "items": [
-          "GDPR Compliant",
-          "PII Redaction",
-          "Data Residency Controls"
-        ]
-      },
-      "auth": {
-        "title": "Authentication",
-        "items": [
-          "SSO/SAML 2.0",
-          "OAuth 2.0",
-          "MFA Support"
+          "GDPR-compliant PII handling",
+          "Data provenance and lineage tracking",
+          "Cognitive memory with Ebbinghaus decay curves",
+          "Source confidence decay for aging knowledge"
         ]
       },
       "audit": {
-        "title": "Audit & Monitoring",
+        "title": "Audit & Observability",
         "items": [
-          "Real-time Monitoring",
-          "Audit Logs",
-          "Anomaly Detection"
+          "OpenTelemetry-compatible telemetry (OTLP)",
+          "Full audit logging for every agent action",
+          "Real-time monitoring and anomaly detection",
+          "Cost guards, circuit breakers, stuck detection"
         ]
       },
       "soc2": {
-        "title": "SOC 2 Compliance",
+        "title": "SOC 2 Readiness",
         "items": [
-          "Type II (Planned)",
-          "Annual Audits",
-          "Continuous Compliance"
+          "Type II certification planned",
+          "Continuous compliance monitoring",
+          "Self-hosted deployment support"
         ]
       },
       "scale": {
-        "title": "Enterprise Scale",
+        "title": "Production Scale",
         "items": [
-          "Auto-scaling",
-          "99.99% SLA",
-          "Global CDN"
+          "105+ extensions, 80 curated skills",
+          "21 LLM providers, 37 channel adapters",
+          "Video, audio, and image generation",
+          "Self-improving agents with tool forging"
         ]
       }
     },
     "legend": {
       "fullyImplemented": {
         "title": "Fully Implemented",
-        "description": "GDPR compliance, PII redaction, and core security features are production-ready"
+        "description": "5-tier security, 6 guardrails, PII redaction, audit logging, cognitive memory, and 105+ extensions are production-ready today"
       },
       "inProgress": {
         "title": "Planned",
-        "description": "SOC 2 Type II certification planned"
+        "description": "SOC 2 Type II certification and formal compliance audits are in progress"
       },
       "enterpriseSupport": {
         "title": "Enterprise Support",
-        "description": "24/7 support with vca.chat integration and dedicated success managers"
+        "description": "Self-hosting, GPU orchestration, local model hosting, SSO, and dedicated support available"
       }
+    },
+    "cta": {
+      "title": "AgentOS Enterprise",
+      "description": "Self-hosting, advanced PII controls, OpenTelemetry telemetry, local model hosting, CI/CD pipelines, GPU orchestration, SSO, and dedicated support for production deployments.",
+      "contact": "Contact team@frame.dev"
     },
     "trustBadge": "Trusted by industry leaders",
     "wipLabel": "WIP",
