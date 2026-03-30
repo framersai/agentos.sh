@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "AgentOS | Runtime production-ready d'agents IA pour l'intelligence adaptative et émergente",
-    "description": "Créez des agents IA adaptatifs et émergents avec AgentOS, le runtime universel production-ready pour le RAG d'entreprise, l'orchestration multi-agents et l'intelligence permanente.",
-    "ogTitle": "AgentOS | Intelligence IA adaptative prête pour l'entreprise",
-    "ogDescription": "Déployez des agents IA adaptatifs dotés de mémoire, d'outils et d'autonomie. Runtime open source avec rôles GMI, orchestration multi-agents et garde-fous entreprise. Par Framers (frame.dev).",
-    "twitterTitle": "AgentOS | Intelligence IA adaptative prête pour l'entreprise",
-    "twitterDescription": "Créez des agents IA adaptatifs avec AgentOS. Runtime open source avec rôles GMI, orchestration et garde-fous pour l'entreprise. Par Framers."
+    "title": "AgentOS — Construire des Agents IA Autonomes avec Intelligence Adaptative",
+    "description": "Construisez des agents IA autonomes avec intelligence adaptative et comportements émergents. RAG multimodal, mémoire cognitive, garde-fous en streaming, pipeline vocal et 21 fournisseurs LLM. Runtime TypeScript open source.",
+    "ogTitle": "AgentOS — Construire des Agents IA Autonomes avec Intelligence Adaptative",
+    "ogDescription": "Construisez des agents IA autonomes avec intelligence adaptative et comportements émergents. RAG multimodal, mémoire cognitive, garde-fous en streaming, pipeline vocal et 21 fournisseurs LLM. Runtime TypeScript open source.",
+    "twitterTitle": "AgentOS — Construire des Agents IA Autonomes avec Intelligence Adaptative",
+    "twitterDescription": "Construisez des agents IA autonomes avec intelligence adaptative et comportements émergents. Mémoire cognitive, RAG multimodal, garde-fous en streaming et 21 fournisseurs LLM. Runtime TypeScript open source."
   },
   "nav": {
     "features": "Fonctionnalités",

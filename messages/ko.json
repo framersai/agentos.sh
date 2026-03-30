@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "AgentOS | 적응형 및 창발형 지능을 위한 휴대용 AI 에이전트 런타임",
-    "description": "AgentOS로 적응형, 창발형 AI 에이전트를 구축하세요—엔터프라이즈 RAG, 다중 에이전트 오케스트레이션 및 영구 지능을 위한 휴대용 범용 런타임.",
-    "ogTitle": "AgentOS | 엔터프라이즈급 에이전트를 위한 적응형 AI 지능",
-    "ogDescription": "메모리, 도구 및 자율성을 갖춘 적응형, 창발형 AI 에이전트를 AgentOS로 구축하세요. GMI 역할, 다중 에이전트 오케스트레이션 및 엔터프라이즈 가드레일을 갖춘 오픈소스 런타임. Framers(frame.dev)에서 제공.",
-    "twitterTitle": "AgentOS | 엔터프라이즈급 에이전트를 위한 적응형 AI 지능",
-    "twitterDescription": "AgentOS로 적응형 창발형 AI 에이전트를 구축하세요. GMI 역할, 에이전트 오케스트레이션 및 엔터프라이즈 가드레일을 갖춘 오픈소스 런타임. Framers에서 제공."
+    "title": "AgentOS — 적응형 지능을 갖춘 자율 AI 에이전트 구축",
+    "description": "적응형 지능과 창발적 행동을 갖춘 자율 AI 에이전트를 구축하세요. 멀티모달 RAG, 인지 메모리, 스트리밍 가드레일, 음성 파이프라인 및 21개 LLM 제공자. 오픈소스 TypeScript 런타임.",
+    "ogTitle": "AgentOS — 적응형 지능을 갖춘 자율 AI 에이전트 구축",
+    "ogDescription": "적응형 지능과 창발적 행동을 갖춘 자율 AI 에이전트를 구축하세요. 멀티모달 RAG, 인지 메모리, 스트리밍 가드레일, 음성 파이프라인 및 21개 LLM 제공자. 오픈소스 TypeScript 런타임.",
+    "twitterTitle": "AgentOS — 적응형 지능을 갖춘 자율 AI 에이전트 구축",
+    "twitterDescription": "적응형 지능과 창발적 행동을 갖춘 자율 AI 에이전트를 구축하세요. 인지 메모리, 멀티모달 RAG, 스트리밍 가드레일 및 21개 LLM 제공자. 오픈소스 TypeScript 런타임."
   },
   "nav": {
     "features": "기능",

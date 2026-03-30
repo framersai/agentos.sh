@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "AgentOS — Open-Source AI Agent Framework for TypeScript",
-    "description": "Build production AI agents in TypeScript with multi-agent orchestration, cognitive memory, RAG, 5-tier guardrails, voice pipelines, 37 channels, and 21 LLM providers. Free and self-hostable.",
-    "ogTitle": "AgentOS — Build Production AI Agents in TypeScript",
-    "ogDescription": "Open-source AI agent framework with graph orchestration, cognitive memory, multimodal RAG, 5-tier guardrails, voice pipelines, and 21 LLM providers. Self-hostable and free.",
-    "twitterTitle": "AgentOS — Open-Source AI Agent Framework for TypeScript",
-    "twitterDescription": "Build production AI agents with graph orchestration, cognitive memory, RAG, guardrails, voice, 37 channels, and 21 LLM providers. Free and self-hostable."
+    "title": "AgentOS — Build Autonomous AI Agents with Adaptive Intelligence",
+    "description": "Build autonomous AI agents with adaptive intelligence and emergent behaviors. Multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and 21 LLM providers. Open-source TypeScript runtime.",
+    "ogTitle": "AgentOS — Build Autonomous AI Agents with Adaptive Intelligence",
+    "ogDescription": "Build autonomous AI agents with adaptive intelligence and emergent behaviors. Multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and 21 LLM providers. Open-source TypeScript runtime.",
+    "twitterTitle": "AgentOS — Build Autonomous AI Agents with Adaptive Intelligence",
+    "twitterDescription": "Build autonomous AI agents with adaptive intelligence and emergent behaviors. Cognitive memory, multimodal RAG, streaming guardrails, and 21 LLM providers. Open-source TypeScript runtime."
   },
   "nav": {
     "features": "Features",
@@ -22,7 +22,7 @@
   "hero": {
     "badge": "Open Source · TypeScript · Production-Ready",
     "title": "Open-Source TypeScript AI Agent Runtime",
-    "subtitle": "Production-ready TypeScript runtime with multimodal RAG, multi-agent orchestration, 37 channel adapters, 5-tier guardrails, 21 LLM providers, and 72 curated skills. Self-hostable and free.",
+    "subtitle": "Autonomous AI agents with adaptive intelligence and emergent behaviors — cognitive memory, multimodal RAG, and 21 LLM providers. Self-hostable and free.",
     "cycleWords": [
       "Adaptive",
       "Emergent"
@@ -1392,13 +1392,17 @@
         },
         "hyde": {
           "name": "HyDE",
-          "description": "Generates hypothetical answers to improve recall on abstract queries.",
-          "badge": "optional"
+          "description": "Generates hypothetical answers to improve recall on abstract queries. Based on Gao et al. (2022).",
+          "badge": "optional",
+          "citation": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+          "citationUrl": "https://arxiv.org/abs/2212.10496"
         },
         "graphrag": {
           "name": "GraphRAG",
-          "description": "Community-aware retrieval via knowledge graph with Louvain clustering.",
-          "badge": ""
+          "description": "Community-aware retrieval via knowledge graph with Louvain clustering. Based on Edge et al. (2024).",
+          "badge": "",
+          "citation": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+          "citationUrl": "https://arxiv.org/abs/2404.16130"
         },
         "hybrid": {
           "name": "Hybrid",
