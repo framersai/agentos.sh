@@ -164,20 +164,15 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
-          <h1 className="font-bold tracking-tight mb-2" itemProp="name">
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-tight flex items-baseline gap-1">
-              <span className="inline-block shrink-0">
-                <ParticleMorphText words={morphingWords} interval={2500} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
-              </span>
-              <span className="text-[var(--color-text-primary)]">intelligence</span>
-            </div>
-            <div className="text-[22px] sm:text-[30px] lg:text-[40px] leading-tight flex items-baseline gap-1">
-              <span className="text-[var(--color-text-secondary)]">for</span>
-              <span className="inline-block shrink-0">
-                <ParticleMorphText words={morphingWords} interval={2500} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} />
-              </span>
-              <span className="text-[var(--color-text-primary)]">agents</span>
-            </div>
+          <h1 className="font-bold tracking-tight mb-2 text-[22px] sm:text-[30px] lg:text-[40px] leading-tight" itemProp="name">
+            <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Emergent</span>
+            {' '}
+            <span className="text-[var(--color-text-primary)]">intelligence</span>
+            <br />
+            <span className="text-[var(--color-text-secondary)]">for </span>
+            <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">adaptive</span>
+            {' '}
+            <span className="text-[var(--color-text-primary)]">agents</span>
           </h1>
 
           <p className="text-sm sm:text-base text-[var(--color-text-secondary)] mb-4 max-w-lg" itemProp="abstract">
