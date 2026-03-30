@@ -5,7 +5,6 @@ import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 import { motion } from 'framer-motion'
 import { Copy, Check, Code2, Cpu, Database, GitBranch, Sparkles, Play, Book } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { SectionLabel } from '../ui/section-label'
 
 interface CodeExample {
   id: string
@@ -562,13 +561,6 @@ console.log(session.forgedTools())
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <SectionLabel
-            icon={<Code2 className="w-4 h-4" />}
-            className="mx-auto mb-6 text-sm"
-          >
-            {t('badge')}
-          </SectionLabel>
-
           <h2 id="code-examples-heading" className="text-4xl sm:text-5xl font-bold mb-4">
             <span className="gradient-text">{t('title')}</span>
           </h2>

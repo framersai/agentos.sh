@@ -4,7 +4,6 @@ import { useState, useRef, useMemo } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Zap, ArrowRight, Hammer, Users, RefreshCw } from 'lucide-react'
-import { SectionLabel } from '../ui/section-label'
 
 /* ------------------------------------------------------------------ */
 /*  Forge Spark Particles — ambient animated background effect         */
@@ -549,13 +548,6 @@ export function EmergentSection() {
           variants={fadeUp}
           className="text-center mb-12"
         >
-          <SectionLabel
-            icon={<Zap className="w-4 h-4" />}
-            className="mx-auto mb-6 text-sm"
-          >
-            {t('badge')}
-          </SectionLabel>
-
           <h2 id="emergent-heading" className="text-4xl sm:text-5xl font-extrabold mb-4">
             <span className="gradient-text">{t('title')}</span>
           </h2>
