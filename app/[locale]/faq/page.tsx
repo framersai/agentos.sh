@@ -4,6 +4,61 @@ import { getTranslations } from 'next-intl/server';
 import { ExternalLink, BookOpen, Cpu, Rocket, Building2, GraduationCap } from 'lucide-react';
 import type { Locale } from '../../../i18n';
 
+/**
+ * Map of inline citation text (as it appears in prose) to its DOI/URL.
+ * Keys must match the parenthetical citation exactly, including surrounding parens.
+ */
+const CITATION_URLS: Record<string, string> = {
+  '(Ebbinghaus, 1885)': 'https://psychclassics.yorku.ca/Ebbinghaus/index.htm',
+  '(Baddeley, 2000)': 'https://doi.org/10.1016/S1364-6613(00)01538-2',
+  '(Ashton & Lee, 2004)': 'https://doi.org/10.1207/s15327957pspr0802_1',
+  '(Blondel et al., 2008)': 'https://doi.org/10.1088/1742-5468/2008/10/P10008',
+  '(Malkov & Yashunin, 2018)': 'https://doi.org/10.1109/TPAMI.2018.2889473',
+  '(Nader et al., 2000)': 'https://doi.org/10.1038/35021052',
+  '(Anderson et al., 1994)': 'https://doi.org/10.1037/0096-3445.123.2.178',
+  '(Berntsen, 2010)': 'https://doi.org/10.1177/1745691610370007',
+};
+
+/**
+ * Escapes special regex characters so a literal string can be used in a
+ * `new RegExp()` constructor safely.
+ */
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Splits a plain-text string on known academic citation patterns and returns
+ * an array of React nodes where each citation is wrapped in an `<a>` tag
+ * linking to its DOI / source URL. Non-citation segments remain as plain text.
+ */
+function linkCitations(text: string): ReactNode[] {
+  /* Build a single regex that matches any known citation. */
+  const pattern = new RegExp(
+    `(${Object.keys(CITATION_URLS).map(escapeRegExp).join('|')})`,
+    'g',
+  );
+  const parts = text.split(pattern);
+
+  return parts.map((part, i) => {
+    const url = CITATION_URLS[part];
+    if (url) {
+      return (
+        <a
+          key={i}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="citation-link"
+        >
+          {part}
+        </a>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
 type Props = {
   params: {
     locale: string;
@@ -251,10 +306,10 @@ export default async function FAQPage({ params: { locale } }: Props) {
             <p>{t('technical.whatIsGMI.answer')}</p>
           </FAQItem>
           <FAQItem question={t('technical.hexaco.question')}>
-            <p>{t('technical.hexaco.answer')}</p>
+            <p>{linkCitations(t('technical.hexaco.answer'))}</p>
           </FAQItem>
           <FAQItem question={t('technical.cognitiveMemory.question')}>
-            <p>{t('technical.cognitiveMemory.answer')}</p>
+            <p>{linkCitations(t('technical.cognitiveMemory.answer'))}</p>
           </FAQItem>
           <FAQItem question={t('technical.guardrails.question')}>
             <p>{t('technical.guardrails.answer')}</p>

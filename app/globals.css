@@ -484,3 +484,17 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent-primary);
 }
+
+/* ------------------------------------------------------------------ */
+/*  Inline academic citation links (FAQ page)                         */
+/* ------------------------------------------------------------------ */
+.citation-link {
+  color: var(--color-accent-primary);
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in oklab, var(--color-accent-primary) 50%, transparent);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.citation-link:hover {
+  text-decoration: underline;
+  border-bottom-color: var(--color-accent-primary);
+}
