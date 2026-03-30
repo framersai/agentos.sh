@@ -1372,6 +1372,8 @@
           "name": "GraphRAG",
           "description": "Recuperacion por comunidades via grafo de conocimiento con clustering Louvain.",
           "badge": ""
+          ,"citation": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+          "citationUrl": "https://arxiv.org/abs/2404.16130"
         },
         "hybrid": {
           "name": "Hibrido",

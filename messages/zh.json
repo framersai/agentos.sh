@@ -1362,6 +1362,8 @@
           "name": "GraphRAG",
           "description": "通过Louvain聚类知识图谱进行社区感知检索。",
           "badge": ""
+          ,"citation": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+          "citationUrl": "https://arxiv.org/abs/2404.16130"
         },
         "hybrid": {
           "name": "混合",

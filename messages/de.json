@@ -1357,11 +1357,15 @@
           "name": "HyDE",
           "description": "Generiert hypothetische Antworten fuer besseren Recall bei abstrakten Anfragen.",
           "badge": "optional"
+          ,"citation": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+          "citationUrl": "https://arxiv.org/abs/2212.10496"
         },
         "graphrag": {
           "name": "GraphRAG",
           "description": "Gemeinschaftsbewusster Abruf ueber Wissensgraph mit Louvain-Clustering.",
           "badge": ""
+          ,"citation": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+          "citationUrl": "https://arxiv.org/abs/2404.16130"
         },
         "hybrid": {
           "name": "Hybrid",
