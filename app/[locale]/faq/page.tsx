@@ -138,6 +138,14 @@ function FAQJsonLd({ locale: _locale }: { locale: string }) {
       q: 'What are emergent behaviors?',
       a: 'Emergent behaviors are capabilities agents develop at runtime — including runtime tool forging, self-improving personality traits, dynamic skill management, composable workflow creation, and tiered tool promotion for cross-agent reuse.',
     },
+    {
+      q: 'Can I use an LLM as a judge instead of a human?',
+      a: 'Yes. AgentOS supports LLM-as-judge approval flows through hitl.llmJudge() at the agency level and the judge option on humanNode() in graph orchestration.',
+    },
+    {
+      q: 'Can guardrails override HITL approvals?',
+      a: 'Yes. When hitl.guardrailOverride is enabled, post-approval guardrails such as code-safety and pii-redaction can still block an action after HITL approval.',
+    },
   ];
 
   const ld = {
@@ -333,6 +341,12 @@ export default async function FAQPage({ params: { locale } }: Props) {
           </FAQItem>
           <FAQItem question={t('technical.emergentBehaviors.question')}>
             <p>{t('technical.emergentBehaviors.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('technical.llmJudge.question')}>
+            <p>{t('technical.llmJudge.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('technical.guardrailOverride.question')}>
+            <p>{t('technical.guardrailOverride.answer')}</p>
           </FAQItem>
         </FAQSection>
 

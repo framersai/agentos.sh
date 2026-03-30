@@ -1037,6 +1037,10 @@
       "llmJudge": {
         "question": "Can I use an LLM as a judge instead of a human?",
         "answer": "Yes. AgentOS provides two complementary LLM-as-judge mechanisms. At the agency level, hitl.llmJudge() creates an approval handler that delegates decisions to an LLM. It evaluates each ApprovalRequest against configurable criteria and returns a structured decision with a confidence score. When confidence falls below the threshold, the decision escalates to a fallback handler (another hitl handler or a human). At the graph level, the humanNode() builder accepts a judge option that delegates the interrupt decision to an LLM. If the judge is confident, the graph continues without suspension. If confidence is low, execution falls through to a normal human interrupt. Both approaches support configurable model, provider, criteria, and confidence threshold. Example: hitl.llmJudge({ model: 'gpt-4o-mini', criteria: 'Is this response factually accurate?', confidenceThreshold: 0.8, fallback: hitl.cli() })."
+      },
+      "guardrailOverride": {
+        "question": "Can guardrails override HITL approvals?",
+        "answer": "Yes. When hitl.guardrailOverride is enabled, guardrails run after an approval decision and can still block destructive or sensitive actions. This adds a second safety layer after auto-approve, human approval, or hitl.llmJudge(). The default post-approval guardrails include code-safety and pii-redaction, and you can configure the list with hitl.postApprovalGuardrails. Disable the override only if you explicitly want the approval handler to have the final say."
       }
     },
     "gettingStarted": {
