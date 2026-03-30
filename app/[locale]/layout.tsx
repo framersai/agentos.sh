@@ -90,6 +90,8 @@ export async function resolveLocaleMetadata(locale: Locale) {
       'AI agent framework',
       'build AI agents',
       'TypeScript AI agents',
+      'adaptive intelligence',
+      'emergent behaviors',
       'multi-agent orchestration',
       'agentic AI framework',
       'autonomous AI agents',
@@ -109,6 +111,8 @@ export async function resolveLocaleMetadata(locale: Locale) {
       'agent runtime',
       'AI SDK TypeScript',
       'multimodal RAG',
+      'runtime tool forging',
+      'self-improving agents',
       'agent extensions',
       'agent skills',
     ],
@@ -148,7 +152,7 @@ export async function resolveLocaleMetadata(locale: Locale) {
           url: '/og-image.png',
           width: 1200,
           height: 630,
-          alt: 'AgentOS - Open-Source TypeScript AI Agent Runtime'
+          alt: 'AgentOS - Build Autonomous AI Agents with Adaptive Intelligence'
         }
       ],
       locale: locale === 'en' ? 'en_US' : locale,
@@ -238,10 +242,12 @@ export default async function LocaleLayout({
               },
               downloadUrl: 'https://github.com/framersai/agentos',
               featureList: [
-                'Multi-agent orchestration across 37 channel adapters',
+                'Adaptive intelligence with meta-reflective prompt adaptation and self-evaluating response quality',
+                'Emergent behaviors including runtime tool forging, self-improving personality, and composable workflows',
                 'Multimodal RAG with cognitive memory and Ebbinghaus decay',
+                'Multi-agent orchestration across 37 channel adapters',
                 '5-tier guardrails with prompt injection defense',
-                '21 LLM providers and 40 curated skills'
+                '21 LLM providers and 72 curated skills'
               ]
             })
           }}

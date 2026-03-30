@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "AgentOS | 自适应AI代理运行时，支持自适应与涌现智能",
-    "description": "使用AgentOS构建自适应、涌现的AI代理——企业级RAG、多代理编排和永久智能的便携式通用运行时。",
-    "ogTitle": "AgentOS | 面向企业级代理的自适应AI智能",
-    "ogDescription": "使用AgentOS构建具有记忆、工具和自主能力的自适应涌现AI代理。开源运行时，具有GMI角色、多代理编排和企业级护栏。由Framers（frame.dev）开发。",
-    "twitterTitle": "AgentOS | 面向企业级代理的自适应AI智能",
-    "twitterDescription": "使用AgentOS构建自适应涌现AI代理。开源运行时，具有GMI角色、代理编排和企业级护栏。由Framers开发。"
+    "title": "AgentOS — 构建具有自适应智能的自主AI代理",
+    "description": "构建具有自适应智能和涌现行为的自主AI代理。多模态RAG、认知记忆、流式护栏、语音管道和21个LLM提供商。开源TypeScript运行时。",
+    "ogTitle": "AgentOS — 构建具有自适应智能的自主AI代理",
+    "ogDescription": "构建具有自适应智能和涌现行为的自主AI代理。多模态RAG、认知记忆、流式护栏、语音管道和21个LLM提供商。开源TypeScript运行时。",
+    "twitterTitle": "AgentOS — 构建具有自适应智能的自主AI代理",
+    "twitterDescription": "构建具有自适应智能和涌现行为的自主AI代理。认知记忆、多模态RAG、流式护栏和21个LLM提供商。开源TypeScript运行时。"
   },
   "nav": {
     "features": "功能",

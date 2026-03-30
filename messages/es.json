@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "title": "AgentOS | Runtime Portátil de Agentes de IA para Inteligencia Adaptativa y Emergente",
-    "description": "Construye agentes de IA adaptativos y emergentes con AgentOS—el runtime universal portátil para RAG empresarial, orquestación multi-agente e inteligencia permanente.",
-    "ogTitle": "AgentOS | Inteligencia de IA Adaptativa para Agentes Listos para Empresas",
-    "ogDescription": "Construye agentes de IA adaptativos y emergentes con memoria, herramientas y autonomía. Runtime de código abierto con roles GMI, orquestación multi-agente y barreras de seguridad empresariales. Por Framers (frame.dev).",
-    "twitterTitle": "AgentOS | Inteligencia de IA Adaptativa para Agentes Listos para Empresas",
-    "twitterDescription": "Construye agentes de IA adaptativos y emergentes con AgentOS. Runtime de código abierto con roles GMI, orquestación de agentes y barreras de seguridad empresariales. Por Framers."
+    "title": "AgentOS — Construye Agentes de IA Autónomos con Inteligencia Adaptativa",
+    "description": "Construye agentes de IA autónomos con inteligencia adaptativa y comportamientos emergentes. RAG multimodal, memoria cognitiva, guardrails en streaming, pipeline de voz y 21 proveedores LLM. Runtime TypeScript de código abierto.",
+    "ogTitle": "AgentOS — Construye Agentes de IA Autónomos con Inteligencia Adaptativa",
+    "ogDescription": "Construye agentes de IA autónomos con inteligencia adaptativa y comportamientos emergentes. RAG multimodal, memoria cognitiva, guardrails en streaming, pipeline de voz y 21 proveedores LLM. Runtime TypeScript de código abierto.",
+    "twitterTitle": "AgentOS — Construye Agentes de IA Autónomos con Inteligencia Adaptativa",
+    "twitterDescription": "Construye agentes de IA autónomos con inteligencia adaptativa y comportamientos emergentes. Memoria cognitiva, RAG multimodal, guardrails en streaming y 21 proveedores LLM. Runtime TypeScript de código abierto."
   },
   "nav": {
     "features": "Características",
