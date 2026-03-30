@@ -297,19 +297,20 @@ export function GMISection() {
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                 />
 
-                {/* Pulse animation on LLM core */}
+                {/* Pulse animation on LLM core — uses explicit initial
+                    to prevent framer-motion setting r to undefined before
+                    the first animation frame */}
                 <motion.circle
                   cx={CX}
                   cy={CY}
-                  r={20}
                   fill="#fbbf24"
-                  opacity={0.3}
+                  filter="url(#gmi-core-glow)"
+                  initial={{ r: 20, opacity: 0.3 }}
                   animate={{
                     r: [18, 28, 18],
                     opacity: [0.4, 0.1, 0.4],
                   }}
                   transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-                  filter="url(#gmi-core-glow)"
                 />
                 <circle cx={CX} cy={CY} r={8} fill="#fbbf24" opacity={0.6} />
 
