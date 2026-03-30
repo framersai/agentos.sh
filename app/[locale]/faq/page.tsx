@@ -1,105 +1,428 @@
-import type { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
+import { getTranslations } from 'next-intl/server';
+import { ExternalLink, BookOpen, Cpu, Rocket, Building2, GraduationCap } from 'lucide-react';
+import type { Locale } from '../../../i18n';
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'faq' })
+type Props = {
+  params: {
+    locale: string;
+  };
+};
+
+export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'faq' });
+  const canonical = locale === 'en' ? '/faq' : `/${locale}/faq`;
+
   return {
     title: `${t('title')} - AgentOS`,
     description: t('subtitle'),
-    alternates: { canonical: 'https://agentos.sh/faq' },
+    alternates: { canonical },
     openGraph: {
       title: `${t('title')} - AgentOS`,
       description: t('subtitle'),
-      url: 'https://agentos.sh/faq',
+      url: `https://agentos.sh${canonical}`,
       siteName: 'AgentOS',
       images: [{ url: '/og-image.png' }],
-      type: 'website'
+      type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
       title: `${t('title')} - AgentOS`,
-      description: t('subtitle')
+      description: t('subtitle'),
     },
-    authors: [{ name: 'Frame.dev', url: 'https://frame.dev' }]
-  }
+    authors: [{ name: 'Frame.dev', url: 'https://frame.dev' }],
+  };
 }
 
-function FAQJsonLd() {
-  const t = useTranslations('faq')
+/** Structured data for SEO — Google-compatible FAQPage schema. */
+function FAQJsonLd({ locale: _locale }: { locale: string }) {
+  /**
+   * We hardcode the structured data to avoid runtime translation calls in a
+   * non-client component. These mirror the en.json FAQ content for the
+   * default locale; Google reads the rendered HTML regardless of locale.
+   */
+  const faqs = [
+    {
+      q: 'What is AgentOS?',
+      a: 'AgentOS is an open-source TypeScript runtime for building production AI agents with multi-agent orchestration, cognitive memory, multimodal RAG, 5-tier guardrails, voice pipelines, 37 channel adapters, and 21 LLM providers.',
+    },
+    {
+      q: 'Is AgentOS free and open source?',
+      a: 'Yes. The core runtime is Apache 2.0 licensed. Agent presets, extensions, and guardrails are MIT licensed.',
+    },
+    {
+      q: 'What LLM providers are supported?',
+      a: 'AgentOS supports 21 LLM providers including OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Ollama, OpenRouter, and more.',
+    },
+    {
+      q: 'How does cognitive memory work?',
+      a: 'AgentOS implements 8 neuroscience-backed memory mechanisms with Ebbinghaus forgetting curves and HEXACO personality modulation.',
+    },
+    {
+      q: 'How do I install AgentOS?',
+      a: 'Install via npm: npm install @framers/agentos. Requires Node.js 18 or higher.',
+    },
+    {
+      q: 'Does AgentOS work offline?',
+      a: 'Yes. AgentOS works fully offline when paired with Ollama for local LLM inference.',
+    },
+    {
+      q: 'Is AgentOS production-ready?',
+      a: 'Yes. AgentOS includes 5 named security tiers, streaming guardrails, tool call approvals, budget limits, and circuit breakers.',
+    },
+    {
+      q: 'Is there enterprise support?',
+      a: 'Yes. Contact team@frame.dev for production deployments, enterprise licensing, and dedicated support.',
+    },
+  ];
+
   const ld = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: t('questions.whatIsAgentOS.question'),
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: t('questions.whatIsAgentOS.answer'),
-        },
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.a,
       },
-      {
-        '@type': 'Question',
-        name: t('questions.customPersonas.question'),
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: t('questions.customPersonas.answer'),
-        },
-      },
-    ],
-  }
+    })),
+  };
+
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
     />
-  )
+  );
 }
 
-export default function AgentOSFaqPage() {
-  const t = useTranslations('faq')
-  
+/** Section wrapper with an icon badge and collapsible group of Q&A items. */
+function FAQSection({
+  icon,
+  title,
+  children,
+}: {
+  icon: ReactNode;
+  title: string;
+  children: ReactNode;
+}) {
   return (
-    <main className="mx-auto max-w-4xl px-6 py-12">
-      <FAQJsonLd />
-      <header className="mb-10">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">{t('title')}</h1>
-        <p className="mt-3 text-slate-600 dark:text-slate-400">
-          {t('subtitle')}
-        </p>
-      </header>
+    <section className="space-y-6">
+      <div className="flex items-center gap-3">
+        <span
+          className="inline-flex items-center justify-center w-10 h-10 rounded-xl"
+          style={{
+            background: 'linear-gradient(135deg, color-mix(in oklab, var(--color-accent-primary) 20%, transparent), color-mix(in oklab, var(--color-accent-secondary) 14%, transparent))',
+          }}
+        >
+          {icon}
+        </span>
+        <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-text-primary)]">{title}</h2>
+      </div>
+      <div className="space-y-5 ml-0 md:ml-13">{children}</div>
+    </section>
+  );
+}
 
-      <section className="space-y-7 md:space-y-8">
-        <article>
-          <h2 className="text-xl md:text-2xl font-semibold">{t('questions.whatIsAgentOS.question')}</h2>
-          <p className="mt-2">
-            {t('questions.whatIsAgentOS.answer')}
-          </p>
-        </article>
-        <article>
-          <h2 className="text-xl md:text-2xl font-semibold">{t('questions.integration.question')}</h2>
-          <p className="mt-2">
-            {t('questions.integration.answer')}
-          </p>
-        </article>
-        <article>
-          <h2 className="text-xl md:text-2xl font-semibold">{t('questions.customPersonas.question')}</h2>
-          <p className="mt-2">
-            {t('questions.customPersonas.answer')}
-          </p>
-        </article>
-      </section>
+/** Single FAQ item rendered as a details/summary element for native expand/collapse. */
+function FAQItem({ question, children }: { question: string; children: ReactNode }) {
+  return (
+    <details className="group rounded-2xl border border-[var(--color-border-subtle)]/60 bg-white/70 dark:bg-white/5 shadow-sm transition-shadow hover:shadow-md">
+      <summary className="cursor-pointer select-none list-none px-6 py-5 text-lg font-semibold text-[var(--color-text-primary)] flex items-center justify-between gap-4">
+        <span>{question}</span>
+        <span
+          className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full border border-[var(--color-border-subtle)] text-[var(--color-text-secondary)] transition-transform group-open:rotate-45"
+          aria-hidden="true"
+        >
+          +
+        </span>
+      </summary>
+      <div className="px-6 pb-6 text-[var(--color-text-secondary)] leading-relaxed space-y-3">
+        {children}
+      </div>
+    </details>
+  );
+}
 
-      <section className="mt-10 md:mt-14">
-        <h3 className="text-lg font-semibold">{t('seeAlso')}</h3>
-        <ul className="mt-3 grid gap-2 underline text-brand">
-          <li><a href="https://vca.chat/faq" target="_blank" rel="noopener">{t('links.vcaFaq')}</a></li>
-          <li><a href="https://frame.dev/faq" target="_blank" rel="noopener">{t('links.frameFaq')}</a></li>
-          <li><a href="https://frame.dev" target="_blank" rel="noopener">{t('links.frameDev')}</a></li>
-          <li><a href="https://frame.dev/blog" target="_blank" rel="noopener">{t('links.lookingGlass')}</a></li>
-        </ul>
-      </section>
+/** A single academic reference row with a DOI/URL link. */
+function ReferenceItem({
+  label,
+  title,
+  detail,
+  url,
+}: {
+  label: string;
+  title: string;
+  detail: string;
+  url: string;
+}) {
+  return (
+    <li className="rounded-xl border border-[var(--color-border-subtle)]/60 bg-white/70 dark:bg-white/5 p-5 space-y-1">
+      <p className="text-sm font-semibold text-[var(--color-text-primary)]">{label}</p>
+      <p className="text-sm italic text-[var(--color-text-secondary)]">{title}</p>
+      <p className="text-xs text-[var(--color-text-secondary)]">{detail}</p>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1 text-xs font-medium text-[var(--color-accent-primary)] hover:underline mt-1"
+      >
+        View source <ExternalLink className="w-3 h-3" />
+      </a>
+    </li>
+  );
+}
+
+export default async function FAQPage({ params: { locale } }: Props) {
+  const t = await getTranslations({ locale: locale as Locale, namespace: 'faq' });
+
+  const PAPER_KEYS = [
+    'ebbinghaus',
+    'baddeley',
+    'hexaco',
+    'louvain',
+    'hnsw',
+    'reconsolidation',
+    'rif',
+    'involuntaryRecall',
+  ] as const;
+
+  return (
+    <main
+      id="main-content"
+      className="relative overflow-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]"
+    >
+      <FAQJsonLd locale={locale} />
+
+      {/* Subtle gradient backdrop matching the about page */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10" />
+        <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-accent-primary/10 to-transparent blur-3xl opacity-40" />
+      </div>
+
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-16">
+        {/* Hero */}
+        <header className="space-y-4 text-center">
+          <p className="uppercase tracking-[0.5em] text-xs text-accent-primary">
+            {t('sections.general')}
+          </p>
+          <h1 className="text-4xl sm:text-5xl font-bold leading-tight gradient-text">
+            {t('title')}
+          </h1>
+          <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto">
+            {t('subtitle')}
+          </p>
+        </header>
+
+        {/* ---------------------------------------------------------------- */}
+        {/*  General                                                         */}
+        {/* ---------------------------------------------------------------- */}
+        <FAQSection
+          icon={<BookOpen className="w-5 h-5 text-[var(--color-accent-primary)]" />}
+          title={t('sections.general')}
+        >
+          <FAQItem question={t('general.whatIsAgentOS.question')}>
+            <p>{t('general.whatIsAgentOS.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('general.isOpenSource.question')}>
+            <p>{t('general.isOpenSource.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('general.llmProviders.question')}>
+            <p>{t('general.llmProviders.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('general.language.question')}>
+            <p>{t('general.language.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('general.comparison.question')}>
+            <p>{t('general.comparison.answer')}</p>
+          </FAQItem>
+        </FAQSection>
+
+        {/* ---------------------------------------------------------------- */}
+        {/*  Technical                                                       */}
+        {/* ---------------------------------------------------------------- */}
+        <FAQSection
+          icon={<Cpu className="w-5 h-5 text-[var(--color-accent-primary)]" />}
+          title={t('sections.technical')}
+        >
+          <FAQItem question={t('technical.whatIsGMI.question')}>
+            <p>{t('technical.whatIsGMI.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('technical.hexaco.question')}>
+            <p>{t('technical.hexaco.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('technical.cognitiveMemory.question')}>
+            <p>{t('technical.cognitiveMemory.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('technical.guardrails.question')}>
+            <p>{t('technical.guardrails.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('technical.capabilityDiscovery.question')}>
+            <p>{t('technical.capabilityDiscovery.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('technical.queryRouter.question')}>
+            <p>{t('technical.queryRouter.answer')}</p>
+          </FAQItem>
+        </FAQSection>
+
+        {/* ---------------------------------------------------------------- */}
+        {/*  Getting Started                                                 */}
+        {/* ---------------------------------------------------------------- */}
+        <FAQSection
+          icon={<Rocket className="w-5 h-5 text-[var(--color-accent-primary)]" />}
+          title={t('sections.gettingStarted')}
+        >
+          <FAQItem question={t('gettingStarted.install.question')}>
+            <p>{t('gettingStarted.install.answer')}</p>
+            <div className="mt-2 rounded-lg bg-[var(--color-background-tertiary)] px-4 py-3 font-mono text-sm">
+              npm install @framers/agentos
+            </div>
+          </FAQItem>
+          <FAQItem question={t('gettingStarted.firstAgent.question')}>
+            <p>Import the <code className="px-1.5 py-0.5 rounded bg-[var(--color-background-tertiary)] text-sm font-mono">agent</code> function and configure it with a provider, instructions, and optional personality traits:</p>
+            <pre className="mt-2 rounded-lg bg-[var(--color-background-tertiary)] px-4 py-3 text-sm font-mono overflow-x-auto leading-relaxed">
+{`import { agent } from '@framers/agentos'
+
+const myAgent = agent({
+  provider: 'openai',
+  instructions: 'You are a helpful assistant.',
+  personality: {
+    openness: 0.8,
+    conscientiousness: 0.9,
+  },
+  memory: { enabled: true },
+})
+
+const reply = await myAgent.send('Hello!')
+console.log(reply.text)`}
+            </pre>
+          </FAQItem>
+          <FAQItem question={t('gettingStarted.voice.question')}>
+            <p>{t('gettingStarted.voice.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('gettingStarted.deploy.question')}>
+            <p>{t('gettingStarted.deploy.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('gettingStarted.offline.question')}>
+            <p>{t('gettingStarted.offline.answer')}</p>
+          </FAQItem>
+        </FAQSection>
+
+        {/* ---------------------------------------------------------------- */}
+        {/*  Enterprise                                                      */}
+        {/* ---------------------------------------------------------------- */}
+        <FAQSection
+          icon={<Building2 className="w-5 h-5 text-[var(--color-accent-primary)]" />}
+          title={t('sections.enterprise')}
+        >
+          <FAQItem question={t('enterprise.productionReady.question')}>
+            <p>{t('enterprise.productionReady.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('enterprise.compliance.question')}>
+            <p>{t('enterprise.compliance.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('enterprise.support.question')}>
+            <p>{t('enterprise.support.answer')}</p>
+            <p className="mt-2">
+              <a
+                href="mailto:team@frame.dev"
+                className="inline-flex items-center gap-1 font-semibold text-[var(--color-accent-primary)] hover:underline"
+              >
+                team@frame.dev <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </p>
+          </FAQItem>
+          <FAQItem question={t('enterprise.selfHosted.question')}>
+            <p>{t('enterprise.selfHosted.answer')}</p>
+          </FAQItem>
+        </FAQSection>
+
+        {/* ---------------------------------------------------------------- */}
+        {/*  Academic References                                             */}
+        {/* ---------------------------------------------------------------- */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3">
+            <span
+              className="inline-flex items-center justify-center w-10 h-10 rounded-xl"
+              style={{
+                background: 'linear-gradient(135deg, color-mix(in oklab, var(--color-accent-primary) 20%, transparent), color-mix(in oklab, var(--color-accent-secondary) 14%, transparent))',
+              }}
+            >
+              <GraduationCap className="w-5 h-5 text-[var(--color-accent-primary)]" />
+            </span>
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-text-primary)]">
+                {t('references.title')}
+              </h2>
+              <p className="text-sm text-[var(--color-text-secondary)]">
+                {t('references.subtitle')}
+              </p>
+            </div>
+          </div>
+          <ul className="grid gap-4 md:grid-cols-2 ml-0 md:ml-13">
+            {PAPER_KEYS.map((key) => (
+              <ReferenceItem
+                key={key}
+                label={t(`references.papers.${key}.label`)}
+                title={t(`references.papers.${key}.title`)}
+                detail={t(`references.papers.${key}.detail`)}
+                url={t(`references.papers.${key}.url`)}
+              />
+            ))}
+          </ul>
+        </section>
+
+        {/* ---------------------------------------------------------------- */}
+        {/*  See Also                                                        */}
+        {/* ---------------------------------------------------------------- */}
+        <section className="rounded-3xl bg-gradient-to-r from-accent-primary/10 via-transparent to-accent-secondary/10 p-8 border border-[var(--color-border-subtle)]/60">
+          <h2 className="text-2xl font-bold mb-4 text-[var(--color-text-primary)]">{t('seeAlso')}</h2>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            <li>
+              <a
+                href="https://docs.agentos.sh/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[var(--color-accent-primary)] hover:underline font-semibold"
+              >
+                Documentation <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/framersai/agentos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[var(--color-accent-primary)] hover:underline font-semibold"
+              >
+                GitHub Repository <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://vca.chat/faq"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[var(--color-accent-primary)] hover:underline font-semibold"
+              >
+                {t('links.vcaFaq')} <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://frame.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[var(--color-accent-primary)] hover:underline font-semibold"
+              >
+                {t('links.frameDev')} <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </li>
+          </ul>
+        </section>
+      </div>
     </main>
-  )
+  );
 }

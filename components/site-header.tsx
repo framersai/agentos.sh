@@ -26,6 +26,7 @@ export function SiteHeader() {
     { href: `${localePrefix}/#features`, label: t('features') },
     { href: 'https://docs.agentos.sh/', label: 'Docs' },
     { href: 'https://docs.agentos.sh/blog', label: 'Blog' },
+    { href: `${localePrefix}/faq`, label: t('faq') },
   ], [t, localePrefix]);
 
   const localizeHref = useCallback((href: string) => {
