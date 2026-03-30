@@ -123,7 +123,7 @@
     "heroVisualAlt": "AgentOS Orchestrations-Workspace-Vorschau"
   },
   "features": {
-    "sectionTitle": "Kernfunktionen",
+    "sectionTitle": "Entwicklerfreundliche Plattform",
     "sectionSubtitle": "Produktionsreife Infrastruktur zum Erstellen, Bereitstellen und Skalieren von KI-Agenten",
     "multiAgent": {
       "title": "Emergente Multi-Agenten-Koordination",
