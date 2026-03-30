@@ -1362,6 +1362,8 @@
           "name": "GraphRAG",
           "description": "Louvain 클러스터링 지식 그래프를 통한 커뮤니티 인식 검색.",
           "badge": ""
+          ,"citation": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+          "citationUrl": "https://arxiv.org/abs/2404.16130"
         },
         "hybrid": {
           "name": "하이브리드",
