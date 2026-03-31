@@ -54,8 +54,8 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     if (!mounted) return;
     const update = () => {
       const w = window.innerWidth;
-      // Must match: clamp(22px, 5vw, 40px)
-      setMorphFontSize(Math.min(40, Math.max(22, w * 0.05)));
+      // 85% of CSS text size — particles render visually larger than equivalent CSS text
+      setMorphFontSize(Math.min(34, Math.max(19, w * 0.042)));
     };
     update();
     window.addEventListener('resize', update);
@@ -156,12 +156,12 @@ const HeroSectionInner = memo(function HeroSectionInner() {
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
           <h1 className="font-bold tracking-tight mb-2 text-[22px] sm:text-[30px] lg:text-[40px] leading-[1.15]" itemProp="name">
-            <ParticleMorphText words={['Emergent', 'Adaptive']} interval={3500} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
+            <ParticleMorphText words={['Emergent', 'Adaptive']} interval={4000} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
             {' '}
             <span className="text-[var(--color-text-primary)]">intelligence</span>
             <br />
             <span className="text-[var(--color-text-secondary)]">for </span>
-            <ParticleMorphText words={['adaptive', 'emergent']} interval={3500} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} />
+            <ParticleMorphText words={['adaptive', 'emergent']} interval={5000} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={0} />
             {' '}
             <span className="text-[var(--color-text-primary)]">agents</span>
           </h1>
