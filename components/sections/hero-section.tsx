@@ -137,12 +137,22 @@ const HeroSectionInner = memo(function HeroSectionInner() {
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
           <h1 className="font-bold tracking-tight mb-2 text-[22px] sm:text-[30px] lg:text-[40px] leading-tight" itemProp="name">
-            <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Emergent</span>
+            <span className="inline-block relative overflow-hidden align-baseline" style={{ height: '1.2em', verticalAlign: 'baseline' }}>
+              <span className="inline-flex flex-col animate-[heroMorph_6s_ease-in-out_infinite]">
+                <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent h-[1.2em] leading-[1.2em]">Emergent</span>
+                <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent h-[1.2em] leading-[1.2em]">Adaptive</span>
+              </span>
+            </span>
             {' '}
             <span className="text-[var(--color-text-primary)]">intelligence</span>
             <br />
             <span className="text-[var(--color-text-secondary)]">for </span>
-            <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">adaptive</span>
+            <span className="inline-block relative overflow-hidden align-baseline" style={{ height: '1.2em', verticalAlign: 'baseline' }}>
+              <span className="inline-flex flex-col animate-[heroMorph_6s_ease-in-out_infinite]" style={{ animationDelay: '3s' }}>
+                <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent h-[1.2em] leading-[1.2em]">adaptive</span>
+                <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent h-[1.2em] leading-[1.2em]">emergent</span>
+              </span>
+            </span>
             {' '}
             <span className="text-[var(--color-text-primary)]">agents</span>
           </h1>
