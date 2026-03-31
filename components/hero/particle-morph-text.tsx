@@ -41,7 +41,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
 
   const height = useMemo(() => Math.ceil(fontSize * 1.15), [fontSize]);
   const [wordWidths, setWordWidths] = useState<[number, number]>(() => {
-    const estimate = (text: string) => Math.ceil(text.length * fontSize * 0.62);
+    const estimate = (text: string) => Math.ceil(text.length * fontSize * 0.72);
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
