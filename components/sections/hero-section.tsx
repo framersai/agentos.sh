@@ -54,8 +54,8 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     if (!mounted) return;
     const update = () => {
       const w = window.innerWidth;
-      // ~75% of CSS text size — particle dots occupy more visual space than CSS glyphs
-      setMorphFontSize(Math.min(30, Math.max(17, w * 0.037)));
+      // ~82% of CSS text size (text-[22px] sm:text-[30px] lg:text-[40px])
+      setMorphFontSize(Math.min(33, Math.max(18, w * 0.04)));
     };
     update();
     window.addEventListener('resize', update);
