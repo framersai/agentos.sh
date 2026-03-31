@@ -155,17 +155,21 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
-          <h1 className="font-bold tracking-tight mb-2 leading-[1.15]" style={{ fontSize: `${morphFontSize}px` }} itemProp="name">
-            <span className="inline-block" style={{ verticalAlign: 'baseline', lineHeight: 0 }}>
-              <ParticleMorphText words={['Emergent', 'Adaptive']} interval={3000} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
-            </span>{' '}
-            <span className="text-[var(--color-text-primary)]">intelligence</span>
+          <h1 className="font-bold tracking-tight mb-2 text-[22px] sm:text-[30px] lg:text-[40px] leading-[1.15]" itemProp="name">
+            <span className="inline-flex items-baseline">
+              <span className="inline-block" style={{ lineHeight: 0, position: 'relative', top: '0.05em' }}>
+                <ParticleMorphText words={['Emergent', 'Adaptive']} interval={3500} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
+              </span>
+              <span className="text-[var(--color-text-primary)]">&nbsp;intelligence</span>
+            </span>
             <br />
-            <span className="text-[var(--color-text-secondary)]">for </span>
-            <span className="inline-block" style={{ verticalAlign: 'baseline', lineHeight: 0 }}>
-              <ParticleMorphText words={['adaptive', 'emergent']} interval={3000} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} />
-            </span>{' '}
-            <span className="text-[var(--color-text-primary)]">agents</span>
+            <span className="inline-flex items-baseline">
+              <span className="text-[var(--color-text-secondary)]">for&nbsp;</span>
+              <span className="inline-block" style={{ lineHeight: 0, position: 'relative', top: '0.05em' }}>
+                <ParticleMorphText words={['adaptive', 'emergent']} interval={3500} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} />
+              </span>
+              <span className="text-[var(--color-text-primary)]">&nbsp;agents</span>
+            </span>
           </h1>
 
           <p className="text-sm sm:text-base text-[var(--color-text-secondary)] mb-4 max-w-lg" itemProp="abstract">
