@@ -25,6 +25,11 @@ const ResponsiveNeuralConstellation = dynamic(() => import('../hero/neural-const
   loading: () => null
 });
 
+const ParticleMorphText = dynamic(() => import('../hero/particle-morph-text').then(m => ({ default: m.ParticleMorphText })), {
+  ssr: false,
+  loading: () => null
+});
+
 const HeroSectionInner = memo(function HeroSectionInner() {
   const t = useTranslations('hero');
   const locale = useLocale();
@@ -34,6 +39,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   const [githubForks, setGithubForks] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
   const [contentReady, setContentReady] = useState(false);
+  const [morphFontSize, setMorphFontSize] = useState(40);
   const isDark = resolvedTheme === 'dark';
 
   // Mark as mounted after hydration, then trigger content ready
@@ -42,6 +48,19 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     const timer = setTimeout(() => setContentReady(true), 50);
     return () => clearTimeout(timer);
   }, []);
+
+  // Match ParticleMorphText font size to the CSS clamp breakpoints
+  useEffect(() => {
+    if (!mounted) return;
+    const update = () => {
+      const w = window.innerWidth;
+      // Must match: clamp(22px, 5vw, 40px)
+      setMorphFontSize(Math.min(40, Math.max(22, w * 0.05)));
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -136,21 +155,15 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
-          <h1 className="font-bold tracking-tight mb-2 leading-[1.15]" style={{ fontSize: 'clamp(22px, 5vw, 40px)' }} itemProp="name">
-            <span className="inline-block relative overflow-hidden" style={{ height: '1.15em', width: 'auto', verticalAlign: 'top' }}>
-              <span className="flex flex-col animate-[heroMorph_6s_ease-in-out_infinite]" style={{ lineHeight: '1.15' }}>
-                <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent" style={{ height: '1.15em' }}>Emergent</span>
-                <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent" style={{ height: '1.15em' }}>Adaptive</span>
-              </span>
+          <h1 className="font-bold tracking-tight mb-2 leading-[1.15]" style={{ fontSize: `${morphFontSize}px` }} itemProp="name">
+            <span className="inline-block" style={{ verticalAlign: 'baseline', lineHeight: 0 }}>
+              <ParticleMorphText words={['Emergent', 'Adaptive']} interval={3000} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
             </span>{' '}
             <span className="text-[var(--color-text-primary)]">intelligence</span>
             <br />
             <span className="text-[var(--color-text-secondary)]">for </span>
-            <span className="inline-block relative overflow-hidden" style={{ height: '1.15em', width: 'auto', verticalAlign: 'top' }}>
-              <span className="flex flex-col animate-[heroMorph_6s_ease-in-out_infinite]" style={{ animationDelay: '3s', lineHeight: '1.15' }}>
-                <span className="bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent" style={{ height: '1.15em' }}>adaptive</span>
-                <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent" style={{ height: '1.15em' }}>emergent</span>
-              </span>
+            <span className="inline-block" style={{ verticalAlign: 'baseline', lineHeight: 0 }}>
+              <ParticleMorphText words={['adaptive', 'emergent']} interval={3000} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={1} />
             </span>{' '}
             <span className="text-[var(--color-text-primary)]">agents</span>
           </h1>
