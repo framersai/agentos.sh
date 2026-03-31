@@ -39,7 +39,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const [mounted, setMounted] = useState(false);
   const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
 
-  const height = useMemo(() => Math.ceil(fontSize * 1.05), [fontSize]);
+  const height = useMemo(() => Math.ceil(fontSize * 1.15), [fontSize]);
   const [wordWidths, setWordWidths] = useState<[number, number]>(() => {
     const estimate = (text: string) => Math.ceil(text.length * fontSize * 0.62);
     return [estimate(wordA), estimate(wordB)];
@@ -78,9 +78,9 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     off.height = height;
     ctx.font = `700 ${fontSize}px Inter, system-ui, sans-serif`;
     ctx.textAlign = 'left';
-    ctx.textBaseline = 'middle';
+    ctx.textBaseline = 'alphabetic';
     ctx.fillStyle = '#fff';
-    ctx.fillText(text, 0, height / 2);
+    ctx.fillText(text, 0, fontSize * 0.85);
 
     const data = ctx.getImageData(0, 0, width, height).data;
     const step = Math.max(2, Math.floor(fontSize / 20));
