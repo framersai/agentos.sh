@@ -54,8 +54,8 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     if (!mounted) return;
     const update = () => {
       const w = window.innerWidth;
-      // Match text-[28px] sm:text-[36px] lg:text-[48px]
-      setMorphFontSize(w >= 1024 ? 48 : w >= 640 ? 36 : 28);
+      // 110% of CSS text to compensate for canvas rendering thinner than CSS bold
+      setMorphFontSize(w >= 1024 ? 53 : w >= 640 ? 40 : 31);
     };
     update();
     window.addEventListener('resize', update);
