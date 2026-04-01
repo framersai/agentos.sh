@@ -200,6 +200,90 @@ export default async function LocaleLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         
+        {/* JSON-LD Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'SoftwareApplication',
+              name: 'AgentOS',
+              alternateName: 'AgentOS by Manic Agency',
+              description: 'Open-source TypeScript runtime for building autonomous AI agents with cognitive memory, multimodal RAG, streaming guardrails, voice pipeline, and 21 LLM providers.',
+              url: 'https://agentos.sh',
+              applicationCategory: 'DeveloperApplication',
+              operatingSystem: 'Any',
+              programmingLanguage: 'TypeScript',
+              offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+                description: 'Free and open-source (Apache 2.0)',
+              },
+              author: {
+                '@type': 'Organization',
+                name: 'Manic Agency LLC',
+                url: 'https://manic.agency',
+              },
+              downloadUrl: 'https://www.npmjs.com/package/@framers/agentos',
+              installUrl: 'https://www.npmjs.com/package/@framers/agentos',
+              softwareVersion: '0.1.x',
+              license: 'https://opensource.org/licenses/Apache-2.0',
+              image: 'https://agentos.sh/og-image.png',
+              screenshot: 'https://agentos.sh/og-image.png',
+              featureList: [
+                'Cognitive memory with Ebbinghaus decay',
+                'Multimodal RAG (text, image, audio, video)',
+                '21 LLM providers (OpenAI, Anthropic, Google, Ollama, etc.)',
+                '37 channel adapters (Telegram, WhatsApp, Discord, Slack)',
+                '5-tier guardrails with prompt injection defense',
+                'HEXACO personality system',
+                'Multi-agent orchestration and graph workflows',
+                'Voice pipeline (STT, TTS, VAD)',
+                '80+ curated skills',
+                'Self-hostable and production-ready',
+              ],
+              sameAs: [
+                'https://github.com/framersai/agentos',
+                'https://www.npmjs.com/package/@framers/agentos',
+                'https://docs.agentos.sh',
+              ],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Manic Agency LLC',
+              url: 'https://manic.agency',
+              logo: 'https://agentos.sh/logo.png',
+              sameAs: [
+                'https://github.com/manicinc',
+                'https://rabbithole.inc',
+              ],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'AgentOS',
+              url: 'https://agentos.sh',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: 'https://docs.agentos.sh/search?q={search_term_string}',
+                'query-input': 'required name=search_term_string',
+              },
+            }),
+          }}
+        />
+
         {/* Analytics with consent integration */}
         <GoogleAnalyticsDynamic />
         <MicrosoftClarityDynamic />
