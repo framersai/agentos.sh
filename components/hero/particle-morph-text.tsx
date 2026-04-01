@@ -236,16 +236,13 @@ export const ParticleMorphText = memo(function ParticleMorphText({
 
   // Inline-block for proper text flow alignment
   return (
-    <span 
-      className={`inline-block ${className}`} 
-      style={{ 
-        width: wrapperWidth,
-        height,
+    <span
+      className={`inline-block ${className}`}
+      style={{
+        width: '100%',
+        height: '100%',
         overflow: 'hidden',
-        verticalAlign: 'middle',
-        marginTop: 5, // shift down 5px
-        transition: 'width 520ms cubic-bezier(0.4, 0, 0.2, 1)',
-        willChange: 'width',
+        display: 'block',
       }}
     >
       <span className="sr-only">{wordA} / {wordB}</span>
