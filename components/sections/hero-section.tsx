@@ -155,14 +155,22 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
-          <h1 className="font-bold tracking-tight mb-2 text-[22px] sm:text-[30px] lg:text-[40px] leading-[1.15]" itemProp="name">
-            <ParticleMorphText words={['Emergent', 'Adaptive']} interval={4000} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
-            {' '}
+          <h1 className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2]" itemProp="name">
+            <span className="inline-block overflow-hidden align-top" style={{ height: '1.2em' }}>
+              <span className="flex flex-col animate-[heroWordCycle1_8s_ease-in-out_infinite]">
+                <span className="h-[1.2em] bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Emergent</span>
+                <span className="h-[1.2em] bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">Adaptive</span>
+              </span>
+            </span>{' '}
             <span className="text-[var(--color-text-primary)]">intelligence</span>
             <br />
             <span className="text-[var(--color-text-secondary)]">for </span>
-            <ParticleMorphText words={['adaptive', 'emergent']} interval={5000} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={0} />
-            {' '}
+            <span className="inline-block overflow-hidden align-top" style={{ height: '1.2em' }}>
+              <span className="flex flex-col animate-[heroWordCycle2_10s_ease-in-out_infinite]">
+                <span className="h-[1.2em] bg-gradient-to-r from-pink-400 to-indigo-400 bg-clip-text text-transparent">adaptive</span>
+                <span className="h-[1.2em] bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">emergent</span>
+              </span>
+            </span>{' '}
             <span className="text-[var(--color-text-primary)]">agents</span>
           </h1>
 
