@@ -80,7 +80,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
     ctx.fillStyle = '#fff';
-    ctx.fillText(text, 0, fontSize * 0.85);
+    ctx.fillText(text, 0, fontSize * 0.92);
 
     const data = ctx.getImageData(0, 0, width, height).data;
     const step = Math.max(2, Math.floor(fontSize / 20));
