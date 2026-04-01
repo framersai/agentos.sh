@@ -156,18 +156,18 @@ const HeroSectionInner = memo(function HeroSectionInner() {
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
         <article className="max-w-2xl">
           <h1 className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2]" itemProp="name">
-            <span className="relative inline-block mr-[0.25em]">
-              <span className="invisible" aria-hidden="true">Emergent</span>
-              <span className="absolute inset-0 overflow-visible">
+            <span className="relative inline-block mr-[0.3em]" style={{ minWidth: '5.5em' }}>
+              <span className="invisible" aria-hidden="true">Emergentt</span>
+              <span className="absolute inset-0 overflow-visible" style={{ top: '0.05em' }}>
                 <ParticleMorphText words={['Emergent', 'Adaptive']} interval={4000} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
               </span>
             </span>
             <span className="text-[var(--color-text-primary)]">intelligence</span>
             <br />
             <span className="text-[var(--color-text-secondary)]">for </span>
-            <span className="relative inline-block mr-[0.25em]">
-              <span className="invisible" aria-hidden="true">emergent</span>
-              <span className="absolute inset-0 overflow-visible">
+            <span className="relative inline-block mr-[0.3em]" style={{ minWidth: '5.5em' }}>
+              <span className="invisible" aria-hidden="true">emergentt</span>
+              <span className="absolute inset-0 overflow-visible" style={{ top: '0.05em' }}>
                 <ParticleMorphText words={['adaptive', 'emergent']} interval={5200} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={0} />
               </span>
             </span>
