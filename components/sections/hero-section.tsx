@@ -180,7 +180,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
           {/* CTAs */}
           <nav className="flex flex-wrap gap-2 mb-4" aria-label="Primary actions">
-            <LinkButton href={`/${locale === 'en' ? '' : locale + '/'}docs`} variant="primary" size="lg" className="group text-sm">
+            <LinkButton href="https://docs.agentos.sh/getting-started" variant="primary" size="lg" className="group text-sm">
               {t('getStarted')}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
             </LinkButton>
