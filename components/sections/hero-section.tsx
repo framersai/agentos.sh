@@ -157,12 +157,10 @@ const HeroSectionInner = memo(function HeroSectionInner() {
         <article className="max-w-2xl">
           <h1 className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2]" itemProp="name">
             <ParticleMorphText words={['Emergent', 'Adaptive']} interval={4000} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
-            {' '}
             <span className="text-[var(--color-text-primary)]">intelligence</span>
             <br />
             <span className="text-[var(--color-text-secondary)]">for </span>
             <ParticleMorphText words={['adaptive', 'emergent']} interval={5200} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={0} />
-            {' '}
             <span className="text-[var(--color-text-primary)]">agents</span>
           </h1>
 
