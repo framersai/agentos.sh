@@ -45,7 +45,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
-  const wrapperWidth = wordWidths[activeWordIndex] ?? width;
+  const _wrapperWidth = wordWidths[activeWordIndex] ?? width;
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);

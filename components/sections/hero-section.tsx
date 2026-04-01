@@ -32,7 +32,7 @@ const ParticleMorphText = dynamic(() => import('../hero/particle-morph-text').th
 
 const HeroSectionInner = memo(function HeroSectionInner() {
   const t = useTranslations('hero');
-  const locale = useLocale();
+  const _locale = useLocale();
   const { theme: currentTheme, resolvedTheme } = useTheme();
   const { copied: showToast, copy: copyToClipboard } = useCopyToClipboard();
   const [githubStars, setGithubStars] = useState<number | null>(null);
