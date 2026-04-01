@@ -239,10 +239,11 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     <span
       className={`inline-block ${className}`}
       style={{
-        width: _wrapperWidth + 4,
+        width: _wrapperWidth,
         height,
         overflow: 'visible',
         verticalAlign: 'text-bottom',
+        marginRight: '0.2em',
         transition: 'width 520ms cubic-bezier(0.4, 0, 0.2, 1)',
         willChange: 'width',
       }}
