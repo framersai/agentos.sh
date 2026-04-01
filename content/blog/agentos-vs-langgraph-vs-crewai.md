@@ -28,7 +28,7 @@ Building AI agents in 2026 means choosing between a growing number of frameworks
 | **Streaming** | Native SSE + WebSocket | Token-by-token streaming | Streaming support | Native streaming |
 | **Self-Hosted** | Yes (npm install) | Yes | Yes | Yes |
 | **License** | Apache 2.0 | MIT | MIT | MIT + Enterprise |
-| **GitHub Stars** | ~90 | ~8,000+ | ~25,000+ | ~22,000+ |
+| **GitHub Stars** | ~90 | ~24,600+ | ~46,900+ | ~22,300+ |
 
 ## Code Comparison: Same Task, Four Frameworks
 
@@ -135,7 +135,7 @@ The tradeoff: LangGraph is primarily Python. The JavaScript SDK exists but has f
 
 CrewAI's core abstraction is the [crew](https://docs.crewai.com/) — a team of agents with defined roles that collaborate on tasks. You assign each agent a role ("Research Analyst", "Editor", "Fact Checker") and CrewAI handles task delegation and inter-agent communication.
 
-With [25,000+ GitHub stars](https://github.com/crewAIInc/crewAI), CrewAI has the largest community and the most third-party tutorials. The [100+ built-in tools](https://crewai.com/open-source) cover web search, file operations, and API integrations.
+With [46,900+ GitHub stars](https://github.com/crewAIInc/crewAI), CrewAI has the largest community and the most third-party tutorials. The [100+ built-in tools](https://crewai.com/open-source) cover web search, file operations, and API integrations.
 
 The tradeoff: CrewAI is Python-only. Memory is simpler (shared short/long-term + entity, no decay model). No guardrails beyond output validation. No channel adapters or voice.
 
@@ -145,7 +145,7 @@ The tradeoff: CrewAI is Python-only. Memory is simpler (shared short/long-term +
 
 Built by the [team behind Gatsby](https://github.com/mastra-ai/mastra), Mastra is the closest TypeScript competitor to AgentOS. It connects to [40+ LLM providers](https://mastra.ai/) through one interface, has a workflow engine for multi-step automations, and supports [MCP servers](https://mastra.ai/docs) for tool integration.
 
-With [22,000+ stars](https://github.com/mastra-ai/mastra), Mastra has strong community adoption. The playground and tracing tools are polished. It integrates cleanly with Next.js and React.
+With [22,300+ stars](https://github.com/mastra-ai/mastra), Mastra has strong community adoption. The playground and tracing tools are polished. It integrates cleanly with Next.js and React.
 
 The tradeoff: no cognitive memory (conversation + semantic only), no personality system, no guardrails, no channel adapters, no voice pipeline. Mastra is closer to a "TypeScript LangChain" — an orchestration layer, not a cognitive agent runtime.
 
