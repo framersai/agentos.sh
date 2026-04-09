@@ -898,53 +898,21 @@
     "watchButton": "观看演示",
     "duration": "时长",
     "videos": {
-      "streaming": {
-        "title": "实时流式传输",
-        "description": "Token级响应交付",
-        "captions": [
-          "输入提示词并发送给代理",
-          "实时观看Token流式返回",
-          "带会话时间线的完整响应"
-        ]
-      },
-      "agentCreation": {
-        "title": "代理创建",
-        "description": "几分钟内构建自定义AI角色",
-        "captions": [
-          "浏览角色目录 — 预构建的代理",
-          "步骤1 — 名称、描述、标签和特征",
-          "步骤2 — 系统提示词、模型和成本策略",
-          "护栏和工具扩展",
-          "市场情报分析师 — 已创建",
-          "新角色的流式响应"
-        ]
+      "agentLoop": {
+        "title": "Agent Loop",
+        "description": "工具、流式传输和追踪的实际演示"
       },
       "multiAgent": {
-        "title": "多代理系统",
-        "description": "编排代理团队",
-        "captions": [
-          "代理机构管理器 — 负责人、研究员、撰稿人",
-          "定义多代理协调的共享目标",
-          "创建并启动新的代理团队"
-        ]
+        "title": "Multi-Agent Coordination",
+        "description": "多个代理协同工作，实现共同目标"
       },
-      "ragMemory": {
-        "title": "RAG 记忆",
-        "description": "评估套件和质量跟踪",
-        "captions": [
-          "评估仪表板 — 带评分的运行历史",
-          "运行评估并跟踪每个测试用例的通过/失败",
-          "跨运行比较结果 — 尽早发现回归"
-        ]
+      "graphPipeline": {
+        "title": "Graph Pipeline",
+        "description": "5节点分类、查询、起草和审批流程"
       },
-      "planningEngine": {
-        "title": "规划引擎",
-        "description": "多步骤任务分解",
-        "captions": [
-          "规划引擎 — 带置信度评分的执行计划",
-          "暂停、恢复和推进 — 完全执行控制",
-          "每一步都追踪工具调用和依赖关系"
-        ]
+      "toolForge": {
+        "title": "Tool Forge",
+        "description": "代理自行创建并使用工具"
       }
     }
   },

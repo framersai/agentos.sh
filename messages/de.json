@@ -1050,53 +1050,21 @@
     "watchButton": "Demo ansehen",
     "duration": "Dauer",
     "videos": {
-      "streaming": {
-        "title": "Echtzeit-Streaming",
-        "description": "Token-genaue Antwortlieferung",
-        "captions": [
-          "Geben Sie einen Prompt ein und senden Sie ihn an den Agenten",
-          "Beobachten Sie, wie Tokens in Echtzeit zurückkommen",
-          "Vollständige Antwort mit Sitzungs-Timeline"
-        ]
-      },
-      "agentCreation": {
-        "title": "Agentenerstellung",
-        "description": "Erstellen Sie KI-Personas in Minuten",
-        "captions": [
-          "Durchsuchen Sie den Persona-Katalog — vorgefertigte Agenten",
-          "Schritt 1 — Name, Beschreibung, Tags und Eigenschaften",
-          "Schritt 2 — System-Prompt, Modell und Kostenstrategie",
-          "Leitplanken und Tool-Erweiterungen",
-          "Marktintelligenz-Analyst — erstellt",
-          "Streaming-Antwort der neuen Persona"
-        ]
+      "agentLoop": {
+        "title": "Agent Loop",
+        "description": "Tools, Streaming und Traces in Aktion"
       },
       "multiAgent": {
-        "title": "Multi-Agenten-System",
-        "description": "Orchestrieren Sie Agenten-Teams",
-        "captions": [
-          "Agentur-Manager — Lead, Forscher, Autor",
-          "Definieren Sie gemeinsame Ziele für die Multi-Agenten-Koordination",
-          "Erstellen und starten Sie neue Agenten-Teams"
-        ]
+        "title": "Multi-Agent Coordination",
+        "description": "Mehrere Agenten arbeiten auf ein gemeinsames Ziel hin"
       },
-      "ragMemory": {
-        "title": "RAG-Speicher",
-        "description": "Evaluierungs-Suiten und Qualitätsverfolgung",
-        "captions": [
-          "Evaluierungs-Dashboard — Ausführungsverlauf mit Bewertungen",
-          "Führen Sie Evaluierungen durch und verfolgen Sie Bestehen/Nichtbestehen pro Testfall",
-          "Vergleichen Sie Ergebnisse über Durchläufe hinweg — erkennen Sie Regressionen frühzeitig"
-        ]
+      "graphPipeline": {
+        "title": "Graph Pipeline",
+        "description": "5-Knoten-Flow: Klassifizieren, Nachschlagen, Entwerfen und Genehmigen"
       },
-      "planningEngine": {
-        "title": "Planungs-Engine",
-        "description": "Mehrstufige Aufgabenzerlegung",
-        "captions": [
-          "Planungs-Engine — Ausführungspläne mit Konfidenzwerten",
-          "Pausieren, fortsetzen und voranschreiten — volle Ausführungskontrolle",
-          "Jeder Schritt mit Tool-Aufrufen und Abhängigkeiten verfolgt"
-        ]
+      "toolForge": {
+        "title": "Tool Forge",
+        "description": "Agent erstellt und nutzt seine eigenen Tools"
       }
     }
   },
