@@ -1,9 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import wildsLogo from '@/public/logos/wilds-logo.svg'
 
 const placeholderSlots = [0, 1, 2] as const
 
@@ -50,13 +48,17 @@ export function SocialProofSection() {
               rel="noopener noreferrer"
               className="relative overflow-hidden rounded-3xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 dark:border-white/10 p-5 backdrop-blur flex flex-col items-center justify-center gap-3 transition-colors hover:border-accent-primary/50 hover:bg-white/90 dark:hover:bg-white/10"
             >
-              <Image
-                src={wildsLogo}
-                alt="Wilds AI"
-                width={48}
-                height={48}
-                className="rounded-xl"
-              />
+              <svg width="48" height="48" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="rounded-xl">
+                <rect width="64" height="64" rx="15" fill="#0c1528"/>
+                <defs>
+                  <clipPath id="above-front">
+                    <rect x="0" y="0" width="64" height="50"/>
+                  </clipPath>
+                </defs>
+                <path d="M9,50 L24,22 L32,32 L40,22 L55,50 L47,50 L40,34 L32,44 L24,34 L17,50 Z" fill="#1a3358" clipPath="url(#above-front)"/>
+                <path d="M9,50 L22,28 L32,40 L42,28 L55,50 L47,50 L42,38 L32,50 L22,38 L17,50 Z" fill="#2d6bc9"/>
+                <circle cx="32" cy="16" r="5" fill="#4a8fe8"/>
+              </svg>
               <span className="text-sm font-semibold text-text-primary">Wilds AI</span>
             </a>
 
