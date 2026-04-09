@@ -1195,53 +1195,21 @@
     "watchButton": "Watch Demo",
     "duration": "Duration",
     "videos": {
-      "streaming": {
-        "title": "Real-time Streaming",
-        "description": "Token-level response delivery",
-        "captions": [
-          "Type a prompt and send it to the agent",
-          "Watch tokens stream back in real-time",
-          "Complete response with session timeline"
-        ]
-      },
-      "agentCreation": {
-        "title": "Agent Creation",
-        "description": "Build custom AI personas in minutes",
-        "captions": [
-          "Browse the persona catalog — pre-built agents",
-          "Step 1 — Name, description, tags, and traits",
-          "Step 2 — System prompt, model, and cost strategy",
-          "Guardrails and tool extensions",
-          "Market Intelligence Analyst — created",
-          "Streaming response from the new persona"
-        ]
+      "agentLoop": {
+        "title": "Agent Loop",
+        "description": "Tools, streaming, and traces in action"
       },
       "multiAgent": {
-        "title": "Multi-Agent System",
-        "description": "Orchestrate agent teams",
-        "captions": [
-          "Agency Manager — Lead, Researcher, Writer seats",
-          "Define shared goals for multi-agent coordination",
-          "Create and launch new agent teams"
-        ]
+        "title": "Multi-Agent Coordination",
+        "description": "Multiple agents working toward a shared goal"
       },
-      "ragMemory": {
-        "title": "RAG Memory",
-        "description": "Evaluation suites and quality tracking",
-        "captions": [
-          "Evaluation Dashboard — run history with scores",
-          "Run evaluations and track pass/fail per test case",
-          "Compare results across runs — catch regressions early"
-        ]
+      "graphPipeline": {
+        "title": "Graph Pipeline",
+        "description": "5-node classify, lookup, draft, and approve flow"
       },
-      "planningEngine": {
-        "title": "Planning Engine",
-        "description": "Multi-step task decomposition",
-        "captions": [
-          "Planning Engine — execution plans with confidence scores",
-          "Pause, resume, and advance — full execution control",
-          "Each step tracked with tool calls and dependencies"
-        ]
+      "toolForge": {
+        "title": "Tool Forge",
+        "description": "Agent creates and uses its own tools"
       }
     }
   },

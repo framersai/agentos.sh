@@ -998,53 +998,21 @@
     "watchButton": "Ver Demo",
     "duration": "Duração",
     "videos": {
-      "streaming": {
-        "title": "Streaming em Tempo Real",
-        "description": "Entrega de respostas por token",
-        "captions": [
-          "Digite um prompt e envie para o agente",
-          "Veja os tokens chegando em tempo real",
-          "Resposta completa com linha do tempo da sessão"
-        ]
-      },
-      "agentCreation": {
-        "title": "Criação de Agentes",
-        "description": "Crie personas de IA em minutos",
-        "captions": [
-          "Navegue pelo catálogo de personas — agentes pré-configurados",
-          "Passo 1 — Nome, descrição, tags e traços",
-          "Passo 2 — Prompt de sistema, modelo e estratégia de custos",
-          "Guardrails e extensões de ferramentas",
-          "Analista de Inteligência de Mercado — criado",
-          "Resposta em streaming da nova persona"
-        ]
+      "agentLoop": {
+        "title": "Agent Loop",
+        "description": "Ferramentas, streaming e traces em ação"
       },
       "multiAgent": {
-        "title": "Sistema Multiagente",
-        "description": "Orquestre equipes de agentes",
-        "captions": [
-          "Gestor de Agência — Líder, Pesquisador, Redator",
-          "Defina objetivos compartilhados para coordenação multiagente",
-          "Crie e lance novas equipes de agentes"
-        ]
+        "title": "Multi-Agent Coordination",
+        "description": "Múltiplos agentes trabalhando em direção a um objetivo compartilhado"
       },
-      "ragMemory": {
-        "title": "Memória RAG",
-        "description": "Suítes de avaliação e rastreamento de qualidade",
-        "captions": [
-          "Painel de Avaliação — histórico de execuções com pontuações",
-          "Execute avaliações e acompanhe aprovação/falha por caso de teste",
-          "Compare resultados entre execuções — detecte regressões cedo"
-        ]
+      "graphPipeline": {
+        "title": "Graph Pipeline",
+        "description": "Fluxo de 5 nós: classificar, consultar, redigir e aprovar"
       },
-      "planningEngine": {
-        "title": "Motor de Planejamento",
-        "description": "Decomposição de tarefas multi-passo",
-        "captions": [
-          "Motor de Planejamento — planos de execução com pontuações de confiança",
-          "Pausar, retomar e avançar — controle total da execução",
-          "Cada passo rastreado com chamadas de ferramentas e dependências"
-        ]
+      "toolForge": {
+        "title": "Tool Forge",
+        "description": "O agente cria e usa suas próprias ferramentas"
       }
     }
   },

@@ -1150,53 +1150,21 @@
     "watchButton": "Voir la démo",
     "duration": "Durée",
     "videos": {
-      "streaming": {
-        "title": "Streaming en temps réel",
-        "description": "Livraison des réponses token par token",
-        "captions": [
-          "Saisissez un prompt et envoyez-le à l'agent",
-          "Observez les tokens arriver en temps réel",
-          "Réponse complète avec chronologie de session"
-        ]
-      },
-      "agentCreation": {
-        "title": "Création d'agents",
-        "description": "Créez des personas IA sur mesure en quelques minutes",
-        "captions": [
-          "Parcourez le catalogue de personas — agents préconfigurés",
-          "Étape 1 — Nom, description, tags et traits",
-          "Étape 2 — Prompt système, modèle et stratégie de coûts",
-          "Garde-fous et extensions d'outils",
-          "Analyste en Intelligence de Marché — créé",
-          "Réponse en streaming de la nouvelle persona"
-        ]
+      "agentLoop": {
+        "title": "Agent Loop",
+        "description": "Outils, streaming et traces en action"
       },
       "multiAgent": {
-        "title": "Système multi-agents",
-        "description": "Orchestrez des équipes d'agents",
-        "captions": [
-          "Gestionnaire d'agence — Lead, Chercheur, Rédacteur",
-          "Définissez des objectifs communs pour la coordination multi-agents",
-          "Créez et lancez de nouvelles équipes d'agents"
-        ]
+        "title": "Multi-Agent Coordination",
+        "description": "Plusieurs agents collaborant vers un objectif commun"
       },
-      "ragMemory": {
-        "title": "Mémoire RAG",
-        "description": "Suites d'évaluation et suivi qualité",
-        "captions": [
-          "Tableau de bord d'évaluation — historique des exécutions avec scores",
-          "Lancez les évaluations et suivez réussite/échec par cas de test",
-          "Comparez les résultats entre exécutions — détectez les régressions tôt"
-        ]
+      "graphPipeline": {
+        "title": "Graph Pipeline",
+        "description": "Flux à 5 nœuds : classifier, rechercher, rédiger et approuver"
       },
-      "planningEngine": {
-        "title": "Moteur de planification",
-        "description": "Décomposition de tâches multi-étapes",
-        "captions": [
-          "Moteur de planification — plans d'exécution avec scores de confiance",
-          "Mettre en pause, reprendre et avancer — contrôle total de l'exécution",
-          "Chaque étape suivie avec appels d'outils et dépendances"
-        ]
+      "toolForge": {
+        "title": "Tool Forge",
+        "description": "L'agent crée et utilise ses propres outils"
       }
     }
   },
