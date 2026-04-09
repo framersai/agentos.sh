@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
+import wildsLogo from '@/public/logos/wilds-logo.svg'
 
 const placeholderSlots = [0, 1, 2] as const
 
@@ -50,7 +51,7 @@ export function SocialProofSection() {
               className="relative overflow-hidden rounded-3xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 dark:border-white/10 p-5 backdrop-blur flex flex-col items-center justify-center gap-3 transition-colors hover:border-accent-primary/50 hover:bg-white/90 dark:hover:bg-white/10"
             >
               <Image
-                src="/logos/wilds-logo.svg"
+                src={wildsLogo}
                 alt="Wilds AI"
                 width={48}
                 height={48}
