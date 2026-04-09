@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 
@@ -41,6 +42,23 @@ export function SocialProofSection() {
             viewport={{ once: true }}
             className="grid sm:grid-cols-2 gap-4"
           >
+            {/* Wilds AI — revealed deployment */}
+            <a
+              href="https://wilds.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative overflow-hidden rounded-3xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 dark:border-white/10 p-5 backdrop-blur flex flex-col items-center justify-center gap-3 transition-colors hover:border-accent-primary/50 hover:bg-white/90 dark:hover:bg-white/10"
+            >
+              <Image
+                src="/logos/wilds-logo.svg"
+                alt="Wilds AI"
+                width={48}
+                height={48}
+                className="rounded-xl"
+              />
+              <span className="text-sm font-semibold text-text-primary">Wilds AI</span>
+            </a>
+
             {placeholderSlots.map((slot) => (
               <div key={slot} className="relative overflow-hidden rounded-3xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 dark:border-white/10 p-5 backdrop-blur">
                 <div className="absolute inset-0 bg-black/50 blur-lg opacity-0 pointer-events-none" aria-hidden="true" />
