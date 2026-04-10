@@ -188,8 +188,10 @@ const result = await generateText({
 console.log(result.text);
 ```
 
-[Full documentation](https://docs.agentos.sh) · [GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos)
+[Full documentation](https://docs.agentos.sh) · [GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos) · [Discord](https://discord.gg/VXXC4SJMKh)
 
 ---
+
+**AgentOS** is built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). See [Wilds.ai](https://wilds.ai) for AI game worlds powered by AgentOS.
 
 *Last updated: March 2026. Framework features and star counts change — check each framework's documentation for the latest information.*

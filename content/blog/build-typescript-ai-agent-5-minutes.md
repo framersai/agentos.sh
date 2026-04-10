@@ -183,4 +183,8 @@ console.log(response);
 npm install @framers/agentos
 ```
 
-[GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos) · [Documentation](https://docs.agentos.sh)
+[GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos) · [Documentation](https://docs.agentos.sh) · [Discord](https://discord.gg/VXXC4SJMKh)
+
+---
+
+**AgentOS** is built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). See [Wilds.ai](https://wilds.ai) for AI game worlds powered by AgentOS.
