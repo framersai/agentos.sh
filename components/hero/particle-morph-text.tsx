@@ -244,7 +244,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         overflow: 'visible',
         verticalAlign: 'baseline',
         position: 'relative',
-        top: '0.08em',
+        top: '0.22em',
         marginRight: '0.2em',
         transition: 'width 520ms cubic-bezier(0.4, 0, 0.2, 1)',
         willChange: 'width',
