@@ -163,13 +163,15 @@ export default function DocsPage({ params }: Props) {
             </p>
             <div>
               <pre className="code-block overflow-x-auto text-xs sm:text-sm">
-                <code>{`pnpm add @framers/agentos
+                <code>{`npm install @framers/agentos
 
-// package.json must have "type": "module" (ESM required)
+// Set a provider key via env or pass it inline
+// export OPENAI_API_KEY=sk-...
 import { generateText } from '@framers/agentos'
 
 const result = await generateText({
-  model: 'openai:gpt-4o',
+  provider: 'openai',
+  apiKey: process.env.OPENAI_API_KEY, // optional — auto-detected from env
   prompt: 'Explain quantum computing in one sentence.',
 })
 console.log(result.text)`}</code>
