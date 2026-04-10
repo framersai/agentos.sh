@@ -116,15 +116,27 @@ export function SiteHeader() {
     const hashMatch = href.match(/#(.+)$/);
     if (hashMatch) {
       const targetId = hashMatch[1];
-      const element = document.getElementById(targetId);
-      if (element) {
-        // On the same page — smooth scroll
-        e.preventDefault();
-        closeMenu();
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        window.history.pushState(null, '', href);
+      e.preventDefault();
+      closeMenu();
+      window.history.pushState(null, '', href);
+
+      const scrollTo = () => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return true;
+        }
+        return false;
+      };
+
+      // Element may be in a lazy-loaded (ssr: false) section that hasn't mounted yet.
+      // Retry a few times to catch deferred renders.
+      if (!scrollTo()) {
+        let attempts = 0;
+        const interval = setInterval(() => {
+          if (scrollTo() || ++attempts >= 10) clearInterval(interval);
+        }, 150);
       }
-      // else: element not on this page — let the browser navigate to /#hash
     }
   };
 
