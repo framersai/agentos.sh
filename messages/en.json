@@ -41,8 +41,8 @@
         "bottom": "across 37 Channels"
       },
       {
-        "top": "Security Guardrails",
-        "bottom": "with Prompt Injection Defense"
+        "top": "Built-in Safety",
+        "bottom": "PII Redaction & Injection Defense"
       },
       {
         "top": "21 LLM Providers",
@@ -359,8 +359,8 @@
         ]
       },
       "guardrails": {
-        "title": "Security Guardrails",
-        "description": "Five security tiers — dangerous, permissive, balanced, strict, paranoid — with PII redaction, ML classifiers, and hallucination detection",
+        "title": "Built-in Safety",
+        "description": "Blocks prompt injection, redacts personal data, catches hallucinations, and scans generated code — configurable from permissive to locked-down",
         "features": [
           "4-tier PII redaction",
           "ONNX BERT classifiers",
@@ -407,10 +407,10 @@
   },
   "enterprise": {
     "title": "Enterprise-Ready Infrastructure",
-    "subtitle": "Five security tiers, guardrail extensions, 21 LLM providers, 37 channels, and cognitive memory — production-grade from day one",
+    "subtitle": "Safety guardrails, 21 LLM providers, 37 channels, and cognitive memory — production-grade from day one",
     "features": {
       "security": {
-        "title": "5-Tier Security",
+        "title": "Agent Safety",
         "items": [
           "Dangerous, Permissive, Balanced, Strict, Paranoid tiers",
           "LLM-based sentiment analysis with keyword fallback",
@@ -466,7 +466,7 @@
     "legend": {
       "fullyImplemented": {
         "title": "Fully Implemented",
-        "description": "5-tier security, 6 guardrails, PII redaction, audit logging, cognitive memory, and 105+ extensions are production-ready today"
+        "description": "PII redaction, prompt injection defense, content moderation, audit logging, cognitive memory, and 105+ extensions are production-ready today"
       },
       "inProgress": {
         "title": "Planned",
@@ -919,7 +919,7 @@
       },
       "guardrails": {
         "name": "Guardrails & Safety",
-        "description": "Streaming guardrails evaluate every chunk. PII redaction, toxicity detection, grounding guard, code safety scanner. Five security tiers from permissive to paranoid."
+        "description": "Every output chunk is evaluated in real time. PII redaction, toxicity detection, hallucination grounding, and code safety scanning — configurable from permissive to fully locked down."
       },
       "tools": {
         "name": "Tools & Extensions",
@@ -965,7 +965,7 @@
       },
       "safety": {
         "traditional": "No safety",
-        "gmi": "5-tier guardrails with streaming evaluation"
+        "gmi": "Real-time content safety with PII redaction and injection defense"
       }
     }
   },
@@ -982,7 +982,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "What is AgentOS?",
-        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents. It provides multi-agent orchestration, cognitive memory with 8 neuroscience-backed mechanisms, multimodal RAG with 7 vector store backends, 5-tier guardrails, voice pipelines, 37 channel adapters, and 21 LLM provider integrations. It is designed to be self-hostable and free."
+        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents. It provides multi-agent orchestration, cognitive memory, multimodal RAG, built-in safety guardrails (PII redaction, prompt injection defense, content moderation), voice pipelines, 37 channel adapters, and 21 LLM provider integrations. Self-hostable and free."
       },
       "isOpenSource": {
         "question": "Is AgentOS free and open source?",
@@ -1068,7 +1068,7 @@
     "enterprise": {
       "productionReady": {
         "question": "Is AgentOS production-ready?",
-        "answer": "Yes. AgentOS includes 5 named security tiers (dangerous, permissive, balanced, strict, paranoid) for fine-grained control over agent behavior. The balanced tier is recommended for production. Features include streaming guardrails, tool call approval workflows, budget limits, auditable routing, circuit breakers for tool failures, and rate limiting."
+        "answer": "Yes. AgentOS lets you control exactly how much freedom your agents have — from wide open to fully locked down. It blocks prompt injection attacks, redacts personal data, moderates content in real time, requires approval for sensitive tool calls, enforces budget limits, and includes circuit breakers and rate limiting."
       },
       "compliance": {
         "question": "What compliance standards does AgentOS address?",

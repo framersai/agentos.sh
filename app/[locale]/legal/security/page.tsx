@@ -35,7 +35,7 @@ const Sections = [
     )
   },
   {
-    title: "5-tier security system",
+    title: "Configurable agent safety",
     body: (
       <div className="space-y-3 text-slate-700 dark:text-slate-200">
         <p>

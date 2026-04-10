@@ -100,7 +100,7 @@ function FAQJsonLd({ locale: _locale }: { locale: string }) {
   const faqs = [
     {
       q: 'What is AgentOS?',
-      a: 'AgentOS is an open-source TypeScript runtime for building production AI agents with multi-agent orchestration, cognitive memory, multimodal RAG, 5-tier guardrails, voice pipelines, 37 channel adapters, and 21 LLM providers.',
+      a: 'AgentOS is an open-source TypeScript runtime for building production AI agents with multi-agent orchestration, cognitive memory, multimodal RAG, built-in safety guardrails, voice pipelines, 37 channel adapters, and 21 LLM providers.',
     },
     {
       q: 'Is AgentOS free and open source?',
@@ -124,7 +124,7 @@ function FAQJsonLd({ locale: _locale }: { locale: string }) {
     },
     {
       q: 'Is AgentOS production-ready?',
-      a: 'Yes. AgentOS includes 5 named security tiers, streaming guardrails, tool call approvals, budget limits, and circuit breakers.',
+      a: 'Yes. AgentOS blocks prompt injection, redacts personal data, moderates content in real time, and includes tool call approvals, budget limits, and circuit breakers.',
     },
     {
       q: 'Is there enterprise support?',
