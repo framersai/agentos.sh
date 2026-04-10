@@ -67,6 +67,10 @@
       "destination": "/en/index.html"
     },
     {
+      "source": "/index.txt",
+      "destination": "/en/index.txt"
+    },
+    {
       "source": "/:locale(en|zh|ko|ja|es|de|fr|pt)",
       "destination": "/:locale/index.html"
     },

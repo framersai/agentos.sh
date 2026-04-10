@@ -1,0 +1,31 @@
+# Hashed Next.js static assets — immutable long cache
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML — always revalidate
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Security headers
+/*
+  X-DNS-Prefetch-Control: on
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cross-Origin-Opener-Policy: same-origin

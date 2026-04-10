@@ -192,32 +192,31 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             ))}
           </div>
 
-          {/* Badges - dynamic shields.io images */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* Badges - dynamic shields.io images (no explicit width — intrinsic sizes vary) */}
           <div className="flex flex-wrap gap-2 mb-5" aria-label="Package badges">
             <a href="https://www.npmjs.com/package/@framers/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/npm/v/@framers/agentos?logo=npm&color=cb3837" alt="npm version" width={100} height={20} className="h-5" />
+              <img src="https://img.shields.io/npm/v/@framers/agentos?logo=npm&color=cb3837" alt="npm version" height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
             </a>
             <a href="https://codecov.io/gh/framersai/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/codecov/c/github/framersai/agentos?logo=codecov" alt="test coverage" width={100} height={20} className="h-5" />
+              <img src="https://img.shields.io/codecov/c/github/framersai/agentos?logo=codecov" alt="test coverage" height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
             </a>
             <a href="https://github.com/framersai/agentos/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/github/actions/workflow/status/framersai/agentos/ci.yml?logo=github" alt="CI status" width={100} height={20} className="h-5" />
+              <img src="https://img.shields.io/github/actions/workflow/status/framersai/agentos/ci.yml?logo=github" alt="CI status" height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
             </a>
             <a href="https://github.com/framersai/agentos/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/badge/tests-3%2C866%2B_passed-2ea043?logo=vitest&logoColor=white" alt="tests" width={130} height={20} className="h-5" />
+              <img src="https://img.shields.io/badge/tests-3%2C866%2B_passed-2ea043?logo=vitest&logoColor=white" alt="tests" height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
             </a>
             <span className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/badge/TypeScript-5.4+-3178c6?logo=typescript&logoColor=white" alt="TypeScript" width={110} height={20} className="h-5" />
+              <img src="https://img.shields.io/badge/TypeScript-5.4+-3178c6?logo=typescript&logoColor=white" alt="TypeScript" height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
             </span>
             <a href="https://github.com/framersai/agentos/blob/master/LICENSE" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/badge/License-Apache_2.0-blue?logo=apache&logoColor=white" alt="Apache 2.0 License" width={130} height={20} className="h-5" />
+              <img src="https://img.shields.io/badge/License-Apache_2.0-blue?logo=apache&logoColor=white" alt="Apache 2.0 License" height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
             </a>
           </div>
 

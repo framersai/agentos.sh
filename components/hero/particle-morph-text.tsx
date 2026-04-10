@@ -45,7 +45,8 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
-  const _wrapperWidth = wordWidths[activeWordIndex] ?? width;
+  // Use max width always to prevent CLS from width transitions
+  const _wrapperWidth = width;
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);
@@ -246,8 +247,6 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         position: 'relative',
         top: '0.22em',
         marginRight: '0.2em',
-        transition: 'width 520ms cubic-bezier(0.4, 0, 0.2, 1)',
-        willChange: 'width',
       }}
     >
       <span className="sr-only">{wordA} / {wordB}</span>
