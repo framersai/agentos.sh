@@ -38,7 +38,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
   const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
-  const [settled, setSettled] = useState(false);
+  const [fontsReady, setFontsReady] = useState(false);
 
   const height = useMemo(() => Math.ceil(fontSize * 1.15), [fontSize]);
   const [wordWidths, setWordWidths] = useState<[number, number]>(() => {
@@ -46,8 +46,8 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
-  // Start at max width to prevent CLS, then allow per-word width after first morph
-  const _wrapperWidth = settled ? (wordWidths[activeWordIndex] ?? width) : width;
+  // Use per-word width once fonts are measured; max width until then to prevent CLS
+  const _wrapperWidth = fontsReady ? (wordWidths[activeWordIndex] ?? width) : width;
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);
@@ -134,6 +134,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
 
       if (cancelled) return;
       setWordWidths((prev) => (prev[0] === next[0] && prev[1] === next[1] ? prev : next));
+      setFontsReady(true);
     };
 
     const fontReady = (document as Document & { fonts?: { ready?: Promise<unknown> } }).fonts?.ready;
@@ -177,13 +178,12 @@ export const ParticleMorphText = memo(function ParticleMorphText({
 
       // Slower morph speed with exponential decay
       if (s.isMorphing) {
-        s.morphT += 0.018; // slower morph
+        s.morphT += 0.008; // slow, elegant morph
         if (s.morphT >= 1) {
           s.morphT = 0;
           s.isMorphing = false;
           s.wordIdx = 1 - s.wordIdx;
           setActiveWordIndex(s.wordIdx);
-          setSettled(true);
           s.lastSwitch = t;
           s.nextInterval = interval + (Math.random() - 0.5) * 1000; // randomize next
         }
@@ -249,7 +249,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         position: 'relative',
         top: '0.22em',
         marginRight: '0.2em',
-        ...(settled ? { transition: 'width 520ms cubic-bezier(0.4, 0, 0.2, 1)' } : {}),
+        ...(fontsReady ? { transition: 'width 520ms cubic-bezier(0.4, 0, 0.2, 1)' } : {}),
       }}
     >
       <span className="sr-only">{wordA} / {wordB}</span>
