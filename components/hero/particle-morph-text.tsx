@@ -37,7 +37,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const particlesARef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
+  const [_activeWordIndex, setActiveWordIndex] = useState(startIndex);
 
   const height = useMemo(() => Math.ceil(fontSize * 1.15), [fontSize]);
   const [wordWidths, setWordWidths] = useState<[number, number]>(() => {
