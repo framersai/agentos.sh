@@ -241,7 +241,7 @@ export default async function LocaleLayout({
                 'Multimodal RAG (text, image, audio, video)',
                 '21 LLM providers (OpenAI, Anthropic, Google, Ollama, etc.)',
                 '37 channel adapters (Telegram, WhatsApp, Discord, Slack)',
-                'Security guardrails with prompt injection defense',
+                'Built-in safety: PII redaction, prompt injection defense, content moderation',
                 'HEXACO personality system',
                 'Multi-agent orchestration and graph workflows',
                 'Voice pipeline (STT, TTS, VAD)',

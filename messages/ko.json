@@ -338,7 +338,7 @@
         ]
       },
       "guardrails": {
-        "title": "5-Tier Guardrails",
+        "title": "Built-in Safety",
         "description": "위험에서 편집증까지의 보안 단계와 PII 삭제, ML 분류기, 환각 탐지",
         "features": [
           "4단계 PII 삭제",
@@ -782,7 +782,7 @@
       },
       "guardrails": {
         "name": "Guardrails & Safety",
-        "description": "Streaming guardrails evaluate every chunk. PII redaction, toxicity detection, grounding guard, code safety scanner. Five security tiers from permissive to paranoid."
+        "description": "Every output chunk is evaluated in real time. PII redaction, toxicity detection, hallucination grounding, and code safety scanning — configurable from permissive to fully locked down."
       },
       "tools": {
         "name": "Tools & Extensions",
@@ -828,7 +828,7 @@
       },
       "safety": {
         "traditional": "No safety",
-        "gmi": "5-tier guardrails with streaming evaluation"
+        "gmi": "built-in safety guardrails with streaming evaluation"
       }
     }
   },
@@ -887,7 +887,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "What is AgentOS?",
-        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents. It provides multi-agent orchestration, cognitive memory with 8 neuroscience-backed mechanisms, multimodal RAG with 7 vector store backends, 5-tier guardrails, voice pipelines, 37 channel adapters, and 21 LLM provider integrations. It is designed to be self-hostable and free."
+        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents. It provides multi-agent orchestration, cognitive memory with 8 neuroscience-backed mechanisms, multimodal RAG with 7 vector store backends, built-in safety guardrails, voice pipelines, 37 channel adapters, and 21 LLM provider integrations. It is designed to be self-hostable and free."
       },
       "isOpenSource": {
         "question": "Is AgentOS free and open source?",
@@ -965,7 +965,7 @@
     "enterprise": {
       "productionReady": {
         "question": "Is AgentOS production-ready?",
-        "answer": "Yes. AgentOS includes 5 named security tiers (dangerous, permissive, balanced, strict, paranoid) for fine-grained control over agent behavior. The balanced tier is recommended for production. Features include streaming guardrails, tool call approval workflows, budget limits, auditable routing, circuit breakers for tool failures, and rate limiting."
+        "answer": "Yes. AgentOS includes lets you control exactly how much freedom your agents have — from wide open to fully locked down. It blocks prompt injection attacks, redacts personal data, moderates content in real time, requires approval for sensitive tool calls, budget limits, auditable routing, circuit breakers for tool failures, and rate limiting."
       },
       "compliance": {
         "question": "What compliance standards does AgentOS address?",

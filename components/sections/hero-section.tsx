@@ -102,7 +102,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     { title: '37 Channels', detail: 'Discord, Slack, WhatsApp' },
     { title: '21 LLM Providers', detail: 'OpenAI, Anthropic, Ollama' },
     { title: 'Multimodal RAG', detail: 'Text, image, audio, video' },
-    { title: 'Security Guardrails', detail: '5 tiers, PII redaction' }
+    { title: 'Built-in Safety', detail: 'PII redaction, injection defense' }
   ];
 
 
