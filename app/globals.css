@@ -496,12 +496,11 @@
     border: 1px solid var(--glass-border);
   }
 
-  /* Force GPU compositing for animated glass elements */
-  .glass-morphism,
-  .glass-card,
-  .holographic-card {
+  /* GPU compositing only on hover/active — persistent will-change wastes VRAM */
+  .glass-morphism:hover,
+  .glass-card:hover,
+  .holographic-card:hover {
     will-change: transform;
-    transform: translateZ(0);
   }
 
   /* Scroll targets need margin for fixed header */

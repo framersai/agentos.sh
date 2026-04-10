@@ -198,7 +198,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider messages={messages} locale={locale}>
       <ThemeProvider>
         {/* Preconnect to critical external origins — limit to 4 max */}
-        <link rel="preconnect" href="https://api.github.com" />
+        <link rel="preconnect" href="https://api.github.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://img.shields.io" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.npmjs.org" />
         <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />

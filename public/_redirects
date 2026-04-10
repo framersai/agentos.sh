@@ -1,0 +1,5 @@
+# Root RSC payload rewrite (prevents 404 on prefetch)
+/index.txt /en/index.txt 200
+
+# Root path to English homepage
+/ /en/ 301

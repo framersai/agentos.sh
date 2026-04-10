@@ -31,9 +31,12 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_SQL_ADAPTER_VERSION: resolveSqlAdapterVersion(),
   },
+  // Source maps for Lighthouse Best Practices audit
+  productionBrowserSourceMaps: true,
   // Performance optimizations
   experimental: {
-    optimizeCss: true,
+    // optimizeCss disabled — critters can corrupt CSS chunks (SyntaxError in Lighthouse)
+    // Critical CSS is already inlined manually in app/layout.tsx
     optimizePackageImports: ['framer-motion', 'lucide-react', 'react-syntax-highlighter'],
   },
   compiler: {
