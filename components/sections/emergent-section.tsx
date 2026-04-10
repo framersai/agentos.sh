@@ -529,10 +529,12 @@ export function EmergentSection() {
       <div
         className="absolute top-[-100px] right-1/4 w-[600px] h-[600px] rounded-full blur-3xl opacity-[0.07] pointer-events-none"
         style={{ background: 'var(--color-accent-primary)' }}
+        aria-hidden="true"
       />
       <div
         className="absolute bottom-[-80px] left-1/3 w-[500px] h-[500px] rounded-full blur-3xl opacity-[0.06] pointer-events-none"
         style={{ background: 'var(--color-accent-secondary)' }}
+        aria-hidden="true"
       />
 
       {/* Forge spark particles */}
@@ -592,7 +594,7 @@ export function EmergentSection() {
             }}
           >
             {/* Tab bar */}
-            <div className="flex border-b" style={{ borderColor: 'var(--color-border-primary)' }}>
+            <div className="flex border-b" style={{ borderColor: 'var(--color-border-primary)' }} role="tablist" aria-label={t('title')}>
               {tabs.map((tab) => {
                 const Icon = tab.icon
                 const isActive = activeTab === tab.id
@@ -606,8 +608,11 @@ export function EmergentSection() {
                     }}
                     aria-selected={isActive}
                     role="tab"
+                    id={`emergent-tab-${tab.id}`}
+                    aria-controls={`emergent-panel-${tab.id}`}
+                    aria-label={tab.label}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-4 h-4" aria-hidden="true" />
                     <span className="hidden sm:inline">{tab.label}</span>
                     {isActive && (
                       <motion.div
@@ -627,6 +632,9 @@ export function EmergentSection() {
                 {activeTab === 0 && (
                   <motion.div
                     key="tab-forging"
+                    role="tabpanel"
+                    id="emergent-panel-0"
+                    aria-labelledby="emergent-tab-0"
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -12 }}
@@ -666,6 +674,9 @@ export function EmergentSection() {
                 {activeTab === 1 && (
                   <motion.div
                     key="tab-synthesis"
+                    role="tabpanel"
+                    id="emergent-panel-1"
+                    aria-labelledby="emergent-tab-1"
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -12 }}
@@ -685,6 +696,9 @@ export function EmergentSection() {
                 {activeTab === 2 && (
                   <motion.div
                     key="tab-loop"
+                    role="tabpanel"
+                    id="emergent-panel-2"
+                    aria-labelledby="emergent-tab-2"
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -12 }}

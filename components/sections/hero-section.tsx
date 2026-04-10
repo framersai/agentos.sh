@@ -38,15 +38,12 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   const [githubStars, setGithubStars] = useState<number | null>(null);
   const [githubForks, setGithubForks] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
-  const [contentReady, setContentReady] = useState(false);
   const [morphFontSize, setMorphFontSize] = useState(40);
   const isDark = resolvedTheme === 'dark';
 
-  // Mark as mounted after hydration, then trigger content ready
+  // Mark as mounted after hydration
   useEffect(() => {
     setMounted(true);
-    const timer = setTimeout(() => setContentReady(true), 50);
-    return () => clearTimeout(timer);
   }, []);
 
   // Match ParticleMorphText font size to the CSS clamp breakpoints
@@ -102,10 +99,10 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   }, [copyToClipboard]);
 
   const highlights = [
-    { title: '37 Channels', detail: 'Multiplatform delivery' },
-    { title: '21 LLM Providers', detail: 'Any model, anywhere' },
-    { title: 'Multimodal RAG', detail: 'Cognitive memory' },
-    { title: '5-Tier Guardrails', detail: 'Production-ready' }
+    { title: '37 Channels', detail: 'Discord, Slack, WhatsApp' },
+    { title: '21 LLM Providers', detail: 'OpenAI, Anthropic, Ollama' },
+    { title: 'Multimodal RAG', detail: 'Text, image, audio, video' },
+    { title: 'Security Guardrails', detail: '5 tiers, PII redaction' }
   ];
 
 
@@ -115,23 +112,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
       <meta itemProp="applicationCategory" content="AI Framework" />
       <meta itemProp="operatingSystem" content="Any" />
       
-      {/* Loading skeleton overlay - fades out when content ready */}
-      <div 
-        className={`absolute inset-0 z-20 bg-[var(--color-background-primary)] transition-opacity duration-300 pointer-events-none ${contentReady ? 'opacity-0' : 'opacity-100'}`}
-        aria-hidden="true"
-      >
-        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 mt-16">
-          <div className="max-w-2xl space-y-4">
-            <div className="h-10 w-64 bg-gradient-to-r from-violet-500/10 to-cyan-500/10 rounded animate-pulse" />
-            <div className="h-10 w-48 bg-gradient-to-r from-pink-500/10 to-indigo-500/10 rounded animate-pulse" />
-            <div className="h-4 w-96 bg-[var(--color-background-secondary)] rounded animate-pulse mt-4" />
-            <div className="flex gap-2 mt-4">
-              <div className="h-10 w-32 bg-violet-500/20 rounded-lg animate-pulse" />
-              <div className="h-10 w-36 bg-[var(--color-background-secondary)] rounded-lg animate-pulse" />
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Skeleton overlay removed — hero text renders immediately for faster LCP */}
       
       {/* Background gradient - CSS only */}
       <div 
@@ -153,7 +134,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
         <ResponsiveNeuralConstellation />
       </div>
 
-      <div className={`relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18 transition-opacity duration-500 ${contentReady ? 'opacity-100' : 'opacity-0'}`}>
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18">
         <article className="max-w-2xl">
           <h1 className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2]" itemProp="name">
             <ParticleMorphText words={['Emergent', 'Adaptive']} interval={4000} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
@@ -192,7 +173,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               )}
               <code className="font-mono">{showToast ? 'Copied!' : 'npm install @framers/agentos'}</code>
             </Button>
-            <a href="#code" onClick={(e) => { e.preventDefault(); const scroll = () => document.getElementById('code')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); scroll(); setTimeout(scroll, 300); setTimeout(scroll, 800); setTimeout(scroll, 1500); }}
+            <a href="#code"
                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold border border-[var(--color-accent-primary)] bg-[var(--color-accent-primary)]/10 text-[var(--color-accent-primary)] hover:bg-[var(--color-accent-primary)]/20 transition-all cursor-pointer group">
               <Code2 className="w-4 h-4" aria-hidden="true" />
               See code examples
@@ -216,44 +197,42 @@ const HeroSectionInner = memo(function HeroSectionInner() {
           <div className="flex flex-wrap gap-2 mb-5" aria-label="Package badges">
             <a href="https://www.npmjs.com/package/@framers/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/npm/v/@framers/agentos?logo=npm&color=cb3837" alt="npm version" className="h-5" />
+              <img src="https://img.shields.io/npm/v/@framers/agentos?logo=npm&color=cb3837" alt="npm version" width={100} height={20} className="h-5" />
             </a>
             <a href="https://codecov.io/gh/framersai/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/codecov/c/github/framersai/agentos?logo=codecov" alt="test coverage" className="h-5" />
+              <img src="https://img.shields.io/codecov/c/github/framersai/agentos?logo=codecov" alt="test coverage" width={100} height={20} className="h-5" />
             </a>
             <a href="https://github.com/framersai/agentos/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/github/actions/workflow/status/framersai/agentos/ci.yml?logo=github" alt="CI status" className="h-5" />
+              <img src="https://img.shields.io/github/actions/workflow/status/framersai/agentos/ci.yml?logo=github" alt="CI status" width={100} height={20} className="h-5" />
             </a>
             <a href="https://github.com/framersai/agentos/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/badge/tests-3%2C866%2B_passed-2ea043?logo=vitest&logoColor=white" alt="tests" className="h-5" />
+              <img src="https://img.shields.io/badge/tests-3%2C866%2B_passed-2ea043?logo=vitest&logoColor=white" alt="tests" width={130} height={20} className="h-5" />
             </a>
             <span className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/badge/TypeScript-5.4+-3178c6?logo=typescript&logoColor=white" alt="TypeScript" className="h-5" />
+              <img src="https://img.shields.io/badge/TypeScript-5.4+-3178c6?logo=typescript&logoColor=white" alt="TypeScript" width={110} height={20} className="h-5" />
             </span>
             <a href="https://github.com/framersai/agentos/blob/master/LICENSE" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/badge/License-Apache_2.0-blue?logo=apache&logoColor=white" alt="Apache 2.0 License" className="h-5" />
+              <img src="https://img.shields.io/badge/License-Apache_2.0-blue?logo=apache&logoColor=white" alt="Apache 2.0 License" width={130} height={20} className="h-5" />
             </a>
           </div>
 
           {/* Features — click scrolls to Core Capabilities */}
-          <ul className="grid grid-cols-2 lg:grid-cols-4 gap-2 list-none p-0" aria-label="Key features">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2" role="group" aria-label="Key features">
             {highlights.map((h) => (
-              <li key={h.title}
-                  role="button"
-                  tabIndex={0}
+              <button key={h.title}
+                  type="button"
                   onClick={() => document.getElementById('capabilities')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') document.getElementById('capabilities')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-                  className="p-2 rounded-md bg-[var(--color-background-secondary)]/40 border border-[var(--color-border-subtle)]/30 cursor-pointer hover:border-[var(--color-accent-primary)]/40 hover:bg-[var(--color-accent-primary)]/5 transition-all">
+                  className="p-2 rounded-md bg-[var(--color-background-secondary)]/40 border border-[var(--color-border-subtle)]/30 cursor-pointer hover:border-[var(--color-accent-primary)]/40 hover:bg-[var(--color-accent-primary)]/5 transition-all text-left">
                 <div className="text-xs font-medium text-[var(--color-text-primary)]">{h.title}</div>
                 <div className="text-[10px] text-[var(--color-text-muted)]">{h.detail}</div>
-              </li>
+              </button>
             ))}
-          </ul>
+          </div>
 
           {/* Compliance badges */}
           <div className="mt-4 flex items-center gap-3 text-[10px] text-[var(--color-text-muted)]">

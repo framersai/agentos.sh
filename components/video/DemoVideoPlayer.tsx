@@ -12,7 +12,7 @@ interface DemoVideo {
 }
 
 function getYouTubeEmbedUrl(videoId: string): string {
-  return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
+  return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`;
 }
 
 function getDemoVideos(t: ReturnType<typeof useTranslations>): DemoVideo[] {
@@ -85,7 +85,7 @@ export function DemoVideoPlayer() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1.5 mb-4 text-sm font-semibold bg-violet-500/10 text-violet-400 rounded-full border border-violet-500/20">
+          <span className="inline-block px-4 py-1.5 mb-4 text-sm font-semibold bg-violet-500/15 text-violet-300 rounded-full border border-violet-500/30">
             {t('badge')}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text-primary)] mb-4">
@@ -106,6 +106,7 @@ export function DemoVideoPlayer() {
                 title={activeVideo.title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
+                loading="lazy"
                 className="w-full h-full border-0"
               />
             ) : (
@@ -121,8 +122,9 @@ export function DemoVideoPlayer() {
             <button
               onClick={goToPrevious}
               className="p-2 hover:bg-[var(--color-background-tertiary)] rounded-full transition-colors"
+              aria-label="Previous video"
             >
-              <ChevronLeft className="w-5 h-5 text-[var(--color-text-muted)]" />
+              <ChevronLeft className="w-5 h-5 text-[var(--color-text-muted)]" aria-hidden="true" />
             </button>
 
             <div className="flex gap-2 overflow-x-auto px-4 py-2 scrollbar-hide">
@@ -144,8 +146,9 @@ export function DemoVideoPlayer() {
             <button
               onClick={goToNext}
               className="p-2 hover:bg-[var(--color-background-tertiary)] rounded-full transition-colors"
+              aria-label="Next video"
             >
-              <ChevronRight className="w-5 h-5 text-[var(--color-text-muted)]" />
+              <ChevronRight className="w-5 h-5 text-[var(--color-text-muted)]" aria-hidden="true" />
             </button>
           </div>
         </div>

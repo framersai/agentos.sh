@@ -19,7 +19,7 @@ const DemoVideoPlayerLazy = dynamic(
 
 const ProductCardsLazy = dynamic(
   () => import('../../components/sections/product-cards').then(m => m.ProductCards),
-  { ssr: true }
+  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
 )
 
 const SkylineSectionLazy = dynamic(
@@ -29,42 +29,42 @@ const SkylineSectionLazy = dynamic(
 
 const GMISectionLazy = dynamic(
   () => import('../../components/sections/gmi-section').then(m => m.GMISection),
-  { ssr: true }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const AgencySectionLazy = dynamic(
   () => import('../../components/sections/agency-section').then(m => m.AgencySection),
-  { ssr: true }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const EmergentSectionLazy = dynamic(
   () => import('../../components/sections/emergent-section').then(m => m.EmergentSection),
-  { ssr: true }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const CognitiveSectionLazy = dynamic(
   () => import('../../components/sections/cognitive-section').then(m => m.CognitiveSection),
-  { ssr: true }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const CodeExamplesSectionLazy = dynamic(
   () => import('../../components/sections/code-examples-section').then(m => m.CodeExamplesSection),
-  { ssr: true }
+  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
 )
 
 const EcosystemSectionLazy = dynamic(
   () => import('../../components/sections/ecosystem-section').then(m => m.EcosystemSection),
-  { ssr: true }
+  { ssr: false }
 )
 
 const SocialProofSectionLazy = dynamic(
   () => import('../../components/sections/social-proof-section').then(m => m.SocialProofSection),
-  { ssr: true }
+  { ssr: false }
 )
 
 const FeaturesGridClient = dynamic(
   () => import('../../components/sections/features-grid-client'),
-  { ssr: false }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const WorkbenchCTALazy = dynamic(

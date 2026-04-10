@@ -63,19 +63,19 @@ const nextConfig = {
               enforce: true,
               reuseExistingChunk: true,
             },
-            // Framer Motion - separate chunk due to size
+            // Framer Motion - async only to keep it out of initial bundle
             framerMotion: {
               name: 'framer-motion',
-              chunks: 'all',
+              chunks: 'async',
               test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
               priority: 45,
               enforce: true,
               reuseExistingChunk: true,
             },
-            // Lucide icons
+            // Lucide icons - async to reduce initial bundle
             lucideReact: {
               name: 'lucide-react',
-              chunks: 'all',
+              chunks: 'async',
               test: /[\\/]node_modules[\\/]lucide-react[\\/]/,
               priority: 43,
               enforce: true,

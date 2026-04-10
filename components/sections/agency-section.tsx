@@ -534,7 +534,7 @@ export function AgencySection() {
                 className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer"
                 style={{
                   background: isActive
-                    ? `color-mix(in srgb, ${s.color} 18%, transparent)`
+                    ? `color-mix(in srgb, ${s.color} 22%, var(--color-background-primary))`
                     : 'var(--color-background-glass)',
                   color: isActive ? s.color : 'var(--color-text-secondary)',
                   border: `1px solid ${isActive ? s.color : 'var(--color-border-primary)'}`,

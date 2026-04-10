@@ -1,11 +1,11 @@
 {
   "metadata": {
     "title": "AgentOS — Build Autonomous AI Agents with Adaptive Intelligence",
-    "description": "Build autonomous AI agents with adaptive intelligence and emergent behaviors. Multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and 21 LLM providers. Open-source TypeScript runtime.",
+    "description": "Build autonomous AI agents with adaptive intelligence and emergent behaviors. Multimodal RAG, cognitive memory, multi-tier security guardrails, voice pipeline, and 21 LLM providers. Open-source TypeScript runtime.",
     "ogTitle": "AgentOS — Build Autonomous AI Agents with Adaptive Intelligence",
-    "ogDescription": "Build autonomous AI agents with adaptive intelligence and emergent behaviors. Multimodal RAG, cognitive memory, streaming guardrails, voice pipeline, and 21 LLM providers. Open-source TypeScript runtime.",
+    "ogDescription": "Build autonomous AI agents with adaptive intelligence and emergent behaviors. Multimodal RAG, cognitive memory, multi-tier security guardrails, voice pipeline, and 21 LLM providers. Open-source TypeScript runtime.",
     "twitterTitle": "AgentOS — Build Autonomous AI Agents with Adaptive Intelligence",
-    "twitterDescription": "Build autonomous AI agents with adaptive intelligence and emergent behaviors. Cognitive memory, multimodal RAG, streaming guardrails, and 21 LLM providers. Open-source TypeScript runtime."
+    "twitterDescription": "Build autonomous AI agents with adaptive intelligence and emergent behaviors. Cognitive memory, multimodal RAG, multi-tier security guardrails, and 21 LLM providers. Open-source TypeScript runtime."
   },
   "nav": {
     "features": "Features",
@@ -41,7 +41,7 @@
         "bottom": "across 37 Channels"
       },
       {
-        "top": "5-Tier Guardrails",
+        "top": "Security Guardrails",
         "bottom": "with Prompt Injection Defense"
       },
       {
@@ -330,7 +330,7 @@
       },
       "streaming": {
         "title": "Real-time Streaming",
-        "description": "SSE and WebSocket support with streaming guardrails, partial JSON output, and tool call progress events",
+        "description": "SSE and WebSocket support with in-flight content filtering, partial JSON output, and tool call progress events",
         "features": [
           "SSE + WebSocket",
           "In-flight guardrails",
@@ -359,8 +359,8 @@
         ]
       },
       "guardrails": {
-        "title": "5-Tier Guardrails",
-        "description": "Security tiers from dangerous to paranoid with PII redaction, ML classifiers, and hallucination detection",
+        "title": "Security Guardrails",
+        "description": "Five security tiers — dangerous, permissive, balanced, strict, paranoid — with PII redaction, ML classifiers, and hallucination detection",
         "features": [
           "4-tier PII redaction",
           "ONNX BERT classifiers",
@@ -407,7 +407,7 @@
   },
   "enterprise": {
     "title": "Enterprise-Ready Infrastructure",
-    "subtitle": "5-tier security, 6 guardrail extensions, 21 LLM providers, 37 channels, and cognitive memory — production-grade from day one",
+    "subtitle": "Five security tiers, guardrail extensions, 21 LLM providers, 37 channels, and cognitive memory — production-grade from day one",
     "features": {
       "security": {
         "title": "5-Tier Security",
