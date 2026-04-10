@@ -37,7 +37,8 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const particlesARef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [_activeWordIndex, setActiveWordIndex] = useState(startIndex);
+  const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
+  const [settled, setSettled] = useState(false);
 
   const height = useMemo(() => Math.ceil(fontSize * 1.15), [fontSize]);
   const [wordWidths, setWordWidths] = useState<[number, number]>(() => {
@@ -45,8 +46,8 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
-  // Use max width always to prevent CLS from width transitions
-  const _wrapperWidth = width;
+  // Start at max width to prevent CLS, then allow per-word width after first morph
+  const _wrapperWidth = settled ? (wordWidths[activeWordIndex] ?? width) : width;
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);
@@ -182,6 +183,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
           s.isMorphing = false;
           s.wordIdx = 1 - s.wordIdx;
           setActiveWordIndex(s.wordIdx);
+          setSettled(true);
           s.lastSwitch = t;
           s.nextInterval = interval + (Math.random() - 0.5) * 1000; // randomize next
         }
@@ -247,6 +249,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         position: 'relative',
         top: '0.22em',
         marginRight: '0.2em',
+        ...(settled ? { transition: 'width 520ms cubic-bezier(0.4, 0, 0.2, 1)' } : {}),
       }}
     >
       <span className="sr-only">{wordA} / {wordB}</span>
