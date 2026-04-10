@@ -85,9 +85,6 @@ export function DemoVideoPlayer() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1.5 mb-4 text-sm font-semibold bg-violet-500/15 text-violet-300 rounded-full border border-violet-500/30">
-            {t('badge')}
-          </span>
           <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text-primary)] mb-4">
             {t('title')}
           </h2>
