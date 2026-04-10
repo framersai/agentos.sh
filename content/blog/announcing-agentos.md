@@ -55,7 +55,7 @@ console.log(reply.text);
 - [Discord](https://discord.gg/VXXC4SJMKh) — Community chat and support
 - [Wilds.ai](https://wilds.ai) — AI game worlds powered by AgentOS
 - [How to Build a TypeScript AI Agent in 5 Minutes](/blog/build-typescript-ai-agent-5-minutes) — Step-by-step tutorial
-- [AgentOS vs LangGraph vs CrewAI vs Mastra](/blog/agentos-vs-langgraph-vs-crewai) — Framework comparison
+- [AgentOS vs LangGraph vs CrewAI vs Mastra](https://docs.agentos.sh/blog/2026/02/20/agentos-vs-langgraph-vs-crewai) — Framework comparison
 
 AgentOS is [Apache 2.0 licensed](https://github.com/framersai/agentos/blob/master/LICENSE), built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev).
 

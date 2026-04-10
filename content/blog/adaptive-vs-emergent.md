@@ -45,6 +45,6 @@ The balance means enterprises can deploy safe, reliable agents that still exhibi
 
 - [Getting Started with AgentOS](https://docs.agentos.sh/getting-started) — Install and build your first agent
 - [How to Build a TypeScript AI Agent in 5 Minutes](/blog/build-typescript-ai-agent-5-minutes) — Hands-on tutorial
-- [AgentOS vs LangGraph vs CrewAI vs Mastra](/blog/agentos-vs-langgraph-vs-crewai) — Framework comparison
+- [AgentOS vs LangGraph vs CrewAI vs Mastra](https://docs.agentos.sh/blog/2026/02/20/agentos-vs-langgraph-vs-crewai) — Framework comparison
 - [GitHub](https://github.com/framersai/agentos) · [Discord](https://discord.gg/VXXC4SJMKh) · [Wilds.ai](https://wilds.ai)
 
