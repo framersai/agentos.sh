@@ -558,28 +558,6 @@ export function EmergentSection() {
           </p>
         </motion.div>
 
-        {/* Key stat pills */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.1 } } }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
-        >
-          {(t.raw('statPills') as string[]).map((pill) => (
-            <span
-              key={pill}
-              className="px-4 py-2 rounded-full text-xs font-bold tracking-wide"
-              style={{
-                background: 'linear-gradient(135deg, color-mix(in srgb, var(--color-accent-primary) 12%, transparent), color-mix(in srgb, var(--color-accent-secondary) 8%, transparent))',
-                border: '1px solid color-mix(in srgb, var(--color-accent-primary) 25%, transparent)',
-                color: 'var(--color-accent-primary)',
-              }}
-            >
-              {pill}
-            </span>
-          ))}
-        </motion.div>
-
         {/* Tabbed panels */}
         <motion.div
           initial="hidden"

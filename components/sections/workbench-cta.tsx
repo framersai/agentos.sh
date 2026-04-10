@@ -27,14 +27,8 @@ export function WorkbenchCTA() {
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-xl bg-gradient-to-br from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] shadow-lg">
-                    <Cpu className="w-6 h-6 text-white" />
+                    <Cpu className="w-6 h-6 text-white" aria-hidden="true" />
                   </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
-                    {t('badge1')}
-                  </span>
-                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
-                    {t('badge2')}
-                  </span>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-[var(--color-text-primary)]">
                   {t('title')}
