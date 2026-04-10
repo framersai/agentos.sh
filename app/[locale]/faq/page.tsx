@@ -263,7 +263,7 @@ export default async function FAQPage({ params: { locale } }: Props) {
   return (
     <main
       id="main-content"
-      className="relative overflow-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]"
+      className="relative overflow-x-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]"
     >
       <FAQJsonLd locale={locale} />
 

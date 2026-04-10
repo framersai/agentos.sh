@@ -40,7 +40,22 @@ export default async function AboutPage({ params: { locale } }: Props) {
   const homeHref = locale === 'en' ? '/' : `/${locale}`;
 
   /** Reusable rich-text component map for next-intl's t.rich() */
-  const frameDevLink = {
+  const richLinks = {
+    manicLink: (chunks: ReactNode) => (
+      <a href="https://manic.agency" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline font-semibold">
+        {chunks}
+      </a>
+    ),
+    frameLink: (chunks: ReactNode) => (
+      <a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline font-semibold">
+        {chunks}
+      </a>
+    ),
+    wildsLink: (chunks: ReactNode) => (
+      <a href="https://wilds.ai" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline font-semibold">
+        {chunks}
+      </a>
+    ),
     link: (chunks: ReactNode) => (
       <a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline font-semibold">
         {chunks}
@@ -50,15 +65,17 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
   const connectLinks = [
     { label: t('connect.github'), href: 'https://github.com/framersai/agentos', icon: Github },
+    { label: 'Manic Agency', href: 'https://manic.agency', icon: Globe },
+    { label: 'Wilds.ai', href: 'https://wilds.ai', icon: Globe },
+    { label: t('connect.frameDev'), href: 'https://frame.dev', icon: Globe },
     { label: t('connect.linkedin'), href: 'https://www.linkedin.com/company/framersai', icon: Linkedin },
     { label: t('connect.twitter'), href: 'https://twitter.com/framersai', icon: Twitter },
-    { label: t('connect.frameDev'), href: 'https://frame.dev', icon: Globe },
   ];
 
   const contactCards = [
     {
       title: t('team.generalInquiries'),
-      description: t.rich('team.description', frameDevLink),
+      description: t.rich('team.description', richLinks),
       email: 'team@frame.dev',
     },
     {
@@ -74,7 +91,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
   ];
 
   return (
-    <main id="main-content" className="relative overflow-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]">
+    <main id="main-content" className="relative overflow-x-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10" />
         <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-accent-primary/10 to-transparent blur-3xl opacity-40" />
@@ -90,7 +107,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
             {t('hero.title')}
           </h1>
           <p className="text-lg sm:text-xl text-[var(--color-text-secondary)] max-w-3xl mx-auto">
-            {t.rich('hero.description', frameDevLink)}
+            {t.rich('hero.description', richLinks)}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -124,7 +141,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
         <section className="space-y-8">
           <div className="space-y-4">
             <h2 className="text-3xl font-bold">{t('team.title')}</h2>
-            <p className="text-[var(--color-text-secondary)] max-w-3xl">{t.rich('team.description', frameDevLink)}</p>
+            <p className="text-[var(--color-text-secondary)] max-w-3xl">{t.rich('team.description', richLinks)}</p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {contactCards.map((card) => (

@@ -982,7 +982,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "What is AgentOS?",
-        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents. It provides multi-agent orchestration, cognitive memory, multimodal RAG, built-in safety guardrails (PII redaction, prompt injection defense, content moderation), voice pipelines, 37 channel adapters, and 21 LLM provider integrations. Self-hostable and free."
+        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents, developed by Manic Agency LLC (manic.agency) and Frame.dev. It provides multi-agent orchestration, cognitive memory, multimodal RAG, built-in safety guardrails (PII redaction, prompt injection defense, content moderation), voice pipelines, 37 channel adapters, and 21 LLM provider integrations. AgentOS also powers the AI systems behind Wilds.ai, an AI-native gaming platform. Self-hostable and free."
       },
       "isOpenSource": {
         "question": "Is AgentOS free and open source?",
@@ -1149,7 +1149,7 @@
     "hero": {
       "weAreFramers": "we are the framers",
       "title": "About AgentOS",
-      "description": "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. Built by <link>Frame.dev</link>, AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails."
+      "description": "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. Built by <manicLink>Manic Agency LLC</manicLink> and <frameLink>Frame.dev</frameLink>, AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails. It also drives the AI systems behind <wildsLink>Wilds.ai</wildsLink>."
     },
     "mission": {
       "title": "Our Mission",
@@ -1158,7 +1158,7 @@
     },
     "team": {
       "title": "The Team",
-      "description": "AgentOS is developed by the team at <link>Frame.dev</link>, a company focused on building the future of AI‑powered development tools. We're a distributed team of engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.",
+      "description": "AgentOS is developed by <manicLink>Manic Agency LLC</manicLink> and the team at <frameLink>Frame.dev</frameLink>. We also build <wildsLink>Wilds.ai</wildsLink>, an AI-native gaming platform powered by AgentOS. We're a distributed team of engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.",
       "generalInquiries": "General Inquiries",
       "enterpriseSupport": "Enterprise & Support",
       "enterpriseSupportDesc": "For production deployments, enterprise licensing, and dedicated support",

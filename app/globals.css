@@ -313,6 +313,9 @@
     background-clip: text;
     font-weight: 800;
     letter-spacing: -0.02em;
+    padding: 0.05em 0;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   /* --- Section Titles --- */
