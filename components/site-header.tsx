@@ -217,17 +217,17 @@ export function SiteHeader() {
           </nav>
 
         {/* Right side actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* Search icon — opens DocSearch modal */}
           <DocSearch
-            triggerClassName="inline-flex items-center justify-center p-2 rounded-xl text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/10 transition-all duration-300"
+            triggerClassName="hidden sm:inline-flex items-center justify-center p-2 rounded-xl text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/10 transition-all duration-300"
             triggerLabel=""
           />
 
-          {/* GitHub */}
+          {/* GitHub — desktop only */}
           <a
             href="https://github.com/framersai/agentos"
-            className="relative hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-border-subtle text-[var(--color-text-primary)] hover:text-accent-primary transition-all duration-300 hover:-translate-y-0.5 group"
+            className="relative hidden lg:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-border-subtle text-[var(--color-text-primary)] hover:text-accent-primary transition-all duration-300 hover:-translate-y-0.5 group"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open AgentOS on GitHub"
@@ -236,29 +236,23 @@ export function SiteHeader() {
             <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               style={{ background: 'linear-gradient(90deg, color-mix(in oklab, var(--color-accent-primary) 18%, transparent), color-mix(in oklab, var(--color-accent-secondary) 14%, transparent))' }}
             />
-            <Github className="w-4 h-4" />
+            <Github className="w-4 h-4" aria-hidden="true" />
             <span className="font-semibold">{t('github')}</span>
           </a>
-          {/* Theme controls */}
-          <div className="flex items-center gap-1.5">
+
+          {/* Theme controls — hidden on mobile, shown in mobile menu instead */}
+          <div className="hidden sm:flex items-center gap-1.5">
             <ThemeSelector />
             <ModeToggle />
             <LanguageSwitcher />
           </div>
 
-          {/* Mobile GitHub icon */}
-          <a
-            href="https://github.com/framersai/agentos"
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-xl glass-morphism hover:bg-accent-primary/10 transition-all"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open AgentOS on GitHub"
-            title="Open AgentOS on GitHub"
-          >
-            <Github className="h-5 w-5" />
-          </a>
+          {/* Dark/light toggle — mobile only (compact) */}
+          <div className="flex sm:hidden items-center">
+            <ModeToggle />
+          </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button — pinned far right */}
           <button
             type="button"
             aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -267,7 +261,7 @@ export function SiteHeader() {
             onClick={() => setMenuOpen((open) => !open)}
             className="inline-flex items-center justify-center p-2 rounded-xl glass-morphism hover:bg-accent-primary/10 transition-all lg:hidden min-h-[44px] min-w-[44px]"
           >
-            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
@@ -315,10 +309,15 @@ export function SiteHeader() {
               onClick={closeMenu}
               className="px-6 py-4 text-base font-bold text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/5 transition-all duration-300 ease-out flex items-center gap-2 border-b border-border-subtle/20"
             >
-              <Github className="w-5 h-5" />
+              <Github className="w-5 h-5" aria-hidden="true" />
               {t('github')}
             </a>
           </nav>
+          {/* Theme & language controls — mobile only */}
+          <div className="flex items-center justify-center gap-3 px-6 py-4 sm:hidden">
+            <ThemeSelector />
+            <LanguageSwitcher />
+          </div>
         </div>
       </div>
     </header>

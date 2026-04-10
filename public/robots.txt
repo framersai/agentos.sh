@@ -1,6 +1,6 @@
-# Global allow
 User-agent: *
 Allow: /
+Disallow: /_next/static/
+Disallow: /api/
 
-# Sitemap
 Sitemap: https://agentos.sh/sitemap.xml

@@ -4,8 +4,8 @@ import '../styles/tokens.css';
 import './globals.css';
 import { defaultLocale } from '../i18n';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const grotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-grotesk' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const grotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-grotesk', display: 'swap' });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const lang = defaultLocale;
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
              --color-background-tertiary: hsl(220, 20%, 92%);
              --color-text-primary: hsl(222, 47%, 8%);
              --color-text-secondary: hsl(220, 35%, 22%);
-             --color-text-muted: hsl(220, 25%, 35%);
+             --color-text-muted: hsl(220, 25%, 32%);
              --color-accent-primary: hsl(250, 95%, 55%);
              --color-accent-secondary: hsl(280, 85%, 60%);
              --color-accent-tertiary: hsl(340, 85%, 65%);
@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
              --color-background-tertiary: hsl(240, 16%, 12%);
              --color-text-primary: hsl(220, 30%, 98%);
              --color-text-secondary: hsl(220, 25%, 85%);
-             --color-text-muted: hsl(220, 22%, 72%);
+             --color-text-muted: hsl(220, 22%, 74%);
              --color-accent-primary: hsl(250, 100%, 70%);
              --color-accent-secondary: hsl(280, 90%, 75%);
              --color-accent-tertiary: hsl(340, 90%, 70%);

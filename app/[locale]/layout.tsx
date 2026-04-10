@@ -73,7 +73,7 @@ export async function resolveLocaleMetadata(locale: Locale) {
     description: t('description'),
     metadataBase: new URL('https://agentos.sh'),
     alternates: {
-      canonical: locale === 'en' ? '/' : `/${locale}`,
+      canonical: `/${locale}`,
       languages: {
         'en': '/en',
         'zh': '/zh',
@@ -88,16 +88,20 @@ export async function resolveLocaleMetadata(locale: Locale) {
     keywords: [
       'AgentOS',
       'AI agent framework',
+      'agentic AI framework',
       'build AI agents',
       'TypeScript AI agents',
+      'AI agent SDK TypeScript',
+      'agentic workflows',
+      'multi-agent orchestration',
+      'multi-agent system',
+      'autonomous AI agents',
       'adaptive intelligence',
       'emergent behaviors',
-      'multi-agent orchestration',
-      'agentic AI framework',
-      'autonomous AI agents',
       'AI guardrails',
       'prompt injection defense',
       'cognitive memory',
+      'multimodal RAG',
       'RAG memory',
       'voice AI agents',
       'LLM providers',
@@ -108,13 +112,14 @@ export async function resolveLocaleMetadata(locale: Locale) {
       'production AI agents',
       'LangGraph alternative',
       'CrewAI alternative',
+      'AutoGen alternative',
+      'Vercel AI SDK alternative',
+      'Mastra alternative',
+      'LlamaIndex alternative',
       'agent runtime',
-      'AI SDK TypeScript',
-      'multimodal RAG',
       'runtime tool forging',
       'self-improving agents',
-      'agent extensions',
-      'agent skills',
+      'AI agent orchestration patterns',
     ],
     authors: [{ name: 'Framers', url: 'https://frame.dev' }],
     creator: 'Framers',
@@ -192,12 +197,12 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
       <ThemeProvider>
-        {/* Preconnect to external origins for faster API calls */}
-        <link rel="preconnect" href="https://api.github.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://api.npmjs.org" crossOrigin="anonymous" />
+        {/* Preconnect to critical external origins — limit to 4 max */}
+        <link rel="preconnect" href="https://api.github.com" />
         <link rel="preconnect" href="https://img.shields.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://api.npmjs.org" />
         <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         
         {/* JSON-LD Structured Data for SEO */}
@@ -209,7 +214,7 @@ export default async function LocaleLayout({
               '@type': 'SoftwareApplication',
               name: 'AgentOS',
               alternateName: 'AgentOS by Manic Agency',
-              description: 'Open-source TypeScript runtime for building autonomous AI agents with cognitive memory, multimodal RAG, streaming guardrails, voice pipeline, and 21 LLM providers.',
+              description: 'Open-source TypeScript runtime for building autonomous AI agents with cognitive memory, multimodal RAG, multi-tier security guardrails, voice pipeline, and 21 LLM providers.',
               url: 'https://agentos.sh',
               applicationCategory: 'DeveloperApplication',
               operatingSystem: 'Any',
@@ -236,7 +241,7 @@ export default async function LocaleLayout({
                 'Multimodal RAG (text, image, audio, video)',
                 '21 LLM providers (OpenAI, Anthropic, Google, Ollama, etc.)',
                 '37 channel adapters (Telegram, WhatsApp, Discord, Slack)',
-                '5-tier guardrails with prompt injection defense',
+                'Security guardrails with prompt injection defense',
                 'HEXACO personality system',
                 'Multi-agent orchestration and graph workflows',
                 'Voice pipeline (STT, TTS, VAD)',
@@ -260,9 +265,15 @@ export default async function LocaleLayout({
               name: 'Manic Agency LLC',
               url: 'https://manic.agency',
               logo: 'https://agentos.sh/logo.png',
+              email: 'mailto:team@frame.dev',
               sameAs: [
                 'https://github.com/manicinc',
+                'https://github.com/framersai',
+                'https://frame.dev',
+                'https://twitter.com/framersai',
+                'https://www.linkedin.com/company/framersai',
                 'https://rabbithole.inc',
+                'https://vca.chat',
               ],
             }),
           }}
@@ -290,52 +301,7 @@ export default async function LocaleLayout({
         <CookieConsentDynamic />
         <a href="#main-content" className="skip-to-content">Skip to content</a>
         <SiteHeaderDynamic />
-        {/* JSON-LD: Organization */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Organization',
-              name: 'AgentOS',
-              url: 'https://agentos.sh',
-              email: 'mailto:team@frame.dev',
-              sameAs: [
-                'https://frame.dev',
-                'https://github.com/framersai',
-                'https://twitter.com/framersai',
-                'https://www.linkedin.com/company/framersai',
-                'https://vca.chat'
-              ]
-            })
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'SoftwareApplication',
-              name: 'AgentOS',
-              applicationCategory: 'EnterpriseApplication',
-              operatingSystem: 'Cross-platform',
-              offers: {
-                '@type': 'Offer',
-                price: '0',
-                priceCurrency: 'USD'
-              },
-              downloadUrl: 'https://github.com/framersai/agentos',
-              featureList: [
-                'Adaptive intelligence with meta-reflective prompt adaptation and self-evaluating response quality',
-                'Emergent behaviors including runtime tool forging, self-improving personality, and composable workflows',
-                'Multimodal RAG with cognitive memory and Ebbinghaus decay',
-                'Multi-agent orchestration across 37 channel adapters',
-                '5-tier guardrails with prompt injection defense',
-                '21 LLM providers and 72 curated skills'
-              ]
-            })
-          }}
-        />
+        {/* Duplicate JSON-LD removed — consolidated in head above */}
         
         {/* Immediate Theme Script to prevent FOUC */}
         <script
@@ -396,7 +362,6 @@ export default async function LocaleLayout({
                   <li><a href="https://wilds.ai" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Wilds.ai</a></li>
                   <li><a href={locale === 'en' ? '/about' : `/${locale}/about`} className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('about')}</a></li>
                   <li><a href={locale === 'en' ? '/faq' : `/${locale}/faq`} className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('faq')}</a></li>
-                  <li><a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Frame.dev</a></li>
                   <li><a href="mailto:team@frame.dev" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('contact')}</a></li>
                 </ul>
               </div>

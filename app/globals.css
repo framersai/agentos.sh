@@ -48,7 +48,7 @@
     /* Text: High contrast, deep blue-grays for readability - WCAG AA compliant (4.5:1 minimum) */
     --color-text-primary: hsl(222, 47%, 11%); /* Very dark - contrast ratio ~15:1 on white */
     --color-text-secondary: hsl(220, 35%, 25%); /* Dark - contrast ratio ~9:1 on white */
-    --color-text-muted: hsl(220, 25%, 38%); /* Medium - contrast ratio ~6:1 on light backgrounds */
+    --color-text-muted: hsl(220, 25%, 32%); /* Medium - contrast ratio ~7.5:1 on light backgrounds */
     --color-text-placeholder: hsl(220, 20%, 50%); /* Light enough for placeholder, ~4.5:1 */
     --color-text-contrast: hsl(0, 0%, 100%);
     --color-text-on-accent: hsl(0, 0%, 100%);
@@ -145,7 +145,7 @@
     /* Text: Crisp white, soft gray-blues - WCAG AA compliant for dark mode (4.5:1 minimum) */
     --color-text-primary: hsl(220, 30%, 97%); /* Near-white - contrast ratio ~15:1 on dark bg */
     --color-text-secondary: hsl(220, 25%, 82%); /* Light gray - contrast ratio ~9:1 on dark bg */
-    --color-text-muted: hsl(220, 22%, 68%); /* Medium gray - contrast ratio ~6:1 on dark bg */
+    --color-text-muted: hsl(220, 22%, 74%); /* Medium gray - contrast ratio ~8:1 on dark bg */
     --color-text-placeholder: hsl(220, 18%, 55%); /* Dimmer but still ~4.5:1 on dark bg */
     --color-text-contrast: hsl(0, 0%, 100%); /* Pure white for accents */
     --color-text-on-accent: hsl(0, 0%, 100%); /* Ensure white on accent colors */
@@ -332,6 +332,51 @@
     }
   }
 
+  /* --- CTA Buttons --- */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-text-on-accent);
+    background: var(--color-accent-gradient);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    text-decoration: none;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--color-glow-primary);
+    opacity: 0.95;
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--color-text-primary);
+    background: var(--color-background-secondary);
+    border: 1px solid var(--color-border-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    border-color: var(--color-accent-primary);
+    background: color-mix(in srgb, var(--color-accent-primary) 8%, var(--color-background-secondary));
+  }
+
   /* --- Code Block --- */
   .code-block {
     background: rgba(10, 10, 20, 0.95); /* Always dark for code */
@@ -451,17 +496,30 @@
     border: 1px solid var(--glass-border);
   }
 
+  /* Force GPU compositing for animated glass elements */
+  .glass-morphism,
+  .glass-card,
+  .holographic-card {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* Scroll targets need margin for fixed header */
+  [id] {
+    scroll-margin-top: 80px;
+  }
+
   /* Content visibility for below-fold sections - major perf optimization */
   .lazy-section {
     content-visibility: auto;
     contain-intrinsic-size: 0 500px;
   }
-  
+
   .lazy-section-sm {
     content-visibility: auto;
     contain-intrinsic-size: 0 300px;
   }
-  
+
   .lazy-section-lg {
     content-visibility: auto;
     contain-intrinsic-size: 0 800px;

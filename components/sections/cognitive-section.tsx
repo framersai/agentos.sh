@@ -942,14 +942,13 @@ export function CognitiveSection() {
                 </p>
                 {(() => {
                   try {
-                    const url = t(`ragPipeline.strategies.${activeStrategy}.citationUrl`);
-                    const cite = t(`ragPipeline.strategies.${activeStrategy}.citation`);
-                    if (url && cite && !url.includes('citationUrl')) return (
-                      <a href={url} target="_blank" rel="noopener noreferrer"
+                    const raw = t.raw(`ragPipeline.strategies.${activeStrategy}`) as Record<string, string> | undefined;
+                    if (raw?.citationUrl && raw?.citation) return (
+                      <a href={raw.citationUrl} target="_blank" rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-xs mt-3 hover:underline transition-opacity"
                         style={{ color: 'var(--color-accent-primary)', opacity: 0.75 }}>
-                        <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3 shrink-0"><path d="M4.715 6.542L3.343 7.914a3 3 0 104.243 4.243l1.828-1.829A3 3 0 008.586 5.5L8 6.086a1 1 0 00-.154.199 2 2 0 01.861 3.337L6.88 11.45a2 2 0 11-2.83-2.83l.793-.792a4 4 0 01-.128-1.287z"/><path d="M6.586 4.672A3 3 0 007.414 9.5l.775-.776a2 2 0 01-.896-3.346L9.12 3.55a2 2 0 112.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 10-4.243-4.243L6.586 4.672z"/></svg>
-                        {cite}
+                        <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3 shrink-0" aria-hidden="true"><path d="M4.715 6.542L3.343 7.914a3 3 0 104.243 4.243l1.828-1.829A3 3 0 008.586 5.5L8 6.086a1 1 0 00-.154.199 2 2 0 01.861 3.337L6.88 11.45a2 2 0 11-2.83-2.83l.793-.792a4 4 0 01-.128-1.287z"/><path d="M6.586 4.672A3 3 0 007.414 9.5l.775-.776a2 2 0 01-.896-3.346L9.12 3.55a2 2 0 112.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 10-4.243-4.243L6.586 4.672z"/></svg>
+                        {raw.citation}
                       </a>
                     );
                   } catch { /* no citation for this strategy */ }
