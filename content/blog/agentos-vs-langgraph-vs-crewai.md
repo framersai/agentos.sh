@@ -17,18 +17,18 @@ Building AI agents in 2026 means choosing between a growing number of frameworks
 | **Language** | TypeScript | Python + JS | Python | TypeScript |
 | **Architecture** | GMI (cognitive entities) | State graphs | Role-based crews | Agents + workflows |
 | **Memory** | Cognitive (Ebbinghaus decay, 8 mechanisms) | Conversation + checkpoints | Short/long-term + entity | Conversation + semantic |
-| **LLM Providers** | 21 (OpenAI, Anthropic, Gemini, Ollama, etc.) | Via LangChain (OpenAI, Anthropic, etc.) | OpenAI, Anthropic, Mistral + more | 40+ via AI SDK |
+| **LLM Providers** | [17](https://docs.agentos.sh/features/llm-output-validation) (OpenAI, Anthropic, Gemini, Ollama, etc.) | Via LangChain (OpenAI, Anthropic, etc.) | OpenAI, Anthropic, Mistral + more | 40+ via AI SDK |
 | **Guardrails** | 6 packs (PII, injection, code safety, grounding, content policy, topicality) | Content moderation middleware | Basic output validation | None built-in |
 | **Multi-Agent** | Graph workflows + emergent teams | State graph orchestration | Role-based crew orchestration | Workflow engine |
 | **Channels** | 37 (Telegram, WhatsApp, Discord, Slack, etc.) | None built-in | None built-in | None built-in |
 | **Voice** | Full pipeline (STT, TTS, VAD) | None built-in | None built-in | None built-in |
-| **Tools** | 100+ curated extensions | Via LangChain ecosystem | 100+ open-source tools | 40+ integrations |
-| **Skills** | 83 curated skill files | None | None | None |
+| **Tools** | [107+ curated extensions](https://github.com/framersai/agentos-extensions) | Via LangChain ecosystem | 100+ open-source tools | 40+ integrations |
+| **Skills** | [72 curated skill files](https://github.com/framersai/agentos-skills) | None | None | None |
 | **Personality** | HEXACO trait system | None | Role descriptions | None |
 | **Streaming** | Native SSE + WebSocket | Token-by-token streaming | Streaming support | Native streaming |
 | **Self-Hosted** | Yes (npm install) | Yes | Yes | Yes |
 | **License** | Apache 2.0 | MIT | MIT | MIT + Enterprise |
-| **GitHub Stars** | ~90 | ~24,600+ | ~46,900+ | ~22,300+ |
+| **GitHub Stars** | [71](https://github.com/framersai/agentos) | [~29,000](https://github.com/langchain-ai/langgraph) | [~48,600](https://github.com/crewAIInc/crewAI) | [~22,900](https://github.com/mastra-ai/mastra) |
 
 ## Code Comparison: Same Task, Four Frameworks
 
@@ -113,11 +113,11 @@ const result = await agent.generate('What caused the 2008 financial crisis?');
 
 ### AgentOS: Long-Running Agents with Personality and Memory
 
-AgentOS treats each agent as a cognitive entity — not a stateless function. The [HEXACO personality system](https://docs.agentos.sh/features/personality) shapes how agents communicate (a high-openness agent explores tangents; a high-conscientiousness agent stays focused). [Cognitive memory](https://docs.agentos.sh/features/cognitive-memory) means agents forget unimportant details naturally (Ebbinghaus decay) while retaining what matters (flashbulb memories for high-importance events).
+AgentOS treats each agent as a cognitive entity, not a stateless function. The [HEXACO personality system](https://docs.agentos.sh/features/cognitive-memory-guide), based on the [six-factor model from personality psychology](https://en.wikipedia.org/wiki/HEXACO_model_of_personality_structure), shapes how agents communicate (a high-openness agent explores tangents; a high-conscientiousness agent stays focused). [Cognitive memory](https://docs.agentos.sh/features/cognitive-memory) means agents forget unimportant details naturally via [Ebbinghaus decay](https://en.wikipedia.org/wiki/Forgetting_curve) while retaining what matters through the [8-mechanism cognitive engine](https://docs.agentos.sh/api/classes/CognitiveMechanismsEngine).
 
-This matters for agents that run for weeks or months — customer support bots, personal assistants, social media managers. Stateless frameworks require you to build memory, personality, and channel integration yourself.
+This matters for agents that run for weeks or months: customer support bots, personal assistants, social media managers. Stateless frameworks require you to build memory, personality, and channel integration yourself.
 
-AgentOS also ships with [37 channel adapters](https://docs.agentos.sh/features/channels) (Telegram, WhatsApp, Discord, Slack, and 33 more), a [voice pipeline](https://docs.agentos.sh/features/voice) (STT + TTS + VAD), and [6 guardrail packs](https://docs.agentos.sh/features/guardrails) including PII redaction, prompt injection defense, and content policy enforcement.
+AgentOS ships with [37 channel adapters](https://docs.agentos.sh/features/channels) (Telegram, WhatsApp, Discord, Slack, and 33 more), a [voice pipeline](https://docs.agentos.sh/features/voice-pipeline) (12 STT + 12 TTS providers, VAD, speaker diarization), and [6 guardrail packs](https://docs.agentos.sh/features/guardrails) including [PII redaction](https://docs.agentos.sh/features/safety-primitives), [prompt injection defense](https://docs.agentos.sh/features/guardrails-architecture), and grounding verification via [NLI-based citation checking](https://docs.agentos.sh/features/citation-verification). Agents can also [forge new tools at runtime](https://docs.agentos.sh/features/emergent-capabilities) when no existing tool fits the task.
 
 **Best for:** Long-running agents, chatbots with personality, multi-channel deployment, production safety.
 
@@ -135,7 +135,7 @@ The tradeoff: LangGraph is primarily Python. The JavaScript SDK exists but has f
 
 CrewAI's core abstraction is the [crew](https://docs.crewai.com/) — a team of agents with defined roles that collaborate on tasks. You assign each agent a role ("Research Analyst", "Editor", "Fact Checker") and CrewAI handles task delegation and inter-agent communication.
 
-With [46,900+ GitHub stars](https://github.com/crewAIInc/crewAI), CrewAI has the largest community and the most third-party tutorials. The [100+ built-in tools](https://crewai.com/open-source) cover web search, file operations, and API integrations.
+With [~48,600 GitHub stars](https://github.com/crewAIInc/crewAI), CrewAI has the largest community and the most third-party tutorials. The [100+ built-in tools](https://docs.crewai.com/concepts/tools) cover web search, file operations, and API integrations.
 
 The tradeoff: CrewAI is Python-only. Memory is simpler (shared short/long-term + entity, no decay model). No guardrails beyond output validation. No channel adapters or voice.
 
@@ -143,9 +143,9 @@ The tradeoff: CrewAI is Python-only. Memory is simpler (shared short/long-term +
 
 ### Mastra: TypeScript-First with Modern Tooling
 
-Built by the [team behind Gatsby](https://github.com/mastra-ai/mastra), Mastra is the closest TypeScript competitor to AgentOS. It connects to [40+ LLM providers](https://mastra.ai/) through one interface, has a workflow engine for multi-step automations, and supports [MCP servers](https://mastra.ai/docs) for tool integration.
+Built by the [team behind Gatsby](https://github.com/mastra-ai/mastra), Mastra is the closest TypeScript competitor to AgentOS. It connects to [40+ LLM providers](https://mastra.ai/docs/frameworks/ai-sdk) through one interface via the [Vercel AI SDK](https://sdk.vercel.ai/), has a workflow engine for multi-step automations, and supports [MCP servers](https://mastra.ai/docs/agents/mcp-guide) for tool integration.
 
-With [22,300+ stars](https://github.com/mastra-ai/mastra), Mastra has strong community adoption. The playground and tracing tools are polished. It integrates cleanly with Next.js and React.
+With [~22,900 stars](https://github.com/mastra-ai/mastra), Mastra has strong community adoption. The playground and tracing tools are polished. It integrates cleanly with Next.js and React.
 
 The tradeoff: no cognitive memory (conversation + semantic only), no personality system, no guardrails, no channel adapters, no voice pipeline. Mastra is closer to a "TypeScript LangChain" — an orchestration layer, not a cognitive agent runtime.
 
@@ -194,4 +194,4 @@ console.log(result.text);
 
 **AgentOS** is built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). See [Wilds.ai](https://wilds.ai) for AI game worlds powered by AgentOS.
 
-*Last updated: March 2026. Framework features and star counts change — check each framework's documentation for the latest information.*
+*Last updated: April 2026. Star counts verified via GitHub API. Framework features change. Check each project's documentation for the latest.*
