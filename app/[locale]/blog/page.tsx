@@ -1,16 +1,13 @@
 import Link from 'next/link';
 import type { Route } from 'next';
-import { getTranslations } from 'next-intl/server';
 import { getAllPosts } from '@/lib/markdown';
 import { Calendar, ArrowRight, Tag } from 'lucide-react';
-import type { Locale } from '../../../i18n';
 
 type Props = {
   params: { locale: string };
 };
 
 export async function generateMetadata({ params: { locale } }: Props) {
-  const t = await getTranslations({ locale: locale as Locale, namespace: 'metadata' });
   const canonical = locale === 'en' ? '/blog' : `/${locale}/blog`;
 
   return {

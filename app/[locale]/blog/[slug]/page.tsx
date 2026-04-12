@@ -4,7 +4,6 @@ import type { Route } from 'next';
 import { getPostBySlug, getPostSlugs } from '@/lib/markdown';
 import { MarkdownRenderer } from '@/components/markdown-renderer';
 import { Calendar, ArrowLeft, Tag, User } from 'lucide-react';
-import type { Locale } from '../../../../i18n';
 import { locales } from '../../../../i18n';
 
 type Props = {
