@@ -266,6 +266,19 @@ export default async function FAQPage({ params: { locale } }: Props) {
       className="relative overflow-x-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]"
     >
       <FAQJsonLd locale={locale} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://agentos.sh' },
+              { '@type': 'ListItem', position: 2, name: 'FAQ', item: `https://agentos.sh${locale === 'en' ? '/faq' : `/${locale}/faq`}` },
+            ],
+          }),
+        }}
+      />
 
       {/* Subtle gradient backdrop matching the about page */}
       <div className="absolute inset-0 pointer-events-none">

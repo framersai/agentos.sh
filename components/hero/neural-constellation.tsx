@@ -207,9 +207,11 @@ export const NeuralConstellation = memo(function NeuralConstellation({
  */
 export function ResponsiveNeuralConstellation({ className = '' }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    setIsMobile(window.innerWidth < 640);
   }, []);
 
   if (!mounted) {
@@ -220,12 +222,20 @@ export function ResponsiveNeuralConstellation({ className = '' }: { className?: 
     );
   }
 
+  // Skip canvas rendering on mobile for performance
+  if (isMobile) {
+    return (
+      <div className={`w-full h-full flex items-center justify-center ${className}`}>
+        <div className="w-[250px] h-[250px] rounded-full bg-gradient-to-br from-violet-500/10 to-cyan-500/10" />
+      </div>
+    );
+  }
+
   // Render a single 500px canvas and scale with CSS transforms
-  // This is much more performant than rendering 4 separate canvases
   return (
     <div className={`w-full h-full flex items-center justify-center ${className}`}>
-      <div 
-        className="transform scale-50 sm:scale-90 lg:scale-[1.2] xl:scale-[1.5] origin-center transition-transform duration-300"
+      <div
+        className="transform sm:scale-90 lg:scale-[1.2] xl:scale-[1.5] origin-center transition-transform duration-300"
         style={{ willChange: 'transform' }}
       >
         <NeuralConstellation size={500} />

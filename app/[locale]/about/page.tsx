@@ -92,6 +92,19 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
   return (
     <main id="main-content" className="relative overflow-x-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://agentos.sh' },
+              { '@type': 'ListItem', position: 2, name: 'About', item: `https://agentos.sh${locale === 'en' ? '/about' : `/${locale}/about`}` },
+            ],
+          }),
+        }}
+      />
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10" />
         <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-accent-primary/10 to-transparent blur-3xl opacity-40" />
