@@ -30,12 +30,13 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const [wordA, wordB] = words;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
-  const stateRef = useRef({ 
-    wordIdx: startIndex, 
-    morphT: 0, 
-    lastSwitch: 0, 
+  const stateRef = useRef({
+    wordIdx: startIndex,
+    morphT: 0,
+    lastSwitch: 0,
     isMorphing: false,
-    nextInterval: interval + (Math.random() - 0.5) * 800 // randomize timing
+    widthSwitched: false,
+    nextInterval: interval + (Math.random() - 0.5) * 800
   });
   const particlesARef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
@@ -182,13 +183,18 @@ export const ParticleMorphText = memo(function ParticleMorphText({
       // Slower morph speed with exponential decay
       if (s.isMorphing) {
         s.morphT += 0.008; // slow, elegant morph
+        // Switch width at morph midpoint so spacing animates in sync with particles
+        if (s.morphT >= 0.5 && !s.widthSwitched) {
+          s.widthSwitched = true;
+          setActiveWordIndex(1 - s.wordIdx);
+        }
         if (s.morphT >= 1) {
           s.morphT = 0;
           s.isMorphing = false;
+          s.widthSwitched = false;
           s.wordIdx = 1 - s.wordIdx;
-          setActiveWordIndex(s.wordIdx);
           s.lastSwitch = t;
-          s.nextInterval = interval + (Math.random() - 0.5) * 1000; // randomize next
+          s.nextInterval = interval + (Math.random() - 0.5) * 1000;
         }
       }
 
