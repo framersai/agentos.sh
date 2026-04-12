@@ -326,6 +326,25 @@ export default async function LocaleLayout({
           }}
         />
 
+        {/* Scroll to hash target after lazy sections mount */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (window.location.hash) {
+                  var id = window.location.hash.slice(1);
+                  var attempts = 0;
+                  var poll = setInterval(function() {
+                    var el = document.getElementById(id);
+                    if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); clearInterval(poll); }
+                    if (++attempts >= 20) clearInterval(poll);
+                  }, 200);
+                }
+              } catch(e) {}
+            `
+          }}
+        />
+
         <main id="main-content" tabIndex={-1} className="focus:outline-none scroll-mt-24">{children}</main>
         <ScrollToTopButton />
         <footer className="border-t border-purple-200/30 dark:border-purple-500/20 bg-gradient-to-br from-white/90 via-purple-50/30 to-pink-50/30 dark:from-black/80 dark:via-purple-950/40 dark:to-pink-950/40 backdrop-blur-lg py-12">
