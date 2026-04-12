@@ -10,6 +10,8 @@ interface ParticleMorphTextProps {
   gradientFrom?: string;
   gradientTo?: string;
   startIndex?: number;
+  /** Extra vertical offset in em units (e.g. 0.03 to nudge down) */
+  nudgeY?: number;
 }
 
 /**
@@ -23,6 +25,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   gradientFrom = '#8b5cf6',
   gradientTo = '#06b6d4',
   startIndex = 0,
+  nudgeY = 0,
 }: ParticleMorphTextProps) {
   const [wordA, wordB] = words;
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -247,7 +250,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         overflow: 'visible',
         verticalAlign: 'baseline',
         position: 'relative',
-        top: '0.22em',
+        top: `${0.22 + nudgeY}em`,
         marginRight: '0.2em',
         transition: 'width 180ms ease-out',
       }}
