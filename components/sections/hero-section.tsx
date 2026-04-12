@@ -127,7 +127,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
       {/* Neural Constellation - right side, single responsive instance */}
       <div 
-        className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 sm:opacity-50 lg:opacity-70" 
+        className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15 sm:opacity-25 lg:opacity-40"
         style={{ marginLeft: 'calc(15% + 40px)', marginTop: '-8%' }} 
         aria-hidden="true"
       >
