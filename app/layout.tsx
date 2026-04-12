@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { Inter, DM_Sans } from 'next/font/google';
 import '../styles/tokens.css';
 import './globals.css';
 import { defaultLocale } from '../i18n';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
-const grotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-grotesk', display: 'swap' });
+const grotesk = DM_Sans({ subsets: ['latin'], variable: '--font-grotesk', display: 'swap' });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const lang = defaultLocale;
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
              --color-accent-hover: hsl(250, 95%, 45%);
              --color-border-subtle: hsl(220, 15%, 85%);
              --color-border-interactive: hsl(250, 50%, 75%);
-             --font-grotesk: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+             --font-grotesk: 'DM Sans', system-ui, -apple-system, sans-serif;
           }
           .dark {
              --color-background-primary: hsl(240, 20%, 3%);

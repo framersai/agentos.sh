@@ -15,7 +15,7 @@
   --color-accent-hover: hsl(250, 95%, 45%);
   --color-border-subtle: hsl(220, 15%, 85%);
   --color-border-interactive: hsl(250, 50%, 75%);
-  --font-grotesk: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-grotesk: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
 .dark {
