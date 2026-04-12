@@ -1,8 +1,9 @@
 'use client';
 
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Copy, Check } from 'lucide-react';
 import { useCallback } from 'react';
 import { useTheme } from 'next-themes';
@@ -38,12 +39,13 @@ function CodeBlock({ language, children }: { language: string; children: string 
       </div>
       <SyntaxHighlighter
         language={language || 'text'}
-        style={isDark ? vscDarkPlus : vs}
+        style={isDark ? oneDark : oneLight}
         customStyle={{
           margin: 0,
           borderRadius: '0.75rem',
           padding: '1.5rem',
           fontSize: '0.875rem',
+          background: isDark ? '#1e1e2e' : '#fafafa',
         }}
         showLineNumbers={children.split('\n').length > 5}
         lineNumberStyle={{
@@ -76,13 +78,16 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       prose-ol:text-[var(--color-text-secondary)] prose-ol:list-decimal prose-ol:pl-6
       prose-li:text-[var(--color-text-secondary)] prose-li:my-1
       prose-blockquote:border-l-4 prose-blockquote:border-[var(--color-accent-primary)] prose-blockquote:bg-[var(--color-background-secondary)] prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-[var(--color-text-secondary)]
-      prose-table:border-collapse
-      prose-th:bg-[var(--color-background-secondary)] prose-th:text-[var(--color-text-primary)] prose-th:font-semibold prose-th:px-4 prose-th:py-2 prose-th:border prose-th:border-[var(--color-border-subtle)]
-      prose-td:px-4 prose-td:py-2 prose-td:border prose-td:border-[var(--color-border-subtle)] prose-td:text-[var(--color-text-secondary)]
+      prose-table:border-collapse prose-table:w-full prose-table:overflow-x-auto
+      prose-thead:bg-[var(--color-background-secondary)]
+      prose-th:text-[var(--color-text-primary)] prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:border prose-th:border-[var(--color-border-subtle)] prose-th:text-left prose-th:text-sm
+      prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-[var(--color-border-subtle)] prose-td:text-[var(--color-text-secondary)] prose-td:text-sm
+      prose-tr:even:bg-[var(--color-background-secondary)]/30
       prose-hr:border-[var(--color-border-subtle)]
       prose-img:rounded-xl prose-img:shadow-lg
     ">
       <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
         components={{
           code({ node: _node, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
@@ -100,6 +105,13 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
               <CodeBlock language={match?.[1] || 'text'}>
                 {String(children).replace(/\n$/, '')}
               </CodeBlock>
+            );
+          },
+          table({ node: _node, children, ...props }) {
+            return (
+              <div className="overflow-x-auto my-6 rounded-xl border border-[var(--color-border-subtle)]">
+                <table {...props}>{children}</table>
+              </div>
             );
           },
           a({ node: _node, href, children, ...props }) {
