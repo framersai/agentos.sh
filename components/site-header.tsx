@@ -116,26 +116,18 @@ export function SiteHeader() {
     const hashMatch = href.match(/#(.+)$/);
     if (hashMatch) {
       const targetId = hashMatch[1];
-      e.preventDefault();
       closeMenu();
-      window.history.pushState(null, '', href);
 
-      const scrollTo = () => {
-        const element = document.getElementById(targetId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          return true;
-        }
-        return false;
-      };
-
-      // Element may be in a lazy-loaded (ssr: false) section that hasn't mounted yet.
-      // Retry a few times to catch deferred renders.
-      if (!scrollTo()) {
-        let attempts = 0;
-        const interval = setInterval(() => {
-          if (scrollTo() || ++attempts >= 10) clearInterval(interval);
-        }, 150);
+      // Check if the target element exists on the current page
+      const element = document.getElementById(targetId);
+      if (element) {
+        // Same page: smooth scroll
+        e.preventDefault();
+        window.history.pushState(null, '', href);
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        // Different page (e.g. on /about but hash is on /): let browser navigate
+        // The default <a> behavior will load the target page with the hash
       }
     }
   };

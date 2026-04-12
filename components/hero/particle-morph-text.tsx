@@ -247,9 +247,9 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         overflow: 'visible',
         verticalAlign: 'baseline',
         position: 'relative',
-        top: '0.22em',
-        marginRight: '0.2em',
-        ...(fontsReady ? { transition: 'width 520ms cubic-bezier(0.4, 0, 0.2, 1)' } : {}),
+        top: '0.12em',
+        marginRight: '0.15em',
+        ...(fontsReady ? { transition: 'width 300ms cubic-bezier(0.25, 0.8, 0.25, 1)' } : {}),
       }}
     >
       <span className="sr-only">{wordA} / {wordB}</span>
