@@ -70,7 +70,7 @@ export default async function BlogPage({ params: { locale } }: Props) {
 
         <div className="space-y-8">
           {posts.map((post) => {
-            const href = locale === 'en' ? `/blog/${post.slug}` : `/${locale}/blog/${post.slug}`;
+            const href = `/${locale}/blog/${post.slug}`;
             const colorClass = categoryColors[post.category || ''] || 'bg-gray-500/10 text-gray-600 dark:text-gray-400';
 
             return (

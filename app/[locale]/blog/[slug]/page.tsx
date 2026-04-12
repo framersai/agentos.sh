@@ -53,8 +53,8 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
-  const blogHref = locale === 'en' ? '/blog' : `/${locale}/blog`;
-  const canonical = locale === 'en' ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
+  const blogHref = `/${locale}/blog`;
+  const canonical = `/${locale}/blog/${slug}`;
 
   return (
     <main id="main-content" className="relative overflow-x-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]">
