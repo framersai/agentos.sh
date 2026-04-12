@@ -23,7 +23,7 @@ export function SiteHeader() {
   const localePrefix = locale === 'en' ? '' : `/${locale}`;
   const NAV_LINKS = useMemo(() => [
     { href: `${localePrefix}/about`, label: t('about') },
-    { href: `/${locale}/#features`, label: t('features') },
+    { href: `/${locale}/#capabilities`, label: t('features') },
     { href: 'https://docs.agentos.sh/', label: 'Docs' },
     { href: `${localePrefix}/blog`, label: 'Blog' },
     { href: `${localePrefix}/faq`, label: t('faq') },
