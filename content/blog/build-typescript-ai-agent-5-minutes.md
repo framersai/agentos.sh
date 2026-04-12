@@ -1,11 +1,11 @@
 ---
 title: "How to Build a TypeScript AI Agent in 5 Minutes"
-date: "2026-03-31"
-excerpt: "From npm install to a working agent with personality, memory, tools, and guardrails — in under 50 lines of code."
+date: "2026-04-12"
+excerpt: "From npm install to a working agent with personality, memory, tools, and guardrails. Five steps, under 50 lines of TypeScript code. Complete tutorial with inline citations."
 author: "AgentOS Team"
 category: "Tutorial"
-image: "/blog/quickstart-tutorial.png"
-keywords: "build ai agent typescript, typescript ai tutorial, ai agent quickstart, how to build ai agent, agentos tutorial"
+image: "/og-image.png"
+keywords: "build ai agent typescript, typescript ai tutorial, ai agent quickstart, how to build ai agent, agentos tutorial, AI agent SDK TypeScript, typescript ai agent framework, production AI agents, cognitive memory tutorial, HEXACO personality AI"
 ---
 
 Zero to a working AI agent with personality, cognitive memory, web search, and guardrails. Five steps, under 50 lines of TypeScript.
@@ -23,7 +23,20 @@ export OPENAI_API_KEY=sk-your-key
 # or ANTHROPIC_API_KEY, GEMINI_API_KEY, GROQ_API_KEY, etc.
 ```
 
-AgentOS auto-detects which provider you have configured. Supports [17 LLM providers](https://docs.agentos.sh/getting-started) out of the box, including OpenAI, Anthropic, Gemini, Ollama, Groq, and [12 more](https://docs.agentos.sh/features/llm-output-validation).
+AgentOS auto-detects which provider you have configured. Supports [21 LLM providers](https://docs.agentos.sh/features/llm-output-validation) out of the box:
+
+| Provider | API Key Variable | Models |
+|----------|-----------------|--------|
+| [OpenAI](https://platform.openai.com/) | `OPENAI_API_KEY` | GPT-4o, GPT-4o-mini, o1 |
+| [Anthropic](https://www.anthropic.com/) | `ANTHROPIC_API_KEY` | Claude Opus 4, Sonnet 4, Haiku |
+| [Google Gemini](https://ai.google.dev/) | `GEMINI_API_KEY` | Gemini 2.5 Pro, Flash |
+| [Ollama](https://ollama.ai/) | Local (no key) | Llama 3, Mistral, Qwen |
+| [Groq](https://groq.com/) | `GROQ_API_KEY` | Llama 3, Mixtral |
+| [OpenRouter](https://openrouter.ai/) | `OPENROUTER_API_KEY` | 200+ models |
+| [Together](https://www.together.ai/) | `TOGETHER_API_KEY` | Open-source models |
+| [Fireworks](https://fireworks.ai/) | `FIREWORKS_API_KEY` | Llama 3, Mixtral |
+| [DeepSeek](https://www.deepseek.com/) | `DEEPSEEK_API_KEY` | DeepSeek V3, R1 |
+| + [12 more](https://docs.agentos.sh/getting-started) | Various | Perplexity, Mistral, Cohere, xAI, Bedrock, Qwen, Moonshot, CLI bridges |
 
 ## Step 2: Generate Text
 
@@ -39,7 +52,7 @@ const result = await generateText({
 console.log(result.text);
 ```
 
-That's the simplest possible agent — one LLM call, one response. Now let's add personality and memory.
+One LLM call, one response. Now let's add personality and memory.
 
 ## Step 3: Add Personality and Memory
 
@@ -70,9 +83,29 @@ const answer2 = await assistant.text('What topics would interest me?');
 // Response references marine biology because it remembers
 ```
 
-[HEXACO personality traits](https://docs.agentos.sh/features/cognitive-memory-guide), based on the [six-factor model from personality psychology](https://en.wikipedia.org/wiki/HEXACO_model_of_personality_structure), shape how the agent communicates. High openness means it explores tangential ideas. High conscientiousness means it stays organized and thorough. These are modeled as weighted parameters in the [`StyleAdaptation`](https://docs.agentos.sh/api/classes/AgentOS) engine that influence every response.
+### How Personality Works
 
-[Cognitive memory](https://docs.agentos.sh/features/cognitive-memory) goes beyond chat history. Memories decay organically via the [Ebbinghaus forgetting curve](https://en.wikipedia.org/wiki/Forgetting_curve), high-importance events resist decay (flashbulb memories), and retrieved memories drift toward the agent's current emotional context ([reconsolidation](https://doi.org/10.1038/35021052)). [8 cognitive mechanisms](https://docs.agentos.sh/api/classes/CognitiveMechanismsEngine) total, each implemented in the AgentOS core runtime.
+[HEXACO personality traits](https://docs.agentos.sh/features/cognitive-memory-guide), based on the [six-factor model from personality psychology](https://hexaco.org/hexaco-inventory) ([Ashton & Lee, 2004](https://doi.org/10.1207/s15327957pspr0802_1)), shape how the agent communicates. Recent research shows that [LLMs can reliably simulate HEXACO personality structures](https://arxiv.org/abs/2508.00742) with coherent factor recovery.
+
+| Trait | High Value Effect | Low Value Effect |
+|-------|------------------|-----------------|
+| **Openness** | Explores tangential ideas, creative responses | Stays focused, conservative |
+| **Conscientiousness** | Organized, thorough, detailed | Casual, brief |
+| **Agreeableness** | Warm, accommodating | Direct, challenging |
+| **Extraversion** | Enthusiastic, verbose | Reserved, concise |
+| **Emotionality** | Empathetic, supportive | Analytical, detached |
+| **Honesty-Humility** | Transparent, admits limitations | Confident, promotional |
+
+### How Memory Works
+
+[Cognitive memory](https://docs.agentos.sh/features/cognitive-memory) goes beyond chat history. [8 neuroscience-grounded mechanisms](https://docs.agentos.sh/api/classes/CognitiveMechanismsEngine) model how human memory actually works:
+
+- **[Ebbinghaus decay](https://en.wikipedia.org/wiki/Forgetting_curve)**: memories fade exponentially over time (R = e^(-t/S)), [replicated and validated by Murre & Dros (2015)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4492928/). High-importance events resist decay (flashbulb memories).
+- **[Reconsolidation](https://doi.org/10.1038/35021052)**: retrieved memories drift toward the agent's current emotional context ([Nader et al., 2000](https://doi.org/10.1038/35021052)).
+- **[Retrieval-induced forgetting](https://doi.org/10.1037/0096-3445.123.2.178)**: retrieving one memory suppresses competing memories ([Anderson et al., 1994](https://doi.org/10.1037/0096-3445.123.2.178)).
+- **[4-tier hierarchy](https://docs.agentos.sh/features/memory-architecture)**: working memory, episodic, semantic, observational. Memories consolidate upward automatically.
+
+This approach mirrors the [ACT-R cognitive architecture](https://arxiv.org/html/2512.20651) used by recent AI memory systems like [Memory Bear](https://arxiv.org/html/2512.20651) and [CortexGraph](https://github.com/prefrontal-systems/cortexgraph), which also integrate Ebbinghaus decay with activation scheduling.
 
 ## Step 4: Add Tools
 
@@ -92,7 +125,7 @@ const result = await researcher.text(
 // and responds with cited information
 ```
 
-AgentOS ships with [107+ curated extensions](https://github.com/framersai/agentos-extensions) covering web search, news, image search, browser automation, deep research, and more. The [`verify_citations` tool](https://docs.agentos.sh/features/citation-verification) decomposes responses into atomic claims and checks each against sources using NLI-based entailment scoring via the [`CitationVerifier`](https://docs.agentos.sh/api/classes/CitationVerifier).
+AgentOS ships with [107+ curated extensions](https://github.com/framersai/agentos-extensions) covering web search, news, image search, browser automation, deep research, and more. The [`verify_citations` tool](https://docs.agentos.sh/features/citation-verification) decomposes responses into atomic claims and checks each against sources using [NLI-based entailment scoring](https://docs.agentos.sh/api/classes/CitationVerifier).
 
 ## Step 5: Add Guardrails
 
@@ -111,16 +144,18 @@ const safeBot = agent({
 });
 ```
 
-Six [guardrail packs](https://docs.agentos.sh/features/guardrails) run on every request:
+[6 guardrail packs](https://docs.agentos.sh/features/guardrails) run on every request:
 
-- **[PII Redaction](https://docs.agentos.sh/features/safety-primitives)** -- four-tier detection (regex + NLP + NER + LLM)
-- **[ML Classifiers](https://docs.agentos.sh/features/guardrails-architecture)** -- toxicity, prompt injection, and jailbreak detection via ONNX BERT models
-- **[Topicality](https://docs.agentos.sh/features/guardrails)** -- embedding-based topic enforcement with drift detection
-- **[Code Safety](https://docs.agentos.sh/features/guardrails)** -- OWASP-pattern scanning for generated code
-- **[Grounding Guard](https://docs.agentos.sh/features/citation-verification)** -- NLI-based claim verification against RAG sources
-- **[Content Policy](https://docs.agentos.sh/features/creating-guardrails)** -- configurable categories with LLM rewrite/block
+| Guardrail | Detection Method | What It Catches |
+|-----------|-----------------|-----------------|
+| **[PII Redaction](https://docs.agentos.sh/features/safety-primitives)** | 4-tier: regex + NLP + NER + LLM | Names, emails, SSNs, credit cards, addresses |
+| **[ML Classifiers](https://docs.agentos.sh/features/guardrails-architecture)** | ONNX BERT models | Toxicity, prompt injection, jailbreak attempts |
+| **[Topicality](https://docs.agentos.sh/features/guardrails)** | Embedding-based + drift detection | Off-topic messages, scope violations |
+| **[Code Safety](https://docs.agentos.sh/features/guardrails)** | OWASP pattern scanning | Command injection, XSS, SQL injection in generated code |
+| **[Grounding Guard](https://docs.agentos.sh/features/citation-verification)** | NLI-based claim verification | Hallucinated facts not supported by RAG sources |
+| **[Content Policy](https://docs.agentos.sh/features/creating-guardrails)** | LLM rewrite/block | Configurable category enforcement |
 
-[5 security tiers](https://docs.agentos.sh/features/guardrails): `dangerous` > `permissive` > `balanced` > `strict` > `paranoid`. Each tier controls which tools the agent can access and what guardrails are enforced.
+[5 security tiers](https://docs.agentos.sh/features/guardrails): `dangerous` > `permissive` > `balanced` > `strict` > `paranoid`. Each tier controls tool access and guardrail enforcement. This layered approach addresses the [runtime security concerns](https://www.ibm.com/think/insights/agentic-ai-runtime-security) that IBM identifies as critical for agentic AI systems.
 
 ## Full Example: 47 Lines
 
@@ -135,7 +170,7 @@ const myAgent = agent({
     You search the web for current information,
     verify your claims against sources, and cite everything.`,
 
-  // Personality
+  // Personality (HEXACO six-factor model)
   personality: {
     openness: 0.9,
     conscientiousness: 0.85,
@@ -145,13 +180,13 @@ const myAgent = agent({
     honestyHumility: 0.95,
   },
 
-  // Memory
+  // Cognitive memory with Ebbinghaus decay
   memory: {
     enabled: true,
     decay: 'ebbinghaus',
   },
 
-  // Tools
+  // Tools (107+ available extensions)
   tools: [
     'web_search',
     'deep_research',
@@ -159,7 +194,7 @@ const myAgent = agent({
     'news_search',
   ],
 
-  // Safety
+  // Safety (6 guardrail packs, 5 security tiers)
   security: { tier: 'balanced' },
   guardrails: {
     input: ['pii-redaction'],
@@ -174,17 +209,20 @@ console.log(response);
 
 ## What's Next
 
-- [Deploy to Telegram or WhatsApp](https://docs.agentos.sh/features/channels) -- 37 channel adapters ready to go
-- [Add voice](https://docs.agentos.sh/features/voice-pipeline) -- 12 STT providers, 12 TTS providers, VAD, and [telephony](https://docs.agentos.sh/features/telephony-providers)
-- [Build multi-agent teams](https://docs.agentos.sh/features/agency-api) -- [6 coordination strategies](https://docs.agentos.sh/features/agency-collaboration) with [emergent tool forging](https://docs.agentos.sh/features/emergent-capabilities)
-- [Graph-based orchestration](https://docs.agentos.sh/features/workflow-dsl) -- `workflow()`, `AgentGraph`, and `mission()` for complex pipelines
-- [Full documentation](https://docs.agentos.sh) -- guides, [API reference](https://docs.agentos.sh/api), and architecture
+- **[Deploy to messaging channels](https://docs.agentos.sh/features/channels)**: [37 adapters](https://docs.agentos.sh/features/channels) including Telegram, WhatsApp, Discord, Slack
+- **[Add voice](https://docs.agentos.sh/features/voice-pipeline)**: [12 STT providers](https://docs.agentos.sh/features/voice-pipeline), [12 TTS providers](https://docs.agentos.sh/features/voice-pipeline), VAD, and [telephony](https://docs.agentos.sh/features/telephony-providers) via Twilio, Telnyx, Plivo
+- **[Build multi-agent teams](https://docs.agentos.sh/features/agency-api)**: [6 coordination strategies](https://docs.agentos.sh/features/agency-collaboration) with [emergent tool forging](https://docs.agentos.sh/features/emergent-capabilities)
+- **[Graph-based orchestration](https://docs.agentos.sh/features/workflow-dsl)**: `workflow()`, `AgentGraph`, and `mission()` for complex pipelines
+- **[Full documentation](https://docs.agentos.sh)**: guides, [API reference](https://docs.agentos.sh/api), and architecture
 
 ```bash
 npm install @framers/agentos
 ```
 
-[GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos) · [Documentation](https://docs.agentos.sh) · [Discord](https://discord.gg/VXXC4SJMKh)
+- [GitHub](https://github.com/framersai/agentos)
+- [npm](https://www.npmjs.com/package/@framers/agentos)
+- [Documentation](https://docs.agentos.sh)
+- [Discord](https://discord.gg/VXXC4SJMKh)
 
 ---
 
