@@ -37,7 +37,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const particlesARef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [_activeWordIndex, setActiveWordIndex] = useState(startIndex);
+  const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
   const [_fontsReady, setFontsReady] = useState(false);
 
   const height = useMemo(() => Math.ceil(fontSize * 1.15), [fontSize]);
@@ -46,8 +46,8 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
-  // Always use max width to prevent layout shifts during morph transitions
-  const _wrapperWidth = width;
+  // Use per-word width for tight spacing; switch is instant (no CSS transition)
+  const _wrapperWidth = wordWidths[activeWordIndex] ?? width;
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);
