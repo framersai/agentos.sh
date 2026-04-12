@@ -1,0 +1,167 @@
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import type { Route } from 'next';
+import { getPostBySlug, getPostSlugs } from '@/lib/markdown';
+import { MarkdownRenderer } from '@/components/markdown-renderer';
+import { Calendar, ArrowLeft, Tag, User } from 'lucide-react';
+import type { Locale } from '../../../../i18n';
+import { locales } from '../../../../i18n';
+
+type Props = {
+  params: { locale: string; slug: string };
+};
+
+export function generateStaticParams() {
+  const slugs = getPostSlugs();
+  return locales.flatMap((locale) =>
+    slugs.map((file) => ({
+      locale,
+      slug: file.replace(/\.md$/, ''),
+    }))
+  );
+}
+
+export async function generateMetadata({ params: { locale, slug } }: Props) {
+  const post = getPostBySlug(slug);
+  if (!post) return {};
+
+  const canonical = locale === 'en' ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
+
+  return {
+    title: `${post.title} - AgentOS Blog`,
+    description: post.excerpt || post.title,
+    keywords: post.keywords || '',
+    alternates: { canonical },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || post.title,
+      url: `https://agentos.sh${canonical}`,
+      siteName: 'AgentOS',
+      images: post.image ? [{ url: post.image }] : [{ url: '/og-image.png' }],
+      type: 'article',
+      publishedTime: post.date,
+      authors: [post.author || 'AgentOS Team'],
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title: post.title,
+      description: post.excerpt || post.title,
+    },
+  };
+}
+
+export default function BlogPostPage({ params: { locale, slug } }: Props) {
+  const post = getPostBySlug(slug);
+  if (!post) notFound();
+
+  const blogHref = locale === 'en' ? '/blog' : `/${locale}/blog`;
+  const canonical = locale === 'en' ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
+
+  return (
+    <main id="main-content" className="relative overflow-x-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]">
+      {/* Article JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: post.title,
+            description: post.excerpt || post.title,
+            datePublished: post.date,
+            dateModified: post.date,
+            author: {
+              '@type': 'Organization',
+              name: post.author || 'AgentOS Team',
+              url: 'https://agentos.sh',
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Manic Agency LLC',
+              url: 'https://manic.agency',
+              logo: { '@type': 'ImageObject', url: 'https://agentos.sh/og-image.png' },
+            },
+            mainEntityOfPage: `https://agentos.sh${canonical}`,
+            image: post.image ? `https://agentos.sh${post.image}` : 'https://agentos.sh/og-image.png',
+          }),
+        }}
+      />
+      {/* BreadcrumbList JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://agentos.sh' },
+              { '@type': 'ListItem', position: 2, name: 'Blog', item: `https://agentos.sh${blogHref}` },
+              { '@type': 'ListItem', position: 3, name: post.title, item: `https://agentos.sh${canonical}` },
+            ],
+          }),
+        }}
+      />
+
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10" />
+      </div>
+
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        {/* Back link */}
+        <Link
+          href={blogHref as Route}
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent-primary)] transition-colors mb-8"
+        >
+          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+          Back to blog
+        </Link>
+
+        {/* Post header */}
+        <header className="mb-10">
+          <div className="flex items-center gap-3 mb-4 text-sm">
+            {post.category && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--color-accent-primary)]/10 text-[var(--color-accent-primary)]">
+                <Tag className="w-3 h-3" aria-hidden="true" />
+                {post.category}
+              </span>
+            )}
+            <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
+              <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
+              {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </span>
+            {post.author && (
+              <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
+                <User className="w-3.5 h-3.5" aria-hidden="true" />
+                {post.author}
+              </span>
+            )}
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--color-text-primary)] leading-tight">
+            {post.title}
+          </h1>
+
+          {post.excerpt && (
+            <p className="mt-4 text-lg text-[var(--color-text-secondary)] leading-relaxed">
+              {post.excerpt}
+            </p>
+          )}
+        </header>
+
+        {/* Post content */}
+        <MarkdownRenderer content={post.content} />
+
+        {/* Footer */}
+        <footer className="mt-16 pt-8 border-t border-[var(--color-border-subtle)]">
+          <Link
+            href={blogHref as Route}
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-accent-primary)] hover:underline"
+          >
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            Back to all articles
+          </Link>
+        </footer>
+      </div>
+    </main>
+  );
+}

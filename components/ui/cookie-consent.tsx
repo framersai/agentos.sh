@@ -149,7 +149,7 @@ export function CookieConsent() {
           className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6"
         >
           <div className="mx-auto max-w-4xl">
-            <div className="holographic-card p-6 shadow-2xl border border-[var(--color-border-primary)]">
+            <div className="holographic-card p-6 shadow-2xl border border-[var(--color-border-primary)]" role="dialog" aria-label="Cookie consent" aria-modal="false">
               {!showSettings ? (
                 /* Main Banner */
                 <div className="flex flex-col md:flex-row md:items-center gap-4">
@@ -209,6 +209,7 @@ export function CookieConsent() {
                     <button
                       onClick={() => setShowSettings(false)}
                       className="p-1 hover:bg-[var(--color-background-secondary)] rounded-lg transition-colors"
+                      aria-label="Close cookie preferences"
                     >
                       <X className="w-5 h-5 text-[var(--color-text-muted)]" />
                     </button>

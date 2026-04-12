@@ -19,6 +19,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/careers', priority: 0.6, changeFrequency: 'weekly' as const },
     { path: '/legal/terms', priority: 0.3, changeFrequency: 'yearly' as const },
     { path: '/legal/privacy', priority: 0.3, changeFrequency: 'yearly' as const },
+    { path: '/legal/security', priority: 0.3, changeFrequency: 'yearly' as const },
+    { path: '/legal/cookies', priority: 0.3, changeFrequency: 'yearly' as const },
+    { path: '/guides', priority: 0.7, changeFrequency: 'weekly' as const },
   ];
 
   // Generate URLs for all locales for static pages
@@ -41,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         : `${baseUrl}/${locale}/blog/${post.slug}`,
       lastModified: new Date(post.date),
       changeFrequency: 'monthly' as const,
-      priority: 0.7,
+      priority: 0.8,
     }))
   );
 

@@ -305,6 +305,18 @@
     border-color: var(--color-accent-primary);
   }
 
+  /* Reduce expensive backdrop-filter on mobile */
+  @media (max-width: 639px) {
+    .glass-card {
+      backdrop-filter: blur(8px) saturate(150%);
+      -webkit-backdrop-filter: blur(8px) saturate(150%);
+    }
+    .holographic-card {
+      backdrop-filter: blur(4px) saturate(150%);
+      -webkit-backdrop-filter: blur(4px) saturate(150%);
+    }
+  }
+
   /* --- Gradient Text --- */
   .gradient-text {
     background: var(--color-accent-gradient);
@@ -473,6 +485,17 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+  }
+
+  /* Universal focus-visible indicator for keyboard navigation */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+  }
+
+  /* Remove outline for mouse clicks */
+  :focus:not(:focus-visible) {
+    outline: none;
   }
 }
 
