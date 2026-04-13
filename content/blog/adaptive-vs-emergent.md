@@ -90,4 +90,4 @@ The constraint is the enabler. Agents can forge tools freely because the judge g
 - [How to Build a TypeScript AI Agent in 5 Minutes](/blog/build-typescript-ai-agent-5-minutes)
 - [Emergent Capabilities Guide](https://docs.agentos.sh/features/emergent-capabilities)
 - [AgentOS vs LangGraph vs CrewAI vs Mastra vs VoltAgent](/blog/agentos-vs-langgraph-vs-crewai)
-- [GitHub](https://github.com/framersai/agentos) | [Discord](https://discord.gg/VXXC4SJMKh) | [npm](https://www.npmjs.com/package/@framers/agentos)
+- [GitHub](https://github.com/framersai/agentos) | [Discord](https://discord.gg/3bYhhcrn) | [npm](https://www.npmjs.com/package/@framers/agentos)
