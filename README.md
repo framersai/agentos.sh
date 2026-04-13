@@ -79,7 +79,12 @@ If you prefer different names, adjust the `heroVideoSources` / `pipelineImageSou
 ---
 
 <p align="center">
-  <a href="https://frame.dev">
-    <img src="public/logos/frame-logo-no-subtitle.svg" alt="Frame.dev" height="40" />
-  </a>
+  <a href="https://agentos.sh"><img src="public/logos/agentos-primary-no-tagline.svg" alt="AgentOS" height="36" /></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://frame.dev"><img src="public/logos/frame-logo-no-subtitle.svg" alt="Frame.dev" height="28" /></a>
+</p>
+
+<p align="center">
+  Built by <a href="https://manic.agency">Manic Agency LLC</a> / <a href="https://frame.dev">Frame.dev</a><br>
+  Contact: <a href="mailto:team@frame.dev">team@frame.dev</a>
 </p>
