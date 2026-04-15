@@ -46,6 +46,16 @@ const repositories: Repository[] = [
     lastUpdated: '12 hours ago'
   },
   {
+    name: 'Paracosm',
+    description: 'AI agent swarm simulation engine. Emergent tool forging, HEXACO personality evolution, deterministic divergence kernels. Built on AgentOS.',
+    url: 'https://github.com/framersai/paracosm',
+    category: 'core',
+    icon: Globe,
+    language: 'TypeScript',
+    status: 'stable',
+    lastUpdated: 'recently'
+  },
+  {
     name: 'AgentOS Skills',
     description: '69 curated SKILL.md prompt modules -- web search, coding, research, social media, and more. Data-only package with zero runtime dependencies.',
     url: 'https://github.com/framersai/agentos-skills',
