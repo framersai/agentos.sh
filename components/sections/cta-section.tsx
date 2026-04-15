@@ -35,13 +35,15 @@ export function CTASection() {
           viewport={{ once: true }}
           className="max-w-xl mx-auto"
         >
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-4 gap-3">
             <a
-              href="https://vca.chat"
-              className="group flex flex-col items-center gap-2 p-4 bg-[var(--color-background-card)] backdrop-blur-xl rounded-xl border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] hover:border-[var(--color-accent-primary)] hover:bg-[var(--color-accent-primary)]/5 transition-all duration-300"
+              href="https://wilds.ai/discord"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col items-center gap-2 p-4 bg-[var(--color-background-card)] backdrop-blur-xl rounded-xl border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] hover:border-[#5865F2] hover:bg-[#5865F2]/5 transition-all duration-300"
             >
-              <MessageCircle className="w-5 h-5 text-[var(--color-accent-primary)]" />
-              <span className="text-xs font-medium">{t('tryVoiceChat')}</span>
+              <MessageCircle className="w-5 h-5 text-[#5865F2]" />
+              <span className="text-xs font-medium">Discord</span>
             </a>
 
             <a
@@ -60,6 +62,14 @@ export function CTASection() {
             >
               <Sparkles className="w-5 h-5 text-[var(--color-accent-primary)]" />
               <span className="text-xs font-medium">Docs</span>
+            </a>
+
+            <a
+              href="https://vca.chat"
+              className="group flex flex-col items-center gap-2 p-4 bg-[var(--color-background-card)] backdrop-blur-xl rounded-xl border border-[var(--color-border-subtle)] text-[var(--color-text-primary)] hover:border-[var(--color-accent-primary)] hover:bg-[var(--color-accent-primary)]/5 transition-all duration-300"
+            >
+              <MessageCircle className="w-5 h-5 text-[var(--color-accent-primary)]" />
+              <span className="text-xs font-medium">{t('tryVoiceChat')}</span>
             </a>
           </div>
         </motion.div>
