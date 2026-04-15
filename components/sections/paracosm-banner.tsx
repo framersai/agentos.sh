@@ -84,16 +84,6 @@ export function ParacosmBanner() {
                 >
                   PARA<span style={{ color: '#e8b44a' }}>COSM</span>
                 </h3>
-                <span
-                  className="rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest"
-                  style={{
-                    color: '#e06530',
-                    background: 'color-mix(in oklab, #e06530 12%, transparent)',
-                    border: '1px solid color-mix(in oklab, #e06530 25%, transparent)',
-                  }}
-                >
-                  New
-                </span>
               </div>
 
               <p
