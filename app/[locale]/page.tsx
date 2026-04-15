@@ -72,6 +72,11 @@ const WorkbenchCTALazy = dynamic(
   { ssr: false }
 )
 
+const ParacosmBannerLazy = dynamic(
+  () => import('../../components/sections/paracosm-banner').then(m => m.ParacosmBanner),
+  { ssr: false }
+)
+
 export default function LandingPageRedesigned() {
   return (
     <>
@@ -82,6 +87,9 @@ export default function LandingPageRedesigned() {
       <div>
         {/* Hero Section - SSR enabled for faster LCP */}
         <HeroSection />
+
+        {/* Paracosm — AI Agent Swarm Simulation */}
+        <ParacosmBannerLazy />
 
         {/* Live Demo Videos with Captions */}
         <div className="lazy-section">
