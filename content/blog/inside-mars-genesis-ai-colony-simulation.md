@@ -226,6 +226,12 @@ By turn three the aggregate forged-toolbox inventory has diverged. By turn six t
 
 The dashboard's colony visualization clusters survivors into family pods, floats featured colonists into a top row with their HEXACO badges, and lays out a ghost layer for the deceased so attrition reads as the visible field of pod outlines thinning over turns. Click any tile to open the drilldown: HEXACO radar with the colony mean overlaid, mood trajectory across turns annotated with crisis titles, family tree with clickable spouse and children thumbnails, reaction quotes per turn, chat handoff straight into the Chat tab pre-selected. Forge events tint by leader side, so at a glance which column invented a tool on which turn is obvious without reading any text.
 
+## Deaths have causes
+
+Mortality in Paracosm is not a single age-stepped roll. The kernel simulates six independent causes and attributes each death to the specific one that killed the colonist. Natural causes fire for colonists over 60 on an age-stepped probability. Radiation cancer fires for colonists over 30 with cumulative exposure above 1000 mSv and escalates above 2000 and 3500. Starvation fires colony-wide when food reserves drop below one month; everyone shares the risk. Despair fires for colonists with psychological scores below 0.2 and is weighted by Emotionality — high-Em colonists feel isolation harder. Fatal fractures fire for Mars-born crew over 40 with bone density below 60 percent. Accidents fire at a small baseline, department-weighted so engineering and medical take more hazardous positions than governance.
+
+Every death carries the cause as a string in the event stream. The stats bar renders the distribution inline as a chip: `DEATHS 8 (3 radiation · 2 accident · 1 despair / 5 age)`. The verdict LLM at the end of a run sees the per-leader breakdown and writes about the specific pattern — a Visionary whose crew died to accidents reads very differently from an Engineer whose crew died to despair. Partnerships form during progression when unpartnered adults have high HEXACO compatibility and morale clears a floor; births prefer partnered couples at triple the unpartnered rate; conditions clear at different rates depending on severity. The population dynamics are not props in the story. They are the story the HEXACO-driven decisions leave behind.
+
 ## What to read next
 
 - [Build an AI Civilization Simulation in 5 Minutes with Paracosm](/blog/build-ai-civilization-simulation-paracosm). The 5-minute tutorial.
