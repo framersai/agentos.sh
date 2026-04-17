@@ -1,0 +1,237 @@
+---
+title: "Inside Mars Genesis: A HEXACO AI Agent Case Study in Emergent Simulation"
+date: "2026-04-17"
+excerpt: "Mars Genesis is a six-turn, thirty-colonist AI civilization simulation where two commanders with opposing HEXACO personality profiles run the same seed and produce measurably different outcomes. This is the end-to-end case study: how the forge-and-reuse economy, personality-weighted memory, and cognitive substrate combine so the Visionary's toolbox diverges from the Engineer's while both share identical starting conditions."
+author: "AgentOS Team"
+category: "Engineering"
+image: "/img/blog/paracosm/dashboard-overview.png"
+keywords: "mars colony ai simulation, hexaco ai agents, cognitive memory ai agents, emergent tool forging llm, call forged tool reuse, typescript ai agent framework, personality driven llm agents, llm as judge, v8 isolate sandbox ai, runtime tool generation llm, agent based simulation, two leader one seed"
+---
+
+## The moment a colonist writes a tool
+
+Turn three. Year 2051. A solar storm rolls across the newly-settled Mars colony and the cumulative radiation dose for the outdoor crew crosses the threshold in the scenario's research packet. Dr. Priya Singh, the Chief Medical Officer in Dietrich Voss's colony, is the department agent assigned to analyze the event. She has HEXACO scores 0.88 Conscientiousness, 0.71 Emotionality, 0.42 Openness. She has three turns of consolidated memory about prior radiation incidents. She has exactly one meta-tool attached to her agent definition: `forge_tool`.
+
+Her first move is not to pick an option from a menu. She looks at the already-forged toolbox. A `landing_site_suitability_index` from turn one does not apply. She writes a new tool.
+
+She emits a JSON object describing a radiation dose calculator: an input schema, a sandboxed JavaScript function, three test cases, and an expected output shape. The function runs inside a [V8 isolate](https://v8.dev/docs/embed). An [LLM-as-judge](https://arxiv.org/abs/2306.05685) reviews the code for safety and correctness. The verdict comes back approved, confidence 0.87. The calculator executes against her test cases and returns a projected exposure. That number lands in the report her commander reads three seconds later. By turn four the same tool is callable by every other department in the session without a second judge review, because a second meta-tool, `call_forged_tool`, dispatches to it directly.
+
+This is the interior of [Mars Genesis](https://paracosm.agentos.sh), the reference scenario for [Paracosm](https://paracosm.agentos.sh), an AI agent swarm simulation engine built on [AgentOS](https://agentos.sh). The rest of this post is the case study. Two commanders with opposing HEXACO profiles run the same seed, and their colonies diverge in ways the deterministic kernel alone cannot explain. What follows is the machinery that makes that divergence repeatable and measurable.
+
+## Two commanders, one seed
+
+The scenario defaults to six turns across thirty-two years, 2035 to 2067, with a starting population of thirty. The seed is 950. The two default leaders have opposing HEXACO profiles:
+
+- **Aria Chen, the Visionary.** Openness 0.95, Conscientiousness 0.35, Extraversion 0.85, Agreeableness 0.55, Emotionality 0.30, Honesty-Humility 0.65. Leads from the front with public comms; favors novel approaches; accepts casualties for strategic gain.
+- **Dietrich Voss, the Engineer.** Openness 0.25, Conscientiousness 0.97, Extraversion 0.30, Agreeableness 0.60, Emotionality 0.70, Honesty-Humility 0.90. Works through technical channels; demands evidence before committing; reports failures transparently.
+
+The kernel is deterministic. Given identical seed, identical roster, identical starting resources, it produces identical numerical outcomes per decision. What diverges is every language model call in between. Nine stages per turn, five of them LLM-driven, four deterministic:
+
+```
+1. EVENT DIRECTOR      LLM   Observes state, generates events
+2. KERNEL ADVANCE      det.  Aging, births, deaths, resource deltas
+3. DEPARTMENT ANALYSIS LLM   Each dept may forge or reuse a tool
+4. COMMANDER DECISION  LLM   Reads all reports, picks an option
+5. OUTCOME             det.  Seeded RNG + option risk probability
+6. EFFECTS             det.  Colony deltas via the EffectRegistry
+7. AGENT REACTIONS     LLM   Every alive agent reacts in parallel
+8. MEMORY              det.  Short-term consolidates, stances drift
+9. PERSONALITY DRIFT   det.  HEXACO traits shift under three forces
+```
+
+Two runs on the same seed produce identical stages 2, 5, 6, 8, 9 at the numerical level. The LLM stages diverge because every prompt carries the leader's HEXACO profile and the accumulated state it has shaped. The asymmetry is the entire point. For the turn-loop walk-through, see [Build an AI Civilization Simulation in 5 Minutes with Paracosm](/blog/build-ai-civilization-simulation-paracosm). This post goes into how the three cognitive systems (personality, mood, memory) and two economic systems (forge, reuse) combine to make the Visionary's run read differently from the Engineer's even when their populations track nearly identically.
+
+## Personality: six traits that do work
+
+Every colonist in Paracosm carries a [HEXACO](https://hexaco.org/) profile: six trait values clamped to the range 0.05 to 0.95. The model is from [Ashton and Lee (2007)](https://psycnet.apa.org/record/2007-06785-003) and their [2014 review of the Honesty-Humility dimension](https://journals.sagepub.com/doi/abs/10.1177/1088868314523838). The six dimensions are Honesty-Humility, Emotionality, Extraversion, Agreeableness, Conscientiousness, and Openness.
+
+The engine-side profile lives at `HexacoProfile` in [apps/paracosm/src/engine/core/state.ts](https://github.com/framersai/paracosm/blob/master/src/engine/core/state.ts). The framework-side profile lives at `HexacoTraits` in [packages/agentos/src/memory/core/config.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/memory/core/config.ts). Paracosm passes the profile through to AgentOS every time a colonist is instantiated as a conversational agent, and from there the trait vector controls how the agent's memory behaves.
+
+In [EncodingModel.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/memory/core/encoding/EncodingModel.ts) each trait maps to an attention weight on one class of input feature:
+
+```typescript
+export function computeEncodingWeights(traits: HexacoTraits): EncodingWeights {
+  const o = clamp01(traits.openness);
+  const c = clamp01(traits.conscientiousness);
+  const e = clamp01(traits.emotionality);
+  const x = clamp01(traits.extraversion);
+  const a = clamp01(traits.agreeableness);
+  const h = clamp01(traits.honesty);
+
+  return {
+    noveltyAttention:     0.3 + o * 0.7,
+    proceduralAttention:  0.3 + c * 0.7,
+    emotionalSensitivity: 0.2 + e * 0.8,
+    socialAttention:      0.2 + x * 0.8,
+    cooperativeAttention: 0.2 + a * 0.8,
+    ethicalAttention:     0.2 + h * 0.8,
+  };
+}
+```
+
+Dietrich's Chief Engineer weights procedural details more strongly than Aria's. Aria's Chief Medical Officer amplifies novelty more. The same speech from a commander lands at different encoding strengths in different crew. Over six turns the compounding produces measurable differences in what each colonist can recall about a crisis they all experienced together.
+
+The commander's HEXACO also writes a decision-style block into the bootstrap prompt. Six axes, both poles, each cue naming a concrete downstream behavior rather than the trait label. Aria reads `You favor novel, untested approaches over proven ones; the unknown is an opportunity, not a threat` and `You lead from the front: public announcements, rallying speeches, visible command presence`. Dietrich reads `You demand evidence and contingency plans before committing; you would rather be slow and right than fast and wrong` and `You report failures transparently, accept blame, and refuse to spin bad outcomes`. The dept prompt gets a matching six-axis cue that shapes the report itself: assertive tone versus measured tradeoffs-first, data-certainty presentation, cross-department framing. Two dept heads with different profiles on the same event produce measurably different reports, not the same report with different adjectives.
+
+### Personality drifts, with known coefficients
+
+HEXACO is not fixed for the run. Each turn, every promoted colonist's traits shift under three named forces. The function lives at [apps/paracosm/src/engine/core/progression.ts](https://github.com/framersai/paracosm/blob/master/src/engine/core/progression.ts):
+
+```typescript
+for (const trait of HEXACO_TRAITS) {
+  let pull = 0;
+  // Leader pull: traits converge toward commander
+  pull += (commanderHexaco[trait] - c.hexaco[trait]) * 0.02;
+  // Role pull: department activates specific traits (Tett & Burnett 2003)
+  if (activation[trait] !== undefined) {
+    pull += (activation[trait]! - c.hexaco[trait]) * 0.01;
+  }
+  // Outcome pull: success or failure reinforces specific traits
+  if (turnOutcome === 'risky_success' && trait === 'openness') pull += 0.03;
+  // ...
+  c.hexaco[trait] = clamp(c.hexaco[trait] + pull * yearDelta, 0.05, 0.95);
+}
+```
+
+The role-pull coefficients come from [trait activation theory](https://scholarworks.iu.edu/dspace/handle/2022/24014), the Tett and Burnett (2003) account of how certain situations activate certain traits and pull an occupant's observable personality toward the role's demand profile. Paracosm encodes role archetypes for medical, engineering, agriculture, psychology, and governance, each with a target trait vector, and moves a colonist's traits toward the archetype by a capped fraction per year. Leader pull draws on workplace research about personality similarity and team cohesion. None of the coefficients are invented. They are small, documented inline with their sources, and they are the only nondeterminism in personality evolution across runs on the same seed.
+
+## Mood: a running affect state with concrete consequences
+
+Personality says who the colonist is. Mood says how they feel right now. Every AgentOS agent carries a [`GMIMood`](https://github.com/framersai/agentos/blob/master/packages/agentos/src/cognitive_substrate/IGMI.ts) value, one of eight states: neutral, focused, empathetic, curious, assertive, analytical, frustrated, creative. Each mood maps to a [Pleasure-Arousal-Dominance](https://en.wikipedia.org/wiki/PAD_emotional_state_model) vector in [CognitiveMemoryBridge.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/cognitive_substrate/CognitiveMemoryBridge.ts):
+
+```typescript
+public getPadState(): PADState {
+  switch (this.getMood()) {
+    case GMIMood.FRUSTRATED: return { valence: -0.65, arousal: 0.6,  dominance: 0.2  };
+    case GMIMood.CURIOUS:    return { valence: 0.35,  arousal: 0.45, dominance: 0.15 };
+    case GMIMood.EMPATHETIC: return { valence: 0.55,  arousal: 0.15, dominance: 0.25 };
+    // ...
+  }
+}
+```
+
+Mood does three concrete things. It shapes encoding strength through the [Yerkes-Dodson](https://en.wikipedia.org/wiki/Yerkes%E2%80%93Dodson_law) arousal curve, which peaks at moderate arousal and degrades at both ends. It triggers flashbulb encoding when emotional intensity exceeds 0.8, a phenomenon first described by [Brown and Kulik (1977)](https://psycnet.apa.org/record/1977-27787-001) for events like the Kennedy assassination and replicated for other high-salience events since. Flashbulb memories land in the store at 2x base strength and 5x stability, so they survive decay cycles that ordinary memories do not. And mood biases retrieval through mood-congruent recall: a frustrated agent preferentially retrieves memories tagged with negative valence.
+
+The `SentimentTracker` in [cognitive_substrate/SentimentTracker.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/cognitive_substrate/SentimentTracker.ts) runs across turns with either lexicon-based or LLM-based scoring, maintains a sliding window of sentiment, and emits events to the metaprompt system when it detects patterns like accumulating frustration or rising confusion. Those events can trigger self-reflection, tone adjustment, or a swap to a stronger model for the next response.
+
+Mood reaches Paracosm through two channels. The agent-reactions step produces per-colonist sentiment from the turn's events. The mood roll-up then feeds aggregate affect back into the next Event Director prompt. A scared colony sees different events than a hopeful one. Aria's Extraversion-0.85 rationale produces a more decisive public tone, which the mood roll-up reads as focused and determined. Dietrich's Extraversion-0.30 rationale reads as measured. The Event Director on the next turn picks events that test each colony's apparent readiness profile, which is why the same seed produces a solar storm for Aria and a perchlorate contamination suspicion for Dietrich at turn two.
+
+## Cognitive memory: the pipeline
+
+Memory is where personality and mood become durable. AgentOS's cognitive memory manager ([CognitiveMemoryManager.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/memory/CognitiveMemoryManager.ts)) coordinates six subsystems. The pipeline:
+
+```mermaid
+flowchart TD
+    A[Input: user msg / tool output / system event] --> B[Observer]
+    B --> C[Encoder: HEXACO weights + Yerkes-Dodson arousal]
+    C --> D{Intensity > 0.8?}
+    D -->|yes| E[Flashbulb: strength 2.0x, stability 5.0x]
+    D -->|no| F[Standard encoding]
+    E --> G[Memory Store]
+    F --> G
+    G --> H[Graph: spreading activation]
+    G --> I[Ebbinghaus decay + interference]
+    H --> J[Retrieval: query + mood]
+    I --> J
+    J --> K[Prompt Assembler, token budget]
+    K --> L[LLM call]
+    L --> M[Reflector: consolidate > 40k tokens]
+    M --> G
+```
+
+Three pieces are worth pulling apart.
+
+**Encoding is personality-modulated.** `computeEncodingStrength` in [EncodingModel.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/memory/core/encoding/EncodingModel.ts) combines HEXACO-derived attention weights with a Yerkes-Dodson arousal multiplier, a mood-congruence boost, and flashbulb detection. Same input, different traits, different moods: different memory traces. That is the requirement for a memory system that claims to model humans instead of describing a featureless buffer.
+
+**Retrieval is graph-aware.** The memory store sits behind either [Graphology](https://graphology.github.io/) or a custom KnowledgeGraph backend. On a query, the system runs classical similarity retrieval over the store and walks the graph for [spreading activation](https://psycnet.apa.org/record/1972-10293-001), the mechanism Collins and Quillian (1969) described and Anderson's [ACT-R](http://act-r.psy.cmu.edu/) architecture formalized. A recent memory tagged "storm" pulls in older memories tagged the same way even when embedding similarity alone would not surface them. [Hebbian co-activation](https://en.wikipedia.org/wiki/Hebbian_theory) strengthens edges between co-retrieved nodes, so graph traversal improves the longer a session runs.
+
+**Forgetting is real.** Memories decay by an [Ebbinghaus](https://en.wikipedia.org/wiki/Forgetting_curve) curve with interference detection. Traces below a strength threshold are soft-deleted. Flashbulb memories get 5x stability, so they stay. This is the cognitive-science analogue of why Dr. Singh will still remember the solar storm in turn six but not remember an unremarkable briefing from turn two.
+
+When Paracosm turns a colonist into a chat-ready agent in [apps/paracosm/src/runtime/chat-agents.ts](https://github.com/framersai/paracosm/blob/master/src/runtime/chat-agents.ts), the full pipeline activates. The agent carries the HEXACO profile from the simulation, every reaction the colonist produced during the run gets seeded as a memory with tags and importance scores, the full colony roster loads as a separate high-importance memory block, and conversation runs through AgentOS's standard memory-assembled prompt path. A user asking "what happened during the storm" gets a reply whose content depends on which colonist they asked. Each colonist encoded the storm differently and the decay rates since have differed too.
+
+## Emergent tool forging: the runtime loop
+
+Dr. Singh's dose calculator is not a stored-procedure call. It is a tool that did not exist before turn three. The machinery is the `EmergentCapabilityEngine` in [EmergentCapabilityEngine.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/emergent/EmergentCapabilityEngine.ts), fronted by the meta-tool `forge_tool` from [ForgeToolMetaTool.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/emergent/ForgeToolMetaTool.ts).
+
+```mermaid
+sequenceDiagram
+    participant A as Department Agent
+    participant F as forge_tool (meta)
+    participant E as EmergentCapabilityEngine
+    participant S as SandboxedToolForge (V8)
+    participant J as EmergentJudge (LLM)
+    participant R as ToolRegistry
+    participant O as ToolOrchestrator
+
+    A->>F: forge(name, schema, code, tests)
+    F->>E: forge(request, {agentId, sessionId})
+    E->>S: validateCode + run tests in isolate
+    S-->>E: test results
+    E->>J: reviewCreation(candidate)
+    J-->>E: {approved, confidence, reasoning}
+    alt approved
+        E->>R: register(tool, tier='session')
+        E-->>O: onToolForged callback
+        O-->>A: tool callable next turn via call_forged_tool
+    else rejected
+        E-->>A: failure + judge reasoning
+    end
+```
+
+Two modes are supported. **Compose mode** chains existing tools by input-to-output mapping; it is safe by construction because no novel code executes. **Sandbox mode** runs agent-written JavaScript inside a V8 isolate via [isolated-vm](https://github.com/laverdet/isolated-vm), with a Node `vm` fallback when the native module is absent. Defaults are a 10-second wall clock, a 128-megabyte heap cap, and an empty API allowlist. Fetching, filesystem reads, and crypto are allowlisted individually. Static validation in `SandboxedToolForge.validateCode` rejects known-dangerous patterns before a byte of code runs.
+
+The forge pipeline is strict about one thing: every forged tool has an input schema, an output schema, and one or more test cases. The schemas are declared on the meta-tool itself (see `inputSchema` in [ForgeToolMetaTool.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/emergent/ForgeToolMetaTool.ts)), so the model has to emit a self-describing tool rather than a bare function. At the framework level, where AgentOS requests a structured payload from the model, [api/generateObject.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/api/generateObject.ts) uses a [Zod](https://zod.dev/) schema; invalid JSON triggers a retry with the validation error appended to the conversation so the model can self-correct. The forge loop uses declared test cases as the correctness check rather than a pure schema match, because schema validity alone does not prove a calculator calculates.
+
+On judge approval the tool registers at the `session` tier with a 50-tool ceiling per run. The optional `onToolForged` callback fires at the same moment, wiring the new tool into the host's `ToolOrchestrator` and into a shared executable map. In Paracosm this happens inside the same turn, which is why Dr. Singh's calculator is callable by the Chief Engineer on the next department analysis. After five uses at confidence 0.8 or higher the promotion panel runs. On panel approval, the tool moves to the `agent` tier and survives beyond the session.
+
+### The reuse economy: call_forged_tool
+
+`forge_tool` is only half the loop. The other half is `call_forged_tool`, a meta-tool that lets a department in a later turn execute an already-approved forge on new inputs. No second judge review, no re-forging, no re-allocating sandbox time. A dose calculator approved on turn three returns a fresh number on turn four when the situation calls for it.
+
+The machinery is small. The `onToolForged` callback pushes every approved tool's executable into a shared `Map<string, ITool>`. The `call_forged_tool` meta-tool closes over that map and dispatches by name. Every department sees an ALREADY-FORGED TOOLS block in its system context listing the current session inventory with last outputs, and the HEXACO-aware system prompt tells each profile when to reach for reuse versus when to forge fresh.
+
+Personality drives the ratio. High-Openness leaders bias exploratory: they forge more novel angles, and their toolbox grows wider. High-Conscientiousness leaders bias conservative: they reuse whenever an existing tool fits and only forge when nothing in the toolbox covers the current analysis. On the same seed, Aria ends a six-turn run with more unique tools; Dietrich ends with fewer tools but a much higher reuse count on the ones he has. This is personality asymmetry expressed as economic behavior, not just as different adjectives in a report.
+
+Cost follows. A fresh forge costs a judge LLM call plus sandbox execution; a reuse via `call_forged_tool` costs essentially nothing. Six turns of a high-reuse Engineer run pay for fewer judge reviews than the same six turns of a high-forge Visionary run, even when both produce comparable downstream decisions. The dashboard's cost breakdown modal makes this visible: judge spend is the single largest share of a typical run, which is why the reuse economy is the single biggest lever on total cost.
+
+### Do skills auto-pick up forged tools?
+
+Within a process and session, yes, via the `onToolForged` callback plus `call_forged_tool`. The tool is immediately callable by every agent sharing that orchestrator for the rest of the run.
+
+Across processes and sessions, no, not automatically. The bridge is one-way and explicit. The `SkillExporter` in [emergent/SkillExporter.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/emergent/SkillExporter.ts) converts a promoted `EmergentTool` into the standard SKILL.md plus CAPABILITY.yaml format the `SkillLoader` and capability scanner already consume. Once exported to disk, the next process that starts up loads the forged skill alongside hand-authored ones. To ship a tool as a first-class capability in AgentOS, publish it through [@framers/agentos-extensions](https://github.com/framersai/agentos-extensions), which handles manifest, versioning, and load order. The trade-off is intentional: automatic within a session so agents solve novel problems live, reviewable across processes so the persistent capability surface stays a human decision. For a deeper look at the forge machinery and the LLM-as-judge pattern adapted to code review, see [Emergent Tool Forging and HEXACO Leaders](/blog/emergent-tools-hexaco-leaders).
+
+## Cost safety: demo caps, BYO keys, abort gates
+
+Paracosm ships as open source and is hosted at [paracosm.agentos.sh](https://paracosm.agentos.sh) for public access. A visitor who opens the site and clicks Run burns LLM credits. Keeping that footprint predictable takes three guards wired into the runtime.
+
+**Demo caps, toggled by environment.** When `PARACOSM_HOSTED_DEMO=true` is set on the host, every request without a session API key runs against the host's credentials under a clamped configuration: 6 turns (configurable via `PARACOSM_DEMO_MAX_TURNS`), 30 colonists, 3 active departments, and the cheapest model tier (OpenAI `gpt-5.4-nano`, Anthropic `claude-haiku-4-5`). The dashboard's Settings panel reflects this: the Turns and Population inputs lock with a `demo:N` label and unlock the moment a user pastes their own OpenAI or Anthropic key into the API Keys field. No code push required to flip caps, no mystery overrides at submit time.
+
+**Per-IP rate limit, persistent.** One simulation per IP per day for demo-mode requests, tracked in a JSON file that survives pm2 restarts. Worst-case spend at the host's keys scales as roughly `$0.15 × unique_daily_IPs × 30 days`. Users who want more runs paste their own key and bypass the limit entirely.
+
+**Abort gates.** When all SSE clients disconnect for longer than a 1500ms grace period, the server fires an AbortController that the runtime checks at every major call site: the Event Director, each department's parallel fan-out, the commander decision, the reaction step, and the Turn 0 promotions. At most one in-flight LLM call completes after a tab closes; the rest of the turn short-circuits with a `sim_aborted` SSE event. The dashboard renders an "Unfinished" badge when the user returns, with partial results preserved. A demo run abandoned mid-turn costs pennies, not whole dollars.
+
+The full run breakdown is visible in the dashboard's cost modal, tagged by pipeline stage: director, commander, dept-by-name, judge, reactions. The largest share is the judge across forges, which is why the reuse economy matters so much to total cost.
+
+## Case study: how turn two diverges
+
+Turn one is deterministic in framing. Both Aria and Dietrich face the same Landfall milestone, the first permanent settlement decision. The Event Director returns a milestone payload; the kernel has not advanced. Both commanders pick Arcadia Planitia over the canyon rim, the safer plain over mineral-rich terrain.
+
+Turn two is where the runs diverge. The Director this time is not anchored to a milestone. It reads the colony's post-Turn-1 state: Aria's commander rationale in a high-Extraversion register, Dietrich's in a measured technical-log register; the aggregate mood roll-up from every colonist's agent reaction; the list of already-forged tools; knowledge topics from the seed's research packet. It returns different events per side.
+
+Aria draws a solar storm. Her Chief Engineer and Chief Medical Officer both forge new tools on the spot: a shielding compliance scorer, a solar storm radiation risk index. High-Openness leaders lean exploratory, and her dept heads have been pulled toward that profile by leader-pull across the first turn.
+
+Dietrich draws a perchlorate contamination suspicion in the first water loop. His Chief Engineer reuses the Turn 1 `landing_site_suitability_index` against the contaminated water loop's geometry; his Chief Medical Officer forges one tool for the contamination assay rather than two. High-Conscientiousness leaders lean conservative, and his dept heads reuse more, forge less, and produce tighter, evidence-heavier reports.
+
+By turn three the aggregate forged-toolbox inventory has diverged. By turn six the runs have different survivor counts, different HEXACO drift profiles for promoted colonists, different prompt-cache hit rates because of how many distinct judge reviews each run fired. Open a chat panel against any colonist after both runs complete. A colonist on Aria's side carries memories encoded with high-novelty attention weights: they remember the solar storm in terms of what the team learned. A colonist on Dietrich's side remembers the contamination scare in terms of what protocols were updated. Same HEXACO underlying profile at birth; different memory content because the encoding strength for each input depended on the traits of the leader whose commands shaped their experience, and on the mood they were in when the event landed.
+
+The dashboard's colony visualization clusters survivors into family pods, floats featured colonists into a top row with their HEXACO badges, and lays out a ghost layer for the deceased so attrition reads as the visible field of pod outlines thinning over turns. Click any tile to open the drilldown: HEXACO radar with the colony mean overlaid, mood trajectory across turns annotated with crisis titles, family tree with clickable spouse and children thumbnails, reaction quotes per turn, chat handoff straight into the Chat tab pre-selected. Forge events tint by leader side, so at a glance which column invented a tool on which turn is obvious without reading any text.
+
+## What to read next
+
+- [Build an AI Civilization Simulation in 5 Minutes with Paracosm](/blog/build-ai-civilization-simulation-paracosm). The 5-minute tutorial.
+- [Emergent Tool Forging and HEXACO Leaders](/blog/emergent-tools-hexaco-leaders). Two-leader-one-seed comparison from a forge-machinery angle.
+- [Adaptive vs Emergent: Two Approaches to Agent Capability](/blog/adaptive-vs-emergent). Why forge and not fetch.
+- [Building AI Companions with Agentic Tools](/blog/building-ai-companions-agentic-tools). The companion side of the same stack.
+- [Announcing AgentOS](/blog/announcing-agentos). The framework, end to end.
+
+Paracosm is open source. AgentOS is open source. The Mars Genesis scenario ships as a default and runs the moment you `npm install paracosm`, or hosted at [paracosm.agentos.sh](https://paracosm.agentos.sh) with a one-click demo run. The engine does not care who leads the colony, which six traits they carry, or what crisis they face. It cares how they decide, what they remember, what tools they forge, and how aggressively they reuse. Two leaders under the same seed produce different histories because those five questions resolve differently for each of them. That is the case study.
