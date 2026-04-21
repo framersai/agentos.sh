@@ -435,7 +435,7 @@
       "scale": {
         "title": "프로덕션 규모",
         "items": [
-          "105+ 확장, 80개 큐레이션 스킬",
+          "115개 확장, 88개 큐레이션 스킬",
           "21개 LLM 제공자, 37개 채널 어댑터",
           "비디오, 오디오, 이미지 생성",
           "도구 포징을 통한 자기 개선 에이전트"
@@ -445,7 +445,7 @@
     "legend": {
       "fullyImplemented": {
         "title": "완전히 구현됨",
-        "description": "5단계 보안, 6개 가드레일, PII 수정, 감사 로깅, 인지 메모리, 105+ 확장이 오늘 프로덕션 준비 완료"
+        "description": "5단계 보안, 6개 가드레일, PII 수정, 감사 로깅, 인지 메모리, 115개 확장이 오늘 프로덕션 준비 완료"
       },
       "inProgress": {
         "title": "계획 중",
@@ -786,7 +786,7 @@
       },
       "tools": {
         "name": "Tools & Extensions",
-        "description": "Web search, browser automation, image generation, shell execution, social posting. 107 extensions and 72 curated skills. Capability discovery finds the right tool semantically."
+        "description": "Web search, browser automation, image generation, shell execution, social posting. 115 extensions and 88 curated skills. Capability discovery finds the right tool semantically."
       },
       "orchestration": {
         "name": "Orchestration",
@@ -903,7 +903,7 @@
       },
       "comparison": {
         "question": "How is AgentOS different from LangChain, CrewAI, or AutoGen?",
-        "answer": "AgentOS is TypeScript-native (not Python), includes cognitive memory with Ebbinghaus decay curves and HEXACO personality modeling, offers 5 security tiers instead of basic prompt filtering, provides 37 built-in channel adapters (Discord, Telegram, Slack, email, and more), and supports 6 orchestration strategies including graph-based agent DAGs. It also ships with 72 curated skills and a capability discovery engine that reduces token usage by roughly 90%."
+        "answer": "AgentOS is TypeScript-native (not Python), includes cognitive memory with Ebbinghaus decay curves and HEXACO personality modeling, offers 5 security tiers instead of basic prompt filtering, provides 37 built-in channel adapters (Discord, Telegram, Slack, email, and more), and supports 6 orchestration strategies including graph-based agent DAGs. It also ships with 88 curated skills and a capability discovery engine that reduces token usage by roughly 90%."
       }
     },
     "technical": {
@@ -977,7 +977,7 @@
       },
       "selfHosted": {
         "question": "Can I use AgentOS with my own infrastructure?",
-        "answer": "Absolutely. AgentOS is designed to be self-hosted from the ground up. Your data never leaves your infrastructure. The runtime supports SQLite for development, with one-command migration to Postgres, pgvector, Qdrant, Pinecone, or Neo4j for production. Docker Compose configurations are provided for all supported backends."
+        "answer": "Absolutely. AgentOS is designed to be self-hosted from the ground up. For self-hosted deployments, your data stays on your infrastructure with SQLite, Postgres, pgvector, Qdrant, or Neo4j. If you want a managed vendor-hosted vector database instead, Pinecone is also supported. Docker Compose configurations are provided for the self-hosted backends."
       }
     },
     "references": {
