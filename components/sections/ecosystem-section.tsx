@@ -57,7 +57,7 @@ const repositories: Repository[] = [
   },
   {
     name: 'AgentOS Skills',
-    description: '69 curated SKILL.md prompt modules -- web search, coding, research, social media, and more. Data-only package with zero runtime dependencies.',
+    description: '88 curated SKILL.md prompt modules -- web search, coding, research, social media, and more. Data-only package with zero runtime dependencies.',
     url: 'https://github.com/framersai/agentos-skills',
     category: 'core',
     icon: BookOpen,
@@ -463,7 +463,7 @@ export function EcosystemSection() {
               {t('cta.followOnGithub')}
             </a>
             <a
-              href="https://discord.gg/3bYhhcrn"
+              href="https://discord.gg/usEkfCeQxs"
               className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary rounded-xl font-semibold text-white hover:shadow-lg hover:shadow-purple-500/50 transition-all flex items-center justify-center gap-2 border border-purple-500/20"
             >
               <Users className="w-5 h-5" />

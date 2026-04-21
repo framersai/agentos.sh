@@ -222,7 +222,7 @@ npm install @framers/agentos
 - [GitHub](https://github.com/framersai/agentos)
 - [npm](https://www.npmjs.com/package/@framers/agentos)
 - [Documentation](https://docs.agentos.sh)
-- [Discord](https://discord.gg/3bYhhcrn)
+- [Discord](https://discord.gg/usEkfCeQxs)
 
 ---
 

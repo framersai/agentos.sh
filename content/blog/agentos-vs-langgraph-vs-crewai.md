@@ -214,7 +214,7 @@ console.log(result.text);
 - [Documentation](https://docs.agentos.sh)
 - [GitHub](https://github.com/framersai/agentos)
 - [npm](https://www.npmjs.com/package/@framers/agentos)
-- [Discord](https://discord.gg/3bYhhcrn)
+- [Discord](https://discord.gg/usEkfCeQxs)
 
 ---
 

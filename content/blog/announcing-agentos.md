@@ -100,7 +100,7 @@ See [AgentOS vs LangGraph vs CrewAI vs Mastra vs VoltAgent](/blog/agentos-vs-lan
 
 - [Documentation](https://docs.agentos.sh)
 - [GitHub](https://github.com/framersai/agentos)
-- [Discord](https://discord.gg/3bYhhcrn)
+- [Discord](https://discord.gg/usEkfCeQxs)
 - [npm](https://www.npmjs.com/package/@framers/agentos)
 - [How to Build a TypeScript AI Agent in 5 Minutes](/blog/build-typescript-ai-agent-5-minutes)
 - [Adaptive vs. Emergent Intelligence](/blog/adaptive-vs-emergent)
