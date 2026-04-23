@@ -35,12 +35,14 @@ A scenario is a JSON file that describes the simulation domain. Here is a submar
     "name": "Deep Ocean Habitat",
     "populationNoun": "crew",
     "settlementNoun": "habitat",
-    "currency": "credits"
+    "currency": "credits",
+    "timeUnitNoun": "year",
+    "timeUnitNounPlural": "years"
   },
   "setup": {
     "defaultTurns": 8,
     "defaultPopulation": 50,
-    "defaultStartYear": 2040,
+    "defaultStartTime": 2040,
     "defaultSeed": 42
   },
   "departments": [

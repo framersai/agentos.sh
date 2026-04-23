@@ -89,7 +89,7 @@ for (const trait of HEXACO_TRAITS) {
   // Outcome pull: success or failure reinforces specific traits
   if (turnOutcome === 'risky_success' && trait === 'openness') pull += 0.03;
   // ...
-  c.hexaco[trait] = clamp(c.hexaco[trait] + pull * yearDelta, 0.05, 0.95);
+  c.hexaco[trait] = clamp(c.hexaco[trait] + pull * timeDelta, 0.05, 0.95);
 }
 ```
 
