@@ -224,7 +224,7 @@ Each turn, the Event Director receives the available topics and categories so it
 
 The resulting `CrisisResearchPacket` is injected into each department's prompt under a `RESEARCH:` block as `[claim](url)` markdown. Department reports return citations in their JSON response. When the LLM omits citations, the orchestrator attaches the research packet's facts to the report anyway, guaranteeing that what the agent saw and what the agent cited line up end to end.
 
-The final run output includes a deduplicated `citationCatalog` across all departments and turns, with per-citation metadata describing which departments used the citation on which turns. The dashboard Reports tab renders these as clickable links with DOI badges where available. Memory itself decays on an [Ebbinghaus](https://doi.org/10.1371/journal.pone.0120644) curve through AgentOS's cognitive memory layer, so stale facts lose recall priority without being deleted outright.
+The final run output includes a deduplicated `citations` catalog across all departments and turns, with per-citation metadata describing which departments used the citation on which turns. The dashboard Reports tab renders these as clickable links with DOI badges where available. Memory itself decays on an [Ebbinghaus](https://doi.org/10.1371/journal.pone.0120644) curve through AgentOS's cognitive memory layer, so stale facts lose recall priority without being deleted outright.
 
 ## Reasoning and Chain-of-Thought Prompting
 
