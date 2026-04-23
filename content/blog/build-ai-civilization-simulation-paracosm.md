@@ -89,7 +89,7 @@ const leaders = [
   {
     name: 'Captain Reyes',
     archetype: 'The Pragmatist',
-    colony: 'Station Alpha',
+    unit: 'Station Alpha',
     hexaco: {
       openness: 0.4, conscientiousness: 0.9,
       extraversion: 0.3, agreeableness: 0.6,
@@ -100,7 +100,7 @@ const leaders = [
   {
     name: 'Captain Okafor',
     archetype: 'The Innovator',
-    colony: 'Station Beta',
+    unit: 'Station Beta',
     hexaco: {
       openness: 0.9, conscientiousness: 0.4,
       extraversion: 0.8, agreeableness: 0.5,
@@ -110,16 +110,31 @@ const leaders = [
   },
 ];
 
+// Every event carries a universal `e.data.summary` one-liner the
+// runtime populates for you. Narrow via `e.type` if you want
+// intellisense on per-event fields (title, choice, outcome, etc.).
 const results = await Promise.all(
   leaders.map(leader =>
     runSimulation(leader, [], {
       scenario,
       maxTurns: 8,
       seed: 42,
-      onEvent(e) { console.log(leader.name, e.type, e.data?.title); },
+      onEvent(e) { console.log(leader.name, e.type, e.data.summary); },
     })
   )
 );
+
+// Each result is a Zod-validated RunArtifact from `paracosm/schema`.
+for (const r of results) {
+  console.log(r.metadata.scenario.name, '->', r.fingerprint);
+  console.log('  cost   $', r.cost?.totalUSD.toFixed(2), `(${r.cost?.llmCalls} LLM calls)`);
+  console.log('  final   ', r.finalState?.metrics);
+  console.log('  tools   ', r.forgedTools?.length ?? 0,
+              'citations', r.citations?.length ?? 0);
+  if (r.providerError) {
+    console.error('  provider error:', r.providerError.kind, r.providerError.message);
+  }
+}
 ```
 
 Each call to `runSimulation` takes one leader. Run one, two, or twenty. The dashboard runs two side-by-side for comparison, but the API has no limit.
