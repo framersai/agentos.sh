@@ -8,6 +8,8 @@ image: "/img/blog/paracosm/dashboard-overview.png"
 keywords: "mars colony ai simulation, hexaco ai agents, cognitive memory ai agents, emergent tool forging llm, call forged tool reuse, typescript ai agent framework, personality driven llm agents, llm as judge, v8 isolate sandbox ai, runtime tool generation llm, agent based simulation, two leader one seed"
 ---
 
+> **Editor's note (2026-04-23):** Paracosm's positioning has evolved since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, Stanford 2025). The case study below stays accurate; the category label changed. For the updated placement against Sora / Genie 3 / MiroFish / OASIS / Concordia and the seven claim pillars, see [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model).
+
 ## The moment a colonist writes a tool
 
 Turn three. Year 2051. A solar storm rolls across the newly-settled Mars colony and the cumulative radiation dose for the outdoor crew crosses the threshold in the scenario's research packet. Dr. Priya Singh, the Chief Medical Officer in Dietrich Voss's colony, is the department agent assigned to analyze the event. She has HEXACO scores 0.88 Conscientiousness, 0.71 Emotionality, 0.42 Openness. She has three turns of consolidated memory about prior radiation incidents. She has exactly one meta-tool attached to her agent definition: `forge_tool`.

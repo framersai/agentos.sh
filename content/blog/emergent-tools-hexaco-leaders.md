@@ -8,6 +8,8 @@ image: "/img/blog/paracosm/dashboard-overview.png"
 keywords: "emergent tool forging, runtime tool forging, LLM-as-judge, HEXACO personality AI, multi-agent simulation, leader simulation, AI agent swarm, sandboxed tool execution, V8 isolate sandbox, personality-driven AI decision making, trait activation theory, agent policy simulation, paracosm, agentos, deterministic simulation engine"
 ---
 
+> **Editor's note (2026-04-23):** Paracosm's positioning has evolved since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, Stanford 2025). The mechanics below (tool forging + HEXACO propagation + judge review) are unchanged and accurate. For the updated placement against Sora / Genie 3 / MiroFish / OASIS / Concordia, see [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model).
+
 ## Two Leaders, One Seed, Two Civilizations
 
 Run [Paracosm](https://paracosm.agentos.sh) with two leaders against the same scenario, the same kernel seed, the same opening crisis, and the same crew roster. By turn six the two colonies have measurably different populations, infrastructure counts, tool inventories, and political stances. No randomness changed. The Event Director produced the same events for both runs. What differs is whose decision passed through the pipeline and which computational tools each colony's department agents chose to forge in response.
