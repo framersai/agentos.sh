@@ -8,7 +8,7 @@ image: "/img/blog/paracosm/dashboard-overview.png"
 keywords: "AI civilization simulation, build AI simulation, multi-agent simulation framework, HEXACO personality AI, Mars colony simulation, AI agent swarm simulation, TypeScript AI agent framework, emergent tool forging, paracosm, agentos, personality-driven AI agents, deterministic simulation engine"
 ---
 
-> **Editor's note (2026-04-23):** Paracosm's positioning has evolved since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, Stanford 2025), keeping "same seed, different leader, different world" as the flagship use case. The tutorial below stays accurate. For the updated category placement and the map of how paracosm relates to Sora / Genie 3 / MiroFish / OASIS / Concordia, see [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model).
+> **Editor's note (2026-04-23):** Paracosm's positioning has evolved since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, 2025), keeping "same seed, different leader, different world" as the flagship use case. The tutorial below stays accurate. For the updated category placement and the map of how paracosm relates to Sora / Genie 3 / MiroFish / OASIS / Concordia, see [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model).
 
 ## Two Leaders, One Colony, Divergent Civilizations
 
