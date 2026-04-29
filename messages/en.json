@@ -1513,5 +1513,23 @@
       "perAgentGuardrails": "Per-Agent Guardrails"
     },
     "ctaExploreDocs": "Explore Agency API"
+  },
+  "benchmarks": {
+    "badge": "SOTA · LongMemEval · LOCOMO · Phase B N=500",
+    "title": "Memory Benchmarks at Matched Reader",
+    "subtitle": "Honest, apples-to-apples comparison: same gpt-4o reader, same dataset, same Phase B N=500 methodology, same gpt-4o-2024-08-06 judge with rubric 2026-04-18.1. Cross-provider configurations are excluded because they cannot be reproduced from public methodology disclosures.",
+    "tabS": "LongMemEval-S (115K tokens)",
+    "tabM": "LongMemEval-M (1.5M tokens)",
+    "highlightSAccuracy": "AgentOS LongMemEval-S",
+    "highlightSValue": "85.6%",
+    "highlightSCi": "[82.4%, 88.6%] · $0.0090/correct · 4-second avg latency",
+    "highlightMAccuracy": "AgentOS LongMemEval-M",
+    "highlightMValue": "70.2%",
+    "highlightMCi": "[66.0%, 74.0%] · First open-source library above 65% on the 1.5M-token variant",
+    "matrixIntro": "Matched gpt-4o reader, Phase B N=500. Bootstrap CIs use 10,000 Mulberry32 resamples at seed=42.",
+    "ctaReadAudit": "Read the Transparency Audit",
+    "ctaSeeRunJsons": "See run JSONs on GitHub",
+    "ctaBenchmarksPage": "Full Benchmarks Reference",
+    "footnote": "Mastra OM 94.9%, Mem0 v3 93.4%, Hindsight 91.4%, agentmemory 96.2%, and Supermemory 85.2% all use cross-provider readers (gpt-5-mini, gemini-3-pro) or managed-platform infrastructure where the underlying judge model, rubric, and seed are not published. The matched-reader comparison above is what is independently reproducible from the methodology each vendor discloses."
   }
 }

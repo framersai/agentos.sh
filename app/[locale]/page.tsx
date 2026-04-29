@@ -77,6 +77,11 @@ const ParacosmBannerLazy = dynamic(
   { ssr: false }
 )
 
+const BenchmarksSectionLazy = dynamic(
+  () => import('../../components/sections/benchmarks-section').then(m => m.BenchmarksSection),
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
+)
+
 export default function LandingPageRedesigned() {
   return (
     <>
@@ -94,6 +99,11 @@ export default function LandingPageRedesigned() {
         {/* Live Demo Videos with Captions */}
         <div className="lazy-section">
           <DemoVideoPlayerLazy />
+        </div>
+
+        {/* Memory Benchmarks SOTA — matched gpt-4o reader on LongMemEval-S/M */}
+        <div className="lazy-section-lg">
+          <BenchmarksSectionLazy />
         </div>
 
         {/* AgentOS Workbench CTA */}
