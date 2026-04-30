@@ -138,7 +138,7 @@ const LONGMEMEVAL_M_ROWS: MRow[] = [
     accuracy: 'not published',
     ci: '—',
     license: 'various',
-    source: { label: 'reports S only', href: 'https://docs.agentos.sh/benchmarks' },
+    source: { label: 'reports S only', href: 'https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md' },
   },
 ]
 
@@ -411,7 +411,7 @@ export function BenchmarksSection() {
           className="flex flex-wrap gap-3"
         >
           <a
-            href="https://docs.agentos.sh/benchmarks"
+            href="https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md"
             className="inline-flex items-center gap-2 rounded-full bg-[var(--color-text-primary)] px-6 py-3 text-sm font-medium text-[var(--color-background-primary)] transition-all hover:opacity-90"
           >
             {t('ctaBenchmarksPage')}

@@ -29,7 +29,7 @@ The rest of the post covers: the architecture changes that produced each number,
 | **LongMemEval-S** (115K tokens, 50 sessions) | **85.6%** | EmergenceMem 86.0%, Mastra OM gpt-4o 84.23%, Supermemory 81.6% | **$0.0090** | Apache-2.0 | +1.4 over Mastra |
 | **LongMemEval-M** (1.5M tokens, 500 sessions) | **70.2%** | AgentBrain 71.7% (closed-source SaaS). No other open-source library publishes M. | **$0.0078** | Apache-2.0 | first open-source above 65% |
 
-[Full benchmarks reference](https://docs.agentos.sh/benchmarks) · [Reproducible run JSONs](https://github.com/framersai/agentos-bench/tree/master/results/runs) · [Methodology audit framework](https://agentos.sh/en/blog/agentos-memory-sota-longmemeval/)
+[Full benchmarks reference](https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md) · [Reproducible run JSONs](https://github.com/framersai/agentos-bench/tree/master/results/runs) · [Methodology audit framework](https://agentos.sh/en/blog/agentos-memory-sota-longmemeval/)
 
 ---
 
@@ -149,6 +149,7 @@ The table below covers every memory library or platform with a public LongMemEva
 | [Mem0 v3 / Mem0 OS](https://mem0.ai/research) | Apache 2.0 | 92-93.4% | not published |
 | [Mastra Observational Memory](https://mastra.ai/research/observational-memory) | Apache 2.0 | 84.23-94.87% | **not published** |
 | [Hindsight (vectorize.io)](https://github.com/vectorize-io/hindsight) | open repo | 91.4% | not published |
+| [Neutrally](https://github.com/xiaowu0162/LongMemEval/issues) | public production system | 89.4% (LongMemEval repo issue submission, gpt-4o judge) | not published |
 | [Zep / Graphiti](https://blog.getzep.com/state-of-the-art-agent-memory/) | Apache 2.0 | 71.2% (independently reproduced at [63.8%](https://arxiv.org/abs/2512.13564)) | not published |
 | [EmergenceMem](https://www.emergence.ai/blog/sota-on-longmemeval-with-rag) | open Python | 79-86% | not published |
 | [Supermemory](https://supermemory.ai/research/) | open | 81.6-99% | not published |
@@ -440,7 +441,7 @@ Reproducible memory benchmarks require a published seed, configuration, and per-
 
 ## Further reading
 
-- [Full benchmarks reference](https://docs.agentos.sh/benchmarks): canonical comparison tables, methodology disclosure matrix, LOCOMO judge-FPR data.
+- [Full benchmarks reference](https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md): canonical comparison tables, methodology disclosure matrix, LOCOMO judge-FPR data.
 - [Cognitive Memory for AI Agents: Beyond RAG](/blog/cognitive-memory-beyond-rag): the nine cognitive-memory mechanisms behind AgentOS, with primary-source citations.
 - [agentos-bench v1 evaluation matrix](https://github.com/framersai/agentos-bench/blob/master/results/eval-matrix-v1/comparison-table.md): per-cell run JSONs.
 - [docs.agentos.sh/blog](https://docs.agentos.sh/blog): engineering writeups including M-series intermediate stages (45.4%, 57.6%), Stage L/I negative findings, ingest-router executor design, and memory archive rehydration.

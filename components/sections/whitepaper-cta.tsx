@@ -136,7 +136,7 @@ export function WhitepaperCTA() {
                 Notify me when it drops
               </a>
               <a
-                href="https://docs.agentos.sh/benchmarks"
+                href="https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md"
                 className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.03] px-6 py-3 text-sm font-semibold text-white transition-all hover:border-white/40 hover:bg-white/5"
               >
                 Read the benchmarks while you wait
