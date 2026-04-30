@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { ListTree } from 'lucide-react';
 
 interface TocItem {
   id: string;
@@ -15,9 +14,9 @@ interface TocItem {
  *
  *   const id = String(children).toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
  *
- * Any drift between the two slug functions silently breaks every link
- * in the TOC, so the implementation is duplicated rather than imported
- * to keep the contract obvious in both call sites.
+ * Drift between the two slug functions silently breaks every link in
+ * the TOC, so the implementation is duplicated here rather than
+ * imported to keep the contract obvious in both call sites.
  */
 function slugify(text: string): string {
   return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
@@ -52,23 +51,38 @@ function extractToc(markdown: string): TocItem[] {
 }
 
 /**
- * Single static TOC rendered above the article body across all
- * viewports. No collapse, no sticky, no scroll-following. The TOC
- * sits in normal document flow and is always visible at the top
- * of the post.
+ * Two placements:
+ *
+ *   - `placement="sidebar"` (default) renders a sticky right-rail
+ *     TOC at lg+ breakpoints. Hidden under lg.
+ *   - `placement="inline"` renders a plain block above the article
+ *     body, visible only under lg, so phones and small tablets still
+ *     get a TOC when the sidebar isn't on the page.
+ *
+ * The active-item highlight uses IntersectionObserver and is shared
+ * across both placements.
  */
-export function TableOfContents({ content }: { content: string }) {
+export function TableOfContents({
+  content,
+  placement = 'sidebar',
+}: {
+  content: string;
+  placement?: 'sidebar' | 'inline';
+}) {
   const items = useMemo(() => extractToc(content), [content]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   /**
-   * Highlight the heading whose section is currently in view. The
-   * IntersectionObserver callback fires whenever any tracked heading
-   * crosses the top-30% / bottom-70% band, and we pick the topmost
-   * intersecting heading. With pure rootMargin: '-30% 0% -70% 0%'
-   * scrolling fast enough to skip the band leaves no heading active;
-   * the fallback (intersecting headings sorted by document position)
-   * keeps the active state stable in that case.
+   * Highlight the heading whose section is currently in view.
+   *
+   * `rootMargin: '-80px 0px -70% 0px'` gives a band that starts 80px
+   * below the top of the viewport (the rough height of any sticky
+   * site header) and ends 30% from the top, which keeps the active
+   * indicator anchored to whatever section is currently being read.
+   *
+   * When multiple headings sit inside the band at once we pick the
+   * one that appears earliest in document order (matches the
+   * top-of-band behavior most readers intuit).
    */
   useEffect(() => {
     if (items.length === 0) return;
@@ -86,17 +100,13 @@ export function TableOfContents({ content }: { content: string }) {
           .map((entry) => entry.target.id);
 
         if (intersecting.length > 0) {
-          // Pick the heading closest to the top of the viewport
           const ordered = items
             .map((item) => item.id)
             .filter((id) => intersecting.includes(id));
           if (ordered.length > 0) setActiveId(ordered[0]);
         }
       },
-      {
-        rootMargin: '-80px 0px -70% 0px',
-        threshold: [0, 1],
-      },
+      { rootMargin: '-80px 0px -70% 0px', threshold: [0, 1] },
     );
 
     for (const el of headingElements) observer.observe(el);
@@ -105,24 +115,28 @@ export function TableOfContents({ content }: { content: string }) {
 
   if (items.length === 0) return null;
 
-  return (
-    <nav
-      aria-label="Table of contents"
-      className="my-8 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-5"
-    >
-      <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-        <ListTree className="h-3.5 w-3.5" aria-hidden />
-        On this page
-      </div>
-      <ul className="space-y-1.5">
-        {items.map((item) => (
-          <li key={item.id}>
+  const list = (
+    <ul className="space-y-px border-l border-[var(--color-border-subtle)]">
+      {items.map((item) => {
+        const isActive = activeId === item.id;
+        return (
+          <li key={item.id} className="relative">
+            {isActive && (
+              <span
+                aria-hidden
+                className="absolute -left-px top-0 bottom-0 w-[2px] rounded-full"
+                style={{
+                  background:
+                    'linear-gradient(180deg, hsl(180, 95%, 60%), hsl(270, 85%, 65%))',
+                }}
+              />
+            )}
             <a
               href={`#${item.id}`}
-              className={`block text-sm leading-snug transition-colors ${
-                item.level === 3 ? 'pl-4 text-[13px]' : ''
+              className={`block py-1.5 text-[13px] leading-snug transition-colors ${
+                item.level === 3 ? 'pl-7 text-[12px]' : 'pl-4'
               } ${
-                activeId === item.id
+                isActive
                   ? 'font-semibold text-[var(--color-text-link)]'
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-link)]'
               }`}
@@ -130,8 +144,45 @@ export function TableOfContents({ content }: { content: string }) {
               {item.text}
             </a>
           </li>
-        ))}
-      </ul>
-    </nav>
+        );
+      })}
+    </ul>
+  );
+
+  const eyebrow = (
+    <div className="mb-4 flex items-center gap-2">
+      <span
+        aria-hidden
+        className="block h-[2px] w-6 rounded-full"
+        style={{
+          background:
+            'linear-gradient(90deg, hsl(180, 95%, 60%), hsl(270, 85%, 65%))',
+        }}
+      />
+      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+        On this page
+      </span>
+    </div>
+  );
+
+  if (placement === 'inline') {
+    return (
+      <nav
+        aria-label="Table of contents"
+        className="my-8 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-5 lg:hidden"
+      >
+        {eyebrow}
+        {list}
+      </nav>
+    );
+  }
+
+  return (
+    <aside aria-label="Table of contents" className="hidden lg:block">
+      <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-1">
+        {eyebrow}
+        {list}
+      </div>
+    </aside>
   );
 }

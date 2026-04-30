@@ -112,14 +112,14 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
         {/* Back link */}
         <Link
           href={blogHref as Route}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-accent-primary)] transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text-link)] transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" aria-hidden="true" />
           Back to blog
         </Link>
 
-        <div className="mx-auto max-w-3xl">
-          <div className="min-w-0">
+        <div className="lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] lg:gap-x-12">
+          <div className="min-w-0 max-w-3xl">
             {/* Post header */}
             <header className="mb-10">
               {/* Eyebrow row: thin gradient accent + meta items separated by tiny dot bullets */}
@@ -133,7 +133,7 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
                   }}
                 />
                 {post.category && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] bg-[var(--color-accent-primary)]/10 text-[var(--color-accent-primary)] border border-[var(--color-accent-primary)]/30">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] bg-[var(--color-text-link)]/10 text-[var(--color-text-link)] border border-[var(--color-text-link)]/30">
                     <Tag className="w-3 h-3" aria-hidden="true" />
                     {post.category}
                   </span>
@@ -176,8 +176,10 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
             {/* Hero metrics block (renders only when frontmatter has heroStat + heroLabel) */}
             <BlogPostHero post={post} />
 
-            {/* Static TOC, always-on-top of article body across viewports */}
-            <TableOfContents content={post.content} />
+            {/* Inline TOC for mobile (lg:hidden); the sticky right-rail
+                takes over at lg+ breakpoints and is rendered below the
+                article column inside the same grid */}
+            <TableOfContents content={post.content} placement="inline" />
 
             {/* Post content */}
             <MarkdownRenderer content={post.content} />
@@ -190,13 +192,16 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
             <footer className="mt-16 pt-8 border-t border-[var(--color-border-subtle)]">
               <Link
                 href={blogHref as Route}
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-accent-primary)] hover:underline"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-link)] hover:underline"
               >
                 <ArrowLeft className="w-4 h-4" aria-hidden="true" />
                 Back to all articles
               </Link>
             </footer>
           </div>
+
+          {/* Sticky right-rail table of contents (lg+ only) */}
+          <TableOfContents content={post.content} />
         </div>
       </div>
     </main>

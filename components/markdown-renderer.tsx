@@ -72,7 +72,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       prose-p:text-[var(--color-text-secondary)] prose-p:leading-[1.75]
       prose-a:text-[var(--color-text-link)] prose-a:font-medium prose-a:underline prose-a:decoration-[var(--color-text-link)]/50 prose-a:decoration-2 prose-a:underline-offset-[3px] hover:prose-a:decoration-[var(--color-text-link)] hover:prose-a:text-[var(--color-accent-hover)]
       prose-strong:text-[var(--color-text-primary)] prose-strong:font-semibold
-      prose-code:text-[var(--color-accent-primary)] prose-code:bg-[var(--color-background-tertiary)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+      prose-code:text-[var(--color-text-link)] prose-code:bg-[var(--color-background-tertiary)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
       prose-pre:bg-transparent prose-pre:p-0 prose-pre:my-0
       prose-ul:text-[var(--color-text-secondary)] prose-ul:list-none prose-ul:pl-0 prose-ul:my-6
       prose-ol:text-[var(--color-text-secondary)] prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-6
