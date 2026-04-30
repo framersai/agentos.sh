@@ -4,11 +4,26 @@ date: "2026-04-14"
 excerpt: "Define any world as JSON. Assign AI commanders with HEXACO personality profiles. Run a deterministic simulation where personality shapes civilization. A tutorial and case study using Paracosm and AgentOS."
 author: "AgentOS Team"
 category: "Tutorials"
+audience: "engineer"
 image: "/img/blog/og/build-ai-civilization-simulation-paracosm.png"
 keywords: "AI civilization simulation, build AI simulation, multi-agent simulation framework, HEXACO personality AI, Mars colony simulation, AI agent swarm simulation, TypeScript AI agent framework, emergent tool forging, paracosm, agentos, personality-driven AI agents, deterministic simulation engine"
 ---
 
-> **Editor's note (2026-04-23):** Paracosm's positioning has evolved since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, 2025), keeping "same seed, different leader, different world" as the flagship use case. The tutorial below stays accurate. For the updated category placement and the map of how paracosm relates to Sora / Genie 3 / MiroFish / OASIS / Concordia, see [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model).
+> "If a man does not keep pace with his companions, perhaps it is because he hears a different drummer. Let him step to the music which he hears, however measured or far away."
+>
+> — Thoreau, *Walden*, 1854
+
+> **Editor's note (2026-04-23):** Paracosm's positioning has evolved since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, 2025), keeping "same seed, different leader, different world" as the flagship use case. The tutorial below stays accurate. For the updated category placement, see [Paracosm is a Structured World Model](/blog/paracosm-structured-world-model). For the long-form essay, see [Paracosm 2026 Overview](/blog/paracosm-2026-overview).
+
+The first time I ran this tutorial end-to-end myself, I had been holding a coffee in one hand and pasting the JSON snippet into a fresh terminal with the other. The whole thing took longer to copy than to execute. The output was on my screen four minutes later: two Mars colonies, six turns each, identical seed, divergent histories. The Engineer commander's colony had a deployable lifeboat protocol. The Visionary commander's colony had named four lichen species. I sat with the artifact for ten minutes without doing anything else. There is something specific about watching personality, encoded as six numbers, become a measurable axis of historical divergence.
+
+This post is the procedural version of that experience. It will get you to the same place in five minutes if your network and OPENAI_API_KEY cooperate.
+
+<video controls poster="/img/blog/paracosm/digital-twin-maria-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
+  <source src="/img/blog/paracosm/digital-twin-maria.mp4" type="video/mp4">
+</video>
+
+The video is the Visionary-commander Maria scenario running end-to-end. If you watch nothing else, watch turn three: that's where her science specialist forges the exobiology survey tool that defines the rest of her colony's trajectory.
 
 ## Two Leaders, One Colony, Divergent Civilizations
 
@@ -230,6 +245,30 @@ npm run dashboard
 
 The dashboard includes a scenario editor where you can write, import, compile, and run custom worlds from the browser.
 
+## Common pitfalls
+
+Five things that bit me when I first ran this tutorial:
+
+1. **Forgetting to seed the run.** If you don't pass a `seed`, the simulation is non-deterministic — re-running gives different output and the counterfactual comparison loses meaning. Always pass a seed for any run you intend to compare to another run.
+2. **Comparing across different scenarios.** The interesting comparison is *same scenario, different leader*. If you change the scenario between runs, you're measuring scenario noise, not personality. Lock the scenario; vary the leader.
+3. **Running without research grounding.** If `WebSearchService` keys aren't configured, paracosm will fall back to LLM-only event generation. The artifact records this as `groundingMode: "llm-only"` so you can audit which runs were grounded. Ungrounded runs drift toward LLM cliché.
+4. **Reading the artifact instead of the dashboard.** The artifact is a JSON object hundreds of lines long. The dashboard renders it as a navigable timeline. For exploration, use the dashboard. The artifact is for programmatic consumption — diffs, regression tests, fleet reporting.
+5. **Treating a single run as ground truth.** Paracosm is a tool for thinking about counterfactuals. A single run is a single counterfactual. Multiple runs across multiple seeds give you a distribution. Treating one run as a forecast is a misuse we have warned about [in the long-form post](/blog/paracosm-2026-overview#part-8-what-we-dont-claim) and we'll keep warning about.
+
+## FAQ
+
+**How long does a six-turn run take?** On a small scenario (~30 agents) with default specialists, default reranker, default reader, runs complete in ~3-5 minutes wall clock. Cost is in the low tens of cents. Larger scenarios scale roughly linearly with agent count and turn count.
+
+**Can I run this offline?** The kernel and forge can run offline (no `WebSearchService`), but you lose research grounding and the artifact will be marked as `groundingMode: "llm-only"`. The LLM itself still requires network access unless you configure a local provider.
+
+**Do I need a HEXACO test result for myself to use paracosm?** No. Use the archetype shortcuts (`engineer`, `visionary`, `diplomat`, etc.) which map to validated trait profiles. Custom profiles are supported if you have measured ones.
+
+**What if my scenario doesn't fit the JSON shape?** Open an issue. The five-bag shape (`metrics`, `capacities`, `statuses`, `politics`, `environment`) covers a wide range of domains, but if your domain doesn't fit, that's useful feedback for us.
+
+**Can I forge tools without an LLM?** No. Tool forging requires an LLM to author the function body. The LLM judge that approves forged tools is a separate call from the body author, so you can use different models for the two roles if you want.
+
+**How do I diff two runs?** `sim.diff(runA, runB)` returns a structured diff over the artifact: which decisions differed, which tools were forged in one run but not the other, which metrics ended up at different values. The dashboard renders this as a side-by-side timeline.
+
 ## Try It
 
 - **Live demo:** [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim) -- run Mars Genesis in your browser
@@ -238,6 +277,8 @@ The dashboard includes a scenario editor where you can write, import, compile, a
 - **AgentOS:** [agentos.sh](https://agentos.sh) -- the runtime that powers it
 - **API docs:** [paracosm.agentos.sh/docs](https://paracosm.agentos.sh/docs)
 - **Discord:** [wilds.ai/discord](https://wilds.ai/discord)
+- **Long-form essay:** [Paracosm 2026 Overview](/blog/paracosm-2026-overview)
+- **Case study:** [Inside Mars Genesis](/blog/inside-mars-genesis-ai-colony-simulation)
 
 ---
 
