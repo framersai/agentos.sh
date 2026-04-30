@@ -78,6 +78,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       prose-ol:text-[var(--color-text-secondary)] prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-6
       prose-li:text-[var(--color-text-secondary)] prose-li:my-2 prose-li:leading-[1.7]
       prose-blockquote:border-l-2 prose-blockquote:border-[var(--color-accent-primary)] prose-blockquote:bg-gradient-to-r prose-blockquote:from-[var(--color-background-secondary)] prose-blockquote:to-transparent prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:text-[var(--color-text-secondary)]
+      [&_blockquote_p:first-of-type]:before:content-none [&_blockquote_p:last-of-type]:after:content-none
       prose-table:border-collapse prose-table:w-full prose-table:overflow-x-auto
       prose-thead:bg-[var(--color-background-secondary)]
       prose-th:text-[var(--color-text-primary)] prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:border prose-th:border-[var(--color-border-subtle)] prose-th:text-left prose-th:text-sm
