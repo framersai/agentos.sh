@@ -285,7 +285,7 @@
     "cards": {
       "cognitiveMemory": {
         "title": "Cognitive Memory",
-        "description": "8 neuroscience-backed mechanisms modulated by HEXACO personality traits with Ebbinghaus forgetting curve decay",
+        "description": "8 neuroscience-backed mechanisms with Ebbinghaus forgetting curve decay. Optional HEXACO personality vector biases retrieval; runs personality-neutral by default.",
         "features": [
           "Reconsolidation & RIF",
           "Involuntary recall & FOK",
@@ -344,8 +344,8 @@
         ]
       },
       "hexaco": {
-        "title": "HEXACO Personality",
-        "description": "6-dimensional personality modeling that shapes memory, communication style, and decision-making behavior",
+        "title": "HEXACO Personality (Optional)",
+        "description": "Opt-in 6-dimensional personality vector. When enabled, biases memory retrieval, communication style, and decision-making at the kernel level (not in the prompt). Omit it and the runtime stays personality-neutral.",
         "features": [
           "6-axis trait modeling",
           "Memory modulation",
@@ -1417,7 +1417,7 @@
       "step3": "Judge Evaluates",
       "step4": "Tool Activated",
       "step5": "Agent Uses It",
-      "description": "When an agent encounters a task it cannot handle with existing tools, it writes a new tool definition on the fly. A judge agent evaluates safety and correctness before activation. Approved tools are sandbox-executed and tracked for reliability-based promotion.",
+      "description": "Runtime Tool Forging means an agent can write itself a new TypeScript function mid-decision, get it reviewed by a separate judge LLM, and execute it inside a V8 isolate sandbox (128 MB heap, 10s wall clock, no fs/network/eval) — all before the next turn. Approved tools land in a discoverable index for reuse, so cost flattens after the first few forges in a session.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",
