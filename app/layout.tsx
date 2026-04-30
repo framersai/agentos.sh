@@ -14,6 +14,58 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        {/*
+         * Synchronous theme bootstrap. Runs before <body> paints so the
+         * page never flashes the wrong mode on first load.
+         *
+         * Reads two keys:
+         *   - agentos-mode  ('light' | 'dark' | 'system'), set by
+         *     next-themes (storageKey in components/theme-provider.tsx)
+         *   - agentos-theme (the named theme: 'twilight-neo' etc.), set
+         *     by lib/themes.ts applyTheme()
+         *
+         * Mirrors lib/themes.ts THEME_VERSION so a stale theme name is
+         * cleared the first time a user lands after a version bump.
+         * This is duplication on purpose: the body-side theme code
+         * still runs on hydration (and is the source of truth for
+         * subsequent changes), but the head-side bootstrap eliminates
+         * the dark→light flash that was visible on first paint.
+         */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var THEME_VERSION = '2026-04-29-twilight-default';
+                  var modeKey = 'agentos-mode';
+                  var themeKey = 'agentos-theme';
+                  var versionKey = 'agentos-theme-version';
+
+                  var ver = localStorage.getItem(versionKey);
+                  if (ver !== THEME_VERSION) {
+                    localStorage.setItem(versionKey, THEME_VERSION);
+                    localStorage.removeItem(themeKey);
+                  }
+
+                  var mode = localStorage.getItem(modeKey);
+                  if (!mode || mode === 'system') {
+                    mode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+                  if (mode === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.style.colorScheme = 'light';
+                  }
+
+                  var theme = localStorage.getItem(themeKey) || 'twilight-neo';
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch (e) { /* swallow: localStorage may be unavailable in some embeds */ }
+              })();
+            `,
+          }}
+        />
         <style
           dangerouslySetInnerHTML={{
             __html: `
