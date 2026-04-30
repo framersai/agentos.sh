@@ -6,7 +6,7 @@ heroStat: "85.6% / 70.2%"
 heroLabel: "on LongMemEval-S and -M (matched gpt-4o reader)"
 benchmarkBadge: ""
 image: "/img/blog/og/agentos-memory-sota-longmemeval.png"
-excerpt: "AgentOS posts 85.6% on LongMemEval-S, +1.4 points above Mastra Observational Memory (84.23%) at the matched gpt-4o reader. On the harder 1.5M-token M variant, AgentOS posts 70.2%, the first open-source library above 65% on LongMemEval-M and +4.5 points above the academic baseline (Wu et al., ICLR 2025). Apache-2.0, one CLI command to reproduce."
+excerpt: "AgentOS posts 85.6% on LongMemEval-S, +1.4 points above Mastra Observational Memory (84.23%) at the matched gpt-4o reader. On the harder 1.5M-token M variant, AgentOS posts 70.2%, competitive with the strongest published M results in the LongMemEval paper (Wu et al., ICLR 2025) and the only open-source library on the public record above 65% on M with publicly reproducible methodology. Apache-2.0, one CLI command to reproduce."
 author: "AgentOS Team"
 category: "Engineering"
 keywords: "longmemeval benchmark, longmemeval-s, longmemeval-m, ai memory benchmark, agentos memory, mastra mem0 hindsight comparison, memory library benchmark, open source memory library, transparency audit, mem0 vs zep, locomo judge audit, retrieval augmented memory, cognitive memory ai, top-k tuning, reader router, sem-embed, longmemeval paper Wu et al ICLR 2025, agent memory architecture, observational memory mastra, emergencemem"
@@ -16,7 +16,7 @@ keywords: "longmemeval benchmark, longmemeval-s, longmemeval-m, ai memory benchm
 
 **LongMemEval-S: 85.6%** at $0.0090 per correct answer, 3.6-second median latency. That's +1.4 points above Mastra Observational Memory at `gpt-4o` (84.23%), the strongest published memory-library number at this reader. EmergenceMem Internal publishes 86.0% (0.4 points above us). The result is the highest published open-source number at the matched `gpt-4o` reader from a library that ships an end-to-end agent runtime around it.
 
-**LongMemEval-M: 70.2%** at $0.0078 per correct answer. M is the harder variant: 1.5M tokens of conversation per question, 500 sessions per haystack, exceeds every production LLM context window. Of the 14 memory-library vendors we audited, no one else publishes an M number at all. AgentOS is +4.5 points above the strongest M result in the original LongMemEval paper ([Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813), 65.7%). The closest published number is AgentBrain's 71.7% from their closed-source SaaS.
+**LongMemEval-M: 70.2%** at $0.0078 per correct answer. M is the harder variant: 1.5M tokens of conversation per question, 500 sessions per haystack, exceeds every production LLM context window. Of the 14 memory-library vendors we audited, no one else publishes an M number at all. AgentOS at 70.2% is competitive with the strongest published M results in the original LongMemEval paper ([Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)). At matched reader-Top-5, that's +4.5 points above the round-level configuration (65.7%) and 1.2 points below the session-level configuration (71.4%); the paper's strongest GPT-4o result is 72.0% at round-level Top-10. The closest published external number is AgentBrain's 71.7% from their closed-source SaaS.
 
 Both numbers ship with per-case run JSONs at seed 42, so anyone can rerun the same configuration and compare per-question with our results. The runtime is Apache-2.0 at [github.com/framersai/agentos](https://github.com/framersai/agentos); the benchmark harness is Apache-2.0 at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench). One CLI command at the bottom of this post reproduces each headline.
 
@@ -176,9 +176,11 @@ The full per-vendor audit is at [packages/agentos-bench/docs/COMPETITOR_METHODOL
 
 Wu et al., Table 3 of [arXiv:2410.10813](https://arxiv.org/abs/2410.10813), reports academic-baseline configurations on LongMemEval-M. The strongest configuration in the paper:
 
-> 65.7% on LongMemEval-M with `GPT-4o + Stella V5 retriever + Value=Session + K=V+fact + top-5`.
+> 72.0% on LongMemEval-M with GPT-4o + Stella V5 retriever + Value=Round + K=V+fact + Top-10.
 
-The dataset, evaluation harness, and rubric are open source at [xiaowu0162/LongMemEval](https://github.com/xiaowu0162/LongMemEval). Prior to agentos-bench Phase B at N=500, the highest open-source M result on the public record was the 65.7% reported in this paper.
+The same Table 3 reports several other GPT-4o configurations: Round Top-5 K=V+fact at 65.7%, Session Top-5 K=V+fact at 71.4%, Session Top-10 K=V+fact at 70.0%. The 72.0% number is the strongest result in Table 3 across all GPT-4o configurations.
+
+The dataset, evaluation harness, and rubric are open source at [xiaowu0162/LongMemEval](https://github.com/xiaowu0162/LongMemEval). The paper's GPT-4o results at Top-5 retrieval (the configuration AgentOS uses) span 65.7% (round-level) to 71.4% (session-level). At Top-10 the strongest is 72.0% (round-level).
 
 ### Where we land
 
@@ -186,10 +188,10 @@ The dataset, evaluation harness, and rubric are open source at [xiaowu0162/LongM
 |---|---:|---|---|---|
 | AgentBrain | 71.7% (Test 0) | not published | closed-source SaaS | [github.com/AgentBrainHQ](https://github.com/AgentBrainHQ) |
 | **🚀 AgentOS** (sem-embed + reader-router + top-K=5) | **70.2%** | **Apache-2.0** | [agentos-bench](https://github.com/framersai/agentos-bench) |
-| LongMemEval paper academic baseline | 65.7% | not published | open repo | [Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813) |
+| LongMemEval paper, strongest GPT-4o result | 72.0% (round, Top-10) / 71.4% (session, Top-5) | not published | open repo | [Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813) |
 | Mem0 v3, Mastra OM, Hindsight, Zep, EmergenceMem, Supermemory, MemMachine, Memoria, agentmemory, Backboard, ByteRover, Letta, Cognee | not published | | various | reports S only |
 
-AgentOS at 70.2% is 4.5 points above the LongMemEval paper's academic baseline. AgentBrain's 71.7% falls inside the AgentOS 66.0% to 74.0% range; the two systems are statistically tied at this resolution. AgentBrain is closed-source and runs against a hosted endpoint. agentos-bench publishes 95% confidence ranges (resampled 10,000 times at seed 42), per-case run JSONs, and judge false-positive-rate probes at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench).
+AgentOS at 70.2% is competitive with the strongest published M results in the LongMemEval paper. The paper's strongest GPT-4o result is 72.0% at round-level Top-10; at matched Top-5 retrieval the paper's results span 65.7% (round) to 71.4% (session). The closest published external number is AgentBrain's 71.7% from their closed-source SaaS, which requires access to a hosted endpoint to reproduce. agentos-bench publishes per-case run JSONs and a one-line CLI reproduction at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench).
 
 ### Step-by-step: 30.6% to 70.2%
 
