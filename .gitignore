@@ -41,3 +41,6 @@ next-env.d.ts
 
 # docs (copied from root during build)
 /public/docs-generated
+
+# Internal planning workflow — never published.
+docs/superpowers/
