@@ -1,6 +1,7 @@
 import { CTASection } from '../../components/sections/cta-section'
 import dynamic from 'next/dynamic'
 import { HeroSection } from '../../components/sections/hero-section'
+import { BenchmarkBanner } from '../../components/sections/benchmark-banner'
 
 // Enable static generation for faster initial loads
 export const dynamicParams = false
@@ -95,6 +96,9 @@ export default function LandingPageRedesigned() {
 
       {/* Main Content */}
       <div>
+        {/* Latest benchmark headline - dismissible per visit */}
+        <BenchmarkBanner />
+
         {/* Hero Section - SSR enabled for faster LCP */}
         <HeroSection />
 
