@@ -4,9 +4,18 @@ date: "2026-04-12"
 excerpt: "From npm install to a working agent with personality, memory, tools, and guardrails. Five steps, under 50 lines of TypeScript code. Complete tutorial with inline citations."
 author: "AgentOS Team"
 category: "Tutorial"
+audience: "engineer"
 image: "/img/blog/og/build-typescript-ai-agent-5-minutes.png"
 keywords: "build ai agent typescript, typescript ai tutorial, ai agent quickstart, how to build ai agent, agentos tutorial, AI agent SDK TypeScript, typescript ai agent framework, production AI agents, cognitive memory tutorial, HEXACO personality AI"
 ---
+
+> "Begin at the beginning, the King said gravely, and go on till you come to the end: then stop."
+>
+> — *Alice in Wonderland*, 1865
+
+Five-minute tutorials are usually a lie. They omit the API key setup, they assume your network and your `node_modules` cooperate, and they end at "hello world" instead of at something you can use. This one tries not to be that. By the end of these five minutes you'll have an agent with persistent memory, an opt-in HEXACO personality, web search, and a guardrail pack. The whole thing is under fifty lines of TypeScript. None of those lines are placeholder code.
+
+If you are setting up your first AgentOS agent and run into trouble at any step, the [Discord](https://discord.gg/usEkfCeQxs) is the fastest way to unblock yourself; we monitor it. The full source for this tutorial is at [github.com/framersai/agentos/tree/master/examples/quickstart](https://github.com/framersai/agentos/tree/master/examples/quickstart).
 
 Zero to a working AI agent with personality, cognitive memory, web search, and guardrails. Five steps, under 50 lines of TypeScript.
 
