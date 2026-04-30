@@ -173,21 +173,14 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
               )}
             </header>
 
-            {/* Hero image. Same asset as the OG/social card so the in-page hero
-                matches what people see when the link is shared. Falls back to
-                the BlogPostHero stat block only when frontmatter omits image. */}
-            {post.image ? (
-              <div className="relative my-10 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-background-tertiary)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            ) : (
-              <BlogPostHero post={post} />
-            )}
+            {/* In-page hero: always the branded BlogPostHero component
+                (AgentOS logo + dark canvas + cyan/violet radial accents).
+                Posts with heroStat + heroLabel render a stat layout;
+                everything else renders the post title in gradient text on
+                the same canvas. Consistent brand identity across every
+                article body. The frontmatter `image` field still ships
+                with the post for OG/social-card sharing. */}
+            <BlogPostHero post={post} />
 
             {/* Inline TOC for mobile (lg:hidden); the sticky right-rail
                 takes over at lg+ breakpoints and is rendered below the

@@ -4,33 +4,24 @@ import Image from 'next/image';
 import type { Post } from '@/lib/markdown';
 
 /**
- * Blog post hero. Renders for posts whose frontmatter carries
- * `heroStat` + `heroLabel`. Posts without a hero stat skip this
- * component entirely.
+ * Blog post hero. Renders for every blog post — there are two paths:
  *
- * Layout (mobile and desktop):
+ *   1. Posts with `heroStat` + `heroLabel` in frontmatter (benchmarks,
+ *      announcements with a headline number) get the *stat* layout:
+ *      AgentOS logo + brand mark in the top row, big gradient figures,
+ *      summary under a hairline.
  *
- *   ┌──────────────────────────────────────────┐
- *   │ [logo] AgentOS Memory       Benchmark    │
- *   │                                           │
- *   │     85.6%             70.2%               │
- *   │     S variant         M variant           │
- *   │                                           │
- *   │ matched gpt-4o reader · agentos-bench     │
- *   └──────────────────────────────────────────┘
+ *   2. Every other post gets the *brand* layout: same dark canvas with
+ *      cyan + violet radial accents, AgentOS logo + brand mark in the
+ *      top row, the post category as the eyebrow, the post title in
+ *      gradient text, the post date as the bottom-line. Consistent
+ *      branding across the index, no AI-photo-looking hero PNGs in the
+ *      article body.
  *
- * The `heroStat` value supports a "stat-strip" pattern where two
- * numbers are separated by ` / ` (e.g. "85.6% / 70.2%") and rendered
- * side-by-side. Single-stat posts get one centred figure.
- *
- * `heroLabel` is the line under the figures. When it includes the
- * substring " and " between two parts, the hero splits the label so
- * each figure gets its own mini-label (e.g. "S variant" / "M variant").
- *
- * `benchmarkBadge` from frontmatter is no longer rendered. The
- * methodology disclosure line (judge model, bootstrap CIs, sample
- * size) lives in the body of the post where it can be read in
- * context, not in chrome above the fold.
+ * The OG/social-card PNG (`post.image`) is no longer rendered as the
+ * in-page hero. It still ships with the post for share previews, but
+ * the in-page hero is always this component so every article carries
+ * the same brand identity.
  */
 interface BlogPostHeroProps {
   post: Post;
@@ -79,21 +70,27 @@ function trimSummaryLabel(heroLabel: string): string {
   return heroLabel.trim();
 }
 
-export function BlogPostHero({ post }: BlogPostHeroProps) {
-  const heroStat = post.heroStat as string | undefined;
-  const heroLabel = post.heroLabel as string | undefined;
-
-  if (!heroStat || !heroLabel) return null;
-
-  const stats = parseStats(heroStat, heroLabel);
-  const summary = trimSummaryLabel(heroLabel);
-
+/**
+ * Shared shell: dark canvas, cyan + violet radial accents, brand
+ * row at the top with the AgentOS logo and a configurable eyebrow.
+ * Both layouts (stat and brand) share this shell so the visual
+ * identity is consistent across all blog post hero treatments.
+ */
+function HeroShell({
+  eyebrow,
+  rightMeta,
+  children,
+}: {
+  eyebrow: string;
+  rightMeta?: string;
+  children: React.ReactNode;
+}) {
   return (
     <section
-      aria-label="Headline metrics"
+      aria-label="Article hero"
       className="relative my-10 overflow-hidden rounded-2xl border border-[var(--color-border-subtle)] bg-gradient-to-br from-[hsl(220,30%,8%)] via-[hsl(220,28%,11%)] to-[hsl(220,32%,7%)]"
     >
-      {/* Faint radial accent in the top-right corner */}
+      {/* Faint radial accents */}
       <div
         aria-hidden
         className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-30 blur-3xl"
@@ -112,7 +109,9 @@ export function BlogPostHero({ post }: BlogPostHeroProps) {
       />
 
       <div className="relative px-6 py-8 sm:px-10 sm:py-10">
-        {/* Top row: brand on the left, benchmark name on the right */}
+        {/* Top row: AgentOS logo + brand wordmark on the left,
+            optional context tag on the right (benchmark name,
+            category, etc). Same on every hero. */}
         <div className="mb-8 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Image
@@ -125,17 +124,35 @@ export function BlogPostHero({ post }: BlogPostHeroProps) {
             />
             <div className="flex flex-col leading-tight">
               <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-200/60">
-                AgentOS Memory
+                AgentOS
               </span>
-              <span className="text-sm font-semibold text-white">Benchmark Result</span>
+              <span className="text-sm font-semibold text-white">{eyebrow}</span>
             </div>
           </div>
-          <div className="hidden text-right text-[11px] font-medium uppercase tracking-[0.16em] text-white/50 sm:block">
-            LongMemEval
-          </div>
+          {rightMeta && (
+            <div className="hidden text-right text-[11px] font-medium uppercase tracking-[0.16em] text-white/50 sm:block">
+              {rightMeta}
+            </div>
+          )}
         </div>
 
-        {/* Stat grid */}
+        {children}
+      </div>
+    </section>
+  );
+}
+
+export function BlogPostHero({ post }: BlogPostHeroProps) {
+  const heroStat = post.heroStat as string | undefined;
+  const heroLabel = post.heroLabel as string | undefined;
+
+  // Path 1: stat layout for posts with heroStat + heroLabel.
+  if (heroStat && heroLabel) {
+    const stats = parseStats(heroStat, heroLabel);
+    const summary = trimSummaryLabel(heroLabel);
+
+    return (
+      <HeroShell eyebrow="Benchmark Result" rightMeta="LongMemEval">
         <div
           className={`grid items-end ${
             stats.length === 1
@@ -163,13 +180,53 @@ export function BlogPostHero({ post }: BlogPostHeroProps) {
           ))}
         </div>
 
-        {/* Summary line under the figures */}
         {summary && (
           <div className="mt-8 border-t border-white/[0.06] pt-4 text-center text-xs font-medium uppercase tracking-[0.18em] text-white/45 sm:text-left">
             {summary}
           </div>
         )}
+      </HeroShell>
+    );
+  }
+
+  // Path 2: brand layout for every other post. The category from
+  // frontmatter slots into the right-meta tag; the post title becomes
+  // a gradient typographic mark on the same canvas. No external
+  // images needed, so it works for every post regardless of whether
+  // an OG card has been generated.
+  const date = post.date
+    ? new Date(post.date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : '';
+
+  return (
+    <HeroShell eyebrow="Engineering Notes" rightMeta={post.category || undefined}>
+      <div className="text-center sm:text-left">
+        <h2
+          className="bg-clip-text text-transparent text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight"
+          style={{
+            backgroundImage:
+              'linear-gradient(135deg, hsl(180, 95%, 62%) 0%, hsl(270, 85%, 68%) 100%)',
+          }}
+        >
+          {post.title}
+        </h2>
+        {post.excerpt && (
+          <p className="mt-4 max-w-3xl text-sm sm:text-base text-cyan-100/70 leading-relaxed line-clamp-3">
+            {post.excerpt}
+          </p>
+        )}
       </div>
-    </section>
+
+      {(date || post.author) && (
+        <div className="mt-8 border-t border-white/[0.06] pt-4 text-center text-xs font-medium uppercase tracking-[0.18em] text-white/45 sm:text-left">
+          {date}
+          {post.author ? ` · ${post.author}` : ''}
+        </div>
+      )}
+    </HeroShell>
   );
 }
