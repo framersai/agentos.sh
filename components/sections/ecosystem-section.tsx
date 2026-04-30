@@ -132,16 +132,6 @@ const repositories: Repository[] = [
     lastUpdated: 'recently'
   },
   {
-    name: 'Rabbit Hole',
-    description: 'Managed cloud dashboard for running Wunderbots with billing, credentials, and human-in-the-loop support (rabbithole.inc).',
-    url: 'https://rabbithole.inc',
-    category: 'apps',
-    icon: ExternalLink,
-    language: 'TypeScript',
-    status: 'beta',
-    lastUpdated: 'recently'
-  },
-  {
     name: 'AgentOS.sh',
     description: 'Marketing site and documentation hub for AgentOS. This website!',
     url: 'https://github.com/framersai/agentos.sh',

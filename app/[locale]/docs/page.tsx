@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BookOpen, Code2, FileCode, Github, Layers, Sparkles, ChevronRight } from "lucide-react";
 import { getAllGuides } from "../../../lib/guides";
+import { WhitepaperCTA } from "../../../components/sections/whitepaper-cta";
 
 type Props = {
   params: {
@@ -199,6 +200,9 @@ console.log(result.text)`}</code>
 pnpm --dir apps/agentos.sh dev:full         # Watch docs and run the site locally`}</code>
           </pre>
         </div>
+
+        {/* Whitepaper coming-soon CTA — research-oriented PDF with full methodology */}
+        <WhitepaperCTA />
       </div>
     </div>
   );

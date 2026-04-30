@@ -82,6 +82,11 @@ const BenchmarksSectionLazy = dynamic(
   { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
+const WhitepaperCTALazy = dynamic(
+  () => import('../../components/sections/whitepaper-cta').then(m => m.WhitepaperCTA),
+  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
+)
+
 export default function LandingPageRedesigned() {
   return (
     <>
@@ -149,6 +154,11 @@ export default function LandingPageRedesigned() {
         {/* Code Examples Section */}
         <div className="lazy-section-lg">
           <CodeExamplesSectionLazy />
+        </div>
+
+        {/* Whitepaper coming-soon CTA — full architecture + benchmark methodology */}
+        <div className="lazy-section">
+          <WhitepaperCTALazy />
         </div>
 
         {/* Social Proof Section */}

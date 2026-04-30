@@ -145,7 +145,7 @@ function firstSentence(text: string, maxChars: number): string {
  * for the social card). Falls back to the regular title.
  */
 function ogTitleOf(fm: PostFrontmatter): string {
-  return ((fm as Record<string, unknown>).ogTitle as string | undefined) ?? fm.title;
+  return ((fm as unknown as Record<string, unknown>).ogTitle as string | undefined) ?? fm.title;
 }
 
 /** Build OG card variables for a single post. */

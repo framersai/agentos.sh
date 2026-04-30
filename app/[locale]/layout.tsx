@@ -280,7 +280,6 @@ export default async function LocaleLayout({
                 'https://frame.dev',
                 'https://twitter.com/framersai',
                 'https://www.linkedin.com/company/framersai',
-                'https://rabbithole.inc',
                 'https://vca.chat',
               ],
             }),
