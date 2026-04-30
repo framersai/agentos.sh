@@ -4,9 +4,20 @@ date: "2026-04-12"
 excerpt: "AgentOS is an open-source TypeScript runtime for building AI agents with cognitive memory, HEXACO personality, multi-agent orchestration, runtime tool forging, 37 channel adapters, and 21 LLM providers. Apache 2.0 licensed."
 author: "AgentOS Team"
 category: "Announcements"
+audience: "evaluator"
 image: "/img/blog/og/announcing-agentos.png"
 keywords: "agentos launch, ai agent framework, typescript ai agents, build ai agent, multi-agent orchestration, cognitive memory, open source ai framework, langgraph alternative, crewai alternative, mastra alternative, adaptive ai agents, emergent tool forging, agent simulation framework, AI agent SDK TypeScript"
 ---
+
+> "There are countless ingredients that make up the human body and mind, like all the components that make up me as an individual with my own personality."
+>
+> — Major Motoko Kusanagi, *Ghost in the Shell*, 1995
+
+There is a moment most agent frameworks ask you to ignore. It's the moment when the agent forgets. It happens in a chat history that drops the third turn back, or in a memory store that retrieves the wrong document, or in a tool registry that doesn't have the function the agent actually needs. The framework hands you back an apology and a non-sequitur, and you build the workaround in your application code. After enough of those workarounds, the application code IS the agent, and the framework has become a thin shim over the LLM.
+
+We built AgentOS because we kept hitting that moment and the workaround was getting bigger than the framework. Memory, personality, multi-agent collaboration, tool forging — those are the things that should live inside the runtime, not in your handlers. This post is the announcement that they do, that AgentOS is open source under Apache 2.0, and that the public benchmarks are real.
+
+If you want the brutally short version: `npm install @framers/agentos`, and the runtime starts on the high road.
 
 ## What AgentOS Is
 
@@ -96,6 +107,17 @@ Full type safety with [Zod-validated structured output](https://docs.agentos.sh/
 
 See [AgentOS vs LangGraph vs CrewAI vs Mastra vs VoltAgent](/blog/agentos-vs-langgraph-vs-crewai) for the full comparison.
 
+## What we measured (and what we didn't)
+
+AgentOS ships with [agentos-bench](https://github.com/framersai/agentos-bench), an Apache 2.0 memory benchmark suite. We publish bootstrap CIs at 10k resamples on every headline number and the per-cell run JSON for replication. The recent results:
+
+- **LongMemEval-S**: 85.6% [82.4%, 88.6%] at $0.0090 per correct, gpt-4o reader, 4-second avg latency. Beats Mastra OM gpt-4o (84.2% published) on accuracy at matched reader. Beats EmergenceMem Simple Fast (80.6% measured in our harness) by +5.0 pp at 6.5x lower cost-per-correct.
+- **LongMemEval-M** (1.5M tokens, 500 sessions per haystack): 70.2% [66.0%, 74.0%] at $0.0078 per correct with reader-router top-K=5. **+4.5 pp above the LongMemEval paper's published academic-baseline ceiling** ([Wu et al, ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)).
+
+We do not run benchmarks against vendors that don't ship complete standalone runnables. We do not claim X-times-cheaper unless reader model and config match between the two systems being compared. The entire methodology — judges, sample sizes, judge FPR probes, adversarial calibration — is documented in [agentos-bench/docs](https://github.com/framersai/agentos-bench/tree/master/docs).
+
+This is what an honest benchmark looks like. If something on this list is wrong, file an issue against agentos-bench and we'll fix it or retract the claim.
+
 ## Get Started
 
 - [Documentation](https://docs.agentos.sh)
@@ -104,5 +126,24 @@ See [AgentOS vs LangGraph vs CrewAI vs Mastra vs VoltAgent](/blog/agentos-vs-lan
 - [npm](https://www.npmjs.com/package/@framers/agentos)
 - [How to Build a TypeScript AI Agent in 5 Minutes](/blog/build-typescript-ai-agent-5-minutes)
 - [Adaptive vs. Emergent Intelligence](/blog/adaptive-vs-emergent)
+- [Paracosm 2026 Overview](/blog/paracosm-2026-overview) — the simulation product built on AgentOS
+
+## FAQ
+
+**Why TypeScript?** Most AI infrastructure is Python. Most production application code is JavaScript or TypeScript. The runtime that lives inside an application should match the application's language. AgentOS does. The Python interop story is via the API server (REST/SSE) or via JSON Schema-generated types from the artifact schema.
+
+**Is AgentOS a LangGraph alternative?** It's an alternative if your job is "build an AI agent with memory and personality and tools." It is not an alternative if your job is "compose Python research code into a workflow." Different jobs. We have a [head-to-head comparison post](/blog/agentos-vs-langgraph-vs-crewai) with honest-cost-rule applied.
+
+**Does AgentOS lock me into a specific LLM?** No. 21 provider adapters ship; you can add yours in ~50 lines if it's not in the list. The provider abstraction is decoupled from the agent abstraction.
+
+**What's the deal with HEXACO personality?** It's optional. Pass `personality` and the runtime biases retrieval, decision routing, and tool selection by the trait vector. Don't pass it and the runtime acts personality-neutral. We don't make HEXACO the centerpiece because not every agent needs it; we just make it work cleanly when you want it.
+
+**Is the cognitive memory feature the same as RAG?** No. RAG retrieves documents. Cognitive memory is a layered system covering short-term context, episodic memory (events with time and emotion encoding), semantic memory (facts and relationships), and a Ebbinghaus-style decay model for forgetting. RAG is one of the retrievers cognitive memory composes with. Read [Cognitive Memory Beyond RAG](/blog/cognitive-memory-beyond-rag) for the deeper version.
+
+**Can AgentOS run agents that talk on the phone?** Yes. The voice pipeline (12 STT providers, 12 TTS providers) plus telephony adapters in the channels system gets you a voice agent that runs as a phone call. We have [a case study with Wilds.ai](/blog/ai-companion-case-study-wilds) on the companion side of the same stack.
+
+**What about safety?** Six guardrail packs ship: topicality, ML classifiers (toxicity / prompt-injection / NSFW), grounding (NLI), PII redaction, code safety (static analysis), and skills (curated SKILL.md execution). Each has its own README in the [packages/agentos-ext-*](https://github.com/framersai/agentos/tree/master/packages) tree.
+
+**Is this production-ready for X?** Define X. We don't publish a generic "production-ready" label because the answer depends on what you're shipping. We do publish concrete benchmark numbers, concrete safety posture, and concrete provider compatibility. Read those, judge for yourself, file issues when we miss.
 
 [Apache 2.0 licensed](https://github.com/framersai/agentos/blob/master/LICENSE). Built by [Manic Agency](https://manic.agency) / [Frame.dev](https://frame.dev).
