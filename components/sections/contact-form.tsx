@@ -4,13 +4,15 @@ import { useState, useCallback, type FormEvent } from 'react';
 import { Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
 /**
- * URL of the Cloudflare Worker that relays the form to Resend.
- * Override with `NEXT_PUBLIC_CONTACT_WORKER_URL` at build time once the
- * Worker is deployed; default points at the canonical frame.dev route
- * we plan to bind it to.
+ * Endpoint that relays the form to Resend. Lives on the wilds.ai
+ * Next.js backend (`apps/wilds-ai/src/app/api/v1/contact/route.ts`),
+ * which already holds the manic.agency Resend API key in its env.
+ * The route is CORS-allowed for the agentos.sh origin. Override at
+ * build time with `NEXT_PUBLIC_CONTACT_ENDPOINT` if you want to point
+ * at staging or a different host.
  */
-const WORKER_URL =
-  process.env.NEXT_PUBLIC_CONTACT_WORKER_URL ?? 'https://contact.frame.dev/contact';
+const CONTACT_ENDPOINT =
+  process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? 'https://wilds.ai/api/v1/contact';
 
 type SubmitStatus =
   | { kind: 'idle' }
@@ -48,14 +50,17 @@ export function ContactForm() {
     setStatus({ kind: 'submitting' });
 
     try {
-      const res = await fetch(WORKER_URL, {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          site: 'agentos.sh',
           name: data.get('name'),
           email: data.get('email'),
           subject: data.get('subject'),
           message: data.get('message'),
+          // Honeypot — sent so the server can confirm and reject.
+          website: data.get('website'),
         }),
       });
 
