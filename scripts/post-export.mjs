@@ -44,6 +44,24 @@ async function createRedirectHTML(targetPath) {
 }
 
 async function run() {
+  // Serve the English homepage HTML directly at `/` instead of the
+  // 64-byte meta-refresh stub from `public/index.html`. The stub
+  // imposes a ~750ms PageSpeed penalty (`redirects` opportunity) and
+  // there is no functional reason for the redirect: internal links go
+  // to `/en/...`, the in-HTML canonical points to `/en/`, and locale
+  // detection happens via middleware/links, not the URL of `/`.
+  //
+  // We overwrite `out/index.html` (which Next.js copied from
+  // `public/index.html`) with the rendered `out/en/index.html`.
+  try {
+    const enHtmlSrc = path.join(outDir, 'en', 'index.html');
+    const rootHtmlDest = path.join(outDir, 'index.html');
+    await fs.copyFile(enHtmlSrc, rootHtmlDest);
+    console.log('[post-export] Replaced root index.html with /en/ homepage (kills redirect stub)');
+  } catch (error) {
+    console.warn('[post-export] Failed to overwrite root index.html:', error.message);
+  }
+
   // Copy locale index files
   await Promise.all(
     locales.map(async (locale) => {
