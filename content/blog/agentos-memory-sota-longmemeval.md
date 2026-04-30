@@ -6,7 +6,7 @@ heroStat: "85.6% / 70.2%"
 heroLabel: "on LongMemEval-S and -M (matched gpt-4o reader)"
 benchmarkBadge: "PHASE B · N=500 · BOOTSTRAP CI"
 image: "/img/blog/og/agentos-memory-sota-longmemeval.png"
-excerpt: "AgentOS publishes 85.6% on LongMemEval-S and 70.2% on the 1.5M-token M variant at the matched gpt-4o reader, with bootstrap 95% CIs and per-case run JSONs. The S result is statistically tied with the strongest published vendor numbers. The M result is the first open-source library above 65% on M and +4.5 pp above the academic baseline (Wu et al., ICLR 2025). MIT-licensed."
+excerpt: "AgentOS publishes 85.6% on LongMemEval-S and 70.2% on the 1.5M-token M variant at the matched gpt-4o reader, with 95% confidence intervals and per-case run JSONs. The S result is statistically tied with the strongest published vendor numbers. The M result is the first open-source library above 65% on M and 4.5 points above the academic baseline (Wu et al., ICLR 2025). Apache-2.0."
 author: "AgentOS Team"
 category: "Engineering"
 keywords: "longmemeval benchmark, longmemeval-s, longmemeval-m, ai memory benchmark, agentos memory, mastra mem0 hindsight comparison, memory library benchmark, open source memory library, transparency audit, mem0 vs zep, locomo judge audit, retrieval augmented memory, cognitive memory ai, top-k tuning, reader router, sem-embed, longmemeval paper Wu et al ICLR 2025, agent memory architecture, observational memory mastra, emergencemem"
@@ -18,7 +18,7 @@ LongMemEval-S: 85.6% [82.4%, 88.6%] at $0.0090 per correct, 3.6-second median la
 
 LongMemEval-M: 70.2% [66.0%, 74.0%] at $0.0078 per correct. The strongest M result in the LongMemEval paper itself is 65.7% ([Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)). Across the 14 vendor research pages we audited, no other open-source memory library publishes an M number. AgentBrain, a closed-source SaaS, publishes 71.7% on M; their point estimate falls inside the AgentOS CI.
 
-Both numbers were validated with bootstrap 95% confidence intervals (10,000 resamples, seed 42), per-case run JSONs at `seed=42`, and judge false-positive-rate probes (1% on S, 2% on M, 0% on LOCOMO). The code is MIT-licensed at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench), and a single CLI command at the bottom of this post reproduces each headline.
+Both numbers were validated with 95% confidence intervals (10,000 resamples, seed 42), per-case run JSONs at `seed=42`, and judge false-positive-rate probes (1% on S, 2% on M, 0% on LOCOMO). The library is open source under Apache-2.0 at [github.com/framersai/agentos](https://github.com/framersai/agentos); the benchmark harness is MIT-licensed at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench). A single CLI command at the bottom of this post reproduces each headline.
 
 The rest of the post covers: the architecture changes that produced each number, the vendor landscape audit, the methodology checks that drive every number above, and the reproduction commands.
 
@@ -26,8 +26,8 @@ The rest of the post covers: the architecture changes that produced each number,
 
 | Variant | AgentOS | Closest published competitor at matched reader | Cost-per-correct | License | Status |
 |---|---:|---|---:|---|---|
-| **LongMemEval-S** (115K tokens, 50 sessions) | **85.6%** | EmergenceMem 86.0% (tied within CI), Mastra OM gpt-4o 84.23%, Supermemory 81.6% | **$0.0090** | MIT | new headline |
-| **LongMemEval-M** (1.5M tokens, 500 sessions) | **70.2%** | AgentBrain 71.7% (closed-source, tied within CI). Every other open-source library does not publish M. | **$0.0078** | MIT | first open-source above 65% |
+| **LongMemEval-S** (115K tokens, 50 sessions) | **85.6%** | EmergenceMem 86.0% (tied within CI), Mastra OM gpt-4o 84.23%, Supermemory 81.6% | **$0.0090** | Apache-2.0 | new headline |
+| **LongMemEval-M** (1.5M tokens, 500 sessions) | **70.2%** | AgentBrain 71.7% (closed-source, tied within CI). Every other open-source library does not publish M. | **$0.0078** | Apache-2.0 | first open-source above 65% |
 
 [Full benchmarks reference](https://docs.agentos.sh/benchmarks) · [Reproducible run JSONs](https://github.com/framersai/agentos-bench/tree/master/results/runs) · [Methodology audit framework](https://docs.agentos.sh/blog/2026/04/24/memory-benchmark-transparency-audit)
 
@@ -37,7 +37,7 @@ The rest of the post covers: the architecture changes that produced each number,
 
 LongMemEval-S has 115K tokens of conversation per question and roughly 50 sessions per haystack. It fits in a single `gpt-4o` call. Every memory-library vendor with a public LongMemEval claim publishes on S.
 
-The table below holds the reader model constant at `gpt-4o`, so the comparison isolates memory architecture from base-LLM capability. Phase B at full N=500, `gpt-4o-2024-08-06` as judge, rubric `2026-04-18.1` (judge false-positive rate 1%), bootstrap 10,000 resamples, seed 42.
+The table below holds the reader model constant at `gpt-4o`, so the comparison isolates memory architecture from base-LLM capability. Full run at N=500, `gpt-4o-2024-08-06` as judge, rubric `2026-04-18.1` (judge false-positive rate 1%), 95% confidence intervals computed by resampling each per-case score 10,000 times at seed 42.
 
 | System (gpt-4o-class reader) | Accuracy | $/correct | p50 latency | p95 latency | Source |
 |---|---:|---:|---:|---:|---|
@@ -50,7 +50,7 @@ The table below holds the reader model constant at `gpt-4o`, so the comparison i
 | Supermemory gpt-4o | 81.6% (no CI) | not published | not published | not published | [supermemory.ai](https://supermemory.ai/research/) |
 | Zep self / independent reproduction | 71.2% / 63.8% | not published | not published | 632 ms p95 search | [self](https://blog.getzep.com/state-of-the-art-agent-memory/) / [arXiv:2512.13564](https://arxiv.org/abs/2512.13564) |
 
-AgentOS at 85.6% [82.4%, 88.6%] is +1.4 pp above the Mastra OM gpt-4o point estimate of 84.23%. Mastra publishes no CI; the 84.23% falls inside the AgentOS 95% CI. EmergenceMem Internal's 86.0% (no CI) also falls inside the AgentOS CI. The three configurations are statistically tied at this resolution.
+AgentOS at 85.6% [82.4%, 88.6%] is 1.4 points above the Mastra OM gpt-4o point estimate of 84.23%. Mastra publishes no confidence interval; their 84.23% falls inside the AgentOS 95% interval. EmergenceMem Internal's 86.0% (no CI) also falls inside the AgentOS interval. The three configurations are statistically tied at this resolution.
 
 Median latency: AgentOS p50 is 3,558 ms; EmergenceMem's published median is 5,650 ms. The remaining vendors do not publish per-case latency.
 
@@ -64,7 +64,7 @@ The router was removed. Every category now flows through `canonical-hybrid`. A s
 
 |                          | Tier 3 PR + RR | Canonical + RR | Δ |
 |--------------------------|---------------:|---------------:|---|
-| Aggregate accuracy        | 84.8%          | 85.6%          | +0.8 pp (CIs overlap) |
+| Aggregate accuracy        | 84.8%          | 85.6%          | +0.8 points (CIs overlap) |
 | Total LLM cost (full N=500) | $17.38       | $3.84          | -$13.54 |
 | Cost per correct          | $0.0410        | **$0.0090**    | -$0.0320 per correct |
 | Avg latency               | 21,042 ms      | 4,001 ms       | -17,041 ms |
@@ -79,12 +79,12 @@ The router was removed. Every category now flows through `canonical-hybrid`. A s
 export const MIN_COST_BEST_CAT_2026_04_28_TABLE = {
   preset: 'min-cost-best-cat-2026-04-28',
   mapping: {
-    'temporal-reasoning': 'gpt-4o',         // +11.8 pp on TR vs gpt-5-mini
-    'single-session-user': 'gpt-4o',        // +4.3 pp on SSU
-    'single-session-preference': 'gpt-5-mini', // +23.4 pp on SSP
-    'single-session-assistant': 'gpt-5-mini',  // +1.8 pp + cheaper
-    'knowledge-update': 'gpt-5-mini',          // +1.5 pp + cheaper
-    'multi-session': 'gpt-5-mini',             // +3.5 pp + cheaper
+    'temporal-reasoning': 'gpt-4o',         // +11.8 points on TR vs gpt-5-mini
+    'single-session-user': 'gpt-4o',        // +4.3 points on SSU
+    'single-session-preference': 'gpt-5-mini', // +23.4 points on SSP
+    'single-session-assistant': 'gpt-5-mini',  // +1.8 points + cheaper
+    'knowledge-update': 'gpt-5-mini',          // +1.5 points + cheaper
+    'multi-session': 'gpt-5-mini',             // +3.5 points + cheaper
   },
 };
 ```
@@ -93,12 +93,12 @@ Per-category at the 85.6% headline:
 
 | Category | Tier 3 PR + RR | Canonical + RR | Δ |
 |---|---:|---:|---:|
-| single-session-assistant (n=56) | 100.0% | 98.2% [94.6, 100] | -1.8 pp (within CI) |
-| single-session-user (n=70) | 91.4% | **94.3%** [88.6, 98.6] | +2.9 pp |
-| knowledge-update (n=78) | 88.5% | **91.0%** [84.6, 97.4] | +2.5 pp |
+| single-session-assistant (n=56) | 100.0% | 98.2% [94.6, 100] | -1.8 points (within CI) |
+| single-session-user (n=70) | 91.4% | **94.3%** [88.6, 98.6] | +2.9 points |
+| knowledge-update (n=78) | 88.5% | **91.0%** [84.6, 97.4] | +2.5 points |
 | single-session-preference (n=30) | 86.7% | 86.7% [73.3, 96.7] | tied |
-| temporal-reasoning (n=133) | 82.0% | **84.2%** [77.4, 90.2] | +2.2 pp |
-| multi-session (n=133) | 75.2% | 74.4% [66.9, 82.0] | -0.8 pp (within CI) |
+| temporal-reasoning (n=133) | 82.0% | **84.2%** [77.4, 90.2] | +2.2 points |
+| multi-session (n=133) | 75.2% | 74.4% [66.9, 82.0] | -0.8 points (within CI) |
 
 ### 15 adjacent configurations all regressed
 
@@ -106,16 +106,16 @@ Each of the following single-variable variants was tested against the 85.6% base
 
 | Probe | Result | Δ vs baseline |
 |---|---:|---:|
-| `--reader-top-k 30` | 81.5% Phase A | -3.7 pp |
-| `--hyde` | 83.3% Phase A | -1.9 pp |
-| `--rerank-candidate-multiplier 5` | 75.9% Phase A | -9.3 pp |
-| `--retrieval-config-router minimize-cost-augmented` | 77.8% Phase A | -7.4 pp |
-| `--policy-router-preset balanced` | 74.1% Phase A | -11.1 pp |
-| `--policy-router-preset maximize-accuracy` | 83.3% Phase A | -1.9 pp |
-| `text-embedding-3-large` | 83.4% Phase B | -2.2 pp at **20× slower latency** |
-| `--om-classifier-model gpt-4o` | 84.0% Phase B | -1.6 pp at +44% cost |
-| `--rerank-model rerank-v4.0-pro` | 84.6% Phase B | -1.0 pp; 5/6 categories regress |
-| `--reader-router min-cost-best-cat-gpt5-tr-2026-04-29` | 83.2% Phase B | -2.4 pp; TR drops 84.2% → 80.5% |
+| `--reader-top-k 30` | 81.5% Phase A | -3.7 points |
+| `--hyde` | 83.3% Phase A | -1.9 points |
+| `--rerank-candidate-multiplier 5` | 75.9% Phase A | -9.3 points |
+| `--retrieval-config-router minimize-cost-augmented` | 77.8% Phase A | -7.4 points |
+| `--policy-router-preset balanced` | 74.1% Phase A | -11.1 points |
+| `--policy-router-preset maximize-accuracy` | 83.3% Phase A | -1.9 points |
+| `text-embedding-3-large` | 83.4% Phase B | -2.2 points at **20× slower latency** |
+| `--om-classifier-model gpt-4o` | 84.0% Phase B | -1.6 points at +44% cost |
+| `--rerank-model rerank-v4.0-pro` | 84.6% Phase B | -1.0 points; 5/6 categories regress |
+| `--reader-router min-cost-best-cat-gpt5-tr-2026-04-29` | 83.2% Phase B | -2.4 points; TR drops 84.2% → 80.5% |
 
 Fifteen variants tested across Phase A and Phase B; fifteen regressions. The 85.6% configuration is a local optimum in the tested parameter space.
 
@@ -185,11 +185,11 @@ The dataset, evaluation harness, and rubric are open source at [xiaowu0162/LongM
 | System | Accuracy | 95% CI | License | Source |
 |---|---:|---|---|---|
 | AgentBrain | 71.7% (Test 0) | not published | closed-source SaaS | [github.com/AgentBrainHQ](https://github.com/AgentBrainHQ) |
-| **🚀 AgentOS** (sem-embed + reader-router + top-K=5) | **70.2%** | **[66.0%, 74.0%]** | **MIT** | [agentos-bench](https://github.com/framersai/agentos-bench) |
+| **🚀 AgentOS** (sem-embed + reader-router + top-K=5) | **70.2%** | **[66.0%, 74.0%]** | **Apache-2.0** | [agentos-bench](https://github.com/framersai/agentos-bench) |
 | LongMemEval paper academic baseline | 65.7% | not published | open repo | [Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813) |
 | Mem0 v3, Mastra OM, Hindsight, Zep, EmergenceMem, Supermemory, MemMachine, Memoria, agentmemory, Backboard, ByteRover, Letta, Cognee | not published | (no CI) | various | reports S only |
 
-AgentOS at 70.2% [66.0%, 74.0%] is +4.5 points above the LongMemEval paper's academic baseline. AgentBrain's 71.7% point estimate falls inside the AgentOS CI; the two systems are statistically tied at this resolution. AgentBrain is closed-source and runs against a hosted endpoint. The agentos-bench harness publishes bootstrap CIs at 10,000 resamples, per-case run JSONs at `seed=42`, and judge-FPR probes at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench).
+AgentOS at 70.2% [66.0%, 74.0%] is 4.5 points above the LongMemEval paper's academic baseline. AgentBrain's 71.7% point estimate falls inside the AgentOS confidence interval; the two systems are statistically tied at this resolution. AgentBrain is closed-source and runs against a hosted endpoint. agentos-bench publishes 95% confidence intervals (resampled 10,000 times at seed 42), per-case run JSONs, and judge false-positive-rate probes at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench).
 
 ### Step-by-step: 30.6% to 70.2%
 
@@ -198,9 +198,9 @@ Each row below is a single configuration change against the prior row. CIs were 
 | Date | Configuration | Aggregate | Lift |
 |---|---|---:|---:|
 | 2026-04-25 | Tier 1 canonical (CharHash, top-K=20) | 30.6% | baseline |
-| 2026-04-26 | M-tuned (HyDE + top-K=50 + rerank-mult=5, CharHash) | 45.4% [41.2%, 49.8%] | +14.8 pp |
-| 2026-04-29 | M-tuned + sem-embed + reader-router (top-K=50) | 57.6% [53.2%, 61.8%] | +12.2 pp |
-| **2026-04-29** | M-tuned + sem-embed + reader-router + **top-K=5** | **70.2% [66.0%, 74.0%]** | **+12.6 pp** |
+| 2026-04-26 | M-tuned (HyDE + top-K=50 + rerank-mult=5, CharHash) | 45.4% [41.2%, 49.8%] | +14.8 points |
+| 2026-04-29 | M-tuned + sem-embed + reader-router (top-K=50) | 57.6% [53.2%, 61.8%] | +12.2 points |
+| **2026-04-29** | M-tuned + sem-embed + reader-router + **top-K=5** | **70.2% [66.0%, 74.0%]** | **+12.6 points** |
 
 Each row's CI is disjoint from the prior row. Cost per correct dropped from $0.1348 to $0.0078, a 17× reduction.
 
@@ -210,7 +210,7 @@ The 57.6% headline ran with `--reader-top-k 50`. The LongMemEval paper's stronge
 
 | Metric | Top-K=50 | Top-K=5 | Δ |
 |---|---:|---:|---:|
-| Aggregate accuracy | 57.6% [53.2%, 61.8%] | **70.2% [66.0%, 74.0%]** | +12.6 pp; CIs disjoint |
+| Aggregate accuracy | 57.6% [53.2%, 61.8%] | **70.2% [66.0%, 74.0%]** | +12.6 points; CIs disjoint |
 | Cost per correct | $0.0505 | **$0.0078** | -$0.0427 per correct |
 | Avg latency | 264,933 ms | 83,711 ms | -181,222 ms |
 
@@ -222,12 +222,12 @@ A LongMemEval-M haystack contains ~1.5M tokens spread across 500 sessions, produ
 
 | Category | Top-K=50 | Top-K=5 | Δ |
 |---|---:|---:|---:|
-| **temporal-reasoning** (n=133) | 42.1% | **66.2% [57.9%, 74.4%]** | +24.1 pp |
-| **single-session-preference** (n=30) | 40.0% | **63.3% [46.7%, 80.0%]** | +23.3 pp |
-| **multi-session** (n=133) | 29.3% | **48.9% [40.6%, 57.1%]** | +19.6 pp |
-| knowledge-update (n=78) | 76.9% | 78.2% [69.2%, 87.2%] | +1.3 pp |
+| **temporal-reasoning** (n=133) | 42.1% | **66.2% [57.9%, 74.4%]** | +24.1 points |
+| **single-session-preference** (n=30) | 40.0% | **63.3% [46.7%, 80.0%]** | +23.3 points |
+| **multi-session** (n=133) | 29.3% | **48.9% [40.6%, 57.1%]** | +19.6 points |
+| knowledge-update (n=78) | 76.9% | 78.2% [69.2%, 87.2%] | +1.3 points |
 | single-session-assistant (n=56) | 96.4% | 96.4% [91.1%, 100%] | tied |
-| single-session-user (n=70) | 95.7% | 91.4% [84.3%, 97.1%] | -4.3 pp (within CI) |
+| single-session-user (n=70) | 95.7% | 91.4% [84.3%, 97.1%] | -4.3 points (within CI) |
 
 ### Four one-knob probes all regressed on M
 
@@ -235,10 +235,10 @@ Each variant was tested as a single-variable change on top of the 70.2% configur
 
 | Probe | Aggregate | Δ | Verdict |
 |---|---:|---:|---|
-| `--reader-top-k 3` | 65.2% [60.8%, 69.4%] | -5.0 pp; CIs disjoint | refuted |
-| `--hyde` off | 69.2% [65.0%, 73.4%] | -1.0 pp; tied within CI | marginal |
-| `--rerank-candidate-multiplier 10` | 60.0% [55.6%, 64.4%] | -10.2 pp; CIs disjoint | catastrophically refuted |
-| `--two-call-reader` (Chain-of-Note) | 58.6% [54.2%, 62.8%] | -11.6 pp; CIs disjoint | refuted |
+| `--reader-top-k 3` | 65.2% [60.8%, 69.4%] | -5.0 points; CIs disjoint | refuted |
+| `--hyde` off | 69.2% [65.0%, 73.4%] | -1.0 points; tied within CI | marginal |
+| `--rerank-candidate-multiplier 10` | 60.0% [55.6%, 64.4%] | -10.2 points; CIs disjoint | catastrophically refuted |
+| `--two-call-reader` (Chain-of-Note) | 58.6% [54.2%, 62.8%] | -11.6 points; CIs disjoint | refuted |
 
 Top-K=5 with HyDE on and rerank-multiplier 5 is the local optimum in the tested parameter space.
 
@@ -250,17 +250,17 @@ Per-category accuracy at the 30.6% M baseline indicates which question types deg
 
 | Category | n | M accuracy | S baseline | Δ at M scale |
 |---|---:|---:|---:|---:|
-| single-session-user | 70 | 60.0% | 97.1% | -37.1 pp |
-| single-session-assistant | 56 | 50.0% | 89.3% | -39.3 pp |
-| knowledge-update | 78 | 50.0% | 86.8% | -36.8 pp |
-| **multi-session** | 133 | **18.0%** | 61.7% | **-43.7 pp** |
-| **temporal-reasoning** | 133 | **12.8%** | 70.2% | **-57.4 pp** |
-| single-session-preference | 30 | 10.0% | 63.3% | -53.3 pp |
-| **Aggregate** | **500** | **30.6%** | **76.6%** | **-46.0 pp** |
+| single-session-user | 70 | 60.0% | 97.1% | -37.1 points |
+| single-session-assistant | 56 | 50.0% | 89.3% | -39.3 points |
+| knowledge-update | 78 | 50.0% | 86.8% | -36.8 points |
+| **multi-session** | 133 | **18.0%** | 61.7% | **-43.7 points** |
+| **temporal-reasoning** | 133 | **12.8%** | 70.2% | **-57.4 points** |
+| single-session-preference | 30 | 10.0% | 63.3% | -53.3 points |
+| **Aggregate** | **500** | **30.6%** | **76.6%** | **-46.0 points** |
 
-Multi-session and temporal-reasoning together account for 53% of all M cases and show the largest S→M deltas (-43.7 pp and -57.4 pp respectively). Across 500 candidate sessions instead of 50, the relevant session frequently does not make the top-20 under CharHash + BM25 + Cohere rerank.
+Multi-session and temporal-reasoning together account for 53% of all M cases and show the largest S→M deltas (-43.7 points and -57.4 points respectively). Across 500 candidate sessions instead of 50, the relevant session frequently does not make the top-20 under CharHash + BM25 + Cohere rerank.
 
-The cumulative +39.6-point lift from baseline to 70.2% came from three independent axes: M-tuned retrieval flags (+14.8 pp), semantic embedder switch (+12.2 pp, folded with reader router), and `--reader-top-k 5` (+12.6 pp). Multi-session moved from 18% to 48.9% (+30.9 pp); temporal-reasoning from 12.8% to 66.2% (+53.4 pp).
+The cumulative +39.6-point lift from baseline to 70.2% came from three independent axes: M-tuned retrieval flags (+14.8 points), semantic embedder switch (+12.2 points, folded with reader router), and `--reader-top-k 5` (+12.6 points). Multi-session moved from 18% to 48.9% (+30.9 points); temporal-reasoning from 12.8% to 66.2% (+53.4 points).
 
 ---
 
@@ -293,7 +293,7 @@ The patterns documented below are the methodology checks the agentos-bench harne
 Implications:
 
 - LOCOMO scores above 93.6% include benefit from answer-key errors.
-- LOCOMO score differences below ~6 pp are within the judge false-positive band.
+- LOCOMO score differences below ~6 points are within the judge false-positive band.
 
 For context, [Northcutt et al. (NeurIPS 2021)](https://arxiv.org/abs/2103.14749) found a 3.3% label-error rate sufficient to destabilize benchmark rankings.
 
@@ -309,7 +309,7 @@ The M variant exceeds every production context window, removing this confound.
 
 In May 2025, [Mem0 published a research paper](https://mem0.ai/research) positioning their product as state-of-the-art on LOCOMO. Their comparison table scored Zep at 65.99%. Zep [responded](https://blog.getzep.com/lies-damn-lies-statistics-is-mem0-really-sota-in-agent-memory/), reran the evaluation with their own configuration, and reported 75.14% ±0.17 for Zep. Zep attributed the gap to Mem0 running Zep with sequential search instead of concurrent search.
 
-Zep's self-reported LongMemEval-S number is 71.2% at `gpt-4o`, from [their SOTA blog post](https://blog.getzep.com/state-of-the-art-agent-memory/). An independent reproduction at [arXiv:2512.13564](https://arxiv.org/abs/2512.13564) measured Zep at 63.8%, a 7.4 pp gap.
+Zep's self-reported LongMemEval-S number is 71.2% at `gpt-4o`, from [their SOTA blog post](https://blog.getzep.com/state-of-the-art-agent-memory/). An independent reproduction at [arXiv:2512.13564](https://arxiv.org/abs/2512.13564) measured Zep at 63.8%, a 7.4 points gap.
 
 ### Notable methodology-disclosure findings
 
@@ -323,7 +323,7 @@ Zep's self-reported LongMemEval-S number is 71.2% at `gpt-4o`, from [their SOTA 
 | Transparency axis | Mem0 | Mastra | Supermemory | Zep | Emergence | Letta | MemPalace | AgentOS |
 |---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | Aggregate accuracy | yes | yes | yes | yes | yes | partial | yes | yes |
-| 95% bootstrap CI on headline | no | no | no | partial | no | no | no | yes |
+| 95% confidence interval on headline | no | no | no | partial | no | no | no | yes |
 | Per-category 95% CI | no | no | no | no | no | no | no | yes |
 | Reader model disclosed | no | yes | partial | yes | yes | no | no | yes |
 | Observer / ingest model disclosed | no | yes | no | yes | yes | no | no | yes |
@@ -403,7 +403,7 @@ Multi-session is the lowest per-category score on both variants. On M it measure
 Two candidate v2 mechanisms are queued:
 
 1. Stage E: Hindsight 4-network typed-observer, adding a typed-graph signal orthogonal to BM25 + dense + Cohere rerank. Architecture follows [Hindsight (vectorize.io, 2025)](https://arxiv.org/html/2512.12818v1).
-2. K=V+fact key augmentation (Wu et al., Table 3 configuration): index sessions by raw content and extracted facts, with dual-key vector lookup. The Phase B `--rerank-candidate-multiplier 10` ablation regressed -10.2 pp on the same retrieval-heavy categories K=V+fact would affect, suggesting bounded expected lift.
+2. K=V+fact key augmentation (Wu et al., Table 3 configuration): index sessions by raw content and extracted facts, with dual-key vector lookup. The Phase B `--rerank-candidate-multiplier 10` ablation regressed -10.2 points on the same retrieval-heavy categories K=V+fact would affect, suggesting bounded expected lift.
 
 ---
 
@@ -445,4 +445,4 @@ Reproducible memory benchmarks require a published seed, configuration, and per-
 
 ---
 
-*Built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). AgentOS is open source under Apache 2.0. agentos-bench is MIT-licensed. [GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos) · [Discord](https://wilds.ai/discord)*
+*Built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). AgentOS is open source under Apache-2.0. agentos-bench is MIT-licensed. [GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos) · [Discord](https://wilds.ai/discord)*
