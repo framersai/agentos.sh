@@ -516,12 +516,24 @@ export function applyTheme(themeName: ThemeName, isDark?: boolean) {
   root.setAttribute('data-theme', themeName);
 }
 
+const THEME_VERSION = '2026-04-29-twilight-default';
+
 // Get default theme. Honors saved user preference if present, otherwise
 // returns `twilight-neo` regardless of system light/dark preference. The
 // site's brand identity is the dark-mode neon-cyan palette; the
 // twilight-neo theme is the canonical look for first-time visitors.
+//
+// THEME_VERSION bump forces a one-time reset of stale localStorage values
+// (e.g., users who picked `sakura-sunset` before the launch push). After
+// the reset fires once, explicit user selection is honored as before.
 export function getDefaultTheme(): ThemeName {
   if (typeof window !== 'undefined') {
+    const ver = localStorage.getItem('agentos-theme-version');
+    if (ver !== THEME_VERSION) {
+      localStorage.setItem('agentos-theme-version', THEME_VERSION);
+      localStorage.removeItem('agentos-theme');
+      return 'twilight-neo';
+    }
     const saved = localStorage.getItem('agentos-theme') as ThemeName;
     if (saved && themes[saved]) return saved;
   }
