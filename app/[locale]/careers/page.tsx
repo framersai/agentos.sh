@@ -2,15 +2,33 @@ import Link from 'next/link';
 import { getAllJobs } from '@/lib/markdown';
 import { Metadata } from 'next';
 import { MapPin, Clock, Briefcase, ArrowRight } from 'lucide-react';
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
-export async function generateMetadata(): Promise<Metadata> {
+type Props = { params: { locale: string } };
+
+export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+  const path = '/careers';
+  const url = canonical(locale, path);
   return {
-    title: 'Careers at AgentOS - Build the Future of AI',
-    description: 'Join the team building the world&apos;s first adaptive AI agent runtime. Remote-first, open source, and high impact.',
+    title: 'Careers at AgentOS — Build the Future of AI',
+    description: 'Join the team building the world’s first adaptive AI agent runtime. Remote-first, open source, and high impact.',
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
+    openGraph: {
+      title: 'Careers at AgentOS — Build the Future of AI',
+      description: 'Join the team building the world’s first adaptive AI agent runtime. Remote-first, open source, and high impact.',
+      url,
+      siteName: 'AgentOS',
+      images: [{ url: '/og-image.png' }],
+      type: 'website',
+    },
   };
 }
 
-export default async function CareersPage({ params: { locale } }: { params: { locale: string } }) {
+export default async function CareersPage({ params: { locale } }: Props) {
   const jobs = getAllJobs();
 
   return (

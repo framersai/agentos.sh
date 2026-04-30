@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { BookOpen, ChevronRight, Clock, Layers, Cpu, Database, Settings, Sparkles, FileText } from 'lucide-react';
 import { getAllGuides, getGuideCategories } from '../../../lib/guides';
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 const categoryIcons: Record<string, typeof BookOpen> = {
   Core: Layers,
@@ -22,16 +24,31 @@ const categoryColors: Record<string, string> = {
   Other: 'from-gray-500 to-slate-600'
 };
 
-export const metadata = {
-  title: 'Guides | AgentOS Documentation',
-  description: 'Comprehensive guides for building with AgentOS - architecture, features, integration, and more.'
-};
-
 type Props = {
   params: {
     locale: string;
   };
 };
+
+export async function generateMetadata({ params: { locale } }: Props) {
+  const path = '/guides';
+  const url = canonical(locale, path);
+  return {
+    title: 'Guides | AgentOS Documentation',
+    description: 'Comprehensive guides for building with AgentOS — architecture, features, integration, and more.',
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
+    openGraph: {
+      title: 'Guides | AgentOS Documentation',
+      description: 'Comprehensive guides for building with AgentOS.',
+      url,
+      siteName: 'AgentOS',
+      type: 'website',
+    },
+  };
+}
 
 export default function GuidesPage({ params }: Props) {
   const guides = getAllGuides();

@@ -5,6 +5,8 @@ import { Metadata } from 'next';
 import { ChevronLeft, MapPin, Clock, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 import { locales } from '@/i18n';
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 interface Props {
   params: {
@@ -30,12 +32,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const job = getJobBySlug(params.slug);
   if (!job) return {};
 
+  const path = `/careers/${params.slug}`;
+  const url = canonical(params.locale, path);
+
   return {
-    title: `${job.title} - Careers | AgentOS`,
+    title: `${job.title} — Careers | AgentOS`,
     description: job.excerpt,
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
     openGraph: {
       title: `We are hiring a ${job.title}`,
       description: job.excerpt,
+      url,
       type: 'website',
     },
   };

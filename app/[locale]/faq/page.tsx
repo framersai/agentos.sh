@@ -3,6 +3,8 @@ import type { ReactNode } from 'react';
 import { getTranslations } from 'next-intl/server';
 import { ExternalLink, BookOpen, Cpu, Rocket, Building2, GraduationCap } from 'lucide-react';
 import type { Locale } from '../../../i18n';
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 /**
  * Map of inline citation text (as it appears in prose) to its DOI/URL.
@@ -67,16 +69,20 @@ type Props = {
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'faq' });
-  const canonical = locale === 'en' ? '/faq' : `/${locale}/faq`;
+  const path = '/faq';
+  const url = canonical(locale, path);
 
   return {
-    title: `${t('title')} - AgentOS`,
+    title: `${t('title')} — AgentOS`,
     description: t('subtitle'),
-    alternates: { canonical },
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
     openGraph: {
-      title: `${t('title')} - AgentOS`,
+      title: `${t('title')} — AgentOS`,
       description: t('subtitle'),
-      url: `https://agentos.sh${canonical}`,
+      url,
       siteName: 'AgentOS',
       images: [{ url: '/og-image.png' }],
       type: 'website',

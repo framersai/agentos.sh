@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import type { Route } from 'next';
 import { getAllPosts } from '@/lib/markdown';
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 import { Calendar, ArrowRight, Tag } from 'lucide-react';
 
 type Props = {
@@ -8,23 +10,27 @@ type Props = {
 };
 
 export async function generateMetadata({ params: { locale } }: Props) {
-  const canonical = locale === 'en' ? '/blog' : `/${locale}/blog`;
+  const path = '/blog';
+  const url = canonical(locale, path);
 
   return {
-    title: 'Blog - AgentOS',
+    title: 'Blog — AgentOS',
     description: 'Technical articles, framework comparisons, tutorials, and engineering insights from the AgentOS team. Learn how to build production AI agents with TypeScript.',
-    alternates: { canonical },
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
     openGraph: {
-      title: 'Blog - AgentOS',
+      title: 'Blog — AgentOS',
       description: 'Technical articles, framework comparisons, tutorials, and engineering insights from the AgentOS team.',
-      url: `https://agentos.sh${canonical}`,
+      url,
       siteName: 'AgentOS',
       images: [{ url: '/og-image.png' }],
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image' as const,
-      title: 'Blog - AgentOS',
+      title: 'Blog — AgentOS',
       description: 'Technical articles, framework comparisons, and tutorials for building AI agents with TypeScript.',
     },
   };

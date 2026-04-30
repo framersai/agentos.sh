@@ -2,12 +2,34 @@ import Link from "next/link";
 import { BookOpen, Code2, FileCode, Github, Layers, Sparkles, ChevronRight } from "lucide-react";
 import { getAllGuides } from "../../../lib/guides";
 import { WhitepaperCTA } from "../../../components/sections/whitepaper-cta";
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 type Props = {
   params: {
     locale: string;
   };
 };
+
+export async function generateMetadata({ params: { locale } }: Props) {
+  const path = '/docs';
+  const url = canonical(locale, path);
+  return {
+    title: 'Documentation | AgentOS',
+    description: 'Complete API reference, guides, and examples for building with AgentOS.',
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
+    openGraph: {
+      title: 'Documentation | AgentOS',
+      description: 'Complete API reference, guides, and examples for building with AgentOS.',
+      url,
+      siteName: 'AgentOS',
+      type: 'website',
+    },
+  };
+}
 
 export default function DocsPage({ params }: Props) {
   const guides = getAllGuides();

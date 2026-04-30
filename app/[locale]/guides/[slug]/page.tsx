@@ -4,6 +4,8 @@ import { ArrowLeft, Clock, BookOpen, ChevronRight, Github } from 'lucide-react';
 import { getAllGuides, getGuideBySlug } from '../../../../lib/guides';
 import { MarkdownRenderer } from '../../../../components/markdown-renderer';
 import { locales } from '../../../../i18n';
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 type Props = {
   params: {
@@ -36,9 +38,23 @@ export async function generateMetadata({ params }: Props) {
   const guide = getGuideBySlug(params.slug);
   if (!guide) return { title: 'Guide Not Found' };
 
+  const path = `/guides/${params.slug}`;
+  const url = canonical(params.locale, path);
+
   return {
     title: `${guide.title} | AgentOS Guides`,
     description: guide.description,
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
+    openGraph: {
+      title: `${guide.title} | AgentOS Guides`,
+      description: guide.description,
+      url,
+      siteName: 'AgentOS',
+      type: 'article',
+    },
   };
 }
 

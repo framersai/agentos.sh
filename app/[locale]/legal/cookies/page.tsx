@@ -1,12 +1,32 @@
 import type { Metadata } from "next";
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 const updated = "March 2026";
 
-export const metadata: Metadata = {
-  title: "AgentOS Cookie Policy",
-  description:
-    "How the agentos.sh website uses cookies, analytics, and local storage."
-};
+type MetadataProps = { params: { locale: string } };
+
+export async function generateMetadata({ params: { locale } }: MetadataProps): Promise<Metadata> {
+  const path = '/legal/cookies';
+  const url = canonical(locale, path);
+  return {
+    title: "AgentOS Cookie Policy",
+    description:
+      "How the agentos.sh website uses cookies, analytics, and local storage.",
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
+    openGraph: {
+      title: "AgentOS Cookie Policy",
+      description:
+        "How the agentos.sh website uses cookies, analytics, and local storage.",
+      url,
+      siteName: 'AgentOS',
+      type: 'website',
+    },
+  };
+}
 
 const Sections = [
   {

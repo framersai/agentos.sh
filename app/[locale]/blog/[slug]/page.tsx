@@ -8,6 +8,8 @@ import { Comments } from '@/components/blog/Comments';
 import { BlogPostHero } from '@/components/blog/BlogPostHero';
 import { Calendar, ArrowLeft, Tag, User } from 'lucide-react';
 import { locales } from '../../../../i18n';
+import { canonical as canonicalUrl } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 type Props = {
   params: { locale: string; slug: string };
@@ -27,17 +29,21 @@ export async function generateMetadata({ params: { locale, slug } }: Props) {
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  const canonical = locale === 'en' ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
+  const path = `/blog/${slug}`;
+  const url = canonicalUrl(locale, path);
 
   return {
-    title: `${post.title} - AgentOS Blog`,
+    title: `${post.title} — AgentOS Blog`,
     description: post.excerpt || post.title,
     keywords: post.keywords || '',
-    alternates: { canonical },
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt || post.title,
-      url: `https://agentos.sh${canonical}`,
+      url,
       siteName: 'AgentOS',
       images: post.image ? [{ url: post.image }] : [{ url: '/og-image.png' }],
       type: 'article',
@@ -57,7 +63,7 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
   if (!post) notFound();
 
   const blogHref = `/${locale}/blog`;
-  const canonical = `/${locale}/blog/${slug}`;
+  const canonical = canonicalUrl(locale, `/blog/${slug}`);
 
   return (
     <main id="main-content" className="relative overflow-x-clip bg-[var(--color-background-primary)] text-[var(--color-text-primary)]">
@@ -83,7 +89,7 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
               url: 'https://manic.agency',
               logo: { '@type': 'ImageObject', url: 'https://agentos.sh/og-image.png' },
             },
-            mainEntityOfPage: `https://agentos.sh${canonical}`,
+            mainEntityOfPage: canonical,
             image: post.image ? `https://agentos.sh${post.image}` : 'https://agentos.sh/og-image.png',
           }),
         }}
@@ -96,9 +102,9 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
             '@context': 'https://schema.org',
             '@type': 'BreadcrumbList',
             itemListElement: [
-              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://agentos.sh' },
-              { '@type': 'ListItem', position: 2, name: 'Blog', item: `https://agentos.sh${blogHref}` },
-              { '@type': 'ListItem', position: 3, name: post.title, item: `https://agentos.sh${canonical}` },
+              { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl(locale, '/') },
+              { '@type': 'ListItem', position: 2, name: 'Blog', item: canonicalUrl(locale, '/blog') },
+              { '@type': 'ListItem', position: 3, name: post.title, item: canonical },
             ],
           }),
         }}

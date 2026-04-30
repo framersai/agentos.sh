@@ -4,6 +4,8 @@ import type { Route } from 'next';
 import { ArrowLeft, ArrowRight, Github, Linkedin, Twitter, Globe, Mail } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { Locale } from '../../../i18n';
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 type Props = {
   params: {
@@ -15,18 +17,20 @@ export async function generateMetadata({ params: { locale } }: Props) {
   const t = await getTranslations({ locale: locale as Locale, namespace: 'about' });
   const title = `${t('hero.title')} — AgentOS`;
   const description = t('mission.p1');
-  const canonical = locale === 'en' ? '/about' : `/${locale}/about`;
+  const path = '/about';
+  const url = canonical(locale, path);
 
   return {
     title,
     description,
     alternates: {
-      canonical,
+      canonical: url,
+      languages: hreflangAlternates(path),
     },
     openGraph: {
       title,
       description,
-      url: `https://agentos.sh${canonical}`,
+      url,
     },
     twitter: {
       title,

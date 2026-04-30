@@ -7,6 +7,8 @@ import { ThemeProvider } from '../../components/theme-provider';
 import ScrollToTopButton from '../../components/ScrollToTopButton';
 import dynamic from 'next/dynamic';
 import { locales, type Locale } from '../../i18n';
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 // Enable SSR for SiteHeader to prevent layout shift
 // The component handles hydration safely
@@ -73,17 +75,8 @@ export async function resolveLocaleMetadata(locale: Locale) {
     description: t('description'),
     metadataBase: new URL('https://agentos.sh'),
     alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        'en': '/en',
-        'zh': '/zh',
-        'ko': '/ko',
-        'ja': '/ja',
-        'es': '/es',
-        'de': '/de',
-        'fr': '/fr',
-        'pt': '/pt',
-      },
+      canonical: canonical(locale, '/'),
+      languages: hreflangAlternates('/'),
     },
     keywords: [
       'AgentOS',
@@ -158,7 +151,7 @@ export async function resolveLocaleMetadata(locale: Locale) {
     openGraph: {
       title: t('ogTitle'),
       description: t('ogDescription'),
-      url: locale === 'en' ? 'https://agentos.sh' : `https://agentos.sh/${locale}`,
+      url: canonical(locale, '/'),
       siteName: 'AgentOS',
       images: [
         {

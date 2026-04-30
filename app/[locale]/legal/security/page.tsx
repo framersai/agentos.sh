@@ -1,12 +1,32 @@
 import type { Metadata } from "next";
+import { canonical } from '@/lib/seo/canonical';
+import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 const updated = "March 2026";
 
-export const metadata: Metadata = {
-  title: "AgentOS Security",
-  description:
-    "Security architecture, guardrails, and responsible disclosure for the open-source AgentOS runtime."
-};
+type MetadataProps = { params: { locale: string } };
+
+export async function generateMetadata({ params: { locale } }: MetadataProps): Promise<Metadata> {
+  const path = '/legal/security';
+  const url = canonical(locale, path);
+  return {
+    title: "AgentOS Security",
+    description:
+      "Security architecture, guardrails, and responsible disclosure for the open-source AgentOS runtime.",
+    alternates: {
+      canonical: url,
+      languages: hreflangAlternates(path),
+    },
+    openGraph: {
+      title: "AgentOS Security",
+      description:
+        "Security architecture, guardrails, and responsible disclosure for the open-source AgentOS runtime.",
+      url,
+      siteName: 'AgentOS',
+      type: 'website',
+    },
+  };
+}
 
 const Sections = [
   {
