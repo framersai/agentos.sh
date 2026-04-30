@@ -677,7 +677,7 @@ export function AgencySection() {
           className="text-center mt-10"
         >
           <a
-            href="https://docs.agentos.sh/orchestration/agency-api"
+            href="https://docs.agentos.sh/features/agency-api"
             className="btn-primary inline-flex items-center gap-2"
           >
             <Users className="w-5 h-5" />

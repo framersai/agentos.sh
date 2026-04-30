@@ -683,16 +683,21 @@ console.log(session.forgedTools())
                   </div>
                 </div>
 
-        {/* Tabs: Synchronous vs Streaming (if applicable) */}
+        {/*
+          Tabs: Synchronous vs Streaming.
+          The "Synchronous" tab anchors on the `basic-agent` example; the
+          "Streaming" tab on `streaming`. The previous logic short-circuited
+          when activeExample.id === 'streaming', so clicking Synchronous
+          while streaming was selected did nothing (it hit the no-op
+          branch). The handlers below switch unconditionally — React de-dups
+          identical state, so re-selecting the active tab is free.
+        */}
         <div className="px-6 pt-4 border-b border-border-subtle">
           <div className="inline-flex gap-2 rounded-2xl p-1 glass-morphism">
             <button
               onClick={() => {
-                if (activeExample.id === 'streaming') {
-                  // no-op, already streaming
-                } else {
-                  setActiveExample(codeExamples.find((e) => e.id === 'basic-agent') || activeExample)
-                }
+                const target = codeExamples.find((e) => e.id === 'basic-agent')
+                if (target) setActiveExample(target)
               }}
               className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
                 activeExample.id !== 'streaming'
@@ -704,7 +709,8 @@ console.log(session.forgedTools())
             </button>
             <button
               onClick={() => {
-                setActiveExample(codeExamples.find((e) => e.id === 'streaming') || activeExample)
+                const target = codeExamples.find((e) => e.id === 'streaming')
+                if (target) setActiveExample(target)
               }}
               className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
                 activeExample.id === 'streaming'

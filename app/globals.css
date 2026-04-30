@@ -362,6 +362,14 @@
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     text-decoration: none;
+    /*
+     * Several themes (notably twilight-neo) ship a vivid cyan→violet
+     * accent gradient. White-on-cyan is a contrast trap (~1.5:1, well
+     * below WCAG AA). The text-shadow adds a thin dark outline so the
+     * label stays legible across every theme without forcing a darker
+     * gradient or per-theme text overrides.
+     */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
   }
   .btn-primary:hover {
     transform: translateY(-2px);
