@@ -179,7 +179,7 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
             {/* Inline TOC for mobile (lg:hidden); the sticky right-rail
                 takes over at lg+ breakpoints and is rendered below the
                 article column inside the same grid */}
-            <TableOfContents content={post.content} placement="inline" />
+            <TableOfContents content={post.content} articleTitle={post.title} placement="inline" />
 
             {/* Post content */}
             <MarkdownRenderer content={post.content} />
@@ -201,7 +201,7 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
           </div>
 
           {/* Sticky right-rail table of contents (lg+ only) */}
-          <TableOfContents content={post.content} />
+          <TableOfContents content={post.content} articleTitle={post.title} />
         </div>
       </div>
     </main>

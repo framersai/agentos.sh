@@ -14,17 +14,21 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    /* `clip` (not `hidden`) so that html does not become a scroll
+     * container; `position: sticky` descendants need a non-scrolling
+     * ancestor chain up to the viewport to pin correctly. */
+    overflow-x: clip;
     scroll-behavior: smooth;
     scroll-padding-top: 80px; /* Account for fixed header */
   }
-  
+
   body {
     width: 100%;
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    /* See html note above: `clip` instead of `hidden` so sticky works. */
+    overflow-x: clip;
     background: var(--color-background-primary);
     color: var(--color-text-primary);
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";

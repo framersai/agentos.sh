@@ -19,8 +19,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: `
           * { box-sizing: border-box; }
           html, body { width: 100%; margin: 0; padding: 0; }
-          html { height: 100%; overflow-x: hidden; }
-          body { min-height: 100vh; overflow-x: hidden; }
+          html { height: 100%; overflow-x: clip; }
+          body { min-height: 100vh; overflow-x: clip; }
 
           .skip-to-content { position: absolute; left: -9999px; z-index: 999; padding: 1rem 1.5rem; background: hsl(250, 95%, 55%); color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; }
           .skip-to-content:focus { left: 1rem; top: 1rem; outline: 2px solid hsl(280, 85%, 60%); outline-offset: 2px; }

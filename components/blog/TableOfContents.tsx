@@ -59,14 +59,18 @@ function extractToc(markdown: string): TocItem[] {
  *     body, visible only under lg, so phones and small tablets still
  *     get a TOC when the sidebar isn't on the page.
  *
- * The active-item highlight uses IntersectionObserver and is shared
+ * The header at the top shows the article title (if `articleTitle`
+ * is provided) above the "Table of Contents" eyebrow. The
+ * active-item highlight uses IntersectionObserver and is shared
  * across both placements.
  */
 export function TableOfContents({
   content,
+  articleTitle,
   placement = 'sidebar',
 }: {
   content: string;
+  articleTitle?: string;
   placement?: 'sidebar' | 'inline';
 }) {
   const items = useMemo(() => extractToc(content), [content]);
@@ -150,16 +154,24 @@ export function TableOfContents({
   );
 
   const header = (
-    <div className="mb-4 pb-3 border-b border-[var(--color-border-subtle)]">
+    <div className="mb-4 pb-4 border-b border-[var(--color-border-subtle)]">
       <div
         aria-hidden
-        className="mb-2 h-[2px] w-10 rounded-full"
+        className="mb-3 h-[2px] w-10 rounded-full"
         style={{
           background:
             'linear-gradient(90deg, hsl(180, 95%, 60%), hsl(270, 85%, 65%))',
         }}
       />
-      <h2 className="text-[13px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-primary)]">
+      {articleTitle && (
+        <div
+          className="mb-2 text-[13px] font-semibold leading-snug text-[var(--color-text-primary)]"
+          title={articleTitle}
+        >
+          {articleTitle}
+        </div>
+      )}
+      <h2 className="text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--color-text-muted)]">
         Table of Contents
       </h2>
     </div>
