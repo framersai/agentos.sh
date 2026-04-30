@@ -4,7 +4,7 @@ date: "2026-04-14"
 excerpt: "Define any world as JSON. Assign AI commanders with HEXACO personality profiles. Run a deterministic simulation where personality shapes civilization. A tutorial and case study using Paracosm and AgentOS."
 author: "AgentOS Team"
 category: "Tutorials"
-image: "/img/blog/paracosm/dashboard-overview.png"
+image: "/img/blog/og/build-ai-civilization-simulation-paracosm.png"
 keywords: "AI civilization simulation, build AI simulation, multi-agent simulation framework, HEXACO personality AI, Mars colony simulation, AI agent swarm simulation, TypeScript AI agent framework, emergent tool forging, paracosm, agentos, personality-driven AI agents, deterministic simulation engine"
 ---
 

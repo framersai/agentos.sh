@@ -4,7 +4,7 @@ date: "2026-04-14"
 excerpt: "How to build an AI companion that remembers conversations, sends GIFs, analyzes images, and develops a personality over time. Complete TypeScript implementation with AgentOS."
 author: "AgentOS Team"
 category: "Tutorial"
-image: "/og-image.png"
+image: "/img/blog/og/building-ai-companions-agentic-tools.png"
 keywords: "build AI companion TypeScript, AI companion with memory, agentic tools tutorial, AI agent tools TypeScript, persistent AI memory, HEXACO personality AI, AI companion SDK, cognitive memory implementation, AI vision tool, AI GIF search tool, createAgent TypeScript, AgentOS companion tutorial, AI roleplay framework, AI character with tools"
 ---
 

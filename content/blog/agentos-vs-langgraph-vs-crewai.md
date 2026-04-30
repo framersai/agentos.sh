@@ -4,7 +4,7 @@ date: "2026-04-12"
 excerpt: "A side-by-side comparison of the six leading AI agent frameworks in 2026: features, architecture, code examples, and when to use each. Updated with VoltAgent, OpenAI Agents SDK, and Google ADK."
 author: "AgentOS Team"
 category: "Comparison"
-image: "/og-image.png"
+image: "/img/blog/og/agentos-vs-langgraph-vs-crewai.png"
 keywords: "typescript ai agent framework, langgraph alternative, crewai alternative, mastra alternative, voltagent alternative, ai agent framework comparison, best ai agent framework 2026, openai agents sdk, google adk typescript, build ai agents typescript, multi-agent orchestration comparison, agent simulation framework"
 ---
 

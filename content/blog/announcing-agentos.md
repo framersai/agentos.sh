@@ -4,7 +4,7 @@ date: "2026-04-12"
 excerpt: "AgentOS is an open-source TypeScript runtime for building AI agents with cognitive memory, HEXACO personality, multi-agent orchestration, runtime tool forging, 37 channel adapters, and 21 LLM providers. Apache 2.0 licensed."
 author: "AgentOS Team"
 category: "Announcements"
-image: "/og-image.png"
+image: "/img/blog/og/announcing-agentos.png"
 keywords: "agentos launch, ai agent framework, typescript ai agents, build ai agent, multi-agent orchestration, cognitive memory, open source ai framework, langgraph alternative, crewai alternative, mastra alternative, adaptive ai agents, emergent tool forging, agent simulation framework, AI agent SDK TypeScript"
 ---
 

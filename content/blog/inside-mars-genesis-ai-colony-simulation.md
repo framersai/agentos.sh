@@ -4,7 +4,7 @@ date: "2026-04-17"
 excerpt: "Mars Genesis is a six-turn, thirty-colonist AI civilization simulation where two commanders with opposing HEXACO personality profiles run the same seed and produce measurably different outcomes. This is the end-to-end case study: how the forge-and-reuse economy, personality-weighted memory, and cognitive substrate combine so the Visionary's toolbox diverges from the Engineer's while both share identical starting conditions."
 author: "AgentOS Team"
 category: "Engineering"
-image: "/img/blog/paracosm/dashboard-overview.png"
+image: "/img/blog/og/inside-mars-genesis-ai-colony-simulation.png"
 keywords: "mars colony ai simulation, hexaco ai agents, cognitive memory ai agents, emergent tool forging llm, call forged tool reuse, typescript ai agent framework, personality driven llm agents, llm as judge, v8 isolate sandbox ai, runtime tool generation llm, agent based simulation, two leader one seed"
 ---
 

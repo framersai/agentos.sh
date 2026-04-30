@@ -4,7 +4,7 @@ date: "2026-04-12"
 excerpt: "From npm install to a working agent with personality, memory, tools, and guardrails. Five steps, under 50 lines of TypeScript code. Complete tutorial with inline citations."
 author: "AgentOS Team"
 category: "Tutorial"
-image: "/og-image.png"
+image: "/img/blog/og/build-typescript-ai-agent-5-minutes.png"
 keywords: "build ai agent typescript, typescript ai tutorial, ai agent quickstart, how to build ai agent, agentos tutorial, AI agent SDK TypeScript, typescript ai agent framework, production AI agents, cognitive memory tutorial, HEXACO personality AI"
 ---
 

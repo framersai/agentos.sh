@@ -4,7 +4,7 @@ date: "2026-03-31"
 excerpt: "RAG retrieves documents, it does not remember. AgentOS implements 9 cognitive mechanisms from published neuroscience: Ebbinghaus decay, reconsolidation, retrieval-induced forgetting, emotion regulation, and more. Each mechanism is independently configurable and grounded in primary literature."
 author: "AgentOS Team"
 category: "Engineering"
-image: "/og-image.png"
+image: "/img/blog/og/cognitive-memory-beyond-rag.png"
 keywords: "ai agent memory, cognitive memory ai, rag alternatives, ebbinghaus decay ai, ai agent long term memory, reconsolidation, retrieval-induced forgetting, coala framework, memgpt, generative agents, hexaco personality, agentos memory"
 ---
 

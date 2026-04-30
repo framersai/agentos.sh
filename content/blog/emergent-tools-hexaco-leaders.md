@@ -4,7 +4,7 @@ date: "2026-04-16"
 excerpt: "Paracosm forges computational tools at runtime, reviews each one with an LLM judge, and propagates a leader's HEXACO personality profile through a four-level cascade of sub-agents. Two leaders sharing a seed produce measurably different civilizations. Here is how the machinery works, which parts are grounded in peer-reviewed psychology, and why it matters for policy simulation, AI alignment research, and game worlds."
 author: "AgentOS Team"
 category: "Engineering"
-image: "/img/blog/paracosm/dashboard-overview.png"
+image: "/img/blog/og/emergent-tools-hexaco-leaders.png"
 keywords: "emergent tool forging, runtime tool forging, LLM-as-judge, HEXACO personality AI, multi-agent simulation, leader simulation, AI agent swarm, sandboxed tool execution, V8 isolate sandbox, personality-driven AI decision making, trait activation theory, agent policy simulation, paracosm, agentos, deterministic simulation engine"
 ---
 

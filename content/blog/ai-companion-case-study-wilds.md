@@ -4,7 +4,7 @@ date: "2026-04-14"
 excerpt: "A user asks their AI companion to describe a GIF it just sent. The companion calls a vision tool, looks at the image, and responds with what it sees. None of this is scripted. Here's how AgentOS makes it possible."
 author: "AgentOS Team"
 category: "Case Study"
-image: "/og-image.png"
+image: "/img/blog/og/ai-companion-case-study-wilds.png"
 keywords: "AI companion framework, AI character memory, persistent AI companion, TypeScript AI agent, AI companion SDK, build AI companion, AI companion with tools, agentic AI tools, AI personality system, HEXACO personality AI, AI companion app, AI roleplay with memory, wilds.ai, AgentOS case study"
 ---
 

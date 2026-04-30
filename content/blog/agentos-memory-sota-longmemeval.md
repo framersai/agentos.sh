@@ -1,10 +1,14 @@
 ---
 title: "AgentOS Hits 85.6% on LongMemEval-S and 70.2% on LongMemEval-M: First Open-Source Memory Library Above 65% on the 1.5M-Token Variant"
+ogTitle: "First Open-Source Memory Library Above 65% on LongMemEval-M"
 date: "2026-04-29"
+heroStat: "85.6% / 70.2%"
+heroLabel: "on LongMemEval-S and -M (matched gpt-4o reader)"
+benchmarkBadge: "PHASE B · N=500 · BOOTSTRAP CI"
+image: "/img/blog/og/agentos-memory-sota-longmemeval.png"
 excerpt: "AgentOS publishes the strongest reproducible open-source numbers on LongMemEval at the matched gpt-4o reader with full methodology disclosure. 85.6% [82.4%, 88.6%] on LongMemEval-S at $0.0090 per correct ($9 per 1,000 memory-grounded answers; ~$45 to back 1,000 conversations averaging 5 RAG calls each). 70.2% [66.0%, 74.0%] on the 1.5M-token M variant at $0.0078 per correct ($7.80 per 1,000) — first open-source library above 65% on M, +4.5 pp above the LongMemEval paper's academic ceiling, tied with closed-source AgentBrain (71.7%). +1.4 pp over Mastra OM gpt-4o (84.23%, no published CI) at point estimate; Mastra publishes no CI so the gap is at the threshold of statistical significance. Bootstrap CIs, judge-FPR probes, per-case run JSONs, MIT-licensed code, single CLI command anyone can reproduce."
 author: "AgentOS Team"
 category: "Engineering"
-image: "/og-image.png"
 keywords: "longmemeval benchmark, longmemeval-s, longmemeval-m, ai memory benchmark, agentos sota, mastra mem0 hindsight comparison, memory library benchmark, open source memory library, transparency audit, mem0 vs zep, judge bias locomo, retrieval augmented memory, cognitive memory ai, top-k tuning, reader router, sem-embed migration, locomo audit, penfield labs"
 ---
 

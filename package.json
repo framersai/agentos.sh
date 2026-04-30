@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:full": "concurrently \"pnpm --filter @framers/agentos run docs:watch\" \"next dev\"",
-    "build": "npm run copy:docs || true && next build && node scripts/post-export.mjs",
+    "build": "npm run copy:docs || true && pnpm gen:og && next build && node scripts/post-export.mjs",
+    "gen:og": "tsx scripts/generate-blog-og.ts",
     "copy:docs": "node scripts/copy-docs.js",
     "export-chrome": "node scripts/export-static-chrome.mjs",
     "start": "next start",
@@ -34,6 +35,7 @@
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.12",
     "@types/node": "^20.15.0",
@@ -45,6 +47,7 @@
     "eslint-config-next": "^14.2.15",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
+    "tsx": "^4.21.0",
     "typescript": "^5.6.3"
   },
   "engines": {

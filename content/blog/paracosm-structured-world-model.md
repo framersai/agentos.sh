@@ -4,7 +4,7 @@ date: "2026-04-23"
 excerpt: "In 2026, 'world model' has two distinct meanings. Sora, Genie 3, and World Labs Marble generate pixels and 3D scenes. Eric Xing's arXiv paper argues a world model's real job is simulating all actionable possibilities for decision-making, and the ACM CSUR 2025 survey separates the two branches formally. Paracosm is the second kind: a structured, reproducible, counterfactual world simulator for AI agents. This post places it on the 2026 world-model map and explains what that means for developers."
 author: "AgentOS Team"
 category: "Engineering"
-image: "/img/blog/paracosm/dashboard-overview.png"
+image: "/img/blog/og/paracosm-structured-world-model.png"
 keywords: "structured world model, counterfactual world simulation model, CWSM, LLM based world model, paracosm positioning, world model taxonomy, Sora Genie alternative, symbolic world model, multi-agent simulation, HEXACO AI agents, digital twin LLM, reproducible simulation, deterministic seeded kernel, agent based modeling, OASIS MiroFish comparison"
 ---
 

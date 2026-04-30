@@ -4,7 +4,7 @@ date: "2026-04-12"
 excerpt: "Adaptive intelligence modifies behavior from feedback. Emergent intelligence produces complex behavior from multi-agent interaction. AgentOS implements both with distinct runtime primitives and neuroscience-grounded memory."
 author: "AgentOS Team"
 category: "Engineering"
-image: "/og-image.png"
+image: "/img/blog/og/adaptive-vs-emergent.png"
 keywords: "adaptive ai agents, emergent ai behavior, ai agent intelligence, multi-agent emergence, runtime tool forging, self-improving agents, autonomous ai agents, agentos framework, agent personality model, HEXACO AI, cognitive memory AI, Ebbinghaus forgetting curve AI, agent simulation"
 ---
 
