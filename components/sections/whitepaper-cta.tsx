@@ -32,7 +32,7 @@ export function WhitepaperCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5 }}
-          className="relative overflow-hidden rounded-3xl border border-[var(--color-border-subtle)] bg-gradient-to-br from-[hsl(220,30%,8%)] via-[hsl(220,28%,10%)] to-[hsl(220,30%,8%)] p-8 sm:p-12"
+          className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[hsl(220,30%,8%)] via-[hsl(220,28%,10%)] to-[hsl(220,30%,8%)] p-8 sm:p-12"
         >
           {/* Hex-grid texture overlay */}
           <div
@@ -73,7 +73,7 @@ export function WhitepaperCTA() {
             </div>
 
             {/* Title */}
-            <h2 className="mb-4 text-center text-3xl sm:text-4xl font-bold tracking-tight text-[var(--color-text-primary)] leading-tight">
+            <h2 className="mb-4 text-center text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
               <span
                 className="bg-clip-text text-transparent"
                 style={{
@@ -86,7 +86,7 @@ export function WhitepaperCTA() {
             </h2>
 
             {/* Dek */}
-            <p className="mx-auto mb-8 max-w-2xl text-center text-base sm:text-lg text-[var(--color-text-secondary)] leading-relaxed">
+            <p className="mx-auto mb-8 max-w-2xl text-center text-base sm:text-lg text-white/75 leading-relaxed">
               The full architecture and methodology, written for engineers
               and researchers who want a citable PDF instead of scrolling
               docs. Cognitive memory pipeline, classifier-driven dispatch,
@@ -114,12 +114,12 @@ export function WhitepaperCTA() {
               ].map((card) => (
                 <div
                   key={card.title}
-                  className="rounded-2xl border border-[var(--color-border-subtle)] bg-white/[0.02] p-5"
+                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-5"
                 >
                   <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-300">
                     {card.title}
                   </div>
-                  <div className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                  <div className="text-sm text-white/75 leading-relaxed">
                     {card.body}
                   </div>
                 </div>
