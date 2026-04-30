@@ -1,6 +1,7 @@
 ---
 title: "Paracosm: Counterfactual World Simulation in 2026"
-date: "2026-04-29"
+date: "2026-04-26"
+featured: true
 excerpt: "An end-to-end essay about why we built Paracosm, what it actually does, and what surprised us in the process. Counterfactual world simulation is the second meaning of 'world model' in 2026, and it's the meaning that lets you ask what-if without lying about what you measured."
 author: "AgentOS Team"
 category: "Engineering"
@@ -21,10 +22,6 @@ This post is the ground-up tour. What Paracosm is, why it is shaped the way it i
 
 ## Part 1: Two world models
 
-> "There is no perspective from which the universe could be seen as a totality without flaws."
->
-> — Stanislaw Lem, *Solaris*, 1961
-
 Type "world model" into any search engine in April 2026 and you get two answers, neither of them wrong, both of them unhelpful if your question was about the other one.
 
 The first answer is generative and visual. [Sora](https://openai.com/sora), [Genie 3](https://deepmind.google/discover/blog/genie-3/), [World Labs Marble](https://www.worldlabs.ai/) — text-to-video, text-to-3D-scene, text-to-environment. They are evaluated on visual fidelity and physical plausibility. Their customers are filmmakers, 3D artists, embodied-AI labs, and robotics teams. Yann LeCun's AMI Labs raised [$1.03B in March](https://techcrunch.com/2026/03/09/yann-lecuns-ami-labs-raises-1-03-billion-to-build-world-models/) to do something adjacent on sensor and video streams. The narrative oxygen is mostly here.
@@ -42,10 +39,6 @@ There is a tradition behind the second meaning that pre-dates LLMs by several de
 That's it. That's the product, written by an Argentine librarian forty-three years before any of us were born. A counterfactual world simulator builds a network of times that fork at the points the user asks about and re-converge or diverge or break off depending on what was perturbed. Borges anticipated this in fiction. The math is more recent. The engineering — runnable, queryable, attributable — is from the last eighteen months of work on Paracosm.
 
 ## Part 2: What Paracosm is
-
-> "All these moments will be lost in time, like tears in rain."
->
-> — *Blade Runner*, Roy Batty, 1982
 
 A Paracosm run takes four inputs and produces one artifact:
 
@@ -81,10 +74,6 @@ I built turn-loop first. The Mars Genesis case study is below in Part 4. The oth
 
 ## Part 3: How a turn actually executes
 
-> "A man becomes preeminent, he's expected to have enthusiasms. Enthusiasms, enthusiasms… What are mine? What draws my admiration? What is that which gives me joy? Baseball!"
->
-> — Capone, *The Untouchables*, 1987
-
 The turn loop is the only piece of Paracosm that's interesting at the level of engineering rather than philosophy. The rest of the system is plumbing. Here's what a single turn does, in order, with the parts that surprised me marked:
 
 1. **State snapshot.** The kernel reads the current `ScenarioPackage` state — five bags called `metrics`, `capacities`, `statuses`, `politics`, `environment`. State lives in JSON. There are no hidden fields. The shape *is* the API.
@@ -108,10 +97,6 @@ The video above is the dashboard's Branches view: every fork point in a multi-le
 
 ## Part 4: Mars Genesis
 
-> "The trouble with the world is not that people know too little; it's that they know so many things that just aren't so."
->
-> — Mark Twain, attributed
-
 The reference scenario for Paracosm is Mars Genesis. Thirty colonists, six turns, two leaders chosen to differ on a single HEXACO axis, identical seed. The leaders are an "Atlas" archetype — high Conscientiousness, low Openness — and a "Maria" archetype — high Openness, lower Conscientiousness. Atlas optimizes for survival; Maria optimizes for discovery. Both colonies face the same kernel-generated weather, the same opening resource pool, the same agent roster.
 
 The first time we ran Mars Genesis end-to-end with real research grounding, the divergence on turn three was sharp enough to feel narratively coherent. Atlas had built a redundant water reclamation pipeline; Maria had funded an exobiology survey of a thermal anomaly her science specialist had argued for. By turn five Atlas had a deployable lifeboat protocol; Maria had four named lichen-analog species and a paper draft. Both colonies were alive at turn six. They had spent identical token counts. The artifact recorded the entire trajectory.
@@ -126,10 +111,6 @@ The full Atlas lab walkthrough is the video above. The case-study post — [Insi
 
 ## Part 5: HEXACO is the leverage
 
-> "Personality, then, is the entire mental organization of a human being at any stage of his development."
->
-> — Gordon Allport, *Personality: A Psychological Interpretation*, 1937
-
 There are six factors in the HEXACO model: Honesty-Humility, Emotionality, Extraversion, Agreeableness, Conscientiousness, Openness. The model was introduced by Lee and Ashton in their 2007 *Personality and Social Psychology Review* paper ([doi:10.1177/1088868306294907](https://doi.org/10.1177/1088868306294907)) as a six-factor extension of the Big Five, with Honesty-Humility split out as a separate axis because the data demanded it.
 
 There is nothing magical about HEXACO. It is a measurement framework with extensive cross-cultural validation. We use it in Paracosm because, after trying the alternatives, it's the smallest set of dimensions that produces visibly distinct simulator behavior. The Big Five works almost as well; the Big Five plus an "honesty" axis works better; HEXACO is, in our hands, the sweet spot of expressive-without-being-overfit.
@@ -139,10 +120,6 @@ Two things to note. First, HEXACO use in Paracosm is *opt-in*. Many Paracosm sce
 The microbenchmark for this is in the agentos-bench package: [`HexacoEncodingBias`](https://github.com/framersai/agentos-bench/blob/master/src/micro/HexacoEncodingBias.ts). It asserts that each HEXACO trait modulates encoding in the direction the literature predicts. Pass criterion is published in the source.
 
 ## Part 6: Tool forging at runtime
-
-> "I do not know what I may appear to the world; but to myself I seem to have been only like a boy playing on the seashore… whilst the great ocean of truth lay all undiscovered before me."
->
-> — Newton, attributed, 1727
 
 This is the part that made me reconsider what "agent" actually means. A specialist agent in Paracosm is not just an LLM in a costume. It can write code at runtime that the kernel will then execute. The pipeline looks like:
 
@@ -206,10 +183,6 @@ This runs locally. The cost of a six-turn run with default specialists, default 
 
 ## Part 8: What we don't claim
 
-> "We are all in the gutter, but some of us are looking at the stars."
->
-> — Wilde, *Lady Windermere's Fan*, 1892
-
 I have spent more time editing this section than any other section of this post. It matters more.
 
 **We do not generate pixels.** Sora, Genie 3, World Labs Marble do that. Their output is visual. Paracosm's output is a structured `RunArtifact`. There are no images in the artifact. There are diagrams in the dashboard, but the diagrams are renderings of the artifact, not the artifact.
@@ -234,7 +207,7 @@ That, more than any single technical claim, is the reason the project exists. A 
 
 - The live demo at [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim).
 - The npm package at [paracosm](https://www.npmjs.com/package/paracosm).
-- The structured-world-model positioning post at [Paracosm is a Structured World Model](/blog/paracosm-structured-world-model) for the taxonomy and lineage if you want the academic placement.
+- The structured-world-model positioning post at [Paracosm is a Structured World Model](/blog/paracosm-2026-overview) for the taxonomy and lineage if you want the academic placement.
 - The tutorial at [Build an AI Civilization Simulation in 5 Minutes](/blog/build-ai-civilization-simulation-paracosm) for the code walk.
 - The Mars Genesis case study at [Inside Mars Genesis](/blog/inside-mars-genesis-ai-colony-simulation) for the narrative breakdown.
 - The MiroFish comparison at [docs.agentos.sh](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation) for the head-to-head with the bottom-up swarm approach.
@@ -251,7 +224,7 @@ That, more than any single technical claim, is the reason the project exists. A 
 
 **Is Paracosm a physics simulator?** No. The kernel applies symbolic state transitions. There is no fluid dynamics, no rigid-body mechanics, no chemistry engine. If you need physics, use a physics simulator and feed Paracosm the resulting state changes through `ScenarioPackage` updates.
 
-**What's different about Paracosm vs MiroFish or OASIS?** Direction (top-down vs bottom-up), scale (~100 vs 1k–1M agents), determinism (seeded vs emergent). They are useful for different jobs. The full table is in the [structured-world-model post](/blog/paracosm-structured-world-model#what-paracosm-is-not).
+**What's different about Paracosm vs MiroFish or OASIS?** Direction (top-down vs bottom-up), scale (~100 vs 1k–1M agents), determinism (seeded vs emergent). They are useful for different jobs. The full table is in the [structured-world-model post](/blog/paracosm-2026-overview#what-paracosm-is-not).
 
 **What's the cost of a typical run?** A six-turn `turn-loop` run on a small scenario with default settings runs in the low tens of cents. The artifact records every token spend; you can compare runs by cost as honestly as by outcome. Reuse of forged tools after turn three is the largest cost lever.
 

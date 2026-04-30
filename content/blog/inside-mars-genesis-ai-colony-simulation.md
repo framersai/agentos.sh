@@ -13,7 +13,7 @@ keywords: "mars colony ai simulation, hexaco ai agents, cognitive memory ai agen
 >
 > — paraphrased after Ray Bradbury, *The Martian Chronicles*, 1950
 
-> **Editor's note (2026-04-23):** Paracosm's positioning has evolved since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, 2025). The case study below stays accurate; the category label changed. For the updated placement against Sora / Genie 3 / MiroFish / OASIS / Concordia and the seven claim pillars, see [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model). For the long-form essay, see [Paracosm 2026 Overview](/blog/paracosm-2026-overview).
+> **Editor's note (2026-04-26):** Paracosm's positioning has been consolidated into a single overview essay since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, 2025). The case study below stays accurate; the category label changed. For the updated placement against Sora / Genie 3 / MiroFish / OASIS / Concordia, see [Paracosm: Counterfactual World Simulation in 2026](/blog/paracosm-2026-overview).
 
 There is a particular moment in Mars Genesis I think about more than I should. It is turn three, year 2051. Dietrich Voss's chief medical officer has just been faced with a solar-storm radiation event that her existing toolbox doesn't cover. She does not pick an option from a menu. She writes a tool. The function gets approved, runs inside a sandbox, returns a projected exposure number, and her commander reads that number three seconds later. By turn four every other department in the session can call her tool for tens of tokens of dispatch.
 
@@ -217,7 +217,7 @@ Cost follows. A fresh forge costs a judge LLM call plus sandbox execution; a reu
 
 Within a process and session, yes, via the `onToolForged` callback plus `call_forged_tool`. The tool is immediately callable by every agent sharing that orchestrator for the rest of the run.
 
-Across processes and sessions, no, not automatically. The bridge is one-way and explicit. The `SkillExporter` in [emergent/SkillExporter.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/emergent/SkillExporter.ts) converts a promoted `EmergentTool` into the standard SKILL.md plus CAPABILITY.yaml format the `SkillLoader` and capability scanner already consume. Once exported to disk, the next process that starts up loads the forged skill alongside hand-authored ones. To ship a tool as a first-class capability in AgentOS, publish it through [@framers/agentos-extensions](https://github.com/framersai/agentos-extensions), which handles manifest, versioning, and load order. The trade-off is intentional: automatic within a session so agents solve novel problems live, reviewable across processes so the persistent capability surface stays a human decision. For a deeper look at the forge machinery and the LLM-as-judge pattern adapted to code review, see [Emergent Tool Forging and HEXACO Leaders](/blog/emergent-tools-hexaco-leaders).
+Across processes and sessions, no, not automatically. The bridge is one-way and explicit. The `SkillExporter` in [emergent/SkillExporter.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/emergent/SkillExporter.ts) converts a promoted `EmergentTool` into the standard SKILL.md plus CAPABILITY.yaml format the `SkillLoader` and capability scanner already consume. Once exported to disk, the next process that starts up loads the forged skill alongside hand-authored ones. To ship a tool as a first-class capability in AgentOS, publish it through [@framers/agentos-extensions](https://github.com/framersai/agentos-extensions), which handles manifest, versioning, and load order. The trade-off is intentional: automatic within a session so agents solve novel problems live, reviewable across processes so the persistent capability surface stays a human decision. For a deeper look at the forge machinery and the LLM-as-judge pattern adapted to code review, see [Emergent Tool Forging and HEXACO Leaders](/blog/inside-mars-genesis-ai-colony-simulation).
 
 ## Cost safety: demo caps, BYO keys, abort gates
 
@@ -303,10 +303,10 @@ The diff renders the per-turn divergence: which decisions differed, which tools 
 ## What to read next
 
 - [Paracosm 2026 Overview](/blog/paracosm-2026-overview). The long-form essay version of the project.
-- [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model). Academic placement, taxonomy, and lineage.
+- [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-2026-overview). Academic placement, taxonomy, and lineage.
 - [Build an AI Civilization Simulation in 5 Minutes with Paracosm](/blog/build-ai-civilization-simulation-paracosm). The 5-minute tutorial.
 - [Mars Genesis vs MiroFish (engineering)](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation). Top-down vs bottom-up swarm comparison.
-- [Emergent Tool Forging and HEXACO Leaders](/blog/emergent-tools-hexaco-leaders). Two-leader-one-seed comparison from a forge-machinery angle.
+- [Emergent Tool Forging and HEXACO Leaders](/blog/inside-mars-genesis-ai-colony-simulation). Two-leader-one-seed comparison from a forge-machinery angle.
 - [Announcing AgentOS](/blog/announcing-agentos). The framework, end to end.
 
 Paracosm is open source. AgentOS is open source. The Mars Genesis scenario ships as a default and runs the moment you `npm install paracosm`, or hosted at [paracosm.agentos.sh](https://paracosm.agentos.sh) with a one-click demo run. The engine does not care who leads the colony, which six traits they carry, or what crisis they face. It cares how they decide, what they remember, what tools they forge, and how aggressively they reuse. Two leaders under the same seed produce different histories because those five questions resolve differently for each of them. That is the case study.

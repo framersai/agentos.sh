@@ -2,6 +2,7 @@
 title: "AgentOS Memory Benchmarks: 85.6% on LongMemEval-S, 70.2% on M (Beats Mastra by 1.4 points at gpt-4o)"
 ogTitle: "AgentOS posts 85.6% on LongMemEval-S, +1.4 over Mastra at matched gpt-4o reader"
 date: "2026-04-29"
+featured: true
 heroStat: "85.6% / 70.2%"
 heroLabel: "on LongMemEval-S and -M (matched gpt-4o reader)"
 benchmarkBadge: ""
