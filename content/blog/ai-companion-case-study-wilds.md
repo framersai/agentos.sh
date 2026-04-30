@@ -4,9 +4,20 @@ date: "2026-04-14"
 excerpt: "A user asks their AI companion to describe a GIF it just sent. The companion calls a vision tool, looks at the image, and responds with what it sees. None of this is scripted. Here's how AgentOS makes it possible."
 author: "AgentOS Team"
 category: "Case Study"
+audience: "general"
 image: "/img/blog/og/ai-companion-case-study-wilds.png"
 keywords: "AI companion framework, AI character memory, persistent AI companion, TypeScript AI agent, AI companion SDK, build AI companion, AI companion with tools, agentic AI tools, AI personality system, HEXACO personality AI, AI companion app, AI roleplay with memory, wilds.ai, AgentOS case study"
 ---
+
+> "There is no me without you."
+>
+> — Samantha, *Her*, 2013
+
+The first time I built a chatbot, I trained it on five thousand of my own Facebook messages and put it in an art gallery and watched strangers talk to a digital ghost of me for a week. The thing that surprised me wasn't the bot's responses — those were always going to be uneven, because the dataset was uneven, and I was nineteen and didn't know any better. The surprise was how the strangers responded *to the bot*. They addressed me directly. They asked the bot questions they'd never have asked the actual me. They thought, briefly and incorrectly, that the bot remembered them. Some of them got angry when it didn't.
+
+That was 2017. The technology was a Naive Bayes classifier wrapped around message-response pairings. The result was a curiosity, not a product. But the lesson stayed: people will treat a digital companion like it has continuity, even when it doesn't. The continuity is the thing they're paying for, even if they can't articulate it. If your companion forgets, the magic breaks. If it remembers wrong, the magic breaks worse.
+
+This post is the case study of [wilds.ai](https://wilds.ai), a companion product built on AgentOS where the continuity is the feature. Memory works. Tools work. Personality is consistent across sessions. The companion knows your name three days later because the runtime has actual memory, not a chat history that gets re-injected at inference time. None of this is scripted. The mechanics are below.
 
 A user opens [wilds.ai](https://wilds.ai) and starts chatting with Alice, an AI companion based on Alice in Wonderland. They haven't talked in three days.
 
