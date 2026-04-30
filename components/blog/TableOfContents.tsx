@@ -115,30 +115,28 @@ export function TableOfContents({
     return () => observer.disconnect();
   }, [items]);
 
-  if (items.length < 3) {
-    // Skip rendering for very short posts where the TOC adds no value
-    return null;
-  }
+  if (items.length === 0) return null;
 
-  return (
-    <>
-      {/* Mobile: collapsible header. Renders only on the mobile-only
-          mount point in the post page. Suppress on lg+ where the
-          sidebar variant takes over. */}
-      {variant === 'mobile' && (
-        <details
-          className="my-6 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-4 lg:hidden"
-          open={isOpen}
-          onToggle={(e) => setIsOpen((e.target as HTMLDetailsElement).open)}
-        >
-          <summary className="flex cursor-pointer items-center gap-2 text-sm font-semibold text-[var(--color-text-primary)]">
-            <ListTree className="h-4 w-4" aria-hidden />
-            Table of Contents
-          </summary>
-          <nav className="mt-3 space-y-1.5">
-            {items.map((item) => (
+  // Always-static rendering: no collapse, no sticky, no scroll
+  // following. The TOC sits in normal document flow (`position:
+  // static`, the default) and is fully expanded on every viewport.
+  // Visitors get a permanent, predictable list of section links
+  // anchored to the article structure.
+
+  if (variant === 'mobile') {
+    return (
+      <nav
+        aria-label="Table of contents"
+        className="my-6 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-4 lg:hidden"
+      >
+        <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--color-text-primary)]">
+          <ListTree className="h-4 w-4" aria-hidden />
+          Table of Contents
+        </div>
+        <ul className="space-y-1.5">
+          {items.map((item) => (
+            <li key={item.id}>
               <a
-                key={item.id}
                 href={`#${item.id}`}
                 className={`block text-sm transition-colors ${
                   item.level === 3 ? 'pl-4' : ''
@@ -150,41 +148,40 @@ export function TableOfContents({
               >
                 {item.text}
               </a>
-            ))}
-          </nav>
-        </details>
-      )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    );
+  }
 
-      {/* Desktop: sticky sidebar nav */}
-      {variant === 'desktop' && (
-        <aside
-          aria-label="Table of contents"
-          className="hidden lg:block sticky top-24 self-start max-h-[calc(100vh-7rem)] overflow-y-auto pl-6 pr-2 py-2"
-          style={{ scrollbarWidth: 'thin' }}
-        >
-          <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-            <ListTree className="h-3.5 w-3.5" aria-hidden />
-            On this page
-          </div>
-          <nav className="space-y-1.5 text-sm">
-            {items.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className={`block leading-snug transition-colors ${
-                  item.level === 3 ? 'pl-4 text-xs' : ''
-                } ${
-                  activeId === item.id
-                    ? 'font-semibold text-[var(--color-accent-primary)]'
-                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)]'
-                }`}
-              >
-                {item.text}
-              </a>
-            ))}
-          </nav>
-        </aside>
-      )}
-    </>
+  return (
+    <aside
+      aria-label="Table of contents"
+      className="hidden lg:block pl-6 pr-2 py-2"
+    >
+      <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
+        <ListTree className="h-3.5 w-3.5" aria-hidden />
+        On this page
+      </div>
+      <ul className="space-y-1.5 text-sm">
+        {items.map((item) => (
+          <li key={item.id}>
+            <a
+              href={`#${item.id}`}
+              className={`block leading-snug transition-colors ${
+                item.level === 3 ? 'pl-4 text-xs' : ''
+              } ${
+                activeId === item.id
+                  ? 'font-semibold text-[var(--color-accent-primary)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)]'
+              }`}
+            >
+              {item.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
   );
 }

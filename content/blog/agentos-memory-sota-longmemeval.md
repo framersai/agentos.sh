@@ -1,20 +1,22 @@
 ---
 title: "AgentOS Hits 85.6% on LongMemEval-S and 70.2% on LongMemEval-M: First Open-Source Memory Library Above 65% on the 1.5M-Token Variant"
 date: "2026-04-29"
-excerpt: "AgentOS is now SOTA on both LongMemEval variants at the matched gpt-4o reader. 85.6% [82.4%, 88.6%] on S beats Mastra OM gpt-4o (84.23%) at 4.6× lower cost. 70.2% [66.0%, 74.0%] on M is the first open-source library above 65% on the 1.5M-token variant, +4.5 pp above the LongMemEval paper's academic ceiling, statistically tied with closed-source AgentBrain (71.7%). Bootstrap CIs, judge-FPR probes, per-case run JSONs, MIT-licensed code. The full transparency audit, vendor landscape, journey from 30.6% → 70.2%, and methodology framework in one post."
+excerpt: "AgentOS publishes the strongest reproducible numbers at the matched gpt-4o reader on both LongMemEval variants with full methodology disclosure. 85.6% [82.4%, 88.6%] on S, +1.4 pp over Mastra OM gpt-4o (84.23%, no published CI) at point estimate; Mastra's number sits inside our CI so the gap is at the threshold of statistical significance. Cost per correct: $0.0090, measured (4.6× cheaper than our own prior 84.8% headline; Mastra does not publish $/correct so a cross-vendor cost comparison is not possible). 70.2% [66.0%, 74.0%] on M is the first open-source library above 65% on the 1.5M-token variant, +4.5 pp above the LongMemEval paper's academic-baseline ceiling, statistically tied with closed-source AgentBrain (71.7%). Bootstrap CIs, judge-FPR probes, per-case run JSONs, MIT-licensed code. Full audit, vendor landscape, journey from 30.6% → 70.2%, and methodology framework in one post."
 author: "AgentOS Team"
 category: "Engineering"
 image: "/og-image.png"
 keywords: "longmemeval benchmark, longmemeval-s, longmemeval-m, ai memory benchmark, agentos sota, mastra mem0 hindsight comparison, memory library benchmark, open source memory library, transparency audit, mem0 vs zep, judge bias locomo, retrieval augmented memory, cognitive memory ai, top-k tuning, reader router, sem-embed migration, locomo audit, penfield labs"
 ---
 
-This is the unified memory-benchmark publication. AgentOS now holds the strongest open-source numbers on the public record at the matched `gpt-4o` reader:
+This is the unified memory-benchmark publication. AgentOS publishes the strongest reproducible open-source numbers at the matched `gpt-4o` reader on both LongMemEval variants with full methodology disclosure:
 
 - **LongMemEval-S Phase B at N=500: 85.6% [82.4%, 88.6%]** at $0.0090 per correct, 4-second average latency
 - **LongMemEval-M Phase B at N=500: 70.2% [66.0%, 74.0%]** at $0.0078 per correct, first open-source library above 65% on the 1.5M-token variant
 - **Both validated** with bootstrap 10,000-resample CIs (seed 42), per-case run JSONs, judge-FPR probes (1% S, 2% M, 0% LOCOMO), and a single CLI command anyone can reproduce
 
-**+1.4 pp over Mastra OM gpt-4o** at the matched reader. **+4.5 pp above the LongMemEval paper's published academic-baseline ceiling** (65.7%, [Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)). **Statistically tied with [AgentBrain's](https://github.com/AgentBrainHQ) closed-source SaaS** (71.7%) on M; their point estimate sits inside our 95% CI.
+**+1.4 pp over Mastra OM gpt-4o (84.23%) at the matched reader, at the point estimate.** Mastra publishes no CI; their point estimate sits inside our 95% CI [82.4%, 88.6%] so the gap is at the threshold of statistical significance. **+4.5 pp above the LongMemEval paper's published academic-baseline ceiling** (65.7%, [Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)). **Statistically tied with [AgentBrain's](https://github.com/AgentBrainHQ) closed-source SaaS** (71.7%) on M; their point estimate sits inside our 95% CI.
+
+**On "SOTA":** EmergenceMem Internal publishes 86.0% (no CI) which is 0.4 pp ahead of our 85.6% at point estimate; their number also sits inside our CI. Among open-source memory libraries with full methodology disclosure (bootstrap CIs, judge-FPR probes, per-case run JSONs, reproducible CLI, $/correct, latency percentiles) at the matched gpt-4o reader, AgentOS leads the published record on accuracy, and is the only open-source library above 65% on M. Cost-per-correct comparisons against vendors who don't publish $/correct (Mastra, Mem0, Hindsight, Supermemory, Zep, EmergenceMem, AgentBrain) are not possible from the data each vendor discloses.
 
 This post consolidates four pieces of work from the past week: the M 70.2% headline (April 29), the S 85.6% Pareto-win headline (April 28), the first published M number (30.6% baseline, April 26), and the methodology audit that drives every published number (April 24). Below: the headline tables, the journey, the vendor landscape, the methodology framework, the reproduction commands.
 
