@@ -173,8 +173,21 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
               )}
             </header>
 
-            {/* Hero metrics block (renders only when frontmatter has heroStat + heroLabel) */}
-            <BlogPostHero post={post} />
+            {/* Hero image. Same asset as the OG/social card so the in-page hero
+                matches what people see when the link is shared. Falls back to
+                the BlogPostHero stat block only when frontmatter omits image. */}
+            {post.image ? (
+              <div className="relative my-10 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-background-tertiary)]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ) : (
+              <BlogPostHero post={post} />
+            )}
 
             {/* Inline TOC for mobile (lg:hidden); the sticky right-rail
                 takes over at lg+ breakpoints and is rendered below the
