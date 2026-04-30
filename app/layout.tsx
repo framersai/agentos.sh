@@ -1,11 +1,10 @@
 import type { ReactNode } from 'react';
-import { Inter, DM_Sans } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import '../styles/tokens.css';
 import './globals.css';
 import { defaultLocale } from '../i18n';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
-const grotesk = DM_Sans({ subsets: ['latin'], variable: '--font-grotesk', display: 'swap' });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const lang = defaultLocale;
@@ -97,7 +96,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${grotesk.variable} grainy min-h-screen antialiased transition-theme bg-background-primary text-text-primary`}
+        className={`${inter.variable} grainy min-h-screen antialiased transition-theme bg-background-primary text-text-primary`}
       >
         {children}
       </body>

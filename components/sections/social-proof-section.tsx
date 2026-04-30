@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 
-const placeholderSlots = [0, 1, 2] as const
+const placeholderSlots = [0, 1] as const
 
 export function SocialProofSection() {
   const t = useTranslations('socialProof')
@@ -60,6 +60,33 @@ export function SocialProofSection() {
                 <circle cx="32" cy="16" r="5" fill="#4a8fe8"/>
               </svg>
               <span className="text-sm font-semibold text-text-primary">Wilds AI</span>
+            </a>
+
+            {/* Paracosm — revealed deployment */}
+            <a
+              href="https://paracosm.agentos.sh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative overflow-hidden rounded-3xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 dark:border-white/10 p-5 backdrop-blur flex flex-col items-center justify-center gap-3 transition-colors hover:border-accent-primary/50 hover:bg-white/90 dark:hover:bg-white/10"
+            >
+              <svg width="48" height="48" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="rounded-xl">
+                <rect width="64" height="64" rx="15" fill="#1c1232"/>
+                <line x1="32" y1="32" x2="37.6" y2="11" stroke="#f5f0e4" strokeWidth="1.6" opacity="0.55"/>
+                <line x1="32" y1="32" x2="53" y2="26.4" stroke="#f5f0e4" strokeWidth="1.6" opacity="0.55"/>
+                <line x1="32" y1="32" x2="47.4" y2="47.4" stroke="#f5f0e4" strokeWidth="1.6" opacity="0.55"/>
+                <line x1="32" y1="32" x2="26.4" y2="53" stroke="#f5f0e4" strokeWidth="1.6" opacity="0.55"/>
+                <line x1="32" y1="32" x2="11" y2="37.6" stroke="#f5f0e4" strokeWidth="1.6" opacity="0.55"/>
+                <line x1="32" y1="32" x2="16.6" y2="16.6" stroke="#f5f0e4" strokeWidth="1.6" opacity="0.55"/>
+                <circle cx="32" cy="32" r="9.2" fill="#e8b44a" opacity="0.15"/>
+                <circle cx="32" cy="32" r="5.1" fill="#e8b44a"/>
+                <circle cx="37.6" cy="11" r="3.5" fill="#e06530"/>
+                <circle cx="53" cy="26.4" r="3.5" fill="#e8b44a"/>
+                <circle cx="47.4" cy="47.4" r="3.5" fill="#4ca8a8"/>
+                <circle cx="26.4" cy="53" r="3.5" fill="#e06530"/>
+                <circle cx="11" cy="37.6" r="3.5" fill="#4ca8a8"/>
+                <circle cx="16.6" cy="16.6" r="3.5" fill="#e8b44a"/>
+              </svg>
+              <span className="text-sm font-semibold text-text-primary">Paracosm</span>
             </a>
 
             {placeholderSlots.map((slot) => (

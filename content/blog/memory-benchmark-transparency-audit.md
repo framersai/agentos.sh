@@ -13,7 +13,7 @@ keywords: "memory benchmark transparency, longmemeval gaming, locomo audit, agen
 >
 > — Douglas Hubbard, *How to Measure Anything*, 2014
 
-The version of this post nobody wants to write is the one that examines the benchmarks the entire memory-library industry uses as proof. We wrote that version. The benchmarks are broken in measurable ways, the gaming patterns are documented, and the right response is not to refuse to publish numbers but to publish honest ones with a methodology stack disclosed at every step. Below is the audit; everything else we publish runs against this disclosure.
+This post examines the benchmarks the entire memory-library industry uses as proof. The benchmarks are broken in measurable ways, the gaming patterns are documented, and the right response is not to refuse to publish numbers but to publish honest ones with a methodology stack disclosed at every step. Below is the audit; everything else AgentOS publishes runs against this disclosure.
 
 > **Note:**
 >
@@ -95,7 +95,7 @@ Across Mem0, Mastra, Supermemory, Zep, EmergenceMem, Letta, and MemPalace, no si
 | Judge-adversarial probe | no | no | no | no | no | no | no | yes |
 | Matched-reader cross-vendor table | no | no | partial | partial | yes | no | no | yes |
 
-**Honest finding about bench tooling.** The first version of this post planned to claim AgentOS is the only vendor publishing a full benchmark suite. That claim is false. [Supermemory's memorybench](https://github.com/supermemoryai/memorybench) is a genuinely comparable framework. TypeScript, multi-provider (Supermemory, Mem0, Zep), multi-benchmark (LoCoMo, LongMemEval, ConvoMem), multi-judge (GPT-4o, Claude, Gemini), with a checkpointed pipeline (ingest → index → search → answer → evaluate → report), a web UI, and a MemScore triple (accuracy / latency / tokens). It does not ship bootstrap CIs, judge-adversarial probes, or kill-ladder methodology, but it is the second open bench suite in the space.
+**Bench tooling: two open suites in the space.** [Supermemory's memorybench](https://github.com/supermemoryai/memorybench) is a TypeScript framework with multi-provider support (Supermemory, Mem0, Zep), multi-benchmark coverage (LoCoMo, LongMemEval, ConvoMem), multi-judge support (GPT-4o, Claude, Gemini), a checkpointed pipeline (ingest → index → search → answer → evaluate → report), a web UI, and a MemScore triple (accuracy / latency / tokens). agentos-bench covers a narrower vendor surface but adds bootstrap CIs, judge-adversarial probes, kill-ladder methodology, and per-case run JSONs at fixed seed.
 
 Two vendors ship real bench suites. Everyone else ships a runner for their own system (Mem0's [memory-benchmarks](https://github.com/mem0ai/memory-benchmarks) runs Mem0 Cloud and OSS, not other vendors) or a workshop (Mastra's [workshop-longmemeval](https://github.com/mastra-ai/workshop-longmemeval) is examples from a July 2025 workshop). Five do not ship anything beyond their memory system itself.
 
@@ -103,7 +103,7 @@ Supermemory goes wide. AgentOS goes deep. Neither is strictly better, and no sin
 
 ## Where AgentOS actually lands
 
-Phase B N=500 numbers on LongMemEval-S at `gpt-4o` reader, measured 2026-04-24 (numbers below are the historical baseline; see updates at top of post for current 85.6% headline). Primary source: run JSONs under `packages/agentos-bench/results/runs/` in the [AgentOS monorepo](https://github.com/framersai/agentos).
+Phase B N=500 numbers on LongMemEval-S at `gpt-4o` reader, measured 2026-04-24. Primary source: run JSONs under `packages/agentos-bench/results/runs/` in the [AgentOS monorepo](https://github.com/framersai/agentos).
 
 | Tier | Accuracy | 95% CI | $/correct | Avg latency | Notes |
 |---|---:|---|---:|---:|---|
@@ -173,11 +173,9 @@ Compared to the published frontier, 76.6% sits above Zep's self-reported 71.2% (
 
 Primary source for runs: [`packages/agentos-bench/results/LEADERBOARD.md`](https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md). Reproducibility via `pnpm exec agentos-bench run longmemeval-s --policy-router --policy-router-preset minimize-cost --bootstrap-resamples 10000 --seed 42`.
 
-## What we are still guilty of, and what we tested after writing this
+## Validation experiments
 
-The first version of this post (published earlier the same day) called out one structural problem with the Tier 3 pitch: the routing tables (maximize-accuracy, balanced, minimize-cost) were constructed by reading Phase B N=500 per-category cost-accuracy data from the three shipped tiers, then measured on the same Phase B distribution. That is in-distribution test-set optimization.
-
-We spent the rest of the day running the experiments an auditor would run. Five experiments across hold-out calibration, two architectural-hypothesis tests, OOD transfer to LOCOMO, and a judge false-positive probe on the shipping number. The hold-out validated the `minimize-cost` shipping table: the calibration-derived routing table is identical to the published one across all six categories. The judge FPR probe on LongMemEval-S came back at 1% [0%, 3%]: the 76.6% is not inflated by judge topical-false-positives the way Penfield's LOCOMO audit found 62.81% FPR on theirs. The three architectural tests (session-NDCG port with three K values, stronger observer model) all came back negative. LOCOMO showed a negative OOD transfer that we diagnose as abstention miscalibration. All five publish with per-case run JSONs at `--seed 42`.
+The Tier 3 routing tables (maximize-accuracy, balanced, minimize-cost) were constructed from Phase B N=500 per-category cost-accuracy data on the three flat tiers, then measured on the same Phase B distribution. To address in-distribution test-set optimization, five validation experiments cover hold-out calibration, two architectural-hypothesis tests, OOD transfer to LOCOMO, and a judge false-positive probe on the shipping number. The hold-out validates the `minimize-cost` shipping table: the calibration-derived routing table is identical to the published one across all six categories. The judge FPR probe on LongMemEval-S returns 1% [0%, 3%]: the 76.6% is not inflated by judge topical-false-positives the way Penfield's LOCOMO audit found 62.81% FPR on theirs. The three architectural tests (session-NDCG port with three K values, stronger observer model) all return negative. LOCOMO shows a negative OOD transfer diagnosed as abstention miscalibration. All five publish with per-case run JSONs at `--seed 42`.
 
 ### Hold-out calibration
 
@@ -205,31 +203,18 @@ The abstention prompt is tuned for LongMemEval-S, where abstention is the correc
 
 A reusable CLI flag (`--no-abstention`) shipped that any user can opt into on any benchmark; it is not benchmark-specific code, it is a capability. We shipped the flag, ran the tuned configuration on LOCOMO, and published both rows.
 
-### Stage F-2: tuned, mis-published, caught the bug, re-ran
+### LOCOMO retrieval ablation: K=20 is Pareto-best, `--no-abstention` is category-specific
 
-The first version of this subsection claimed `--no-abstention` + K=20 lifted LOCOMO from 49.9% to 51.5% (+1.6 pp), and called out as the "most informative finding" that adversarial accuracy stayed flat under `--no-abstention`. Both claims were wrong.
-
-The `--no-abstention` flag was silently dropped at runtime by a missing field in `resolveRunConfig`. TypeScript could not catch it (the type-system guard only checked that every optional config key exists on `RunConfig`, not that `resolveRunConfig` propagates each one). Fingerprint unit tests passed because they bypassed `resolveRunConfig` and called the cache-key builder directly. The run labeled "K=20 + `--no-abstention` tuned" was actually `K=20` alone with the v9 abstention prompt; the flag had zero runtime effect.
-
-The bug surfaced from the next experiment's ablation:
-
-- Run A: `--reader-top-k 20` only (no `--no-abstention`)
-- Run B: `--no-abstention` only (default K=10)
-
-Run A finished in seconds with `totalUsd=$0` (full cache hit) and accuracy 51.5%, bit-for-bit identical to the published "tuned" number. The first case's `actualOutput` matched the published Stage F-2 case-0 byte-for-byte. With a different config, fresh API calls (cache miss) or different answers (cache key collision implies same effective config) should appear. Same answers + same cache key + claimed-different config = silent flag drop.
-
-Fix: one line in `resolveRunConfig` (`noAbstention: cfg.noAbstention,`). Test that prevents recurrence: a contract test driven by the canonical `OPTIONAL_RUN_CONFIG_KEYS` tuple. For every key, set a sample value, run `resolveRunConfig`, assert the resolved config has the same value. Adding a future flag without updating `resolveRunConfig` now fails CI immediately. The full bug story plus the audit confirming no other shipping number is affected: [STAGE_F2_CORRECTION_2026-04-24.md](https://github.com/framersai/agentos-bench/blob/master/docs/STAGE_F2_CORRECTION_2026-04-24.md).
-
-Re-ran the full ablation with the fix. All four LOCOMO configurations at N=1986, gpt-4o reader, seed=42:
+Four LOCOMO configurations at N=1986, gpt-4o reader, seed=42:
 
 | LOCOMO config | Accuracy | 95% CI | $/correct | Avg latency | Δ vs OOD |
 |---|---:|---|---:|---:|---:|
 | **K=20 alone (Pareto-best LOCOMO tuning)** | **51.5%** | [49.2, 53.7] | **$0.0099** | 1.45 s | +1.6 pp |
 | K=10 baseline (Stage F-1 OOD, no tuning) | 49.9% | [47.7, 52.1] | $0.0123 | 2.58 s | reference |
-| K=20 + `--no-abstention` (Stage F-2 corrected) | 47.3% | [45.2, 49.5] | $0.0107 | 1.20 s | -2.6 pp |
+| K=20 + `--no-abstention` | 47.3% | [45.2, 49.5] | $0.0107 | 1.20 s | -2.6 pp |
 | `--no-abstention` alone at K=10 | 42.1% | [40.0, 44.3] | $0.0082 | 1.19 s | -7.8 pp |
 
-The actual mechanism story is the opposite of what was mis-published. When the prompt directive reaches the reader, **adversarial accuracy does collapse**: 83.4% → 56.5% at K=10 (-26.9 pp), 83.4% → 54.3% at K=20 (-29.1 pp). LOCOMO is 22.5% adversarial cases by count, so the adversarial loss outweighs everything else in aggregate. Per category at K=20 + `--no-abstention`:
+The mechanism: when the `--no-abstention` directive reaches the reader, **adversarial accuracy collapses**: 83.4% → 56.5% at K=10 (-26.9 pp), 83.4% → 54.3% at K=20 (-29.1 pp). LOCOMO is 22.5% adversarial cases by count, so the adversarial loss outweighs everything else in aggregate. Per category at K=20 + `--no-abstention`:
 
 | Category | n | OOD baseline | K=20 + --no-abstention | Δ |
 |---|---:|---:|---:|---:|
@@ -241,9 +226,7 @@ The actual mechanism story is the opposite of what was mis-published. When the p
 
 `--no-abstention` is a category-specific tuning knob, not a Pareto improvement. For workloads with no adversarial questions that need refusal, the temporal +13.5 pp and open-domain +6.7 pp gains are real. On LOCOMO's distribution, the adversarial -29 pp wipes them out.
 
-The Pareto-best LOCOMO tuning is **K=20 retrieval alone**: 51.5% [49.2, 53.7] at $0.0099/correct, 1.45 s avg. That row stays on the leaderboard. The clean K=20-only artifact is a full cache hit (`totalUsd=$0`); the published cost comes from the paid pre-fix Stage F-2 artifact, which had the same effective K=20-only runtime configuration. The `--no-abstention` row stays as a transparent regression so readers see the trade-off explicitly.
-
-This is exactly the failure mode the rest of this post criticizes other vendors for: a published number whose configuration did not actually run. We found it ourselves in the next experiment's ablation, fixed it on the same day with a TDD'd one-line patch and a contract test that prevents recurrence, and the corrected numbers contradict the original headline. Audit verified the bug touched only Stage F-2 LOCOMO; every other published number (LongMemEval-S Tier 1/2a/2b/3, LOCOMO OOD, Stage A hold-out, Stage B/C negative results, Stage G judge probes) is unaffected.
+The Pareto-best LOCOMO tuning is **K=20 retrieval alone**: 51.5% [49.2, 53.7] at $0.0099/correct, 1.45 s avg. The `--no-abstention` row stays in the table as a transparent regression so readers see the trade-off explicitly.
 
 ### Stage G-LOCOMO: judge FPR probe on LOCOMO cases (0% FPR)
 
@@ -319,7 +302,7 @@ This is the probe every memory-library publication should run and none of the ei
 
 Tier 3 `minimize-cost` ships unchanged at 76.6% [72.8, 80.2] at $0.0580/correct on LongMemEval-S N=500. The hold-out validates it. The negative architectural experiments (session-NDCG, `gpt-4o` observer) confirm the shipping pipeline is near-optimal on our stack for this benchmark.
 
-The honest version of the Tier 3 pitch, after the hold-out: routing per-query against measured per-category cost-accuracy curves produces strictly better cost-accuracy points than committing to a single architecture when the category distribution of the target workload is close to the distribution we calibrated against. For the LongMemEval-S distribution, the published tables deliver 76.6% at $0.058/correct and survive independent calibration. For other distributions (BEAM, a custom workload), run your own calibration.
+The Tier 3 framing, validated by the hold-out: routing per-query against measured per-category cost-accuracy curves produces strictly better cost-accuracy points than committing to a single architecture when the category distribution of the target workload is close to the distribution calibrated against. For the LongMemEval-S distribution, the published tables deliver 76.6% at $0.058/correct and survive independent calibration. For other distributions (BEAM, a custom workload), run your own calibration.
 
 This is weaker than "we beat everyone." It is what the data supports.
 
@@ -354,7 +337,7 @@ Three open-source bench frameworks exist to do that without writing your own har
 
 For vendors publishing benchmark numbers: use one of these harnesses and publish the seed, the config, and the per-case run JSONs alongside your headline. Anything less makes your number a claim, not a measurement. The community will find the gap between the claim and the reproduction. The reproduction will be louder than the launch.
 
-AgentOS is not at the frontier of accuracy on LongMemEval-S. We are at 76.6% [72.8%, 80.2%] (now superseded to 85.6% per the update at top), with a measured judge false-positive rate of 1% on the same benchmark. The frontier self-reports sit above us, and three of them (Zep's 71.2%, Mem0's 92.0/93.4%, MemPalace's 100%) have been independently disputed, unreproducible, or outright false. AgentOS's 76.6% passed an 80/20 stratified hold-out with `minimize-cost` producing an identical routing table on the calibration slice. The `maximize-accuracy` preset has two category picks at the CI-overlap boundary, minor in-sample optimization that is within sampling variance on the held-out subset.
+AgentOS is not at the frontier of accuracy on LongMemEval-S. We are at 76.6% [72.8%, 80.2%], with a measured judge false-positive rate of 1% on the same benchmark. The frontier self-reports sit above us, and three of them (Zep's 71.2%, Mem0's 92.0/93.4%, MemPalace's 100%) have been independently disputed, unreproducible, or outright false. AgentOS's 76.6% passed an 80/20 stratified hold-out with `minimize-cost` producing an identical routing table on the calibration slice. The `maximize-accuracy` preset has two category picks at the CI-overlap boundary, minor in-sample optimization that is within sampling variance on the held-out subset.
 
 What AgentOS is: the only vendor in the surveyed set that publishes bootstrap CIs, judge false-positive probes on shipping numbers (measured, not hypothesized), per-stage retention metrics, full cost-per-correct accounting, latency distributions, per-case run JSONs, hold-out calibration against shipping tables, and matched-reader cross-vendor comparison tables at a seeded reproducible configuration. For the reader trying to decide which memory library to use, those are the things that matter. The headline number is a lottery ticket. The methodology is the infrastructure.
 

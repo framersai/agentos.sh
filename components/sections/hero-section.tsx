@@ -99,8 +99,8 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   }, [copyToClipboard]);
 
   const highlights = [
+    { title: '85.6% LongMemEval-S', detail: '70.2% on M (matched gpt-4o)' },
     { title: '37 Channels', detail: 'Discord, Slack, WhatsApp' },
-    { title: '21 LLM Providers', detail: 'OpenAI, Anthropic, Ollama' },
     { title: 'Multimodal RAG', detail: 'Text, image, audio, video' },
     { title: 'Built-in Safety', detail: 'PII redaction, injection defense' }
   ];

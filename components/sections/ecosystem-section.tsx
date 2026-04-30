@@ -337,7 +337,7 @@ export function EcosystemSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 id="ecosystem-heading" className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary bg-clip-text text-transparent">
+          <h2 id="ecosystem-heading" className="text-4xl sm:text-5xl font-bold mb-4 leading-[1.2] pb-2 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-accent-primary dark:to-accent-secondary bg-clip-text text-transparent">
             {t('title')}
           </h2>
           <p className="text-lg text-text-muted max-w-3xl mx-auto">
