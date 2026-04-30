@@ -99,7 +99,7 @@
     },
     "compliance": {
       "gdpr": "GDPR & PII-konform",
-      "soc2": "SOC 2 — Planned",
+      "soc2": "SOC 2 — Geplant",
       "enterpriseSupport": "Enterprise-Support verfügbar"
     },
     "capabilities": {
@@ -188,6 +188,27 @@
       "pill": "10 Formate",
       "bullet1": "Obsidian-Vault + ChatGPT-Import",
       "bullet2": "Ein-Befehl-Backend-Migration"
+    },
+    "guardrails": {
+      "title": "Guardrails & Sicherheit",
+      "description": "Eingebaute Inhaltsmoderation, PII-Erkennung und Compliance-Prüfungen. Schutzschalter, Kostenwächter und Blockade-Erkennung verhindern Endlosschleifen und überhöhte Ausgaben.",
+      "pill": "Unternehmenssicherheit",
+      "bullet1": "Schutzschalter + Kostenwächter + Blockade-Erkennung",
+      "bullet2": "Inhaltsfilter und Genehmigungs-Workflows"
+    },
+    "streaming": {
+      "title": "Streaming-Runtime",
+      "description": "Token-Streaming in Echtzeit. Konzipiert für latenzarme Interaktionen mit Unterstützung für SSE, WebSockets und benutzerdefinierte Transporte.",
+      "pill": "Echtzeit",
+      "bullet1": "Token-für-Token-Zustellung",
+      "bullet2": "Multi-Kanal-Unterstützung"
+    },
+    "workflow": {
+      "title": "Workflow-Engine",
+      "description": "Definieren Sie komplexe mehrstufige Workflows mit bedingter Verzweigung, paralleler Ausführung und automatischer Wiederholungslogik.",
+      "pill": "Orchestrierung",
+      "bullet1": "Visueller Workflow-Builder",
+      "bullet2": "Parallele Aufgabenausführung"
     }
   },
   "marketplace": {
@@ -244,7 +265,7 @@
       "chunkStrategies": "Chunk-Strategien",
       "strategies": "Strategien",
       "planningEngine": "Planungsmodul",
-      "workflowDsl": "Workflow DSL",
+      "workflowDsl": "Workflow-DSL",
       "protocols": "Protokolle",
       "guardrailMode": "Guardrail-Modus",
       "connectionStability": "Verbindungsstabilität",
@@ -263,7 +284,7 @@
     },
     "cards": {
       "cognitiveMemory": {
-        "title": "Cognitive Memory",
+        "title": "Kognitives Gedächtnis",
         "description": "8 neurowissenschaftlich fundierte Mechanismen, moduliert durch HEXACO-Persönlichkeitsmerkmale mit Ebbinghaus-Vergessenskurve",
         "features": [
           "Rekonsolidierung & RIF",
@@ -278,7 +299,7 @@
         ]
       },
       "graphRag": {
-        "title": "Graph-Based RAG",
+        "title": "Graph-basiertes RAG",
         "description": "7 Vektor-Store-Backends mit HyDE-Retrieval, GraphRAG-Community-Erkennung und 10 Dokument-Ladern",
         "features": [
           "HyDE hypothetische Embeddings",
@@ -293,7 +314,7 @@
         ]
       },
       "orchestration": {
-        "title": "Multi-Agent Orchestration",
+        "title": "Multi-Agenten-Orchestrierung",
         "description": "6 Strategien von sequenziell bis graphbasiert mit Mission API, Tree-of-Thought-Planung und Workflow DSL",
         "features": [
           "Sequenziell & parallel",
@@ -308,7 +329,7 @@
         ]
       },
       "streaming": {
-        "title": "Real-time Streaming",
+        "title": "Echtzeit-Streaming",
         "description": "SSE- und WebSocket-Unterstützung mit Streaming-Guardrails, partiellem JSON-Output und Tool-Call-Fortschrittsereignissen",
         "features": [
           "SSE + WebSocket",
@@ -323,7 +344,7 @@
         ]
       },
       "hexaco": {
-        "title": "HEXACO Personality",
+        "title": "HEXACO-Persönlichkeit",
         "description": "6-dimensionale Persönlichkeitsmodellierung, die Gedächtnis, Kommunikationsstil und Entscheidungsverhalten formt",
         "features": [
           "6-Achsen-Trait-Modellierung",
@@ -338,7 +359,7 @@
         ]
       },
       "guardrails": {
-        "title": "Built-in Safety",
+        "title": "Integrierte Sicherheit",
         "description": "Sicherheitsstufen von gefährlich bis paranoid mit PII-Redaktion, ML-Klassifikatoren und Halluzinationserkennung",
         "features": [
           "4-stufige PII-Redaktion",
@@ -353,7 +374,7 @@
         ]
       },
       "voice": {
-        "title": "Voice Pipeline",
+        "title": "Sprach-Pipeline",
         "description": "12 STT- und 12 TTS-Anbieter mit Echtzeit-Streaming, VAD, Sprecherdiarisierung und Telefonie-Unterstützung",
         "features": [
           "12 STT + 12 TTS",
@@ -368,7 +389,7 @@
         ]
       },
       "providers": {
-        "title": "21 LLM Providers",
+        "title": "21 LLM-Anbieter",
         "description": "OpenAI, Anthropic, Gemini, Ollama, Groq und 16 weitere mit automatischen Fallback-Ketten und Provider-First-API",
         "features": [
           "Auto Fallback (402/429/5xx)",
@@ -751,295 +772,303 @@
     }
   },
   "socialProof": {
-    "badge": "Social proof",
-    "title": "Trusted deployments (revealing soon)",
-    "subtitle": "We’re onboarding AI agency teams across finance, operations, and support. Logos and case studies unlock with their launches—stay tuned.",
-    "reveal": "Reveal #{index}",
-    "comingSoon": "Coming soon",
-    "latestUpdates": "Latest updates",
+    "badge": "Social Proof",
+    "title": "Vertrauenswürdige Implementierungen (Enthüllung in Kürze)",
+    "subtitle": "Wir nehmen KI-Agency-Teams aus Finanzen, Operations und Support an Bord. Logos und Case Studies werden mit den jeweiligen Launches veröffentlicht — bleibt dran.",
+    "reveal": "Enthüllung Nr. {index}",
+    "comingSoon": "Demnächst",
+    "latestUpdates": "Neueste Updates",
     "cta": {
-      "ask": "Want to be featured?"
+      "ask": "Möchtet ihr hier erscheinen?"
     },
     "placeholders": {
-      "helios": "Multi-market research pods (coming soon)",
-      "northwind": "Product localization + CRM sync (coming soon)",
-      "atlas": "Adaptive support routing (coming soon)"
+      "helios": "Multi-Markt-Research-Pods (demnächst)",
+      "northwind": "Produktlokalisierung + CRM-Sync (demnächst)",
+      "atlas": "Adaptives Support-Routing (demnächst)"
     }
   },
   "gmiSection": {
-    "badge": "Core Concept",
+    "badge": "Kernkonzept",
     "title": "Generalized Mind Instances",
-    "subtitle": "Every agent in AgentOS is powered by a GMI — a persistent cognitive core with personality, memory, and autonomous decision-making. Not just a prompt wrapper: a mind.",
-    "ctaExploreDocs": "Learn More",
-    "codeExampleLabel": "Create a GMI",
-    "comparisonTitle": "GMI vs Traditional Agents",
-    "comparisonTraditionalLabel": "Traditional Agent",
+    "subtitle": "Jeder Agent in AgentOS wird von einem GMI angetrieben — einem persistenten kognitiven Kern mit Persönlichkeit, Gedächtnis und autonomer Entscheidungsfindung. Kein bloßer Prompt-Wrapper: ein Verstand.",
+    "ctaExploreDocs": "Mehr erfahren",
+    "codeExampleLabel": "Ein GMI erstellen",
+    "comparisonTitle": "GMI vs. herkömmliche Agenten",
+    "comparisonTraditionalLabel": "Herkömmlicher Agent",
     "comparisonGmiLabel": "AgentOS GMI",
     "layers": {
       "channels": {
-        "name": "Channels & I/O",
-        "description": "Telegram, Discord, Slack, WhatsApp, Twitter, and 32 more. Voice via 12 STT + 12 TTS providers. Every channel adapter streams tokens in real-time through a unified protocol."
+        "name": "Kanäle & I/O",
+        "description": "Telegram, Discord, Slack, WhatsApp, Twitter und 32 weitere. Sprache über 12 STT- + 12 TTS-Anbieter. Jeder Kanal-Adapter streamt Tokens in Echtzeit über ein einheitliches Protokoll."
       },
       "guardrails": {
-        "name": "Guardrails & Safety",
-        "description": "Every output chunk is evaluated in real time. PII redaction, toxicity detection, hallucination grounding, and code safety scanning — configurable from permissive to fully locked down."
+        "name": "Guardrails & Sicherheit",
+        "description": "Jeder Output-Chunk wird in Echtzeit evaluiert. PII-Redaktion, Toxizitätserkennung, Halluzinations-Grounding und Code-Sicherheitsscan — konfigurierbar von permissiv bis vollständig gesperrt."
       },
       "tools": {
-        "name": "Tools & Extensions",
-        "description": "Web search, browser automation, image generation, shell execution, social posting. 115 extensions and 88 curated skills. Capability discovery finds the right tool semantically."
+        "name": "Werkzeuge & Erweiterungen",
+        "description": "Websuche, Browser-Automatisierung, Bildgenerierung, Shell-Ausführung, Social Posting. 115 Erweiterungen und 88 kuratierte Skills. Die Capability-Discovery findet semantisch das richtige Werkzeug."
       },
       "orchestration": {
-        "name": "Orchestration",
-        "description": "Sequential, parallel, debate, hierarchical, review-loop, and graph strategies. Tree-of-Thought planning. Mission checkpointing with fork and resume semantics."
+        "name": "Orchestrierung",
+        "description": "Sequentielle, parallele, Debate-, hierarchische, Review-Loop- und Graph-Strategien. Tree-of-Thought-Planung. Mission-Checkpointing mit Fork- und Resume-Semantik."
       },
       "memory": {
-        "name": "Memory",
-        "description": "Ebbinghaus decay, reconsolidation, retrieval-induced forgetting, involuntary recall, feeling-of-knowing, temporal gist, schema encoding, source confidence decay. HyDE + GraphRAG retrieval across 7 vector backends."
+        "name": "Gedächtnis",
+        "description": "Ebbinghaus-Vergessenskurve, Rekonsolidierung, abrufbedingtes Vergessen, unwillkürliche Erinnerung, Feeling-of-Knowing, temporaler Gist, Schema-Kodierung, Quellenvertrauens-Verfall. HyDE + GraphRAG-Retrieval über 7 Vektor-Backends."
       },
       "personality": {
-        "name": "Personality (HEXACO)",
-        "description": "Honesty-Humility, Emotionality, Extraversion, Agreeableness, Conscientiousness, Openness. Traits modulate memory encoding, communication style, and risk tolerance."
+        "name": "Persönlichkeit (HEXACO)",
+        "description": "Ehrlichkeit-Bescheidenheit, Emotionalität, Extraversion, Verträglichkeit, Gewissenhaftigkeit, Offenheit. Die Merkmale modulieren Gedächtniskodierung, Kommunikationsstil und Risikotoleranz."
       },
       "llmCore": {
-        "name": "LLM Core",
-        "description": "21 LLM providers with automatic fallback chains. Provider-first API design. The thinking engine at the heart of every GMI."
+        "name": "LLM-Kern",
+        "description": "21 LLM-Anbieter mit automatischen Fallback-Ketten. Provider-First-API-Design. Die denkende Engine im Herzen jedes GMI."
       }
     },
     "comparison": {
       "identity": {
-        "traditional": "Stateless prompt",
-        "gmi": "Persistent identity with HEXACO personality"
+        "traditional": "Zustandsloser Prompt",
+        "gmi": "Persistente Identität mit HEXACO-Persönlichkeit"
       },
       "memory": {
-        "traditional": "No memory between sessions",
-        "gmi": "Cognitive memory with Ebbinghaus decay + 8 mechanisms"
+        "traditional": "Keine Erinnerung zwischen Sitzungen",
+        "gmi": "Kognitives Gedächtnis mit Ebbinghaus-Vergessenskurve + 8 Mechanismen"
       },
       "behavior": {
-        "traditional": "Fixed behavior",
-        "gmi": "Style adaptation — learns your preferences"
+        "traditional": "Festes Verhalten",
+        "gmi": "Stil-Anpassung — lernt deine Präferenzen"
       },
       "providers": {
-        "traditional": "Single model",
-        "gmi": "21 providers with automatic fallback"
+        "traditional": "Einzelnes Modell",
+        "gmi": "21 Anbieter mit automatischem Fallback"
       },
       "tools": {
-        "traditional": "Manual tool wiring",
-        "gmi": "Capability discovery — finds tools semantically"
+        "traditional": "Manuelle Tool-Verdrahtung",
+        "gmi": "Capability-Discovery — findet Werkzeuge semantisch"
       },
       "safety": {
-        "traditional": "No safety",
+        "traditional": "Keine Sicherheit",
         "gmi": "built-in safety guardrails with streaming evaluation"
       }
     }
   },
   "about": {
     "hero": {
-      "weAreFramers": "we are the framers",
-      "title": "About AgentOS",
+      "weAreFramers": "wir sind die framers",
+      "title": "Über AgentOS",
       "description": "AgentOS is an open‑source TypeScript runtime for building adaptive, emergent AI agent systems. Built by <link>Frame.dev</link>, AgentOS powers intelligent applications with GMI orchestration, persistent memory, and enterprise‑grade guardrails."
     },
     "mission": {
-      "title": "Our Mission",
-      "p1": "We’re building the most advanced AI agent runtime for developers who want to create intelligent, adaptive systems without compromising on control, safety, or performance.",
-      "p2": "AgentOS combines cutting-edge AI orchestration with production-ready infrastructure, enabling developers to build everything from simple chatbots to complex multi-agent systems with {span} memory architecture."
+      "title": "Unsere Mission",
+      "p1": "Wir bauen die fortschrittlichste KI-Agent-Runtime für Entwickler, die intelligente, adaptive Systeme erstellen möchten, ohne Kompromisse bei Kontrolle, Sicherheit oder Performance einzugehen.",
+      "p2": "AgentOS kombiniert modernste KI-Orchestrierung mit produktionsreifer Infrastruktur und ermöglicht Entwicklern, von einfachen Chatbots bis zu komplexen Multi-Agenten-Systemen mit {span}-Memory-Architektur zu bauen."
     },
     "team": {
-      "title": "The Team",
-      "description": "AgentOS is developed by the team at <link>Frame.dev</link>, a company focused on building the future of AI‑powered development tools. We're a distributed team of engineers, designers, and AI researchers passionate about making advanced AI accessible to all developers.",
-      "generalInquiries": "General Inquiries",
+      "title": "Das Team",
+      "description": "AgentOS wird von <manicLink>Manic Agency LLC</manicLink> und dem Team von <frameLink>Frame.dev</frameLink> entwickelt. Wir bauen außerdem <wildsLink>Wilds.ai</wildsLink>, eine KI-native Gaming-Plattform, die von AgentOS angetrieben wird. Wir sind ein verteiltes Team aus Ingenieuren, Designern und KI-Forschern, mit der Mission, fortgeschrittene KI für alle Entwickler zugänglich zu machen.",
+      "generalInquiries": "Allgemeine Anfragen",
       "enterpriseSupport": "Enterprise & Support",
-      "enterpriseSupportDesc": "For production deployments, enterprise licensing, and dedicated support",
-      "hiring": "We are Hiring!",
-      "joinUs": "Join us in building the future of autonomous agents."
+      "enterpriseSupportDesc": "Für Produktions-Deployments, Enterprise-Lizenzierung und dedizierten Support",
+      "hiring": "Wir stellen ein!",
+      "joinUs": "Komm dazu und gestalte mit uns die Zukunft autonomer Agenten."
     },
     "connect": {
-      "title": "Connect With Us",
+      "title": "Verbinde dich mit uns",
       "github": "GitHub",
       "linkedin": "LinkedIn",
       "twitter": "Twitter",
       "frameDev": "Frame.dev",
-      "ourCompany": "Our Company"
+      "ourCompany": "Unser Unternehmen"
     },
     "license": {
-      "title": "Open Source Licensing",
+      "title": "Open-Source-Lizenzierung",
       "core": "AgentOS Core Engine",
-      "coreDesc": "The core AgentOS runtime, GMI orchestration, and infrastructure",
-      "extensions": "Extensions & Agents",
-      "extensionsDesc": "Community-built agents, extensions, and guardrails",
-      "footer": "AgentOS is open source under the Apache 2.0 license. For enterprise support and production deployments, contact us at <link>team@frame.dev</link>."
+      "coreDesc": "Die Kern-Runtime von AgentOS, GMI-Orchestrierung und Infrastruktur",
+      "extensions": "Erweiterungen & Agenten",
+      "extensionsDesc": "Von der Community entwickelte Agenten, Erweiterungen und Guardrails",
+      "footer": "AgentOS ist Open Source unter der Apache-2.0-Lizenz. Für Enterprise-Support und Produktions-Deployments kontaktiere uns unter <link>team@frame.dev</link>."
     },
     "cta": {
-      "title": "Ready to Build?",
-      "viewOnGithub": "View on GitHub",
-      "backToHome": "Back to Home"
+      "title": "Bereit zu bauen?",
+      "viewOnGithub": "Auf GitHub ansehen",
+      "backToHome": "Zurück zur Startseite"
     }
   },
   "faq": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Everything you need to know about AgentOS — from first install to production deployment.",
+    "title": "Häufig gestellte Fragen",
+    "subtitle": "Alles, was du über AgentOS wissen musst — von der ersten Installation bis zur Produktionsbereitstellung.",
     "sections": {
-      "general": "General",
-      "technical": "Technical",
-      "gettingStarted": "Getting Started",
-      "enterprise": "Enterprise",
-      "references": "Academic References"
+      "general": "Allgemein",
+      "technical": "Technisch",
+      "gettingStarted": "Erste Schritte",
+      "enterprise": "Unternehmen",
+      "references": "Akademische Quellen"
     },
     "general": {
       "whatIsAgentOS": {
-        "question": "What is AgentOS?",
-        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents. It provides multi-agent orchestration, cognitive memory with 8 neuroscience-backed mechanisms, multimodal RAG with 7 vector store backends, built-in safety guardrails, voice pipelines, 37 channel adapters, and 21 LLM provider integrations. It is designed to be self-hostable and free."
+        "question": "Was ist AgentOS?",
+        "answer": "AgentOS ist eine Open-Source-TypeScript-Runtime zum Bauen produktiver KI-Agenten, entwickelt von Manic Agency LLC (manic.agency) und Frame.dev. Sie bietet Multi-Agenten-Orchestrierung, kognitives Gedächtnis, multimodales RAG, integrierte Sicherheits-Guardrails (PII-Redaktion, Prompt-Injection-Abwehr, Content-Moderation), Sprach-Pipelines, 37 Kanal-Adapter und 21 LLM-Anbieter-Integrationen. AgentOS treibt zudem die KI-Systeme hinter Wilds.ai an, einer KI-nativen Gaming-Plattform. Selbst-hostbar und kostenlos."
       },
       "isOpenSource": {
-        "question": "Is AgentOS free and open source?",
-        "answer": "Yes. The core runtime is licensed under Apache 2.0. Agent presets, extensions, and guardrails are MIT-licensed. You can use AgentOS commercially, modify it, and redistribute it under these license terms."
+        "question": "Ist AgentOS kostenlos und Open Source?",
+        "answer": "Ja. Die Kern-Runtime steht unter Apache 2.0. Agent-Presets, Erweiterungen und Guardrails stehen unter MIT-Lizenz. Du darfst AgentOS kommerziell nutzen, modifizieren und unter diesen Lizenzbedingungen weitergeben."
       },
       "llmProviders": {
-        "question": "What LLM providers are supported?",
-        "answer": "AgentOS supports 21 LLM providers including OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Ollama, OpenRouter, Together AI, Fireworks AI, Groq, Perplexity, DeepSeek, xAI (Grok), Replicate, Anyscale, AI21 Labs, Aleph Alpha, AWS Bedrock, Azure OpenAI, Cloudflare Workers AI, and HuggingFace Inference. Provider fallback chains allow automatic failover."
+        "question": "Welche LLM-Anbieter werden unterstützt?",
+        "answer": "AgentOS unterstützt 21 LLM-Anbieter, darunter OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Ollama, OpenRouter, Together AI, Fireworks AI, Groq, Perplexity, DeepSeek, xAI (Grok), Replicate, Anyscale, AI21 Labs, Aleph Alpha, AWS Bedrock, Azure OpenAI, Cloudflare Workers AI und HuggingFace Inference. Provider-Fallback-Ketten ermöglichen automatisches Failover."
       },
       "language": {
-        "question": "What programming language is AgentOS built in?",
-        "answer": "AgentOS is written entirely in TypeScript and runs on Node.js. The npm package is @framers/agentos. It works with any TypeScript or JavaScript project."
+        "question": "In welcher Programmiersprache ist AgentOS geschrieben?",
+        "answer": "AgentOS ist vollständig in TypeScript geschrieben und läuft auf Node.js. Das npm-Paket heißt @framers/agentos. Es funktioniert mit jedem TypeScript- oder JavaScript-Projekt."
       },
       "comparison": {
-        "question": "How is AgentOS different from LangChain, CrewAI, or AutoGen?",
-        "answer": "AgentOS is TypeScript-native (not Python), includes cognitive memory with Ebbinghaus decay curves and HEXACO personality modeling, offers 5 security tiers instead of basic prompt filtering, provides 37 built-in channel adapters (Discord, Telegram, Slack, email, and more), and supports 6 orchestration strategies including graph-based agent DAGs. It also ships with 88 curated skills and a capability discovery engine that reduces token usage by roughly 90%."
+        "question": "Wie unterscheidet sich AgentOS von LangChain, CrewAI oder AutoGen?",
+        "answer": "AgentOS ist TypeScript-nativ (nicht Python), enthält kognitives Gedächtnis mit Ebbinghaus-Vergessenskurven und HEXACO-Persönlichkeitsmodellierung, bietet 5 Sicherheitsstufen statt nur einfacher Prompt-Filterung, stellt 37 integrierte Kanal-Adapter bereit (Discord, Telegram, Slack, E-Mail und mehr) und unterstützt 6 Orchestrierungsstrategien einschließlich graphbasierter Agenten-DAGs. Außerdem werden 88 kuratierte Skills und eine Capability-Discovery-Engine mitgeliefert, die den Token-Verbrauch um etwa 90% reduziert."
       }
     },
     "technical": {
       "whatIsGMI": {
-        "question": "What is a GMI?",
-        "answer": "GMI stands for General Machine Intelligence — it is the cognitive core of each AgentOS agent. A GMI encapsulates the agent's personality traits (via HEXACO), memory systems, tool access, guardrail configuration, and communication style into a single persistent identity. GMIs maintain state across sessions and adapt their behavior based on accumulated experience."
+        "question": "Was ist ein GMI?",
+        "answer": "GMI steht für General Machine Intelligence — der kognitive Kern jedes AgentOS-Agents. Ein GMI bündelt die Persönlichkeitsmerkmale des Agents (via HEXACO), Gedächtnissysteme, Tool-Zugriff, Guardrail-Konfiguration und Kommunikationsstil in einer persistenten Identität. GMIs behalten ihren Zustand sitzungsübergreifend und passen ihr Verhalten basierend auf gesammelten Erfahrungen an."
       },
       "hexaco": {
-        "question": "What is HEXACO personality?",
-        "answer": "HEXACO is a 6-factor personality model from psychology research (Ashton & Lee, 2004). The six dimensions are Honesty-Humility, Emotionality, Extraversion, Agreeableness, Conscientiousness, and Openness to Experience. In AgentOS, HEXACO traits modulate how agents communicate, remember, and make decisions. For example, high Openness increases memory reconsolidation during recall, while high Conscientiousness strengthens retrieval-induced forgetting of irrelevant associations."
+        "question": "Was ist die HEXACO-Persönlichkeit?",
+        "answer": "HEXACO ist ein 6-Faktoren-Persönlichkeitsmodell aus der Psychologieforschung (Ashton & Lee, 2004). Die sechs Dimensionen sind Ehrlichkeit-Bescheidenheit, Emotionalität, Extraversion, Verträglichkeit, Gewissenhaftigkeit und Offenheit für Erfahrungen. In AgentOS modulieren HEXACO-Merkmale, wie Agenten kommunizieren, sich erinnern und Entscheidungen treffen. Beispielsweise erhöht eine hohe Offenheit die Gedächtnis-Rekonsolidierung beim Abruf, während hohe Gewissenhaftigkeit das abrufbedingte Vergessen irrelevanter Assoziationen verstärkt."
       },
       "cognitiveMemory": {
-        "question": "How does cognitive memory work?",
-        "answer": "AgentOS cognitive memory implements 8 mechanisms from cognitive science research: reconsolidation, retrieval-induced forgetting, involuntary recall, feeling-of-knowing, temporal gist extraction, schema encoding, source confidence decay, and emotion regulation. Memories decay over time following Ebbinghaus forgetting curves (Ebbinghaus, 1885), with spaced repetition and consolidation to preserve important information. Working memory follows Baddeley's multi-component model (Baddeley, 2000) with a volatile scratchpad for the current turn that consolidates upward into episodic, semantic, and observational memory tiers."
+        "question": "Wie funktioniert das kognitive Gedächtnis?",
+        "answer": "Das kognitive Gedächtnis von AgentOS implementiert 8 Mechanismen aus der kognitionswissenschaftlichen Forschung: Rekonsolidierung, abrufbedingtes Vergessen, unwillkürliche Erinnerung, Feeling-of-Knowing, temporale Gist-Extraktion, Schema-Kodierung, Quellenvertrauens-Verfall und Emotionsregulation. Erinnerungen verblassen über die Zeit gemäß den Ebbinghaus-Vergessenskurven (Ebbinghaus, 1885), wobei verteilte Wiederholung und Konsolidierung wichtige Informationen erhalten. Das Arbeitsgedächtnis folgt Baddeleys Multikomponentenmodell (Baddeley, 2000) mit einem flüchtigen Scratchpad für den aktuellen Turn, der sich nach oben in episodische, semantische und beobachtende Gedächtnisebenen konsolidiert."
       },
       "guardrails": {
-        "question": "What guardrails are available?",
-        "answer": "AgentOS provides 5 security tiers (dangerous, permissive, balanced, strict, paranoid) and 6 guardrail extension types: PII redaction (names, emails, phone numbers, SSNs), ML classifiers for prompt injection detection, code safety analysis, grounding verification against source documents, topicality enforcement to keep agents on-task, and content policy filtering for harmful or inappropriate output."
+        "question": "Welche Guardrails sind verfügbar?",
+        "answer": "AgentOS bietet 5 Sicherheitsstufen (dangerous, permissive, balanced, strict, paranoid) und 6 Guardrail-Erweiterungstypen: PII-Redaktion (Namen, E-Mails, Telefonnummern, SSNs), ML-Klassifikatoren zur Erkennung von Prompt-Injection, Code-Sicherheitsanalyse, Grounding-Überprüfung gegen Quelldokumente, Topikalitätsdurchsetzung, um Agenten beim Thema zu halten, sowie Content-Policy-Filterung für schädliche oder unangemessene Ausgaben."
       },
       "capabilityDiscovery": {
-        "question": "What is the capability discovery system?",
-        "answer": "The capability discovery engine replaces static tool and skill dumps with 3-tier semantic search, reducing token usage by roughly 90%. Tier 0 provides category summaries in about 150 tokens (always included). Tier 1 returns the top-5 semantic matches in about 200 tokens. Tier 2 delivers full schemas in about 1,500 tokens, loaded on demand. A meta-tool called discover_capabilities lets agents self-discover available tools at runtime."
+        "question": "Was ist das Capability-Discovery-System?",
+        "answer": "Die Capability-Discovery-Engine ersetzt statische Tool- und Skill-Dumps durch eine 3-Tier-Semantiksuche und reduziert den Token-Verbrauch um etwa 90%. Tier 0 liefert Kategorie-Zusammenfassungen in ca. 150 Tokens (immer enthalten). Tier 1 gibt die Top-5 semantischen Treffer in ca. 200 Tokens zurück. Tier 2 stellt vollständige Schemas in ca. 1.500 Tokens bereit, geladen on-demand. Ein Meta-Tool namens discover_capabilities erlaubt Agenten, verfügbare Werkzeuge zur Laufzeit selbst zu entdecken."
       },
       "queryRouter": {
-        "question": "How does the QueryRouter work?",
-        "answer": "The QueryRouter classifies incoming queries into 4 tiers: T0 (direct answer from context), T1 (single-tool invocation), T2 (multi-step plan requiring a planning engine), and T3 (multi-agent delegation requiring orchestration). This classification determines the execution strategy and resource allocation for each request."
+        "question": "Wie funktioniert der QueryRouter?",
+        "answer": "Der QueryRouter klassifiziert eingehende Anfragen in 4 Stufen: T0 (direkte Antwort aus dem Kontext), T1 (Aufruf eines einzelnen Tools), T2 (Mehrschrittplan, der eine Planungs-Engine benötigt) und T3 (Multi-Agenten-Delegation mit Orchestrierung). Diese Klassifikation bestimmt Ausführungsstrategie und Ressourcenzuteilung pro Anfrage."
       },
       "adaptiveIntelligence": {
-        "question": "What is adaptive intelligence?",
-        "answer": "Adaptive intelligence is how AgentOS agents continuously improve their behavior without retraining. Five mechanisms work together: (1) Meta-reflective prompt adaptation — the PromptBuilder assembles a different system prompt every turn, dynamically incorporating personality traits, mood state, conversation history, retrieved memories, and available tools. (2) Self-evaluating response quality — the self_evaluate tool scores the agent's own output and adjusts parameters like temperature, verbosity, and personality expression in real time. (3) Personality-modulated cognition — HEXACO traits shape how the agent processes information. High openness increases creative associations during memory retrieval; high conscientiousness strengthens retrieval-induced forgetting of irrelevant data. (4) Autonomous memory consolidation — the ConsolidationLoop prunes weak memories, strengthens frequently-accessed ones, and derives new insights from memory clusters, so the agent's knowledge improves over time without explicit training. (5) QueryRouter tiered classification — the system adapts retrieval depth based on query complexity. Simple questions get fast keyword lookup; complex questions trigger full hybrid RAG with deep research."
+        "question": "Was ist adaptive Intelligenz?",
+        "answer": "Adaptive Intelligenz ist die Art und Weise, wie AgentOS-Agenten ihr Verhalten kontinuierlich verbessern, ohne neu trainiert werden zu müssen. Fünf Mechanismen arbeiten zusammen: (1) Meta-reflektive Prompt-Anpassung — der PromptBuilder stellt für jeden Turn einen neuen System-Prompt zusammen und integriert dynamisch Persönlichkeitsmerkmale, Stimmungszustand, Konversationsverlauf, abgerufene Erinnerungen und verfügbare Tools. (2) Selbst-Evaluierung der Antwortqualität — das self_evaluate-Tool bewertet die eigene Ausgabe des Agents und passt Parameter wie Temperatur, Verbosität und Persönlichkeitsausdruck in Echtzeit an. (3) Persönlichkeitsmodulierte Kognition — HEXACO-Merkmale prägen, wie der Agent Informationen verarbeitet. Hohe Offenheit erhöht kreative Assoziationen beim Memory-Retrieval; hohe Gewissenhaftigkeit verstärkt das abrufbedingte Vergessen irrelevanter Daten. (4) Autonome Memory-Konsolidierung — die ConsolidationLoop schneidet schwache Erinnerungen weg, stärkt häufig abgerufene und leitet neue Einsichten aus Memory-Clustern ab, sodass sich das Wissen des Agents über die Zeit ohne explizites Training verbessert. (5) QueryRouter-Tier-Klassifikation — das System passt die Retrieval-Tiefe an die Anfragekomplexität an. Einfache Fragen erhalten schnelle Keyword-Lookup; komplexe Fragen triggern vollständiges hybrides RAG mit Deep-Research."
       },
       "emergentBehaviors": {
-        "question": "What are emergent behaviors?",
-        "answer": "Emergent behaviors are capabilities that agents develop at runtime rather than being explicitly programmed. AgentOS supports five forms: (1) Runtime tool forging — agents create new tools on the fly via forge_tool. The EmergentCapabilityEngine uses sandboxed JavaScript execution and LLM-as-judge evaluation to safely create, test, and promote tools. (2) Self-improving personality — agents adapt their HEXACO personality traits within bounded limits via adapt_personality. Mutations persist with Ebbinghaus decay — strong repeated adaptations stick, while weak ones fade naturally. (3) Dynamic skill management — agents enable or disable skills at runtime via manage_skills, adapting their behavioral repertoire to the task at hand. (4) Composable workflow creation — agents compose registered tools into multi-step pipelines via create_workflow, building new capabilities from existing building blocks. (5) Tiered tool promotion — forged tools progress through session, agent, and shared tiers. Tools that prove reliable (5+ successful uses, >0.8 confidence score) auto-promote for cross-agent reuse."
+        "question": "Was sind emergente Verhaltensweisen?",
+        "answer": "Emergente Verhaltensweisen sind Fähigkeiten, die Agenten zur Laufzeit entwickeln, statt explizit programmiert zu werden. AgentOS unterstützt fünf Formen: (1) Runtime-Tool-Forging — Agenten erstellen neue Werkzeuge spontan via forge_tool. Die EmergentCapabilityEngine nutzt sandboxed JavaScript-Ausführung und LLM-as-judge-Bewertung, um Tools sicher zu erstellen, zu testen und zu promoten. (2) Selbstverbessernde Persönlichkeit — Agenten passen ihre HEXACO-Persönlichkeitsmerkmale innerhalb begrenzter Grenzen via adapt_personality an. Mutationen bleiben mit Ebbinghaus-Vergessen bestehen — starke wiederholte Anpassungen halten, schwache verblassen natürlich. (3) Dynamisches Skill-Management — Agenten aktivieren oder deaktivieren Skills zur Laufzeit via manage_skills und passen so ihr Verhaltensrepertoire an die jeweilige Aufgabe an. (4) Komponierbare Workflow-Erstellung — Agenten setzen registrierte Tools via create_workflow zu mehrstufigen Pipelines zusammen und bauen neue Fähigkeiten aus existierenden Bausteinen. (5) Tier-basierte Tool-Beförderung — geforged Tools durchlaufen Session-, Agent- und Shared-Tiers. Werkzeuge, die sich als zuverlässig erweisen (5+ erfolgreiche Verwendungen, Confidence-Score >0,8), werden automatisch für agent-übergreifende Wiederverwendung befördert."
+      },
+      "llmJudge": {
+        "question": "Kann ich ein LLM statt eines Menschen als Richter einsetzen?",
+        "answer": "Ja. AgentOS bietet zwei sich ergänzende LLM-as-judge-Mechanismen. Auf Agency-Ebene erstellt hitl.llmJudge() einen Approval-Handler, der Entscheidungen an ein LLM delegiert. Er bewertet jede ApprovalRequest gegen konfigurierbare Kriterien und liefert eine strukturierte Entscheidung mit Confidence-Score. Fällt die Confidence unter den Schwellenwert, wird die Entscheidung an einen Fallback-Handler eskaliert (ein anderer hitl-Handler oder ein Mensch). Auf Graph-Ebene akzeptiert der humanNode()-Builder eine judge-Option, die die Interrupt-Entscheidung an ein LLM delegiert. Ist der Richter zuversichtlich, läuft der Graph ohne Suspendierung weiter. Bei niedriger Confidence fällt die Ausführung auf einen normalen Human-Interrupt zurück. Beide Ansätze unterstützen konfigurierbares model, provider, criteria und confidence threshold."
+      },
+      "guardrailOverride": {
+        "question": "Können Guardrails HITL-Genehmigungen außer Kraft setzen?",
+        "answer": "Ja. Wenn hitl.guardrailOverride aktiviert ist, werden Guardrails nach einer Approval-Entscheidung ausgeführt und können destruktive oder sensible Aktionen weiterhin blockieren. Dies fügt eine zweite Sicherheitsebene nach Auto-Approval, menschlicher Genehmigung oder hitl.llmJudge() hinzu. Die Standard-Post-Approval-Guardrails sind code-safety und pii-redaction, die Liste lässt sich mit hitl.postApprovalGuardrails konfigurieren. Deaktiviere das Override nur, wenn du explizit möchtest, dass der Approval-Handler das letzte Wort hat."
       }
     },
     "gettingStarted": {
       "install": {
-        "question": "How do I install AgentOS?",
-        "answer": "Install via npm: npm install @framers/agentos. AgentOS requires Node.js 18 or higher. For the CLI tools, install the companion package: npm install -g @framers/wunderland."
+        "question": "Wie installiere ich AgentOS?",
+        "answer": "Installation über npm: npm install @framers/agentos. AgentOS benötigt Node.js 18 oder höher. Für CLI-Werkzeuge installiere das Begleitpaket: npm install -g @framers/wunderland."
       },
       "firstAgent": {
-        "question": "How do I create my first agent?",
-        "answer": "Import the agent function and configure it with a provider, instructions, and optional personality traits. Here is a minimal example:\n\nimport { agent } from '@framers/agentos'\n\nconst myAgent = agent({\n  provider: 'openai',\n  instructions: 'You are a helpful assistant.',\n  personality: { openness: 0.8, conscientiousness: 0.9 },\n  memory: { enabled: true },\n})\n\nconst reply = await myAgent.send('Hello!')\nconsole.log(reply.text)"
+        "question": "Wie erstelle ich meinen ersten Agenten?",
+        "answer": "Importiere die agent-Funktion und konfiguriere sie mit einem provider, instructions und optionalen Persönlichkeitsmerkmalen. Hier ein minimales Beispiel:\n\nimport { agent } from '@framers/agentos'\n\nconst myAgent = agent({\n  provider: 'openai',\n  instructions: 'Du bist ein hilfreicher Assistent.',\n  personality: { openness: 0.8, conscientiousness: 0.9 },\n  memory: { enabled: true },\n})\n\nconst reply = await myAgent.send('Hallo!')\nconsole.log(reply.text)"
       },
       "voice": {
-        "question": "How do I add voice capabilities?",
-        "answer": "AgentOS supports multiple STT (speech-to-text) and TTS (text-to-speech) providers. Configure a voice pipeline by specifying STT and TTS providers in your agent configuration. Supported STT providers include Whisper (OpenAI), Deepgram, and AssemblyAI. TTS providers include ElevenLabs, OpenAI TTS, and Google Cloud TTS. Telephony integration is available for real-time voice interactions."
+        "question": "Wie füge ich Sprachfunktionen hinzu?",
+        "answer": "AgentOS unterstützt mehrere STT- (Speech-to-Text) und TTS- (Text-to-Speech) Anbieter. Konfiguriere eine Sprach-Pipeline, indem du STT- und TTS-Anbieter in der Agent-Konfiguration angibst. Unterstützte STT-Anbieter sind Whisper (OpenAI), Deepgram und AssemblyAI. TTS-Anbieter umfassen ElevenLabs, OpenAI TTS und Google Cloud TTS. Telefonie-Integration ist für Echtzeit-Sprachinteraktionen verfügbar."
       },
       "deploy": {
-        "question": "How do I deploy AgentOS?",
-        "answer": "AgentOS is self-hostable and runs anywhere Node.js runs. Deploy on your own infrastructure with Docker, on cloud providers like AWS, GCP, or Azure, or use platforms like Vercel, Railway, or Fly.io. The runtime uses SQLite by default for zero-config setup, with optional migration to Postgres, pgvector, Qdrant, or Neo4j for production scale."
+        "question": "Wie stelle ich AgentOS bereit?",
+        "answer": "AgentOS ist selbst-hostbar und läuft überall, wo Node.js läuft. Deploye auf eigener Infrastruktur mit Docker, bei Cloud-Anbietern wie AWS, GCP oder Azure oder nutze Plattformen wie Vercel, Railway oder Fly.io. Das Runtime verwendet standardmäßig SQLite für Zero-Config-Setup, mit optionaler Migration zu Postgres, pgvector, Qdrant oder Neo4j für Produktions-Skala."
       },
       "offline": {
-        "question": "Does AgentOS work offline?",
-        "answer": "Yes. AgentOS works fully offline when paired with Ollama for local LLM inference. Ollama provides access to open-weight models like Llama, Mistral, and Phi locally. The SQLite storage backend and in-memory vector store require no external services. The CLI auto-detects Ollama and configures the agent to use it."
+        "question": "Funktioniert AgentOS offline?",
+        "answer": "Ja. AgentOS funktioniert vollständig offline in Kombination mit Ollama für lokale LLM-Inferenz. Ollama bietet lokalen Zugriff auf Open-Weight-Modelle wie Llama, Mistral und Phi. Das SQLite-Storage-Backend und der In-Memory-Vector-Store benötigen keine externen Dienste. Die CLI erkennt Ollama automatisch und konfiguriert den Agenten entsprechend."
       }
     },
     "enterprise": {
       "productionReady": {
-        "question": "Is AgentOS production-ready?",
-        "answer": "Yes. AgentOS includes lets you control exactly how much freedom your agents have — from wide open to fully locked down. It blocks prompt injection attacks, redacts personal data, moderates content in real time, requires approval for sensitive tool calls, budget limits, auditable routing, circuit breakers for tool failures, and rate limiting."
+        "question": "Ist AgentOS produktionsreif?",
+        "answer": "Ja. AgentOS lässt dich exakt steuern, wie viel Freiheit deine Agenten haben — von ganz offen bis vollständig gesperrt. Es blockiert Prompt-Injection-Angriffe, redigiert personenbezogene Daten, moderiert Inhalte in Echtzeit, verlangt Genehmigung für sensible Tool-Calls, erzwingt Budget-Limits und enthält Schutzschalter und Rate Limiting."
       },
       "compliance": {
-        "question": "What compliance standards does AgentOS address?",
-        "answer": "AgentOS is designed with GDPR readiness in mind — PII redaction guardrails can strip personal data before it reaches LLM providers. All data stays on your infrastructure when self-hosted. SOC 2 compliance documentation is planned. The memory system supports data deletion and export for right-to-access requests."
+        "question": "Welche Compliance-Standards adressiert AgentOS?",
+        "answer": "AgentOS ist mit Blick auf DSGVO-Konformität konzipiert — PII-Redaktions-Guardrails können personenbezogene Daten entfernen, bevor sie LLM-Anbieter erreichen. Alle Daten bleiben bei Self-Hosting auf der eigenen Infrastruktur. SOC-2-Compliance-Dokumentation ist geplant. Das Memory-System unterstützt Datenlöschung und -export für Auskunftsersuchen."
       },
       "support": {
-        "question": "Is there enterprise support available?",
-        "answer": "Yes. For production deployments, enterprise licensing, dedicated support, and custom integrations, contact the team at team@frame.dev. Enterprise support includes priority issue resolution, architecture consulting, and deployment assistance."
+        "question": "Ist Enterprise-Support verfügbar?",
+        "answer": "Ja. Für Produktions-Deployments, Enterprise-Lizenzierung, dedizierten Support und maßgeschneiderte Integrationen kontaktiere das Team unter team@frame.dev. Enterprise-Support umfasst priorisierte Issue-Lösung, Architekturberatung und Deployment-Unterstützung."
       },
       "selfHosted": {
-        "question": "Can I use AgentOS with my own infrastructure?",
-        "answer": "Absolutely. AgentOS is designed to be self-hosted from the ground up. For self-hosted deployments, your data stays on your infrastructure with SQLite, Postgres, pgvector, Qdrant, or Neo4j. If you want a managed vendor-hosted vector database instead, Pinecone is also supported. Docker Compose configurations are provided for the self-hosted backends."
+        "question": "Kann ich AgentOS mit meiner eigenen Infrastruktur nutzen?",
+        "answer": "Absolut. AgentOS ist von Grund auf für Self-Hosting konzipiert. Bei Self-Hosted-Deployments bleiben deine Daten auf deiner Infrastruktur mit SQLite, Postgres, pgvector, Qdrant oder Neo4j. Wenn du eine vom Anbieter gehostete Vektor-Datenbank bevorzugst, wird auch Pinecone unterstützt. Docker-Compose-Konfigurationen sind für die Self-Hosted-Backends verfügbar."
       }
     },
     "references": {
-      "title": "Academic References",
-      "subtitle": "AgentOS cognitive memory and personality systems are grounded in peer-reviewed research.",
+      "title": "Akademische Quellen",
+      "subtitle": "Die kognitiven Gedächtnis- und Persönlichkeitssysteme von AgentOS basieren auf peer-reviewed Forschung.",
       "papers": {
         "ebbinghaus": {
           "label": "Ebbinghaus, H. (1885)",
           "title": "Memory: A Contribution to Experimental Psychology.",
-          "detail": "The foundational study establishing the forgetting curve. AgentOS uses Ebbinghaus decay functions for automatic memory consolidation.",
+          "detail": "Die grundlegende Studie zur Vergessenskurve. AgentOS nutzt Ebbinghaus-Vergessensfunktionen für die automatische Memory-Konsolidierung.",
           "url": "https://psychclassics.yorku.ca/Ebbinghaus/index.htm"
         },
         "baddeley": {
           "label": "Baddeley, A. D. (2000)",
           "title": "The episodic buffer: a new component of working memory?",
-          "detail": "Introduced the 4-component model of working memory. AgentOS working memory is modeled on this architecture.",
+          "detail": "Führte das Vier-Komponenten-Modell des Arbeitsgedächtnisses ein. AgentOS modelliert sein Arbeitsgedächtnis auf dieser Architektur.",
           "url": "https://doi.org/10.1016/S1364-6613(00)01538-2"
         },
         "hexaco": {
           "label": "Ashton, M. C., & Lee, K. (2004)",
           "title": "Empirical, theoretical, and practical advantages of the HEXACO model of personality structure.",
-          "detail": "The HEXACO model provides the 6-factor personality dimensions used in AgentOS agent identity.",
+          "detail": "Das HEXACO-Modell liefert die 6 Persönlichkeitsdimensionen, die in der Identität von AgentOS-Agenten verwendet werden.",
           "url": "https://doi.org/10.1207/s15327957pspr0802_1"
         },
         "louvain": {
           "label": "Blondel, V. D., Guillaume, J.-L., Lambiotte, R., & Lefebvre, E. (2008)",
           "title": "Fast unfolding of communities in large networks.",
-          "detail": "The Louvain algorithm is used in AgentOS GraphRAG for community detection in knowledge graphs.",
+          "detail": "Der Louvain-Algorithmus wird im GraphRAG von AgentOS für die Community-Erkennung in Wissensgraphen verwendet.",
           "url": "https://doi.org/10.1088/1742-5468/2008/10/P10008"
         },
         "hnsw": {
           "label": "Malkov, Y. A., & Yashunin, D. A. (2018)",
           "title": "Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs.",
-          "detail": "HNSW is one of 7 vector store backends supported by AgentOS for efficient similarity search.",
+          "detail": "HNSW ist eines von 7 Vector-Store-Backends, die AgentOS für effiziente Ähnlichkeitssuche unterstützt.",
           "url": "https://doi.org/10.1109/TPAMI.2018.2889473"
         },
         "reconsolidation": {
           "label": "Nader, K., Schafe, G. E., & LeDoux, J. E. (2000)",
           "title": "Fear memories require protein synthesis in the amygdala for reconsolidation after retrieval.",
-          "detail": "Basis for the memory reconsolidation mechanism — memories are rewritten each time they are recalled.",
+          "detail": "Grundlage für den Memory-Rekonsolidierungsmechanismus — Erinnerungen werden bei jedem Abruf neu geschrieben.",
           "url": "https://doi.org/10.1038/35021052"
         },
         "rif": {
           "label": "Anderson, M. C., Bjork, R. A., & Bjork, E. L. (1994)",
           "title": "Remembering can cause forgetting: Retrieval dynamics in long-term memory.",
-          "detail": "Basis for retrieval-induced forgetting — retrieving one memory suppresses related competing memories.",
+          "detail": "Grundlage für abrufbedingtes Vergessen — der Abruf einer Erinnerung unterdrückt verwandte konkurrierende Erinnerungen.",
           "url": "https://doi.org/10.1037/0278-7393.20.5.1063"
         },
         "involuntaryRecall": {
           "label": "Berntsen, D. (2010)",
           "title": "The unbidden past: Involuntary autobiographical memories as a basic mode of remembering.",
-          "detail": "Basis for involuntary recall — contextual cues trigger spontaneous memory activation.",
+          "detail": "Grundlage für unwillkürliche Erinnerung — kontextuelle Hinweise lösen spontane Memory-Aktivierung aus.",
           "url": "https://doi.org/10.1177/0963721410370301"
         }
       }
     },
-    "seeAlso": "See also",
+    "seeAlso": "Siehe auch",
     "links": {
       "vcaFaq": "VCA.Chat FAQ",
       "frameFaq": "Frame.dev FAQ",
       "frameDev": "Frame.dev",
-      "lookingGlass": "The Looking Glass — AI newsletter & blog"
+      "lookingGlass": "The Looking Glass — KI-Newsletter und Blog"
     }
   },
   "videoDemo": {
@@ -1051,121 +1080,137 @@
     "duration": "Dauer",
     "videos": {
       "agentLoop": {
-        "title": "Agent Loop",
+        "title": "Agent-Loop",
         "description": "Tools, Streaming und Traces in Aktion"
       },
       "multiAgent": {
-        "title": "Multi-Agent Coordination",
+        "title": "Multi-Agenten-Koordination",
         "description": "Mehrere Agenten arbeiten auf ein gemeinsames Ziel hin"
       },
       "graphPipeline": {
-        "title": "Graph Pipeline",
+        "title": "Graph-Pipeline",
         "description": "5-Knoten-Flow: Klassifizieren, Nachschlagen, Entwerfen und Genehmigen"
       },
       "toolForge": {
-        "title": "Tool Forge",
+        "title": "Tool-Forge",
         "description": "Agent erstellt und nutzt seine eigenen Tools"
       }
     }
   },
   "ecosystem": {
-    "title": "The AgentOS Ecosystem",
-    "subtitle": "Explore the production-ready AgentOS ecosystem powering adaptive, emergent, permanent intelligence—SDKs, agents, RAG utilities, and deployment kits for enterprise AI teams.",
+    "title": "Das AgentOS-Ökosystem",
+    "subtitle": "Erkunde das produktionsreife AgentOS-Ökosystem, das adaptive, emergente und persistente Intelligenz antreibt — SDKs, Agenten, RAG-Utilities und Deployment-Kits für Enterprise-KI-Teams.",
     "stats": {
       "repositories": "Repositories",
-      "weeklyDownloads": "Weekly Downloads",
-      "githubStars": "GitHub Stars"
+      "weeklyDownloads": "Wöchentliche Downloads",
+      "githubStars": "GitHub-Sterne"
     },
     "categories": {
       "core": {
-        "title": "Core Frameworks",
-        "description": "Runtime, skills content, and extension source code"
+        "title": "Kern-Frameworks",
+        "description": "Runtime, Skill-Inhalte und Erweiterungs-Quellcode"
       },
       "infrastructure": {
-        "title": "Infrastructure",
-        "description": "Storage adapters, registries, and catalog SDKs"
+        "title": "Infrastruktur",
+        "description": "Storage-Adapter, Registries und Catalog-SDKs"
       },
       "tools": {
-        "title": "Tools",
-        "description": "Developer tooling and debugging"
+        "title": "Werkzeuge",
+        "description": "Entwickler-Werkzeuge und Debugging"
       },
       "apps": {
-        "title": "Apps",
-        "description": "Production applications and platforms"
+        "title": "Anwendungen",
+        "description": "Produktive Anwendungen und Plattformen"
       },
       "community": {
         "title": "Community",
-        "description": "Forums, discussions, and resources"
+        "description": "Foren, Diskussionen und Ressourcen"
       }
     },
-    "starsSuffix": "stars",
-    "updatedLabel": "Updated {date}",
+    "starsSuffix": "Sterne",
+    "updatedLabel": "Aktualisiert am {date}",
     "cta": {
-      "title": "Join the AgentOS Community",
-      "description": "Contribute to open-source AI development, share your agents, and collaborate with developers worldwide.",
-      "followOnGithub": "Follow on GitHub",
-      "joinDiscord": "Join Discord Community",
-      "contributeCode": "Contribute Code"
+      "title": "Tritt der AgentOS-Community bei",
+      "description": "Trage zur Open-Source-KI-Entwicklung bei, teile deine Agenten und arbeite mit Entwicklern weltweit zusammen.",
+      "followOnGithub": "Auf GitHub folgen",
+      "joinDiscord": "Discord-Community beitreten",
+      "contributeCode": "Code beitragen"
     }
   },
   "codeExamples": {
-    "badge": "Code Examples",
-    "title": "Build with AgentOS",
-    "subtitle": "Production-ready code examples and patterns for building intelligent agent systems",
+    "badge": "Code-Beispiele",
+    "title": "Mit AgentOS entwickeln",
+    "subtitle": "Produktionsreife Code-Beispiele und Muster zum Aufbau intelligenter Agentensysteme",
     "categories": {
-      "all": "All Examples",
-      "basic": "Basic",
-      "advanced": "Advanced",
+      "all": "Alle Beispiele",
+      "basic": "Grundlagen",
+      "advanced": "Fortgeschritten",
       "integration": "Integration",
-      "deployment": "Deployment"
+      "deployment": "Bereitstellung"
     },
-    "selectExample": "Select Example",
+    "selectExample": "Beispiel auswählen",
     "tabs": {
-      "synchronous": "Synchronous",
+      "synchronous": "Synchron",
       "streaming": "Streaming"
     },
-    "copyButton": "Copy code",
-    "docsButton": "View Docs",
-    "runButton": "Try in Playground",
+    "copyButton": "Code kopieren",
+    "docsButton": "Dokumentation ansehen",
+    "runButton": "Im Playground ausprobieren",
     "examples": {
       "basicAgent": {
-        "title": "Create Your First Agent",
-        "description": "Basic agent setup with memory and tools"
+        "title": "Erstelle deinen ersten Agenten",
+        "description": "Grundkonfiguration eines Agenten mit Speicher und Werkzeugen"
       },
       "gmiRoles": {
-        "title": "GMI Roles & Agencies",
-        "description": "Implementing Generalised Mind Instance roles"
+        "title": "GMI-Rollen und Agenturen",
+        "description": "Implementierung von Generalised-Mind-Instance-Rollen"
       },
       "memorySystem": {
-        "title": "Personality & Cognitive Memory",
-        "description": "HEXACO personality traits with Ebbinghaus decay and session history"
+        "title": "Persönlichkeit und kognitives Gedächtnis",
+        "description": "HEXACO-Persönlichkeitsmerkmale mit Ebbinghaus-Vergessenskurve und Sitzungsverlauf"
       },
       "toolIntegration": {
-        "title": "RAG Pipeline",
-        "description": "Ingest documents and retrieve context with HyDE embeddings"
+        "title": "RAG-Pipeline",
+        "description": "Dokumente einlesen und Kontext mit HyDE-Embeddings abrufen"
       },
       "skillsIntegration": {
-        "title": "Skills & Extensions",
-        "description": "Browse the curated catalog and register extensions programmatically"
+        "title": "Skills und Erweiterungen",
+        "description": "Den kuratierten Katalog durchsuchen und Erweiterungen programmatisch registrieren"
       },
       "realtimeStream": {
-        "title": "Real-time Streaming Responses",
-        "description": "Stream agent responses for better UX"
+        "title": "Echtzeit-Streaming-Antworten",
+        "description": "Agent-Antworten als Stream für bessere UX empfangen"
       },
       "deployment": {
-        "title": "Production Deployment",
-        "description": "Deploy AgentOS with Docker and Kubernetes"
+        "title": "Produktionsbereitstellung",
+        "description": "AgentOS mit Docker und Kubernetes bereitstellen"
       },
       "emergentTools": {
-        "title": "Emergent Tools",
-        "description": "Enable runtime tool forging — agents create new tools when they hit capability gaps"
+        "title": "Emergente Werkzeuge",
+        "description": "Runtime-Tool-Forging aktivieren — Agenten erstellen neue Werkzeuge bei Fähigkeitslücken"
+      },
+      "missionOrchestrator": {
+        "title": "Missions-Orchestrator",
+        "description": "Beschreibe ein Ziel in natürlicher Sprache — der Planer zerlegt es in Agenten"
+      },
+      "voiceAgent": {
+        "title": "Sprachagent mit Werkzeugen",
+        "description": "Sprachfähigen Agenten mit STT, TTS und Funktionsaufrufen erstellen"
+      },
+      "orchestrationGraph": {
+        "title": "Ausführungsgraph (Review-Loop)",
+        "description": "Zyklischen Review-Workflow mit menschlichen Approval-Gates aufbauen"
+      },
+      "imageGeneration": {
+        "title": "Strukturierte Ausgabe (Zod)",
+        "description": "Typisierte, validierte Daten aus unstrukturiertem Text mit beliebigem Provider extrahieren"
       }
     },
     "cta": {
-      "title": "Ready to Build Your First Agent?",
-      "description": "Get started with AgentOS in less than 5 minutes. Install the SDK and follow our interactive tutorial.",
-      "button": "Start Building",
-      "time": "5 min"
+      "title": "Bereit, deinen ersten Agenten zu bauen?",
+      "description": "Starte mit AgentOS in weniger als 5 Minuten. Installiere das SDK und folge unserem interaktiven Tutorial.",
+      "button": "Loslegen",
+      "time": "5 Min."
     }
   },
   "workbench": {
@@ -1332,15 +1377,15 @@
         "hyde": {
           "name": "HyDE",
           "description": "Generiert hypothetische Antworten fuer besseren Recall bei abstrakten Anfragen.",
-          "badge": "optional"
-          ,"citation": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+          "badge": "optional",
+          "citation": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
           "citationUrl": "https://arxiv.org/abs/2212.10496"
         },
         "graphrag": {
           "name": "GraphRAG",
           "description": "Gemeinschaftsbewusster Abruf ueber Wissensgraph mit Louvain-Clustering.",
-          "badge": ""
-          ,"citation": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+          "badge": "",
+          "citation": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
           "citationUrl": "https://arxiv.org/abs/2404.16130"
         },
         "hybrid": {
@@ -1352,9 +1397,9 @@
     }
   },
   "emergent": {
-    "badge": "Runtime Intelligence",
-    "title": "Emergent Capabilities",
-    "subtitle": "Agents that forge their own tools and spawn specialist sub-agents at runtime",
+    "badge": "Runtime-Intelligenz",
+    "title": "Emergente Fähigkeiten",
+    "subtitle": "Agenten, die zur Laufzeit eigene Werkzeuge schmieden und Spezialisten-Sub-Agenten erzeugen",
     "statPills": [
       "Lifetime tiers: session / agent / shared",
       "Judge approval required",
@@ -1362,17 +1407,17 @@
       "Auto-promotion on reliability"
     ],
     "tabs": {
-      "toolForging": "Runtime Tool Forging",
-      "agentSynthesis": "Agent Synthesis",
-      "selfImproving": "Self-Improving Patterns"
+      "toolForging": "Runtime-Tool-Forging",
+      "agentSynthesis": "Agenten-Synthese",
+      "selfImproving": "Selbstverbessernde Muster"
     },
     "forging": {
-      "step1": "Identify Gap",
-      "step2": "Write Spec",
-      "step3": "Judge Evaluates",
-      "step4": "Tool Activated",
-      "step5": "Agent Uses It",
-      "description": "When an agent encounters a task it cannot handle with existing tools, it writes a new tool definition on the fly. A judge agent evaluates safety and correctness before activation. Approved tools are sandbox-executed and tracked for reliability-based promotion.",
+      "step1": "Lücke identifizieren",
+      "step2": "Spec schreiben",
+      "step3": "Richter bewertet",
+      "step4": "Tool aktiviert",
+      "step5": "Agent nutzt es",
+      "description": "Wenn ein Agent auf eine Aufgabe trifft, die er mit vorhandenen Tools nicht bewältigen kann, schreibt er spontan eine neue Tool-Definition. Ein Richter-Agent bewertet Sicherheit und Korrektheit vor der Aktivierung. Genehmigte Tools werden in einer Sandbox ausgeführt und für eine zuverlässigkeitsbasierte Beförderung verfolgt.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",
@@ -1383,86 +1428,108 @@
     },
     "synthesis": {
       "orchestrator": "Orchestrator",
-      "specialist1": "Data Analyst",
-      "specialist2": "Code Reviewer",
-      "specialist3": "Content Writer",
-      "specialist4": "Fact Checker",
-      "resultsMerge": "Results merge back to orchestrator",
-      "description": "Agencies dynamically spawn new agents with specific personas and skills when the existing roster cannot cover a sub-task. The orchestrator identifies the capability gap, synthesises a specialist agent with tailored instructions, and merges its output back into the main workflow. Requires approval when HITL gates are configured."
+      "specialist1": "Datenanalyst",
+      "specialist2": "Code-Reviewer",
+      "specialist3": "Content-Autor",
+      "specialist4": "Faktenprüfer",
+      "resultsMerge": "Ergebnisse fließen zurück in den Orchestrator",
+      "description": "Agencies erzeugen dynamisch neue Agenten mit spezifischen Personas und Skills, wenn der bestehende Roster eine Sub-Aufgabe nicht abdecken kann. Der Orchestrator identifiziert die Capability-Lücke, synthetisiert einen Spezialisten-Agenten mit maßgeschneiderten Anweisungen und führt seine Ausgabe zurück in den Hauptworkflow. Erfordert Genehmigung, wenn HITL-Gates konfiguriert sind."
     },
     "loop": {
-      "execute": "Execute",
-      "observe": "Observe Outcome",
-      "update": "Update Strategy",
-      "executeBetter": "Execute Better",
-      "circuitBreaker": "Circuit breaker on failures",
-      "styleAdaptation": "Style adaptation (user prefs)",
-      "memoryConsolidation": "Memory consolidation",
-      "description": "Agents learn from failures and adapt their approach over time. Tool failure tracking triggers circuit breakers to avoid repeated errors. Style adaptation learns user preferences for formality, verbosity, and technicality. Memory consolidation strengthens useful memories and lets irrelevant ones decay via Ebbinghaus curves."
+      "execute": "Ausführen",
+      "observe": "Ergebnis beobachten",
+      "update": "Strategie aktualisieren",
+      "executeBetter": "Besser ausführen",
+      "circuitBreaker": "Schutzschalter bei Fehlern",
+      "styleAdaptation": "Stil-Anpassung (Benutzerpräferenzen)",
+      "memoryConsolidation": "Memory-Konsolidierung",
+      "description": "Agenten lernen aus Fehlern und passen ihren Ansatz im Laufe der Zeit an. Tool-Fehler-Tracking löst Schutzschalter aus, um wiederholte Fehler zu vermeiden. Stil-Anpassung lernt Benutzerpräferenzen für Formalität, Verbosität und Technikalität. Memory-Konsolidierung stärkt nützliche Erinnerungen und lässt irrelevante via Ebbinghaus-Kurven verblassen."
     },
-    "ctaExploreDocs": "Explore Emergent Capabilities"
+    "ctaExploreDocs": "Emergente Fähigkeiten erkunden"
   },
   "agencySection": {
-    "badge": "Multi-Agent Orchestration",
+    "badge": "Multi-Agenten-Orchestrierung",
     "title": "Parallel Agency",
-    "subtitle": "Coordinate teams of specialized GMIs with 6 built-in execution strategies. Agents share memory, communicate through structured channels, and execute tasks in sequential, parallel, or dependency-based order.",
-    "codeExampleLabel": "Code Example",
-    "sharedCapabilitiesTitle": "Shared Across All Strategies",
+    "subtitle": "Koordiniere Teams spezialisierter GMIs mit 6 integrierten Ausführungsstrategien. Agenten teilen sich Memory, kommunizieren über strukturierte Kanäle und führen Aufgaben in sequenzieller, paralleler oder abhängigkeitsbasierter Reihenfolge aus.",
+    "codeExampleLabel": "Code-Beispiel",
+    "sharedCapabilitiesTitle": "Über alle Strategien hinweg geteilt",
     "strategies": {
       "sequential": {
-        "name": "Sequential",
-        "description": "Agents run one after another in a linear pipeline. Each agent receives the previous agent's output as context, forming a progressive refinement chain."
+        "name": "Sequenziell",
+        "description": "Agenten laufen nacheinander in einer linearen Pipeline. Jeder Agent erhält die Ausgabe des vorherigen als Kontext und bildet so eine progressive Verfeinerungskette."
       },
       "parallel": {
         "name": "Parallel",
-        "description": "All agents run concurrently. Their outputs are merged by a synthesis step that combines perspectives into a single coherent response."
+        "description": "Alle Agenten laufen gleichzeitig. Ihre Ausgaben werden durch einen Synthese-Schritt zusammengeführt, der Perspektiven zu einer einheitlichen, kohärenten Antwort kombiniert."
       },
       "debate": {
         "name": "Debate",
-        "description": "Agents argue and refine a shared answer over multiple rounds. A judge evaluates arguments and selects the strongest position."
+        "description": "Agenten argumentieren und verfeinern eine gemeinsame Antwort über mehrere Runden. Ein Richter bewertet die Argumente und wählt die stärkste Position aus."
       },
       "reviewLoop": {
-        "name": "Review Loop",
-        "description": "One agent produces output, another reviews and requests revisions. The loop continues until the reviewer approves or max rounds are reached."
+        "name": "Review-Loop",
+        "description": "Ein Agent erzeugt die Ausgabe, ein anderer reviewt und fordert Revisionen an. Die Schleife läuft, bis der Reviewer genehmigt oder die maximalen Runden erreicht sind."
       },
       "hierarchical": {
-        "name": "Hierarchical",
-        "description": "A coordinator agent dispatches sub-tasks to specialist agents via tool calls. The coordinator decides which agents to invoke and in what order at runtime."
+        "name": "Hierarchisch",
+        "description": "Ein Koordinator-Agent verteilt Sub-Aufgaben über Tool-Calls an Spezialisten-Agenten. Der Koordinator entscheidet zur Laufzeit, welche Agenten in welcher Reihenfolge aufgerufen werden."
       },
       "graph": {
         "name": "Graph (DAG)",
-        "description": "Agents declare explicit dependencies via dependsOn. The orchestrator topologically sorts agents into tiers and runs each tier concurrently."
+        "description": "Agenten deklarieren explizite Abhängigkeiten über dependsOn. Der Orchestrator sortiert die Agenten topologisch in Tiers und führt jeden Tier parallel aus."
+      },
+      "review-loop": {
+        "name": "Review-Loop",
+        "description": "Ein Agent erzeugt die Ausgabe, ein anderer reviewt und fordert Revisionen an. Die Schleife läuft, bis der Reviewer genehmigt oder die maximalen Runden erreicht sind."
       }
     },
     "diagrams": {
       "agentA": "Agent A",
       "agentB": "Agent B",
       "agentC": "Agent C",
-      "input": "Input",
-      "synthesis": "Synthesis",
-      "proponent": "Proponent",
-      "critic": "Critic",
-      "judge": "Judge",
-      "roundN": "Round N",
-      "drafter": "Drafter",
+      "input": "Eingabe",
+      "synthesis": "Synthese",
+      "proponent": "Befürworter",
+      "critic": "Kritiker",
+      "judge": "Richter",
+      "roundN": "Runde N",
+      "drafter": "Verfasser",
       "reviewer": "Reviewer",
       "approved": "OK?",
-      "output": "Out",
+      "output": "Ausgabe",
       "orchestrator": "Orchestrator",
-      "specialistA": "Researcher",
-      "specialistB": "Coder",
-      "specialistC": "Writer",
-      "researcher": "Researcher",
-      "writer": "Writer",
+      "specialistA": "Forscher",
+      "specialistB": "Entwickler",
+      "specialistC": "Autor",
+      "researcher": "Forscher",
+      "writer": "Autor",
       "illustrator": "Illustrator"
     },
     "sharedCapabilities": {
-      "sharedMemory": "Shared Memory",
-      "hitlGates": "HITL Approval Gates",
-      "streamingOutput": "Streaming Output",
-      "resourceControls": "Resource Controls",
-      "perAgentGuardrails": "Per-Agent Guardrails"
+      "sharedMemory": "Geteiltes Memory",
+      "hitlGates": "HITL-Approval-Gates",
+      "streamingOutput": "Streaming-Ausgabe",
+      "resourceControls": "Ressourcen-Kontrollen",
+      "perAgentGuardrails": "Guardrails pro Agent"
     },
-    "ctaExploreDocs": "Explore Agency API"
+    "ctaExploreDocs": "Agency-API erkunden"
+  },
+  "benchmarks": {
+    "badge": "SOTA · LongMemEval · LOCOMO · Phase B N=500",
+    "title": "Memory-Benchmarks mit identischem Reader",
+    "subtitle": "Ehrlicher Apples-to-Apples-Vergleich: gleicher gpt-4o-Reader, gleicher Datensatz, gleiche Phase-B-N=500-Methodik, gleicher gpt-4o-2024-08-06-Richter mit Rubric 2026-04-18.1. Cross-Provider-Konfigurationen sind ausgeschlossen, weil sie aus öffentlichen Methodikangaben nicht reproduzierbar sind.",
+    "tabS": "LongMemEval-S (115K Tokens)",
+    "tabM": "LongMemEval-M (1,5M Tokens)",
+    "highlightSAccuracy": "AgentOS LongMemEval-S",
+    "highlightSValue": "85,6%",
+    "highlightSCi": "[82,4 %, 88,6 %] · 0,0090 $/korrekt · 4 Sekunden durchschnittliche Latenz",
+    "highlightMAccuracy": "AgentOS LongMemEval-M",
+    "highlightMValue": "70,2%",
+    "highlightMCi": "[66,0 %, 74,0 %] · Erste Open-Source-Bibliothek über 65 % bei der 1,5M-Token-Variante",
+    "matrixIntro": "Identischer gpt-4o-Reader, Phase B N=500. Bootstrap-CIs verwenden 10.000 Mulberry32-Resampling mit seed=42.",
+    "ctaReadAudit": "Transparenz-Audit lesen",
+    "ctaSeeRunJsons": "Run-JSONs auf GitHub ansehen",
+    "ctaBenchmarksPage": "Vollständige Benchmark-Referenz",
+    "footnote": "Mastra OM 94,9%, Mem0 v3 93,4%, Hindsight 91,4%, agentmemory 96,2% und Supermemory 85,2% nutzen allesamt Cross-Provider-Reader (gpt-5-mini, gemini-3-pro) oder Managed-Platform-Infrastruktur, bei der das zugrundeliegende Richter-Modell, die Rubric und der Seed nicht veröffentlicht werden. Der Vergleich mit identischem Reader oben ist das, was sich aus der von jedem Anbieter offengelegten Methodik unabhängig reproduzieren lässt."
   }
 }
