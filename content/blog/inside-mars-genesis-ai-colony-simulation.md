@@ -4,11 +4,28 @@ date: "2026-04-17"
 excerpt: "Mars Genesis is a six-turn, thirty-colonist AI civilization simulation where two commanders with opposing HEXACO personality profiles run the same seed and produce measurably different outcomes. This is the end-to-end case study: how the forge-and-reuse economy, personality-weighted memory, and cognitive substrate combine so the Visionary's toolbox diverges from the Engineer's while both share identical starting conditions."
 author: "AgentOS Team"
 category: "Engineering"
+audience: "evaluator"
 image: "/img/blog/og/inside-mars-genesis-ai-colony-simulation.png"
 keywords: "mars colony ai simulation, hexaco ai agents, cognitive memory ai agents, emergent tool forging llm, call forged tool reuse, typescript ai agent framework, personality driven llm agents, llm as judge, v8 isolate sandbox ai, runtime tool generation llm, agent based simulation, two leader one seed"
 ---
 
-> **Editor's note (2026-04-23):** Paracosm's positioning has evolved since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, 2025). The case study below stays accurate; the category label changed. For the updated placement against Sora / Genie 3 / MiroFish / OASIS / Concordia and the seven claim pillars, see [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model).
+> "I had been in love before — but never had I seen it twice in the same Mars."
+>
+> — paraphrased after Ray Bradbury, *The Martian Chronicles*, 1950
+
+> **Editor's note (2026-04-23):** Paracosm's positioning has evolved since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, 2025). The case study below stays accurate; the category label changed. For the updated placement against Sora / Genie 3 / MiroFish / OASIS / Concordia and the seven claim pillars, see [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model). For the long-form essay, see [Paracosm 2026 Overview](/blog/paracosm-2026-overview).
+
+There is a particular moment in Mars Genesis I think about more than I should. It is turn three, year 2051. Dietrich Voss's chief medical officer has just been faced with a solar-storm radiation event that her existing toolbox doesn't cover. She does not pick an option from a menu. She writes a tool. The function gets approved, runs inside a sandbox, returns a projected exposure number, and her commander reads that number three seconds later. By turn four every other department in the session can call her tool for tens of tokens of dispatch.
+
+I spent my career assuming that "agent" meant "LLM in a costume." Watching Dr. Priya Singh forge a radiation-dose calculator at runtime was the moment I revised that. An agent is something that can extend its own toolbox at the speed of a thought, and the kernel either lets it or it doesn't. Mars Genesis is the demonstration that, in our hands, the kernel lets it, the judge approves the right ones, the sandbox catches the wrong ones, and the outcome at turn six is shaped as much by what got forged as by what was on the menu when the run started.
+
+This post is the case study version of [the long-form Paracosm 2026 overview](/blog/paracosm-2026-overview). If the overview is the philosophical tour, this is the autopsy: turn-by-turn, what the engineer commander did, what the visionary commander did, why their colonies diverged, and how to read the artifact when you run your own version.
+
+<video controls poster="/img/blog/paracosm/digital-twin-atlas-lab-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
+  <source src="/img/blog/paracosm/digital-twin-atlas-lab.mp4" type="video/mp4">
+</video>
+
+The video above is Atlas's lab walkthrough: the Engineer commander's path through the same six turns, captured from the dashboard. Pause it on turn three and you'll see the same radiation event resolve very differently than Maria's version.
 
 ## The moment a colonist writes a tool
 
@@ -234,12 +251,62 @@ Mortality in Paracosm is not a single age-stepped roll. The kernel simulates six
 
 Every death carries the cause as a string in the event stream. The stats bar renders the distribution inline as a chip: `DEATHS 8 (3 radiation · 2 accident · 1 despair / 5 age)`. The verdict LLM at the end of a run sees the per-leader breakdown and writes about the specific pattern — a Visionary whose crew died to accidents reads very differently from an Engineer whose crew died to despair. Partnerships form during progression when unpartnered adults have high HEXACO compatibility and morale clears a floor; births prefer partnered couples at triple the unpartnered rate; conditions clear at different rates depending on severity. The population dynamics are not props in the story. They are the story the HEXACO-driven decisions leave behind.
 
+## Reproduce this yourself
+
+Three steps. Five minutes if your network and `OPENAI_API_KEY` cooperate.
+
+```bash
+npm install paracosm
+```
+
+```ts
+import { Paracosm } from 'paracosm';
+
+const sim = new Paracosm();
+const scenario = await sim.compileScenario({ preset: 'mars-genesis' });
+
+const dietrich = await sim.runTurnLoop({
+  scenario,
+  leader: { archetype: 'engineer' }, // high Conscientiousness, low Openness
+  seed: 950,
+  turns: 6,
+});
+
+const aria = await sim.runTurnLoop({
+  scenario,
+  leader: { archetype: 'visionary' }, // high Openness, low Conscientiousness
+  seed: 950, // SAME seed
+  turns: 6,
+});
+
+console.log(sim.diff(dietrich, aria));
+```
+
+The diff renders the per-turn divergence: which decisions differed, which tools were forged in one run but not the other, which mortality causes hit. Read the dashboard for the visual version. Read the artifact for the programmatic one.
+
+## FAQ
+
+**Is Mars Genesis the only scenario?** No. Mars Genesis is the *reference* scenario shipped with paracosm. The same kernel runs any scenario you can express in the five-bag JSON shape (`metrics`, `capacities`, `statuses`, `politics`, `environment`).
+
+**Why HEXACO instead of Big Five?** HEXACO is the smallest set of dimensions that produces visibly distinct simulator behavior in our hands. Big Five works almost as well; the Lee & Ashton 2007 paper makes the case that Honesty-Humility deserves to be a separate axis, and the data backs that up. We added their sixth axis and the simulator got better.
+
+**Are deaths actually deterministic?** Yes. Each death has a kernel-attributed cause (natural / radiation / accident / starvation / despair / fatal fracture) and the cause is recorded in the artifact. Same seed + same leader produces the same death sequence. The per-cause probabilities depend on per-colonist state and on the run's accumulated environment, so the divergence between leaders surfaces in mortality patterns too.
+
+**Can I run more than two commanders?** Yes. `runBatch({ scenario, leaders: [...], seed: ... })` runs N leaders against one scenario. The diff helper extends to N-way; the dashboard renders an N-column timeline.
+
+**How much does a run cost?** A six-turn Mars Genesis run with default settings costs in the low tens of cents. Cost is dominated by forge proposals (many tokens) and judge approvals (separate model calls). Reuse of forged tools after turn three is the largest cost-flattening lever.
+
+**What's "leader-pull" and how is it different from prompting?** Leader-pull is a kernel-encoded drift force that nudges department heads' HEXACO traits toward their commander's profile over turns. It's not a prompt — it's a numerical update applied at turn boundaries to the trait vectors the kernel uses for downstream decision biasing. Prompt-only personality dissolves under pressure; kernel-encoded personality survives across turns.
+
+**Can I see the full artifact?** Yes. Every run writes a `RunArtifact` JSON object covering scenario, leader, seed, turns, decisions, forges, judge verdicts, mortality events, citations, and cost. The dashboard renders it; the schema is exported via Zod and re-exportable to JSON Schema for non-TypeScript consumers.
+
 ## What to read next
 
+- [Paracosm 2026 Overview](/blog/paracosm-2026-overview). The long-form essay version of the project.
+- [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-structured-world-model). Academic placement, taxonomy, and lineage.
 - [Build an AI Civilization Simulation in 5 Minutes with Paracosm](/blog/build-ai-civilization-simulation-paracosm). The 5-minute tutorial.
+- [Mars Genesis vs MiroFish (engineering)](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation). Top-down vs bottom-up swarm comparison.
 - [Emergent Tool Forging and HEXACO Leaders](/blog/emergent-tools-hexaco-leaders). Two-leader-one-seed comparison from a forge-machinery angle.
-- [Adaptive vs Emergent: Two Approaches to Agent Capability](/blog/adaptive-vs-emergent). Why forge and not fetch.
-- [Building AI Companions with Agentic Tools](/blog/building-ai-companions-agentic-tools). The companion side of the same stack.
 - [Announcing AgentOS](/blog/announcing-agentos). The framework, end to end.
 
 Paracosm is open source. AgentOS is open source. The Mars Genesis scenario ships as a default and runs the moment you `npm install paracosm`, or hosted at [paracosm.agentos.sh](https://paracosm.agentos.sh) with a one-click demo run. The engine does not care who leads the colony, which six traits they carry, or what crisis they face. It cares how they decide, what they remember, what tools they forge, and how aggressively they reuse. Two leaders under the same seed produce different histories because those five questions resolve differently for each of them. That is the case study.
