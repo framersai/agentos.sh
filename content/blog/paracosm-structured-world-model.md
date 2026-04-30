@@ -4,9 +4,24 @@ date: "2026-04-23"
 excerpt: "In 2026, 'world model' has two distinct meanings. Sora, Genie 3, and World Labs Marble generate pixels and 3D scenes. Eric Xing's arXiv paper argues a world model's real job is simulating all actionable possibilities for decision-making, and the ACM CSUR 2025 survey separates the two branches formally. Paracosm is the second kind: a structured, reproducible, counterfactual world simulator for AI agents. This post places it on the 2026 world-model map and explains what that means for developers."
 author: "AgentOS Team"
 category: "Engineering"
+audience: "evaluator"
 image: "/img/blog/og/paracosm-structured-world-model.png"
 keywords: "structured world model, counterfactual world simulation model, CWSM, LLM based world model, paracosm positioning, world model taxonomy, Sora Genie alternative, symbolic world model, multi-agent simulation, HEXACO AI agents, digital twin LLM, reproducible simulation, deterministic seeded kernel, agent based modeling, OASIS MiroFish comparison"
 ---
+
+> "The Garden of Forking Paths is an enormous riddle, or parable, whose theme is time… He believed in an infinite series of times, in a growing, dizzying net of divergent, convergent and parallel times."
+>
+> — Borges, *The Garden of Forking Paths*, 1941
+
+There is a particular kind of confusion that happens when you tell someone you've built a world model. They think you mean Sora. You meant Borges. They are both right; they're answering different questions. This post is the disambiguation — the technical placement of paracosm against the 2026 world-model landscape, with the receipts for every claim.
+
+If you want the personal essay version of this material, it's at [Paracosm: Counterfactual World Simulation in 2026](/blog/paracosm-2026-overview). This post is the academic-placement version. Both are accurate. The narrative one is shorter; this one has more tables.
+
+<video controls poster="/img/blog/paracosm/branches-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
+  <source src="/img/blog/paracosm/branches.mp4" type="video/mp4">
+</video>
+
+The video above is paracosm's Branches view: forks across a multi-leader run, color-coded by leader, one diverging tree per scenario. It is the closest thing to a runnable Borgesian library a TypeScript package will get you in 2026.
 
 ## Two meanings of "world model" in 2026
 
@@ -136,3 +151,30 @@ npm install paracosm
 - [Case study: Inside Mars Genesis](https://agentos.sh/blog/inside-mars-genesis-ai-colony-simulation): a run, analyzed turn by turn
 
 If you want to scope paracosm to a specific vertical (digital twins, policy simulation, game-world NPC civilization generation, defense wargaming, corporate strategy), email [team@frame.dev](mailto:team@frame.dev). The open-source engine is unlimited; the hosted tiers for distributed fleet orchestration and persistence are on the roadmap.
+
+## FAQ
+
+**Is paracosm a digital twin?** It can be used as one, specifically through the `batch-trajectory` mode (real-world entity, labeled timepoints over a horizon, counterfactual interventions). But paracosm is broader than digital twins: it also covers civilization simulations and one-shot forecasts.
+
+**How does paracosm relate to agent-based modeling?** Classical ABM tooling (Mesa, NetLogo, MASON, AnyLogic, ABIDES) is generally rule-based or statistical and non-LLM. Paracosm uses LLMs for event generation and specialist reasoning while keeping a deterministic kernel for state transitions. The bridge literature is the [Nature HSSC 2024 survey on LLM-empowered ABM](https://www.nature.com/articles/s41599-024-03611-3) and MIT Media Lab's [On the limits of agency in agent-based models](https://arxiv.org/abs/2409.10568).
+
+**Can paracosm replace Sora-style world models?** No, and we're not trying to. Sora-class models generate perceptual continuations; paracosm enumerates actionable possibilities. They serve different jobs and could in principle be composed (Sora-style to render the look of a paracosm run), but they do not substitute for each other.
+
+**Is paracosm a physics simulator?** No. The kernel applies symbolic state transitions. There is no fluid dynamics, no rigid-body mechanics, no chemistry engine. If you need physics, run a physics simulator and feed its outputs into paracosm via `ScenarioPackage` updates.
+
+**How is paracosm different from MiroFish?** Direction: top-down (leader-driven) vs bottom-up (emergent). Scale: ~100 agents vs 1k–1M. Determinism: seeded kernel vs emergent stochasticity. Paracosm's product is "same world, different leader, measure the divergence." MiroFish's product is "seed document, swarm prediction, aggregate forecast." Both are useful; they answer different questions. The full table is in §What paracosm is not above.
+
+**How is paracosm different from OASIS?** Same comparison as MiroFish (OASIS is the underlying framework MiroFish is built on). Direction, scale, determinism, output shape all differ.
+
+**Is paracosm just an LLM in a costume?** No. The kernel is deterministic, seeded, and rule-based. The LLM generates events and specialist analyses, but state transitions are kernel-applied. Paracosm without the kernel would be a chat agent. Paracosm without the LLM would be classical ABM. The combination is the product.
+
+**Is the artifact replayable?** Yes. The artifact captures the seed, the scenario, the leader profile, every decision, every tool forge, every kernel state transition. Same artifact + same package version + same LLM + same temperature = same result. We use this for regression tests in the agentos-bench harness.
+
+## Where to go next
+
+- [Paracosm 2026 Overview](/blog/paracosm-2026-overview) for the long-form essay version of this material
+- [Inside Mars Genesis](/blog/inside-mars-genesis-ai-colony-simulation) for the case study
+- [Build an AI Civilization Simulation in 5 Minutes](/blog/build-ai-civilization-simulation-paracosm) for the tutorial
+- [Mars Genesis vs MiroFish on docs.agentos.sh](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation) for the head-to-head engineering comparison
+- [Live demo](https://paracosm.agentos.sh/sim)
+- [GitHub](https://github.com/framersai/paracosm)
