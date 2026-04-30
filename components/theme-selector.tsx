@@ -81,7 +81,7 @@ const THEME_ICONS: Record<ThemeName, (props: { className?: string }) => React.Re
  * swatches, and descriptions.
  */
 export function ThemeSelector() {
-  const [currentTheme, setCurrentTheme] = useState<ThemeName>('aurora-daybreak');
+  const [currentTheme, setCurrentTheme] = useState<ThemeName>('twilight-neo');
   const [isOpen, setIsOpen] = useState(false);
   const { theme: mode, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);

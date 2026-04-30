@@ -516,14 +516,14 @@ export function applyTheme(themeName: ThemeName, isDark?: boolean) {
   root.setAttribute('data-theme', themeName);
 }
 
-// Get default theme based on system preference
+// Get default theme. Honors saved user preference if present, otherwise
+// returns `twilight-neo` regardless of system light/dark preference. The
+// site's brand identity is the dark-mode neon-cyan palette; the
+// twilight-neo theme is the canonical look for first-time visitors.
 export function getDefaultTheme(): ThemeName {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem('agentos-theme') as ThemeName;
     if (saved && themes[saved]) return saved;
-
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return systemPrefersDark ? 'twilight-neo' : 'aurora-daybreak';
   }
-  return 'aurora-daybreak';
+  return 'twilight-neo';
 }
