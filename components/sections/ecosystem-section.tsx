@@ -177,34 +177,71 @@ export function EcosystemSection() {
     let cancelled = false
     const fetchStats = async () => {
       try {
-        const repoTargets = ['agentos', 'agentos-extensions', 'agentos-client']
-        const githubResponses = await Promise.all(
-          repoTargets.map(async (repo) => {
-            const response = await fetch(`https://api.github.com/repos/framersai/${repo}`)
-            if (!response.ok) {
-              throw new Error('github')
-            }
-            return response.json()
-          })
-        )
-        const stars = githubResponses.reduce(
-          (sum, repo) => sum + (repo?.stargazers_count ?? 0),
-          0
-        )
-        let downloads: number | null = null
+        // Live: enumerate ALL public repos in the framersai org (paginated;
+        // GitHub returns 30 per page by default, ask for 100). Sum stargazers
+        // across every repo, count repos directly. Fallback to repositories
+        // array length if the API call fails.
+        let publicRepos: { name: string; stargazers_count?: number; fork?: boolean }[] = []
         try {
-          const npmResponse = await fetch('https://api.npmjs.org/downloads/point/last-week/@framers/agentos')
-          if (npmResponse.ok) {
-            const npmJson = await npmResponse.json()
-            downloads = npmJson?.downloads ?? null
+          const orgRes = await fetch(
+            'https://api.github.com/orgs/framersai/repos?per_page=100&type=public&sort=updated'
+          )
+          if (orgRes.ok) {
+            publicRepos = await orgRes.json()
           }
         } catch {
-          // Ignore npm stats errors in production to avoid noisy logs
+          publicRepos = []
+        }
+        const realRepos = publicRepos.filter((r) => !r.fork)
+        const stars = realRepos.reduce(
+          (sum, repo) => sum + (repo.stargazers_count ?? 0),
+          0
+        )
+        const repoCount = realRepos.length || repositories.length
+
+        // Live: aggregate weekly downloads across the @framers/* npm packages
+        // we publish. npm point endpoint accepts comma-joined scoped names
+        // only via the multi-package endpoint (returns object keyed by name).
+        const npmPackages = [
+          '@framers/agentos',
+          '@framers/agentos-extensions',
+          '@framers/agentos-extensions-registry',
+          '@framers/agentos-skills',
+          '@framers/agentos-skills-registry',
+          '@framers/agentos-personas',
+          '@framers/agentos-ext-topicality',
+          '@framers/agentos-ext-ml-classifiers',
+          '@framers/agentos-ext-skills',
+          '@framers/agentos-ext-http-api',
+          '@framers/agentos-ext-grounding-guard',
+          '@framers/agentos-ext-pii-redaction',
+          '@framers/agentos-ext-code-safety',
+          '@framers/agentos-bench',
+          'paracosm',
+        ]
+        let downloads: number | null = null
+        try {
+          // Scoped packages need individual point requests (npm's batch endpoint
+          // doesn't support scoped names). Run in parallel; sum what succeeds.
+          const npmResponses = await Promise.all(
+            npmPackages.map((pkg) =>
+              fetch(`https://api.npmjs.org/downloads/point/last-week/${pkg}`)
+                .then((r) => (r.ok ? r.json() : null))
+                .catch(() => null)
+            )
+          )
+          const total = npmResponses.reduce(
+            (sum, r) => sum + (r?.downloads ?? 0),
+            0
+          )
+          downloads = total > 0 ? total : null
+        } catch {
           downloads = null
         }
+
         if (!cancelled) {
           setLiveStats({
-            repos: repositories.length,
+            repos: repoCount,
             stars,
             downloads,
             loading: false
