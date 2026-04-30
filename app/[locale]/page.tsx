@@ -33,69 +33,72 @@ const CognitiveSectionLazy = dynamic(
   { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
-// Twelve below-fold sections were previously `ssr: false`. Their first
-// render produces text content that should be in the static HTML for
-// search engines: H2 headlines, intro paragraphs, feature lists, etc.
-// Switching to `ssr: true` server-renders the initial markup; the
-// client still hydrates for interactivity (state toggles, hover, etc.).
+// Twelve below-fold sections stay `ssr: false`. We previously experimented
+// with `ssr: true` to put their text content in static HTML for crawlers,
+// but that flipped mobile TBT from ~1.4s to ~6.2s on desktop and dropped
+// mobile perf 67 → 23. Hydrating 12 framer-motion + next-intl client
+// components in series is too costly for marginal SEO gain. The SSR
+// shells below (DemoVideo, Cognitive, Skyline) deliver the SEO win at a
+// fraction of the hydration cost, and the converted-to-SSR-shell pattern
+// is the right one to extend if we want more sections crawler-visible.
 const ProductCardsLazy = dynamic(
   () => import('../../components/sections/product-cards').then(m => m.ProductCards),
-  { ssr: true, loading: () => <div className="min-h-[400px]" /> }
+  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
 )
 
 const GMISectionLazy = dynamic(
   () => import('../../components/sections/gmi-section').then(m => m.GMISection),
-  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const AgencySectionLazy = dynamic(
   () => import('../../components/sections/agency-section').then(m => m.AgencySection),
-  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const EmergentSectionLazy = dynamic(
   () => import('../../components/sections/emergent-section').then(m => m.EmergentSection),
-  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const CodeExamplesSectionLazy = dynamic(
   () => import('../../components/sections/code-examples-section').then(m => m.CodeExamplesSection),
-  { ssr: true, loading: () => <div className="min-h-[400px]" /> }
+  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
 )
 
 const EcosystemSectionLazy = dynamic(
   () => import('../../components/sections/ecosystem-section').then(m => m.EcosystemSection),
-  { ssr: true }
+  { ssr: false }
 )
 
 const SocialProofSectionLazy = dynamic(
   () => import('../../components/sections/social-proof-section').then(m => m.SocialProofSection),
-  { ssr: true }
+  { ssr: false }
 )
 
 const FeaturesGridClient = dynamic(
   () => import('../../components/sections/features-grid-client'),
-  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const WorkbenchCTALazy = dynamic(
   () => import('../../components/sections/workbench-cta').then(m => m.WorkbenchCTA),
-  { ssr: true }
+  { ssr: false }
 )
 
 const ParacosmBannerLazy = dynamic(
   () => import('../../components/sections/paracosm-banner').then(m => m.ParacosmBanner),
-  { ssr: true }
+  { ssr: false }
 )
 
 const BenchmarksSectionLazy = dynamic(
   () => import('../../components/sections/benchmarks-section').then(m => m.BenchmarksSection),
-  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const WhitepaperCTALazy = dynamic(
   () => import('../../components/sections/whitepaper-cta').then(m => m.WhitepaperCTA),
-  { ssr: true, loading: () => <div className="min-h-[400px]" /> }
+  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
 )
 
 export default function LandingPageRedesigned() {
