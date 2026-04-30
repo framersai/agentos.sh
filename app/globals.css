@@ -223,6 +223,19 @@
     --border-subtle: var(--color-border-subtle);
     --border-interactive: var(--color-border-interactive);
   }
+
+  /* Theme-aware link colors with WCAG AA contrast.
+   * `--color-text-link` is the canonical link color used by markdown prose.
+   * The :root default (purple) suits most themes; twilight-neo overrides it
+   * to a deep teal in light mode (the cyan accent at 45% lightness fails
+   * AA at ~1.8:1 on the near-white background) and a brighter teal in dark
+   * mode where the deep navy floor lets it stay vivid. */
+  [data-theme="twilight-neo"]:not(.dark) {
+    --color-text-link: hsl(192, 95%, 27%);
+  }
+  [data-theme="twilight-neo"].dark {
+    --color-text-link: hsl(180, 90%, 70%);
+  }
 }
 
 @layer components {
