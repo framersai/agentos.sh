@@ -149,19 +149,19 @@ export function TableOfContents({
     </ul>
   );
 
-  const eyebrow = (
-    <div className="mb-4 flex items-center gap-2">
-      <span
+  const header = (
+    <div className="mb-4 pb-3 border-b border-[var(--color-border-subtle)]">
+      <div
         aria-hidden
-        className="block h-[2px] w-6 rounded-full"
+        className="mb-2 h-[2px] w-10 rounded-full"
         style={{
           background:
             'linear-gradient(90deg, hsl(180, 95%, 60%), hsl(270, 85%, 65%))',
         }}
       />
-      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-        On this page
-      </span>
+      <h2 className="text-[13px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-primary)]">
+        Table of Contents
+      </h2>
     </div>
   );
 
@@ -171,7 +171,7 @@ export function TableOfContents({
         aria-label="Table of contents"
         className="my-8 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-5 lg:hidden"
       >
-        {eyebrow}
+        {header}
         {list}
       </nav>
     );
@@ -180,7 +180,7 @@ export function TableOfContents({
   return (
     <aside aria-label="Table of contents" className="hidden lg:block">
       <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-1">
-        {eyebrow}
+        {header}
         {list}
       </div>
     </aside>

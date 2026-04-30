@@ -18,7 +18,7 @@ LongMemEval-S: 85.6% [82.4%, 88.6%] at $0.0090 per correct, 3.6-second median la
 
 LongMemEval-M: 70.2% [66.0%, 74.0%] at $0.0078 per correct. The strongest M result in the LongMemEval paper itself is 65.7% ([Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)). Across the 14 vendor research pages we audited, no other open-source memory library publishes an M number. AgentBrain, a closed-source SaaS, publishes 71.7% on M; their point estimate falls inside the AgentOS CI.
 
-Both numbers were validated with 95% confidence intervals (10,000 resamples, seed 42), per-case run JSONs at `seed=42`, and judge false-positive-rate probes (1% on S, 2% on M, 0% on LOCOMO). The library is open source under Apache-2.0 at [github.com/framersai/agentos](https://github.com/framersai/agentos); the benchmark harness is MIT-licensed at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench). A single CLI command at the bottom of this post reproduces each headline.
+Both numbers were validated with 95% confidence intervals (10,000 resamples, seed 42), per-case run JSONs at `seed=42`, and judge false-positive-rate probes (1% on S, 2% on M, 0% on LOCOMO). Both the library ([github.com/framersai/agentos](https://github.com/framersai/agentos)) and the benchmark harness ([github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench)) are Apache-2.0. A single CLI command at the bottom of this post reproduces each headline.
 
 The rest of the post covers: the architecture changes that produced each number, the vendor landscape audit, the methodology checks that drive every number above, and the reproduction commands.
 
@@ -160,7 +160,7 @@ The table below covers every memory library or platform with a public LongMemEva
 | [Letta](https://www.letta.com/) (formerly MemGPT) | Apache 2.0 | not published on LongMemEval | not published |
 | [Cognee](https://github.com/topoteretes/cognee) | Apache 2.0 | not published on LongMemEval | not published |
 | [AgentBrain](https://github.com/AgentBrainHQ) | **closed-source SaaS** | not published | **71.7%** (Test 0; requires hosted Brain endpoint to reproduce) |
-| **[agentos-bench](https://github.com/framersai/agentos-bench) (this work)** | **MIT** | **85.6% [82.4%, 88.6%]** | **70.2% [66.0%, 74.0%]** |
+| **[agentos-bench](https://github.com/framersai/agentos-bench) (this work)** | **Apache-2.0** | **85.6% [82.4%, 88.6%]** | **70.2% [66.0%, 74.0%]** |
 
 The full per-vendor audit is at [packages/agentos-bench/docs/COMPETITOR_METHODOLOGY_AUDIT_2026-04-24.md](https://github.com/framersai/agentos-bench/blob/master/docs/COMPETITOR_METHODOLOGY_AUDIT_2026-04-24.md).
 
@@ -445,4 +445,4 @@ Reproducible memory benchmarks require a published seed, configuration, and per-
 
 ---
 
-*Built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). AgentOS is open source under Apache-2.0. agentos-bench is MIT-licensed. [GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos) · [Discord](https://wilds.ai/discord)*
+*Built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). AgentOS and agentos-bench are open source under Apache-2.0. [GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos) · [Discord](https://wilds.ai/discord)*

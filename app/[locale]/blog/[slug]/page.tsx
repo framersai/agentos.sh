@@ -60,7 +60,7 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
   const canonical = `/${locale}/blog/${slug}`;
 
   return (
-    <main id="main-content" className="relative overflow-x-hidden bg-[var(--color-background-primary)] text-[var(--color-text-primary)]">
+    <main id="main-content" className="relative overflow-x-clip bg-[var(--color-background-primary)] text-[var(--color-text-primary)]">
       {/* Article JSON-LD */}
       <script
         type="application/ld+json"
