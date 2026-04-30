@@ -72,7 +72,7 @@ const LONGMEMEVAL_S_ROWS: BenchmarkRow[] = [
     },
   },
   {
-    system: 'EmergenceMem Simple Fast (apples-to-apples in our harness)',
+    system: 'EmergenceMem Simple Fast (rerun in agentos-bench)',
     accuracy: '80.6%',
     ci: '[77.0%, 84.0%]',
     costPerCorrect: '$0.0586',
@@ -116,7 +116,7 @@ const LONGMEMEVAL_M_ROWS: MRow[] = [
     system: 'AgentOS (sem-embed + reader-router + top-K=5)',
     accuracy: '70.2%',
     ci: '[66.0%, 74.0%]',
-    license: 'MIT',
+    license: 'Apache-2.0',
     source: {
       label: '70.2% post',
       href: 'https://docs.agentos.sh/blog/2026/04/29/longmemeval-m-70-with-topk5',
@@ -161,7 +161,7 @@ export function BenchmarksSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium uppercase tracking-wider text-white/70 backdrop-blur"
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] px-4 py-2 text-xs font-medium uppercase tracking-wider text-[var(--color-text-secondary)] backdrop-blur"
         >
           <Trophy className="h-3.5 w-3.5" style={{ color: accent }} aria-hidden />
           {t('badge')}
@@ -181,7 +181,7 @@ export function BenchmarksSection() {
           >
             <span className="gradient-text">{t('title')}</span>
           </h2>
-          <p className="text-lg leading-relaxed text-white/70">{t('subtitle')}</p>
+          <p className="text-lg leading-relaxed text-[var(--color-text-secondary)]">{t('subtitle')}</p>
         </motion.div>
 
         {/* Headline numbers */}
@@ -192,29 +192,35 @@ export function BenchmarksSection() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mb-12 grid grid-cols-1 gap-6 md:grid-cols-2"
         >
-          <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur">
-            <div className="mb-2 text-sm font-medium uppercase tracking-wider text-white/60">
+          <div className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-8 backdrop-blur">
+            <div className="mb-2 text-sm font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
               {t('highlightSAccuracy')}
             </div>
             <div
-              className="mb-2 text-6xl font-bold tracking-tight"
-              style={{ color: accent }}
+              className="mb-2 bg-clip-text text-6xl font-bold tracking-tight text-transparent"
+              style={{
+                backgroundImage:
+                  'linear-gradient(135deg, hsl(180, 95%, 45%) 0%, hsl(270, 85%, 55%) 100%)',
+              }}
             >
               {t('highlightSValue')}
             </div>
-            <div className="text-sm text-white/70">{t('highlightSCi')}</div>
+            <div className="text-sm text-[var(--color-text-secondary)]">{t('highlightSCi')}</div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur">
-            <div className="mb-2 text-sm font-medium uppercase tracking-wider text-white/60">
+          <div className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-8 backdrop-blur">
+            <div className="mb-2 text-sm font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
               {t('highlightMAccuracy')}
             </div>
             <div
-              className="mb-2 text-6xl font-bold tracking-tight"
-              style={{ color: accent }}
+              className="mb-2 bg-clip-text text-6xl font-bold tracking-tight text-transparent"
+              style={{
+                backgroundImage:
+                  'linear-gradient(135deg, hsl(180, 95%, 45%) 0%, hsl(270, 85%, 55%) 100%)',
+              }}
             >
               {t('highlightMValue')}
             </div>
-            <div className="text-sm text-white/70">{t('highlightMCi')}</div>
+            <div className="text-sm text-[var(--color-text-secondary)]">{t('highlightMCi')}</div>
           </div>
         </motion.div>
 
@@ -234,8 +240,8 @@ export function BenchmarksSection() {
             onClick={() => setActiveTab('s')}
             className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
               activeTab === 's'
-                ? 'border border-white/30 bg-white/10 text-white'
-                : 'border border-white/10 bg-transparent text-white/60 hover:bg-white/5 hover:text-white/80'
+                ? 'border border-[var(--color-border-primary)] bg-[var(--color-background-tertiary)] text-[var(--color-text-primary)]'
+                : 'border border-[var(--color-border-subtle)] bg-transparent text-[var(--color-text-muted)] hover:bg-[var(--color-background-secondary)] hover:text-[var(--color-text-secondary)]'
             }`}
           >
             {t('tabS')}
@@ -247,8 +253,8 @@ export function BenchmarksSection() {
             onClick={() => setActiveTab('m')}
             className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
               activeTab === 'm'
-                ? 'border border-white/30 bg-white/10 text-white'
-                : 'border border-white/10 bg-transparent text-white/60 hover:bg-white/5 hover:text-white/80'
+                ? 'border border-[var(--color-border-primary)] bg-[var(--color-background-tertiary)] text-[var(--color-text-primary)]'
+                : 'border border-[var(--color-border-subtle)] bg-transparent text-[var(--color-text-muted)] hover:bg-[var(--color-background-secondary)] hover:text-[var(--color-text-secondary)]'
             }`}
           >
             {t('tabM')}
@@ -263,15 +269,15 @@ export function BenchmarksSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mb-6"
         >
-          <p className="mb-4 text-sm text-white/60">{t('matrixIntro')}</p>
-          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur">
+          <p className="mb-4 text-sm text-[var(--color-text-muted)]">{t('matrixIntro')}</p>
+          <div className="overflow-x-auto rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)]/40 backdrop-blur">
             {activeTab === 's' ? (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/10 text-left text-xs uppercase tracking-wider text-white/50">
+                  <tr className="border-b border-[var(--color-border-subtle)] text-left text-xs uppercase tracking-wider text-[var(--color-text-muted)]">
                     <th className="px-6 py-4 font-medium">System</th>
                     <th className="px-6 py-4 text-right font-medium">Accuracy</th>
-                    <th className="px-6 py-4 text-right font-medium">95% CI</th>
+                    <th className="px-6 py-4 text-right font-medium">95% range</th>
                     <th className="px-6 py-4 text-right font-medium">$/correct</th>
                     <th className="px-6 py-4 text-right font-medium">p50 latency</th>
                     <th className="px-6 py-4 font-medium">Source</th>
@@ -281,15 +287,15 @@ export function BenchmarksSection() {
                   {LONGMEMEVAL_S_ROWS.map((row) => (
                     <tr
                       key={row.system}
-                      className={`border-b border-white/5 last:border-b-0 ${
+                      className={`border-b border-[var(--color-border-subtle)] last:border-b-0 ${
                         row.isAgentos
-                          ? 'bg-gradient-to-r from-cyan-500/10 to-transparent'
+                          ? 'bg-gradient-to-r from-[hsl(180,95%,45%)]/[0.12] to-transparent'
                           : ''
                       }`}
                     >
                       <td
                         className={`px-6 py-4 ${
-                          row.isAgentos ? 'font-semibold text-white' : 'text-white/80'
+                          row.isAgentos ? 'font-semibold text-[var(--color-text-primary)]' : 'text-[var(--color-text-secondary)]'
                         }`}
                       >
                         {row.isAgentos && (
@@ -301,18 +307,18 @@ export function BenchmarksSection() {
                       </td>
                       <td
                         className={`px-6 py-4 text-right tabular-nums ${
-                          row.isAgentos ? 'font-bold text-white' : 'text-white/80'
+                          row.isAgentos ? 'font-bold text-[var(--color-text-primary)]' : 'text-[var(--color-text-secondary)]'
                         }`}
                       >
                         {row.accuracy}
                       </td>
-                      <td className="px-6 py-4 text-right tabular-nums text-white/60">
+                      <td className="px-6 py-4 text-right tabular-nums text-[var(--color-text-muted)]">
                         {row.ci}
                       </td>
-                      <td className="px-6 py-4 text-right tabular-nums text-white/60">
+                      <td className="px-6 py-4 text-right tabular-nums text-[var(--color-text-muted)]">
                         {row.costPerCorrect}
                       </td>
-                      <td className="px-6 py-4 text-right tabular-nums text-white/60">
+                      <td className="px-6 py-4 text-right tabular-nums text-[var(--color-text-muted)]">
                         {row.p50Latency}
                       </td>
                       <td className="px-6 py-4">
@@ -320,7 +326,7 @@ export function BenchmarksSection() {
                           href={row.source.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-white/70 underline-offset-4 hover:text-white hover:underline"
+                          className="inline-flex items-center gap-1 text-[var(--color-text-secondary)] underline-offset-4 hover:text-[var(--color-text-primary)] hover:underline"
                         >
                           {row.source.label}
                           <ExternalLink className="h-3 w-3" aria-hidden />
@@ -333,10 +339,10 @@ export function BenchmarksSection() {
             ) : (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/10 text-left text-xs uppercase tracking-wider text-white/50">
+                  <tr className="border-b border-[var(--color-border-subtle)] text-left text-xs uppercase tracking-wider text-[var(--color-text-muted)]">
                     <th className="px-6 py-4 font-medium">System</th>
                     <th className="px-6 py-4 text-right font-medium">Accuracy</th>
-                    <th className="px-6 py-4 text-right font-medium">95% CI</th>
+                    <th className="px-6 py-4 text-right font-medium">95% range</th>
                     <th className="px-6 py-4 font-medium">License</th>
                     <th className="px-6 py-4 font-medium">Source</th>
                   </tr>
@@ -345,15 +351,15 @@ export function BenchmarksSection() {
                   {LONGMEMEVAL_M_ROWS.map((row) => (
                     <tr
                       key={row.system}
-                      className={`border-b border-white/5 last:border-b-0 ${
+                      className={`border-b border-[var(--color-border-subtle)] last:border-b-0 ${
                         row.isAgentos
-                          ? 'bg-gradient-to-r from-cyan-500/10 to-transparent'
+                          ? 'bg-gradient-to-r from-[hsl(180,95%,45%)]/[0.12] to-transparent'
                           : ''
                       }`}
                     >
                       <td
                         className={`px-6 py-4 ${
-                          row.isAgentos ? 'font-semibold text-white' : 'text-white/80'
+                          row.isAgentos ? 'font-semibold text-[var(--color-text-primary)]' : 'text-[var(--color-text-secondary)]'
                         }`}
                       >
                         {row.isAgentos && (
@@ -365,21 +371,21 @@ export function BenchmarksSection() {
                       </td>
                       <td
                         className={`px-6 py-4 text-right tabular-nums ${
-                          row.isAgentos ? 'font-bold text-white' : 'text-white/80'
+                          row.isAgentos ? 'font-bold text-[var(--color-text-primary)]' : 'text-[var(--color-text-secondary)]'
                         }`}
                       >
                         {row.accuracy}
                       </td>
-                      <td className="px-6 py-4 text-right tabular-nums text-white/60">
+                      <td className="px-6 py-4 text-right tabular-nums text-[var(--color-text-muted)]">
                         {row.ci}
                       </td>
-                      <td className="px-6 py-4 text-white/60">{row.license}</td>
+                      <td className="px-6 py-4 text-[var(--color-text-muted)]">{row.license}</td>
                       <td className="px-6 py-4">
                         <a
                           href={row.source.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-white/70 underline-offset-4 hover:text-white hover:underline"
+                          className="inline-flex items-center gap-1 text-[var(--color-text-secondary)] underline-offset-4 hover:text-[var(--color-text-primary)] hover:underline"
                         >
                           {row.source.label}
                           <ExternalLink className="h-3 w-3" aria-hidden />
@@ -399,7 +405,7 @@ export function BenchmarksSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="mb-10 max-w-4xl text-xs leading-relaxed text-white/50"
+          className="mb-10 max-w-4xl text-xs leading-relaxed text-[var(--color-text-muted)]"
         >
           {t('footnote')}
         </motion.p>
@@ -414,14 +420,14 @@ export function BenchmarksSection() {
         >
           <a
             href="https://docs.agentos.sh/benchmarks"
-            className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-all hover:bg-white/90"
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-text-primary)] px-6 py-3 text-sm font-medium text-[var(--color-background-primary)] transition-all hover:opacity-90"
           >
             {t('ctaBenchmarksPage')}
             <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
           <a
             href="https://docs.agentos.sh/blog/2026/04/24/memory-benchmark-transparency-audit"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-medium text-white transition-all hover:border-white/40 hover:bg-white/5"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-subtle)] px-6 py-3 text-sm font-medium text-[var(--color-text-primary)] transition-all hover:border-[var(--color-border-primary)] hover:bg-[var(--color-background-secondary)]"
           >
             {t('ctaReadAudit')}
             <ExternalLink className="h-4 w-4" aria-hidden />
@@ -430,7 +436,7 @@ export function BenchmarksSection() {
             href="https://github.com/framersai/agentos-bench"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-medium text-white transition-all hover:border-white/40 hover:bg-white/5"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-subtle)] px-6 py-3 text-sm font-medium text-[var(--color-text-primary)] transition-all hover:border-[var(--color-border-primary)] hover:bg-[var(--color-background-secondary)]"
           >
             <Github className="h-4 w-4" aria-hidden />
             {t('ctaSeeRunJsons')}
