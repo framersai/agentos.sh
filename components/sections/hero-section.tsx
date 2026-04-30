@@ -137,12 +137,19 @@ const HeroSectionInner = memo(function HeroSectionInner() {
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18">
         <article className="max-w-2xl">
           <h1 className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2]" itemProp="name">
-            <ParticleMorphText words={['Emergent', 'Adaptive']} interval={4000} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
-            <span className="text-[var(--color-text-primary)]">intelligence</span>
-            <br />
-            <span className="text-[var(--color-text-secondary)]">for </span>
-            <ParticleMorphText words={['adaptive', 'emergent']} interval={5200} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={0} nudgeY={0.04} />
-            <span className="text-[var(--color-text-primary)]">agents</span>
+            {/* Visually-hidden full-text H1 for search engines and screen readers.
+                The canvas siblings below render the visual particle-morph effect;
+                this sr-only span ensures the full string is in the DOM regardless
+                of canvas hydration state. */}
+            <span className="sr-only">Emergent intelligence for adaptive agents</span>
+            <span aria-hidden="true">
+              <ParticleMorphText words={['Emergent', 'Adaptive']} interval={4000} fontSize={morphFontSize} gradientFrom={isDark ? '#a78bfa' : '#8b5cf6'} gradientTo={isDark ? '#67e8f9' : '#06b6d4'} startIndex={0} />
+              <span className="text-[var(--color-text-primary)]">intelligence</span>
+              <br />
+              <span className="text-[var(--color-text-secondary)]">for </span>
+              <ParticleMorphText words={['adaptive', 'emergent']} interval={5200} fontSize={morphFontSize} gradientFrom={isDark ? '#f472b6' : '#ec4899'} gradientTo={isDark ? '#818cf8' : '#6366f1'} startIndex={0} nudgeY={0.04} />
+              <span className="text-[var(--color-text-primary)]">agents</span>
+            </span>
           </h1>
 
           <p className="sr-only">
