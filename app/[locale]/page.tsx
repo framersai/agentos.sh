@@ -6,21 +6,21 @@ import { BenchmarkBanner } from '../../components/sections/benchmark-banner'
 // Enable static generation for faster initial loads
 export const dynamicParams = false
 
-// Lazy load the animated background - client-only, deferred
+// Animated background is purely decorative (no semantic content), so we
+// keep it client-only with no SSR shell.
 const AnimatedBackgroundLazy = dynamic(
   () => import('../../components/ui/animated-background').then(m => m.AnimatedBackground),
   { ssr: false, loading: () => null }
 )
 
-// Demo Video Player with captions - lazy loaded for better LCP
+// Three sections are kept client-only because their first render reads
+// browser-only state (refs, video element, theme via next-themes) and
+// would otherwise produce hydration warnings or duplicate work. Each
+// gets a server-rendered SSR shell below containing the H2 and intro
+// copy so search engines see the section title regardless of hydration.
 const DemoVideoPlayerLazy = dynamic(
   () => import('../../components/video/DemoVideoPlayer').then(m => m.DemoVideoPlayer),
   { ssr: false, loading: () => <div className="aspect-video bg-slate-900/50 rounded-xl animate-pulse" /> }
-)
-
-const ProductCardsLazy = dynamic(
-  () => import('../../components/sections/product-cards').then(m => m.ProductCards),
-  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
 )
 
 const SkylineSectionLazy = dynamic(
@@ -28,64 +28,74 @@ const SkylineSectionLazy = dynamic(
   { ssr: false }
 )
 
-const GMISectionLazy = dynamic(
-  () => import('../../components/sections/gmi-section').then(m => m.GMISection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
-)
-
-const AgencySectionLazy = dynamic(
-  () => import('../../components/sections/agency-section').then(m => m.AgencySection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
-)
-
-const EmergentSectionLazy = dynamic(
-  () => import('../../components/sections/emergent-section').then(m => m.EmergentSection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
-)
-
 const CognitiveSectionLazy = dynamic(
   () => import('../../components/sections/cognitive-section').then(m => m.CognitiveSection),
   { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
+// Twelve below-fold sections were previously `ssr: false`. Their first
+// render produces text content that should be in the static HTML for
+// search engines: H2 headlines, intro paragraphs, feature lists, etc.
+// Switching to `ssr: true` server-renders the initial markup; the
+// client still hydrates for interactivity (state toggles, hover, etc.).
+const ProductCardsLazy = dynamic(
+  () => import('../../components/sections/product-cards').then(m => m.ProductCards),
+  { ssr: true, loading: () => <div className="min-h-[400px]" /> }
+)
+
+const GMISectionLazy = dynamic(
+  () => import('../../components/sections/gmi-section').then(m => m.GMISection),
+  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
+)
+
+const AgencySectionLazy = dynamic(
+  () => import('../../components/sections/agency-section').then(m => m.AgencySection),
+  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
+)
+
+const EmergentSectionLazy = dynamic(
+  () => import('../../components/sections/emergent-section').then(m => m.EmergentSection),
+  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
+)
+
 const CodeExamplesSectionLazy = dynamic(
   () => import('../../components/sections/code-examples-section').then(m => m.CodeExamplesSection),
-  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
+  { ssr: true, loading: () => <div className="min-h-[400px]" /> }
 )
 
 const EcosystemSectionLazy = dynamic(
   () => import('../../components/sections/ecosystem-section').then(m => m.EcosystemSection),
-  { ssr: false }
+  { ssr: true }
 )
 
 const SocialProofSectionLazy = dynamic(
   () => import('../../components/sections/social-proof-section').then(m => m.SocialProofSection),
-  { ssr: false }
+  { ssr: true }
 )
 
 const FeaturesGridClient = dynamic(
   () => import('../../components/sections/features-grid-client'),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
+  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const WorkbenchCTALazy = dynamic(
   () => import('../../components/sections/workbench-cta').then(m => m.WorkbenchCTA),
-  { ssr: false }
+  { ssr: true }
 )
 
 const ParacosmBannerLazy = dynamic(
   () => import('../../components/sections/paracosm-banner').then(m => m.ParacosmBanner),
-  { ssr: false }
+  { ssr: true }
 )
 
 const BenchmarksSectionLazy = dynamic(
   () => import('../../components/sections/benchmarks-section').then(m => m.BenchmarksSection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
+  { ssr: true, loading: () => <div className="min-h-[600px]" /> }
 )
 
 const WhitepaperCTALazy = dynamic(
   () => import('../../components/sections/whitepaper-cta').then(m => m.WhitepaperCTA),
-  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
+  { ssr: true, loading: () => <div className="min-h-[400px]" /> }
 )
 
 export default function LandingPageRedesigned() {
@@ -105,10 +115,14 @@ export default function LandingPageRedesigned() {
         {/* Paracosm — AI Agent Swarm Simulation */}
         <ParacosmBannerLazy />
 
-        {/* Live Demo Videos with Captions */}
-        <div className="lazy-section">
+        {/* Live Demo Videos with Captions — SSR shell wraps client-only video player */}
+        <section className="lazy-section">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">See AgentOS in action</h2>
+          <p className="text-center text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-10">
+            Watch a live AgentOS agent handle a real workload end-to-end: tool use, memory recall, multi-step planning. Every clip is captured from a running runtime, no edits.
+          </p>
           <DemoVideoPlayerLazy />
-        </div>
+        </section>
 
         {/* Memory Benchmarks SOTA — matched gpt-4o reader on LongMemEval-S/M */}
         <div className="lazy-section-lg">
@@ -140,20 +154,28 @@ export default function LandingPageRedesigned() {
           <EmergentSectionLazy />
         </div>
 
-        {/* Cognitive Mechanisms + HEXACO + RAG Pipeline */}
-        <div className="lazy-section-lg">
+        {/* Cognitive Mechanisms + HEXACO + RAG Pipeline — SSR shell around client-only canvas section */}
+        <section className="lazy-section-lg">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">Cognitive memory and HEXACO personality</h2>
+          <p className="text-center text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-10">
+            AgentOS gives every agent a multi-tier memory model with Ebbinghaus decay plus a six-axis HEXACO personality vector. Recall is grounded by an embedded RAG pipeline that handles text, image, audio, and video.
+          </p>
           <CognitiveSectionLazy />
-        </div>
+        </section>
 
         {/* Enhanced Features Grid with Code Popovers */}
         <div className="lazy-section-lg">
           <FeaturesGridClient />
         </div>
 
-        {/* Enterprise-Ready Infrastructure — skyline visualization */}
-        <div className="lazy-section">
+        {/* Enterprise-Ready Infrastructure — SSR shell around client-only skyline canvas */}
+        <section className="lazy-section">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">Enterprise-ready infrastructure</h2>
+          <p className="text-center text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-10">
+            Self-hostable, Apache-2.0 licensed, with built-in PII redaction, prompt-injection defense, content moderation, and 21 LLM providers. Ship the same agent runtime to staging and production without vendor lock-in.
+          </p>
           <SkylineSectionLazy />
-        </div>
+        </section>
 
         {/* Code Examples Section */}
         <div className="lazy-section-lg">
