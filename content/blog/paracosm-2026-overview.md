@@ -6,7 +6,7 @@ excerpt: "An end-to-end essay about why we built Paracosm, what it actually does
 author: "AgentOS Team"
 category: "Engineering"
 audience: "evaluator"
-image: "/img/blog/paracosm/dashboard-overview.png"
+image: "/img/blog/paracosm/paracosm-2026-overview-hero.png"
 keywords: "paracosm world model, counterfactual world simulator, structured world model AI, prompt to simulation, multi-agent simulation typescript, hexaco simulation, deterministic kernel V8 sandbox, agentos paracosm, Mars Genesis simulation, civilization simulation AI"
 ---
 
