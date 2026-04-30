@@ -151,15 +151,28 @@ export function ContactForm() {
       </div>
 
       <label className="block">
-        <span className="text-sm font-semibold text-[var(--color-text-primary)]">Subject</span>
-        <input
-          type="text"
+        <span className="text-sm font-semibold text-[var(--color-text-primary)]">
+          Topic <span aria-hidden="true">*</span>
+        </span>
+        <select
           name="subject"
-          autoComplete="off"
+          required
+          defaultValue=""
           disabled={status.kind === 'submitting'}
-          className="mt-2 block w-full rounded-lg border border-[var(--color-border-primary)] bg-[var(--color-background-secondary)]/60 px-4 py-2.5 text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-accent-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]/30"
-          placeholder="What's this about?"
-        />
+          className="mt-2 block w-full rounded-lg border border-[var(--color-border-primary)] bg-[var(--color-background-secondary)]/60 px-4 py-2.5 text-[var(--color-text-primary)] focus:border-[var(--color-accent-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]/30"
+        >
+          <option value="" disabled>
+            Pick the closest match…
+          </option>
+          <option value="General inquiry">General inquiry</option>
+          <option value="Partnership / collaboration">Partnership / collaboration</option>
+          <option value="Investment / VC">Investment / VC</option>
+          <option value="Business / enterprise">Business / enterprise</option>
+          <option value="Press / media">Press / media</option>
+          <option value="Security disclosure">Security disclosure</option>
+          <option value="Hiring / careers">Hiring / careers</option>
+          <option value="Other">Other</option>
+        </select>
       </label>
 
       <label className="block">
