@@ -71,7 +71,6 @@ export function TableOfContents({
 }) {
   const items = useMemo(() => extractToc(content), [content]);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
 
   /**
    * Highlight the heading whose section is currently in view. The

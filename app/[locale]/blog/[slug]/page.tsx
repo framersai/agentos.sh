@@ -5,6 +5,7 @@ import { getPostBySlug, getPostSlugs } from '@/lib/markdown';
 import { MarkdownRenderer } from '@/components/markdown-renderer';
 import { TableOfContents } from '@/components/blog/TableOfContents';
 import { Comments } from '@/components/blog/Comments';
+import { BlogPostHero } from '@/components/blog/BlogPostHero';
 import { Calendar, ArrowLeft, Tag, User } from 'lucide-react';
 import { locales } from '../../../../i18n';
 
@@ -121,35 +122,59 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
           <div className="min-w-0 max-w-3xl">
             {/* Post header */}
             <header className="mb-10">
-              <div className="flex items-center gap-3 mb-4 text-sm">
+              {/* Eyebrow row: thin gradient accent + meta items separated by tiny dot bullets */}
+              <div className="flex items-center gap-3 mb-5 text-xs">
+                <span
+                  aria-hidden
+                  className="block h-[2px] w-8 rounded-full"
+                  style={{
+                    background:
+                      'linear-gradient(90deg, hsl(180, 95%, 60%), hsl(270, 85%, 65%))',
+                  }}
+                />
                 {post.category && (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--color-accent-primary)]/10 text-[var(--color-accent-primary)]">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] bg-[var(--color-accent-primary)]/10 text-[var(--color-accent-primary)] border border-[var(--color-accent-primary)]/30">
                     <Tag className="w-3 h-3" aria-hidden="true" />
                     {post.category}
                   </span>
                 )}
-                <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
-                  <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
-                  {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                <span className="text-[var(--color-text-muted)]/40">·</span>
+                <span className="flex items-center gap-1.5 text-[var(--color-text-muted)] tabular-nums">
+                  <Calendar className="w-3 h-3" aria-hidden="true" />
+                  {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                 </span>
                 {post.author && (
-                  <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
-                    <User className="w-3.5 h-3.5" aria-hidden="true" />
-                    {post.author}
-                  </span>
+                  <>
+                    <span className="text-[var(--color-text-muted)]/40">·</span>
+                    <span className="flex items-center gap-1.5 text-[var(--color-text-muted)]">
+                      <User className="w-3 h-3" aria-hidden="true" />
+                      {post.author}
+                    </span>
+                  </>
                 )}
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--color-text-primary)] leading-tight">
+              {/* Title — refined typography, tighter line height and letter-spacing for premium feel */}
+              <h1 className="text-[2rem] sm:text-4xl lg:text-[2.75rem] font-bold tracking-tight text-[var(--color-text-primary)] leading-[1.1]">
                 {post.title}
               </h1>
 
+              {/* Dek / lead paragraph: left-border accent, slightly muted, smaller than the body */}
               {post.excerpt && (
-                <p className="mt-4 text-lg text-[var(--color-text-secondary)] leading-relaxed">
+                <div
+                  className="mt-6 pl-5 border-l-2 text-[15px] sm:text-base text-[var(--color-text-secondary)] leading-relaxed max-w-2xl"
+                  style={{
+                    borderImage:
+                      'linear-gradient(180deg, hsl(180, 95%, 60%) 0%, hsl(270, 85%, 65%) 100%) 1',
+                  }}
+                >
                   {post.excerpt}
-                </p>
+                </div>
               )}
             </header>
+
+            {/* Hero metrics block (renders only when frontmatter has heroStat + heroLabel) */}
+            <BlogPostHero post={post} />
 
             {/* Mobile-only TOC (hidden on lg+ where the sidebar takes over) */}
             <TableOfContents content={post.content} variant="mobile" />

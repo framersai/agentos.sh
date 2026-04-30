@@ -119,16 +119,73 @@ Fifteen adjacent configurations tested across Phase A and Phase B; fifteen regre
 
 ## Part 2: LongMemEval-M Phase B at gpt-4o reader
 
-The harder variant. M's haystacks are 1.5M tokens spread across 500 sessions. None of the major production context windows fit a single M haystack: GPT-4o is 128K, Claude Opus is 200K, Gemini 3 Pro is 1M. Most memory vendors stop at S because raw long-context fits there.
+### What LongMemEval is, and what M means
+
+[LongMemEval](https://github.com/xiaowu0162/LongMemEval) is the academic memory benchmark every memory-library vendor cites. The paper, **["LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory"](https://arxiv.org/abs/2410.10813)** by Wu et al., was published at **ICLR 2025**. The dataset, evaluation harness, and rubric are fully open source and maintained at [github.com/xiaowu0162/LongMemEval](https://github.com/xiaowu0162/LongMemEval). The paper's 12 authors are all academic researchers.
+
+LongMemEval ships two variants by haystack scale:
+
+| Variant | Tokens per haystack | Sessions per haystack | Fits in production context window? |
+|---|---:|---:|---|
+| **S** | ~115K | ~50 | Yes — every modern long-context LLM fits this. GPT-4o is 128K, Claude Opus is 200K, Gemini 3 Pro is 1M, GPT-5 is 400K |
+| **M** | ~1.5M | ~500 | No — exceeds every production context window |
+
+**The S → M jump isn't a 13× scaling exercise. It's a category change.** At S scale, a memory-augmented system competes against just-dump-everything-into-the-context. The 24 pp lift Mastra reports between their full-context baseline (60.20%) and their Observational Memory configuration (84.23%) at S — that lift partly measures *token compression*, not *memory architecture*. Penfield Labs called this out in [their April 2026 LOCOMO audit](https://dev.to/penfieldlabs/we-audited-locomo-64-of-the-answer-key-is-wrong-and-the-judge-accepts-up-to-63-of-intentionally-33lg): when the corpus fits in context, the benchmark partly measures context-window management rather than memory.
+
+At M scale, retrieval is the only path. The benchmark stops being about whether you bothered to call retrieval and starts being about whether your retrieval pipeline can find a needle in 25,000 candidate chunks across 500 sessions. The category change is why M is the test that actually matters for a memory architecture claim.
+
+### Every published memory-library vendor reports only S
+
+We audited the published record across every vendor we could find with a public LongMemEval claim (research pages, blog posts, GitHub repos, peer-reviewed papers) as of 2026-04-29:
+
+| Vendor | License | Their published S number | Their published M number |
+|---|---|---|---|
+| [Mem0 v3 / Mem0 OS](https://mem0.ai/research) | Apache 2.0 | 92-93.4% | not published |
+| [Mastra Observational Memory](https://mastra.ai/research/observational-memory) | Apache 2.0 | 84.23-94.87% | **not published** |
+| [Hindsight (vectorize.io)](https://github.com/vectorize-io/hindsight) | open repo | 91.4% | not published |
+| [Zep / Graphiti](https://blog.getzep.com/state-of-the-art-agent-memory/) | Apache 2.0 | 71.2% (independently reproduced at [63.8%](https://arxiv.org/abs/2512.13564)) | not published |
+| [EmergenceMem](https://www.emergence.ai/blog/sota-on-longmemeval-with-rag) | open Python | 79-86% | not published |
+| [Supermemory](https://supermemory.ai/research/) | open | 81.6-99% | not published |
+| [MemMachine](https://github.com/memmachine) | open repo | 93% | not published |
+| [Memoria](https://github.com/memoriaai) | open | 88.78% | not published |
+| [agentmemory (JordanMcCann)](https://github.com/JordanMcCann/agentmemory) | MIT | 96.2% (no methodology) | not published |
+| [Backboard](https://github.com/Backboard-io/Backboard-longmemEval-results) | open | 93.4% | not published |
+| [ByteRover](https://www.byterover.dev) | closed | 92.8% | not published, explicit "M scales beyond any context window" |
+| [Letta](https://www.letta.com/) (formerly MemGPT) | Apache 2.0 | not published on LongMemEval | not published |
+| [Cognee](https://github.com/topoteretes/cognee) | Apache 2.0 | not published on LongMemEval | not published |
+| [AgentBrain](https://github.com/AgentBrainHQ) | **closed-source SaaS** | not published | **71.7%** (Test 0; requires hosted Brain endpoint to reproduce) |
+| **[agentos-bench](https://github.com/framersai/agentos-bench) (this work)** | **MIT** | **85.6% [82.4%, 88.6%]** | **70.2% [66.0%, 74.0%]** |
+
+The full vendor research-page audit with per-claim methodology check is at [packages/agentos-bench/docs/COMPETITOR_METHODOLOGY_AUDIT_2026-04-24.md](https://github.com/framersai/agentos-bench/blob/master/docs/COMPETITOR_METHODOLOGY_AUDIT_2026-04-24.md).
+
+### Why no other open-source library has published on M
+
+Three reasons stack to discourage publication:
+
+1. **Long context windows hide the problem at S scale.** S fits in every modern LLM. M doesn't. Vendors who care about looking strong on the benchmark stop at S.
+
+2. **The dataset file is technically painful.** `longmemeval_m.json` is **2.7 GB**. Node's V8 engine has a max-string-length cap that rejects `fs.readFile` on it. Out-of-the-box Node fails to load the dataset before any benchmark code runs. The fix is documented at [Stage J](https://github.com/framersai/agentos-bench/blob/master/docs/STAGE_J_BLOCKED_2026-04-25.md): `chain([createReadStream, parser(), streamArray()])` from `stream-json` + `stream-chain`, with a file-size probe routing >1 GB files through the streaming path. We hit this and lost a day to it.
+
+3. **Per-run cost discourages publishing.** A memory-augmented full-context M run consumes ~750M input tokens at GPT-4o-128K pricing — roughly **$1,250 per run**. Retrieval-augmented M runs are $5-15. Vendors avoid M because publishing an M number means publishing one that's lower than their S number, with extra spend, with no marketing upside.
+
+### What the academic paper itself reports on M
+
+Wu et al., **Table 3** of [arXiv:2410.10813](https://arxiv.org/abs/2410.10813), reports academic-baseline configurations on LongMemEval-M. Their strongest published M result:
+
+> **65.7% on LongMemEval-M** with `GPT-4o + Stella V5 retriever + Value=Session + K=V+fact + top-5`
+
+That's the academic ceiling — the strongest M number anyone with the original paper's authors ran. The paper, dataset, and reproducible methodology are open and on GitHub at [xiaowu0162/LongMemEval](https://github.com/xiaowu0162/LongMemEval). They didn't beat 65.7%. Until [agentos-bench](https://github.com/framersai/agentos-bench) Phase B at N=500, no open-source result on the public record went higher.
+
+### Where we land
 
 | System | Accuracy | 95% CI | License | Source |
 |---|---:|---|---|---|
 | AgentBrain | 71.7% (Test 0) | not published | closed-source SaaS | [github.com/AgentBrainHQ](https://github.com/AgentBrainHQ) |
-| **🚀 AgentOS** (sem-embed + reader-router + top-K=5) | **70.2%** | **[66.0%, 74.0%]** | **MIT** | this work |
+| **🚀 AgentOS** (sem-embed + reader-router + top-K=5) | **70.2%** | **[66.0%, 74.0%]** | **MIT** | [agentos-bench](https://github.com/framersai/agentos-bench) |
 | LongMemEval paper academic baseline | 65.7% | not published | open repo | [Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813) |
 | Mem0 v3, Mastra OM, Hindsight, Zep, EmergenceMem, Supermemory, MemMachine, Memoria, agentmemory, Backboard, ByteRover, Letta, Cognee | not published | — | various | reports S only |
 
-**Statistically tied with AgentBrain's closed-source SaaS** (their 71.7% point estimate sits inside our CI [66.0%, 74.0%]). **+4.5 pp above the LongMemEval paper's academic ceiling.** **First open-source memory library above 65% on M with full methodology disclosure.**
+**Statistically tied with [AgentBrain's](https://github.com/AgentBrainHQ) closed-source SaaS** (their 71.7% point estimate sits inside our CI [66.0%, 74.0%]). **+4.5 pp above the LongMemEval paper's academic ceiling.** **First open-source memory library on the public record above 65% on M with full methodology disclosure** (bootstrap CIs at 10,000 resamples, per-case run JSONs at seed=42, judge-FPR probes, MIT-licensed code at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench)).
 
 ### The journey: 30.6% → 45.4% → 57.6% → 70.2% (cumulative +39.6 pp)
 
@@ -210,6 +267,37 @@ Per-category gap at the 30.6% baseline shows where retrieval precision collapses
 The two largest categories (multi-session and temporal-reasoning, 53% of cases) are precision-bound at scale. With 500 candidate sessions per haystack instead of 50, the right session does not make the top-20 most of the time when CharHash + BM25 + Cohere rerank operate over 10× more distractors.
 
 The +39.6 pp lift to 70.2% closes most of that gap via four independent axes: M-tuned retrieval flags (+14.8 pp), semantic embedder (+12.2 pp folded with reader router), reader-top-K=5 (+12.6 pp). Multi-session moved from 18% → 48.9% (+30.9 pp) and temporal-reasoning from 12.8% → 66.2% (+53.4 pp).
+
+---
+
+## A clarifying detour: why does Mastra's gpt-5-mini reader score higher than their gpt-4o reader?
+
+A reader looking at Mastra's research page asks the obvious question: gpt-5-mini is the cheaper input model. gpt-4o is the more expensive one. Mastra reports 84.23% with gpt-4o reader and 94.87% with gpt-5-mini reader. **Cheaper *and* more accurate. That seems backwards.**
+
+It is — but only at the base-LLM level. The architectural answer is that Mastra's stack moves the reasoning *upstream of the reader*.
+
+In their gpt-4o-only configuration:
+
+- The reader does everything: reads the retrieved context, extracts what's relevant, reasons across sessions, answers
+- All of that work happens at query time, in a single LLM call
+
+In their gpt-5-mini + Observational Memory configuration:
+
+- During **ingest** (paid once per haystack), a [`gemini-2.5-flash`](https://blog.google/technology/google-deepmind/gemini-2-5/) **observer** runs over each session and extracts dense structured observation logs
+- During **ingest**, a `gemini-2.5-flash` **reflector** synthesizes those observations into long-term cross-session insights
+- At **query time**, the `gpt-5-mini` reader answers from the *pre-distilled* observation log + reflections, not from raw chunks
+
+The reader in this stack is just a synthesizer over pre-extracted facts. The hard work is at ingest, paid once and amortized across queries. **A cheaper reader can outperform a more expensive one IF the upstream pipeline has done the reasoning already.**
+
+Mastra documents this on [their Observational Memory research page](https://mastra.ai/research/observational-memory) and the [VentureBeat coverage](https://venturebeat.com/data/observational-memory-cuts-ai-agent-costs-10x-and-outscores-rag-on-long) frames it the same way: shift complexity from query-time to ingest-time, and a small reader is sufficient.
+
+**Two caveats keep us from accepting the 94.87% in our matched-reader tables:**
+
+1. **We cannot reproduce it.** When we ran AgentOS at the same stack (gpt-5-mini reader + gemini-2.5-flash observer) on LongMemEval-S Phase A, we got 70.4% — a 24 pp gap. We don't claim Mastra's 94.87% is wrong; we claim it doesn't reproduce in our harness from the methodology they publish. Direct apples-to-apples cost measurement requires running their *library*, not our reproduction of their architecture.
+
+2. **Mastra publishes no CI on the 94.87%.** Their 84.23% gpt-4o number sits inside our 95% CI [82.4%, 88.6%] — at the matched reader, **we are statistically tied with their single-provider OpenAI configuration**. Their cross-provider gpt-5-mini + gemini stack is a separate claim.
+
+The matched-reader honest comparison is at gpt-4o on both sides. That's the table at the top of this post. The 94.87% is excluded because it can't be reproduced from public methodology and uses a different reader.
 
 ---
 
