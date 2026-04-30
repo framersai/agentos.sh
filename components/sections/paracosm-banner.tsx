@@ -127,8 +127,9 @@ export function ParacosmBanner() {
                     color: 'var(--color-text-secondary)',
                     fontSize: '13px',
                   }}
+                  aria-label="Learn more about Paracosm — AI agent swarm simulation"
                 >
-                  Learn More
+                  Learn more about Paracosm
                 </a>
                 <a
                   href="https://www.npmjs.com/package/paracosm"
