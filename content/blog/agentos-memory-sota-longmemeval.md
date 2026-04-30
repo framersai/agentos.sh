@@ -1,7 +1,7 @@
 ---
 title: "AgentOS Hits 85.6% on LongMemEval-S and 70.2% on LongMemEval-M: First Open-Source Memory Library Above 65% on the 1.5M-Token Variant"
 date: "2026-04-29"
-excerpt: "AgentOS publishes the strongest reproducible numbers at the matched gpt-4o reader on both LongMemEval variants with full methodology disclosure. 85.6% [82.4%, 88.6%] on S, +1.4 pp over Mastra OM gpt-4o (84.23%, no published CI) at point estimate; Mastra's number sits inside our CI so the gap is at the threshold of statistical significance. Cost per correct: $0.0090, measured (4.6× cheaper than our own prior 84.8% headline; Mastra does not publish $/correct so a cross-vendor cost comparison is not possible). 70.2% [66.0%, 74.0%] on M is the first open-source library above 65% on the 1.5M-token variant, +4.5 pp above the LongMemEval paper's academic-baseline ceiling, statistically tied with closed-source AgentBrain (71.7%). Bootstrap CIs, judge-FPR probes, per-case run JSONs, MIT-licensed code. Full audit, vendor landscape, journey from 30.6% → 70.2%, and methodology framework in one post."
+excerpt: "AgentOS publishes the strongest reproducible open-source numbers on LongMemEval at the matched gpt-4o reader with full methodology disclosure. 85.6% [82.4%, 88.6%] on LongMemEval-S at $0.0090 per correct ($9 per 1,000 memory-grounded answers; ~$45 to back 1,000 conversations averaging 5 RAG calls each). 70.2% [66.0%, 74.0%] on the 1.5M-token M variant at $0.0078 per correct ($7.80 per 1,000) — first open-source library above 65% on M, +4.5 pp above the LongMemEval paper's academic ceiling, tied with closed-source AgentBrain (71.7%). +1.4 pp over Mastra OM gpt-4o (84.23%, no published CI) at point estimate; Mastra publishes no CI so the gap is at the threshold of statistical significance. Bootstrap CIs, judge-FPR probes, per-case run JSONs, MIT-licensed code, single CLI command anyone can reproduce."
 author: "AgentOS Team"
 category: "Engineering"
 image: "/og-image.png"
@@ -46,7 +46,7 @@ LongMemEval-S Phase B at full N=500, `gpt-4o-2024-08-06` judge, rubric `2026-04-
 | Supermemory gpt-4o | 81.6% (no CI) | not published | not published | not published | [supermemory.ai](https://supermemory.ai/research/) |
 | Zep self / independent reproduction | 71.2% / 63.8% | not published | not published | 632 ms p95 search | [self](https://blog.getzep.com/state-of-the-art-agent-memory/) / [arXiv:2512.13564](https://arxiv.org/abs/2512.13564) |
 
-**+1.4 pp accuracy over Mastra OM gpt-4o at the matched reader.** Statistically tied with EmergenceMem Internal (their 86.0% point estimate sits inside our 95% CI [82.4%, 88.6%]). **1.6× faster median latency** (3,558 ms vs 5,650 ms).
+**+1.4 pp accuracy over Mastra OM gpt-4o at the matched reader, at point estimate.** Mastra publishes no CI; their 84.23% sits inside our 95% CI [82.4%, 88.6%]. EmergenceMem Internal's 86.0% (no CI) also sits inside our CI; we're statistically tied with both. **Median latency:** AgentOS p50 3,558 ms vs EmergenceMem's published median 5,650 ms. The other vendors do not publish a comparable per-case latency number.
 
 ### The S architecture: drop the Tier 3 policy router
 
@@ -54,15 +54,16 @@ The 84.8% prior headline used a Tier 3 minimize-cost policy router that dispatch
 
 Today's run drops the policy router entirely. All categories flow through `canonical-hybrid` retrieval. The reader router fires its own gpt-5-mini classifier (one extra LLM call per case at ~$0.000138) and dispatches per category to the right reader tier.
 
-```
-                            Tier 3 PR + RR    Canonical + RR     Δ
-Aggregate accuracy          84.8%             85.6%               +0.8 pp (CIs overlap)
-Total LLM cost              $17.38            $3.84               -78%
-Cost per correct            $0.0410           $0.0090             4.6× cheaper
-Avg latency                 21,042 ms         4,001 ms            5.3× faster
-p95 latency                 111,535 ms        7,264 ms            15.4× faster on tail
-Recall@K=10                 0.831             0.981               +0.150
-```
+|                          | Tier 3 PR + RR | Canonical + RR | Δ |
+|--------------------------|---------------:|---------------:|---|
+| Aggregate accuracy        | 84.8%          | 85.6%          | +0.8 pp (CIs overlap) |
+| Total LLM cost (full N=500) | $17.38       | $3.84          | -$13.54 |
+| Cost per correct          | $0.0410        | **$0.0090**    | -$0.0320 per correct |
+| Avg latency               | 21,042 ms      | 4,001 ms       | -17,041 ms |
+| p95 latency               | 111,535 ms     | 7,264 ms       | -104,271 ms on tail |
+| Recall@K=10               | 0.831          | 0.981          | +0.150 |
+
+**Cost at scale**: at $0.0090 per memory-grounded answer, 1,000 RAG calls cost $9. A chatbot averaging 5 RAG calls per conversation across 1,000 conversations costs ~$45. The prior 84.8% configuration cost $0.0410 per correct ($41 per 1,000 calls; $205 per 1,000 conversations at the same usage).
 
 ### Reader-router calibration
 
@@ -143,8 +144,10 @@ The previous M headline was 57.6% at `--reader-top-k 50`. The LongMemEval paper'
 | Metric | Top-K=50 | Top-K=5 | Δ |
 |---|---:|---:|---:|
 | Aggregate accuracy | 57.6% [53.2%, 61.8%] | **70.2% [66.0%, 74.0%]** | +12.6 pp; CIs disjoint |
-| Cost per correct | $0.0505 | **$0.0078** | 6.5× cheaper |
-| Avg latency | 264,933 ms | 83,711 ms | 3.2× faster |
+| Cost per correct | $0.0505 | **$0.0078** | -$0.0427 per correct |
+| Avg latency | 264,933 ms | 83,711 ms | -181,222 ms |
+
+**M cost at scale**: at $0.0078 per memory-grounded answer over a 1.5M-token haystack, 1,000 RAG calls cost $7.80. The prior top-K=50 configuration on the same architecture cost $0.0505 per correct ($50.50 per 1,000 calls).
 
 **Why the reader does worse with more context at this scale**: each LongMemEval-M haystack contains ~1.5M tokens spread across 500 sessions, producing ~25,000 candidate chunks. At top-K=50 the reader sees 50 chunks: the rerank cross-encoder's top picks plus 45 of progressively lower confidence. The 6th through 50th chunks frequently come from sessions that share lexical surface with the query but don't contain the answer. Forcing the cross-encoder to commit to its top picks raises the signal-to-noise ratio. The same bias was reported by [Liu et al. (2024) "Lost in the Middle"](https://arxiv.org/abs/2307.03172) at the long-context-LLM level.
 
