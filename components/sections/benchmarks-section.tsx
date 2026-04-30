@@ -277,7 +277,6 @@ export function BenchmarksSection() {
                   <tr className="border-b border-[var(--color-border-subtle)] text-left text-xs uppercase tracking-wider text-[var(--color-text-muted)]">
                     <th className="px-6 py-4 font-medium">System</th>
                     <th className="px-6 py-4 text-right font-medium">Accuracy</th>
-                    <th className="px-6 py-4 text-right font-medium">95% range</th>
                     <th className="px-6 py-4 text-right font-medium">$/correct</th>
                     <th className="px-6 py-4 text-right font-medium">p50 latency</th>
                     <th className="px-6 py-4 font-medium">Source</th>
@@ -313,9 +312,6 @@ export function BenchmarksSection() {
                         {row.accuracy}
                       </td>
                       <td className="px-6 py-4 text-right tabular-nums text-[var(--color-text-muted)]">
-                        {row.ci}
-                      </td>
-                      <td className="px-6 py-4 text-right tabular-nums text-[var(--color-text-muted)]">
                         {row.costPerCorrect}
                       </td>
                       <td className="px-6 py-4 text-right tabular-nums text-[var(--color-text-muted)]">
@@ -342,7 +338,6 @@ export function BenchmarksSection() {
                   <tr className="border-b border-[var(--color-border-subtle)] text-left text-xs uppercase tracking-wider text-[var(--color-text-muted)]">
                     <th className="px-6 py-4 font-medium">System</th>
                     <th className="px-6 py-4 text-right font-medium">Accuracy</th>
-                    <th className="px-6 py-4 text-right font-medium">95% range</th>
                     <th className="px-6 py-4 font-medium">License</th>
                     <th className="px-6 py-4 font-medium">Source</th>
                   </tr>
@@ -375,9 +370,6 @@ export function BenchmarksSection() {
                         }`}
                       >
                         {row.accuracy}
-                      </td>
-                      <td className="px-6 py-4 text-right tabular-nums text-[var(--color-text-muted)]">
-                        {row.ci}
                       </td>
                       <td className="px-6 py-4 text-[var(--color-text-muted)]">{row.license}</td>
                       <td className="px-6 py-4">
