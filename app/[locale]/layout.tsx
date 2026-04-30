@@ -310,20 +310,13 @@ export default async function LocaleLayout({
         <SiteHeaderDynamic />
         {/* Duplicate JSON-LD removed — consolidated in head above */}
         
-        {/* Immediate Theme Script to prevent FOUC */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                let theme = localStorage.getItem('theme');
-                if (!theme) {
-                  theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                }
-                document.documentElement.classList.toggle('dark', theme === 'dark');
-              } catch (e) {}
-            `
-          }}
-        />
+        {/* The theme is bootstrapped by an inline <script> in the
+            root layout's <head> (app/layout.tsx). It reads the
+            'agentos-mode' and 'agentos-theme' localStorage keys
+            synchronously before <body> paints, so there is no FOIT.
+            next-themes (mounted in <ThemeProvider> below) keeps the
+            theme reactive to subsequent toggles. The old 'theme'
+            localStorage key is no longer used. */}
 
         {/* Scroll to hash target after lazy sections mount */}
         <script
