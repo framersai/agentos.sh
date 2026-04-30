@@ -93,7 +93,7 @@ Across Mem0, Mastra, Supermemory, Zep, EmergenceMem, Letta, and MemPalace, no si
 | Open-source benchmark runner | yes | partial (workshop) | yes | partial | yes | no | partial | yes |
 | Per-case run JSONs at seed | no | no | no | no | no | no | no | yes |
 | Judge-adversarial probe | no | no | no | no | no | no | no | yes |
-| Matched-reader cross-vendor table | no | no | partial | partial | yes | no | no | yes |
+| Cross-vendor cross-vendor table | no | no | partial | partial | yes | no | no | yes |
 
 **Bench tooling: two open suites in the space.** [Supermemory's memorybench](https://github.com/supermemoryai/memorybench) is a TypeScript framework with multi-provider support (Supermemory, Mem0, Zep), multi-benchmark coverage (LoCoMo, LongMemEval, ConvoMem), multi-judge support (GPT-4o, Claude, Gemini), a checkpointed pipeline (ingest → index → search → answer → evaluate → report), a web UI, and a MemScore triple (accuracy / latency / tokens). agentos-bench covers a narrower vendor surface but adds bootstrap CIs, judge-adversarial probes, kill-ladder methodology, and per-case run JSONs at fixed seed.
 
@@ -187,7 +187,7 @@ Held-out N=97 aggregate drops 7 pp vs full N=500 (69.1% vs 76.6%). Decomposition
 
 ### LOCOMO out-of-distribution
 
-We ran the LongMemEval-tuned Tier 1 canonical pipeline on LOCOMO N=1986 at matched `gpt-4o` reader, no tuning changes. Aggregate: 49.9% [47.7, 52.1] at $0.0123/correct. About 16 pp below Mem0's claimed LOCOMO range of 66-68%. Per-category:
+We ran the LongMemEval-tuned Tier 1 canonical pipeline on LOCOMO N=1986 at `gpt-4o` reader, no tuning changes. Aggregate: 49.9% [47.7, 52.1] at $0.0123/correct. About 16 pp below Mem0's claimed LOCOMO range of 66-68%. Per-category:
 
 | Category | N | Accuracy |
 |---|---:|---:|
@@ -339,7 +339,7 @@ For vendors publishing benchmark numbers: use one of these harnesses and publish
 
 AgentOS is not at the frontier of accuracy on LongMemEval-S. We are at 76.6% [72.8%, 80.2%], with a measured judge false-positive rate of 1% on the same benchmark. The frontier self-reports sit above us, and three of them (Zep's 71.2%, Mem0's 92.0/93.4%, MemPalace's 100%) have been independently disputed, unreproducible, or outright false. AgentOS's 76.6% passed an 80/20 stratified hold-out with `minimize-cost` producing an identical routing table on the calibration slice. The `maximize-accuracy` preset has two category picks at the CI-overlap boundary, minor in-sample optimization that is within sampling variance on the held-out subset.
 
-What AgentOS is: the only vendor in the surveyed set that publishes bootstrap CIs, judge false-positive probes on shipping numbers (measured, not hypothesized), per-stage retention metrics, full cost-per-correct accounting, latency distributions, per-case run JSONs, hold-out calibration against shipping tables, and matched-reader cross-vendor comparison tables at a seeded reproducible configuration. For the reader trying to decide which memory library to use, those are the things that matter. The headline number is a lottery ticket. The methodology is the infrastructure.
+What AgentOS is: the only vendor in the surveyed set that publishes bootstrap CIs, judge false-positive probes on shipping numbers (measured, not hypothesized), per-stage retention metrics, full cost-per-correct accounting, latency distributions, per-case run JSONs, hold-out calibration against shipping tables, and cross-vendor comparison tables at a seeded reproducible configuration. For the reader trying to decide which memory library to use, those are the things that matter. The headline number is a lottery ticket. The methodology is the infrastructure.
 
 ---
 
