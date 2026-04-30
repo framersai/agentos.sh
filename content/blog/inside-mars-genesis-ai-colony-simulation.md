@@ -58,7 +58,7 @@ The kernel is deterministic. Given identical seed, identical roster, identical s
 9. PERSONALITY DRIFT   det.  HEXACO traits shift under three forces
 ```
 
-Two runs on the same seed produce identical stages 2, 5, 6, 8, 9 at the numerical level. The LLM stages diverge because every prompt carries the leader's HEXACO profile and the accumulated state it has shaped. The asymmetry is the entire point. For the turn-loop walk-through, see [Build an AI Civilization Simulation in 5 Minutes with Paracosm](/blog/build-ai-civilization-simulation-paracosm). This post goes into how the three cognitive systems (personality, mood, memory) and two economic systems (forge, reuse) combine to make the Visionary's run read differently from the Engineer's even when their populations track nearly identically.
+Two runs on the same seed produce identical stages 2, 5, 6, 8, 9 at the numerical level. The LLM stages diverge because every prompt carries the leader's HEXACO profile and the accumulated state it has shaped. The asymmetry is the entire point. This post goes into how the three cognitive systems (personality, mood, memory) and two economic systems (forge, reuse) combine to make the Visionary's run read differently from the Engineer's even when their populations track nearly identically.
 
 ## Personality: six traits that do work
 
@@ -300,13 +300,55 @@ The diff renders the per-turn divergence: which decisions differed, which tools 
 
 **Can I see the full artifact?** Yes. Every run writes a `RunArtifact` JSON object covering scenario, leader, seed, turns, decisions, forges, judge verdicts, mortality events, citations, and cost. The dashboard renders it; the schema is exported via Zod and re-exportable to JSON Schema for non-TypeScript consumers.
 
+## Run your own
+
+Paracosm ships as an npm package. The engine, compiler, dashboard, and the two built-in scenarios (Mars Genesis and Lunar Outpost) come with the install:
+
+```bash
+npm install paracosm
+```
+
+A scenario is a JSON file. You define departments (the specialist AI agents that will analyze each crisis), metrics (what gets tracked), labels (domain vocabulary), and setup defaults. The compiler turns that JSON into a runnable scenario by generating TypeScript hooks via LLM calls. Compilation costs roughly $0.10 once and is cached to disk.
+
+```typescript
+import { compileScenario } from 'paracosm/compiler';
+import { runSimulation } from 'paracosm/runtime';
+
+const scenario = await compileScenario(worldJson, {
+  provider: 'anthropic',
+  model: 'claude-sonnet-4-6',
+});
+
+const visionary = {
+  name: 'Captain Okafor',
+  archetype: 'The Innovator',
+  unit: 'Station Beta',
+  hexaco: { openness: 0.9, conscientiousness: 0.4, extraversion: 0.8, agreeableness: 0.5, emotionality: 0.3, honestyHumility: 0.6 },
+  instructions: 'You lead by experimentation. Push boundaries.',
+};
+const engineer = {
+  name: 'Captain Reyes',
+  archetype: 'The Pragmatist',
+  unit: 'Station Alpha',
+  hexaco: { openness: 0.4, conscientiousness: 0.9, extraversion: 0.3, agreeableness: 0.6, emotionality: 0.5, honestyHumility: 0.8 },
+  instructions: 'You lead by protocol. Safety margins first.',
+};
+
+const results = await Promise.all(
+  [visionary, engineer].map((leader) =>
+    runSimulation(leader, [], { scenario, maxTurns: 8, seed: 42 })
+  )
+);
+```
+
+Each `runSimulation` returns a Zod-validated `RunArtifact` with cost, forged tools, citations, final state, and the per-turn decision log. The dashboard renders two artifacts side-by-side; the API has no upper limit, so you can sweep ten or twenty leaders if you want.
+
+For the no-code path, [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim) runs the same engine in the browser with a one-click Mars Genesis demo. Default settings take the low tens of cents per six-turn run.
+
 ## What to read next
 
-- [Paracosm 2026 Overview](/blog/paracosm-2026-overview). The long-form essay version of the project.
-- [Paracosm is a Structured World Model for AI Agents](/blog/paracosm-2026-overview). Academic placement, taxonomy, and lineage.
-- [Build an AI Civilization Simulation in 5 Minutes with Paracosm](/blog/build-ai-civilization-simulation-paracosm). The 5-minute tutorial.
+- [Paracosm 2026 Overview](/blog/paracosm-2026-overview). The long-form essay: why we built this, what it actually does, what it refuses to claim.
 - [Mars Genesis vs MiroFish (engineering)](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation). Top-down vs bottom-up swarm comparison.
-- [Emergent Tool Forging and HEXACO Leaders](/blog/inside-mars-genesis-ai-colony-simulation). Two-leader-one-seed comparison from a forge-machinery angle.
-- [Announcing AgentOS](/blog/announcing-agentos). The framework, end to end.
+- [Announcing AgentOS](/blog/announcing-agentos). The framework underneath, end to end.
 
 Paracosm is open source. AgentOS is open source. The Mars Genesis scenario ships as a default and runs the moment you `npm install paracosm`, or hosted at [paracosm.agentos.sh](https://paracosm.agentos.sh) with a one-click demo run. The engine does not care who leads the colony, which six traits they carry, or what crisis they face. It cares how they decide, what they remember, what tools they forge, and how aggressively they reuse. Two leaders under the same seed produce different histories because those five questions resolve differently for each of them. That is the case study.

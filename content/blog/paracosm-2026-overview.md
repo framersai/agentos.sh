@@ -205,13 +205,11 @@ That, more than any single technical claim, is the reason the project exists. A 
 
 ## Part 10: Where to go next
 
-- The live demo at [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim).
-- The npm package at [paracosm](https://www.npmjs.com/package/paracosm).
-- The structured-world-model positioning post at [Paracosm is a Structured World Model](/blog/paracosm-2026-overview) for the taxonomy and lineage if you want the academic placement.
-- The tutorial at [Build an AI Civilization Simulation in 5 Minutes](/blog/build-ai-civilization-simulation-paracosm) for the code walk.
-- The Mars Genesis case study at [Inside Mars Genesis](/blog/inside-mars-genesis-ai-colony-simulation) for the narrative breakdown.
+- The live demo at [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim) — one-click Mars Genesis run, no install.
+- The npm package at [paracosm](https://www.npmjs.com/package/paracosm) — `npm install paracosm` and you have the engine, the compiler, the dashboard, and Mars Genesis + Lunar Outpost as built-in scenarios.
+- The Mars Genesis case study at [Inside Mars Genesis](/blog/inside-mars-genesis-ai-colony-simulation) for the turn-by-turn narrative breakdown plus the install-and-run code path.
 - The MiroFish comparison at [docs.agentos.sh](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation) for the head-to-head with the bottom-up swarm approach.
-- The github repository at [framersai/paracosm](https://github.com/framersai/paracosm).
+- The GitHub repository at [framersai/paracosm](https://github.com/framersai/paracosm).
 - The agentos-bench package at [framersai/agentos-bench](https://github.com/framersai/agentos-bench) for the underlying memory benchmark methodology.
 
 ## FAQ
