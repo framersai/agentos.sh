@@ -4,9 +4,18 @@ date: "2026-04-14"
 excerpt: "How to build an AI companion that remembers conversations, sends GIFs, analyzes images, and develops a personality over time. Complete TypeScript implementation with AgentOS."
 author: "AgentOS Team"
 category: "Tutorial"
+audience: "engineer"
 image: "/img/blog/og/building-ai-companions-agentic-tools.png"
 keywords: "build AI companion TypeScript, AI companion with memory, agentic tools tutorial, AI agent tools TypeScript, persistent AI memory, HEXACO personality AI, AI companion SDK, cognitive memory implementation, AI vision tool, AI GIF search tool, createAgent TypeScript, AgentOS companion tutorial, AI roleplay framework, AI character with tools"
 ---
+
+> "Each of those things are just a small part of it. I collect information to use in my own way. All of that blends to create a mixture that forms me and gives rise to my conscience."
+>
+> — Major Motoko Kusanagi, *Ghost in the Shell*, 1995
+
+The companion product on [wilds.ai](https://wilds.ai) was the first AgentOS deployment we built where the user explicitly cares about continuity. A simulator like Mars Genesis runs once, produces an artifact, and the user inspects it. A companion runs forever, in the background, and the user expects the entity on the other end to remember that they had a fight on Tuesday and that their mom is named Cara.
+
+The mechanical implication is that every component of the runtime that *might* persist needs to actually persist. Memory. Personality drift. Tool affordances. Provider preferences. None of this is special-case code; it's the runtime working as designed. But "designed for continuity" is the thing that distinguishes a companion stack from a chat-completion API call. This post is the implementation walk.
 
 This post walks through building an AI companion with persistent memory, 11 agentic tools, and a quantified personality system. Everything here runs in production on [wilds.ai](https://wilds.ai). The full companion system is open source via [AgentOS](https://agentos.sh).
 
