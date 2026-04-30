@@ -32,7 +32,7 @@ The rest of the post covers: the architecture changes that produced each number,
 | **LongMemEval-S** (115K tokens, 50 sessions) | **85.6%** | EmergenceMem 86.0%, Mastra OM gpt-4o 84.23%, Supermemory 81.6% | **$0.0090** | Apache-2.0 | +1.4 over Mastra |
 | **LongMemEval-M** (1.5M tokens, 500 sessions) | **70.2%** | AgentBrain 71.7% (closed-source SaaS). No other open-source library publishes M. | **$0.0078** | Apache-2.0 | first open-source above 65% |
 
-[Full benchmarks reference](https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md) · [Reproducible run JSONs](https://github.com/framersai/agentos-bench/tree/master/results/runs) · [Methodology audit framework](https://agentos.sh/en/blog/agentos-memory-sota-longmemeval/)
+[Full benchmarks reference](https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md) · [Reproducible run JSONs](https://github.com/framersai/agentos-bench/tree/master/results/runs) · [Transparency audit framework](/blog/memory-benchmark-transparency-audit)
 
 ---
 
