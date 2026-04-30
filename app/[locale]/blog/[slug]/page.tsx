@@ -3,6 +3,8 @@ import Link from 'next/link';
 import type { Route } from 'next';
 import { getPostBySlug, getPostSlugs } from '@/lib/markdown';
 import { MarkdownRenderer } from '@/components/markdown-renderer';
+import { TableOfContents } from '@/components/blog/TableOfContents';
+import { Comments } from '@/components/blog/Comments';
 import { Calendar, ArrowLeft, Tag, User } from 'lucide-react';
 import { locales } from '../../../../i18n';
 
@@ -105,7 +107,7 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10" />
       </div>
 
-      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">
         {/* Back link */}
         <Link
           href={blogHref as Route}
@@ -115,51 +117,65 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
           Back to blog
         </Link>
 
-        {/* Post header */}
-        <header className="mb-10">
-          <div className="flex items-center gap-3 mb-4 text-sm">
-            {post.category && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--color-accent-primary)]/10 text-[var(--color-accent-primary)]">
-                <Tag className="w-3 h-3" aria-hidden="true" />
-                {post.category}
-              </span>
-            )}
-            <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
-              <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
-              {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-            </span>
-            {post.author && (
-              <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
-                <User className="w-3.5 h-3.5" aria-hidden="true" />
-                {post.author}
-              </span>
-            )}
+        <div className="lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] lg:gap-12">
+          <div className="min-w-0 max-w-3xl">
+            {/* Post header */}
+            <header className="mb-10">
+              <div className="flex items-center gap-3 mb-4 text-sm">
+                {post.category && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--color-accent-primary)]/10 text-[var(--color-accent-primary)]">
+                    <Tag className="w-3 h-3" aria-hidden="true" />
+                    {post.category}
+                  </span>
+                )}
+                <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
+                  <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
+                  {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </span>
+                {post.author && (
+                  <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
+                    <User className="w-3.5 h-3.5" aria-hidden="true" />
+                    {post.author}
+                  </span>
+                )}
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--color-text-primary)] leading-tight">
+                {post.title}
+              </h1>
+
+              {post.excerpt && (
+                <p className="mt-4 text-lg text-[var(--color-text-secondary)] leading-relaxed">
+                  {post.excerpt}
+                </p>
+              )}
+            </header>
+
+            {/* Mobile-only TOC (hidden on lg+ where the sidebar takes over) */}
+            <TableOfContents content={post.content} variant="mobile" />
+
+            {/* Post content */}
+            <MarkdownRenderer content={post.content} />
+
+            {/* Comments (giscus when configured, friendly stub otherwise) */}
+            <Comments slug={slug} />
+
+
+            {/* Footer */}
+            <footer className="mt-16 pt-8 border-t border-[var(--color-border-subtle)]">
+              <Link
+                href={blogHref as Route}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-accent-primary)] hover:underline"
+              >
+                <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                Back to all articles
+              </Link>
+            </footer>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--color-text-primary)] leading-tight">
-            {post.title}
-          </h1>
-
-          {post.excerpt && (
-            <p className="mt-4 text-lg text-[var(--color-text-secondary)] leading-relaxed">
-              {post.excerpt}
-            </p>
-          )}
-        </header>
-
-        {/* Post content */}
-        <MarkdownRenderer content={post.content} />
-
-        {/* Footer */}
-        <footer className="mt-16 pt-8 border-t border-[var(--color-border-subtle)]">
-          <Link
-            href={blogHref as Route}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-accent-primary)] hover:underline"
-          >
-            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-            Back to all articles
-          </Link>
-        </footer>
+          {/* Desktop-only TOC sidebar (hidden under lg) */}
+          <TableOfContents content={post.content} variant="desktop" />
+        </div>
       </div>
     </main>
   );
