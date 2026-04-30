@@ -87,7 +87,7 @@ const assistant = agent({
 const answer1 = await assistant.text('My name is Sarah and I study marine biology.');
 // The agent remembers Sarah's name and field
 
-// Later conversation — the agent still knows
+// Later conversation, the agent still knows
 const answer2 = await assistant.text('What topics would interest me?');
 // Response references marine biology because it remembers
 ```

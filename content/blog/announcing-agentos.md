@@ -15,7 +15,7 @@ keywords: "agentos launch, ai agent framework, typescript ai agents, build ai ag
 
 There is a moment most agent frameworks ask you to ignore. It's the moment when the agent forgets. It happens in a chat history that drops the third turn back, or in a memory store that retrieves the wrong document, or in a tool registry that doesn't have the function the agent actually needs. The framework hands you back an apology and a non-sequitur, and you build the workaround in your application code. After enough of those workarounds, the application code IS the agent, and the framework has become a thin shim over the LLM.
 
-We built AgentOS because we kept hitting that moment and the workaround was getting bigger than the framework. Memory, personality, multi-agent collaboration, tool forging — those are the things that should live inside the runtime, not in your handlers. This post is the announcement that they do, that AgentOS is open source under Apache 2.0, and that the public benchmarks are real.
+We built AgentOS because we kept hitting that moment and the workaround was getting bigger than the framework. Memory, personality, multi-agent collaboration, tool forging, those are the things that should live inside the runtime, not in your handlers. This post is the announcement that they do, that AgentOS is open source under Apache 2.0, and that the public benchmarks are real.
 
 If you want the brutally short version: `npm install @framers/agentos`, and the runtime starts on the high road.
 
@@ -114,7 +114,7 @@ AgentOS ships with [agentos-bench](https://github.com/framersai/agentos-bench), 
 - **LongMemEval-S**: 85.6% [82.4%, 88.6%] at $0.0090 per correct, gpt-4o reader, 4-second avg latency. Beats Mastra OM gpt-4o (84.2% published) on accuracy at matched reader. Beats EmergenceMem Simple Fast (80.6% measured in our harness) by +5.0 pp at 6.5x lower cost-per-correct.
 - **LongMemEval-M** (1.5M tokens, 500 sessions per haystack): 70.2% [66.0%, 74.0%] at $0.0078 per correct with reader-router top-K=5. Competitive with the strongest published M results in the original LongMemEval paper ([Wu et al, ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)). At matched reader-Top-5, +4.5 points above the paper's round-level configuration (65.7%) and 1.2 below the paper's session-level configuration (71.4%); 1.8 below the paper's overall best (72.0% at round-level Top-10).
 
-We do not run benchmarks against vendors that don't ship complete standalone runnables. We do not claim X-times-cheaper unless reader model and config match between the two systems being compared. The entire methodology — judges, sample sizes, judge FPR probes, adversarial calibration — is documented in [agentos-bench/docs](https://github.com/framersai/agentos-bench/tree/master/docs).
+We do not run benchmarks against vendors that don't ship complete standalone runnables. We do not claim X-times-cheaper unless reader model and config match between the two systems being compared. The entire methodology (judges, sample sizes, judge FPR probes, adversarial calibration) is documented in [agentos-bench/docs](https://github.com/framersai/agentos-bench/tree/master/docs).
 
 This is what an honest benchmark looks like. If something on this list is wrong, file an issue against agentos-bench and we'll fix it or retract the claim.
 
@@ -126,7 +126,7 @@ This is what an honest benchmark looks like. If something on this list is wrong,
 - [npm](https://www.npmjs.com/package/@framers/agentos)
 - [How to Build a TypeScript AI Agent in 5 Minutes](/blog/build-typescript-ai-agent-5-minutes)
 - [Adaptive vs. Emergent Intelligence](/blog/adaptive-vs-emergent)
-- [Paracosm 2026 Overview](/blog/paracosm-2026-overview) — the simulation product built on AgentOS
+- [Paracosm 2026 Overview](/blog/paracosm-2026-overview), the simulation product built on AgentOS
 
 ## FAQ
 

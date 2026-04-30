@@ -249,10 +249,10 @@ The dashboard includes a scenario editor where you can write, import, compile, a
 
 Five things that bit me when I first ran this tutorial:
 
-1. **Forgetting to seed the run.** If you don't pass a `seed`, the simulation is non-deterministic — re-running gives different output and the counterfactual comparison loses meaning. Always pass a seed for any run you intend to compare to another run.
+1. **Forgetting to seed the run.** If you don't pass a `seed`, the simulation is non-deterministic, re-running gives different output and the counterfactual comparison loses meaning. Always pass a seed for any run you intend to compare to another run.
 2. **Comparing across different scenarios.** The interesting comparison is *same scenario, different leader*. If you change the scenario between runs, you're measuring scenario noise, not personality. Lock the scenario; vary the leader.
 3. **Running without research grounding.** If `WebSearchService` keys aren't configured, paracosm will fall back to LLM-only event generation. The artifact records this as `groundingMode: "llm-only"` so you can audit which runs were grounded. Ungrounded runs drift toward LLM cliché.
-4. **Reading the artifact instead of the dashboard.** The artifact is a JSON object hundreds of lines long. The dashboard renders it as a navigable timeline. For exploration, use the dashboard. The artifact is for programmatic consumption — diffs, regression tests, fleet reporting.
+4. **Reading the artifact instead of the dashboard.** The artifact is a JSON object hundreds of lines long. The dashboard renders it as a navigable timeline. For exploration, use the dashboard. The artifact is for programmatic consumption, diffs, regression tests, fleet reporting.
 5. **Treating a single run as ground truth.** Paracosm is a tool for thinking about counterfactuals. A single run is a single counterfactual. Multiple runs across multiple seeds give you a distribution. Treating one run as a forecast is a misuse we have warned about [in the long-form post](/blog/paracosm-2026-overview#part-8-what-we-dont-claim) and we'll keep warning about.
 
 ## FAQ

@@ -17,7 +17,7 @@ The first time I built a RAG system that "remembered" something it hadn't been t
 
 A vector database is a search engine. A search engine that returns the same answer for the same query forever, regardless of what happened between queries, is not a memory. Memory is what changes when something is recalled. Memory is what fades when nothing recalls it. Memory is what gets reshaped by the emotion of the moment it's accessed. RAG does none of those things, because it isn't designed to.
 
-This post is about what's required to give an agent something closer to actual memory. The neuroscience is well-established. The implementation is harder than it looks. AgentOS ships nine mechanisms from published cognitive-science literature, each independently configurable, each grounded in a primary source we cite below. None of them are RAG. RAG is one of the retrievers cognitive memory composes with — not a replacement for it.
+This post is about what's required to give an agent something closer to actual memory. The neuroscience is well-established. The implementation is harder than it looks. AgentOS ships nine mechanisms from published cognitive-science literature, each independently configurable, each grounded in a primary source we cite below. None of them are RAG. RAG is one of the retrievers cognitive memory composes with, not a replacement for it.
 
 RAG retrieves documents. It does not remember.
 
