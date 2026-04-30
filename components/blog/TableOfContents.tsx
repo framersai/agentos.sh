@@ -52,23 +52,12 @@ function extractToc(markdown: string): TocItem[] {
 }
 
 /**
- * Variants:
- *   - `mobile` renders a collapsible details element. Suitable inside
- *     the article column above the markdown body. Shown on screens
- *     under the lg breakpoint and `lg:hidden` past it.
- *   - `desktop` renders a sticky aside intended for the right sidebar
- *     in the lg+ grid layout. Hidden under lg.
- *
- * Splitting into variants (rather than rendering both at once) keeps
- * the consumer in control of where each variant mounts in the DOM.
+ * Single static TOC rendered above the article body across all
+ * viewports. No collapse, no sticky, no scroll-following. The TOC
+ * sits in normal document flow and is always visible at the top
+ * of the post.
  */
-export function TableOfContents({
-  content,
-  variant = 'mobile',
-}: {
-  content: string;
-  variant?: 'mobile' | 'desktop';
-}) {
+export function TableOfContents({ content }: { content: string }) {
   const items = useMemo(() => extractToc(content), [content]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -116,64 +105,26 @@ export function TableOfContents({
 
   if (items.length === 0) return null;
 
-  // Always-static rendering: no collapse, no sticky, no scroll
-  // following. The TOC sits in normal document flow (`position:
-  // static`, the default) and is fully expanded on every viewport.
-  // Visitors get a permanent, predictable list of section links
-  // anchored to the article structure.
-
-  if (variant === 'mobile') {
-    return (
-      <nav
-        aria-label="Table of contents"
-        className="my-6 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-4 lg:hidden"
-      >
-        <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-[var(--color-text-primary)]">
-          <ListTree className="h-4 w-4" aria-hidden />
-          Table of Contents
-        </div>
-        <ul className="space-y-1.5">
-          {items.map((item) => (
-            <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                className={`block text-sm transition-colors ${
-                  item.level === 3 ? 'pl-4' : ''
-                } ${
-                  activeId === item.id
-                    ? 'font-semibold text-[var(--color-accent-primary)]'
-                    : 'text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)]'
-                }`}
-              >
-                {item.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    );
-  }
-
   return (
-    <aside
+    <nav
       aria-label="Table of contents"
-      className="hidden lg:block pl-6 pr-2 py-2"
+      className="my-8 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-5"
     >
       <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
         <ListTree className="h-3.5 w-3.5" aria-hidden />
         On this page
       </div>
-      <ul className="space-y-1.5 text-sm">
+      <ul className="space-y-1.5">
         {items.map((item) => (
           <li key={item.id}>
             <a
               href={`#${item.id}`}
-              className={`block leading-snug transition-colors ${
-                item.level === 3 ? 'pl-4 text-xs' : ''
+              className={`block text-sm leading-snug transition-colors ${
+                item.level === 3 ? 'pl-4 text-[13px]' : ''
               } ${
                 activeId === item.id
-                  ? 'font-semibold text-[var(--color-accent-primary)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-accent-primary)]'
+                  ? 'font-semibold text-[var(--color-text-link)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-link)]'
               }`}
             >
               {item.text}
@@ -181,6 +132,6 @@ export function TableOfContents({
           </li>
         ))}
       </ul>
-    </aside>
+    </nav>
   );
 }

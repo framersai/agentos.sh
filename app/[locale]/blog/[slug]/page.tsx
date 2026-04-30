@@ -118,8 +118,8 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
           Back to blog
         </Link>
 
-        <div className="lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] lg:gap-12">
-          <div className="min-w-0 max-w-3xl">
+        <div className="mx-auto max-w-3xl">
+          <div className="min-w-0">
             {/* Post header */}
             <header className="mb-10">
               {/* Eyebrow row: thin gradient accent + meta items separated by tiny dot bullets */}
@@ -176,8 +176,8 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
             {/* Hero metrics block (renders only when frontmatter has heroStat + heroLabel) */}
             <BlogPostHero post={post} />
 
-            {/* Mobile-only TOC (hidden on lg+ where the sidebar takes over) */}
-            <TableOfContents content={post.content} variant="mobile" />
+            {/* Static TOC, always-on-top of article body across viewports */}
+            <TableOfContents content={post.content} />
 
             {/* Post content */}
             <MarkdownRenderer content={post.content} />
@@ -197,9 +197,6 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
               </Link>
             </footer>
           </div>
-
-          {/* Desktop-only TOC sidebar (hidden under lg) */}
-          <TableOfContents content={post.content} variant="desktop" />
         </div>
       </div>
     </main>

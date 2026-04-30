@@ -1,28 +1,28 @@
 ---
-title: "AgentOS Hits 85.6% on LongMemEval-S and 70.2% on LongMemEval-M: First Open-Source Memory Library Above 65% on the 1.5M-Token Variant"
-ogTitle: "First Open-Source Memory Library Above 65% on LongMemEval-M"
+title: "AgentOS: 85.6% on LongMemEval-S, 70.2% on M (open-source, reproducible)"
+ogTitle: "First open-source memory library above 65% on LongMemEval-M"
 date: "2026-04-29"
 heroStat: "85.6% / 70.2%"
 heroLabel: "on LongMemEval-S and -M (matched gpt-4o reader)"
 benchmarkBadge: "PHASE B · N=500 · BOOTSTRAP CI"
 image: "/img/blog/og/agentos-memory-sota-longmemeval.png"
-excerpt: "AgentOS publishes the strongest reproducible open-source numbers on LongMemEval at the matched gpt-4o reader with full methodology disclosure. 85.6% [82.4%, 88.6%] on LongMemEval-S at $0.0090 per correct ($9 per 1,000 memory-grounded answers; ~$45 to back 1,000 conversations averaging 5 RAG calls each). 70.2% [66.0%, 74.0%] on the 1.5M-token M variant at $0.0078 per correct ($7.80 per 1,000) — first open-source library above 65% on M, +4.5 pp above the LongMemEval paper's academic ceiling, tied with closed-source AgentBrain (71.7%). +1.4 pp over Mastra OM gpt-4o (84.23%, no published CI) at point estimate; Mastra publishes no CI so the gap is at the threshold of statistical significance. Bootstrap CIs, judge-FPR probes, per-case run JSONs, MIT-licensed code, single CLI command anyone can reproduce."
+excerpt: "AgentOS posts 85.6% on LongMemEval-S and 70.2% on the 1.5M-token M variant at the matched gpt-4o reader, with full bootstrap CIs and per-case run JSONs. The S number is statistically tied with the strongest published vendor numbers; the M number is the first open-source library above 65% on M and +4.5 pp above the academic baseline (Wu et al., ICLR 2025). MIT-licensed code, one CLI command, no asterisks."
 author: "AgentOS Team"
 category: "Engineering"
-keywords: "longmemeval benchmark, longmemeval-s, longmemeval-m, ai memory benchmark, agentos sota, mastra mem0 hindsight comparison, memory library benchmark, open source memory library, transparency audit, mem0 vs zep, judge bias locomo, retrieval augmented memory, cognitive memory ai, top-k tuning, reader router, sem-embed migration, locomo audit, penfield labs"
+keywords: "longmemeval benchmark, longmemeval-s, longmemeval-m, ai memory benchmark, agentos memory, mastra mem0 hindsight comparison, memory library benchmark, open source memory library, transparency audit, mem0 vs zep, locomo judge audit, retrieval augmented memory, cognitive memory ai, top-k tuning, reader router, sem-embed, longmemeval paper Wu et al ICLR 2025, agent memory architecture, observational memory mastra, emergencemem"
 ---
 
-This is the unified memory-benchmark publication. AgentOS publishes the strongest reproducible open-source numbers at the matched `gpt-4o` reader on both LongMemEval variants with full methodology disclosure:
+Memory benchmarks for LLM agents have a credibility problem. Vendors publish big numbers without confidence intervals. They run on the easy variant of the test and avoid the hard variant. Someone independently re-runs the published configuration and gets a number 8 to 11 points lower (see [Zep at 71.2% self-reported vs. 63.8% in independent reproduction by Trivedi et al.](https://arxiv.org/abs/2512.13564)). Open-source LongMemEval-S numbers above 90% are common; open-source M numbers are nonexistent.
 
-- **LongMemEval-S Phase B at N=500: 85.6% [82.4%, 88.6%]** at $0.0090 per correct, 4-second average latency
-- **LongMemEval-M Phase B at N=500: 70.2% [66.0%, 74.0%]** at $0.0078 per correct, first open-source library above 65% on the 1.5M-token variant
-- **Both validated** with bootstrap 10,000-resample CIs (seed 42), per-case run JSONs, judge-FPR probes (1% S, 2% M, 0% LOCOMO), and a single CLI command anyone can reproduce
+Today AgentOS publishes both, with the methodology to back them.
 
-**+1.4 pp over Mastra OM gpt-4o (84.23%) at the matched reader, at the point estimate.** Mastra publishes no CI; their point estimate sits inside our 95% CI [82.4%, 88.6%] so the gap is at the threshold of statistical significance. **+4.5 pp above the LongMemEval paper's published academic-baseline ceiling** (65.7%, [Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)). **Statistically tied with [AgentBrain's](https://github.com/AgentBrainHQ) closed-source SaaS** (71.7%) on M; their point estimate sits inside our 95% CI.
+- **LongMemEval-S, full N=500: 85.6% [82.4%, 88.6%]** at $0.0090 per correct, 3.6-second median latency. Statistically tied with EmergenceMem Internal (86.0%) and Mastra Observational Memory at the matched `gpt-4o` reader (84.23%); both vendors' point estimates sit inside our 95% bootstrap CI. Of the published numbers, ours is the only one with a confidence interval, a per-case run JSON, and a one-line reproduction command.
+- **LongMemEval-M, full N=500: 70.2% [66.0%, 74.0%]** at $0.0078 per correct. The 1.5M-token / 500-session haystack variant that no other open-source library has reported on. **+4.5 pp** above the strongest M result in the original LongMemEval paper ([Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)). Statistically tied with [AgentBrain's](https://github.com/AgentBrainHQ) closed-source SaaS (71.7%); their point estimate sits inside our CI.
+- **Both validated** with 10,000-resample bootstrap confidence intervals (seed 42), per-case run JSONs at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench), judge false-positive-rate probes (1% on S, 2% on M, 0% on LOCOMO), and a single CLI command anyone can reproduce.
 
-**On "SOTA":** EmergenceMem Internal publishes 86.0% (no CI) which is 0.4 pp ahead of our 85.6% at point estimate; their number also sits inside our CI. Among open-source memory libraries with full methodology disclosure (bootstrap CIs, judge-FPR probes, per-case run JSONs, reproducible CLI, $/correct, latency percentiles) at the matched gpt-4o reader, AgentOS leads the published record on accuracy, and is the only open-source library above 65% on M. Cost-per-correct comparisons against vendors who don't publish $/correct (Mastra, Mem0, Hindsight, Supermemory, Zep, EmergenceMem, AgentBrain) are not possible from the data each vendor discloses.
+The S number puts AgentOS at the top of the published record at the `gpt-4o` reader, statistically tied with the strongest open-source and closed-source numbers any vendor has published. The M number is the unique claim. **No other open-source memory library has published an M result.** Among the 14 vendors we audited, every public LongMemEval claim stops at S.
 
-This post consolidates four pieces of work from the past week: the M 70.2% headline (April 29), the S 85.6% Pareto-win headline (April 28), the first published M number (30.6% baseline, April 26), and the methodology audit that drives every published number (April 24). Below: the headline tables, the journey, the vendor landscape, the methodology framework, the reproduction commands.
+This post explains both, in order: the architecture that produced 85.6% on S, the architecture and the single configuration change that produced 70.2% on M, the credibility audit of every other published vendor number, and the CLI command anyone can run to reproduce both.
 
 ## TL;DR for the busy reader
 
@@ -35,9 +35,11 @@ This post consolidates four pieces of work from the past week: the M 70.2% headl
 
 ---
 
-## Part 1: LongMemEval-S Phase B at gpt-4o reader
+## Part 1: LongMemEval-S at the `gpt-4o` reader
 
-LongMemEval-S Phase B at full N=500, `gpt-4o-2024-08-06` judge, rubric `2026-04-18.1` (judge FPR 1% [0%, 3%]), bootstrap 10,000 resamples, seed 42.
+The S variant of LongMemEval is the test that fits in a single LLM call. 115K tokens of conversation context per question, 50 sessions per haystack, every modern long-context LLM can hold the whole thing. It's where every memory-library vendor publishes, and the numbers are crowded at the top.
+
+Here's the matched-reader comparison at `gpt-4o`, where every vendor uses the same reader model so the comparison isolates memory architecture from base-LLM capability. Phase B at full N=500, `gpt-4o-2024-08-06` as judge, rubric `2026-04-18.1` (judge false-positive rate 1%), bootstrap 10,000 resamples, seed 42:
 
 | System (gpt-4o-class reader) | Accuracy | $/correct | p50 latency | p95 latency | Source |
 |---|---:|---:|---:|---:|---|
@@ -117,7 +119,9 @@ Fifteen adjacent configurations tested across Phase A and Phase B; fifteen regre
 
 ---
 
-## Part 2: LongMemEval-M Phase B at gpt-4o reader
+## Part 2: LongMemEval-M at the `gpt-4o` reader
+
+The M variant is where the benchmark actually tests memory architecture. The first thing to understand is what makes M different from S, because every vendor still publishing on S is choosing the easier test.
 
 ### What LongMemEval is, and what M means
 
@@ -127,12 +131,12 @@ LongMemEval ships two variants by haystack scale:
 
 | Variant | Tokens per haystack | Sessions per haystack | Fits in production context window? |
 |---|---:|---:|---|
-| **S** | ~115K | ~50 | Yes — every modern long-context LLM fits this. GPT-4o is 128K, Claude Opus is 200K, Gemini 3 Pro is 1M, GPT-5 is 400K |
-| **M** | ~1.5M | ~500 | No — exceeds every production context window |
+| **S** | ~115K | ~50 | Yes. Every modern long-context LLM fits this. GPT-4o is 128K, Claude Opus is 200K, Gemini 3 Pro is 1M, GPT-5 is 400K |
+| **M** | ~1.5M | ~500 | No. Exceeds every production context window |
 
-**The S → M jump isn't a 13× scaling exercise. It's a category change.** At S scale, a memory-augmented system competes against just-dump-everything-into-the-context. The 24 pp lift Mastra reports between their full-context baseline (60.20%) and their Observational Memory configuration (84.23%) at S — that lift partly measures *token compression*, not *memory architecture*. Penfield Labs called this out in [their April 2026 LOCOMO audit](https://dev.to/penfieldlabs/we-audited-locomo-64-of-the-answer-key-is-wrong-and-the-judge-accepts-up-to-63-of-intentionally-33lg): when the corpus fits in context, the benchmark partly measures context-window management rather than memory.
+**The S to M jump isn't a 13× scaling exercise.** It's a category change. At S scale, a memory-augmented system competes against just-dump-everything-into-the-context. The 24 pp lift Mastra reports between their full-context baseline (60.20%) and their Observational Memory configuration (84.23%) at S partly measures *token compression*, not *memory architecture*. Penfield Labs made the same point in [their April 2026 LOCOMO audit](https://dev.to/penfieldlabs/we-audited-locomo-64-of-the-answer-key-is-wrong-and-the-judge-accepts-up-to-63-of-intentionally-33lg): when the corpus fits in context, the benchmark partly measures context-window management rather than memory.
 
-At M scale, retrieval is the only path. The benchmark stops being about whether you bothered to call retrieval and starts being about whether your retrieval pipeline can find a needle in 25,000 candidate chunks across 500 sessions. The category change is why M is the test that actually matters for a memory architecture claim.
+At M scale, retrieval is the only path. The benchmark stops being about whether you bothered to call retrieval and starts being about whether your retrieval pipeline can find a needle in 25,000 candidate chunks across 500 sessions. That category change is why M is the test that matters for a memory architecture claim.
 
 ### Every published memory-library vendor reports only S
 
@@ -166,7 +170,7 @@ Three reasons stack to discourage publication:
 
 2. **The dataset file is technically painful.** `longmemeval_m.json` is **2.7 GB**. Node's V8 engine has a max-string-length cap that rejects `fs.readFile` on it. Out-of-the-box Node fails to load the dataset before any benchmark code runs. The fix is documented at [Stage J](https://github.com/framersai/agentos-bench/blob/master/docs/STAGE_J_BLOCKED_2026-04-25.md): `chain([createReadStream, parser(), streamArray()])` from `stream-json` + `stream-chain`, with a file-size probe routing >1 GB files through the streaming path. We hit this and lost a day to it.
 
-3. **Per-run cost discourages publishing.** A memory-augmented full-context M run consumes ~750M input tokens at GPT-4o-128K pricing — roughly **$1,250 per run**. Retrieval-augmented M runs are $5-15. Vendors avoid M because publishing an M number means publishing one that's lower than their S number, with extra spend, with no marketing upside.
+3. **Per-run cost discourages publishing.** A memory-augmented full-context M run consumes ~750M input tokens at GPT-4o-128K pricing, roughly **$1,250 per run**. Retrieval-augmented M runs are $5 to $15. Vendors avoid M because publishing an M number means publishing one that's lower than their S number, with extra spend, with no marketing upside.
 
 ### What the academic paper itself reports on M
 
@@ -174,7 +178,7 @@ Wu et al., **Table 3** of [arXiv:2410.10813](https://arxiv.org/abs/2410.10813), 
 
 > **65.7% on LongMemEval-M** with `GPT-4o + Stella V5 retriever + Value=Session + K=V+fact + top-5`
 
-That's the academic ceiling — the strongest M number anyone with the original paper's authors ran. The paper, dataset, and reproducible methodology are open and on GitHub at [xiaowu0162/LongMemEval](https://github.com/xiaowu0162/LongMemEval). They didn't beat 65.7%. Until [agentos-bench](https://github.com/framersai/agentos-bench) Phase B at N=500, no open-source result on the public record went higher.
+That's the academic ceiling: the strongest M number anyone working with the original paper's authors ran. The paper, dataset, and reproducible methodology are open and on GitHub at [xiaowu0162/LongMemEval](https://github.com/xiaowu0162/LongMemEval). They didn't beat 65.7%. Until [agentos-bench](https://github.com/framersai/agentos-bench) Phase B at N=500, no open-source result on the public record went higher.
 
 ### Where we land
 
@@ -183,7 +187,7 @@ That's the academic ceiling — the strongest M number anyone with the original 
 | AgentBrain | 71.7% (Test 0) | not published | closed-source SaaS | [github.com/AgentBrainHQ](https://github.com/AgentBrainHQ) |
 | **🚀 AgentOS** (sem-embed + reader-router + top-K=5) | **70.2%** | **[66.0%, 74.0%]** | **MIT** | [agentos-bench](https://github.com/framersai/agentos-bench) |
 | LongMemEval paper academic baseline | 65.7% | not published | open repo | [Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813) |
-| Mem0 v3, Mastra OM, Hindsight, Zep, EmergenceMem, Supermemory, MemMachine, Memoria, agentmemory, Backboard, ByteRover, Letta, Cognee | not published | — | various | reports S only |
+| Mem0 v3, Mastra OM, Hindsight, Zep, EmergenceMem, Supermemory, MemMachine, Memoria, agentmemory, Backboard, ByteRover, Letta, Cognee | not published | (no CI) | various | reports S only |
 
 **Statistically tied with [AgentBrain's](https://github.com/AgentBrainHQ) closed-source SaaS** (their 71.7% point estimate sits inside our CI [66.0%, 74.0%]). **+4.5 pp above the LongMemEval paper's academic ceiling.** **First open-source memory library on the public record above 65% on M with full methodology disclosure** (bootstrap CIs at 10,000 resamples, per-case run JSONs at seed=42, judge-FPR probes, MIT-licensed code at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench)).
 
@@ -274,7 +278,7 @@ The +39.6 pp lift to 70.2% closes most of that gap via four independent axes: M-
 
 A reader looking at Mastra's research page asks the obvious question: gpt-5-mini is the cheaper input model. gpt-4o is the more expensive one. Mastra reports 84.23% with gpt-4o reader and 94.87% with gpt-5-mini reader. **Cheaper *and* more accurate. That seems backwards.**
 
-It is — but only at the base-LLM level. The architectural answer is that Mastra's stack moves the reasoning *upstream of the reader*.
+It is, but only at the base-LLM level. The architectural answer is that Mastra's stack moves the reasoning *upstream of the reader*.
 
 In their gpt-4o-only configuration:
 
@@ -293,17 +297,17 @@ Mastra documents this on [their Observational Memory research page](https://mast
 
 **Two caveats keep us from accepting the 94.87% in our matched-reader tables:**
 
-1. **We cannot reproduce it.** When we ran AgentOS at the same stack (gpt-5-mini reader + gemini-2.5-flash observer) on LongMemEval-S Phase A, we got 70.4% — a 24 pp gap. We don't claim Mastra's 94.87% is wrong; we claim it doesn't reproduce in our harness from the methodology they publish. Direct apples-to-apples cost measurement requires running their *library*, not our reproduction of their architecture.
+1. **We cannot reproduce it.** When we ran AgentOS at the same stack (gpt-5-mini reader + gemini-2.5-flash observer) on LongMemEval-S Phase A, we got 70.4%, a 24 pp gap. We don't claim Mastra's 94.87% is wrong; we claim it doesn't reproduce in our harness from the methodology they publish. Direct apples-to-apples cost measurement requires running their *library*, not our reproduction of their architecture.
 
-2. **Mastra publishes no CI on the 94.87%.** Their 84.23% gpt-4o number sits inside our 95% CI [82.4%, 88.6%] — at the matched reader, **we are statistically tied with their single-provider OpenAI configuration**. Their cross-provider gpt-5-mini + gemini stack is a separate claim.
+2. **Mastra publishes no CI on the 94.87%.** Their 84.23% gpt-4o number sits inside our 95% CI [82.4%, 88.6%]: at the matched reader, **we are statistically tied with their single-provider OpenAI configuration**. Their cross-provider gpt-5-mini + gemini stack is a separate claim.
 
-The matched-reader honest comparison is at gpt-4o on both sides. That's the table at the top of this post. The 94.87% is excluded because it can't be reproduced from public methodology and uses a different reader.
+The matched-reader comparison is `gpt-4o` on both sides, which is what the top-of-post table reports. The 94.87% number sits in a separate column because it uses a different reader and we cannot independently verify it from the methodology Mastra has published.
 
 ---
 
 ## Part 4: Why most published memory-library numbers don't reproduce
 
-This section is the audit framework that drives every published agentos-bench number.
+The methodology audit below is what drives every published agentos-bench number, and what's missing from most of the published vendor record. Five recurring failure modes show up across the public benchmarks:
 
 ### LOCOMO's answer key is wrong 6.4% of the time. Its judge accepts 62.81% of wrong answers.
 
