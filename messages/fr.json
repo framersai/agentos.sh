@@ -285,7 +285,7 @@
     "cards": {
       "cognitiveMemory": {
         "title": "Mémoire Cognitive",
-        "description": "8 mecanismes fondes sur les neurosciences modules par les traits de personnalite HEXACO avec courbe d’oubli d’Ebbinghaus",
+        "description": "8 mécanismes soutenus par les neurosciences avec la décroissance de la courbe d'oubli d'Ebbinghaus. Biais de récupération du vecteur de personnalité HEXACO optionnels ; fonctionne de manière neutre par défaut.",
         "features": [
           "Reconsolidation et RIF",
           "Rappel involontaire et FOK",
@@ -344,8 +344,8 @@
         ]
       },
       "hexaco": {
-        "title": "Personnalité HEXACO",
-        "description": "Modelisation de personnalite a 6 dimensions qui faconne la memoire, le style de communication et le comportement decisionnnel",
+        "title": "Personnalité HEXACO (Optionnel)",
+        "description": "Vecteur de personnalité à 6 dimensions avec option d'adhésion. Lorsqu'il est activé, il biaise la récupération de la mémoire, le style de communication et la prise de décision au niveau du noyau (pas dans l'invite). Si on l'ommet, le temps d'exécution reste neutre en termes de personnalité.",
         "features": [
           "Modelisation de traits a 6 axes",
           "Modulation de memoire",
@@ -1416,7 +1416,7 @@
       "step3": "Le Juge Évalue",
       "step4": "Outil Activé",
       "step5": "L’Agent l’Utilise",
-      "description": "Lorsqu’un agent rencontre une tâche qu’il ne peut pas gérer avec les outils existants, il écrit une nouvelle définition d’outil à la volée. Un agent juge évalue la sûreté et l’exactitude avant l’activation. Les outils approuvés sont exécutés en sandbox et suivis pour une promotion basée sur la fiabilité.",
+      "description": "Runtime Tool Forging signifie qu'un agent peut s'écrire une nouvelle fonction TypeScript en cours de décision, la faire examiner par un juge LLM distinct et l'exécuter dans un bac à sable isolé V8 (tas de 128 Mo, horloge murale de 10 s, pas de fs/réseau/eval), le tout avant le prochain tour. Les outils approuvés sont placés dans un index découvrable pour réutilisation, de sorte que le coût se stabilise après les premières forges d'une session.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",

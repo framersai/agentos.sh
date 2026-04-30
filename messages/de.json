@@ -285,7 +285,7 @@
     "cards": {
       "cognitiveMemory": {
         "title": "Kognitives Gedächtnis",
-        "description": "8 neurowissenschaftlich fundierte Mechanismen, moduliert durch HEXACO-Persönlichkeitsmerkmale mit Ebbinghaus-Vergessenskurve",
+        "description": "8 neurowissenschaftlich gestützte Mechanismen mit Ebbinghaus-Vergessenskurvenzerfall. Optionale HEXACO-Persönlichkeitsvektor-Biases Abruf; läuft standardmäßig persönlichkeitsneutral.",
         "features": [
           "Rekonsolidierung & RIF",
           "Unwillkürlicher Abruf & FOK",
@@ -344,8 +344,8 @@
         ]
       },
       "hexaco": {
-        "title": "HEXACO-Persönlichkeit",
-        "description": "6-dimensionale Persönlichkeitsmodellierung, die Gedächtnis, Kommunikationsstil und Entscheidungsverhalten formt",
+        "title": "HEXACO-Persönlichkeit (Optional)",
+        "description": "Opt-in 6-dimensionaler Persönlichkeitsvektor. Wenn aktiviert, beeinflusst es den Gedächtnisabruf, den Kommunikationsstil und die Entscheidungsfindung auf Kernel-Ebene (nicht im Prompt). Lässt man es weg, bleibt die Laufzeit persönlichkeitsneutral.",
         "features": [
           "6-Achsen-Trait-Modellierung",
           "Gedächtnismodulation",
@@ -1417,7 +1417,7 @@
       "step3": "Richter bewertet",
       "step4": "Tool aktiviert",
       "step5": "Agent nutzt es",
-      "description": "Wenn ein Agent auf eine Aufgabe trifft, die er mit vorhandenen Tools nicht bewältigen kann, schreibt er spontan eine neue Tool-Definition. Ein Richter-Agent bewertet Sicherheit und Korrektheit vor der Aktivierung. Genehmigte Tools werden in einer Sandbox ausgeführt und für eine zuverlässigkeitsbasierte Beförderung verfolgt.",
+      "description": "Runtime Tool Forging bedeutet, dass ein Agent sich während einer Entscheidung eine neue TypeScript-Funktion schreiben, sie von einem separaten Richter-LLM überprüfen lassen und sie in einer V8-Isolations-Sandbox (128 MB Heap, 10s Wanduhr, kein fs/Netzwerk/eval) ausführen kann, alles vor dem nächsten Zug. Genehmigte Werkzeuge landen in einem durchsuchbaren Index zur Wiederverwendung, sodass die Kosten nach den ersten Schmieden in einer Sitzung flach bleiben.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",

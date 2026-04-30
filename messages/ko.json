@@ -285,7 +285,7 @@
     "cards": {
       "cognitiveMemory": {
         "title": "인지 메모리",
-        "description": "에빙하우스 망각 곡선 감소를 포함한 HEXACO 성격 특성에 의해 조절되는 8개의 신경과학 기반 메커니즘",
+        "description": "에빙하우스 망각 곡선 감쇠를 포함한 8가지 신경과학 기반 메커니즘. 선택적 HEXACO 성격 벡터가 검색을 편향시킵니다. 기본적으로 성격 중립적으로 실행됩니다.",
         "features": [
           "재강화 및 RIF",
           "비자발적 회상 및 FOK",
@@ -344,8 +344,8 @@
         ]
       },
       "hexaco": {
-        "title": "HEXACO 성격",
-        "description": "기억, 커뮤니케이션 스타일, 의사결정 행동을 형성하는 6차원 성격 모델링",
+        "title": "HEXACO 성격 (선택 사항)",
+        "description": "옵트인 6차원 성격 벡터. 활성화되면 커널 수준에서 기억 검색, 의사소통 스타일 및 의사 결정에 편향을 줍니다 (프롬프트에는 아님). 생략하면 런타임은 성격 중립적으로 유지됩니다.",
         "features": [
           "6축 특성 모델링",
           "기억 조절",
@@ -1416,7 +1416,7 @@
       "step3": "판단자 평가",
       "step4": "도구 활성화",
       "step5": "에이전트가 사용",
-      "description": "에이전트가 기존 도구로 처리할 수 없는 작업에 직면하면, 즉석에서 새 도구 정의를 작성합니다. 판단자 에이전트가 활성화 전에 안전성과 정확성을 평가합니다. 승인된 도구는 샌드박스에서 실행되며 신뢰도 기반 승격을 위해 추적됩니다.",
+      "description": "Runtime Tool Forging은 에이전트가 결정 중간에 새로운 TypeScript 함수를 작성하고, 별도의 판사 LLM에 의해 검토를 받고, V8 격리 샌드박스(128 MB 힙, 10초 벽시계, fs/네트워크/eval 없음) 내에서 실행할 수 있음을 의미합니다. 모든 것이 다음 턴 전에 이루어집니다. 승인된 도구는 재사용을 위해 검색 가능한 인덱스에 배치되므로 세션 내에서 처음 몇 번의 단조 후 비용이 평탄해집니다.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",

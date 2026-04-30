@@ -285,7 +285,7 @@
     "cards": {
       "cognitiveMemory": {
         "title": "Memoria Cognitiva",
-        "description": "8 mecanismos respaldados por neurociencia modulados por rasgos de personalidad HEXACO con curva de olvido de Ebbinghaus",
+        "description": "8 mecanismos respaldados por neurociencia con decaimiento de la curva de olvido de Ebbinghaus. Sesgos de recuperación del vector de personalidad HEXACO opcionales; funciona de manera neutral por defecto.",
         "features": [
           "Reconsolidacion y RIF",
           "Recuerdo involuntario y FOK",
@@ -344,8 +344,8 @@
         ]
       },
       "hexaco": {
-        "title": "Personalidad HEXACO",
-        "description": "Modelado de personalidad 6-dimensional que moldea memoria, estilo de comunicacion y comportamiento de decision",
+        "title": "Personalidad HEXACO (Opcional)",
+        "description": "Vector de personalidad de 6 dimensiones con opción de inclusión. Cuando está habilitado, sesga la recuperación de la memoria, el estilo de comunicación y la toma de decisiones a nivel del núcleo (no en el prompt). Si se omite, el tiempo de ejecución permanece neutral en cuanto a la personalidad.",
         "features": [
           "Modelado de 6 ejes de rasgos",
           "Modulacion de memoria",
@@ -1426,7 +1426,7 @@
       "step3": "Juez Evalúa",
       "step4": "Herramienta Activada",
       "step5": "El Agente la Usa",
-      "description": "Cuando un agente encuentra una tarea que no puede manejar con las herramientas existentes, escribe una nueva definición de herramienta sobre la marcha. Un agente juez evalúa la seguridad y la corrección antes de la activación. Las herramientas aprobadas se ejecutan en sandbox y se rastrean para promoción basada en fiabilidad.",
+      "description": "Runtime Tool Forging significa que un agente puede escribirse una nueva función TypeScript a mitad de decisión, hacer que un juez LLM separado la revise y ejecutarla dentro de un sandbox de aislamiento V8 (128 MB de heap, 10s de reloj de pared, sin fs/red/eval), todo antes del siguiente turno. Las herramientas aprobadas se colocan en un índice detectable para su reutilización, por lo que el costo se estabiliza después de las primeras forjas en una sesión.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",

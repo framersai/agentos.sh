@@ -977,7 +977,7 @@
     "cards": {
       "cognitiveMemory": {
         "title": "认知记忆",
-        "description": "8种基于神经科学的机制，由HEXACO人格特质调节，具有艾宾浩斯遗忘曲线衰减",
+        "description": "8种基于神经科学的机制，伴随艾宾浩斯遗忘曲线衰减。可选的HEXACO人格向量偏差检索；默认情况下运行人格中立。",
         "features": [
           "再巩固与RIF",
           "非自愿回忆与FOK",
@@ -1036,8 +1036,8 @@
         ]
       },
       "hexaco": {
-        "title": "HEXACO 人格",
-        "description": "6维人格建模，塑造记忆、沟通风格和决策行为",
+        "title": "HEXACO人格（可选）",
+        "description": "选择加入的6维人格向量。启用时，在内核级别（而不是在提示中）偏向记忆检索、沟通风格和决策。省略它，运行时保持人格中立。",
         "features": [
           "6轴特质建模",
           "记忆调节",
@@ -1416,7 +1416,7 @@
       "step3": "裁判评估",
       "step4": "工具激活",
       "step5": "智能体使用",
-      "description": "当智能体遇到现有工具无法处理的任务时,它会即时编写新的工具定义。一个裁判智能体在激活前评估安全性与正确性。批准的工具在沙盒中执行,并跟踪用于基于可靠性的推广。",
+      "description": "Runtime Tool Forging意味着代理可以在决策中途为自己编写一个新的TypeScript函数，由一个单独的法官LLM审查，并在V8隔离沙箱（128 MB堆，10秒挂钟，无fs/网络/eval）中执行，所有这些都在下一回合之前完成。批准的工具会放在一个可发现的索引中以供重用，因此在会话中的前几次锻造后成本会趋于平稳。",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",
