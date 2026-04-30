@@ -3,6 +3,7 @@ import type { Route } from 'next';
 import { getAllPosts } from '@/lib/markdown';
 import { canonical } from '@/lib/seo/canonical';
 import { hreflangAlternates } from '@/lib/seo/hreflang';
+import { DiscordCTA } from '@/components/sections/discord-cta';
 import { Calendar, ArrowRight, Tag } from 'lucide-react';
 
 type Props = {
@@ -79,6 +80,8 @@ export default async function BlogPage({ params: { locale } }: Props) {
             Technical articles, framework comparisons, and tutorials for building production AI agents with TypeScript.
           </p>
         </header>
+
+        <DiscordCTA variant="section" className="mb-12" />
 
         {featuredPosts.length > 0 && (
           <section aria-labelledby="featured-heading" className="mb-16">

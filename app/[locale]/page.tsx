@@ -2,6 +2,7 @@ import { CTASection } from '../../components/sections/cta-section'
 import dynamic from 'next/dynamic'
 import { HeroSection } from '../../components/sections/hero-section'
 import { BenchmarkBanner } from '../../components/sections/benchmark-banner'
+import { DiscordCTA } from '../../components/sections/discord-cta'
 
 // Enable static generation for faster initial loads
 export const dynamicParams = false
@@ -114,6 +115,9 @@ export default function LandingPageRedesigned() {
 
         {/* Hero Section - SSR enabled for faster LCP */}
         <HeroSection />
+
+        {/* Discord CTA — official Wilds AI community for AgentOS + Paracosm support */}
+        <DiscordCTA />
 
         {/* Paracosm — AI Agent Swarm Simulation */}
         <ParacosmBannerLazy />

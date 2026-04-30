@@ -5,6 +5,7 @@ import { ExternalLink, BookOpen, Cpu, Rocket, Building2, GraduationCap } from 'l
 import type { Locale } from '../../../i18n';
 import { canonical } from '@/lib/seo/canonical';
 import { hreflangAlternates } from '@/lib/seo/hreflang';
+import { DiscordCTA } from '@/components/sections/discord-cta';
 
 /**
  * Map of inline citation text (as it appears in prose) to its DOI/URL.
@@ -305,6 +306,8 @@ export default async function FAQPage({ params: { locale } }: Props) {
             {t('subtitle')}
           </p>
         </header>
+
+        <DiscordCTA variant="section" className="!py-0" />
 
         {/* ---------------------------------------------------------------- */}
         {/*  General                                                         */}

@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import type { Locale } from '../../../i18n';
 import { canonical } from '@/lib/seo/canonical';
 import { hreflangAlternates } from '@/lib/seo/hreflang';
+import { DiscordCTA } from '@/components/sections/discord-cta';
 
 type Props = {
   params: {
@@ -146,6 +147,8 @@ export default async function AboutPage({ params: { locale } }: Props) {
             </Link>
           </div>
         </section>
+
+        <DiscordCTA variant="section" className="!py-0" />
 
         {/* Mission */}
         <section className="rounded-[32px] border border-border-subtle/60 bg-white/70 dark:bg-white/5 p-10 space-y-6 shadow-2xl shadow-black/5">
