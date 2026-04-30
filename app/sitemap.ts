@@ -1,15 +1,29 @@
 import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/markdown';
 import { getAllJobs } from '@/lib/markdown';
-import { locales, defaultLocale } from '@/i18n';
+import { locales } from '@/i18n';
 
 const baseUrl = 'https://agentos.sh';
 
+/**
+ * The app router uses /[locale] for every public route, so a URL like
+ * "/blog/foo" never resolves; only "/en/blog/foo", "/es/blog/foo",
+ * etc. exist on disk after `next export`. Earlier sitemap revisions
+ * emitted bare-path URLs for the default locale (no /en/ prefix),
+ * which caused Google Search Console to flag ~98 sitemap URLs as
+ * 404 because the bare paths never deployed. This file always emits
+ * the locale-prefixed URL so every entry resolves to a real HTML
+ * file in the static export.
+ *
+ * For non-blog top-level redirect stubs that DO live at bare paths
+ * (about, faq, legal/*, privacy, cookies — see the comment in
+ * middleware.ts about static-export redirect pages), Google can find
+ * them via the locale homepage; the sitemap stays canonical-locale.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
   const jobs = getAllJobs();
 
-  // Static pages with their priorities
   const staticPages = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
     { path: '/about', priority: 0.8, changeFrequency: 'monthly' as const },
@@ -24,40 +38,50 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/guides', priority: 0.7, changeFrequency: 'weekly' as const },
   ];
 
-  // Generate URLs for all locales for static pages
+  // Always locale-prefix every URL. The static export only emits
+  // `/[locale]/...` paths; bare-path equivalents (where they exist as
+  // redirect stubs) are not canonical and should not appear in the
+  // sitemap.
   const staticUrls: MetadataRoute.Sitemap = staticPages.flatMap((page) =>
     locales.map((locale) => ({
-      url: locale === defaultLocale 
-        ? `${baseUrl}${page.path}` 
-        : `${baseUrl}/${locale}${page.path}`,
+      url: `${baseUrl}/${locale}${page.path}`,
       lastModified: new Date(),
       changeFrequency: page.changeFrequency,
       priority: page.priority,
-    }))
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((alt) => [alt, `${baseUrl}/${alt}${page.path}`]),
+        ),
+      },
+    })),
   );
 
-  // Generate URLs for blog posts across all locales
   const blogUrls: MetadataRoute.Sitemap = posts.flatMap((post) =>
     locales.map((locale) => ({
-      url: locale === defaultLocale
-        ? `${baseUrl}/blog/${post.slug}`
-        : `${baseUrl}/${locale}/blog/${post.slug}`,
+      url: `${baseUrl}/${locale}/blog/${post.slug}`,
       lastModified: new Date(post.date),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
-    }))
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((alt) => [alt, `${baseUrl}/${alt}/blog/${post.slug}`]),
+        ),
+      },
+    })),
   );
 
-  // Generate URLs for career pages across all locales
   const careerUrls: MetadataRoute.Sitemap = jobs.flatMap((job) =>
     locales.map((locale) => ({
-      url: locale === defaultLocale
-        ? `${baseUrl}/careers/${job.slug}`
-        : `${baseUrl}/${locale}/careers/${job.slug}`,
+      url: `${baseUrl}/${locale}/careers/${job.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.6,
-    }))
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((alt) => [alt, `${baseUrl}/${alt}/careers/${job.slug}`]),
+        ),
+      },
+    })),
   );
 
   return [...staticUrls, ...blogUrls, ...careerUrls];
