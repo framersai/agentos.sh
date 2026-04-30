@@ -1,5 +1,5 @@
 ---
-title: "AgentOS: 85.6% on LongMemEval-S, 70.2% on M (open-source, reproducible)"
+title: "AgentOS Memory Benchmarks: 85.6% on LongMemEval-S, 70.2% on M (Beats Mastra by 1.4 points at gpt-4o)"
 ogTitle: "AgentOS posts 85.6% on LongMemEval-S, +1.4 over Mastra at matched gpt-4o reader"
 date: "2026-04-29"
 heroStat: "85.6% / 70.2%"
@@ -29,7 +29,7 @@ The rest of the post covers: the architecture changes that produced each number,
 | **LongMemEval-S** (115K tokens, 50 sessions) | **85.6%** | EmergenceMem 86.0%, Mastra OM gpt-4o 84.23%, Supermemory 81.6% | **$0.0090** | Apache-2.0 | +1.4 over Mastra |
 | **LongMemEval-M** (1.5M tokens, 500 sessions) | **70.2%** | AgentBrain 71.7% (closed-source SaaS). No other open-source library publishes M. | **$0.0078** | Apache-2.0 | first open-source above 65% |
 
-[Full benchmarks reference](https://docs.agentos.sh/benchmarks) · [Reproducible run JSONs](https://github.com/framersai/agentos-bench/tree/master/results/runs) · [Methodology audit framework](https://docs.agentos.sh/blog/2026/04/24/memory-benchmark-transparency-audit)
+[Full benchmarks reference](https://docs.agentos.sh/benchmarks) · [Reproducible run JSONs](https://github.com/framersai/agentos-bench/tree/master/results/runs) · [Methodology audit framework](https://agentos.sh/en/blog/agentos-memory-sota-longmemeval/)
 
 ---
 
