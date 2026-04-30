@@ -139,6 +139,14 @@ export default async function AboutPage({ params: { locale } }: Props) {
               <ArrowRight className="w-4 h-4" />
             </a>
             <Link
+              href={`/${locale}/contact` as Route}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-[var(--color-accent-primary)] bg-[var(--color-accent-primary)]/10 text-[var(--color-accent-primary)] font-semibold hover:bg-[var(--color-accent-primary)]/20 transition-colors"
+            >
+              <Mail className="w-4 h-4" />
+              Contact us
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
               href={homeHref as Route}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-border-subtle text-[var(--color-text-primary)] font-semibold hover:border-accent-primary transition-colors"
             >
