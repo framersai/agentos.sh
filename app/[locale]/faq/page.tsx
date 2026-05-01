@@ -331,6 +331,12 @@ export default async function FAQPage({ params: { locale } }: Props) {
           <FAQItem question={t('general.comparison.question')}>
             <p>{t('general.comparison.answer')}</p>
           </FAQItem>
+          <FAQItem question={t('general.whatIsParacosm.question')}>
+            <p>{t('general.whatIsParacosm.answer')}</p>
+          </FAQItem>
+          <FAQItem question={t('general.whatIsWildsAi.question')}>
+            <p>{t('general.whatIsWildsAi.answer')}</p>
+          </FAQItem>
         </FAQSection>
 
         {/* ---------------------------------------------------------------- */}

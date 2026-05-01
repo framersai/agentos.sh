@@ -999,6 +999,14 @@
       "comparison": {
         "question": "How is AgentOS different from LangChain, CrewAI, or AutoGen?",
         "answer": "AgentOS is TypeScript-native (not Python), includes cognitive memory with Ebbinghaus decay curves and HEXACO personality modeling, offers 5 security tiers instead of basic prompt filtering, provides 37 built-in channel adapters (Discord, Telegram, Slack, email, and more), and supports 6 orchestration strategies including graph-based agent DAGs. It also ships with 88 curated skills and a capability discovery engine that reduces token usage by roughly 90%."
+      },
+      "whatIsParacosm": {
+        "question": "What is Paracosm?",
+        "answer": "Paracosm (https://paracosm.agentos.sh) is a structured world-model simulation engine built on AgentOS. It compiles a JSON ScenarioPackage plus a HEXACO leader profile into a deterministic turn loop where AgentOS agents propose events, forge new TypeScript tools at runtime inside a hardened node:vm sandbox, and produce a counterfactual artifact you can fork and replay. Three modes share one schema: turn-loop civilization sims (Mars Genesis is the canonical example), batch-trajectory digital twins, and batch-point Monte-Carlo forecasts. Open-source under Apache 2.0, npm install paracosm. Live demo: https://paracosm.agentos.sh/sim. Source: https://github.com/framersai/paracosm."
+      },
+      "whatIsWildsAi": {
+        "question": "What is Wilds.ai?",
+        "answer": "Wilds.ai (https://wilds.ai) is an AI-native gaming platform built on AgentOS and Paracosm. AI characters with persistent cognitive memory and HEXACO personality traits inhabit shared world models and diverge from each other based on grounded LLM-as-judge events. Players can drop into existing worlds, fork them, or compile new ones in the browser. Wilds.ai is the canonical production deployment of the AgentOS + Paracosm stack and the official community / support channel (https://wilds.ai/discord) for both projects."
       }
     },
     "technical": {
