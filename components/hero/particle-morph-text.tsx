@@ -41,7 +41,12 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const particlesARef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
+  // _activeWordIndex tracks the currently-rendered word so the canvas
+  // re-renders when the morph swaps. The value isn't read elsewhere now
+  // that the wrapper width is locked to max(both words) — only the
+  // setter is used to trigger React's re-render. Underscore prefix
+  // satisfies the eslint no-unused-vars allowance pattern.
+  const [_activeWordIndex, setActiveWordIndex] = useState(startIndex);
   const [_fontsReady, setFontsReady] = useState(false);
 
   const height = useMemo(() => Math.ceil(fontSize * 1.15), [fontSize]);

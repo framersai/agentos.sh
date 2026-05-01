@@ -45,7 +45,7 @@ export function BenchmarkBanner() {
           >
             Mastra
           </a>
-          's Observational Memory at gpt-4o) and 70.2% on LongMemEval-M.
+          &apos;s Observational Memory at gpt-4o) and 70.2% on LongMemEval-M.
         </span>
         <a
           href={BLOG_URL}
