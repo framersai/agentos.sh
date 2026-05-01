@@ -23,14 +23,15 @@ type SubmitStatus =
 /**
  * Contact form component.
  *
- * Submits to a Cloudflare Worker (configured via `WORKER_URL`) which
- * relays the message to team@frame.dev via Resend. The form ships with:
+ * Submits to the wilds.ai contact relay (`CONTACT_ENDPOINT`) which
+ * forwards the message to team@frame.dev via Resend. The form ships
+ * with:
  *
  * * A honeypot `website` field hidden from real users; bots fill it,
- *   the Worker sees a non-empty value, returns 200 (so bots don't
+ *   the relay sees a non-empty value, returns 200 (so bots don't
  *   retry), and silently drops the email.
  * * Client-side `required` + email validation as a UX layer; the
- *   Worker re-validates server-side.
+ *   relay re-validates server-side.
  * * Success and error UI states with appropriate ARIA live regions.
  */
 export function ContactForm() {
@@ -222,7 +223,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status.kind === 'submitting'}
-        className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-accent-primary)] px-7 py-3 font-semibold text-white shadow-lg shadow-[var(--color-accent-primary)]/30 transition-all hover:translate-y-[-1px] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-accent-primary)] px-7 py-3 font-semibold text-white dark:text-slate-950 shadow-lg shadow-[var(--color-accent-primary)]/30 transition-all hover:translate-y-[-1px] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status.kind === 'submitting' ? (
           <>

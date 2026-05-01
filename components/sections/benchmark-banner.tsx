@@ -36,8 +36,16 @@ export function BenchmarkBanner() {
     >
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-1.5 px-10 py-2.5 sm:flex-row sm:justify-center sm:gap-4 sm:px-4">
         <span className="text-center text-[13px] font-medium leading-snug sm:text-sm sm:text-left">
-          New: 70.2% on LongMemEval-M (66.0%–74.0% bootstrap CI), $0.0078 per
-          correct.
+          New benchmarks: 85.6% on LongMemEval-S (+1.4 above{' '}
+          <a
+            href="https://mastra.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:opacity-80"
+          >
+            Mastra
+          </a>
+          's Observational Memory at gpt-4o) and 70.2% on LongMemEval-M.
         </span>
         <a
           href={BLOG_URL}
