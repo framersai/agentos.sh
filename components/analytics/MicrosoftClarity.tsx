@@ -64,9 +64,13 @@ export function MicrosoftClarity() {
   return (
     <>
       {consentGiven && (
+        // `lazyOnload` instead of `afterInteractive` so Clarity's heatmap
+        // tag fires during the browser idle window, not during the
+        // hydration / TBT measurement window. Trade-off: misses the very
+        // first ~2s of session activity. Acceptable for UX heatmaps.
         <Script
           id="microsoft-clarity"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               (function(c,l,a,r,i,t,y){
