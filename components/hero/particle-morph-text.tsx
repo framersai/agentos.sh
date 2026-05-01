@@ -55,12 +55,20 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
-  // Wrapper is fixed at the max of both word widths so the layout never
-  // shifts when the morph swaps "Emergent" for "Adaptive". Per-word width
-  // saved a few pixels of whitespace but cost ~0.16 of CLS on every
-  // 4-second morph cycle (Lighthouse called this out as the dominant hero
-  // shift). Constant width = no shift; the canvas inside still scales.
-  const _wrapperWidth = width;
+  // Wrapper width is LOCKED to the initial pre-measurement estimate and
+  // intentionally never updates. After the canvas measures real glyph
+  // widths post `document.fonts.ready`, `wordWidths` updates and the
+  // canvas drawing scales — but the outer wrapper stays at the estimate
+  // so the surrounding inline flow ("intelligence", "agents") never
+  // reflows. The estimate uses a 0.72 factor that runs slightly wider
+  // than Inter 700's real ~0.55 ratio: extra padding inside the wrapper
+  // is invisible (canvas centers the text), but it eliminates the shift
+  // PSI flagged at 0.236 + 0.208 + 0.011 (~0.45 CLS) on every render.
+  const _wrapperLockedWidth = useMemo(() => {
+    const estimate = (text: string) => Math.ceil(text.length * fontSize * 0.72);
+    return Math.max(estimate(wordA), estimate(wordB));
+  }, [fontSize, wordA, wordB]);
+  const _wrapperWidth = _wrapperLockedWidth;
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);
