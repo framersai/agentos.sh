@@ -211,7 +211,7 @@ const assistant = agent({
 
 RAG gives agents access to information. Cognitive memory gives them the ability to selectively remember, naturally forget, and honestly report when they are unsure. For agents that run for days, weeks, or months, the difference between "retrieves everything equally" and "remembers what matters, forgets what does not" determines whether the agent remains useful or drowns in noise.
 
-The benchmark numbers backing this claim: **70.2% on [LongMemEval-M](/blog/longmemeval-m-70-with-topk5)** (first open-source library above 65% on the 1.5M-token variant) and **85.6% on [LongMemEval-S](/blog/longmemeval-s-85-pareto-win)** (Pareto-win over Mastra OM gpt-4o).
+The benchmark numbers backing this claim: **70.2% on [LongMemEval-M](/blog/longmemeval-m-70-with-topk5)** (first open-source library above 65% on the 1.5M-token variant) and **85.6% on [LongMemEval-S](/blog/longmemeval-s-85-pareto-win)** (Pareto-win over Mastra OM gpt-4o). Methodology, per-case run JSONs at fixed seed, judge-FPR probes, and a single-CLI reproduction recipe are open at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench).
 
 ## References
 
@@ -234,4 +234,4 @@ The benchmark numbers backing this claim: **70.2% on [LongMemEval-M](/blog/longm
 
 ---
 
-*AgentOS cognitive memory is open-source (Apache 2.0). [GitHub](https://github.com/framersai/agentos) · [Documentation](https://docs.agentos.sh/features/cognitive-memory) · [npm](https://www.npmjs.com/package/@framers/agentos)*
+*AgentOS cognitive memory is open-source (Apache 2.0). [GitHub](https://github.com/framersai/agentos) · [Benchmarks](https://github.com/framersai/agentos-bench) · [Documentation](https://docs.agentos.sh/features/cognitive-memory) · [npm](https://www.npmjs.com/package/@framers/agentos)*
