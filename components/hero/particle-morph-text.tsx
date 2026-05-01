@@ -41,12 +41,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   const particlesARef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
-  // _activeWordIndex tracks the currently-rendered word so the canvas
-  // re-renders when the morph swaps. The value isn't read elsewhere now
-  // that the wrapper width is locked to max(both words) — only the
-  // setter is used to trigger React's re-render. Underscore prefix
-  // satisfies the eslint no-unused-vars allowance pattern.
-  const [_activeWordIndex, setActiveWordIndex] = useState(startIndex);
+  const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
   const [_fontsReady, setFontsReady] = useState(false);
 
   const height = useMemo(() => Math.ceil(fontSize * 1.15), [fontSize]);
@@ -55,20 +50,15 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
-  // Wrapper width is LOCKED to the initial pre-measurement estimate and
-  // intentionally never updates. After the canvas measures real glyph
-  // widths post `document.fonts.ready`, `wordWidths` updates and the
-  // canvas drawing scales — but the outer wrapper stays at the estimate
-  // so the surrounding inline flow ("intelligence", "agents") never
-  // reflows. The estimate uses a 0.72 factor that runs slightly wider
-  // than Inter 700's real ~0.55 ratio: extra padding inside the wrapper
-  // is invisible (canvas centers the text), but it eliminates the shift
-  // PSI flagged at 0.236 + 0.208 + 0.011 (~0.45 CLS) on every render.
-  const _wrapperLockedWidth = useMemo(() => {
-    const estimate = (text: string) => Math.ceil(text.length * fontSize * 0.72);
-    return Math.max(estimate(wordA), estimate(wordB));
-  }, [fontSize, wordA, wordB]);
-  const _wrapperWidth = _wrapperLockedWidth;
+  // Per-word wrapper width drives the slide-and-reflow effect: as
+  // "Emergent" morphs into "Adaptive", the wrapper shrinks/grows and
+  // the surrounding inline flow ("intelligence", "agents") slides with
+  // it. CSS `transition: width 180ms ease-out` (set on the wrapper)
+  // animates the change. This costs ~0.10–0.15 CLS per morph cycle —
+  // explicitly accepted as a design trade because the slide is part of
+  // the hero's identity. The font-display:optional and body-shift
+  // fixes elsewhere already cut the bigger CLS contributors.
+  const _wrapperWidth = wordWidths[activeWordIndex] ?? width;
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);
