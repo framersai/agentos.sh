@@ -21,7 +21,7 @@ This post walks through building an AI companion with persistent memory, 11 agen
 
 If you haven't read the [case study](https://agentos.sh/blog/ai-companion-case-study-wilds) showing what this looks like from a user's perspective, start there. This post is the implementation guide.
 
-## The Architecture
+## The architecture
 
 An AgentOS companion is a `createAgent()` call with three layers:
 
@@ -45,7 +45,7 @@ const companion = createAgent({
 
 The LLM sees the instructions (from personality + skills), the tool schemas (from tools), and the conversation history. It generates text and tool calls. AgentOS executes tool calls, returns results, and lets the LLM continue for up to `maxSteps` iterations per turn.
 
-## Defining Agentic Tools
+## Defining agentic tools
 
 Tools are the core differentiator. Most AI companion frameworks give the LLM a system prompt and a context window. AgentOS gives it callable functions.
 
@@ -107,7 +107,7 @@ This cannot come from a registry or plugin system. The `actorId` and `slug` clos
 
 The companion in production has [11 tools](https://docs.agentos.sh/architecture/skills-vs-tools-vs-extensions): `recall_messages`, `search_conversation`, `conversation_stats`, `recall_attachments`, `recall_memories`, `send_gif`, `send_selfie`, `send_photo`, `web_search`, `generate_image`, and `analyze_image`. The LLM decides which to call based on conversation context, chaining up to 8 tool calls per turn.
 
-## Wiring Persistent Memory
+## Wiring persistent memory
 
 Memory is what separates a companion from a chatbot. AgentOS implements [cognitive memory](https://docs.agentos.sh/features/cognitive-memory) with five trace types:
 
@@ -118,6 +118,8 @@ Memory is what separates a companion from a chatbot. AgentOS implements [cogniti
 | Procedural | Skills and habits | "Johnny prefers short answers" |
 | Relational | Relationship dynamics | "Trust is high, affection is moderate" |
 | Prospective | Reminders | "Johnny asked me to remind him about X" |
+
+The taxonomy follows the [CoALA framework](https://arxiv.org/abs/2309.02427) (Sumers et al., 2023), which formalizes episodic, semantic, and procedural memory for language-model agents. AgentOS extends it with the relational and prospective traces a long-running companion needs.
 
 Memories decay over time following an [Ebbinghaus forgetting curve](https://en.wikipedia.org/wiki/Forgetting_curve). Encoding strength determines how fast a memory fades. Emotionally significant moments (flashbulb memories) get high encoding strength and resist decay.
 
@@ -159,7 +161,7 @@ const companion = createAgent({
 
 The memory bridge handles encoding (forming new memories from conversation), decay (Ebbinghaus curve), consolidation (merging related traces), and retrieval (the 4-stage cascade). The companion calls `recall_memories` as a tool when the conversation warrants it. Memory formation happens automatically during the response pipeline.
 
-## Quantified Personality
+## Quantified personality
 
 AgentOS uses the [HEXACO model](https://en.wikipedia.org/wiki/HEXACO_model_of_personality_structure) from personality psychology. Six dimensions, each scored 0 to 1:
 
@@ -174,15 +176,15 @@ personality: {
 }
 ```
 
-These traits don't just flavor the system prompt. AgentOS maps them to behavioral rules at generation time. High openness means the companion goes off-topic willingly. Low agreeableness means it pushes back on the user's ideas. High emotionality means bigger mood swings between turns.
+The traits map to behavioral rules at generation time, not just the system prompt. High openness means the companion goes off-topic willingly. Low agreeableness means it pushes back on the user's ideas. High emotionality means bigger mood swings between turns.
 
-### Policy Routing
+### Policy routing
 
 Content safety is enforced at the framework level via a `policyRouter`. Four tiers: safe, standard, mature, and private-adult. The router intercepts tool calls and generation output, blocking content that violates the tier.
 
 The companion's personality shapes how it communicates the boundary. A high-agreeableness companion apologizes and redirects. A low-agreeableness companion dismisses the request bluntly. The safety boundary is identical. The character voice is not.
 
-### Graduated Familiarity
+### Graduated familiarity
 
 Trust builds over time. AgentOS tracks trust and memory depth to determine a familiarity stage:
 
@@ -192,7 +194,7 @@ Trust builds over time. AgentOS tracks trust and memory depth to determine a fam
 
 The familiarity preamble is injected into the system prompt before each generation. As trust increases through positive interactions, the companion's behavior shifts naturally.
 
-## Putting It Together
+## Putting it together
 
 The full companion creation in production:
 
@@ -223,7 +225,7 @@ for await (const event of orchestrator.handleMessageStream({
 
 The `CompanionOrchestrator` wraps `createAgent()` with the full cognitive pipeline: memory encoding, mood shifts (PAD model), personality drift detection, and multi-segment response splitting. It streams events via SSE so the client can show typing indicators, memory formation toasts, and media as they resolve.
 
-## Start Building
+## Start building
 
 ```bash
 npm install @framers/agentos
