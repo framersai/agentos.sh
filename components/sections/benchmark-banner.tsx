@@ -26,7 +26,7 @@ export function BenchmarkBanner() {
     <aside
       role="region"
       aria-label="Latest benchmark result"
-      className="relative w-full border-b text-sm"
+      className="relative mt-[64px] w-full border-b text-sm sm:mt-[68px]"
       style={{
         borderColor: 'color-mix(in oklab, var(--color-accent-primary) 22%, transparent)',
         background:
@@ -34,8 +34,8 @@ export function BenchmarkBanner() {
         color: 'var(--color-text-primary)',
       }}
     >
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-2.5 sm:flex-row sm:justify-center sm:gap-4">
-        <span className="text-center font-medium sm:text-left">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-1.5 px-10 py-2.5 sm:flex-row sm:justify-center sm:gap-4 sm:px-4">
+        <span className="text-center text-[13px] font-medium leading-snug sm:text-sm sm:text-left">
           New: 70.2% on LongMemEval-M (66.0%–74.0% bootstrap CI), $0.0078 per
           correct.
         </span>
@@ -53,7 +53,7 @@ export function BenchmarkBanner() {
             window.localStorage.setItem(STORAGE_KEY, 'dismissed')
             setHidden(true)
           }}
-          className="absolute right-3 top-1/2 -translate-y-1/2 px-2 py-0.5 text-base leading-none opacity-60 hover:opacity-100"
+          className="absolute right-2 top-2 px-2 py-0.5 text-base leading-none opacity-60 hover:opacity-100 sm:right-3 sm:top-1/2 sm:-translate-y-1/2"
           style={{ color: 'var(--color-text-secondary)' }}
         >
           ×
