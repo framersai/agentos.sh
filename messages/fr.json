@@ -1088,7 +1088,7 @@
     "gettingStarted": {
       "install": {
         "question": "Comment installer AgentOS ?",
-        "answer": "Installez via npm : npm install @framers/agentos. AgentOS nécessite Node.js 18 ou supérieur. Pour les outils CLI, installez le package compagnon : npm install -g @framers/wunderland."
+        "answer": "Installez via npm : npm install @framers/agentos. AgentOS nécessite Node.js 18 ou supérieur. Pour les outils CLI, installez le package compagnon : npm install -g wunderland."
       },
       "firstAgent": {
         "question": "Comment créer mon premier agent ?",

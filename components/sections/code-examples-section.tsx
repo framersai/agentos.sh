@@ -426,8 +426,8 @@ console.log(\`Prep: \${recipe.prepTimeMinutes} min\`)`
     description: t('examples.deployment.description'),
     language: 'bash',
     category: 'deployment',
-    code: `# Install the Wunderland CLI
-npm install -g @framers/wunderland
+    code: `# Install the Wunderland CLI (https://wunderland.sh)
+npm install -g wunderland
 
 # Create an agent from natural language
 wunderland create "A research assistant that finds papers and writes summaries"
@@ -840,6 +840,17 @@ console.log(session.forgedTools())
                   <Sparkles className="w-5 h-5" />
                   {t('cta.button')}
                   <span className="text-xs px-2 py-0.5 rounded-full bg-white/20">{t('cta.time')}</span>
+                </a>
+
+                <a
+                  href="https://wunderland.sh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold border border-[var(--color-border-interactive)] bg-[var(--color-background-elevated)] text-[var(--color-text-primary)] hover:bg-[var(--color-background-secondary)] transition-all duration-[var(--duration-fast)]"
+                >
+                  <Play className="w-5 h-5 text-[var(--color-accent-primary)]" />
+                  Try the Wunderland CLI
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--color-accent-primary)]/15 text-[var(--color-accent-primary)]">wunderland.sh</span>
                 </a>
               </div>
             </div>

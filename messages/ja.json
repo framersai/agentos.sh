@@ -936,7 +936,7 @@
     "gettingStarted": {
       "install": {
         "question": "AgentOS のインストール方法は?",
-        "answer": "npm 経由でインストール:npm install @framers/agentos。AgentOS は Node.js 18 以降を必要とします。CLI ツールには companion パッケージをインストール:npm install -g @framers/wunderland。"
+        "answer": "npm 経由でインストール:npm install @framers/agentos。AgentOS は Node.js 18 以降を必要とします。CLI ツールには companion パッケージをインストール:npm install -g wunderland。"
       },
       "firstAgent": {
         "question": "最初のエージェントの作成方法は?",

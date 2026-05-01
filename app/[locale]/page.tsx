@@ -183,8 +183,8 @@ export default function LandingPageRedesigned() {
           <SkylineSectionLazy />
         </section>
 
-        {/* Code Examples Section */}
-        <div className="lazy-section-lg">
+        {/* Code Examples Section — id hoisted to wrapper so the hero "See code examples" CTA (href="#code") has a scroll target before the lazy-loaded section hydrates. */}
+        <div id="code" className="lazy-section-lg" style={{ scrollMarginTop: '80px' }}>
           <CodeExamplesSectionLazy />
         </div>
 

@@ -972,7 +972,7 @@
     "gettingStarted": {
       "install": {
         "question": "AgentOS는 어떻게 설치하나요?",
-        "answer": "npm으로 설치: npm install @framers/agentos. AgentOS는 Node.js 18 이상이 필요합니다. CLI 도구는 동반 패키지를 설치하세요: npm install -g @framers/wunderland."
+        "answer": "npm으로 설치: npm install @framers/agentos. AgentOS는 Node.js 18 이상이 필요합니다. CLI 도구는 동반 패키지를 설치하세요: npm install -g wunderland."
       },
       "firstAgent": {
         "question": "첫 번째 에이전트는 어떻게 만드나요?",

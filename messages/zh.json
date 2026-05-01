@@ -820,7 +820,7 @@
     "gettingStarted": {
       "install": {
         "question": "如何安装 AgentOS?",
-        "answer": "通过 npm 安装:npm install @framers/agentos。AgentOS 需要 Node.js 18 或更高版本。对于 CLI 工具,安装伴随包:npm install -g @framers/wunderland。"
+        "answer": "通过 npm 安装:npm install @framers/agentos。AgentOS 需要 Node.js 18 或更高版本。对于 CLI 工具,安装伴随包:npm install -g wunderland。"
       },
       "firstAgent": {
         "question": "如何创建我的第一个智能体?",
