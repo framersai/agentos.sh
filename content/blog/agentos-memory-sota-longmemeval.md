@@ -134,7 +134,7 @@ LongMemEval-M has 1.5M tokens of conversation per question and roughly 500 sessi
 
 ### What LongMemEval is, and what M means
 
-[LongMemEval](https://github.com/xiaowu0162/LongMemEval) is an academic memory benchmark introduced in ["LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory"](https://arxiv.org/abs/2410.10813) by Wu et al., published at ICLR 2025. The dataset, evaluation harness, and rubric are open source at [github.com/xiaowu0162/LongMemEval](https://github.com/xiaowu0162/LongMemEval). The 12 paper authors are academic researchers, none affiliated with a memory-library vendor.
+[LongMemEval](https://github.com/xiaowu0162/LongMemEval) [^4] is an academic memory benchmark introduced in ["LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory"](https://arxiv.org/abs/2410.10813) (Wu et al., ICLR 2025) [^1]. The dataset, evaluation harness, and rubric are open source at [github.com/xiaowu0162/LongMemEval](https://github.com/xiaowu0162/LongMemEval) [^4]. The 12 paper authors are academic researchers, none affiliated with a memory-library vendor.
 
 The benchmark ships two variants by haystack scale:
 
@@ -143,7 +143,7 @@ The benchmark ships two variants by haystack scale:
 | **S** | ~115K | ~50 | Yes. Every modern long-context LLM fits this. GPT-4o is 128K, Claude Opus is 200K, Gemini 3 Pro is 1M, GPT-5 is 400K |
 | **M** | ~1.5M | ~500 | No. Exceeds every production context window |
 
-The S-to-M jump is a category change rather than a 13× scaling exercise. At S scale a memory architecture competes against the option of dumping the full conversation into the context window. Mastra's full-context baseline at `gpt-4o` is 60.20%, and their Observational Memory configuration at the same model is 84.23%; the 24-point lift partly reflects token compression rather than memory architecture, because the OM config fits in fewer tokens and the reader has less to process. Penfield Labs makes the same point in [their April 2026 LOCOMO audit](https://dev.to/penfieldlabs/we-audited-locomo-64-of-the-answer-key-is-wrong-and-the-judge-accepts-up-to-63-of-intentionally-33lg): when the corpus fits in the context window, the benchmark is partly measuring context-window management.
+The S-to-M jump is a category change rather than a 13× scaling exercise. At S scale a memory architecture competes against the option of dumping the full conversation into the context window. [Mastra's full-context baseline](https://mastra.ai/research/observational-memory) [^2] at `gpt-4o` is 60.20%, and their Observational Memory configuration at the same model is 84.23%; the 24-point lift partly reflects token compression rather than memory architecture, because the OM config fits in fewer tokens and the reader has less to process. Penfield Labs makes the same point in [their April 2026 LOCOMO audit](https://dev.to/penfieldlabs/we-audited-locomo-64-of-the-answer-key-is-wrong-and-the-judge-accepts-up-to-63-of-intentionally-33lg) [^3]: when the corpus fits in the context window, the benchmark is partly measuring context-window management.
 
 At M scale the corpus does not fit in context. Retrieval is the only path, and the benchmark measures whether retrieval can find the relevant chunks in roughly 25,000 candidates across 500 sessions.
 
@@ -442,9 +442,9 @@ What isn't, with caveats:
 
 Three open-source benchmark harnesses cover the LongMemEval / LOCOMO space:
 
-- [agentos-bench](https://github.com/framersai/agentos-bench): LongMemEval-S/M, LOCOMO, BEAM, and eight cognitive-mechanism micro-benchmarks. 95% confidence ranges, judge-adversarial probes, per-stage retention metric, per-case run JSONs at `--seed 42`.
-- [Supermemory memorybench](https://github.com/supermemoryai/memorybench): LoCoMo, LongMemEval, ConvoMem against Supermemory, Mem0, and Zep with multi-judge support.
-- [Mem0 memory-benchmarks](https://github.com/mem0ai/memory-benchmarks): LOCOMO and LongMemEval against Mem0 Cloud and OSS.
+- [agentos-bench](https://github.com/framersai/agentos-bench) [^5]: LongMemEval-S/M, LOCOMO, BEAM, and eight cognitive-mechanism micro-benchmarks. 95% confidence ranges, judge-adversarial probes, per-stage retention metric, per-case run JSONs at `--seed 42`.
+- [Supermemory memorybench](https://github.com/supermemoryai/memorybench) [^6]: LoCoMo, LongMemEval, ConvoMem against Supermemory, Mem0, and Zep with multi-judge support.
+- [Mem0 memory-benchmarks](https://github.com/mem0ai/memory-benchmarks) [^7]: LOCOMO and LongMemEval against Mem0 Cloud and OSS.
 
 Reproducible memory benchmarks require a published seed, configuration, and per-case run JSONs alongside the headline number.
 
@@ -466,3 +466,45 @@ The runtime is Apache-2.0 at [github.com/framersai/agentos](https://github.com/f
 ---
 
 *Built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). AgentOS and agentos-bench are open source under Apache-2.0. [GitHub](https://github.com/framersai/agentos) · [npm](https://www.npmjs.com/package/@framers/agentos) · [Discord](https://wilds.ai/discord)*
+
+---
+
+## References
+
+[^1]: Wu, D., Wang, J., Hu, P., et al. (2024). *LongMemEval: Benchmarking chat assistants on long-term interactive memory.* ICLR 2025. <https://arxiv.org/abs/2410.10813>
+
+[^2]: Mastra. (2025). *Observational Memory: Research and methodology.* Mastra research blog. <https://mastra.ai/research/observational-memory>
+
+[^3]: Penfield Labs. (2026, April). *We audited LOCOMO: 64% of the answer key is wrong and the judge accepts up to 63% of intentionally wrong answers.* dev.to. <https://dev.to/penfieldlabs/we-audited-locomo-64-of-the-answer-key-is-wrong-and-the-judge-accepts-up-to-63-of-intentionally-33lg>
+
+[^4]: Wu, D., et al. *LongMemEval — Open dataset, evaluation harness, and rubric.* GitHub. <https://github.com/xiaowu0162/LongMemEval>
+
+[^5]: framersai. *agentos-bench — Open benchmark harness for AgentOS memory and retrieval.* GitHub (Apache-2.0). <https://github.com/framersai/agentos-bench>
+
+[^6]: Supermemory. *memorybench — Multi-judge benchmarking harness for LoCoMo, LongMemEval, and ConvoMem.* GitHub. <https://github.com/supermemoryai/memorybench>
+
+[^7]: Mem0. *memory-benchmarks — LOCOMO and LongMemEval against Mem0 Cloud and OSS.* GitHub. <https://github.com/mem0ai/memory-benchmarks>
+
+[^8]: EmergenceMem. *SOTA on LongMemEval with RAG.* emergence.ai blog. <https://www.emergence.ai/blog/sota-on-longmemeval-with-rag>
+
+[^9]: Mem0. *Mem0 v3 / Mem0 OS research.* mem0.ai. <https://mem0.ai/research>
+
+[^10]: vectorize-io. *Hindsight — Memory architecture for AI agents.* GitHub. <https://github.com/vectorize-io/hindsight>
+
+[^11]: Zep AI. *State-of-the-art agent memory.* getzep.com blog. <https://blog.getzep.com/state-of-the-art-agent-memory/>
+
+[^12]: Anonymous. (2025). *Independent reproduction of Zep / Graphiti memory architecture results.* arXiv preprint. <https://arxiv.org/abs/2512.13564>
+
+[^13]: Borges, J. L. (1942). *Funes the Memorious.* In *Ficciones* (English: 1962, Grove Press). The literary frame for the project: a man cursed with perfect memory is unable to think because every detail demands equal attention. AgentOS's decay + retrieval-induced forgetting + reconsolidation borrow from cognitive science precisely to avoid this failure mode.
+
+### Vendor research pages cited in the comparison table
+
+The vendor table inline-links each vendor's own published research. Those source links remain inline (per-row attribution rather than prose claims). Canonical entries:
+
+- [Mem0 v3 / Mem0 OS research](https://mem0.ai/research)
+- [Mastra Observational Memory](https://mastra.ai/research/observational-memory)
+- [Hindsight (vectorize.io)](https://github.com/vectorize-io/hindsight)
+- [Zep / Graphiti](https://blog.getzep.com/state-of-the-art-agent-memory/) · [Independent repro arXiv:2512.13564](https://arxiv.org/abs/2512.13564)
+- [EmergenceMem](https://www.emergence.ai/blog/sota-on-longmemeval-with-rag)
+- [Supermemory](https://supermemory.ai/research/)
+- [MemMachine](https://github.com/memmachine) · [Memoria](https://github.com/memoriaai) · [agentmemory](https://github.com/JordanMcCann/agentmemory) · [Backboard](https://github.com/Backboard-io/Backboard-longmemEval-results) · [ByteRover](https://www.byterover.dev) · [Letta](https://www.letta.com/) · [Cognee](https://github.com/topoteretes/cognee) · [AgentBrain](https://github.com/AgentBrainHQ)
