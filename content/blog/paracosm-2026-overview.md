@@ -7,7 +7,7 @@ author: "AgentOS Team"
 category: "Engineering"
 audience: "evaluator"
 image: "/img/blog/paracosm/paracosm-2026-overview-hero.png"
-keywords: "structured world model, world model for AI agents, counterfactual world simulator, LLM world model, paracosm, prompt to simulation, multi-agent simulation typescript, HEXACO simulation, deterministic kernel, V8 sandbox, agentos paracosm, Mars Genesis simulation, civilization simulation AI, agent-based modeling LLM, JEPA, AMI Labs, Sora, Genie 3, Marble"
+keywords: "structured world model, world model for AI agents, counterfactual world simulator, LLM world model, paracosm, prompt to simulation, multi-agent simulation typescript, HEXACO simulation, deterministic kernel, node:vm sandbox, agentos paracosm, Mars Genesis simulation, civilization simulation AI, agent-based modeling LLM, JEPA, AMI Labs, Sora, Genie 3, Marble"
 ---
 
 > "It's a poor sort of memory that only works backwards."
@@ -191,7 +191,7 @@ This runs locally. A six-turn run with default specialists, default reranker, an
 
 **Not a multi-agent task framework.** LangGraph, AutoGen, CrewAI, OpenAI Agents SDK, Mastra: those execute real tasks against real APIs. Their output reaches the world. Paracosm's output stays inside the simulation. Zero overlap on user job-to-be-done.
 
-**Forging is not magic.** Forged tools fail. The judge rejects a meaningful fraction. The 128 MB / 10 s sandbox kills tools that try to do too much. The artifact records every forge attempt including the failed ones, on the theory that transparency is more valuable than a higher reported success rate.
+**Forging is not magic.** Forged tools fail. The judge rejects a meaningful fraction. The 128 MB / 5 s sandbox kills tools that try to do too much. The artifact records every forge attempt including the failed ones, on the theory that transparency is more valuable than a higher reported success rate.
 
 ## Where the field is in April 2026
 

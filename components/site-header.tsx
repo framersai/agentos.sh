@@ -314,6 +314,7 @@ export function SiteHeader() {
             ThemeSelector and LanguageSwitcher dropdowns can extend
             below their triggers without being clipped. */}
         <div className="mx-4 mb-4 mt-2 flex items-center justify-center gap-3 rounded-2xl glass-morphism shadow-modern px-6 py-3 sm:hidden">
+          <ModeToggle />
           <ThemeSelector />
           <LanguageSwitcher />
         </div>

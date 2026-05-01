@@ -192,7 +192,7 @@ export function ContactForm() {
 
       {/* Honeypot field — visually and assistively hidden but parseable
           by spam bots that fill every text input. Real submissions have
-          this empty; the Worker drops anything else. */}
+          this empty; the relay drops anything else. */}
       <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px]">
         <label>
           Website (leave empty)
