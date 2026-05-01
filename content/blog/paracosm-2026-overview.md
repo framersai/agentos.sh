@@ -20,13 +20,13 @@ Paracosm is the second kind. The rest of this post is the long version of that s
 
 ## Two world models
 
-The first meaning is generative and visual. [Sora](https://openai.com/sora) makes video. Google DeepMind's [Genie 3](https://deepmind.google/discover/blog/genie-3/) renders interactive 3D environments at 24 fps that stay coherent for a few minutes. Fei-Fei Li's [World Labs Marble](https://techcrunch.com/2025/11/12/fei-fei-lis-world-labs-speeds-up-the-world-model-race-with-marble-its-first-commercial-product/) generates persistent 3D scenes you can download and edit. These tools are evaluated on visual fidelity and physical plausibility. Filmmakers, 3D artists, and embodied-AI labs are the customers. Yann LeCun's AMI Labs [raised $1.03B in March 2026 at a $3.5B valuation](https://techcrunch.com/2026/03/09/yann-lecuns-ami-labs-raises-1-03-billion-to-build-world-models/) to do something adjacent: a [JEPA-based, non-LLM world model](https://www.technologyreview.com/2026/01/22/1131661/yann-lecuns-new-venture-ami-labs/) trained on sensor and video streams. Most of the funding and most of the press coverage live in this column.
+The first meaning is generative and visual. Sora [^1] makes video. Google DeepMind's Genie 3 [^2] renders interactive 3D environments at 24 fps that stay coherent for a few minutes. Fei-Fei Li's World Labs Marble [^3] generates persistent 3D scenes you can download and edit. These tools are evaluated on visual fidelity and physical plausibility. Filmmakers, 3D artists, and embodied-AI labs are the customers. Yann LeCun's AMI Labs raised $1.03B in March 2026 at a $3.5B valuation [^4] to do something adjacent: a JEPA-based, non-LLM world model [^5] trained on sensor and video streams. Most of the funding and most of the press coverage live in this column.
 
-The second meaning is academic and quieter. Eric Xing's [Critiques of World Models](https://arxiv.org/abs/2507.05169) reframes a world model as *an internal simulator an agent uses to imagine future states before acting*. No pixels. The job is to enumerate actionable possibilities so a decision can be made. The Tsinghua FIB Lab's [ACM Computing Surveys 2025 piece](https://dl.acm.org/doi/full/10.1145/3746449), "Understanding World or Predicting Future?", formalizes the split: *understanding-world* models simulate counterfactuals for planning; *predicting-future* models generate perceptual continuations. Different jobs, different customers, same name.
+The second meaning is academic and quieter. Eric Xing's *Critiques of World Models* [^6] reframes a world model as *an internal simulator an agent uses to imagine future states before acting*. No pixels. The job is to enumerate actionable possibilities so a decision can be made. The Tsinghua FIB Lab's *Understanding World or Predicting Future?* (ACM Computing Surveys 2025) [^7] formalizes the split: *understanding-world* models simulate counterfactuals for planning; *predicting-future* models generate perceptual continuations. Different jobs, different customers, same name.
 
-Paracosm sits firmly on the understanding-world side. The reason it matters operationally is that planning agents need a substrate they can interrogate, not a video they can watch. [Yang et al's "Evaluating World Models with LLM for Decision Making"](https://openreview.net/pdf?id=XmYCERErcD) (ICLR 2025, [arXiv:2411.08794](https://arxiv.org/abs/2411.08794)) breaks the substrate into three measurable tasks: **policy verification** (does this plan work?), **action proposal** (what should I do next?), and **policy planning** (full plan synthesis). Across 31 environments they find GPT-4o-class models can already do the first two. Long-horizon planning is where the field is still struggling. A structured world model doesn't have to do all three to be useful; it has to give a planner (or a person) somewhere to ask *what if* and get a typed answer back.
+Paracosm sits firmly on the understanding-world side. The reason it matters operationally is that planning agents need a substrate they can interrogate, not a video they can watch. Yang et al's *Evaluating World Models with LLM for Decision Making* (ICLR 2025) [^8] breaks the substrate into three measurable tasks: **policy verification** (does this plan work?), **action proposal** (what should I do next?), and **policy planning** (full plan synthesis). Across 31 environments they find GPT-4o-class models can already do the first two. Long-horizon planning is where the field is still struggling. A structured world model doesn't have to do all three to be useful; it has to give a planner (or a person) somewhere to ask *what if* and get a typed answer back.
 
-The lineage of the second meaning runs through Schmidhuber and Ha's [2018 paper](https://arxiv.org/abs/1803.10122), classical reinforcement learning, and model-based control theory. It also runs through Borges, who wrote the design spec in 1941 without knowing it.
+The lineage of the second meaning runs through Schmidhuber and Ha's 2018 *World Models* paper [^9], classical reinforcement learning, and model-based control theory. It also runs through Borges, who wrote the design spec in 1941 without knowing it.
 
 > "The Garden of Forking Paths is an enormous riddle, or parable, whose theme is time… He believed in an infinite series of times, in a growing, dizzying net of divergent, convergent and parallel times. This network of times which approached one another, forked, broke off, or were unaware of one another for centuries, embraces all possibilities of time."
 >
@@ -109,7 +109,7 @@ The full Atlas walkthrough is the video above. The case-study post, [Inside Mars
 
 ## HEXACO is the leverage
 
-Six factors: Honesty-Humility, Emotionality, Extraversion, Agreeableness, Conscientiousness, Openness. Lee and Ashton introduced HEXACO in their 2007 *Personality and Social Psychology Review* paper ([doi:10.1177/1088868306294907](https://doi.org/10.1177/1088868306294907)) as a six-factor extension of the Big Five, with Honesty-Humility split out as a separate axis because the data demanded it.
+Six factors: Honesty-Humility, Emotionality, Extraversion, Agreeableness, Conscientiousness, Openness. Lee and Ashton introduced HEXACO in their 2007 *Personality and Social Psychology Review* paper [^10] as a six-factor extension of the Big Five, with Honesty-Humility split out as a separate axis because the data demanded it.
 
 There's nothing magical about HEXACO. It's a measurement framework with extensive cross-cultural validation. Paracosm uses it because, after trying the alternatives, it's the smallest set of dimensions that produces visibly distinct simulator behavior. The Big Five works almost as well. The Big Five plus an honesty axis works better. HEXACO is the sweet spot of expressive-without-being-overfit.
 
@@ -187,7 +187,7 @@ This runs locally. A six-turn run with default specialists, default reranker, an
 
 **Not a replacement for real-world data.** A counterfactual simulator is a tool for thinking, not for forecasting in the strong sense. Every decision has a `confidence` score, every metric has a `derivedFrom` trace, every citation has a DOI when one exists. Treat a Paracosm run as ground truth at your own risk; the artifact is structured to make that harder than it would otherwise be.
 
-**Not at the scale of [OASIS](https://openreview.net/forum?id=JBzTculaVV) or [MiroFish](https://github.com/666ghj/MiroFish).** Those operate at 1k to 1M agents and do bottom-up emergent prediction. Paracosm operates at ~100 agents plus 5 specialists plus 1 commander and does top-down leader-driven counterfactuals. Different jobs. The [head-to-head comparison post](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation) has the engineering breakdown.
+**Not at the scale of OASIS [^11] or MiroFish [^12].** Those operate at 1k to 1M agents and do bottom-up emergent prediction. Paracosm operates at ~100 agents plus 5 specialists plus 1 commander and does top-down leader-driven counterfactuals. Different jobs. The [head-to-head comparison post](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation) has the engineering breakdown.
 
 **Not a multi-agent task framework.** LangGraph, AutoGen, CrewAI, OpenAI Agents SDK, Mastra: those execute real tasks against real APIs. Their output reaches the world. Paracosm's output stays inside the simulation. Zero overlap on user job-to-be-done.
 
@@ -197,15 +197,15 @@ This runs locally. A six-turn run with default specialists, default reranker, an
 
 Three threads of recent literature triangulate the structured world model category and explain why Paracosm exists in its current shape.
 
-**Counterfactual semantics for LLM agents are getting formal.** Kirfel, Manktelow, and Lagnado's [counterfactual world simulation models paper](https://link.springer.com/article/10.1007/s43681-025-00718-4) (*AI and Ethics*, 2025) is the philosophical foundation: a CWSM replays an event with one variable changed and surfaces the effect, with explicit ethical guardrails around how the result gets used. [Integrating Counterfactual Simulations with Language Models](https://arxiv.org/abs/2505.17801) (May 2025) introduces AXIS, an LLM-driven framework that interrogates a simulator with `whatif` and `remove` prompts to explain multi-agent policies. AXIS is roughly the API a downstream tool would call against a Paracosm `RunArtifact`. The artifact already exposes the right shape for it.
+**Counterfactual semantics for LLM agents are getting formal.** Kirfel, Manktelow, and Lagnado's *Counterfactual World Simulation Models* paper (*AI and Ethics*, 2025) [^13] is the philosophical foundation: a CWSM replays an event with one variable changed and surfaces the effect, with explicit ethical guardrails around how the result gets used. *Integrating Counterfactual Simulations with Language Models* (May 2025) [^14] introduces AXIS, an LLM-driven framework that interrogates a simulator with `whatif` and `remove` prompts to explain multi-agent policies. AXIS is roughly the API a downstream tool would call against a Paracosm `RunArtifact`. The artifact already exposes the right shape for it.
 
-**Generative ABM is getting critical scrutiny.** The 2025 Springer review [Validation is the central challenge for generative social simulation: a critical review of LLMs in agent-based modeling](https://link.springer.com/article/10.1007/s10462-025-11412-6) makes the case bluntly: LLMs revive interest in agent-based models by enabling expressive generative agents, but stochasticity, cultural bias, and black-box behavior make calibration and validation harder than they were under classical (Mesa, NetLogo, MASON, ABIDES, AnyLogic) tooling. The [Nature HSSC 2024 survey on LLM-empowered ABM](https://www.nature.com/articles/s41599-024-03611-3) is the broader companion. AgentSociety ([SSRN 2026](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5954414)) and [WarAgent](https://github.com/agiresearch/WarAgent) are concrete examples at the population end. Paracosm runs ~100-agent civilizations specifically because the calibration problem is tractable at that scale and intractable at the millions-of-agents end.
+**Generative ABM is getting critical scrutiny.** The 2025 Springer review *Validation is the central challenge for generative social simulation: a critical review of LLMs in agent-based modeling* [^15] makes the case bluntly: LLMs revive interest in agent-based models by enabling expressive generative agents, but stochasticity, cultural bias, and black-box behavior make calibration and validation harder than they were under classical (Mesa, NetLogo, MASON, ABIDES, AnyLogic) tooling. The Nature HSSC 2024 survey on LLM-empowered ABM [^16] is the broader companion. AgentSociety (SSRN 2026) [^17] and WarAgent [^18] are concrete examples at the population end. Paracosm runs ~100-agent civilizations specifically because the calibration problem is tractable at that scale and intractable at the millions-of-agents end.
 
-**Agents are not yet good at using world models as tools.** [Current Agents Fail to Leverage World Model as Tool for Foresight](https://arxiv.org/html/2601.03905) (January 2026) finds that LLM agents often don't invoke world-model tools even when doing so would improve foresight, and when they do, they tend to misuse them: generating one deterministic future, overriding the simulation with their own internal reasoning, or skipping the counterfactual branches. That paper describes the failure mode a structured world model has to engineer against. Paracosm's answer is to keep the kernel deterministic, return the artifact in a typed shape that resists the "I bet the future is X" override, and surface fork-vs-trunk divergence visibly in the dashboard so a single-trajectory claim is harder to make.
+**Agents are not yet good at using world models as tools.** *Current Agents Fail to Leverage World Model as Tool for Foresight* (January 2026) [^19] finds that LLM agents often don't invoke world-model tools even when doing so would improve foresight, and when they do, they tend to misuse them: generating one deterministic future, overriding the simulation with their own internal reasoning, or skipping the counterfactual branches. That paper describes the failure mode a structured world model has to engineer against. Paracosm's answer is to keep the kernel deterministic, return the artifact in a typed shape that resists the "I bet the future is X" override, and surface fork-vs-trunk divergence visibly in the dashboard so a single-trajectory claim is harder to make.
 
 The throughline: if the simulator hides its assumptions, an LLM agent will paper over the rest. A structured world model has to externalize the world into schema, citations, tools, snapshots, and seeded transitions, then let the LLM reason over that structure.
 
-The [LLM Agents Papers tracker](https://github.com/AGI-Edgerunners/LLM-Agents-Papers) and the [Awesome World Models reading list](https://github.com/leofan90/Awesome-World-Models) are the two community-maintained lists worth bookmarking if you want to follow this from the outside.
+The LLM Agents Papers tracker [^20] and the Awesome World Models reading list [^21] are the two community-maintained lists worth bookmarking if you want to follow this from the outside.
 
 ## Where to go next
 
@@ -221,7 +221,7 @@ The [LLM Agents Papers tracker](https://github.com/AGI-Edgerunners/LLM-Agents-Pa
 
 **Is Paracosm a digital twin?** It can be used as one. The `batch-trajectory` mode is specifically the digital-twin shape: real-world entity, labeled timepoints, counterfactual interventions. But Paracosm is broader: civilization simulations and one-shot forecasts also live in the artifact.
 
-**How does Paracosm relate to agent-based modeling?** Classical ABM tooling (Mesa, NetLogo, MASON, AnyLogic, ABIDES) is rule-based or statistical, generally non-LLM. Paracosm uses LLMs for event generation and specialist reasoning while keeping a deterministic kernel for state transitions. The bridge literature is the [Nature HSSC 2024 survey on LLM-empowered ABM](https://www.nature.com/articles/s41599-024-03611-3) and MIT Media Lab's [On the limits of agency in agent-based models](https://arxiv.org/abs/2409.10568).
+**How does Paracosm relate to agent-based modeling?** Classical ABM tooling (Mesa, NetLogo, MASON, AnyLogic, ABIDES) is rule-based or statistical, generally non-LLM. Paracosm uses LLMs for event generation and specialist reasoning while keeping a deterministic kernel for state transitions. The bridge literature is the Nature HSSC 2024 survey on LLM-empowered ABM [^16] and MIT Media Lab's *On the Limits of Agency in Agent-Based Models* [^22].
 
 **Can Paracosm replace Sora-style world models?** No. Different jobs. Sora-class models generate perceptual continuations; Paracosm enumerates actionable possibilities. You can run them together (Sora rendering the look of a Paracosm run, for example) but they don't substitute.
 
@@ -242,3 +242,51 @@ The [LLM Agents Papers tracker](https://github.com/AGI-Edgerunners/LLM-Agents-Pa
 The structured-world-model category isn't one that markets itself. The visual side gets the funding, the press coverage, and the watercooler conversation. The other side (the one Eric Xing reframed in 2025, the one Borges anticipated in 1941, the one that lets an agent ask *what if* and get a typed answer back) is what Paracosm is for.
 
 Full API reference: [paracosm.agentos.sh/docs](https://paracosm.agentos.sh/docs).
+
+---
+
+## References
+
+[^1]: OpenAI. (2024). *Sora.* — Text-to-video generative model. <https://openai.com/sora>
+
+[^2]: Google DeepMind. (2025). *Genie 3: A new frontier for world models.* — Real-time interactive 3D environment generation at 24 fps. <https://deepmind.google/discover/blog/genie-3/>
+
+[^3]: TechCrunch. (2025, November 12). *Fei-Fei Li's World Labs speeds up the world model race with Marble, its first commercial product.* <https://techcrunch.com/2025/11/12/fei-fei-lis-world-labs-speeds-up-the-world-model-race-with-marble-its-first-commercial-product/>
+
+[^4]: TechCrunch. (2026, March 9). *Yann LeCun's AMI Labs raises $1.03 billion to build world models.* <https://techcrunch.com/2026/03/09/yann-lecuns-ami-labs-raises-1-03-billion-to-build-world-models/>
+
+[^5]: MIT Technology Review. (2026, January 22). *Yann LeCun's new venture: AMI Labs.* — Coverage of the JEPA-based, non-LLM world-model approach. <https://www.technologyreview.com/2026/01/22/1131661/yann-lecuns-new-venture-ami-labs/>
+
+[^6]: Xing, E. P., et al. (2025). *Critiques of World Models.* arXiv preprint. <https://arxiv.org/abs/2507.05169>
+
+[^7]: Tsinghua FIB Lab. (2025). *Understanding World or Predicting Future? A comprehensive survey of world models.* ACM Computing Surveys 2025. <https://dl.acm.org/doi/full/10.1145/3746449>
+
+[^8]: Yang, Z., et al. (2025). *Evaluating World Models with LLM for Decision Making.* ICLR 2025. <https://openreview.net/pdf?id=XmYCERErcD> · arXiv: <https://arxiv.org/abs/2411.08794>
+
+[^9]: Ha, D., & Schmidhuber, J. (2018). *World Models.* arXiv preprint. <https://arxiv.org/abs/1803.10122>
+
+[^10]: Lee, K., & Ashton, M. C. (2007). *Empirical, theoretical, and practical advantages of the HEXACO model of personality structure.* *Personality and Social Psychology Review*, 11(2), 150–166. <https://doi.org/10.1177/1088868306294907>
+
+[^11]: Yang, X., et al. *OASIS: Open agent-based social simulation of LLM-driven population-scale interactions.* OpenReview. <https://openreview.net/forum?id=JBzTculaVV>
+
+[^12]: agiresearch / 666ghj. *MiroFish: Bottom-up multi-agent simulation framework.* GitHub. <https://github.com/666ghj/MiroFish>
+
+[^13]: Kirfel, L., Manktelow, K., & Lagnado, D. (2025). *Counterfactual World Simulation Models.* *AI and Ethics*. <https://link.springer.com/article/10.1007/s43681-025-00718-4>
+
+[^14]: Anonymous. (2025, May). *Integrating Counterfactual Simulations with Language Models (AXIS).* arXiv preprint. <https://arxiv.org/abs/2505.17801>
+
+[^15]: Anonymous. (2025). *Validation is the central challenge for generative social simulation: a critical review of LLMs in agent-based modeling.* Springer (Artificial Intelligence Review). <https://link.springer.com/article/10.1007/s10462-025-11412-6>
+
+[^16]: Anonymous. (2024). *LLM-empowered agent-based modeling: A comprehensive survey.* *Humanities and Social Sciences Communications* (Nature). <https://www.nature.com/articles/s41599-024-03611-3>
+
+[^17]: Anonymous. (2026). *AgentSociety: Population-scale LLM-driven agent simulation.* SSRN preprint. <https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5954414>
+
+[^18]: agiresearch. *WarAgent: Multi-agent LLM simulation of geopolitical conflict.* GitHub. <https://github.com/agiresearch/WarAgent>
+
+[^19]: Anonymous. (2026, January). *Current Agents Fail to Leverage World Model as Tool for Foresight.* arXiv preprint. <https://arxiv.org/html/2601.03905>
+
+[^20]: AGI Edgerunners. *LLM Agents Papers — community-maintained reading list.* GitHub. <https://github.com/AGI-Edgerunners/LLM-Agents-Papers>
+
+[^21]: leofan90. *Awesome World Models — community-maintained reading list.* GitHub. <https://github.com/leofan90/Awesome-World-Models>
+
+[^22]: MIT Media Lab. (2024). *On the Limits of Agency in Agent-Based Models.* arXiv preprint. <https://arxiv.org/abs/2409.10568>
