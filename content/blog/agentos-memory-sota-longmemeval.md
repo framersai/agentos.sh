@@ -19,7 +19,7 @@ keywords: "longmemeval benchmark, longmemeval-s, longmemeval-m, ai memory benchm
 
 [AgentOS](https://github.com/framersai/agentos) is an open-source TypeScript runtime for AI agents. The piece this post is about is the memory system. Two new results from that system on the [LongMemEval](https://github.com/xiaowu0162/LongMemEval) benchmark, both at the `gpt-4o` reader, both at full N=500.
 
-**LongMemEval-S: 85.6%** at $0.0090 per correct answer, 3.6-second median latency. That's +1.4 points above Mastra Observational Memory at `gpt-4o` (84.23%), the strongest published memory-library number at this reader. EmergenceMem Internal publishes 86.0% (0.4 points above us). The result is the highest published open-source number at `gpt-4o` reader from a library that ships an end-to-end agent runtime around it.
+**LongMemEval-S: 85.6%** at $0.0090 per correct answer, 3.6-second median latency. That's +1.4 points above Mastra Observational Memory at `gpt-4o` (84.23%), the strongest published memory-library number at this reader. EmergenceMem **Internal** (their closed-source proprietary system) publishes 86.0% (0.4 points above us); their open-source [`emergence_simple_fast`](https://github.com/EmergenceAI/emergence_simple_fast) reference reaches 79–80.6% at the same reader. AgentOS at 85.6% is the highest published number from a library that ships its end-to-end memory architecture under a permissive license (Apache-2.0).
 
 **LongMemEval-M: 70.2%** at $0.0078 per correct answer. M is the harder variant: 1.5M tokens of conversation per question, 500 sessions per haystack, exceeds every production LLM context window. Of the 14 memory-library vendors we audited, no one else publishes an M number at all. AgentOS at 70.2% is competitive with the strongest published M results in the original LongMemEval paper ([Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)) [^1]. At reader-Top-5, that's +4.5 points above the round-level configuration (65.7%) and 1.2 points below the session-level configuration (71.4%); the paper's strongest GPT-4o result is 72.0% at round-level Top-10. The closest published external number is AgentBrain's 71.7% from their closed-source SaaS.
 
@@ -33,7 +33,7 @@ The rest of the post covers: the architecture changes that produced each number,
 
 | Variant | AgentOS | Closest published competitor | Cost-per-correct | License | Status |
 |---|---:|---|---:|---|---|
-| **LongMemEval-S** (115K tokens, 50 sessions) | **85.6%** | EmergenceMem 86.0%, Mastra OM gpt-4o 84.23%, Supermemory 81.6% | **$0.0090** | Apache-2.0 | +1.4 over Mastra |
+| **LongMemEval-S** (115K tokens, 50 sessions) | **85.6%** | EmergenceMem Internal **(closed-source)** 86.0%, Mastra OM gpt-4o 84.23%, Supermemory 81.6% | **$0.0090** | Apache-2.0 | +1.4 over Mastra; +5.0 over EmergenceMem's open Simple Fast (80.6%) |
 | **LongMemEval-M** (1.5M tokens, 500 sessions) | **70.2%** | AgentBrain 71.7% (closed-source SaaS). No other open-source library publishes M. | **$0.0078** | Apache-2.0 | first open-source above 65% |
 
 [Full benchmarks reference](https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md) · [Reproducible run JSONs](https://github.com/framersai/agentos-bench/tree/master/results/runs) · [Transparency audit framework](/blog/memory-benchmark-transparency-audit)
@@ -48,7 +48,7 @@ The table below holds the reader model constant at `gpt-4o`, so the comparison i
 
 | System (gpt-4o-class reader) | Accuracy | $/correct | p50 latency | p95 latency | Source |
 |---|---:|---:|---:|---:|---|
-| EmergenceMem internal | 86.0% | not published | 5,650 ms | not published | [emergence.ai](https://www.emergence.ai/blog/sota-on-longmemeval-with-rag) |
+| EmergenceMem Internal **(closed-source proprietary)** | 86.0% | not published | 5,650 ms | not published | [emergence.ai](https://www.emergence.ai/blog/sota-on-longmemeval-with-rag) |
 | **🚀 AgentOS canonical-hybrid + reader-router** | **85.6%** | **$0.0090** | **3,558 ms** | **7,264 ms** | this work |
 | Mastra OM gpt-4o (gemini-flash observer) | 84.23% | not published | not published | not published | [mastra.ai](https://mastra.ai/research/observational-memory) |
 | AgentOS prior reader-router with Tier 3 policy | 84.8% | $0.0410 | ~5,000 ms | 111,535 ms | prior |
@@ -57,7 +57,7 @@ The table below holds the reader model constant at `gpt-4o`, so the comparison i
 | Supermemory gpt-4o | 81.6% | not published | not published | not published | [supermemory.ai](https://supermemory.ai/research/) |
 | Zep self / independent reproduction | 71.2% / 63.8% | not published | not published | 632 ms p95 search | [self](https://blog.getzep.com/state-of-the-art-agent-memory/) / [arXiv:2512.13564](https://arxiv.org/abs/2512.13564) |
 
-AgentOS is 1.4 points above the Mastra OM gpt-4o number and 0.4 points below EmergenceMem Internal. Among open-source memory libraries that publish at `gpt-4o` and ship a methodology readers can audit (judge model, rubric, seed, per-case results), AgentOS is the highest published number.
+AgentOS is 1.4 points above the Mastra OM gpt-4o number and 0.4 points below EmergenceMem **Internal** — but EmergenceMem Internal is their closed-source proprietary system, not their public reference implementation. Their public open-source repo, [`EmergenceAI/emergence_simple_fast`](https://github.com/EmergenceAI/emergence_simple_fast), publishes 79% on the same benchmark; we reproduced it at 80.6% in our adapter. The 86% Internal number cannot be reproduced from public code. Among open-source memory libraries that publish at `gpt-4o`, ship a methodology readers can audit (judge model, rubric, seed, per-case results), and release their full memory architecture (not just a reference implementation), AgentOS is the highest published number.
 
 Median latency: AgentOS p50 is 3,558 ms; EmergenceMem's published median is 5,650 ms. The remaining vendors do not publish per-case latency.
 
@@ -158,7 +158,7 @@ The table below covers every memory library or platform with a public LongMemEva
 | [Hindsight (vectorize.io)](https://github.com/vectorize-io/hindsight) | open repo | 91.4% | not published |
 | [Neutrally](https://github.com/xiaowu0162/LongMemEval/issues) | public production system | 89.4% (LongMemEval repo issue submission, gpt-4o judge) | not published |
 | [Zep / Graphiti](https://blog.getzep.com/state-of-the-art-agent-memory/) | Apache 2.0 | 71.2% (independently reproduced at [63.8%](https://arxiv.org/abs/2512.13564)) | not published |
-| [EmergenceMem](https://www.emergence.ai/blog/sota-on-longmemeval-with-rag) | open Python | 79-86% | not published |
+| [EmergenceMem](https://www.emergence.ai/blog/sota-on-longmemeval-with-rag) | open repo at 79% ([emergence_simple_fast](https://github.com/EmergenceAI/emergence_simple_fast)); 86% Internal is **closed-source SaaS** | 79% (open) / 86% (closed Internal) | not published |
 | [Supermemory](https://supermemory.ai/research/) | open | 81.6-99% | not published |
 | [MemMachine](https://github.com/memmachine) | open repo | 93% | not published |
 | [Memoria](https://github.com/memoriaai) | open | 88.78% | not published |
