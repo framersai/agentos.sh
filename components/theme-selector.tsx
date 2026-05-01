@@ -83,15 +83,30 @@ const THEME_ICONS: Record<ThemeName, (props: { className?: string }) => React.Re
 export function ThemeSelector() {
   const [currentTheme, setCurrentTheme] = useState<ThemeName>('twilight-neo');
   const [isOpen, setIsOpen] = useState(false);
+  const [flipUp, setFlipUp] = useState(false);
   const { theme: mode, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMounted(true);
     const defaultTheme = getDefaultTheme();
     setCurrentTheme(defaultTheme);
   }, []);
+
+  // Flip the dropdown UP when there isn't enough room below the trigger.
+  // Same pattern as LanguageSwitcher: estimate the menu height (~5 rows
+  // × ~80px each + padding for the descriptive theme cards) and compare
+  // against the available space.
+  useEffect(() => {
+    if (!isOpen || !triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    const estimatedHeight = Object.keys(themes).length * 80 + 24;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    setFlipUp(spaceBelow < estimatedHeight && spaceAbove > spaceBelow);
+  }, [isOpen]);
 
   useEffect(() => {
     if (mounted) {
@@ -126,6 +141,7 @@ export function ThemeSelector() {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
+        ref={triggerRef}
         onClick={() => setIsOpen(!isOpen)}
         className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white/80 p-2 text-sm text-slate-700 shadow-sm transition hover:bg-white hover:shadow-md dark:border-slate-600 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-800"
         aria-label="Select theme"
@@ -136,11 +152,13 @@ export function ThemeSelector() {
 
       {isOpen && (
         <div
-          className="absolute right-0 top-full z-[60] mt-2 w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900"
+          className={`absolute right-0 z-[60] w-72 max-w-[calc(100vw-2rem)] max-h-[min(80vh,calc(100vh-6rem))] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900 ${
+            flipUp ? 'bottom-full mb-2' : 'top-full mt-2'
+          }`}
           role="listbox"
           aria-label="Theme presets"
         >
-          <div className="p-1.5 max-h-[60vh] overflow-auto">
+          <div className="p-1.5 max-h-[inherit] overflow-y-auto">
             {Object.entries(themes).map(([key, theme]) => {
               const themeName = key as ThemeName;
               const isActive = currentTheme === themeName;

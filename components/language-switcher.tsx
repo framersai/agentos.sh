@@ -11,7 +11,9 @@ export function LanguageSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [flipUp, setFlipUp] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,6 +37,19 @@ export function LanguageSwitcher() {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscape);
     };
+  }, [isOpen]);
+
+  // Decide whether the menu should drop UP instead of DOWN. The 8-locale
+  // list is ~430px tall; on short viewports (or when the OS dock crops
+  // the bottom of the window) it overflows below the fold. We flip up
+  // when there isn't enough room below AND there is room above.
+  useEffect(() => {
+    if (!isOpen || !triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    const estimatedHeight = locales.length * 48 + 24; // ~48px per row + padding
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    setFlipUp(spaceBelow < estimatedHeight && spaceAbove > spaceBelow);
   }, [isOpen]);
 
   const switchLocale = (newLocale: Locale) => {
@@ -73,6 +88,7 @@ export function LanguageSwitcher() {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="inline-flex items-center gap-2 px-3 py-2 rounded-xl glass-morphism hover:bg-accent-primary/10 transition-all min-h-[44px] min-w-[44px]"
@@ -88,7 +104,9 @@ export function LanguageSwitcher() {
 
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] rounded-xl shadow-xl overflow-hidden z-[60] border border-[var(--color-border-primary)] bg-[var(--color-background-card)] backdrop-blur-xl"
+          className={`absolute right-0 w-48 max-w-[calc(100vw-2rem)] max-h-[min(80vh,calc(100vh-6rem))] overflow-y-auto rounded-xl shadow-xl z-[60] border border-[var(--color-border-primary)] bg-[var(--color-background-card)] backdrop-blur-xl ${
+            flipUp ? 'bottom-full mb-2' : 'top-full mt-2'
+          }`}
           role="menu"
           aria-orientation="vertical"
           style={{
