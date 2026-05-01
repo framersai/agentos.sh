@@ -4,6 +4,7 @@ import { getAllPosts } from '@/lib/markdown';
 import { canonical } from '@/lib/seo/canonical';
 import { hreflangAlternates } from '@/lib/seo/hreflang';
 import { DiscordCTA } from '@/components/sections/discord-cta';
+import { PaginatedPosts, type PaginatedPost } from '@/components/blog/PaginatedPosts';
 import { Calendar, ArrowRight, Tag } from 'lucide-react';
 
 type Props = {
@@ -80,8 +81,6 @@ export default async function BlogPage({ params: { locale } }: Props) {
             Technical articles, framework comparisons, and tutorials for building production AI agents with TypeScript.
           </p>
         </header>
-
-        <DiscordCTA variant="section" className="mb-12" />
 
         {featuredPosts.length > 0 && (
           <section aria-labelledby="featured-heading" className="mb-16">
@@ -171,45 +170,17 @@ export default async function BlogPage({ params: { locale } }: Props) {
                 </h2>
               </div>
             )}
-            <div className="space-y-6 max-w-4xl mx-auto">
-              {standardPosts.map((post) => {
-                const href = `/${locale}/blog/${post.slug}`;
-                const colorClass = categoryColors[post.category || ''] || 'bg-gray-500/10 text-gray-600 dark:text-gray-400';
-                return (
-                  <article key={post.slug} className="group">
-                    <Link
-                      href={href as Route}
-                      className="block rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-background-card,var(--color-background-elevated))] p-6 transition-all hover:border-[var(--color-text-link)]/40 hover:shadow-lg sm:p-8"
-                    >
-                      <div className="mb-3 flex items-center gap-3 text-sm">
-                        {post.category && (
-                          <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${colorClass}`}>
-                            <Tag className="h-3 w-3" aria-hidden="true" />
-                            {post.category}
-                          </span>
-                        )}
-                        <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
-                          <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-                          {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                        </span>
-                      </div>
-                      <h2 className="mb-2 text-xl font-bold text-[var(--color-text-primary)] transition-colors group-hover:text-[var(--color-text-link)] sm:text-2xl">
-                        {post.title}
-                      </h2>
-                      {post.excerpt && (
-                        <p className="mb-4 leading-relaxed text-[var(--color-text-secondary)]">
-                          {post.excerpt}
-                        </p>
-                      )}
-                      <span className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-text-link)] transition-all group-hover:gap-2">
-                        Read article
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                      </span>
-                    </Link>
-                  </article>
-                );
-              })}
-            </div>
+            <PaginatedPosts
+              posts={standardPosts.map<PaginatedPost>((p) => ({
+                slug: p.slug,
+                title: p.title,
+                excerpt: p.excerpt,
+                date: p.date,
+                category: p.category,
+              }))}
+              locale={locale}
+              pageSize={10}
+            />
           </section>
         )}
 
@@ -218,6 +189,10 @@ export default async function BlogPage({ params: { locale } }: Props) {
             <p className="text-[var(--color-text-muted)] text-lg">No posts yet. Check back soon.</p>
           </div>
         )}
+
+        {/* Discord CTA at the bottom — community pitch lands AFTER readers
+            have scanned (or paginated through) the actual writing. */}
+        {posts.length > 0 && <DiscordCTA variant="section" className="mt-16" />}
       </div>
     </main>
   );

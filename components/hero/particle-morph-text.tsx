@@ -46,7 +46,13 @@ export const ParticleMorphText = memo(function ParticleMorphText({
 
   const height = useMemo(() => Math.ceil(fontSize * 1.15), [fontSize]);
   const [wordWidths, setWordWidths] = useState<[number, number]>(() => {
-    const estimate = (text: string) => Math.ceil(text.length * fontSize * 0.72);
+    // Initial pre-measurement estimate calibrated against Inter 700:
+    // average proportional glyph width is ~0.55 of fontSize. The old
+    // 0.72 factor over-shot by ~30%, leaving a ~60–80px gap between
+    // the morph and the next inline word ("intelligence", "agents")
+    // until the post-fonts.ready measurement landed. 0.58 trades a bit
+    // of safety for a much tighter SSR placement.
+    const estimate = (text: string) => Math.ceil(text.length * fontSize * 0.58);
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
