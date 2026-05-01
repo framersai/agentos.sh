@@ -51,7 +51,7 @@ prompt or brief or URL
               ├─ Mulberry32 PRNG drives state
               ├─ LLM generates events + specialist analyses
               ├─ Specialists may forge new TypeScript tools
-              ├─ V8 isolate sandbox runs forged tools
+              ├─ Hardened node:vm sandbox runs forged tools
               ├─ LLM judge approves forged tools before re-use
               └─ Kernel applies consequences; personalities drift
                     ↓
@@ -76,7 +76,7 @@ The turn loop is the only piece of Paracosm that's interesting at the engineerin
 2. **Event generation.** An LLM is prompted with the state and the leader's HEXACO profile and proposes plausible events for this turn. Crucially the LLM doesn't just imagine; it consults research via AgentOS's `WebSearchService` (Firecrawl + Tavily + Serper + Brave in parallel, Cohere `rerank-v3.5` reranking on top). DOI-linked citations propagate into the artifact. Without research grounding, events drift toward LLM cliché.
 3. **Specialist analyses.** Each specialist agent (economist, scientist, security officer) writes a short analysis given the events and the leader's profile. Specialists have personalities. They disagree.
 4. **Tool forging.** A specialist may decide the next decision needs a tool that doesn't exist yet. They write a TypeScript function with a Zod-validated input/output schema and submit it. A forged tool from an actual run looks like `compute_resource_allocation_under_drought_constraint(state) → priorityList`.
-5. **Sandbox execution.** Approved tools run in a V8 isolate with a 128 MB heap and a 10-second wall clock. No filesystem access, no network access, no `eval`, no dynamic import.
+5. **Sandbox execution.** Approved tools run in a hardened `node:vm` sandbox with a 5-second default wall clock and a 128 MB nominal memory budget (heap-delta heuristic, not preemptively enforced — preemptive limits via `isolated-vm` are queued for the hosted multi-tenant tier). The sandbox always bans `eval`, `Function`, `require`, dynamic `import`, `process`, `child_process`, and destructive `fs.*`. `fetch`, `fs.readFile`, and `crypto` are opt-in via allowlist; the default allowlist is empty, so by default a forged tool has no network, no filesystem, no crypto.
 6. **LLM judge.** A separate LLM call examines each forged tool's output against the specialist's stated intent. Match approves it for inclusion in the decision context and adds it to a discoverable index for future turns. Mismatch rejects it. Reuse via `call_forged_tool(name, args)` costs tens of tokens; a fresh forge costs full LLM tokens for the proposal, body, test scaffolding, and judge. After turn three of a typical run most decisions invoke at least one previously-forged tool, and total run cost flattens.
 7. **Decision.** The leader, equipped with events, analyses, and forged tools, makes a turn decision: an action category, a parameter set, a stated rationale, a confidence score.
 8. **Kernel apply.** The kernel applies the decision's effects. Resources move. Statuses change. Agents are promoted, demoted, or lost.
@@ -128,7 +128,7 @@ Specialist proposes a tool
        ↓
    TypeScript body authored by the LLM
        ↓
-   V8 isolate sandbox: 128MB heap, 10s wall clock
+   Hardened node:vm sandbox: 5s wall clock default, 128 MB nominal heap (not preempted), default-empty allowlist
        ↓
    LLM judge: does the output match the stated intent?
    ↓ approve            ↓ reject

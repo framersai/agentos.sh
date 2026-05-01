@@ -1416,7 +1416,7 @@
       "step3": "판단자 평가",
       "step4": "도구 활성화",
       "step5": "에이전트가 사용",
-      "description": "Runtime Tool Forging은 에이전트가 결정 중간에 새로운 TypeScript 함수를 작성하고, 별도의 판사 LLM에 의해 검토를 받고, V8 격리 샌드박스(128 MB 힙, 10초 벽시계, fs/네트워크/eval 없음) 내에서 실행할 수 있음을 의미합니다. 모든 것이 다음 턴 전에 이루어집니다. 승인된 도구는 재사용을 위해 검색 가능한 인덱스에 배치되므로 세션 내에서 처음 몇 번의 단조 후 비용이 평탄해집니다.",
+      "description": "Runtime Tool Forging은 에이전트가 결정 중간에 새로운 TypeScript 함수를 작성하고, 별도의 판사 LLM에 의해 검토를 받은 후, 강화된 node:vm 샌드박스 내에서 실행할 수 있음을 의미합니다 (기본 벽 시계 5초, 128 MB 명목 메모리 예산, fetch/fs/crypto에 대한 기본 빈 허용 목록, eval/require/import/process/child_process는 정적으로 금지됨), 모든 것이 다음 턴 전에 이루어집니다. 승인된 도구는 재사용을 위해 발견 가능한 인덱스에 등록되므로, 세션 내에서 처음 몇 번의 단조 후 비용이 평탄해집니다.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",

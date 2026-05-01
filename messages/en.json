@@ -1417,7 +1417,7 @@
       "step3": "Judge Evaluates",
       "step4": "Tool Activated",
       "step5": "Agent Uses It",
-      "description": "Runtime Tool Forging means an agent can write itself a new TypeScript function mid-decision, get it reviewed by a separate judge LLM, and execute it inside a V8 isolate sandbox (128 MB heap, 10s wall clock, no fs/network/eval) — all before the next turn. Approved tools land in a discoverable index for reuse, so cost flattens after the first few forges in a session.",
+      "description": "Runtime Tool Forging means an agent can write itself a new TypeScript function mid-decision, get it reviewed by a separate judge LLM, and execute it inside a hardened node:vm sandbox (5s default wall clock, 128 MB nominal memory budget, default-empty allowlist for fetch/fs/crypto, statically-banned eval/require/import/process/child_process), all before the next turn. Approved tools land in a discoverable index for reuse, so cost flattens after the first few forges in a session.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",

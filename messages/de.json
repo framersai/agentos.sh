@@ -1417,7 +1417,7 @@
       "step3": "Richter bewertet",
       "step4": "Tool aktiviert",
       "step5": "Agent nutzt es",
-      "description": "Runtime Tool Forging bedeutet, dass ein Agent sich während einer Entscheidung eine neue TypeScript-Funktion schreiben, sie von einem separaten Richter-LLM überprüfen lassen und sie in einer V8-Isolations-Sandbox (128 MB Heap, 10s Wanduhr, kein fs/Netzwerk/eval) ausführen kann, alles vor dem nächsten Zug. Genehmigte Werkzeuge landen in einem durchsuchbaren Index zur Wiederverwendung, sodass die Kosten nach den ersten Schmieden in einer Sitzung flach bleiben.",
+      "description": "Runtime Tool Forging bedeutet, dass ein Agent sich während einer Entscheidung eine neue TypeScript-Funktion schreiben, sie von einem separaten Richter-LLM überprüfen lassen und sie in einer gehärteten node:vm-Sandbox ausführen kann (5s Standard-Wanduhr, 128 MB nominales Speicherbudget, standardmäßig leere Erlaubnisliste für fetch/fs/crypto, statisch verbotene eval/require/import/process/child_process), alles vor dem nächsten Zug. Genehmigte Werkzeuge landen in einem auffindbaren Index zur Wiederverwendung, sodass die Kosten nach den ersten wenigen Schmieden in einer Sitzung abflachen.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",

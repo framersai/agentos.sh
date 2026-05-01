@@ -1416,7 +1416,7 @@
       "step3": "ジャッジが評価",
       "step4": "ツール有効化",
       "step5": "エージェントが使用",
-      "description": "Runtime Tool Forgingとは、エージェントが意思決定の途中で新しいTypeScript関数を書き込み、別の審査LLMによってレビューを受け、V8アイソレートサンドボックス（128 MBヒープ、10秒ウォールクロック、fs/ネットワーク/evalなし）内で実行できることを意味します。すべて次のターンの前に行われます。承認されたツールは再利用のために発見可能なインデックスに配置されるため、セッション内で最初のいくつかの鍛造後にコストが平坦化します。",
+      "description": "Runtime Tool Forgingとは、エージェントが意思決定の途中で新しいTypeScript関数を書き、それを別の判定LLMにレビューさせ、強化されたnode:vmサンドボックス内で実行することを意味します（デフォルトの壁時計5秒、名目メモリ予算128 MB、fetch/fs/cryptoのためのデフォルト空の許可リスト、eval/require/import/process/child_processは静的に禁止）、すべて次のターンの前に行います。承認されたツールは再利用のために発見可能なインデックスに登録されるため、セッション内の最初の数回の鍛造後にコストが平坦化します。",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",

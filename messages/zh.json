@@ -1416,7 +1416,7 @@
       "step3": "裁判评估",
       "step4": "工具激活",
       "step5": "智能体使用",
-      "description": "Runtime Tool Forging意味着代理可以在决策中途为自己编写一个新的TypeScript函数，由一个单独的法官LLM审查，并在V8隔离沙箱（128 MB堆，10秒挂钟，无fs/网络/eval）中执行，所有这些都在下一回合之前完成。批准的工具会放在一个可发现的索引中以供重用，因此在会话中的前几次锻造后成本会趋于平稳。",
+      "description": "Runtime Tool Forging意味着代理可以在决策中途为自己编写一个新的TypeScript函数，由一个独立的法官LLM审核，并在一个强化的node:vm沙箱中执行（默认5秒挂钟，128 MB名义内存预算，fetch/fs/crypto的默认空白名单，静态禁止eval/require/import/process/child_process），所有这些都在下一回合之前完成。批准的工具会进入一个可发现的索引以供重用，因此在会话中的前几次锻造后成本会趋于平稳。",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",

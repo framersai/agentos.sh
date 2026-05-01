@@ -1426,7 +1426,7 @@
       "step3": "Juez Evalúa",
       "step4": "Herramienta Activada",
       "step5": "El Agente la Usa",
-      "description": "Runtime Tool Forging significa que un agente puede escribirse una nueva función TypeScript a mitad de decisión, hacer que un juez LLM separado la revise y ejecutarla dentro de un sandbox de aislamiento V8 (128 MB de heap, 10s de reloj de pared, sin fs/red/eval), todo antes del siguiente turno. Las herramientas aprobadas se colocan en un índice detectable para su reutilización, por lo que el costo se estabiliza después de las primeras forjas en una sesión.",
+      "description": "Runtime Tool Forging significa que un agente puede escribirse una nueva función de TypeScript a mitad de decisión, hacer que un juez LLM separado la revise y ejecutarla dentro de un entorno seguro node:vm (5s de reloj de pared predeterminado, 128 MB de presupuesto de memoria nominal, lista de permitidos vacía por defecto para fetch/fs/crypto, eval/require/import/process/child_process prohibidos estáticamente), todo antes del siguiente turno. Las herramientas aprobadas se colocan en un índice descubierto para su reutilización, por lo que el costo se aplana después de las primeras forjas en una sesión.",
       "details": [
         "Composable mode: chains existing tools via pipeline steps — safe by construction",
         "Sandbox mode: agent-written code runs in memory/time-bounded isolation",
