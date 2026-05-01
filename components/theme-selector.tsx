@@ -136,7 +136,7 @@ export function ThemeSelector() {
 
       {isOpen && (
         <div
-          className="absolute right-0 top-full z-50 mt-2 w-72 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900"
+          className="absolute right-0 top-full z-[60] mt-2 w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900"
           role="listbox"
           aria-label="Theme presets"
         >

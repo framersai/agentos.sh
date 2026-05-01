@@ -263,11 +263,12 @@ export function SiteHeader() {
 
       {/* Mobile menu */}
       <div
+        ref={menuRef}
         className={`lg:hidden transition-all duration-200 ${menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
         id="mobile-menu"
         style={{ display: menuOpen ? 'block' : 'none' }}
       >
-        <div ref={menuRef} className="mx-4 mb-4 mt-2 rounded-2xl glass-morphism shadow-modern overflow-hidden">
+        <div className="mx-4 mt-2 rounded-2xl glass-morphism shadow-modern overflow-hidden">
           <nav className="flex flex-col" aria-label="Mobile navigation">
             {NAV_LINKS.map((link) => {
               const localizedHref = localizeHref(link.href);
@@ -301,17 +302,20 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenu}
-              className="px-6 py-4 text-base font-bold text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/5 transition-all duration-300 ease-out flex items-center gap-2 border-b border-border-subtle/20"
+              className="px-6 py-4 text-base font-bold text-[var(--color-text-primary)] hover:text-accent-primary hover:bg-accent-primary/5 transition-all duration-300 ease-out flex items-center gap-2 border-b border-border-subtle/20 last:border-0"
             >
               <Github className="w-5 h-5" aria-hidden="true" />
               {t('github')}
             </a>
           </nav>
-          {/* Theme & language controls — mobile only */}
-          <div className="flex items-center justify-center gap-3 px-6 py-4 sm:hidden">
-            <ThemeSelector />
-            <LanguageSwitcher />
-          </div>
+        </div>
+        {/* Theme & language controls — mobile only.
+            Rendered OUTSIDE the overflow-hidden nav card so the
+            ThemeSelector and LanguageSwitcher dropdowns can extend
+            below their triggers without being clipped. */}
+        <div className="mx-4 mb-4 mt-2 flex items-center justify-center gap-3 rounded-2xl glass-morphism shadow-modern px-6 py-3 sm:hidden">
+          <ThemeSelector />
+          <LanguageSwitcher />
         </div>
       </div>
     </header>

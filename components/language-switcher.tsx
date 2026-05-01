@@ -87,12 +87,12 @@ export function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div 
-          className="absolute right-0 mt-2 w-48 rounded-xl shadow-xl overflow-hidden z-50 border border-[var(--color-border-primary)] bg-[var(--color-background-card)] backdrop-blur-xl"
+        <div
+          className="absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] rounded-xl shadow-xl overflow-hidden z-[60] border border-[var(--color-border-primary)] bg-[var(--color-background-card)] backdrop-blur-xl"
           role="menu"
           aria-orientation="vertical"
-          style={{ 
-            boxShadow: '0 10px 40px rgba(0,0,0,0.15), 0 2px 10px rgba(0,0,0,0.1)' 
+          style={{
+            boxShadow: '0 10px 40px rgba(0,0,0,0.15), 0 2px 10px rgba(0,0,0,0.1)'
           }}
         >
           {locales.map((loc) => (
