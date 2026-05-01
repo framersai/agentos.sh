@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 
-const placeholderSlots = [0, 1] as const
+const placeholderSlots = [0] as const
 
 export function SocialProofSection() {
   const t = useTranslations('socialProof')
@@ -87,6 +87,41 @@ export function SocialProofSection() {
                 <circle cx="16.6" cy="16.6" r="3.5" fill="#e8b44a"/>
               </svg>
               <span className="text-sm font-semibold text-text-primary">Paracosm</span>
+            </a>
+
+            {/* Wunderland — revealed deployment */}
+            <a
+              href="https://wunderland.sh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative overflow-hidden rounded-3xl border border-border-subtle/60 bg-white/80 dark:bg-white/5 dark:border-white/10 p-5 backdrop-blur flex flex-col items-center justify-center gap-3 transition-colors hover:border-accent-primary/50 hover:bg-white/90 dark:hover:bg-white/10"
+            >
+              <svg width="48" height="48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="rounded-xl">
+                <rect width="100" height="100" rx="22" fill="#0c1528"/>
+                {/* Outer frame */}
+                <polygon points="50,10 76,22 88,50 76,78 50,90 24,78 12,50 24,22"
+                         fill="none"
+                         stroke="#0ea5e9"
+                         strokeWidth="2"/>
+                {/* Main W */}
+                <path d="M24,28 L34,50 L50,32 L66,50 L76,28"
+                      fill="none"
+                      stroke="#38bdf8"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"/>
+                {/* Mirror line */}
+                <line x1="20" y1="50" x2="80" y2="50" stroke="#eab308" strokeWidth="2" opacity="0.75"/>
+                {/* Reflected W */}
+                <path d="M24,72 L34,50 L50,68 L66,50 L76,72"
+                      fill="none"
+                      stroke="#0ea5e9"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      opacity="0.4"/>
+              </svg>
+              <span className="text-sm font-semibold text-text-primary">Wunderland</span>
             </a>
 
             {placeholderSlots.map((slot) => (
