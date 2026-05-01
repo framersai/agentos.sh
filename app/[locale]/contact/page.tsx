@@ -84,12 +84,18 @@ export default function ContactPage() {
           className="grid gap-6 md:grid-cols-3"
           aria-label="Contact channels"
         >
-          {contactCards.map((card) => (
+          {contactCards.map((card) => {
+            // Mailto + tel links must open in the same tab so the browser
+            // hands off to the OS mail/phone client. target="_blank" can
+            // produce a blank tab that never closes (Chrome/Safari).
+            const isProtocolLink = card.href.startsWith('mailto:') || card.href.startsWith('tel:');
+            const shouldOpenInNewTab = card.external && !isProtocolLink;
+            return (
             <a
               key={card.title}
               href={card.href}
-              target={card.external ? '_blank' : undefined}
-              rel={card.external ? 'noopener noreferrer' : undefined}
+              target={shouldOpenInNewTab ? '_blank' : undefined}
+              rel={shouldOpenInNewTab ? 'noopener noreferrer' : undefined}
               className="group flex flex-col gap-4 rounded-2xl border border-[var(--color-border-subtle)]/60 bg-white/70 dark:bg-white/5 p-6 transition-all hover:border-[var(--color-accent-primary)]/60 hover:bg-[var(--color-accent-primary)]/5 hover:translate-y-[-2px]"
             >
               <card.icon
@@ -109,7 +115,8 @@ export default function ContactPage() {
                 <span aria-hidden="true">→</span>
               </span>
             </a>
-          ))}
+          );
+          })}
         </section>
 
         {/* Form */}
