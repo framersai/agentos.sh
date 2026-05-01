@@ -161,12 +161,11 @@ export default function LandingPageRedesigned() {
           <EmergentSectionLazy />
         </div>
 
-        {/* Cognitive Mechanisms + HEXACO + RAG Pipeline — SSR shell around client-only canvas section */}
+        {/* Cognitive Mechanisms + HEXACO + RAG Pipeline — the section component
+            owns its own badge / title / subtitle + canvas; do not wrap it in a
+            second header here or the page renders two competing 'Cognitive
+            Memory' titles back-to-back. */}
         <section className="lazy-section-lg">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">Cognitive memory and HEXACO personality</h2>
-          <p className="text-center text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-10">
-            AgentOS gives every agent a multi-tier memory model with Ebbinghaus decay plus a six-axis HEXACO personality vector. Recall is grounded by an embedded RAG pipeline that handles text, image, audio, and video.
-          </p>
           <CognitiveSectionLazy />
         </section>
 

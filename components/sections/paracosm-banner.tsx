@@ -82,7 +82,15 @@ export function ParacosmBanner() {
                   className="font-mono text-xl font-bold tracking-wider sm:text-2xl"
                   style={{ color: 'var(--color-text-primary)' }}
                 >
-                  PARA<span style={{ color: '#e8b44a' }}>COSM</span>
+                  <a
+                    href="https://paracosm.agentos.sh"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-opacity hover:opacity-80"
+                    aria-label="Paracosm — visit paracosm.agentos.sh"
+                  >
+                    PARA<span style={{ color: '#e8b44a' }}>COSM</span>
+                  </a>
                 </h3>
               </div>
 
@@ -118,7 +126,7 @@ export function ParacosmBanner() {
                   <ExternalLink className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                 </a>
                 <a
-                  href="https://paracosm.agentos.sh"
+                  href="https://agentos.sh/en/blog/paracosm-2026-overview/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 font-semibold transition-all duration-300 hover:-translate-y-0.5"
@@ -127,7 +135,7 @@ export function ParacosmBanner() {
                     color: 'var(--color-text-secondary)',
                     fontSize: '13px',
                   }}
-                  aria-label="Learn more about Paracosm — AI agent swarm simulation"
+                  aria-label="Learn more about Paracosm — read the 2026 overview blog post"
                 >
                   Learn more about Paracosm
                 </a>
