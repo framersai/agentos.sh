@@ -70,6 +70,8 @@ Memory follows a [4-tier hierarchy](https://docs.agentos.sh/features/memory-arch
 
 Agents share memory through the [`AgentCommunicationBus`](https://docs.agentos.sh/api/classes/AgentCommunicationBus) and coordinate via the [`AgencyRegistry`](https://docs.agentos.sh/api/classes/AgencyRegistry).
 
+When `strategy: 'hierarchical'` is paired with `emergent: { enabled: true }`, the manager LLM gets a `spawn_specialist` tool alongside its `delegate_to_<name>` tools. Calling it forges a new sub-agent at runtime via [`EmergentAgentForge`](https://docs.agentos.sh/api/classes/EmergentAgentForge), gates it through [`EmergentAgentJudge`](https://docs.agentos.sh/api/classes/EmergentAgentJudge) for safety review, and adds the new specialist to the live roster — `delegate_to_<spawned-role>` becomes available on the next turn. Bounds via `planner.maxSpecialists`, `planner.maxJudgeCalls`, and an optional HITL `beforeEmergent` gate. See [Hierarchical + emergent agent spawning](https://docs.agentos.sh/architecture/emergent-agency-system) for the worked example.
+
 ### Emergent Tool Forging
 
 Agents [create new tools at runtime](https://docs.agentos.sh/features/emergent-capabilities) when no existing tool fits the task:
