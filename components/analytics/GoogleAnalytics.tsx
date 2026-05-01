@@ -62,10 +62,16 @@ export function GoogleAnalytics() {
 
   return (
     <>
-      {/* Google Analytics with Consent Mode v2 */}
+      {/* Google Analytics with Consent Mode v2.
+          `lazyOnload` instead of `afterInteractive` — fires during the
+          browser's idle window so the analytics setup doesn't compete
+          with hydration on the main thread. PSI lab data attributed
+          ~200ms of TBT to the gtag bundle; deferring it to idle gives
+          back nearly all of that. Trade-off: we miss tracking users who
+          bounce in the first ~2s. Acceptable for marketing analytics. */}
       <Script
         id="ga-consent-init"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
@@ -92,10 +98,11 @@ export function GoogleAnalytics() {
         }}
       />
       
-      {/* Load gtag.js */}
+      {/* Load gtag.js — also lazyOnload so the 153 KiB bundle doesn't
+          land on the main thread during the perf-critical paint window. */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
 
       {/* Update consent when user accepts */}
