@@ -102,10 +102,18 @@ const nextConfig = {
               enforce: true,
               reuseExistingChunk: true,
             },
-            // Shared components across pages
+            // Shared async-loaded modules. Deliberately `chunks: 'async'`
+            // (not `'all'`) so synchronously-imported code shared between
+            // two non-homepage routes (e.g. react-markdown imported by
+            // blog/[slug] and guides/[slug] via the 'use client'
+            // MarkdownRenderer) doesn't get hoisted into a chunk that
+            // every initial route — including the homepage — must load.
+            // PSI lab data showed parse5 + mdast + entities (~38 KiB)
+            // bleeding into the homepage's commons chunk before this
+            // was tightened.
             commons: {
               name: 'commons',
-              chunks: 'all',
+              chunks: 'async',
               minChunks: 2,
               priority: 20,
               reuseExistingChunk: true,
