@@ -13,7 +13,11 @@ category: "Engineering"
 keywords: "longmemeval benchmark, longmemeval-s, longmemeval-m, ai memory benchmark, agentos memory, mastra mem0 hindsight comparison, memory library benchmark, open source memory library, transparency audit, mem0 vs zep, locomo judge audit, retrieval augmented memory, cognitive memory ai, top-k tuning, reader router, sem-embed, longmemeval paper Wu et al ICLR 2025, agent memory architecture, observational memory mastra, emergencemem"
 ---
 
-[AgentOS](https://github.com/framersai/agentos) is an open-source TypeScript AI agent runtime: cognitive memory, HEXACO personality traits, runtime tool forging, 16 LLM providers, end-to-end for building adaptive emergent agents. Its cognitive memory system is the part this post is about. Two new LongMemEval results from that memory system, both at `gpt-4o` reader, both at full N=500.
+> "To think is to forget a difference, to generalize, to abstract."
+>
+> — Jorge Luis Borges, *Funes the Memorious*, 1942
+
+[AgentOS](https://github.com/framersai/agentos) is an open-source TypeScript runtime for AI agents. The piece this post is about is the memory system. Two new results from that system on the [LongMemEval](https://github.com/xiaowu0162/LongMemEval) benchmark, both at the `gpt-4o` reader, both at full N=500.
 
 **LongMemEval-S: 85.6%** at $0.0090 per correct answer, 3.6-second median latency. That's +1.4 points above Mastra Observational Memory at `gpt-4o` (84.23%), the strongest published memory-library number at this reader. EmergenceMem Internal publishes 86.0% (0.4 points above us). The result is the highest published open-source number at `gpt-4o` reader from a library that ships an end-to-end agent runtime around it.
 
@@ -61,9 +65,9 @@ Median latency: AgentOS p50 is 3,558 ms; EmergenceMem's published median is 5,65
 
 The 84.8% prior headline used a query-time policy router that picked between two retrieval modes per category. Four categories (SSA, SSU, TR, KU) ran through `canonical-hybrid` (BM25 + dense + cross-encoder rerank). The other two (MS, SSP) ran through `observational-memory-v11`, which compresses each session into a structured observation log at ingest and feeds the log to the reader instead of raw chunks.
 
-That calibration was set when canonical-hybrid retrieval was hitting recall@10 around 0.62 with CharHash embeddings. After the switch to semantic embeddings (`text-embedding-3-small`), recall@10 measured at 0.981. At that recall level, the observation-log path strips verbatim temporal and preference detail that the `gpt-5-mini` reader needs, and reduces accuracy on MS and SSP rather than improving it.
+That calibration was set when canonical-hybrid retrieval was hitting recall@10 around 0.62 with CharHash embeddings. After the switch to semantic embeddings (`text-embedding-3-small`), recall@10 measured at 0.981. At that recall level, the observation-log path strips verbatim temporal and preference detail that the reader actually needs on MS and SSP, and accuracy drops where it should have lifted. The router was no longer paying for itself.
 
-The router was removed. Every category now flows through `canonical-hybrid`. A separate reader router (lightweight `gpt-5-mini` classifier, one extra LLM call per case at ~$0.000138) still picks the reader model per category.
+It was removed. Every category now flows through `canonical-hybrid`. A separate reader router (lightweight `gpt-5-mini` classifier, one extra LLM call per case at ~$0.000138) still picks the reader model per category.
 
 |                          | Tier 3 PR + RR | Canonical + RR | Δ |
 |--------------------------|---------------:|---------------:|---|
@@ -223,6 +227,8 @@ The 57.6% headline ran with `--reader-top-k 50`. The LongMemEval paper's stronge
 M cost at scale: at $0.0078 per correct over a 1.5M-token haystack, 1,000 RAG calls cost $7.80. The prior top-K=50 configuration cost $0.0505 per correct, or $50.50 per 1,000 calls.
 
 A LongMemEval-M haystack contains ~1.5M tokens spread across 500 sessions, producing ~25,000 candidate chunks. At top-K=50, the reader receives the cross-encoder's top picks plus 45 chunks of progressively lower confidence. Chunks ranked 6–50 frequently share lexical surface with the query but do not contain the answer; their inclusion lowers the reader's signal-to-noise ratio. [Liu et al. (2024), "Lost in the Middle"](https://arxiv.org/abs/2307.03172) reports the same shape of failure at the long-context-LLM level.
+
+The corollary, in line with the Borges epigraph: a memory system that retrieves more is not always one that remembers better. At M scale, a retriever that hands the reader fewer (and better-ranked) chunks scores higher than one that hands it more. Recall is necessary; what the reader does with what it got is the rest of the work.
 
 ### Per-category at the 70.2% M headline
 
@@ -441,6 +447,14 @@ Three open-source benchmark harnesses cover the LongMemEval / LOCOMO space:
 - [Mem0 memory-benchmarks](https://github.com/mem0ai/memory-benchmarks): LOCOMO and LongMemEval against Mem0 Cloud and OSS.
 
 Reproducible memory benchmarks require a published seed, configuration, and per-case run JSONs alongside the headline number.
+
+## Closing
+
+Two numbers end up here. **85.6% on LongMemEval-S** at $0.0090 per correct, +1.4 points above the strongest matched-reader competitor. **70.2% on LongMemEval-M** at $0.0078 per correct, the only open-source library on the public record above 65% on the variant whose haystacks no production context window can absorb.
+
+The intent of the design behind both numbers is not perfect recall. Funes the Memorious had perfect recall and could not think; AgentOS has [Ebbinghaus decay](https://docs.agentos.sh/features/cognitive-memory), [retrieval-induced forgetting](https://docs.agentos.sh/features/cognitive-memory), [reconsolidation](https://docs.agentos.sh/features/cognitive-memory), and seven other mechanisms borrowed from the cognitive-science literature precisely so the agent can generalize from what it has seen rather than drown in it. The benchmark numbers are the part of that argument that can be measured. The rest of the [whitepaper](https://github.com/framersai/agentos-bench) covers the part that can't.
+
+The runtime is Apache-2.0 at [github.com/framersai/agentos](https://github.com/framersai/agentos). The bench is at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench). Reproducing the headlines is the two CLI commands above, on a dataset anyone can download from [the LongMemEval upstream](https://github.com/xiaowu0162/LongMemEval), against per-case run JSONs at seed 42.
 
 ## Further reading
 
