@@ -50,8 +50,12 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     return [estimate(wordA), estimate(wordB)];
   });
   const width = useMemo(() => Math.max(wordWidths[0], wordWidths[1]), [wordWidths]);
-  // Use per-word width for tight spacing; switch is instant (no CSS transition)
-  const _wrapperWidth = wordWidths[activeWordIndex] ?? width;
+  // Wrapper is fixed at the max of both word widths so the layout never
+  // shifts when the morph swaps "Emergent" for "Adaptive". Per-word width
+  // saved a few pixels of whitespace but cost ~0.16 of CLS on every
+  // 4-second morph cycle (Lighthouse called this out as the dominant hero
+  // shift). Constant width = no shift; the canvas inside still scales.
+  const _wrapperWidth = width;
 
   const hexToRgb = useCallback((hex: string) => {
     const v = parseInt(hex.slice(1), 16);

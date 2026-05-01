@@ -136,7 +136,15 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-18">
         <article className="max-w-2xl">
-          <h1 className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2]" itemProp="name">
+          {/* Reserve the H1's rendered height up-front so the canvas
+              hydrate doesn't reflow the rest of the page. Two lines of
+              text at leading-1.2: 28px*2.4=68px mobile, 36px*2.4=87px,
+              48px*2.4=116px desktop. Slight overshoot is intentional —
+              undershoot causes CLS, overshoot is just whitespace. */}
+          <h1
+            className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2] min-h-[72px] sm:min-h-[92px] lg:min-h-[120px]"
+            itemProp="name"
+          >
             {/* Visually-hidden full-text H1 for search engines and screen readers.
                 The canvas siblings below render the visual particle-morph effect;
                 this sr-only span ensures the full string is in the DOM regardless

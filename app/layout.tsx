@@ -4,7 +4,13 @@ import '../styles/tokens.css';
 import './globals.css';
 import { defaultLocale } from '../i18n';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+// `display: 'optional'` swaps fonts only on a fast first connection
+// (within ~100ms). Slower connections render the fallback for the
+// session, which avoids the layout shift caused by `swap` (Lighthouse
+// called body-class swap out as ~0.29 CLS — the single biggest CLS
+// contributor on the hero). next/font's auto adjustFontFallback also
+// generates a metric-matched fallback so glyph widths stay close.
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'optional' });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const lang = defaultLocale;
