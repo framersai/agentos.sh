@@ -9,17 +9,11 @@ image: "/img/blog/og/inside-mars-genesis-ai-colony-simulation.png"
 keywords: "mars colony ai simulation, hexaco ai agents, cognitive memory ai agents, emergent tool forging llm, call forged tool reuse, typescript ai agent framework, personality driven llm agents, llm as judge, v8 isolate sandbox ai, runtime tool generation llm, agent based simulation, two leader one seed"
 ---
 
-> "I had been in love before — but never had I seen it twice in the same Mars."
->
-> — paraphrased after Ray Bradbury, *The Martian Chronicles*, 1950
+Mars Genesis is a six-turn, thirty-colonist civilization simulation that runs on AgentOS and Paracosm. Two AI commanders with opposing HEXACO personality profiles share an identical seed, an identical agent roster, and identical starting resources, and produce measurably different colonies by turn six. This post is the end-to-end case study: turn-by-turn, what the Engineer commander did, what the Visionary commander did, why their colonies diverged, and how to read the run artifact. A shorter comparison against the other major open-source multi-agent simulation framework (MiroFish) is appended at the end.
 
-> **Editor's note (2026-04-26):** Paracosm's positioning has been consolidated into a single overview essay since this post was written. We now describe it as a *structured world model for AI agents* (Xing 2025; ACM CSUR 2025) and a *counterfactual world simulation model* (Kirfel et al, 2025). The case study below stays accurate; the category label changed. For the updated placement against Sora / Genie 3 / MiroFish / OASIS / Concordia, see [Paracosm: Counterfactual World Simulation in 2026](/blog/paracosm-2026-overview).
+A representative moment from a recent run: turn three, year 2051. Dietrich Voss's chief medical officer faces a solar-storm radiation event that her existing toolbox doesn't cover. She doesn't pick an option from a menu. She writes a tool. The function is reviewed by an LLM judge, approved, executed in a sandbox, and returns a projected exposure number. Her commander reads that number three seconds later. By turn four every other department in the session can call the same tool for tens of tokens of dispatch. The runtime didn't script the path; it made the tool discoverable and the agents found it.
 
-There is a particular moment in Mars Genesis I think about more than I should. It is turn three, year 2051. Dietrich Voss's chief medical officer has just been faced with a solar-storm radiation event that her existing toolbox doesn't cover. She does not pick an option from a menu. She writes a tool. The function gets approved, runs inside a sandbox, returns a projected exposure number, and her commander reads that number three seconds later. By turn four every other department in the session can call her tool for tens of tokens of dispatch.
-
-I spent my career assuming that "agent" meant "LLM in a costume." Watching Dr. Priya Singh forge a radiation-dose calculator at runtime was the moment I revised that. An agent is something that can extend its own toolbox at the speed of a thought, and the kernel either lets it or it doesn't. Mars Genesis is the demonstration that, in our hands, the kernel lets it, the judge approves the right ones, the sandbox catches the wrong ones, and the outcome at turn six is shaped as much by what got forged as by what was on the menu when the run started.
-
-This post is the case study version of [the long-form Paracosm 2026 overview](/blog/paracosm-2026-overview). If the overview is the philosophical tour, this is the autopsy: turn-by-turn, what the engineer commander did, what the visionary commander did, why their colonies diverged, and how to read the artifact when you run your own version.
+This post is the case study companion to [the long-form Paracosm 2026 overview](/blog/paracosm-2026-overview). The overview is the structured-world-model framing; this is the autopsy.
 
 <video controls poster="/img/blog/paracosm/digital-twin-atlas-lab-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
   <source src="/img/blog/paracosm/digital-twin-atlas-lab.mp4" type="video/mp4">
@@ -345,10 +339,29 @@ Each `runSimulation` returns a Zod-validated `RunArtifact` with cost, forged too
 
 For the no-code path, [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim) runs the same engine in the browser with a one-click Mars Genesis demo. Default settings take the low tens of cents per six-turn run.
 
+## Comparison: Mars Genesis vs MiroFish
+
+Two open-source multi-agent simulation frameworks shipped in early 2026. Both descend from the [Generative Agents](https://arxiv.org/abs/2304.03442) lineage (Park et al., Stanford 2023). They answer different questions.
+
+[**MiroFish**](https://github.com/666ghj/MiroFish) (54k GitHub stars) is a prediction engine. The user uploads a real-world seed (a news article, a policy draft, a financial signal). MiroFish extracts entities into a [Zep Cloud](https://www.getzep.com/) knowledge graph, generates MBTI-style agent profiles from each entity, and runs a Twitter / Reddit social-media simulation on [OASIS](https://github.com/camel-ai/oasis) with up to a million agents. A ReportAgent with retrieval tools synthesizes the post-simulation graph into a structured prediction report. The graph owns truth; agents update it; the report queries it. The emergence is *social*: information cascades, opinion polarization, herd behavior.
+
+**Mars Genesis** is a counterfactual-history engine. The user configures two commanders with continuous HEXACO trait vectors (not categorical MBTI types) and runs both through the same six-turn deterministic kernel from an identical seed. A deterministic kernel ([Mulberry32 PRNG](https://en.wikipedia.org/wiki/Multiply-with-carry_pseudorandom_number_generator)) owns canonical state (population, deaths, resource production, career progression). AI agents own interpretation (crisis generation, department analyses, tool forging, commander decisions). The kernel applies decisions as bounded numerical effects. The emergence is *capability-driven*: forged tools persist within a session, personality drift compounds across turns, and the colony at turn six reflects what the leader decided rather than what was on the menu when the run started.
+
+| Dimension | MiroFish | Mars Genesis |
+|---|---|---|
+| Owns truth | Knowledge graph | Deterministic kernel |
+| Personality model | MBTI (categorical, static) | HEXACO (continuous, drift each turn) |
+| Agent scale | Thousands to millions | ~107 per turn (commander + 5 departments + director + ~100 colonists) |
+| Determinism | Stochastic | Seeded kernel + stochastic agents |
+| Output | Prediction reports | Side-by-side civilization comparison |
+| Stack | Python + Vue + Flask + Docker, file-system IPC | TypeScript single-process, in-process SSE streaming |
+| Emergence mechanism | Social dynamics on a platform replica | Tool forging + personality drift + crisis generation |
+
+What builders take from each: MiroFish's GraphRAG-as-ground-truth design is strong for prediction use cases where the seed is a real-world document. Mars Genesis's separation of deterministic kernel from AI interpretation makes the divergence claim testable, because the same seed under different leaders is the entire experiment. Both are open source. Both are past chatbot demos.
+
 ## What to read next
 
-- [Paracosm 2026 Overview](/blog/paracosm-2026-overview). The long-form essay: why we built this, what it actually does, what it refuses to claim.
-- [Mars Genesis vs MiroFish (engineering)](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation). Top-down vs bottom-up swarm comparison.
-- [Announcing AgentOS](/blog/announcing-agentos). The framework underneath, end to end.
+- [Paracosm 2026 Overview](/blog/paracosm-2026-overview). The long-form essay on counterfactual world simulation as a category.
+- [Announcing AgentOS](/blog/announcing-agentos). The runtime underneath.
 
-Paracosm is open source. AgentOS is open source. The Mars Genesis scenario ships as a default and runs the moment you `npm install paracosm`, or hosted at [paracosm.agentos.sh](https://paracosm.agentos.sh) with a one-click demo run. The engine does not care who leads the colony, which six traits they carry, or what crisis they face. It cares how they decide, what they remember, what tools they forge, and how aggressively they reuse. Two leaders under the same seed produce different histories because those five questions resolve differently for each of them. That is the case study.
+Paracosm and AgentOS are open source. The Mars Genesis scenario ships as a default and runs on `npm install paracosm`, or hosted at [paracosm.agentos.sh](https://paracosm.agentos.sh) with a one-click demo. The engine doesn't care who leads the colony or which traits they carry. It cares how they decide, what they remember, what tools they forge, and how aggressively they reuse. Two leaders under the same seed produce different histories because those four questions resolve differently for each of them.

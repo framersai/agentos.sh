@@ -9,15 +9,15 @@ image: "/img/blog/og/announcing-agentos.png"
 keywords: "agentos launch, ai agent framework, typescript ai agents, build ai agent, multi-agent orchestration, cognitive memory, open source ai framework, langgraph alternative, crewai alternative, mastra alternative, adaptive ai agents, emergent tool forging, agent simulation framework, AI agent SDK TypeScript"
 ---
 
-> "There are countless ingredients that make up the human body and mind, like all the components that make up me as an individual with my own personality."
+> "So we and our elaborately evolving computers may meet each other halfway. Someday a human being, named perhaps Fred White, may shoot a robot named Pete Something-or-other, which has come out of a General Electric factory, and to his surprise see it weep and bleed. And the dying robot may shoot back and, to its surprise, see a wisp of gray smoke arise from the electric pump that it supposed was Mr. White's beating heart."
 >
-> — Major Motoko Kusanagi, *Ghost in the Shell*, 1995
+> — Philip K. Dick, *The Android and the Human*, 1972
 
-There is a moment most agent frameworks ask you to ignore. It's the moment when the agent forgets. It happens in a chat history that drops the third turn back, or in a memory store that retrieves the wrong document, or in a tool registry that doesn't have the function the agent actually needs. The framework hands you back an apology and a non-sequitur, and you build the workaround in your application code. After enough of those workarounds, the application code IS the agent, and the framework has become a thin shim over the LLM.
+Most agent frameworks treat the LLM as a function call, hand the result back to your application, and let your application do everything that should outlive the call. Memory across sessions, personality consistency, tool registration, multi-agent coordination, retry on tool failure: all of it ends up in handlers you write yourself. After enough handlers, the application code is the agent and the framework is a thin shim over the model.
 
-We built AgentOS because we kept hitting that moment and the workaround was getting bigger than the framework. Memory, personality, multi-agent collaboration, tool forging, those are the things that should live inside the runtime, not in your handlers. This post is the announcement that they do, that AgentOS is open source under Apache 2.0, and that the public benchmarks are real.
+AgentOS is the runtime built around the assumption that those concerns belong inside the runtime. Persistent cognitive memory, optional HEXACO personality, runtime tool forging in a hardened sandbox, six multi-agent orchestration strategies, streaming guardrails, a voice pipeline, and one dispatch interface across the major LLM providers. This post is the announcement that the project is open source under Apache 2.0 and that the public benchmark numbers are real.
 
-If you want the brutally short version: `npm install @framers/agentos`, and the runtime starts on the high road.
+The short version: `npm install @framers/agentos`.
 
 ## What AgentOS Is
 
