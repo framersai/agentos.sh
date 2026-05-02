@@ -569,7 +569,7 @@ console.log(report.forgedTools)
   }
 
   return (
-    <section id="code" className="py-8 sm:py-12 lg:py-14 px-2 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" style={{ scrollMarginTop: '80px' }} aria-labelledby="code-examples-heading">
+    <section className="py-8 sm:py-12 lg:py-14 px-2 sm:px-6 lg:px-8 relative overflow-hidden transition-theme" aria-labelledby="code-examples-heading">
       {/* Subtle organic gradient background */}
       <div className="absolute inset-0 organic-gradient opacity-20" />
 

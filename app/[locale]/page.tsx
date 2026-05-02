@@ -183,8 +183,8 @@ export default function LandingPageRedesigned() {
           <SkylineSectionLazy />
         </section>
 
-        {/* Code Examples Section — id hoisted to wrapper so the hero "See code examples" CTA (href="#code") has a scroll target before the lazy-loaded section hydrates. */}
-        <div id="code" className="lazy-section-lg" style={{ scrollMarginTop: '80px' }}>
+        {/* Code Examples Section — id hoisted to wrapper so the hero "See code examples" CTA (href="#code") has a scroll target before the lazy-loaded section hydrates. Deliberately NOT wrapped in `.lazy-section-lg` (which sets `content-visibility: auto` + an intrinsic placeholder height) because that placeholder mismatches the rendered height and lands the scroll target in the wrong spot when the actual content loads after the scroll completes. */}
+        <div id="code" style={{ scrollMarginTop: '80px' }}>
           <CodeExamplesSectionLazy />
         </div>
 
