@@ -36,6 +36,10 @@ jobs:
           NEXT_PUBLIC_GISCUS_REPO_ID: ${{ secrets.NEXT_PUBLIC_GISCUS_REPO_ID }}
           NEXT_PUBLIC_GISCUS_CATEGORY: ${{ secrets.NEXT_PUBLIC_GISCUS_CATEGORY }}
           NEXT_PUBLIC_GISCUS_CATEGORY_ID: ${{ secrets.NEXT_PUBLIC_GISCUS_CATEGORY_ID }}
+          # GITHUB_TOKEN is auto-injected by Actions; raises the unauthenticated
+          # GitHub API rate limit from 60/hr (per IP) to 5000/hr (per token) so
+          # scripts/fetch-public-stats.mjs reliably populates public/stats.json.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm run build
       - name: Configure Pages
         uses: actions/configure-pages@v5

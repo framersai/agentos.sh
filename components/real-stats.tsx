@@ -10,43 +10,22 @@ interface Stats {
   openIssues?: number
 }
 
-async function fetchGitHubStats() {
+// Read the build-time-generated stats blob shipped at /stats.json. This avoids
+// the unauthenticated GitHub API rate limit (60/hr per IP) that was 403-ing
+// every other visitor. The blob is regenerated on each build by
+// scripts/fetch-public-stats.mjs.
+async function fetchPublicStats() {
   try {
-    const [repoRes, contributorsRes] = await Promise.all([
-      fetch('https://api.github.com/repos/framersai/agentos'),
-      fetch('https://api.github.com/repos/framersai/agentos/contributors?per_page=100')
-    ])
-
-    if (repoRes.ok && contributorsRes.ok) {
-      const repo = await repoRes.json()
-      const contributors = await contributorsRes.json()
-
-      return {
-        stars: repo.stargazers_count,
-        contributors: contributors.length,
-        openIssues: repo.open_issues_count
-      }
-    }
-  } catch (error) {
-    console.error('Failed to fetch GitHub stats:', error)
-  }
-  return null
-}
-
-async function fetchNpmStats() {
-  try {
-    const response = await fetch('https://api.npmjs.org/downloads/point/last-week/@framers/agentos')
-    if (response.ok) {
-      const data = await response.json()
-      return data.downloads
-    }
+    const res = await fetch('/stats.json', { cache: 'no-cache' })
+    if (!res.ok) return null
+    return await res.json()
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line no-console
-      console.error('Failed to fetch npm stats:', error)
+      console.error('Failed to fetch /stats.json:', error)
     }
+    return null
   }
-  return null
 }
 
 export function RealStats() {
@@ -55,16 +34,13 @@ export function RealStats() {
 
   useEffect(() => {
     async function loadStats() {
-      const [githubData, npmDownloads] = await Promise.all([
-        fetchGitHubStats(),
-        fetchNpmStats()
-      ])
-
+      const blob = await fetchPublicStats()
+      const agentos = blob?.repos?.['framersai/agentos']
       setStats({
-        githubStars: githubData?.stars,
-        npmDownloads: npmDownloads,
-        contributors: githubData?.contributors,
-        openIssues: githubData?.openIssues
+        githubStars: agentos?.stars,
+        npmDownloads: blob?.npm?.['@framers/agentos'] ?? undefined,
+        contributors: blob?.aggregate?.agentosContributors ?? undefined,
+        openIssues: agentos?.openIssues,
       })
       setLoading(false)
     }

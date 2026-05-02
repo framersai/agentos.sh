@@ -73,7 +73,10 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     { label: t('stats.forks'), value: githubForks ?? '—', icon: GitBranch }
   ], [githubStars, githubForks, t]);
 
-  // Fetch GitHub stats with cache
+  // Read GitHub stats from the build-time-generated /stats.json blob. Avoids
+  // the unauthenticated GitHub API rate limit (60/hr per IP) that was 403-ing
+  // every other visitor. The blob is regenerated on each build by
+  // scripts/fetch-public-stats.mjs and ships as a static asset.
   useEffect(() => {
     const cached = sessionStorage.getItem('github-stats');
     const parsed = cached ? safeJsonParse<{ stars: number; forks: number; ts: number }>(cached) : null;
@@ -82,13 +85,14 @@ const HeroSectionInner = memo(function HeroSectionInner() {
       setGithubForks(parsed.forks);
       return;
     }
-    fetch('https://api.github.com/repos/framersai/agentos')
-      .then(r => r.json())
-      .then(d => {
-        if (typeof d.stargazers_count === 'number') {
-          setGithubStars(d.stargazers_count);
-          setGithubForks(d.forks_count);
-          sessionStorage.setItem('github-stats', JSON.stringify({ stars: d.stargazers_count, forks: d.forks_count, ts: Date.now() }));
+    fetch('/stats.json', { cache: 'no-cache' })
+      .then(r => r.ok ? r.json() : null)
+      .then(blob => {
+        const repo = blob?.repos?.['framersai/agentos'];
+        if (repo && typeof repo.stars === 'number') {
+          setGithubStars(repo.stars);
+          setGithubForks(repo.forks);
+          sessionStorage.setItem('github-stats', JSON.stringify({ stars: repo.stars, forks: repo.forks, ts: Date.now() }));
         }
       })
       .catch(() => {});

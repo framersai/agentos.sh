@@ -175,69 +175,30 @@ export function EcosystemSection() {
 
   useEffect(() => {
     let cancelled = false
+    // Read from the build-time-generated /stats.json blob instead of hammering
+    // api.github.com / api.npmjs.org from every visitor's browser. The blob is
+    // regenerated on each build by scripts/fetch-public-stats.mjs and ships as
+    // a static asset, so all of these used to 403 after 60 unauthenticated
+    // requests per IP per hour.
     const fetchStats = async () => {
       try {
-        // Live: enumerate ALL public repos in the framersai org (paginated;
-        // GitHub returns 30 per page by default, ask for 100). Sum stargazers
-        // across every repo, count repos directly. Fallback to repositories
-        // array length if the API call fails.
-        let publicRepos: { name: string; stargazers_count?: number; fork?: boolean }[] = []
-        try {
-          const orgRes = await fetch(
-            'https://api.github.com/orgs/framersai/repos?per_page=100&type=public&sort=updated'
-          )
-          if (orgRes.ok) {
-            publicRepos = await orgRes.json()
-          }
-        } catch {
-          publicRepos = []
-        }
-        const realRepos = publicRepos.filter((r) => !r.fork)
+        const res = await fetch('/stats.json', { cache: 'no-cache' })
+        const blob = res.ok ? await res.json() : null
+
+        const orgRepos: { stargazers_count?: number; fork?: boolean; stars?: number }[] = blob?.orgRepos ?? []
+        const realRepos = orgRepos.filter((r) => !r.fork)
         const stars = realRepos.reduce(
-          (sum, repo) => sum + (repo.stargazers_count ?? 0),
+          (sum, repo) => sum + (repo.stars ?? repo.stargazers_count ?? 0),
           0
         )
         const repoCount = realRepos.length || repositories.length
 
-        // Live: aggregate weekly downloads across the @framers/* npm packages
-        // we publish. npm point endpoint accepts comma-joined scoped names
-        // only via the multi-package endpoint (returns object keyed by name).
-        const npmPackages = [
-          '@framers/agentos',
-          '@framers/agentos-extensions',
-          '@framers/agentos-extensions-registry',
-          '@framers/agentos-skills',
-          '@framers/agentos-skills-registry',
-          '@framers/agentos-personas',
-          '@framers/agentos-ext-topicality',
-          '@framers/agentos-ext-ml-classifiers',
-          '@framers/agentos-ext-skills',
-          '@framers/agentos-ext-http-api',
-          '@framers/agentos-ext-grounding-guard',
-          '@framers/agentos-ext-pii-redaction',
-          '@framers/agentos-ext-code-safety',
-          '@framers/agentos-bench',
-          'paracosm',
-        ]
-        let downloads: number | null = null
-        try {
-          // Scoped packages need individual point requests (npm's batch endpoint
-          // doesn't support scoped names). Run in parallel; sum what succeeds.
-          const npmResponses = await Promise.all(
-            npmPackages.map((pkg) =>
-              fetch(`https://api.npmjs.org/downloads/point/last-week/${pkg}`)
-                .then((r) => (r.ok ? r.json() : null))
-                .catch(() => null)
-            )
-          )
-          const total = npmResponses.reduce(
-            (sum, r) => sum + (r?.downloads ?? 0),
-            0
-          )
-          downloads = total > 0 ? total : null
-        } catch {
-          downloads = null
-        }
+        const npm = blob?.npm ?? {}
+        const total = Object.values(npm).reduce<number>(
+          (sum, v) => sum + (typeof v === 'number' ? v : 0),
+          0
+        )
+        const downloads = total > 0 ? total : null
 
         if (!cancelled) {
           setLiveStats({
@@ -271,18 +232,30 @@ export function EcosystemSection() {
 
     const fetchRepoStats = async () => {
       try {
-        const responses = await Promise.all(
-          slugs.map(async (slug) => {
-            const response = await fetch(`https://api.github.com/repos/framersai/${slug}`)
-            if (!response.ok) return null
-            const data = await response.json()
-            return {
-              slug,
-              stars: data?.stargazers_count ?? 0,
-              updatedAt: data?.updated_at ?? new Date().toISOString()
-            }
-          })
-        )
+        const res = await fetch('/stats.json', { cache: 'no-cache' })
+        const blob = res.ok ? await res.json() : null
+        // Build a lookup over BOTH the curated repo entries and the org-wide list
+        // so per-card stats are populated regardless of which list a slug is in.
+        const lookup: Record<string, { stars?: number; pushedAt?: string }> = {}
+        for (const r of (blob?.orgRepos ?? [])) {
+          if (r?.name) lookup[r.name] = { stars: r.stars, pushedAt: r.pushedAt }
+        }
+        if (blob?.repos) {
+          for (const slug of Object.keys(blob.repos)) {
+            const r = blob.repos[slug]
+            const name = slug.split('/').pop() ?? slug
+            lookup[name] = { stars: r?.stars, pushedAt: r?.pushedAt }
+          }
+        }
+        const responses = slugs.map((slug) => {
+          const entry = lookup[slug]
+          if (!entry) return null
+          return {
+            slug,
+            stars: entry.stars ?? 0,
+            updatedAt: entry.pushedAt ?? new Date().toISOString(),
+          }
+        })
         if (!cancelled) {
           const next: Record<string, RepoStat> = {}
           responses.forEach((entry) => {

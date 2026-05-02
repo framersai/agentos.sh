@@ -20,9 +20,10 @@ export function PreloadAssets() {
       document.head.appendChild(link)
     })
     
-    // Preconnect to external domains
+    // Preconnect to external domains. api.github.com is no longer hit at runtime
+    // (stats are fetched at build time and shipped as /stats.json), so it's
+    // dropped here to avoid an unused TLS handshake.
     const domains = [
-      'https://api.github.com',
       'https://fonts.googleapis.com'
     ]
     

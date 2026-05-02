@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:full": "concurrently \"pnpm --filter @framers/agentos run docs:watch\" \"next dev\"",
-    "build": "npm run copy:docs || true && pnpm gen:og && next build && node scripts/post-export.mjs",
+    "build": "npm run copy:docs || true && node scripts/fetch-public-stats.mjs && pnpm gen:og && next build && node scripts/post-export.mjs",
+    "stats": "node scripts/fetch-public-stats.mjs",
     "gen:og": "tsx scripts/generate-blog-og.ts",
     "copy:docs": "node scripts/copy-docs.js",
     "export-chrome": "node scripts/export-static-chrome.mjs",
