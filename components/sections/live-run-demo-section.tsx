@@ -4,7 +4,8 @@ import { useState, useMemo } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark, oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import { useTheme } from 'next-themes'
-import { Github } from 'lucide-react'
+import { Github, Copy, Check } from 'lucide-react'
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 
 /**
  * Live-run demos section.
@@ -426,6 +427,35 @@ const hits = await router.route('how do I configure a guardrail?');`,
   },
 ]
 
+function CopyCodeButton({ code }: { code: string }) {
+  const { copied, copy } = useCopyToClipboard()
+  return (
+    <button
+      type="button"
+      onClick={() => copy(code)}
+      aria-label={copied ? 'Copied' : 'Copy code'}
+      className={
+        'inline-flex items-center gap-1 rounded-md border px-2 py-1 text-[11px] font-medium transition-colors ' +
+        (copied
+          ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
+          : 'border-[var(--color-border-subtle)] bg-transparent text-[var(--color-text-secondary)] hover:border-[var(--color-border-interactive)] hover:text-[var(--color-text-primary)]')
+      }
+    >
+      {copied ? (
+        <>
+          <Check className="h-3 w-3" />
+          <span>Copied</span>
+        </>
+      ) : (
+        <>
+          <Copy className="h-3 w-3" />
+          <span>Copy</span>
+        </>
+      )}
+    </button>
+  )
+}
+
 function ForgeBadge({ agent, approved, comment }: { agent: string; approved: boolean; comment?: string }) {
   return (
     <div className="rounded-md border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 mb-4 dark:bg-emerald-500/10">
@@ -833,19 +863,22 @@ export function LiveRunDemoSection() {
         {/* Code panel */}
         <div className="overflow-hidden rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-background-elevated)]">
           <div className="flex items-center justify-between border-b border-[var(--color-border-subtle)] bg-[var(--color-background-tertiary)] px-4 py-2.5">
-            <div className="flex items-center gap-3">
-              <div className="flex gap-1.5">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="flex gap-1.5 shrink-0">
                 <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-border-subtle)]" />
                 <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-border-subtle)]" />
                 <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-border-subtle)]" />
               </div>
-              <span className="font-mono text-xs text-[var(--color-text-secondary)]">
+              <span className="font-mono text-xs text-[var(--color-text-secondary)] truncate">
                 {active.exampleSlug}
               </span>
             </div>
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-              TypeScript
-            </span>
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
+                TypeScript
+              </span>
+              <CopyCodeButton code={active.code} />
+            </div>
           </div>
           <SyntaxHighlighter
             language={active.language}
