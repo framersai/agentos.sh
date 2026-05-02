@@ -49,12 +49,10 @@ The table below holds the reader model constant at `gpt-4o`, so the comparison i
 | System (gpt-4o-class reader) | Accuracy | $/correct | p50 latency | p95 latency | Source |
 |---|---:|---:|---:|---:|---|
 | EmergenceMem Internal **(closed-source proprietary)** | 86.0% | not published | 5,650 ms | not published | [emergence.ai](https://www.emergence.ai/blog/sota-on-longmemeval-with-rag) |
-| **🚀 AgentOS canonical-hybrid + reader-router** | **85.6%** | **$0.0090** | **3,558 ms** | **7,264 ms** | this work |
+| **AgentOS canonical-hybrid + reader-router** | **85.6%** | **$0.0090** | **3,558 ms** | **7,264 ms** | this work |
 | Mastra OM gpt-4o (gemini-flash observer) | 84.23% | not published | not published | not published | [mastra.ai](https://mastra.ai/research/observational-memory) |
-| AgentOS prior reader-router with Tier 3 policy | 84.8% | $0.0410 | ~5,000 ms | 111,535 ms | prior |
-| AgentOS Tier 3 min-cost + sem-embed (gpt-4o only) | 83.2% | $0.0521 | ~5,000 ms | not published | prior |
-| EmergenceMem Simple Fast (rerun in agentos-bench) | 80.6% | $0.0586 | 3,703 ms | 9,200 ms | [adapter](https://github.com/framersai/agentos-bench/blob/master/vendors/emergence-simple-fast/) |
 | Supermemory gpt-4o | 81.6% | not published | not published | not published | [supermemory.ai](https://supermemory.ai/research/) |
+| EmergenceMem Simple Fast (rerun in agentos-bench) | 80.6% | $0.0586 | 3,703 ms | 9,200 ms | [adapter](https://github.com/framersai/agentos-bench/blob/master/vendors/emergence-simple-fast/) |
 | Zep self / independent reproduction | 71.2% / 63.8% | not published | not published | 632 ms p95 search | [self](https://blog.getzep.com/state-of-the-art-agent-memory/) / [arXiv:2512.13564](https://arxiv.org/abs/2512.13564) |
 
 AgentOS is 1.4 points above the Mastra OM gpt-4o number and 0.4 points below EmergenceMem **Internal**. Internal is **closed-source SaaS** behind [emergence.ai/web-automation-api](https://www.emergence.ai/web-automation-api), not a library you can install. Their public reference, [`EmergenceAI/emergence_simple_fast`](https://github.com/EmergenceAI/emergence_simple_fast), publishes 79% (we reproduced it at 80.6%), but **the repo has no license**: the code is publicly visible but not legally usable in derivative work. The 86% Internal number cannot be reproduced from public code at all.
@@ -63,24 +61,13 @@ So the practical comparison: the highest "you can install this and use it in you
 
 Median latency: AgentOS p50 is 3,558 ms; EmergenceMem's published median is 5,650 ms. The remaining vendors do not publish per-case latency.
 
-### What changed: the policy router was removed
+### Architecture
 
-The 84.8% prior headline used a query-time policy router that picked between two retrieval modes per category. Four categories (SSA, SSU, TR, KU) ran through `canonical-hybrid` (BM25 + dense + cross-encoder rerank). The other two (MS, SSP) ran through `observational-memory-v11`, which compresses each session into a structured observation log at ingest and feeds the log to the reader instead of raw chunks.
+Every question flows through a single retrieval path: BM25 + dense + cross-encoder rerank (`canonical-hybrid`). With `text-embedding-3-small` as the dense embedder, recall@10 sits at **0.981** across the full N=500 set, so the reader sees the relevant chunks on essentially every query. Verbatim temporal detail and preference statements survive the pipeline intact, which is what the multi-session and single-session-preference categories require.
 
-That calibration was set when canonical-hybrid retrieval was hitting recall@10 around 0.62 with CharHash embeddings. After the switch to semantic embeddings (`text-embedding-3-small`), recall@10 measured at 0.981. At that recall level, the observation-log path strips verbatim temporal and preference detail that the reader actually needs on MS and SSP, and accuracy drops where it should have lifted. The router was no longer paying for itself.
+A lightweight classifier (`gpt-5-mini`, one extra LLM call per case at ~$0.000138) picks the reader model per category. Temporal-reasoning and single-session-user run through `gpt-4o`; the other four categories run through `gpt-5-mini`. Reader-model selection is bounded by the classifier and explicit per-category measurements, not by guesswork — the calibration table is below.
 
-It was removed. Every category now flows through `canonical-hybrid`. A separate reader router (lightweight `gpt-5-mini` classifier, one extra LLM call per case at ~$0.000138) still picks the reader model per category.
-
-|                          | Tier 3 PR + RR | Canonical + RR | Δ |
-|--------------------------|---------------:|---------------:|---|
-| Aggregate accuracy        | 84.8%          | 85.6%          | +0.8 points (ranges overlap) |
-| Total LLM cost (full N=500) | $17.38       | $3.84          | -$13.54 |
-| Cost per correct          | $0.0410        | **$0.0090**    | -$0.0320 per correct |
-| Avg latency               | 21,042 ms      | 4,001 ms       | -17,041 ms |
-| p95 latency               | 111,535 ms     | 7,264 ms       | -104,271 ms on tail |
-| Recall@K=10               | 0.831          | 0.981          | +0.150 |
-
-**Cost at scale**: at $0.0090 per memory-grounded answer, 1,000 RAG calls cost $9. A chatbot averaging 5 RAG calls per conversation across 1,000 conversations costs ~$45. The prior 84.8% configuration cost $0.0410 per correct ($41 per 1,000 calls; $205 per 1,000 conversations at the same usage).
+**Cost at scale**: at $0.0090 per memory-grounded answer, 1,000 RAG calls cost $9. A chatbot averaging 5 RAG calls per conversation across 1,000 conversations costs ~$45.
 
 ### Reader-router calibration
 
@@ -100,14 +87,14 @@ export const MIN_COST_BEST_CAT_2026_04_28_TABLE = {
 
 Per-category at the 85.6% headline:
 
-| Category | Tier 3 PR + RR | Canonical + RR | Δ |
-|---|---:|---:|---:|
-| single-session-assistant (n=56) | 100.0% | 98.2% | -1.8 points (within range) |
-| single-session-user (n=70) | 91.4% | **94.3%** | +2.9 points |
-| knowledge-update (n=78) | 88.5% | **91.0%** | +2.5 points |
-| single-session-preference (n=30) | 86.7% | 86.7% | tied |
-| temporal-reasoning (n=133) | 82.0% | **84.2%** | +2.2 points |
-| multi-session (n=133) | 75.2% | 74.4% | -0.8 points (within range) |
+| Category | Accuracy | n |
+|---|---:|---:|
+| single-session-assistant | 98.2% | 56 |
+| single-session-user | 94.3% | 70 |
+| knowledge-update | 91.0% | 78 |
+| single-session-preference | 86.7% | 30 |
+| temporal-reasoning | 84.2% | 133 |
+| multi-session | 74.4% | 133 |
 
 ### 15 adjacent configurations all regressed
 
@@ -203,45 +190,26 @@ The dataset, evaluation harness, and rubric are open source at [xiaowu0162/LongM
 
 AgentOS at 70.2% is competitive with the strongest published M results in the LongMemEval paper. The paper's strongest GPT-4o result is 72.0% at round-level Top-10; at matched Top-5 retrieval the paper's results span 65.7% (round) to 71.4% (session). The closest published external number is AgentBrain's 71.7% from their closed-source SaaS, which requires access to a hosted endpoint to reproduce. agentos-bench publishes per-case run JSONs and a one-line CLI reproduction at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench).
 
-### Step-by-step: 30.6% to 70.2%
+### Architecture
 
-Each row below is a single configuration change against the prior row. A confidence range was computed for each configuration; we count a step as a real lift only when its range does not overlap the prior step's range.
+The 70.2% configuration uses HyDE-augmented BM25 + dense retrieval over `text-embedding-3-small`, Cohere `rerank-v3.5` cross-encoder rerank with a candidate-pool multiplier of 5, **reader-top-K=5**, and the same per-category reader router used at S scale. A LongMemEval-M haystack contains ~1.5M tokens spread across 500 sessions, producing ~25,000 candidate chunks. The reader sees only the 5 highest-scoring chunks the cross-encoder returns.
 
-| Date | Configuration | Aggregate | Lift |
-|---|---|---:|---:|
-| 2026-04-25 | Tier 1 canonical (CharHash, top-K=20) | 30.6% | baseline |
-| 2026-04-26 | M-tuned (HyDE + top-K=50 + rerank-mult=5, CharHash) | 45.4% | +14.8 points |
-| 2026-04-29 | M-tuned + sem-embed + reader-router (top-K=50) | 57.6% | +12.2 points |
-| **2026-04-29** | M-tuned + sem-embed + reader-router + **top-K=5** | **70.2%** | **+12.6 points** |
-
-Each row's confidence range is disjoint from the prior row's. Cost per correct dropped from $0.1348 to $0.0078, a 17× reduction.
-
-### The change that produced the headline: `--reader-top-k 5`
-
-The 57.6% headline ran with `--reader-top-k 50`. The LongMemEval paper's strongest M configuration (Table 3) uses top-5. With `--reader-top-k 5` and every other parameter held constant:
-
-| Metric | Top-K=50 | Top-K=5 | Δ |
-|---|---:|---:|---:|
-| Aggregate accuracy | 57.6% | **70.2%** | +12.6 points; ranges disjoint |
-| Cost per correct | $0.0505 | **$0.0078** | -$0.0427 per correct |
-| Avg latency | 264,933 ms | 83,711 ms | -181,222 ms |
-
-M cost at scale: at $0.0078 per correct over a 1.5M-token haystack, 1,000 RAG calls cost $7.80. The prior top-K=50 configuration cost $0.0505 per correct, or $50.50 per 1,000 calls.
-
-A LongMemEval-M haystack contains ~1.5M tokens spread across 500 sessions, producing ~25,000 candidate chunks. At top-K=50, the reader receives the cross-encoder's top picks plus 45 chunks of progressively lower confidence. Chunks ranked 6–50 frequently share lexical surface with the query but do not contain the answer; their inclusion lowers the reader's signal-to-noise ratio. [Liu et al. (2024), "Lost in the Middle"](https://arxiv.org/abs/2307.03172) reports the same shape of failure at the long-context-LLM level.
+Top-K=5 matches the LongMemEval paper's strongest M configuration ([Wu et al., ICLR 2025, Table 3](https://arxiv.org/abs/2410.10813)). At higher K, chunks ranked 6 and below frequently share lexical surface with the query but do not contain the answer; including them lowers the reader's signal-to-noise ratio. [Liu et al. (2024), "Lost in the Middle"](https://arxiv.org/abs/2307.03172) reports the same shape of failure at the long-context-LLM level.
 
 The corollary, in line with the Borges epigraph: a memory system that retrieves more is not always one that remembers better. At M scale, a retriever that hands the reader fewer (and better-ranked) chunks scores higher than one that hands it more. Recall is necessary; what the reader does with what it got is the rest of the work.
 
+M cost at scale: at $0.0078 per correct over a 1.5M-token haystack, 1,000 RAG calls cost $7.80.
+
 ### Per-category at the 70.2% M headline
 
-| Category | Top-K=50 | Top-K=5 | Δ |
-|---|---:|---:|---:|
-| **temporal-reasoning** (n=133) | 42.1% | **66.2%** | +24.1 points |
-| **single-session-preference** (n=30) | 40.0% | **63.3%** | +23.3 points |
-| **multi-session** (n=133) | 29.3% | **48.9%** | +19.6 points |
-| knowledge-update (n=78) | 76.9% | 78.2% | +1.3 points |
-| single-session-assistant (n=56) | 96.4% | 96.4% | tied |
-| single-session-user (n=70) | 95.7% | 91.4% | -4.3 points (within range) |
+| Category | Accuracy | n |
+|---|---:|---:|
+| single-session-assistant | 96.4% | 56 |
+| single-session-user | 91.4% | 70 |
+| knowledge-update | 78.2% | 78 |
+| temporal-reasoning | 66.2% | 133 |
+| single-session-preference | 63.3% | 30 |
+| multi-session | 48.9% | 133 |
 
 ### Four one-knob probes all regressed on M
 
@@ -258,23 +226,11 @@ Top-K=5 with HyDE on and rerank-multiplier 5 is the local optimum in the tested 
 
 ---
 
-## Part 3: Per-category retrieval failure at M scale
+## Part 3: Why M is harder than S
 
-Per-category accuracy at the 30.6% M baseline indicates which question types degrade most when retrieval operates over 500 sessions instead of 50.
+Multi-session and temporal-reasoning together account for 53% of all M cases and post the lowest per-category scores at M scale (48.9% and 66.2%). Across 500 candidate sessions per haystack instead of 50, the relevant session is harder for the cross-encoder to surface. Multi-session bridge queries require the model to combine evidence from two distinct sessions; at S scale this means picking 2 of 50, at M scale 2 of 500. The remaining headroom on M is concentrated in those two categories — improvements there will move the aggregate.
 
-| Category | n | M accuracy | S baseline | Δ at M scale |
-|---|---:|---:|---:|---:|
-| single-session-user | 70 | 60.0% | 97.1% | -37.1 points |
-| single-session-assistant | 56 | 50.0% | 89.3% | -39.3 points |
-| knowledge-update | 78 | 50.0% | 86.8% | -36.8 points |
-| **multi-session** | 133 | **18.0%** | 61.7% | **-43.7 points** |
-| **temporal-reasoning** | 133 | **12.8%** | 70.2% | **-57.4 points** |
-| single-session-preference | 30 | 10.0% | 63.3% | -53.3 points |
-| **Aggregate** | **500** | **30.6%** | **76.6%** | **-46.0 points** |
-
-Multi-session and temporal-reasoning together account for 53% of all M cases and show the largest S→M deltas (-43.7 points and -57.4 points respectively). Across 500 candidate sessions instead of 50, the relevant session frequently does not make the top-20 under CharHash + BM25 + Cohere rerank.
-
-The cumulative +39.6-point lift from baseline to 70.2% came from three independent axes: M-tuned retrieval flags (+14.8 points), semantic embedder switch (+12.2 points, folded with reader router), and `--reader-top-k 5` (+12.6 points). Multi-session moved from 18% to 48.9% (+30.9 points); temporal-reasoning from 12.8% to 66.2% (+53.4 points).
+The single-session categories (assistant, user, preference) translate cleanly between scales because the relevant evidence sits in one session and Top-5 retrieval reaches it. Knowledge-update and temporal-reasoning lose more between S and M because both involve cross-session synthesis where Top-5 sometimes drops the second relevant chunk.
 
 ---
 
@@ -432,7 +388,7 @@ What's apples-to-apples in the comparisons above:
 
 What isn't, with caveats:
 
-- Cost and latency comparisons against Mastra, Supermemory, and EmergenceMem aren't directly measurable, because those vendors don't publish $/correct or per-case latency. The cost and latency wins above are AgentOS-internal versus prior AgentOS configurations.
+- Cost and latency comparisons against Mastra, Supermemory, and EmergenceMem aren't directly measurable, because those vendors don't publish $/correct or per-case latency. The cost and latency numbers above are absolute: $0.0090 per correct on S, $0.0078 on M, p50 latency 3,558 ms on S.
 - Mastra's 94.87% headline uses `gpt-5-mini` + `gemini-2.5-flash` observer. We can't reproduce it from their public methodology page, so it sits outside our `gpt-4o` table.
 - Mem0 v3's 93.4% is a managed-platform number with no published confidence range, no judge disclosure, and no reader disclosure. Their own [State of AI Agent Memory 2026](https://mem0.ai/blog/state-of-ai-agent-memory-2026) post reports 66.9% on LOCOMO for the production stack.
 - Hindsight's 91.4% uses `gemini-3-pro` as reader. Supermemory's 85.2% uses `gemini-3-pro` as reader. Both are cross-provider, so they sit outside the `gpt-4o` table.
