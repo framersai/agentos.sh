@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { loadPublicStats } from '@/lib/public-stats'
 
 interface Stats {
   githubStars?: number
@@ -10,31 +11,14 @@ interface Stats {
   openIssues?: number
 }
 
-// Read the build-time-generated stats blob shipped at /stats.json. This avoids
-// the unauthenticated GitHub API rate limit (60/hr per IP) that was 403-ing
-// every other visitor. The blob is regenerated on each build by
-// scripts/fetch-public-stats.mjs.
-async function fetchPublicStats() {
-  try {
-    const res = await fetch('/stats.json', { cache: 'no-cache' })
-    if (!res.ok) return null
-    return await res.json()
-  } catch (error) {
-    if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
-      console.error('Failed to fetch /stats.json:', error)
-    }
-    return null
-  }
-}
-
 export function RealStats() {
   const [stats, setStats] = useState<Stats>({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function loadStats() {
-      const blob = await fetchPublicStats()
+    let cancelled = false
+    loadPublicStats().then((blob) => {
+      if (cancelled) return
       const agentos = blob?.repos?.['framersai/agentos']
       setStats({
         githubStars: agentos?.stars,
@@ -43,9 +27,10 @@ export function RealStats() {
         openIssues: agentos?.openIssues,
       })
       setLoading(false)
+    })
+    return () => {
+      cancelled = true
     }
-
-    loadStats()
   }, [])
 
   // Only live stats (no fake numbers). Contributors temporarily omitted.

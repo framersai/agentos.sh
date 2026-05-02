@@ -4,6 +4,12 @@ on:
   push:
     branches: [ master ]
   workflow_dispatch:
+  schedule:
+    # Daily at 06:00 UTC: refresh the build-time-fetched /stats.json so star
+    # counts and npm download numbers don't go stale between code deploys.
+    # Cheap (one extra GitHub Pages build per day) and means visitors don't
+    # see week-old stats just because nothing else shipped.
+    - cron: '0 6 * * *'
 
 permissions:
   contents: read

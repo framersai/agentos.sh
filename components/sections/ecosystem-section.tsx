@@ -8,6 +8,7 @@ import {
   Terminal, Brain, Code2, GitBranch, Globe
 } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
+import { loadPublicStats } from '@/lib/public-stats'
 
 interface Repository {
   name: string
@@ -175,46 +176,36 @@ export function EcosystemSection() {
 
   useEffect(() => {
     let cancelled = false
-    // Read from the build-time-generated /stats.json blob instead of hammering
-    // api.github.com / api.npmjs.org from every visitor's browser. The blob is
-    // regenerated on each build by scripts/fetch-public-stats.mjs and ships as
-    // a static asset, so all of these used to 403 after 60 unauthenticated
-    // requests per IP per hour.
-    const fetchStats = async () => {
-      try {
-        const res = await fetch('/stats.json', { cache: 'no-cache' })
-        const blob = res.ok ? await res.json() : null
+    // Read from the build-time-generated /stats.json blob via the shared
+    // loader (in-process + localStorage + HTTP cache layers). Avoids the
+    // unauthenticated GitHub API rate limit that was 403-ing every visitor.
+    loadPublicStats().then((blob) => {
+      if (cancelled) return
+      const orgRepos: { stargazers_count?: number; fork?: boolean; stars?: number }[] =
+        (blob?.orgRepos as { stargazers_count?: number; fork?: boolean; stars?: number }[]) ?? []
+      const realRepos = orgRepos.filter((r) => !r.fork)
+      const stars = realRepos.reduce(
+        (sum, repo) => sum + (repo.stars ?? repo.stargazers_count ?? 0),
+        0,
+      )
+      const repoCount = realRepos.length || repositories.length
 
-        const orgRepos: { stargazers_count?: number; fork?: boolean; stars?: number }[] = blob?.orgRepos ?? []
-        const realRepos = orgRepos.filter((r) => !r.fork)
-        const stars = realRepos.reduce(
-          (sum, repo) => sum + (repo.stars ?? repo.stargazers_count ?? 0),
-          0
-        )
-        const repoCount = realRepos.length || repositories.length
+      const npm = blob?.npm ?? {}
+      const total = Object.values(npm).reduce<number>(
+        (sum, v) => sum + (typeof v === 'number' ? v : 0),
+        0,
+      )
+      const downloads = total > 0 ? total : null
 
-        const npm = blob?.npm ?? {}
-        const total = Object.values(npm).reduce<number>(
-          (sum, v) => sum + (typeof v === 'number' ? v : 0),
-          0
-        )
-        const downloads = total > 0 ? total : null
-
-        if (!cancelled) {
-          setLiveStats({
-            repos: repoCount,
-            stars,
-            downloads,
-            loading: false
-          })
-        }
-      } catch {
-        if (!cancelled) {
-          setLiveStats((prev) => ({ ...prev, loading: false }))
-        }
-      }
-    }
-    fetchStats()
+      setLiveStats({
+        repos: repoCount,
+        stars,
+        downloads,
+        loading: false,
+      })
+    }).catch(() => {
+      if (!cancelled) setLiveStats((prev) => ({ ...prev, loading: false }))
+    })
     return () => {
       cancelled = true
     }
@@ -232,8 +223,7 @@ export function EcosystemSection() {
 
     const fetchRepoStats = async () => {
       try {
-        const res = await fetch('/stats.json', { cache: 'no-cache' })
-        const blob = res.ok ? await res.json() : null
+        const blob = await loadPublicStats()
         // Build a lookup over BOTH the curated repo entries and the org-wide list
         // so per-card stats are populated regardless of which list a slug is in.
         const lookup: Record<string, { stars?: number; pushedAt?: string }> = {}

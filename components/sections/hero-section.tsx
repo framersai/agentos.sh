@@ -9,15 +9,8 @@ import { LinkButton } from '../ui/LinkButton';
 import { Button } from '../ui/Button';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { applyVisualTheme } from '@/lib/visual-design-system';
+import { loadPublicStats } from '@/lib/public-stats';
 import { useTheme } from 'next-themes';
-
-function safeJsonParse<T>(value: string): T | null {
-  try {
-    return JSON.parse(value) as T;
-  } catch {
-    return null;
-  }
-}
 
 // Lazy load heavy animation components - deferred for better LCP
 const ResponsiveNeuralConstellation = dynamic(() => import('../hero/neural-constellation').then(m => ({ default: m.ResponsiveNeuralConstellation })), {
@@ -73,29 +66,21 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     { label: t('stats.forks'), value: githubForks ?? '—', icon: GitBranch }
   ], [githubStars, githubForks, t]);
 
-  // Read GitHub stats from the build-time-generated /stats.json blob. Avoids
-  // the unauthenticated GitHub API rate limit (60/hr per IP) that was 403-ing
-  // every other visitor. The blob is regenerated on each build by
-  // scripts/fetch-public-stats.mjs and ships as a static asset.
+  // Read GitHub stats from the build-time-generated /stats.json blob via the
+  // shared loader (which adds in-process + localStorage layers on top of the
+  // browser HTTP cache). Avoids the api.github.com 403 storm that hit every
+  // visitor at the unauthenticated 60/hr/IP rate limit.
   useEffect(() => {
-    const cached = sessionStorage.getItem('github-stats');
-    const parsed = cached ? safeJsonParse<{ stars: number; forks: number; ts: number }>(cached) : null;
-    if (parsed && Date.now() - parsed.ts < 300000) { // 5 min cache
-      setGithubStars(parsed.stars);
-      setGithubForks(parsed.forks);
-      return;
-    }
-    fetch('/stats.json', { cache: 'no-cache' })
-      .then(r => r.ok ? r.json() : null)
-      .then(blob => {
-        const repo = blob?.repos?.['framersai/agentos'];
-        if (repo && typeof repo.stars === 'number') {
-          setGithubStars(repo.stars);
-          setGithubForks(repo.forks);
-          sessionStorage.setItem('github-stats', JSON.stringify({ stars: repo.stars, forks: repo.forks, ts: Date.now() }));
-        }
-      })
-      .catch(() => {});
+    let cancelled = false;
+    loadPublicStats().then(blob => {
+      if (cancelled) return;
+      const repo = blob?.repos?.['framersai/agentos'];
+      if (repo && typeof repo.stars === 'number') {
+        setGithubStars(repo.stars);
+        setGithubForks(repo.forks ?? null);
+      }
+    });
+    return () => { cancelled = true; };
   }, []);
 
   const copyCommand = useCallback(() => {

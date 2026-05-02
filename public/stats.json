@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-05-02T05:49:52.550Z",
+  "repos": {},
+  "orgRepos": [],
+  "aggregate": {
+    "agentosStars": null,
+    "agentosOpenIssues": null,
+    "agentosContributors": null
+  },
+  "npm": {
+    "@framers/agentos": 5716,
+    "@framers/agentos-bench": null,
+    "@framers/agentos-personas": null,
+    "@framers/agentos-ext-skills": null,
+    "@framers/sql-storage-adapter": 1271,
+    "@framers/agentos-skills-registry": 82
+  }
+}
