@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1600">
+  <title>AgentOS — Emergent Agent Spawning</title>
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --bg-panel: #0e1320;
+      --bg-elevated: #131a2c;
+      --border: #1e2740;
+      --border-strong: #2a3551;
+      --text: #e8ecf5;
+      --text-muted: #8a96b3;
+      --text-dim: #5a6585;
+      --accent: #4a7fff;
+      --accent-glow: #4a7fff33;
+      --green: #3ecf8e;
+      --amber: #ffb454;
+      --magenta: #c678dd;
+      --purple: #b48ead;
+      --orange: #d19a66;
+      --red: #e06c75;
+      --blue: #61afef;
+      --cyan: #56b6c2;
+      --comment: #5c6378;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .demo-frame {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 36px 48px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), #6f3eff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: white;
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+
+    .brand-name {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-tag {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .stat-strip {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .stat-strip .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-strip .pill strong {
+      color: var(--text);
+    }
+
+    .stat-strip .pill.win {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .stat-strip .pill.win strong {
+      color: var(--accent);
+    }
+
+    .title-block {
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .lede {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 880px;
+    }
+
+    .panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', 'Menlo', monospace;
+    }
+
+    .panel-header .filename {
+      color: var(--text);
+    }
+
+    .panel-header .dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .panel-header .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border-strong);
+    }
+
+    .panel-header .badge {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .panel-header .badge.live {
+      background: rgba(62, 207, 142, 0.12);
+      color: var(--green);
+      border: 1px solid rgba(62, 207, 142, 0.3);
+    }
+
+    pre.code, pre.output {
+      margin: 0;
+      padding: 18px 20px;
+      font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+      font-size: 13.5px;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    pre.code {
+      color: var(--text);
+    }
+
+    pre.output {
+      color: var(--text);
+      background: #060a13;
+    }
+
+    /* Syntax highlighting */
+    .kw { color: var(--magenta); font-weight: 500; }
+    .str { color: var(--green); }
+    .fn { color: var(--blue); }
+    .num { color: var(--orange); }
+    .bool { color: var(--orange); }
+    .com { color: var(--comment); font-style: italic; }
+    .punc { color: var(--text-muted); }
+    .prop { color: var(--red); }
+    .ident { color: var(--text); }
+
+    /* Output coloring */
+    .o-forge { color: var(--green); font-weight: 600; }
+    .o-section { color: var(--accent); font-weight: 600; }
+    .o-key { color: var(--text-muted); }
+    .o-val { color: var(--text); }
+    .o-num { color: var(--amber); }
+    .o-arrow { color: var(--accent); }
+    .o-spawn-line { background: rgba(62, 207, 142, 0.08); padding: 2px 4px; margin: 0 -4px; border-radius: 3px; display: inline-block; }
+    .o-comment { color: var(--text-dim); font-style: italic; }
+    .o-marker { color: var(--magenta); }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .ctas {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .cta {
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text);
+    }
+
+    .cta.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .cta.ghost {
+      background: transparent;
+      color: var(--text-muted);
+    }
+
+    .footer-meta {
+      color: var(--text-muted);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', 'Menlo', monospace;
+    }
+
+    .footer-meta strong {
+      color: var(--text);
+    }
+
+    .caption {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 880px;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    .caption .hl {
+      color: var(--green);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: rgba(62, 207, 142, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-frame">
+    <header class="header">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div>
+          <div class="brand-name">AgentOS</div>
+          <div class="brand-tag">Open-source TypeScript runtime · Apache 2.0</div>
+        </div>
+      </div>
+      <div class="stat-strip">
+        <div class="pill win"><strong>85.6%</strong> LongMemEval-S</div>
+        <div class="pill">0.4 points behind <strong>Emergence.ai</strong> (closed SaaS)</div>
+        <div class="pill">+1.4 above <strong>Mastra</strong> (84.23%)</div>
+      </div>
+    </header>
+
+    <div class="title-block">
+      <h1>Emergent intelligence: agents that spawn agents at runtime</h1>
+      <p class="lede">When the static roster doesn't cover the task, the manager calls <code style="color:var(--accent);font-family:inherit">spawn_specialist</code>. EmergentAgentForge synthesises a config, EmergentAgentJudge approves it, and the new specialist joins the live roster on the next turn. 50 lines of TypeScript. Real run output, no edits.</p>
+    </div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-header">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            <span class="filename">examples/emergent-hierarchical-spawning.mjs</span>
+          </div>
+          <span style="font-size:11px;color:var(--text-dim);">TypeScript</span>
+        </div>
+        <pre class="code"><span class="kw">import</span> { agency } <span class="kw">from</span> <span class="str">'@framers/agentos'</span>;
+
+<span class="kw">const</span> <span class="ident">team</span> = <span class="fn">agency</span>({
+  <span class="prop">provider</span>: <span class="str">'openai'</span>,
+  <span class="prop">model</span>: <span class="str">'gpt-4o'</span>,
+  <span class="prop">strategy</span>: <span class="str">'hierarchical'</span>,
+  <span class="prop">instructions</span>:
+    <span class="str">'When the task needs a capability outside the static '</span> +
+    <span class="str">'roster, call spawn_specialist to mint one for this run.'</span>,
+  <span class="prop">agents</span>: {
+    <span class="prop">researcher</span>: { <span class="prop">instructions</span>: <span class="str">'Find authoritative sources...'</span> },
+    <span class="prop">writer</span>:     { <span class="prop">instructions</span>: <span class="str">'Produce well-cited prose...'</span> },
+  },
+  <span class="prop">emergent</span>: {
+    <span class="prop">enabled</span>: <span class="bool">true</span>,         <span class="com">// unlock spawn_specialist tool</span>
+    <span class="prop">judge</span>:   <span class="bool">true</span>,         <span class="com">// LLM judge gates each new spec</span>
+    <span class="prop">planner</span>: {
+      <span class="prop">maxSpecialists</span>:       <span class="num">2</span>,
+      <span class="prop">requireJustification</span>: <span class="bool">true</span>,
+      <span class="prop">maxJudgeCalls</span>:        <span class="num">4</span>,
+    },
+  },
+  <span class="prop">on</span>: {
+    <span class="prop">emergentForge</span>: (<span class="ident">e</span>) =&gt; <span class="fn">console</span>.<span class="fn">log</span>(
+      <span class="str">`[FORGE] spawned "${e.agentName}" approved=${e.approved}`</span>
+    ),
+  },
+});
+
+<span class="kw">const</span> <span class="ident">result</span> = <span class="kw">await</span> <span class="ident">team</span>.<span class="fn">generate</span>(
+  <span class="str">'Briefing on agentic-AI sandbox security risks. Must include '</span> +
+  <span class="str">'a security-audit review of node:vm vs isolated-vm vs container '</span> +
+  <span class="str">'isolation. The team does not currently have a security auditor.'</span>,
+);</pre>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            <span class="filename">$ node examples/emergent-...mjs</span>
+          </div>
+          <span class="badge live">● LIVE RUN</span>
+        </div>
+        <pre class="output"><span class="o-spawn-line"><span class="o-forge">[FORGE]</span> spawned <span class="o-val">"security_audit_specialist"</span></span>
+        <span class="o-key">at</span> <span class="o-val">2026-05-02T16:08:22.778Z</span>
+        <span class="o-key">approved=</span><span class="o-val">true</span>
+        <span class="o-comment">// EmergentAgentJudge passed; new agent</span>
+        <span class="o-comment">// joins the live roster on next turn</span>
+
+<span class="o-section">=== AGENT CALLS ===</span>
+  <span class="o-arrow">→</span> <span class="o-key">researcher:</span> <span class="o-val">"Research security risks in agentic..."</span>
+  <span class="o-arrow">→</span> <span class="o-key">researcher:</span> <span class="o-val">"Identify main risk categories..."</span>
+  <span class="o-arrow">→</span> <span class="o-key">writer:</span>     <span class="o-val">"Draft CTO-audience briefing..."</span>
+  <span class="o-arrow">→</span> <span class="o-key">writer:</span>     <span class="o-val">"Cover sandbox isolation primitives..."</span>
+  <span class="o-arrow">→</span> <span class="o-key">researcher:</span> <span class="o-val">"Investigate sandbox primitives..."</span>
+  <span class="o-arrow">→</span> <span class="o-key">researcher:</span> <span class="o-val">"Summarize node:vm vs isolated-vm..."</span>
+  <span class="o-arrow">→</span> <span class="o-key">researcher:</span> <span class="o-val">"Review container isolation..."</span>
+  <span class="o-arrow">→</span> <span class="o-key">researcher:</span> <span class="o-val">"Final synthesis pass..."</span>
+  <span class="o-arrow">→</span> <span class="o-key">researcher:</span> <span class="o-val">"Verify load-bearing claims..."</span>
+
+<span class="o-section">=== USAGE ===</span>
+  <span class="o-key">prompt:</span>     <span class="o-num">11,287</span> tokens
+  <span class="o-key">completion:</span> <span class="o-num">4,412</span>  tokens
+  <span class="o-key">total:</span>      <span class="o-num">15,699</span> tokens
+  <span class="o-key">cost:</span>       <span class="o-num">$0.0721</span></pre>
+      </div>
+    </div>
+
+    <p class="caption">
+      The <span class="hl">[FORGE]</span> line above is the moment AgentOS minted a <strong>security_audit_specialist</strong> agent that did not exist when the run started. The static roster was researcher + writer; the prompt required a security audit; the manager called <code style="font-family:JetBrains Mono;color:var(--accent)">spawn_specialist</code>, EmergentAgentJudge approved the spec, and the new specialist joined the live roster. <strong>Real run, real OpenAI API call, no edits.</strong>
+    </p>
+
+    <footer class="footer">
+      <div class="ctas">
+        <a class="cta primary" href="https://github.com/framersai/agentos">View on GitHub →</a>
+        <a class="cta" href="https://www.npmjs.com/package/@framers/agentos">npm install @framers/agentos</a>
+        <a class="cta" href="https://agentos.sh/blog/agentos-memory-sota-longmemeval">Read 85.6% benchmark</a>
+        <a class="cta ghost" href="https://docs.agentos.sh">Docs →</a>
+      </div>
+      <div class="footer-meta">
+        <strong>agentos.sh</strong> · Apache-2.0 · <strong>npm i @framers/agentos</strong>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

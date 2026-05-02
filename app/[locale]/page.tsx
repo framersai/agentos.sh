@@ -97,6 +97,11 @@ const BenchmarksSectionLazy = dynamic(
   { ssr: false, loading: () => <div className="min-h-[600px]" /> }
 )
 
+const LiveRunDemoSectionLazy = dynamic(
+  () => import('../../components/sections/live-run-demo-section').then(m => m.LiveRunDemoSection),
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
+)
+
 const WhitepaperCTALazy = dynamic(
   () => import('../../components/sections/whitepaper-cta').then(m => m.WhitepaperCTA),
   { ssr: false, loading: () => <div className="min-h-[400px]" /> }
@@ -134,6 +139,11 @@ export default function LandingPageRedesigned() {
         {/* Memory Benchmarks SOTA — matched gpt-4o reader on LongMemEval-S/M */}
         <div className="lazy-section-lg">
           <BenchmarksSectionLazy />
+        </div>
+
+        {/* Live run demo — real script + captured output side-by-side */}
+        <div id="live-demo" style={{ scrollMarginTop: '80px' }}>
+          <LiveRunDemoSectionLazy />
         </div>
 
         {/* AgentOS Workbench CTA */}

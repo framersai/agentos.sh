@@ -72,6 +72,10 @@ Agents share memory through the [`AgentCommunicationBus`](https://docs.agentos.s
 
 When `strategy: 'hierarchical'` is paired with `emergent: { enabled: true }`, the manager LLM gets a `spawn_specialist` tool alongside its `delegate_to_<name>` tools. Calling it forges a new sub-agent at runtime via [`EmergentAgentForge`](https://docs.agentos.sh/api/classes/EmergentAgentForge), gates it through [`EmergentAgentJudge`](https://docs.agentos.sh/api/classes/EmergentAgentJudge) for safety review, and adds the new specialist to the live roster, so `delegate_to_<spawned-role>` becomes available on the next turn. Bounds via `planner.maxSpecialists`, `planner.maxJudgeCalls`, and an optional HITL `beforeEmergent` gate. See [Hierarchical + emergent agent spawning](https://docs.agentos.sh/architecture/emergent-agency-system) for the worked example.
 
+[![AgentOS spawning a security_audit_specialist agent at runtime, side-by-side with the source code](/img/blog/og/agentos-emergent-demo.png)](/demo/emergent-spawning.html)
+
+The image above is captured from a real `node examples/emergent-hierarchical-spawning.mjs` run. The team starts with researcher + writer; the prompt requires a security audit; the manager calls `spawn_specialist`, EmergentAgentJudge approves the spec, and `security_audit_specialist` joins the live roster. The `[FORGE]` line is the moment that happens. Reproduce: `node examples/emergent-hierarchical-spawning.mjs` after `npm install @framers/agentos` and `export OPENAI_API_KEY=...`.
+
 ### Emergent Tool Forging
 
 Agents [create new tools at runtime](https://docs.agentos.sh/features/emergent-capabilities) when no existing tool fits the task:
