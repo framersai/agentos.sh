@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FileText, ArrowRight, Mail } from 'lucide-react';
+import { FileText, ArrowRight } from 'lucide-react';
 
 /**
  * WhitepaperCTA renders a "coming soon" callout banner for the
@@ -129,11 +129,13 @@ export function WhitepaperCTA() {
             {/* CTAs */}
             <div className="flex flex-wrap justify-center gap-3">
               <a
-                href="mailto:team@frame.dev?subject=AgentOS%20Whitepaper%20Notify"
+                href="https://wilds.ai/discord"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-all hover:bg-white/90"
               >
-                <Mail className="h-4 w-4" aria-hidden />
-                Notify me when it drops
+                Join Discord for the announcement
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
               <a
                 href="https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md"
