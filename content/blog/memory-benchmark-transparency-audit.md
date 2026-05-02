@@ -341,6 +341,34 @@ AgentOS is not at the frontier of accuracy on LongMemEval-S. We are at 76.6% [72
 
 What AgentOS is: the only vendor in the surveyed set that publishes bootstrap CIs, judge false-positive probes on shipping numbers (measured, not hypothesized), per-stage retention metrics, full cost-per-correct accounting, latency distributions, per-case run JSONs, hold-out calibration against shipping tables, and cross-vendor comparison tables at a seeded reproducible configuration. For the reader trying to decide which memory library to use, those are the things that matter. The headline number is a lottery ticket. The methodology is the infrastructure.
 
+## References
+
+1. Hubbard, D. W. (2014). *How to Measure Anything: Finding the Value of Intangibles in Business* (3rd ed.). Wiley.
+2. Wu, D., et al. (2025). LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory. *ICLR 2025*. [arXiv:2410.10813](https://arxiv.org/abs/2410.10813).
+3. Maharana, A., et al. (2024). Evaluating Very Long-Term Conversational Memory of LLM Agents (LOCOMO). *ACL 2024*. [aclanthology.org/2024.acl-long.747](https://aclanthology.org/2024.acl-long.747.pdf).
+4. Penfield Labs (April 2026). We audited LOCOMO — 6.4% of the answer key is wrong, and the judge accepts up to 63% of intentionally wrong answers. [dev.to/penfieldlabs](https://dev.to/penfieldlabs/we-audited-locomo-64-of-the-answer-key-is-wrong-and-the-judge-accepts-up-to-63-of-intentionally-33lg).
+5. Northcutt, C. G., Athalye, A., & Mueller, J. (2021). Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks. *NeurIPS 2021*. [arXiv:2103.14749](https://arxiv.org/abs/2103.14749).
+6. Sumers, T. R., et al. (2023). Cognitive Architectures for Language Agents (CoALA). [arXiv:2309.02427](https://arxiv.org/abs/2309.02427).
+7. Independent Zep LongMemEval reproduction. [arXiv:2512.13564](https://arxiv.org/abs/2512.13564).
+8. Zep / Graphiti (2025). Temporally-aware knowledge graph memory for AI agents. [arXiv:2501.13956](https://arxiv.org/html/2501.13956v1).
+9. Locomo-Plus benchmark. [arXiv:2602.10715](https://arxiv.org/html/2602.10715v1).
+10. Beyond a Million Tokens (poster). *ICLR 2026*. [iclr.cc/virtual/2026/poster/10006595](https://iclr.cc/virtual/2026/poster/10006595).
+11. Zep blog (2025). Lies, Damn Lies, & Statistics: Is Mem0 Really SOTA in Agent Memory? [blog.getzep.com](https://blog.getzep.com/lies-damn-lies-statistics-is-mem0-really-sota-in-agent-memory/).
+12. Zep blog (2025). State of the Art Agent Memory. [blog.getzep.com](https://blog.getzep.com/state-of-the-art-agent-memory/).
+13. Mem0 research page. [mem0.ai/research](https://mem0.ai/research) and [mem0.ai/research-2](https://mem0.ai/research-2).
+14. Mem0 issue #3944: Third-party reproduction failure. [github.com/mem0ai/mem0/issues/3944](https://github.com/mem0ai/mem0/issues/3944).
+15. Mastra (2025). Observational Memory — research page. [mastra.ai/research/observational-memory](https://mastra.ai/research/observational-memory).
+16. EmergenceMem Simple Fast (open-source repo). [github.com/EmergenceAI/emergence_simple_fast](https://github.com/EmergenceAI/emergence_simple_fast).
+17. Emergence AI blog. SOTA on LongMemEval with RAG. [emergence.ai](https://www.emergence.ai/blog/sota-on-longmemeval-with-rag).
+18. Calvin Ku (2025). Emergence AI broke the agent memory benchmark — I tried to break their code. [Medium](https://medium.com/asymptotic-spaghetti-integration/emergence-ai-broke-the-agent-memory-benchmark-i-tried-to-break-their-code-23b9751ded97).
+19. Supermemory memorybench (open-source repo). [github.com/supermemoryai/memorybench](https://github.com/supermemoryai/memorybench).
+20. Mem0 memory-benchmarks (open-source repo). [github.com/mem0ai/memory-benchmarks](https://github.com/mem0ai/memory-benchmarks).
+21. Mastra workshop-longmemeval. [github.com/mastra-ai/workshop-longmemeval](https://github.com/mastra-ai/workshop-longmemeval).
+22. zep-papers issue #5: Revisiting Zep's 84% LoCoMo Claim. [github.com/getzep/zep-papers/issues/5](https://github.com/getzep/zep-papers/issues/5).
+23. HackerNoon (2026). Resident Evil star Milla Jovovich shipped an AI memory system; devs shredded its benchmarks. [hackernoon.com](https://hackernoon.com/resident-evil-star-milla-jovovich-shipped-an-ai-memory-system-devs-shredded-its-benchmarks).
+24. MemPalace issue #29. [github.com/milla-jovovich/mempalace/issues/29](https://github.com/milla-jovovich/mempalace/issues/29).
+25. Zheng, L., et al. (2023). Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. [arXiv:2306.05685](https://arxiv.org/abs/2306.05685).
+
 ---
 
 *All claims in this post are sourced from primary URLs visited April 24, 2026. The full audit with per-vendor transparency report cards is at [`packages/agentos-bench/docs/COMPETITOR_METHODOLOGY_AUDIT_2026-04-24.md`](https://github.com/framersai/agentos-bench/blob/master/docs/COMPETITOR_METHODOLOGY_AUDIT_2026-04-24.md). The AgentOS bench implementation is open source at [`packages/agentos-bench`](https://github.com/framersai/agentos-bench).*
