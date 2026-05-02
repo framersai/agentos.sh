@@ -1,13 +1,13 @@
 ---
-title: "Structured World Models for AI Agents: What Paracosm Is"
+title: "Agent Swarm Simulation for Structured World Modeling with LLMs: What Paracosm Is"
 date: "2026-04-30"
 featured: true
-excerpt: "The phrase 'world model' in 2026 names two different products. One generates pixels (Sora, Genie 3, Marble, Yann LeCun's $1.03B AMI Labs). The other enumerates actionable possibilities so an agent can decide. Paracosm is the second kind."
+excerpt: "Paracosm runs a top-down agent swarm — one HEXACO-typed leader, five specialist departments, ~100 personality-typed cells — inside a structured, deterministic, forkable world model. The artifact is JSON, not pixels. Reproducible, grounded in research, built on AgentOS."
 author: "AgentOS Team"
 category: "Engineering"
 audience: "evaluator"
 image: "/img/blog/paracosm/paracosm-2026-overview-hero.png"
-keywords: "structured world model, world model for AI agents, counterfactual world simulator, LLM world model, paracosm, prompt to simulation, multi-agent simulation typescript, HEXACO simulation, deterministic kernel, node:vm sandbox, agentos paracosm, Mars Genesis simulation, civilization simulation AI, agent-based modeling LLM, JEPA, AMI Labs, Sora, Genie 3, Marble"
+keywords: "agent swarm, agent swarm simulation, multi-agent simulation, structured world model, world model for AI agents, world modeling, LLM world model, paracosm, prompt to simulation, multi-agent simulation typescript, HEXACO simulation, deterministic kernel, node:vm sandbox, agentos paracosm, Mars Genesis simulation, civilization simulation AI, agent-based modeling LLM, JEPA, AMI Labs, Sora, Genie 3, Marble"
 ---
 
 > "It's a poor sort of memory that only works backwards."
@@ -179,6 +179,21 @@ console.log(sim.diff(atlas, maria));
 
 This runs locally. A six-turn run with default specialists, default reranker, and default reader on a small scenario costs in the low tens of cents. The dashboard at [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim) does the same thing without writing code, and the full API reference is at [paracosm.agentos.sh/docs](https://paracosm.agentos.sh/docs).
 
+Inspecting the agent swarm afterward:
+
+```ts
+import { getSwarm, swarmByDepartment, moodHistogram } from 'paracosm/swarm';
+
+const swarm = getSwarm(atlas);
+if (swarm) {
+  console.log(`T${swarm.turn} · ${swarm.population} alive`);
+  console.log(swarmByDepartment(atlas));    // org chart by dept
+  console.log(moodHistogram(swarm));        // { focused: 12, anxious: 5, ... }
+}
+```
+
+Same data is on `RunArtifact.finalSwarm` directly, available via `WorldModel.swarm(atlas)`, and exposed at `GET /api/v1/runs/:runId/swarm` for HTTP consumers. The dashboard's living-swarm grid streams the same shape per-turn via SSE for live visualization.
+
 ## What Paracosm isn't
 
 **Not a pixel generator.** Sora, Genie 3, World Labs Marble do that. Paracosm's output is a structured `RunArtifact`. There are diagrams in the dashboard, but they're renderings of the artifact, not the artifact.
@@ -187,7 +202,7 @@ This runs locally. A six-turn run with default specialists, default reranker, an
 
 **Not a replacement for real-world data.** A counterfactual simulator is a tool for thinking, not for forecasting in the strong sense. Every decision has a `confidence` score, every metric has a `derivedFrom` trace, every citation has a DOI when one exists. Treat a Paracosm run as ground truth at your own risk; the artifact is structured to make that harder than it would otherwise be.
 
-**Not at the scale of [OASIS](https://openreview.net/forum?id=JBzTculaVV) [^11] or [MiroFish](https://github.com/666ghj/MiroFish) [^12].** Those operate at 1k to 1M agents and do bottom-up emergent prediction. Paracosm operates at ~100 agents plus 5 specialists plus 1 commander and does top-down leader-driven counterfactuals. Different jobs. The [head-to-head comparison post](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation) has the engineering breakdown.
+**A top-down agent swarm, not a bottom-up emergent one.** [OASIS](https://openreview.net/forum?id=JBzTculaVV) [^11] and [MiroFish](https://github.com/666ghj/MiroFish) [^12] operate at 1k to 1M agents and do bottom-up emergent prediction; the swarm dynamics are the output. Paracosm runs a directed agent swarm: 1 commander, 5 specialist departments, ~100 personality-typed cells — and the trajectory is deterministic per seed. The cell population is rich (HEXACO traits, mood, family edges, persistent memory), but the cells react to leader decisions rather than acting autonomously. Both shapes are valid agent swarm architectures; paracosm's lane is the directed, replayable, decision-support side. The [head-to-head comparison post](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation) has the engineering breakdown.
 
 **Not a multi-agent task framework.** LangGraph, AutoGen, CrewAI, OpenAI Agents SDK, Mastra: those execute real tasks against real APIs. Their output reaches the world. Paracosm's output stays inside the simulation. Zero overlap on user job-to-be-done.
 
