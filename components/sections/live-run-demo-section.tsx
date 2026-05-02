@@ -82,9 +82,9 @@ function EmergentOutput() {
           approved=<span className="text-amber-400">true</span>
         </div>
         <div className="ml-8 italic text-[var(--color-text-muted)] text-[11px] mt-1">
-          // EmergentAgentJudge passed; new agent
+          {'// EmergentAgentJudge passed; new agent'}
           <br />
-          // joins the live roster on next turn
+          {'// joins the live roster on next turn'}
         </div>
       </div>
 

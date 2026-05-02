@@ -36,7 +36,16 @@ export function BenchmarkBanner() {
     >
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-1.5 px-10 py-2.5 sm:flex-row sm:justify-center sm:gap-4 sm:px-4">
         <span className="text-center text-[13px] font-medium leading-snug sm:text-sm sm:text-left">
-          New benchmarks: 85.6% on LongMemEval-S (+1.4 above{' '}
+          New benchmarks: 85.6% on LongMemEval-S, 0.4 points behind{' '}
+          <a
+            href="https://www.emergence.ai/blog/sota-on-longmemeval-with-rag"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:opacity-80"
+          >
+            Emergence.ai
+          </a>
+          &apos;s 86% closed-source SaaS, +1.4 above{' '}
           <a
             href="https://mastra.ai"
             target="_blank"
@@ -45,7 +54,7 @@ export function BenchmarkBanner() {
           >
             Mastra
           </a>
-          &apos;s Observational Memory at gpt-4o) and 70.2% on LongMemEval-M.
+          &apos;s Observational Memory at gpt-4o (84.23%). 70.2% on M.
         </span>
         <a
           href={BLOG_URL}

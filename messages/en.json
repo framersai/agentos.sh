@@ -1530,7 +1530,7 @@
     "tabM": "LongMemEval-M (1.5M tokens)",
     "highlightSAccuracy": "AgentOS LongMemEval-S",
     "highlightSValue": "85.6%",
-    "highlightSCi": "+1.4 points above Mastra OM gpt-4o (84.23%) · $0.0090 per correct · 3.6-second median latency",
+    "highlightSCi": "0.4 points behind Emergence.ai SOTA (86%, closed-source SaaS) · +1.4 points above Mastra OM gpt-4o (84.23%) · $0.0090 per correct · 3.6-second median latency",
     "highlightMAccuracy": "AgentOS LongMemEval-M",
     "highlightMValue": "70.2%",
     "highlightMCi": "First open-source library above 65% on the 1.5M-token M variant · +4.5 points above Wu et al., ICLR 2025 baseline",

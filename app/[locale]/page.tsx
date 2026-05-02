@@ -146,6 +146,15 @@ export default function LandingPageRedesigned() {
           <LiveRunDemoSectionLazy />
         </div>
 
+        {/* Code Examples — production-ready code patterns. Hoisted up the page next
+            to the live run demo so the narrative flows: benchmarks (proof of quality)
+            → live run (proof it works) → code examples (here's how to write it). The
+            wrapping `id="code"` keeps the hero "See code examples" CTA href="#code"
+            scroll target stable. */}
+        <div id="code" style={{ scrollMarginTop: '80px' }}>
+          <CodeExamplesSectionLazy />
+        </div>
+
         {/* AgentOS Workbench CTA */}
         <div className="lazy-section-sm">
           <WorkbenchCTALazy />
@@ -184,19 +193,13 @@ export default function LandingPageRedesigned() {
           <FeaturesGridClient />
         </div>
 
-        {/* Enterprise-Ready Infrastructure — SSR shell around client-only skyline canvas */}
+        {/* Enterprise-Ready Infrastructure — the SkylineSection component owns its
+            own h2/subtitle/badge. Wrapping it in another h2/p here previously rendered
+            two competing "Enterprise-Ready Infrastructure" headings back-to-back
+            (same anti-pattern called out in the cognitive-section comment below). */}
         <section className="lazy-section">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">Enterprise-ready infrastructure</h2>
-          <p className="text-center text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-10">
-            Self-hostable, Apache-2.0 licensed, with built-in PII redaction, prompt-injection defense, content moderation, and 21 LLM providers. Ship the same agent runtime to staging and production without vendor lock-in.
-          </p>
           <SkylineSectionLazy />
         </section>
-
-        {/* Code Examples Section — id hoisted to wrapper so the hero "See code examples" CTA (href="#code") has a scroll target before the lazy-loaded section hydrates. Deliberately NOT wrapped in `.lazy-section-lg` (which sets `content-visibility: auto` + an intrinsic placeholder height) because that placeholder mismatches the rendered height and lands the scroll target in the wrong spot when the actual content loads after the scroll completes. */}
-        <div id="code" style={{ scrollMarginTop: '80px' }}>
-          <CodeExamplesSectionLazy />
-        </div>
 
         {/* Whitepaper coming-soon CTA — full architecture + benchmark methodology */}
         <div className="lazy-section">
