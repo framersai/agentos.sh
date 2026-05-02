@@ -22,7 +22,7 @@ This post examines the benchmarks the entire memory-library industry uses as pro
 
 In April 2026, [Penfield Labs](https://dev.to/penfieldlabs/we-audited-locomo-64-of-the-answer-key-is-wrong-and-the-judge-accepts-up-to-63-of-intentionally-33lg) ran a systematic audit of [LOCOMO](https://aclanthology.org/2024.acl-long.747.pdf), the long-term-memory benchmark every major memory-library vendor cites as their SOTA proving ground. The audit found 99 errors in 1,540 answer-key entries: a 6.4% ground-truth error rate. Penfield then tested the LLM judge the benchmark relies on. It accepted **62.81% of intentionally wrong answers** when the wrong answer was topically adjacent to the correct one.
 
-Those two numbers put a hard floor on any LOCOMO score comparison. A 6.4% error rate in the gold answers means any system scoring above 93.6% is benefiting from benchmark errors. A judge that accepts almost two-thirds of wrong-but-topical answers means any score gap below roughly 6 pp is inside the judge's noise. Mem0's 91.6% LOCOMO claim, Hydra DB's 90.79%, Zep's self-reported 71.2%, Emergence AI's 86%: all are measured against a benchmark whose ceiling is 93.6% and whose grader tolerates the exact failure mode (vague, topically-adjacent answers) that weak memory systems produce.
+Those two numbers put a hard floor on any LOCOMO score comparison. A 6.4% error rate in the gold answers means any system scoring above 93.6% is benefiting from benchmark errors. A judge that accepts almost two-thirds of wrong-but-topical answers means any score gap below roughly 6 points is inside the judge's noise. Mem0's 91.6% LOCOMO claim, Hydra DB's 90.79%, Zep's self-reported 71.2%, Emergence AI's 86%: all are measured against a benchmark whose ceiling is 93.6% and whose grader tolerates the exact failure mode (vague, topically-adjacent answers) that weak memory systems produce.
 
 
 
@@ -38,7 +38,7 @@ LongMemEval ([Wu et al., ICLR 2025, arXiv:2410.10813](https://arxiv.org/abs/2410
 
 The Penfield team then tested the LLM judge. LOCOMO uses `gpt-4o-mini` to grade answers against the gold reference. Penfield synthesized intentionally wrong-but-topically-adjacent answers for all 1,540 questions. The judge accepted **62.81%** of them. Per the audit: "Vague answers that identified the correct topic while missing every specific detail passed nearly two-thirds of the time. This is precisely the failure mode of weak retrieval, locating the right conversation but extracting nothing specific, and the benchmark rewards it."
 
-That means any score difference below roughly ±6 pp on LOCOMO is inside the judge's noise floor. By comparison, [Northcutt et al. (NeurIPS 2021, arXiv:2103.14749)](https://arxiv.org/abs/2103.14749) found that a 3.3% label-error rate is sufficient to destabilize model rankings across major ML benchmarks. LOCOMO's 6.4% is nearly double that.
+That means any score difference below roughly ±6 points on LOCOMO is inside the judge's noise floor. By comparison, [Northcutt et al. (NeurIPS 2021, arXiv:2103.14749)](https://arxiv.org/abs/2103.14749) found that a 3.3% label-error rate is sufficient to destabilize model rankings across major ML benchmarks. LOCOMO's 6.4% is nearly double that.
 
 **LongMemEval-S is partly a context-window test, not just a memory test.** LongMemEval-S uses about 115K tokens of conversation context per question. GPT-4o, Claude 3.5, Gemini 1.5 Pro, and GPT-5 all have context windows from 200K to 1M tokens. The entire test corpus fits in a single prompt for every current-generation model.
 
@@ -60,7 +60,7 @@ This is the cross-vendor-comparison problem. When vendors re-implement each othe
 
 ### Case two: Zep's own self-reported number does not reproduce
 
-Zep's primary LongMemEval number is 71.2% at `gpt-4o`, cited from [their SOTA blog post](https://blog.getzep.com/state-of-the-art-agent-memory/). An independent reproduction at [arXiv:2512.13564](https://arxiv.org/abs/2512.13564) measured Zep at **63.8%** on the same benchmark. That is a 7.4 pp gap, about the magnitude of the LOCOMO judge's false-positive floor.
+Zep's primary LongMemEval number is 71.2% at `gpt-4o`, cited from [their SOTA blog post](https://blog.getzep.com/state-of-the-art-agent-memory/). An independent reproduction at [arXiv:2512.13564](https://arxiv.org/abs/2512.13564) measured Zep at **63.8%** on the same benchmark. That is a 7.4 points gap, about the magnitude of the LOCOMO judge's false-positive floor.
 
 A separate [GitHub issue (#5 in zep-papers)](https://github.com/getzep/zep-papers/issues/5) titled "Revisiting Zep's 84% LoCoMo Claim: Corrected Evaluation & 58.44%" claims Zep's self-reported LOCOMO result does not survive a corrected evaluation, landing at 58.44% instead of 84%. Zep has engaged publicly with the Mem0 critique but has not (as of April 2026) published a response to the independent LongMemEval reproduction.
 
@@ -165,9 +165,9 @@ The architecture follows the **CoALA framework** ([Sumers et al., arXiv:2309.024
 
 Compared to the three flat tiers shipped previously:
 
-- +1.2 pp accuracy over Tier 2b v11 at 7.5x lower $/correct
-- +2.0 pp accuracy over Tier 2a v10 at 5.6x lower $/correct
-- +3.4 pp accuracy over Tier 1 canonical at 2.7x higher $/correct, 6x lower latency
+- +1.2 points accuracy over Tier 2b v11 at 7.5x lower $/correct
+- +2.0 points accuracy over Tier 2a v10 at 5.6x lower $/correct
+- +3.4 points accuracy over Tier 1 canonical at 2.7x higher $/correct, 6x lower latency
 
 Compared to the published frontier, 76.6% sits above Zep's self-reported 71.2% (and well above Zep's independently-audited 63.8%) but below Mastra's 84.23%, Supermemory's 81.6%, EmergenceMem's 86%, and Mem0's 92-93.4%. AgentOS is not the frontier. The cost and latency profile at 76.6% is probably the cheapest path to that accuracy that has been published.
 
@@ -181,13 +181,13 @@ The Tier 3 routing tables (maximize-accuracy, balanced, minimize-cost) were cons
 
 Stratified 80/20 split of the Phase B N=500 data (seed=42), derive routing tables from the 398-case calibration slice, evaluate on the 97 held-out cases. For `minimize-cost`, the calibration-derived table is identical to the published table across all six categories. A different random stratified split produces the same routing decisions. The shipping 76.6% at $0.058/correct on `minimize-cost` is not a product of table overfitting.
 
-For `maximize-accuracy`, two categories (SSU and KU) differ: calibration-derived routes both to Tier 2a, published routes to Tier 2b. Both backends' accuracy on these two categories is within CI overlap at calibration scale. The published table picks the backend with a non-significant in-sample advantage. End-to-end on the held-out N=97: 71.1% (published) vs 69.1% (calib-derived). The in-sample optimization buys ~2 pp on this specific held-out sample, which is inside sampling variance at n=97 (CI ±9 pp).
+For `maximize-accuracy`, two categories (SSU and KU) differ: calibration-derived routes both to Tier 2a, published routes to Tier 2b. Both backends' accuracy on these two categories is within CI overlap at calibration scale. The published table picks the backend with a non-significant in-sample advantage. End-to-end on the held-out N=97: 71.1% (published) vs 69.1% (calib-derived). The in-sample optimization buys ~2 points on this specific held-out sample, which is inside sampling variance at n=97 (CI ±9 points).
 
-Held-out N=97 aggregate drops 7 pp vs full N=500 (69.1% vs 76.6%). Decomposition: 2.8 pp from n=97 sampling variance, 4 pp from classifier behaving worse on the smaller subset (51% accuracy on full → 46% on held-out). Not an architectural overfit signal. Full methodology and per-category breakdown at [STAGE_A_HOLDOUT_CALIBRATION_2026-04-24.md](https://github.com/framersai/agentos-bench/blob/master/docs/STAGE_A_HOLDOUT_CALIBRATION_2026-04-24.md).
+Held-out N=97 aggregate drops 7 points vs full N=500 (69.1% vs 76.6%). Decomposition: 2.8 points from n=97 sampling variance, 4 points from classifier behaving worse on the smaller subset (51% accuracy on full → 46% on held-out). Not an architectural overfit signal. Full methodology and per-category breakdown at [STAGE_A_HOLDOUT_CALIBRATION_2026-04-24.md](https://github.com/framersai/agentos-bench/blob/master/docs/STAGE_A_HOLDOUT_CALIBRATION_2026-04-24.md).
 
 ### LOCOMO out-of-distribution
 
-We ran the LongMemEval-tuned Tier 1 canonical pipeline on LOCOMO N=1986 at `gpt-4o` reader, no tuning changes. Aggregate: 49.9% [47.7, 52.1] at $0.0123/correct. About 16 pp below Mem0's claimed LOCOMO range of 66-68%. Per-category:
+We ran the LongMemEval-tuned Tier 1 canonical pipeline on LOCOMO N=1986 at `gpt-4o` reader, no tuning changes. Aggregate: 49.9% [47.7, 52.1] at $0.0123/correct. About 16 points below Mem0's claimed LOCOMO range of 66-68%. Per-category:
 
 | Category | N | Accuracy |
 |---|---:|---:|
@@ -209,22 +209,22 @@ Four LOCOMO configurations at N=1986, gpt-4o reader, seed=42:
 
 | LOCOMO config | Accuracy | 95% CI | $/correct | Avg latency | Δ vs OOD |
 |---|---:|---|---:|---:|---:|
-| **K=20 alone (Pareto-best LOCOMO tuning)** | **51.5%** | [49.2, 53.7] | **$0.0099** | 1.45 s | +1.6 pp |
+| **K=20 alone (Pareto-best LOCOMO tuning)** | **51.5%** | [49.2, 53.7] | **$0.0099** | 1.45 s | +1.6 points |
 | K=10 baseline (Stage F-1 OOD, no tuning) | 49.9% | [47.7, 52.1] | $0.0123 | 2.58 s | reference |
-| K=20 + `--no-abstention` | 47.3% | [45.2, 49.5] | $0.0107 | 1.20 s | -2.6 pp |
-| `--no-abstention` alone at K=10 | 42.1% | [40.0, 44.3] | $0.0082 | 1.19 s | -7.8 pp |
+| K=20 + `--no-abstention` | 47.3% | [45.2, 49.5] | $0.0107 | 1.20 s | -2.6 points |
+| `--no-abstention` alone at K=10 | 42.1% | [40.0, 44.3] | $0.0082 | 1.19 s | -7.8 points |
 
-The mechanism: when the `--no-abstention` directive reaches the reader, **adversarial accuracy collapses**: 83.4% → 56.5% at K=10 (-26.9 pp), 83.4% → 54.3% at K=20 (-29.1 pp). LOCOMO is 22.5% adversarial cases by count, so the adversarial loss outweighs everything else in aggregate. Per category at K=20 + `--no-abstention`:
+The mechanism: when the `--no-abstention` directive reaches the reader, **adversarial accuracy collapses**: 83.4% → 56.5% at K=10 (-26.9 points), 83.4% → 54.3% at K=20 (-29.1 points). LOCOMO is 22.5% adversarial cases by count, so the adversarial loss outweighs everything else in aggregate. Per category at K=20 + `--no-abstention`:
 
 | Category | n | OOD baseline | K=20 + --no-abstention | Δ |
 |---|---:|---:|---:|---:|
-| temporal | 96 | 27.1% | 40.6% | +13.5 pp |
-| open-domain | 841 | 48.5% | 55.2% | +6.7 pp |
-| single-hop | 282 | 20.6% | 22.3% | +1.7 pp |
-| multi-hop | 321 | 39.6% | 41.1% | +1.5 pp |
-| adversarial | 446 | 83.4% | 54.3% | **-29.1 pp** |
+| temporal | 96 | 27.1% | 40.6% | +13.5 points |
+| open-domain | 841 | 48.5% | 55.2% | +6.7 points |
+| single-hop | 282 | 20.6% | 22.3% | +1.7 points |
+| multi-hop | 321 | 39.6% | 41.1% | +1.5 points |
+| adversarial | 446 | 83.4% | 54.3% | **-29.1 points** |
 
-`--no-abstention` is a category-specific tuning knob, not a Pareto improvement. For workloads with no adversarial questions that need refusal, the temporal +13.5 pp and open-domain +6.7 pp gains are real. On LOCOMO's distribution, the adversarial -29 pp wipes them out.
+`--no-abstention` is a category-specific tuning knob, not a Pareto improvement. For workloads with no adversarial questions that need refusal, the temporal +13.5 points and open-domain +6.7 points gains are real. On LOCOMO's distribution, the adversarial -29 points wipes them out.
 
 The Pareto-best LOCOMO tuning is **K=20 retrieval alone**: 51.5% [49.2, 53.7] at $0.0099/correct, 1.45 s avg. The `--no-abstention` row stays in the table as a transparent regression so readers see the trade-off explicitly.
 
@@ -244,10 +244,10 @@ Penfield Labs found 62.81% FPR on LOCOMO's default judge (`gpt-4o-mini` with the
 
 Cost: $0.04. Elapsed: 167 seconds. Standalone script at [`src/scripts/stage-g-locomo-judge-fpr-probe.ts`](https://github.com/framersai/agentos-bench/blob/master/src/scripts/stage-g-locomo-judge-fpr-probe.ts).
 
-Two conclusions from the 63 pp gap between Penfield's LOCOMO FPR and ours:
+Two conclusions from the 63 points gap between Penfield's LOCOMO FPR and ours:
 
-1. **AgentOS LOCOMO numbers (49.9% OOD, 51.5% K=20 tuned, 47.3% K=20 + `--no-abstention` corrected) are not judge-inflated at our rubric's strictness.** The 14.5-16.5 pp gap to Mem0's claimed 66-68% is not sitting on judge noise floor on our side.
-2. **LOCOMO's default judge + rubric is the FPR source, not LOCOMO's gold-answer format.** The short entity-style gold answers are perfectly judge-able when the rubric is strict and the judge model is current-generation. Any published LOCOMO score that ran the default `gpt-4o-mini` judge is sitting on 30-60 pp of accepted-wrong-answer noise by Penfield's measurement. That is a warning about how to interpret every LOCOMO number in the space, including Mem0's.
+1. **AgentOS LOCOMO numbers (49.9% OOD, 51.5% K=20 tuned, 47.3% K=20 + `--no-abstention` corrected) are not judge-inflated at our rubric's strictness.** The 14.5-16.5 points gap to Mem0's claimed 66-68% is not sitting on judge noise floor on our side.
+2. **LOCOMO's default judge + rubric is the FPR source, not LOCOMO's gold-answer format.** The short entity-style gold answers are perfectly judge-able when the rubric is strict and the judge model is current-generation. Any published LOCOMO score that ran the default `gpt-4o-mini` judge is sitting on 30-60 points of accepted-wrong-answer noise by Penfield's measurement. That is a warning about how to interpret every LOCOMO number in the space, including Mem0's.
 
 We cannot, from our side, prove that Mem0's 66-68% is judge-inflated. That would require replicating Mem0 through our harness. What we can prove: on our rubric, LOCOMO is judge-able at a false-positive floor of 0%. Any vendor who wants to claim a LOCOMO number should publish their judge model, their rubric, and their FPR probe output. The gap between "we ran the benchmark" and "we validated the judge" is the gap between a claim and a measurement.
 
@@ -270,8 +270,8 @@ Mastra's 84.23% LongMemEval-S at `gpt-4o` reader uses `gemini-2.5-flash` as the 
 
 | Category | Baseline (`gpt-5-mini` observer, Tier 2b v11 N=500) | `gpt-4o` observer | Δ |
 |---|---:|---:|---:|
-| single-session-user | 98.6% | 92.0% | -6.6 pp |
-| multi-session | 61.7% | 53.0% | -8.7 pp |
+| single-session-user | 98.6% | 92.0% | -6.6 points |
+| multi-session | 61.7% | 53.0% | -8.7 points |
 
 Upgrading the observer model to a stronger LLM hurts both categories. The `gpt-5-mini` observer's looser extraction preserves dense specifics that the reader needs. Cost of the negative run: $102.58.
 
@@ -294,7 +294,7 @@ We ran the probe on LongMemEval-S: 100 randomly sampled cases (seed=42), synthes
 
 The gap between our 1% on LongMemEval-S and Penfield's 62.81% on LOCOMO is big enough to deserve two explanations. First, LOCOMO gold answers are often short entity-style strings ("Sweden", "beach, mountains, forest") where topical-adjacent distractors land inside the judge's tolerance band. LongMemEval-S gold answers are usually complete propositions, which makes topical distractors easier to reject. Second, the `rubricVersion 2026-04-18.1` is stricter than whatever rubric Penfield's audit subject used. Rubric strictness is a first-order FPR variable.
 
-Either way, on LongMemEval-S the 76.6% is not meaningfully inflated by judge false-positives. The judge's noise floor (1-3%) is well below the bootstrap CI on the accuracy number (±4 pp at n=500). Score differences above that bound are interpretable. The 100-probe run cost $0.05 and took 174 seconds. The standalone script is at [`src/scripts/stage-g-judge-fpr-probe.ts`](https://github.com/framersai/agentos-bench/blob/master/src/scripts/stage-g-judge-fpr-probe.ts). Any vendor who wants to reproduce this on their own benchmark can fork it in ten minutes.
+Either way, on LongMemEval-S the 76.6% is not meaningfully inflated by judge false-positives. The judge's noise floor (1-3%) is well below the bootstrap CI on the accuracy number (±4 points at n=500). Score differences above that bound are interpretable. The 100-probe run cost $0.05 and took 174 seconds. The standalone script is at [`src/scripts/stage-g-judge-fpr-probe.ts`](https://github.com/framersai/agentos-bench/blob/master/src/scripts/stage-g-judge-fpr-probe.ts). Any vendor who wants to reproduce this on their own benchmark can fork it in ten minutes.
 
 This is the probe every memory-library publication should run and none of the eight vendors in our methodology audit did.
 

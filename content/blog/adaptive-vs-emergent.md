@@ -23,12 +23,6 @@ The second kind is *emergent*: complex behavior arises from interactions between
 
 These are different mechanisms. They live in different parts of the runtime. They have different observability. Pretending they're the same thing produces frameworks that do neither well. AgentOS treats them separately and ships both.
 
-## Two Forms of Intelligence in AI Agent Systems
-
-AI agent frameworks face a design tension: agents need to be reliable enough for production but flexible enough to handle novel situations. [AgentOS](https://agentos.sh) resolves this by implementing two distinct forms of intelligence at the runtime level, each with its own mechanisms and safety boundaries.
-
-Research on [emergent behavior in multi-agent systems](https://www.adopt.ai/blog/multi-agent-frameworks) shows that 2026 is characterized by mature orchestration layers and sophisticated coordination mechanisms that enable genuinely emergent behaviors. AgentOS provides both adaptive (individual) and emergent (collective) intelligence in a single runtime.
-
 ## Adaptive Intelligence
 
 Adaptive intelligence is behavioral modification driven by explicit signals: feedback loops, environmental constraints, and measurable outcomes. The agent changes *how* it operates within a fixed set of capabilities.

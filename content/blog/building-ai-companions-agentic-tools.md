@@ -15,7 +15,7 @@ keywords: "build AI companion TypeScript, AI companion with memory, agentic tool
 
 The companion product on [wilds.ai](https://wilds.ai) was the first AgentOS deployment we built where the user explicitly cares about continuity. A simulator like Mars Genesis runs once, produces an artifact, and the user inspects it. A companion runs forever, in the background, and the user expects the entity on the other end to remember that they had a fight on Tuesday and that their mom is named Cara.
 
-The mechanical implication is that every component of the runtime that *might* persist needs to actually persist. Memory. Personality drift. Tool affordances. Provider preferences. None of this is special-case code; it's the runtime working as designed. But "designed for continuity" is the thing that distinguishes a companion stack from a chat-completion API call. This post is the implementation walk.
+The mechanical implication is that every component of the runtime that *might* persist needs to actually persist. Memory. Personality drift. Tool affordances. Provider preferences. None of this is special-case code; it's the runtime working as designed. "Designed for continuity" is what separates a companion stack from a chat-completion API call. This post is the implementation walk.
 
 This post walks through building an AI companion with persistent memory, 11 agentic tools, and a quantified personality system. Everything here runs in production on [wilds.ai](https://wilds.ai). The full companion system is open source via [AgentOS](https://agentos.sh).
 
