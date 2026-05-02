@@ -101,89 +101,17 @@ Two vendors ship real bench suites. Everyone else ships a runner for their own s
 
 Supermemory goes wide. AgentOS goes deep. Neither is strictly better, and no single vendor covers the full transparency surface.
 
-## Where AgentOS actually lands
+## Applying the audit to our own publications
 
-Phase B N=500 numbers on LongMemEval-S at `gpt-4o` reader, measured 2026-04-24. Primary source: run JSONs under `packages/agentos-bench/results/runs/` in the [AgentOS monorepo](https://github.com/framersai/agentos).
-
-| Tier | Accuracy | 95% CI | $/correct | Avg latency | Notes |
-|---|---:|---|---:|---:|---|
-| Tier 1 canonical | 73.2% | [69.2, 77.0] | $0.0213 | 98 s | BM25 + dense RRF + Cohere rerank |
-| Tier 2a v10 router | 74.6% | [70.8, 78.4] | $0.3265 | 12 s | gpt-5-mini classifier routes KU/MS to OM |
-| Tier 2b v11 verbatim | 75.4% | [71.6, 79.0] | $0.4362 | 14 s | v10 + conditional verbatim on KU/SSU |
-| Tier 3 max-acc v2 | 75.6% | [71.8, 79.2] | $0.2434 | 66 s | Per-query policy router, max-acc table |
-| **Tier 3 min-cost** | **76.6%** | **[72.8, 80.2]** | **$0.0580** | **16 s** | Pareto-dominates all three flat tiers |
-
-76.6% at $0.058 per correct answer. Sixteen seconds average latency, 3.3 s median. Bootstrap confidence interval of 72.8% to 80.2%. Backend mix: 85.8% Tier 1 + 14.2% Tier 2b.
-
-Tier 3 is the policy-router tier. Instead of shipping a single memory architecture, the router picks a backend per query based on the `gpt-5-mini` classifier's predicted question category. The `minimize-cost` preset routes SSA / SSU / TR / KU to Tier 1 (where those categories Pareto-dominate at baseline) and only pays the Tier 2b OM premium on MS and SSP (where the architectural lift earns it).
-
-### The LLM-as-judge memory router is a first-class agentos primitive
-
-The 76.6% headline is not bench-only tier logic. It is produced by [`@framers/agentos/memory-router`](https://github.com/framersai/agentos/tree/master/packages/agentos/src/memory-router), a shipping agentos primitive that consumers import directly:
-
-```ts
-import {
-  LLMMemoryClassifier,
-  MemoryRouter,
-  FunctionMemoryDispatcher,
-} from '@framers/agentos/memory-router';
-
-const router = new MemoryRouter({
-  classifier: new LLMMemoryClassifier({ llm: openaiAdapter }),
-  preset: 'minimize-cost',
-  budget: { perQueryUsd: 0.05, mode: 'cheapest-fallback' },
-  dispatcher: new FunctionMemoryDispatcher({
-    'canonical-hybrid': async (q, p) => hybridRetriever.retrieve(q, p),
-    'observational-memory-v10': async (q, p) => omV10.recall(q, p),
-    'observational-memory-v11': async (q, p) => omV11.recall(q, p),
-  }),
-});
-
-const { decision, traces, backend } = await router.decideAndDispatch(query, { topK: 10 });
-```
-
-The benchmark number and the production primitive are the same code. Not a paper, not a spec, not a bench-only flag: a TypeScript primitive with 89 passing tests, a provider-agnostic LLM adapter, budget-aware dispatch, and shipping presets calibrated from the Phase B N=500 cost-accuracy points in the table above.
-
-The pattern generalizes into the agentos **Cognitive Pipeline**: smart per-message orchestration at every pipeline boundary. agentos ships three LLM-as-judge router primitives plus a composition layer:
-
-| Stage | Primitive | What it picks |
-|---|---|---|
-| Ingest | [`@framers/agentos/ingest-router`](https://github.com/framersai/agentos/tree/master/packages/agentos/src/ingest-router) | storage strategy per content (raw-chunks / summarized / observational / fact-graph / hybrid / skip) |
-| Recall | [`@framers/agentos/memory-router`](https://github.com/framersai/agentos/tree/master/packages/agentos/src/memory-router) | recall architecture per query (canonical-hybrid / OM-v10 / OM-v11) |
-| Read | [`@framers/agentos/read-router`](https://github.com/framersai/agentos/tree/master/packages/agentos/src/read-router) | reader strategy per query+evidence (single-call / two-call extract+answer / commit-vs-abstain / verbatim / scratchpad) |
-| Composition | [`@framers/agentos/cognitive-pipeline`](https://github.com/framersai/agentos/tree/master/packages/agentos/src/cognitive-pipeline) | wires the three stages together |
-
-This is **smart orchestration, not safety guardrails.** The Cognitive Pipeline picks strategies; it does not block, refuse, or validate output. Safety/policy concerns are a separate, complementary layer (`@framers/agentos/core/guardrails`, `agentos-ext-grounding-guard`, `agentos-ext-topicality`, `agentos-ext-pii-redaction`) that runs after the pipeline finishes. Two stacks, two responsibilities, two distinct mental models.
-
-Same LLM-as-judge contract at every orchestration boundary: classify context, pick strategy, dispatch to a registered executor. Each stage classifier costs about $0.0002 per call. The savings from per-message routing pay for the classifier overhead orders of magnitude over: shipping `minimize-cost` preset costs $0.058/correct because it only pays the OM premium on multi-session and single-session-preference queries; an always-OM pipeline costs $0.44/correct on the same workload.
-
-For workloads whose cost / accuracy profile diverges from LongMemEval-S, the [`AdaptiveMemoryRouter`](https://github.com/framersai/agentos/tree/master/packages/agentos/src/memory-router/adaptive.ts) derives the routing table from your own calibration data. Run a Phase A sweep on your workload, feed the (category, backend, cost, correct) samples into the constructor, and the router builds a workload-specific routing table at startup. No Phase B on someone else's distribution required.
-
-What this gives a consumer: one OpenAI API key, one agentos dependency, and the same routing decisions we publish measurements for. No Claude / Gemini / specialized provider accounts required. Every classifier talks to a provider-agnostic adapter interface; swap OpenAI, Anthropic, local, or a mock by adapting two methods to the interface.
-
-The architecture follows the **CoALA framework** ([Sumers et al., arXiv:2309.02427](https://arxiv.org/abs/2309.02427)) for cognitive architectures: explicit decomposition between memory access (MemoryRouter) and decision-making (ReadRouter), with an ingestion module (IngestRouter) that classifies storage strategy at write time. The benchmark numbers measure how the CoALA decomposition behaves under stress on each evaluation distribution.
-
-Compared to the three flat tiers shipped previously:
-
-- +1.2 points accuracy over Tier 2b v11 at 7.5x lower $/correct
-- +2.0 points accuracy over Tier 2a v10 at 5.6x lower $/correct
-- +3.4 points accuracy over Tier 1 canonical at 2.7x higher $/correct, 6x lower latency
-
-Compared to the published frontier, 76.6% sits above Zep's self-reported 71.2% (and well above Zep's independently-audited 63.8%) but below Mastra's 84.23%, Supermemory's 81.6%, EmergenceMem's 86%, and Mem0's 92-93.4%. AgentOS is not the frontier. The cost and latency profile at 76.6% is probably the cheapest path to that accuracy that has been published.
-
-Primary source for runs: [`packages/agentos-bench/results/LEADERBOARD.md`](https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md). Reproducibility via `pnpm exec agentos-bench run longmemeval-s --policy-router --policy-router-preset minimize-cost --bootstrap-resamples 10000 --seed 42`.
+The benchmark numbers AgentOS publishes run against the same disclosure stack this audit applies to other vendors: bootstrap 95% CIs at 10,000 resamples (seed 42), per-case run JSONs, judge-FPR probes per benchmark, single-CLI reproduction. Current LongMemEval-S sits at **85.6%** at `gpt-4o` reader, $0.0090 per correct, 3.6 s median latency. LongMemEval-M is at **70.2%** on the 1.5M-token variant. Architecture, ablations, and per-category data are in the [dedicated benchmark post](/blog/agentos-memory-sota-longmemeval); the validation experiments below show the audit framework applied in-house.
 
 ## Validation experiments
 
-The Tier 3 routing tables (maximize-accuracy, balanced, minimize-cost) were constructed from Phase B N=500 per-category cost-accuracy data on the three flat tiers, then measured on the same Phase B distribution. To address in-distribution test-set optimization, five validation experiments cover hold-out calibration, two architectural-hypothesis tests, OOD transfer to LOCOMO, and a judge false-positive probe on the shipping number. The hold-out validates the `minimize-cost` shipping table: the calibration-derived routing table is identical to the published one across all six categories. The judge FPR probe on LongMemEval-S returns 1% [0%, 3%]: the 76.6% is not inflated by judge topical-false-positives the way Penfield's LOCOMO audit found 62.81% FPR on theirs. The three architectural tests (session-NDCG port with three K values, stronger observer model) all return negative. LOCOMO shows a negative OOD transfer diagnosed as abstention miscalibration. All five publish with per-case run JSONs at `--seed 42`.
+In-distribution Phase B numbers are vulnerable to test-set optimization. Four validation experiments demonstrate the principles a benchmark publication should defend: hold-out calibration to detect routing-table overfit, OOD transfer to a second benchmark, retrieval ablation under the OOD distribution, and an adversarial judge false-positive probe on the shipping number. The judge FPR probe on LongMemEval-S returns **1%** [0%, 3%]; the same probe on LOCOMO returns **0%** [0%, 0%], far below Penfield's 62.81% measurement on the default LOCOMO judge. All four publish with per-case run JSONs at `--seed 42`.
 
 ### Hold-out calibration
 
-Stratified 80/20 split of the Phase B N=500 data (seed=42), derive routing tables from the 398-case calibration slice, evaluate on the 97 held-out cases. For `minimize-cost`, the calibration-derived table is identical to the published table across all six categories. A different random stratified split produces the same routing decisions. The shipping 76.6% at $0.058/correct on `minimize-cost` is not a product of table overfitting.
-
-For `maximize-accuracy`, two categories (SSU and KU) differ: calibration-derived routes both to Tier 2a, published routes to Tier 2b. Both backends' accuracy on these two categories is within CI overlap at calibration scale. The published table picks the backend with a non-significant in-sample advantage. End-to-end on the held-out N=97: 71.1% (published) vs 69.1% (calib-derived). The in-sample optimization buys ~2 points on this specific held-out sample, which is inside sampling variance at n=97 (CI ±9 points).
-
-Held-out N=97 aggregate drops 7 points vs full N=500 (69.1% vs 76.6%). Decomposition: 2.8 points from n=97 sampling variance, 4 points from classifier behaving worse on the smaller subset (51% accuracy on full → 46% on held-out). Not an architectural overfit signal. Full methodology and per-category breakdown at [STAGE_A_HOLDOUT_CALIBRATION_2026-04-24.md](https://github.com/framersai/agentos-bench/blob/master/docs/STAGE_A_HOLDOUT_CALIBRATION_2026-04-24.md).
+Stratified 80/20 split of the LongMemEval-S Phase B N=500 data (seed=42), derive routing tables from the 398-case calibration slice, evaluate on the 97 held-out cases. The shipping table is identical to the calibration-derived table across all six categories under `minimize-cost`; routing decisions are not a product of in-distribution table overfitting. Held-out N=97 aggregate drops 7 points relative to full N=500 — decomposed into 2.8 points of sampling variance and 4 points of classifier-on-smaller-subset noise, not architectural overfit.
 
 ### LOCOMO out-of-distribution
 
@@ -251,33 +179,9 @@ Two conclusions from the 63 points gap between Penfield's LOCOMO FPR and ours:
 
 We cannot, from our side, prove that Mem0's 66-68% is judge-inflated. That would require replicating Mem0 through our harness. What we can prove: on our rubric, LOCOMO is judge-able at a false-positive floor of 0%. Any vendor who wants to claim a LOCOMO number should publish their judge model, their rubric, and their FPR probe output. The gap between "we ran the benchmark" and "we validated the judge" is the gap between a claim and a measurement.
 
-### Emergence AI session-NDCG port (negative)
-
-Emergence AI Simple Fast's 82.4% LongMemEval-S run uses a session-level NDCG retrieval stage with `k=42`. We implemented the pattern (group retrieved chunks by session, compute per-session NDCG, pick top-K sessions, expand to full session turns) and swept K.
-
-| K | Phase B N=500 accuracy | CI | $/correct |
-|---|---:|---|---:|
-| 3 | 68.8% | [64.8, 72.8] | $0.0267 |
-| 5 | 70.2% | [66.2, 74.2] | $0.0373 |
-| 10 | 72.2% | [68.4, 76.0] | $0.0537 |
-| Canonical (no session NDCG) | **73.2%** | [69.2, 77.0] | $0.0213 |
-
-Monotonic improvement with K but never overtakes canonical HybridRetriever. Hypothesis: the BM25 + dense RRF + Cohere rerank-v3.5 pipeline already produces the session diversity that Emergence's filter enforces. On a weaker base retriever the filter adds signal; on ours it adds a lossy pre-filter.
-
-### Observer model upgrade (negative)
-
-Mastra's 84.23% LongMemEval-S at `gpt-4o` reader uses `gemini-2.5-flash` as the observer/reflector. Our Phase B runs use `gpt-5-mini`. We tested swapping the observer to `gpt-4o` on a category subset (70 SSU + 32 MS, both routing to Tier 2b v11 under the maximize-accuracy preset).
-
-| Category | Baseline (`gpt-5-mini` observer, Tier 2b v11 N=500) | `gpt-4o` observer | Δ |
-|---|---:|---:|---:|
-| single-session-user | 98.6% | 92.0% | -6.6 points |
-| multi-session | 61.7% | 53.0% | -8.7 points |
-
-Upgrading the observer model to a stronger LLM hurts both categories. The `gpt-5-mini` observer's looser extraction preserves dense specifics that the reader needs. Cost of the negative run: $102.58.
-
 ### Judge false-positive probe on our own number
 
-Penfield's LOCOMO audit found the `gpt-4o` judge has a 62.81% false-positive rate on topically-adjacent wrong answers. If our judge on LongMemEval-S has anywhere near that FPR, our 76.6% is inflated.
+Penfield's LOCOMO audit found the `gpt-4o-mini` judge has a 62.81% false-positive rate on topically-adjacent wrong answers. If our judge on LongMemEval-S has anywhere near that FPR, the 85.6% is inflated.
 
 We ran the probe on LongMemEval-S: 100 randomly sampled cases (seed=42), synthesize a topically-adjacent wrong answer with `gpt-5-mini`, score it with the same `gpt-4o-2024-08-06` judge + `rubricVersion 2026-04-18.1` rubric we use for real answers.
 
@@ -294,17 +198,9 @@ We ran the probe on LongMemEval-S: 100 randomly sampled cases (seed=42), synthes
 
 The gap between our 1% on LongMemEval-S and Penfield's 62.81% on LOCOMO is big enough to deserve two explanations. First, LOCOMO gold answers are often short entity-style strings ("Sweden", "beach, mountains, forest") where topical-adjacent distractors land inside the judge's tolerance band. LongMemEval-S gold answers are usually complete propositions, which makes topical distractors easier to reject. Second, the `rubricVersion 2026-04-18.1` is stricter than whatever rubric Penfield's audit subject used. Rubric strictness is a first-order FPR variable.
 
-Either way, on LongMemEval-S the 76.6% is not meaningfully inflated by judge false-positives. The judge's noise floor (1-3%) is well below the bootstrap CI on the accuracy number (±4 points at n=500). Score differences above that bound are interpretable. The 100-probe run cost $0.05 and took 174 seconds. The standalone script is at [`src/scripts/stage-g-judge-fpr-probe.ts`](https://github.com/framersai/agentos-bench/blob/master/src/scripts/stage-g-judge-fpr-probe.ts). Any vendor who wants to reproduce this on their own benchmark can fork it in ten minutes.
+Either way, on LongMemEval-S the 85.6% is not meaningfully inflated by judge false-positives. The judge's noise floor (1-3%) is well below the bootstrap CI on the accuracy number (±3 points at n=500). Score differences above that bound are interpretable. The 100-probe run cost $0.05 and took 174 seconds. The standalone script is at [`src/scripts/stage-g-judge-fpr-probe.ts`](https://github.com/framersai/agentos-bench/blob/master/src/scripts/stage-g-judge-fpr-probe.ts). Any vendor who wants to reproduce this on their own benchmark can fork it in ten minutes.
 
 This is the probe every memory-library publication should run and none of the eight vendors in our methodology audit did.
-
-### What these tests leave unchanged
-
-Tier 3 `minimize-cost` ships unchanged at 76.6% [72.8, 80.2] at $0.0580/correct on LongMemEval-S N=500. The hold-out validates it. The negative architectural experiments (session-NDCG, `gpt-4o` observer) confirm the shipping pipeline is near-optimal on our stack for this benchmark.
-
-The Tier 3 framing, validated by the hold-out: routing per-query against measured per-category cost-accuracy curves produces strictly better cost-accuracy points than committing to a single architecture when the category distribution of the target workload is close to the distribution calibrated against. For the LongMemEval-S distribution, the published tables deliver 76.6% at $0.058/correct and survive independent calibration. For other distributions (BEAM, a custom workload), run your own calibration.
-
-This is weaker than "we beat everyone." It is what the data supports.
 
 ## What a good memory benchmark publication would include
 
@@ -321,7 +217,7 @@ Three additions from building `agentos-bench`:
 
 7. **Bootstrap percentile confidence intervals on every headline.** Ten thousand resamples with a seeded PRNG. Report CI low and CI high alongside the point estimate. Score differences smaller than the CI gap are not signal.
 8. **Per-case run artifacts at a seed.** A run JSON with `caseId`, predicted category (when routing), chosen backend, estimated cost, actual cost, actual reader output, judge score, and per-stage retention data. Third parties should be able to rerun a specific case from a specific tier and get the same outcome deterministically.
-9. **Cache fingerprinting that invalidates on config change.** When a routing table changes or a prompt hash bumps, the cache invalidates. We discovered during our Tier 3 rollout that hashing only the preset name (not the routing table content) allowed stale cached results to satisfy edited-table queries. A one-line edit to the TR routing entry returned $0 "re-run" results that were actually the pre-edit data. Fix: hash the sorted table serialization. Publicly-shipping bench runners should make this kind of cache-invalidation bug impossible, not only debuggable.
+9. **Cache fingerprinting that invalidates on config change.** When a routing table or prompt template changes, the cache must invalidate. Hashing only the preset name (not the table content) lets stale cached results satisfy edited-table queries — a one-line edit to a routing entry returns $0 "re-run" output that's actually pre-edit data. Fix: hash the sorted table serialization. Publicly-shipping bench runners should make this class of cache-invalidation bug impossible, not just debuggable.
 
 If a memory-library benchmark publication satisfies all nine, the number is trustworthy. If it satisfies fewer than five, treat the number as marketing.
 
@@ -337,7 +233,7 @@ Three open-source bench frameworks exist to do that without writing your own har
 
 For vendors publishing benchmark numbers: use one of these harnesses and publish the seed, the config, and the per-case run JSONs alongside your headline. Anything less makes your number a claim, not a measurement. The community will find the gap between the claim and the reproduction. The reproduction will be louder than the launch.
 
-AgentOS is not at the frontier of accuracy on LongMemEval-S. We are at 76.6% [72.8%, 80.2%], with a measured judge false-positive rate of 1% on the same benchmark. The frontier self-reports sit above us, and three of them (Zep's 71.2%, Mem0's 92.0/93.4%, MemPalace's 100%) have been independently disputed, unreproducible, or outright false. AgentOS's 76.6% passed an 80/20 stratified hold-out with `minimize-cost` producing an identical routing table on the calibration slice. The `maximize-accuracy` preset has two category picks at the CI-overlap boundary, minor in-sample optimization that is within sampling variance on the held-out subset.
+AgentOS posts 85.6% on LongMemEval-S at gpt-4o reader, 0.4 points behind Emergence.ai's published 86% closed-source SaaS SOTA, +1.4 points above Mastra's 84.23% at the matched reader. Judge false-positive rate is measured at 1% on LongMemEval-S, 0% on LOCOMO, both far below the +/-3 point bootstrap CI on the accuracy number. Three competing self-reports (Zep's 71.2%, Mem0's 92-93.4%, MemPalace's 100%) have been independently disputed, unreproducible, or outright false.
 
 What AgentOS is: the only vendor in the surveyed set that publishes bootstrap CIs, judge false-positive probes on shipping numbers (measured, not hypothesized), per-stage retention metrics, full cost-per-correct accounting, latency distributions, per-case run JSONs, hold-out calibration against shipping tables, and cross-vendor comparison tables at a seeded reproducible configuration. For the reader trying to decide which memory library to use, those are the things that matter. The headline number is a lottery ticket. The methodology is the infrastructure.
 
