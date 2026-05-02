@@ -414,12 +414,11 @@ console.log(object)
 // => { name: "iPhone Review", sentiment: "mixed",
 //      topics: ["camera", "battery"], confidence: 0.92 }
 
-// Works with any provider — just swap the provider string. Use a higher max
-// token budget for nested-array schemas so the model can finish the JSON.
+// Works with any provider — swap the provider string. The output budget
+// auto-sizes from the schema shape, so nested arrays don't truncate.
 const { object: recipe } = await generateObject({
   provider: 'openai',
-  model: 'gpt-4o',                 // gpt-4o-mini truncates on schemas this nested
-  maxTokens: 1024,
+  model: 'gpt-4o',
   schema: z.object({
     title: z.string(),
     ingredients: z.array(z.string()),    // flat strings stay reliable across providers
