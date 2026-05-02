@@ -52,12 +52,13 @@ const calculatorTool = {
   },
 }
 
-// Create an agent — just set the provider, AgentOS picks the best model
+// Create an agent — provider picks the default model, override with model: when needed
 const mathAgent = agent({
-  provider: 'anthropic',           // or 'openai', 'gemini', etc. (16 supported)
+  provider: 'anthropic',                       // or 'openai', 'gemini', etc. (16 supported)
+  model: 'claude-haiku-4-5-20251001',          // optional: omit to use the provider default
   instructions: 'You are a helpful math assistant. Use the calculator tool.',
-  tools: [calculatorTool],         // agent auto-selects the right tool per step
-  maxSteps: 5,                     // cap agentic loops at 5 iterations
+  tools: [calculatorTool],                     // agent auto-selects the right tool per step
+  maxSteps: 5,                                 // cap agentic loops at 5 iterations
 })
 
 // .generate() runs the full tool-use loop and returns the final answer
@@ -79,16 +80,19 @@ const researchTeam = agency({
   memory: { shared: true },       // agents share conversation context
   agents: {
     researcher: {
-      provider: 'anthropic',      // Claude for deep reasoning
+      provider: 'anthropic',                       // Claude for deep reasoning
+      model: 'claude-sonnet-4-5-20250929',
       instructions: 'Find accurate, well-sourced information on the topic.',
     },
     writer: {
-      provider: 'openai',         // GPT for natural prose
+      provider: 'openai',                          // GPT for natural prose
+      model: 'gpt-4o-mini',
       instructions: 'Write a clear, well-structured article for professionals.',
-      dependsOn: ['researcher'],  // runs after researcher finishes
+      dependsOn: ['researcher'],                   // runs after researcher finishes
     },
     reviewer: {
-      provider: 'gemini',         // Gemini for cross-checking facts
+      provider: 'gemini',                          // Gemini for cross-checking facts
+      model: 'gemini-2.5-flash',
       instructions: 'Review the article for accuracy, clarity, and tone.',
       dependsOn: ['writer'],
     },
@@ -116,6 +120,7 @@ console.log(result.agentCalls)     // trace of which agent did what
 // Personality traits (HEXACO model) shape tone, verbosity, creativity
 const tutor = agent({
   provider: 'anthropic',
+  model: 'claude-sonnet-4-5-20250929',
   instructions: 'You are a patient computer science tutor.',
   personality: {
     openness: 0.9,                // creative, exploratory answers
@@ -151,34 +156,31 @@ console.log(\`Total tokens: \${usage.totalTokens}\`)`
     description: t('examples.toolIntegration.description'),
     language: 'typescript',
     category: 'integration',
-    code: `import { agent } from '@framers/agentos'
+    code: `import { Memory, agent } from '@framers/agentos'
 
-// RAG agent — ingest documents, retrieve with HyDE before answering
+// Memory owns ingest + retrieval. Pass plain text, file paths, directories,
+// or URLs — chunking + embedding happens automatically.
+const mem = await Memory.createSqlite({ path: './brain.sqlite' })
+
+await mem.ingest('Q4 revenue grew 23% YoY to $4.2B driven by cloud services...')
+await mem.ingest('./earnings-report.pdf')
+await mem.ingest('./competitor-analysis.csv')
+
+// Wire the memory to an agent — the agent calls mem.recall() automatically
+// before generating an answer when the prompt looks retrieval-bound.
 const analyst = agent({
   provider: 'openai',
-  instructions: 'You are a financial analyst. Answer using provided documents.',
-  rag: {
-    enabled: true,                // activate retrieval-augmented generation
-    mode: 'aggressive',           // always retrieves before answering
-    topK: 10,                     // return top 10 matching chunks
-    strategy: 'hyde',             // hypothetical document embeddings for better recall
-  },
+  model: 'gpt-4o-mini',
+  instructions: 'You are a financial analyst. Cite passages from memory.',
+  memory: mem,
 })
 
-// Open a session and ingest source material
-const session = analyst.session('q4-review')
-
-// Ingest plain text or files — chunking + embedding happens automatically
-await session.ingest('Q4 revenue grew 23% YoY to $4.2B driven by cloud services...')
-await session.ingest({ type: 'file', path: './earnings-report.pdf' })
-await session.ingest({ type: 'file', path: './competitor-analysis.csv' })
-
-// The agent retrieves relevant passages before generating its answer
-const answer = await session.send('What drove revenue growth in Q4?')
+const answer = await analyst.generate('What drove revenue growth in Q4?')
 console.log(answer.text)          // cites specific passages from ingested docs
 console.log(answer.sources)       // which chunks were retrieved
 
-// Works with 10 document loaders, 3 PDF tiers, 4 chunking strategies`
+// Works with 10 document loaders, 3 PDF tiers, 4 chunking strategies.
+await mem.close()`
   },
   {
     id: 'skills-integration',
@@ -212,7 +214,8 @@ const manifest = await createCuratedManifest({
 
 // --- Option 1: Stateless streaming (no agent, no memory) ---
 const stream = streamText({
-  provider: 'openai',             // provider handles model selection
+  provider: 'openai',
+  model: 'gpt-4o-mini',           // omit to use the provider's default
   prompt: 'Explain quantum computing in simple terms',
 })
 
@@ -228,7 +231,8 @@ console.log('\\nTokens used:', usage.totalTokens)
 
 // --- Option 2: Agent streaming (with memory + tool calls) ---
 const myAgent = agent({
-  provider: 'anthropic',          // Claude for reasoning
+  provider: 'anthropic',
+  model: 'claude-haiku-4-5-20251001',
   instructions: 'You are a helpful science tutor.',
 })
 
@@ -275,13 +279,14 @@ const research = mission('competitor-analysis')
   .costCap(5.00)                  // hard spending limit in USD
   .compile()
 
-// Stream execution events in real time
+// Stream execution events in real time. Mission uses the graph runtime, so
+// events are graph-shaped: run_start, node_start, node_end, edge_transition,
+// checkpoint_saved, run_end.
 for await (const event of research.stream({ topic: 'vector databases' })) {
-  if (event.type === 'text_delta') process.stdout.write(event.content)
-  if (event.type === 'mission:agent_spawned')
-    console.log(\`\\nAgent: \${event.role} (\${event.provider})\`)
-  if (event.type === 'mission:cost_update')
-    console.log(\`Cost: $\${event.totalSpent.toFixed(2)} / $5.00\`)
+  if (event.type === 'node_start')      console.log(\`\\n[\${event.nodeId}] started\`)
+  if (event.type === 'node_end')        console.log(\`[\${event.nodeId}] done\`)
+  if (event.type === 'edge_transition') console.log(\`-> \${event.target}\`)
+  if (event.type === 'run_end')         console.log('mission complete')
 }
 
 const result = await research.invoke({ topic: 'vector databases' })
@@ -293,13 +298,16 @@ console.log(result.report)        // structured output matching .returns() schem
     description: t('examples.voiceAgent.description'),
     language: 'typescript',
     category: 'integration',
-    code: `import { agent } from '@framers/agentos'
+    code: `// Voice agents need ELEVENLABS_API_KEY (TTS) and DEEPGRAM_API_KEY (STT)
+// in env, plus a working mic. See docs.agentos.sh/features/voice-pipeline.
+import { agent } from '@framers/agentos'
 
 // Voice agent — speaks, listens, and calls tools in real time
 const concierge = agent({
-  provider: 'openai',             // GPT for fast, natural conversation
+  provider: 'openai',
+  model: 'gpt-4o-mini',
   instructions: \`You are a hotel concierge. Help guests with reservations
-    and recommendations. Be warm and concise — you're speaking, not writing.\`,
+    and recommendations. Be warm and concise. You're speaking, not writing.\`,
   tools: [
     {
       name: 'book_restaurant',
@@ -335,45 +343,48 @@ await call.start()                 // begins listening on default mic`
     description: t('examples.orchestrationGraph.description'),
     language: 'typescript',
     category: 'advanced',
-    code: `import { AgentGraph } from '@framers/agentos/orchestration'
+    code: `import { AgentGraph, START, END } from '@framers/agentos/orchestration'
+import { z } from 'zod'
 
-// Build a cyclic review loop: draft -> review -> revise (until quality passes)
-// then human approval gate -> publish. Full graph control with typed edges.
-const reviewPipeline = new AgentGraph('content-review')
+// State schema: input (frozen user input), scratch (node-to-node bag),
+// artifacts (accumulated outputs returned by invoke()).
+const reviewPipeline = new AgentGraph({
+  input:     z.object({ topic: z.string() }),
+  scratch:   z.object({ draft: z.string().optional(), score: z.number().optional() }),
+  artifacts: z.object({ finalPost: z.string().optional() }),
+})
   .addNode('draft', {
     type: 'gmi',
-    instructions: 'Write a blog post about the given topic. Be thorough.',
+    provider: 'anthropic',
+    model: 'claude-haiku-4-5-20251001',
+    instructions: 'Write a short blog post about the given topic.',
   })
   .addNode('review', {
     type: 'judge',
+    provider: 'anthropic',
+    model: 'claude-haiku-4-5-20251001',
     rubric: 'Score 1-10 on accuracy, clarity, engagement. Explain issues.',
     threshold: 7,
   })
   .addNode('revise', {
     type: 'gmi',
+    provider: 'anthropic',
+    model: 'claude-sonnet-4-5-20250929',
     instructions: 'Revise the draft based on the reviewer feedback.',
   })
-  .addNode('approve', {
-    type: 'human',
-    prompt: 'The draft scored 7+. Approve for publication?',
-  })
-  .addNode('publish', {
-    type: 'tool',
-    toolName: 'publish_post',
-  })
-  // Wire the graph — note the cycle: revise loops back to review
+  // Wire the graph — note the cycle: revise loops back to review until score >= 7
+  .addEdge(START, 'draft')
   .addEdge('draft', 'review')
-  .addEdge('review', 'revise', { condition: 'score < 7' })
-  .addEdge('review', 'approve', { condition: 'score >= 7' })
-  .addEdge('revise', 'review')      // cycle until quality passes
-  .addEdge('approve', 'publish')
+  .addConditionalEdge('review', ({ score }) => (score >= 7 ? END : 'revise'))
+  .addEdge('revise', 'review')
   .compile()
 
-// Execute with streaming events
+// Execute with streaming events. Graph emits run_start, node_start, node_end,
+// edge_transition, checkpoint_saved, run_end.
 for await (const event of reviewPipeline.stream({ topic: 'AI agents' })) {
-  if (event.type === 'node_start') console.log(\`\\n[\${event.nodeId}] started\`)
-  if (event.type === 'text_delta') process.stdout.write(event.content)
-  if (event.type === 'interrupt') console.log('\\nWaiting for human approval...')
+  if (event.type === 'node_start')      console.log(\`\\n[\${event.nodeId}] started\`)
+  if (event.type === 'node_end')        console.log(\`[\${event.nodeId}] done\`)
+  if (event.type === 'run_end')         console.log('pipeline complete')
 }`
   },
   {
@@ -388,7 +399,8 @@ import { z } from 'zod'
 // Structured output — extract typed data from unstructured text.
 // The LLM output is validated against the Zod schema automatically.
 const { object } = await generateObject({
-  provider: 'gemini',            // Gemini for fast structured extraction
+  provider: 'openai',
+  model: 'gpt-4o-mini',
   schema: z.object({
     name: z.string(),
     sentiment: z.enum(['positive', 'negative', 'neutral', 'mixed']),
@@ -402,22 +414,26 @@ console.log(object)
 // => { name: "iPhone Review", sentiment: "mixed",
 //      topics: ["camera", "battery"], confidence: 0.92 }
 
-// Works with any provider — just swap the provider string
+// Works with any provider — just swap the provider string. Use a higher max
+// token budget for nested-array schemas so the model can finish the JSON.
 const { object: recipe } = await generateObject({
-  provider: 'anthropic',
+  provider: 'openai',
+  model: 'gpt-4o',                 // gpt-4o-mini truncates on schemas this nested
+  maxTokens: 1024,
   schema: z.object({
     title: z.string(),
-    ingredients: z.array(z.object({
-      name: z.string(),
-      amount: z.string(),
-    })),
+    ingredients: z.array(z.string()),    // flat strings stay reliable across providers
     steps: z.array(z.string()),
     prepTimeMinutes: z.number(),
   }),
-  prompt: 'Give me a recipe for chocolate chip cookies.',
+  prompt: \`Return a chocolate chip cookie recipe as JSON with these fields:
+- title: recipe name (string)
+- ingredients: list of ingredient lines with quantity and item (string array)
+- steps: list of preparation steps (string array)
+- prepTimeMinutes: prep time in minutes (number)\`,
 })
 
-console.log(recipe.title)         // fully typed — recipe.ingredients[0].name works
+console.log(recipe.title)
 console.log(\`Prep: \${recipe.prepTimeMinutes} min\`)`
   },
   {
@@ -457,13 +473,19 @@ wunderland monitor`
     description: t('examples.emergentTools.description'),
     language: 'typescript',
     category: 'advanced',
-    code: `import { agent } from '@framers/agentos'
+    code: `// Emergent tool forging needs the full runtime — use agency() (or AgentOS),
+// the lightweight agent() helper accepts the config but doesn't enforce it.
+import { agency } from '@framers/agentos'
 
-// Enable emergent tool forging — the agent can create
-// new tools at runtime when it encounters capability gaps
-const researcher = agent({
-  provider: 'anthropic',
-  instructions: 'You are a research analyst.',
+const researcher = agency({
+  strategy: 'sequential',
+  agents: {
+    analyst: {
+      provider: 'anthropic',
+      model: 'claude-sonnet-4-5-20250929',
+      instructions: 'You are a research analyst.',
+    },
+  },
   emergent: {
     enabled: true,
     judge: 'strict',          // judge evaluates forged tools before use
@@ -472,17 +494,15 @@ const researcher = agent({
   },
 })
 
-const session = researcher.session('market-analysis')
-
-// The agent may forge a "scrape_financial_data" tool
-// if web_search alone isn't sufficient for the task
-const report = await session.send(
+// The runtime may forge a "scrape_financial_data" tool if web_search alone
+// isn't sufficient for the task.
+const report = await researcher.generate(
   'Analyze Q4 earnings trends for the top 5 AI companies.'
 )
 console.log(report.text)
 
-// Check what tools were forged during the session
-console.log(session.forgedTools())
+// Inspect what tools were forged during this run.
+console.log(report.forgedTools)
 // [{ name: "extract_earnings_table", forgedAt: "...", approved: true }]`
   }
 ]), [t])
