@@ -26,9 +26,16 @@ interface AgentCall {
 interface DemoOutput {
   forge?: { agent: string; approved: boolean; comment?: string }
   finalAnswer?: string
+  finalAnswerLabel?: string
   finalOverride?: string
   streamPreface?: string
   claims?: { verdict: 'supported' | 'weak' | 'unverifiable'; confidence: number; text: string; source: string }[]
+  dagTiers?: { tier: number; agents: { name: string; durationMs: number }[] }[]
+  missionSteps?: { id: string; type: 'gmi' | 'tool'; executor: string }[]
+  missionArtifacts?: Record<string, unknown>
+  missionConfidence?: number
+  busMessages?: { from: string; to: string; status: 'success' | 'error'; preview: string }[]
+  corpusStats?: { chunks: number; topics: number; sources: number; platform: Record<string, number> }
   agentCalls?: AgentCall[]
   usage: { tokens?: number; cost?: string; latency?: string }
 }
@@ -223,6 +230,200 @@ const demos: DemoData[] = [
       </>
     ),
   },
+  {
+    id: 'dag',
+    title: 'Multi-agent DAG with dependencies',
+    exampleSlug: 'examples/agency-graph.mjs',
+    language: 'typescript',
+    code: `import { agency } from '@framers/agentos';
+
+const team = agency({
+  provider: 'openai',
+  strategy: 'graph',  // topo-sorts agents into tiers from dependsOn
+  agents: {
+    researcher: {
+      instructions: 'Gather facts and credible sources. Output a brief.',
+    },
+    writer: {
+      instructions: 'Write a 300-word article from the brief.',
+      dependsOn: ['researcher'],
+    },
+    illustrator: {
+      instructions: 'Describe 3 illustrations for the article.',
+      dependsOn: ['researcher'],
+    },
+    reviewer: {
+      instructions: 'Final verdict on factual accuracy and consistency.',
+      dependsOn: ['writer', 'illustrator'],
+    },
+  },
+});
+
+// Tier 0: researcher
+// Tier 1: writer + illustrator (concurrent)
+// Tier 2: reviewer
+const result = await team.generate(
+  'Topic: the James Webb Space Telescope',
+);`,
+    output: {
+      dagTiers: [
+        { tier: 0, agents: [{ name: 'researcher', durationMs: 17015 }] },
+        {
+          tier: 1,
+          agents: [
+            { name: 'writer', durationMs: 5232 },
+            { name: 'illustrator', durationMs: 2420 },
+          ],
+        },
+        { tier: 2, agents: [{ name: 'reviewer', durationMs: 5017 }] },
+      ],
+      finalAnswerLabel: "Reviewer's final verdict (gpt-4o)",
+      finalAnswer:
+        "The article provides a comprehensive overview of the James Webb Space Telescope (JWST), its significance, objectives, and technological advancements. The descriptions of the illustrations effectively complement the article by visually representing JWST's capabilities and missions.\n\nSuggested corrections:\n  • Launch date: the article states December 25, 2021. The launch was on December 25, 2021 UTC; clarifying time zone prevents confusion.\n\nOptional enhancements:\n  • Briefly explain L2 positioning (stability + reduced thermal interference, complementing infrared observations).\n  • Mention MIRI (Mid-Infrared Instrument) to emphasize JWST's full instrument suite.",
+      usage: { tokens: 4196 },
+    },
+    caption: (
+      <>
+        The graph strategy topologically sorts agents into tiers from <code className="font-mono text-[var(--color-accent-primary)]">dependsOn</code> and runs each tier concurrently. Tier 0 runs alone; tier 1 runs both agents in parallel; tier 2 waits for both. Every agent receives the original prompt plus the plain-text outputs of its dependencies, so the reviewer in this run sees the writer&apos;s article and the illustrator&apos;s descriptions before issuing its verdict.
+      </>
+    ),
+  },
+  {
+    id: 'mission',
+    title: 'Plan a mission, run the steps',
+    exampleSlug: 'examples/mission-api.mjs',
+    language: 'typescript',
+    code: `import { mission } from '@framers/agentos';
+
+// Mission auto-generates a step plan from the goal. Each step is either
+// a 'gmi' (LLM agent) or 'tool' (deterministic function), wired via Zod
+// schemas so artifacts flow typed between steps.
+const m = mission({
+  provider: 'openai',
+  goal: 'Explain unified orchestration in AgentOS, with citations.',
+  tools: { factCheck: factCheckTool },
+});
+
+const result = await m.run();
+
+console.log(result.steps);     // generated step plan
+console.log(result.artifacts); // typed outputs per step`,
+    output: {
+      missionSteps: [
+        { id: 'gather-info', type: 'gmi', executor: 'gmi' },
+        { id: 'process-info', type: 'gmi', executor: 'gmi' },
+        { id: 'deliver-result', type: 'gmi', executor: 'gmi' },
+        { id: 'fact-check', type: 'tool', executor: 'tool' },
+      ],
+      missionArtifacts: {
+        'gather-info': 'gathered research notes',
+        'process-info': 'drafted synthesis',
+        'fact-check': { verified: true },
+        summary:
+          'unified orchestration is best explained as a graph runtime layered over deterministic and planner-driven entrypoints.',
+      },
+      missionConfidence: 0.88,
+      usage: {},
+    },
+    caption: (
+      <>
+        Same runtime as <code className="font-mono text-[var(--color-accent-primary)]">workflow()</code> and <code className="font-mono text-[var(--color-accent-primary)]">AgentGraph</code>, different authoring surface. <code className="font-mono text-[var(--color-accent-primary)]">mission()</code> takes a goal and lets a planner LLM emit the step DAG; the kernel then runs the steps the same way it runs hand-authored ones. Tools (deterministic) and GMIs (LLM agents) are first-class step types.
+      </>
+    ),
+  },
+  {
+    id: 'bus',
+    title: 'Inter-agent messaging via the bus',
+    exampleSlug: 'examples/agent-communication-bus.mjs',
+    language: 'typescript',
+    code: `import { AgentCommunicationBus } from '@framers/agentos';
+
+const bus = new AgentCommunicationBus();
+bus.register({ id: 'researcher-gmi', role: 'researcher' });
+bus.register({ id: 'writer-gmi', role: 'writer' });
+
+// Role-routed delegation
+const response = await bus.delegate({
+  toRole: 'researcher',
+  task: 'Review the orchestration rollout',
+  output: 'top risks',
+});
+
+// Hand off ownership of a task to another agent
+const handoff = await bus.handoff({
+  fromAgentId: 'researcher-gmi',
+  toAgentId: 'writer-gmi',
+  payload: response.content,
+});`,
+    output: {
+      busMessages: [
+        {
+          from: 'caller',
+          to: 'researcher-gmi',
+          status: 'success',
+          preview:
+            'findings: ["graph runtime stays shared", "checkpointing first-class", "examples side-by-side"]',
+        },
+        {
+          from: 'researcher-gmi',
+          to: 'writer-gmi',
+          status: 'success',
+          preview: 'handoff accepted; writer-gmi now owns the task',
+        },
+      ],
+      usage: {},
+    },
+    caption: (
+      <>
+        Lower-level than <code className="font-mono text-[var(--color-accent-primary)]">agency()</code>: explicit per-agent IDs, role routing, request/response messages with structured content, and ownership handoff. Useful when an external orchestrator (a queue, a workflow engine, a UI) needs to own scheduling and just wants AgentOS to be the message + memory substrate.
+      </>
+    ),
+  },
+  {
+    id: 'router',
+    title: 'Route queries through a knowledge corpus',
+    exampleSlug: 'examples/query-router.mjs',
+    language: 'typescript',
+    code: `import { QueryRouter } from '@framers/agentos';
+
+// QueryRouter ingests structured platform knowledge (docs, tools, skills,
+// FAQs, API references) plus arbitrary chunked content into a vector store
+// and routes incoming queries to the matching slice. Used by the cognitive
+// pipeline as the T0/T1 retrieval gate.
+const router = new QueryRouter({
+  embedder: 'text-embedding-3-small',
+  vectorStore: 'mem',           // in-memory, swap to Postgres / Qdrant
+  paths: [
+    './docs',                   // chunks markdown + code blocks
+    './platform-knowledge.json',// structured knowledge entries
+  ],
+});
+
+await router.initialize();
+console.log(router.stats());
+
+const hits = await router.route('how do I configure a guardrail?');`,
+    output: {
+      corpusStats: {
+        chunks: 1720,
+        topics: 50,
+        sources: 333,
+        platform: {
+          tools: 110,
+          skills: 82,
+          faq: 38,
+          api: 15,
+          troubleshooting: 15,
+        },
+      },
+      usage: {},
+    },
+    caption: (
+      <>
+        260 platform-knowledge entries plus 1,720 chunked content fragments embedded into a vector store at 1,536 dimensions. Used internally by the cognitive pipeline&apos;s Stage 1 classifier to decide whether a query needs retrieval at all and which corpus slice to draw from. Swap <code className="font-mono text-[var(--color-accent-primary)]">vectorStore: &apos;mem&apos;</code> for Postgres pgvector or Qdrant in production.
+      </>
+    ),
+  },
 ]
 
 function ForgeBadge({ agent, approved, comment }: { agent: string; approved: boolean; comment?: string }) {
@@ -244,14 +445,188 @@ function ForgeBadge({ agent, approved, comment }: { agent: string; approved: boo
   )
 }
 
-function FinalAnswerBlock({ text }: { text: string }) {
+function FinalAnswerBlock({ text, label }: { text: string; label?: string }) {
   return (
     <div className="mb-4">
       <div className="mb-1.5 font-mono text-[12px] font-semibold uppercase tracking-wider text-[var(--color-accent-primary)]">
-        Final answer (gpt-4o)
+        {label ?? 'Final answer (gpt-4o)'}
       </div>
       <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-3 text-[13px] leading-[1.65] text-[var(--color-text-primary)] whitespace-pre-wrap">
         {text}
+      </div>
+    </div>
+  )
+}
+
+function DagTiersBlock({ tiers }: { tiers: NonNullable<DemoOutput['dagTiers']> }) {
+  return (
+    <div className="mb-4">
+      <div className="mb-2 font-mono text-[12px] font-semibold uppercase tracking-wider text-[var(--color-accent-primary)]">
+        Topo-sorted tiers
+      </div>
+      <div className="space-y-2">
+        {tiers.map((t) => (
+          <div
+            key={t.tier}
+            className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-3"
+          >
+            <div className="flex items-center gap-3 font-mono text-[12px]">
+              <span className="rounded bg-[var(--color-background-tertiary)] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
+                Tier {t.tier}
+              </span>
+              <span className="text-[var(--color-text-muted)]">
+                {t.agents.length === 1 ? 'sequential' : `${t.agents.length} concurrent`}
+              </span>
+            </div>
+            <div className="mt-1 ml-2 font-mono text-[12px] leading-[1.7]">
+              {t.agents.map((a, i) => (
+                <div key={i}>
+                  <span className="text-[var(--color-accent-primary)]">→</span>{' '}
+                  <span className="text-[var(--color-text-primary)]">{a.name}</span>
+                  <span className="text-[var(--color-text-muted)]"> · {(a.durationMs / 1000).toFixed(2)}s</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function MissionStepsBlock({
+  steps,
+  artifacts,
+  confidence,
+}: {
+  steps: NonNullable<DemoOutput['missionSteps']>
+  artifacts: NonNullable<DemoOutput['missionArtifacts']>
+  confidence: number
+}) {
+  return (
+    <>
+      <div className="mb-4">
+        <div className="mb-2 font-mono text-[12px] font-semibold uppercase tracking-wider text-[var(--color-accent-primary)]">
+          Generated step plan
+        </div>
+        <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] overflow-hidden">
+          <table className="w-full font-mono text-[12px]">
+            <thead className="bg-[var(--color-background-tertiary)] text-[var(--color-text-muted)]">
+              <tr>
+                <th className="text-left px-3 py-1.5 font-semibold">id</th>
+                <th className="text-left px-3 py-1.5 font-semibold">type</th>
+                <th className="text-left px-3 py-1.5 font-semibold">executor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {steps.map((s) => (
+                <tr key={s.id} className="border-t border-[var(--color-border-subtle)]">
+                  <td className="px-3 py-1.5 text-[var(--color-text-primary)]">{s.id}</td>
+                  <td className="px-3 py-1.5">
+                    <span
+                      className={
+                        s.type === 'gmi'
+                          ? 'text-[var(--color-accent-primary)]'
+                          : 'text-amber-600 dark:text-amber-400'
+                      }
+                    >
+                      {s.type}
+                    </span>
+                  </td>
+                  <td className="px-3 py-1.5 text-[var(--color-text-secondary)]">{s.executor}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="mb-4">
+        <div className="mb-1.5 font-mono text-[12px] font-semibold uppercase tracking-wider text-[var(--color-accent-primary)]">
+          Final artifacts <span className="text-[var(--color-text-muted)]">· confidence {(confidence * 100).toFixed(0)}%</span>
+        </div>
+        <pre className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-3 font-mono text-[12px] leading-[1.65] text-[var(--color-text-primary)] whitespace-pre-wrap">
+{JSON.stringify(artifacts, null, 2)}
+        </pre>
+      </div>
+    </>
+  )
+}
+
+function BusMessagesBlock({ messages }: { messages: NonNullable<DemoOutput['busMessages']> }) {
+  return (
+    <div className="mb-4">
+      <div className="mb-2 font-mono text-[12px] font-semibold uppercase tracking-wider text-[var(--color-accent-primary)]">
+        Bus traffic
+      </div>
+      <div className="space-y-2">
+        {messages.map((m, i) => (
+          <div
+            key={i}
+            className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-3"
+          >
+            <div className="flex items-center gap-2 font-mono text-[12px]">
+              <span className="text-[var(--color-text-secondary)]">{m.from}</span>
+              <span className="text-[var(--color-accent-primary)]">→</span>
+              <span className="text-[var(--color-text-primary)]">{m.to}</span>
+              <span
+                className={
+                  'ml-auto rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wider ' +
+                  (m.status === 'success'
+                    ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30'
+                    : 'bg-red-500/10 text-red-700 dark:text-red-400 border border-red-500/30')
+                }
+              >
+                {m.status}
+              </span>
+            </div>
+            <div className="mt-1.5 font-mono text-[11px] leading-[1.55] text-[var(--color-text-secondary)]">
+              {m.preview}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function CorpusStatsBlock({ stats }: { stats: NonNullable<DemoOutput['corpusStats']> }) {
+  return (
+    <div className="mb-4">
+      <div className="mb-2 font-mono text-[12px] font-semibold uppercase tracking-wider text-[var(--color-accent-primary)]">
+        Corpus initialized
+      </div>
+      <div className="grid grid-cols-3 gap-2 mb-3">
+        <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-3">
+          <div className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-text-muted)]">chunks</div>
+          <div className="font-mono text-[18px] tabular-nums text-[var(--color-text-primary)]">
+            {stats.chunks.toLocaleString()}
+          </div>
+        </div>
+        <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-3">
+          <div className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-text-muted)]">topics</div>
+          <div className="font-mono text-[18px] tabular-nums text-[var(--color-text-primary)]">
+            {stats.topics}
+          </div>
+        </div>
+        <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-3">
+          <div className="font-mono text-[11px] uppercase tracking-wider text-[var(--color-text-muted)]">sources</div>
+          <div className="font-mono text-[18px] tabular-nums text-[var(--color-text-primary)]">
+            {stats.sources}
+          </div>
+        </div>
+      </div>
+      <div className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)] p-3">
+        <div className="mb-1.5 font-mono text-[11px] uppercase tracking-wider text-[var(--color-text-muted)]">
+          Platform knowledge entries
+        </div>
+        <div className="grid grid-cols-5 gap-2 font-mono text-[12px]">
+          {Object.entries(stats.platform).map(([k, v]) => (
+            <div key={k} className="flex flex-col">
+              <span className="text-[var(--color-text-muted)]">{k}</span>
+              <span className="text-[var(--color-text-primary)] tabular-nums">{v}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -378,10 +753,22 @@ function OutputPanel({ demo }: { demo: DemoData }) {
       </div>
       <div className="px-5 py-4">
         {output.forge && <ForgeBadge {...output.forge} />}
+        {output.dagTiers && <DagTiersBlock tiers={output.dagTiers} />}
+        {output.missionSteps && output.missionArtifacts && (
+          <MissionStepsBlock
+            steps={output.missionSteps}
+            artifacts={output.missionArtifacts}
+            confidence={output.missionConfidence ?? 0}
+          />
+        )}
+        {output.busMessages && <BusMessagesBlock messages={output.busMessages} />}
+        {output.corpusStats && <CorpusStatsBlock stats={output.corpusStats} />}
         {output.streamPreface && output.finalOverride && (
           <StreamingBlock preface={output.streamPreface} finalText={output.finalOverride} />
         )}
-        {output.finalAnswer && !output.streamPreface && <FinalAnswerBlock text={output.finalAnswer} />}
+        {output.finalAnswer && !output.streamPreface && (
+          <FinalAnswerBlock text={output.finalAnswer} label={output.finalAnswerLabel} />
+        )}
         {output.claims && <ClaimsBlock claims={output.claims} />}
         {output.agentCalls && <AgentCallsBlock calls={output.agentCalls} />}
         <UsageBlock usage={output.usage} />
@@ -416,25 +803,29 @@ export function LiveRunDemoSection() {
         </p>
       </div>
 
-      {/* Tab strip */}
-      <div className="mb-6 flex flex-wrap gap-2">
-        {demos.map((d, i) => (
-          <button
-            key={d.id}
-            onClick={() => setActiveId(d.id)}
-            className={
-              'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ' +
-              (d.id === activeId
-                ? 'border border-[var(--color-border-interactive)] bg-[var(--color-background-elevated)] text-[var(--color-text-primary)] shadow-sm'
-                : 'border border-transparent bg-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-secondary)]')
-            }
-          >
-            <span className="font-mono text-[11px] tabular-nums text-[var(--color-text-muted)]">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <span>{d.title}</span>
-          </button>
-        ))}
+      {/* Tab strip — horizontally scrollable on overflow */}
+      <div className="relative mb-6 -mx-4 sm:mx-0">
+        <div className="overflow-x-auto px-4 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex gap-2 min-w-max sm:flex-wrap sm:min-w-0">
+            {demos.map((d, i) => (
+              <button
+                key={d.id}
+                onClick={() => setActiveId(d.id)}
+                className={
+                  'inline-flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ' +
+                  (d.id === activeId
+                    ? 'border border-[var(--color-border-interactive)] bg-[var(--color-background-elevated)] text-[var(--color-text-primary)] shadow-sm'
+                    : 'border border-transparent bg-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-background-secondary)]')
+                }
+              >
+                <span className="font-mono text-[11px] tabular-nums text-[var(--color-text-muted)]">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span>{d.title}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Side-by-side panels */}
@@ -512,7 +903,7 @@ export function LiveRunDemoSection() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
         >
-          Browse all 14 examples →
+          Browse all 15 examples →
         </a>
       </div>
     </section>
