@@ -254,29 +254,41 @@ npm install paracosm
 ```
 
 ```ts
-import { Paracosm } from 'paracosm';
+import { WorldModel } from 'paracosm/world-model';
+import { marsScenario } from 'paracosm/mars';
+import { getSwarm, swarmFamilyTree } from 'paracosm/swarm';
 
-const sim = new Paracosm();
-const scenario = await sim.compileScenario({ preset: 'mars-genesis' });
+const wm = WorldModel.fromScenario(marsScenario); // bundled preset
 
-const dietrich = await sim.runTurnLoop({
-  scenario,
-  leader: { archetype: 'engineer' }, // high Conscientiousness, low Openness
-  seed: 950,
-  turns: 6,
-});
+const dietrich = await wm.simulate(
+  {
+    name: 'Dietrich Voss',
+    archetype: 'The Engineer', // high Conscientiousness, low Openness
+    unit: 'Colony Alpha',
+    hexaco: { openness: 0.3, conscientiousness: 0.95, extraversion: 0.4, agreeableness: 0.6, emotionality: 0.5, honestyHumility: 0.8 },
+    instructions: '',
+  },
+  { maxTurns: 6, seed: 950 },
+);
 
-const aria = await sim.runTurnLoop({
-  scenario,
-  leader: { archetype: 'visionary' }, // high Openness, low Conscientiousness
-  seed: 950, // SAME seed
-  turns: 6,
-});
+const aria = await wm.simulate(
+  {
+    name: 'Aria Chen',
+    archetype: 'The Visionary', // high Openness, low Conscientiousness
+    unit: 'Colony Alpha',
+    hexaco: { openness: 0.95, conscientiousness: 0.35, extraversion: 0.85, agreeableness: 0.55, emotionality: 0.3, honestyHumility: 0.65 },
+    instructions: '',
+  },
+  { maxTurns: 6, seed: 950 }, // SAME seed
+);
 
-console.log(sim.diff(dietrich, aria));
+// Same starting roster (same seed) → divergence is leader-driven.
+console.log('Dietrich final:', dietrich.finalState?.metrics, getSwarm(dietrich)?.population);
+console.log('Aria final:', aria.finalState?.metrics, getSwarm(aria)?.population);
+console.log('Aria family tree:', swarmFamilyTree(aria));
 ```
 
-The diff renders the per-turn divergence: which decisions differed, which tools were forged in one run but not the other, which mortality causes hit. Read the dashboard for the visual version. Read the artifact for the programmatic one.
+The artifact captures per-turn divergence: which decisions differed, which tools were forged in one run but not the other, which mortality causes hit. The dashboard renders a Compare-modal swarm-diff that highlights "alive in Dietrich's colony but not Aria's" and which colonists' moods diverged across the runs. Read the dashboard for the visual version. Read the artifact for the programmatic one.
 
 ## FAQ
 

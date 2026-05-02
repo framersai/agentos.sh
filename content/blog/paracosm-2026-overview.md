@@ -153,28 +153,35 @@ npm install paracosm
 ```
 
 ```ts
-import { Paracosm } from 'paracosm';
+import { WorldModel } from 'paracosm/world-model';
 
-const sim = new Paracosm();
-const scenario = await sim.compileScenario({
-  prompt: 'A coastal fishing town facing a regulatory shock that bans certain net types.',
-});
+const wm = await WorldModel.fromPrompt({
+  seedText: 'A coastal fishing town facing a regulatory shock that bans certain net types.',
+}, { provider: 'anthropic' });
 
-const atlas = await sim.runTurnLoop({
-  scenario,
-  leader: { archetype: 'engineer' },
-  seed: 'coast-2026-04-29',
-  turns: 6,
-});
+const atlas = await wm.simulate(
+  {
+    name: 'Atlas',
+    archetype: 'The Engineer',
+    unit: 'Town Council',
+    hexaco: { openness: 0.3, conscientiousness: 0.9, extraversion: 0.45, agreeableness: 0.55, emotionality: 0.4, honestyHumility: 0.7 },
+    instructions: '',
+  },
+  { maxTurns: 6, seed: 42 },
+);
 
-const maria = await sim.runTurnLoop({
-  scenario,
-  leader: { archetype: 'visionary' },
-  seed: 'coast-2026-04-29', // same seed, different leader
-  turns: 6,
-});
+const maria = await wm.simulate(
+  {
+    name: 'Maria',
+    archetype: 'The Visionary',
+    unit: 'Town Council',
+    hexaco: { openness: 0.95, conscientiousness: 0.35, extraversion: 0.85, agreeableness: 0.55, emotionality: 0.3, honestyHumility: 0.65 },
+    instructions: '',
+  },
+  { maxTurns: 6, seed: 42 }, // same seed, different leader
+);
 
-console.log(sim.diff(atlas, maria));
+console.log(atlas.finalState?.metrics, maria.finalState?.metrics);
 ```
 
 This runs locally. A six-turn run with default specialists, default reranker, and default reader on a small scenario costs in the low tens of cents. The dashboard at [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim) does the same thing without writing code, and the full API reference is at [paracosm.agentos.sh/docs](https://paracosm.agentos.sh/docs).
