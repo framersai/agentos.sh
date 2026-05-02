@@ -22,7 +22,7 @@
   "hero": {
     "badge": "Open Source · TypeScript · Production-Ready",
     "title": "Open-Source TypeScript AI Agent Runtime",
-    "subtitle": "Autonomous AI agents with adaptive intelligence and emergent behaviors. Cognitive memory at 85.6% on LongMemEval-S and 70.2% on the harder M variant, multimodal RAG, and runtime tool forging. Open-source under Apache 2.0.",
+    "subtitle": "Open-source TypeScript runtime for AI agents that remember, adapt, and spawn new tools. Agents write their own functions mid-task and the judge approves them; managers create specialists when the static roster does not cover the task. Cognitive memory grounded in neuroscience. 85.6% on LongMemEval-S. Apache 2.0.",
     "cycleWords": [
       "Adaptive",
       "Emergent"

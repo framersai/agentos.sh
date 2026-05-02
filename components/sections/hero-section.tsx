@@ -88,10 +88,10 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   }, [copyToClipboard]);
 
   const highlights = [
-    { title: '85.6% LongMemEval-S', detail: '0.4 below Emergence.ai (closed SaaS), +1.4 above Mastra' },
-    { title: '37 Channels', detail: 'Discord, Slack, WhatsApp' },
-    { title: 'Multimodal RAG', detail: 'Text, image, audio, video' },
-    { title: 'Built-in Safety', detail: 'PII redaction, injection defense' }
+    { title: 'Agents that write their own tools', detail: 'Mid-task TS function generation, judge-approved, sandboxed' },
+    { title: 'Specialist spawning', detail: 'spawn_specialist mints new agents at runtime' },
+    { title: 'Cognitive memory', detail: 'Ebbinghaus decay, reconsolidation, neuroscience-grounded' },
+    { title: '85.6% LongMemEval-S', detail: '0.4 below Emergence.ai (closed SaaS), +1.4 above Mastra' }
   ];
 
 
