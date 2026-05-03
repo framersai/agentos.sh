@@ -64,7 +64,7 @@ export default async function BlogPage({ params: { locale } }: Props) {
             '@type': 'BreadcrumbList',
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://agentos.sh' },
-              { '@type': 'ListItem', position: 2, name: 'Blog', item: `https://agentos.sh/${locale}/blog` },
+              { '@type': 'ListItem', position: 2, name: 'Blog', item: `https://agentos.sh/${locale}/blog/` },
             ],
           }),
         }}

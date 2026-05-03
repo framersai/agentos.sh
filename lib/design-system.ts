@@ -296,7 +296,9 @@ export const seoDefaults = {
   },
 }
 
-// Structured data schemas
+// Structured data schemas. The canonical SoftwareApplication block lives
+// in app/[locale]/layout.tsx; this module exports only the Organization
+// entry for any non-page consumer that needs it.
 export const structuredData = {
   organization: {
     '@context': 'https://schema.org',
@@ -308,23 +310,5 @@ export const structuredData = {
       'https://github.com/framersai',
       'https://twitter.com/framersai',
     ],
-  },
-
-  software: {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'AgentOS',
-    applicationCategory: 'DeveloperApplication',
-    operatingSystem: 'Cross-platform',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      reviewCount: '156',
-    },
   },
 }

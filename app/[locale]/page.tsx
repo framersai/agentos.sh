@@ -75,9 +75,8 @@ const WhitepaperCTALazy = dynamic(
 export default function LandingPageRedesigned() {
   return (
     <>
-      {/* JSON-LD structured data: Organization, SoftwareApplication, FAQPage,
-          BreadcrumbList. Rendered server-side so search-engine crawlers and
-          rich-result generators see the same markup as users. */}
+      {/* JSON-LD: Organization, FAQPage, BreadcrumbList (server-rendered).
+          The SoftwareApplication block lives in app/[locale]/layout.tsx. */}
       <SchemaMarkup />
 
       {/* Animated Background - deferred client-side */}
