@@ -25,7 +25,7 @@ const ParticleMorphText = dynamic(() => import('../hero/particle-morph-text').th
 
 const HeroSectionInner = memo(function HeroSectionInner() {
   const t = useTranslations('hero');
-  const _locale = useLocale();
+  const locale = useLocale();
   const { theme: currentTheme, resolvedTheme } = useTheme();
   const { copied: showToast, copy: copyToClipboard } = useCopyToClipboard();
   const [githubStars, setGithubStars] = useState<number | null>(null);
@@ -228,17 +228,22 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             </a>
           </div>
 
-          {/* Features — click scrolls to Core Capabilities */}
+          {/* Features — click navigates to /features. The first card highlights
+              the headline differentiator (runtime tool generation) with the
+              brand gradient on its title; the others stay plain so the visual
+              hierarchy reads as one lead + three supporting facts. */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2" role="group" aria-label="Key features">
-            {highlights.map((h) => (
-              <button key={h.title}
-                  type="button"
-                  onClick={() => document.getElementById('capabilities')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                  className="p-2 rounded-md bg-[var(--color-background-secondary)]/40 border border-[var(--color-border-subtle)]/30 cursor-pointer hover:border-[var(--color-accent-primary)]/40 hover:bg-[var(--color-accent-primary)]/5 transition-all text-left">
-                <div className="text-xs font-medium text-[var(--color-text-primary)]">{h.title}</div>
-                <div className="text-[10px] text-[var(--color-text-muted)]">{h.detail}</div>
-              </button>
-            ))}
+            {highlights.map((h, i) => {
+              const featuresHref = locale === 'en' ? '/features' : `/${locale}/features`;
+              return (
+                <a key={h.title}
+                    href={featuresHref}
+                    className="p-2 rounded-md bg-[var(--color-background-secondary)]/40 border border-[var(--color-border-subtle)]/30 cursor-pointer hover:border-[var(--color-accent-secondary)]/50 hover:bg-[var(--color-accent-primary)]/5 transition-all text-left block">
+                  <div className={`text-xs font-medium ${i === 0 ? 'brand-gradient-text' : 'text-[var(--color-text-primary)]'}`}>{h.title}</div>
+                  <div className="text-[10px] text-[var(--color-text-muted)]">{h.detail}</div>
+                </a>
+              );
+            })}
           </div>
 
           {/* Compliance badges */}

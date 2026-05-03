@@ -197,11 +197,7 @@ export function BenchmarksSection() {
               {t('highlightSAccuracy')}
             </div>
             <div
-              className="mb-2 bg-clip-text text-6xl font-bold tracking-tight text-transparent"
-              style={{
-                backgroundImage:
-                  'linear-gradient(135deg, hsl(180, 95%, 45%) 0%, hsl(270, 85%, 55%) 100%)',
-              }}
+              className="mb-2 brand-gradient-text text-6xl font-bold tracking-tight"
             >
               {t('highlightSValue')}
             </div>
@@ -212,11 +208,7 @@ export function BenchmarksSection() {
               {t('highlightMAccuracy')}
             </div>
             <div
-              className="mb-2 bg-clip-text text-6xl font-bold tracking-tight text-transparent"
-              style={{
-                backgroundImage:
-                  'linear-gradient(135deg, hsl(180, 95%, 45%) 0%, hsl(270, 85%, 55%) 100%)',
-              }}
+              className="mb-2 brand-gradient-text text-6xl font-bold tracking-tight"
             >
               {t('highlightMValue')}
             </div>
