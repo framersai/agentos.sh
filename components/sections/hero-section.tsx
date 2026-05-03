@@ -115,19 +115,16 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2] min-h-[72px] sm:min-h-[92px] lg:min-h-[120px]"
             itemProp="name"
           >
-            {/* Static gradient title — server-rendered so the H1 is visible
-                on first paint. A canvas-animated variant rendered as blank
-                space until JS hydrated, producing a flash on every load. */}
-            <span className="sr-only">Emergent intelligence for adaptive agents</span>
-            <span aria-hidden="true">
-              <span className="brand-gradient-text">Emergent</span>
-              <span className="text-[var(--color-text-primary)]"> intelligence</span>
-              <br />
-              <span className="text-[var(--color-text-secondary)]">for </span>
-              <span className="brand-gradient-text">adaptive</span>
-              <span className="text-[var(--color-text-primary)]"> agents</span>
-            </span>
+            <span className="brand-gradient-text">Emergent</span>
+            <span className="text-[var(--color-text-primary)]"> intelligence</span>
+            <br />
+            <span className="text-[var(--color-text-secondary)]">for </span>
+            <span className="brand-gradient-text">adaptive</span>
+            <span className="text-[var(--color-text-primary)]"> agents</span>
           </h1>
+          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-accent-primary)] mb-3">
+            Open-source TypeScript AI agent framework
+          </p>
 
           <p className="sr-only">
             AgentOS is an open-source TypeScript AI agent framework for building production-ready autonomous agents with multi-agent orchestration, cognitive memory, multimodal RAG, AI guardrails, voice pipelines, and 21 LLM providers. A type-safe alternative to LangGraph, CrewAI, Mastra, and AutoGen.
