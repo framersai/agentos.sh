@@ -150,7 +150,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
 
           {/* Install command + scroll CTA */}
           <div className="flex flex-wrap items-center gap-2 mb-4">
-            <Button type="button" onClick={copyCommand} variant="secondary" className="gap-2 text-xs sm:text-sm" aria-label="Copy install command">
+            <Button type="button" onClick={copyCommand} variant="secondary" className="gap-2 text-xs sm:text-sm">
               {showToast ? (
                 <Check className="w-4 h-4 text-green-400" aria-hidden="true" />
               ) : (

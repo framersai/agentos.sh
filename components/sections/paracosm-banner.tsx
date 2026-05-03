@@ -69,7 +69,7 @@ export function ParacosmBanner() {
             {/* Content */}
             <div className="flex-1 text-center sm:text-left">
               <div className="mb-2 flex items-center justify-center gap-3 sm:justify-start">
-                <h3
+                <h2
                   className="font-mono text-xl font-bold tracking-wider sm:text-2xl"
                   style={{ color: 'var(--color-text-primary)' }}
                 >
@@ -78,11 +78,11 @@ export function ParacosmBanner() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transition-opacity hover:opacity-80"
-                    aria-label="Paracosm — visit paracosm.agentos.sh"
+                    aria-label="Paracosm: visit paracosm.agentos.sh"
                   >
                     PARA<span style={{ color: '#e8b44a' }}>COSM</span>
                   </a>
-                </h3>
+                </h2>
               </div>
 
               <p
