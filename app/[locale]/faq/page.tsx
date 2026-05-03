@@ -74,14 +74,14 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
   const url = canonical(locale, path);
 
   return {
-    title: `${t('title')} — AgentOS`,
+    title: `${t('title')} | AgentOS - TypeScript AI Agent Framework`,
     description: t('subtitle'),
     alternates: {
       canonical: url,
       languages: hreflangAlternates(path),
     },
     openGraph: {
-      title: `${t('title')} — AgentOS`,
+      title: `${t('title')} | AgentOS - TypeScript AI Agent Framework`,
       description: t('subtitle'),
       url,
       siteName: 'AgentOS',
@@ -90,7 +90,7 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${t('title')} - AgentOS`,
+      title: `${t('title')} | AgentOS - TypeScript AI Agent Framework`,
       description: t('subtitle'),
     },
     authors: [{ name: 'Frame.dev', url: 'https://frame.dev' }],

@@ -16,14 +16,14 @@ export async function generateMetadata({ params: { locale } }: Props) {
   const url = canonical(locale, path);
 
   return {
-    title: 'Blog — AgentOS',
+    title: 'AgentOS Blog | TypeScript AI Agent Framework Tutorials & Benchmarks',
     description: 'Technical articles, framework comparisons, tutorials, and engineering insights from the AgentOS team. Learn how to build production AI agents with TypeScript.',
     alternates: {
       canonical: url,
       languages: hreflangAlternates(path),
     },
     openGraph: {
-      title: 'Blog — AgentOS',
+      title: 'AgentOS Blog | TypeScript AI Agent Framework Tutorials & Benchmarks',
       description: 'Technical articles, framework comparisons, tutorials, and engineering insights from the AgentOS team.',
       url,
       siteName: 'AgentOS',
@@ -32,7 +32,7 @@ export async function generateMetadata({ params: { locale } }: Props) {
     },
     twitter: {
       card: 'summary_large_image' as const,
-      title: 'Blog — AgentOS',
+      title: 'AgentOS Blog | TypeScript AI Agent Framework Tutorials & Benchmarks',
       description: 'Technical articles, framework comparisons, and tutorials for building AI agents with TypeScript.',
     },
   };

@@ -43,7 +43,7 @@ type Props = {
 
 export async function generateMetadata({ params: { locale } }: Props) {
   const t = await getTranslations({ locale: locale as Locale, namespace: 'about' });
-  const title = `${t('hero.title')} — AgentOS`;
+  const title = `About AgentOS | Open Source TypeScript AI Agent Framework`;
   const description = t('mission.p1');
   const path = '/about';
   const url = canonical(locale, path);
