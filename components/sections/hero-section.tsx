@@ -115,11 +115,31 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2] min-h-[72px] sm:min-h-[92px] lg:min-h-[120px]"
             itemProp="name"
           >
-            <span className="brand-gradient-text">Emergent</span>
+            {/* Word 1 cycles Emergent <-> Autonomous via CSS keyframe.
+                Hidden placeholder reserves the wider word's width so the
+                rest of the line never reflows when the visible word swaps. */}
+            <span className="relative inline-block align-baseline">
+              <span aria-hidden="true" className="invisible">Autonomous</span>
+              <span className="absolute inset-0 overflow-hidden leading-[1.2]">
+                <span className="block motion-safe:animate-hero-word-1">
+                  <span className="block brand-gradient-text">Emergent</span>
+                  <span className="block brand-gradient-text">Autonomous</span>
+                </span>
+              </span>
+            </span>
             <span className="text-[var(--color-text-primary)]"> intelligence</span>
             <br />
             <span className="text-[var(--color-text-secondary)]">for </span>
-            <span className="brand-gradient-text">adaptive</span>
+            {/* Word 2 cycles adaptive <-> intelligent, staggered by 4s. */}
+            <span className="relative inline-block align-baseline">
+              <span aria-hidden="true" className="invisible">intelligent</span>
+              <span className="absolute inset-0 overflow-hidden leading-[1.2]">
+                <span className="block motion-safe:animate-hero-word-2">
+                  <span className="block brand-gradient-text">adaptive</span>
+                  <span className="block brand-gradient-text">intelligent</span>
+                </span>
+              </span>
+            </span>
             <span className="text-[var(--color-text-primary)]"> agents</span>
           </h1>
           <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-accent-primary)] mb-3">

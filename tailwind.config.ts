@@ -57,7 +57,9 @@ const config: Config = {
       animation: {
         'fade-in': 'fadeIn var(--duration-smooth) var(--ease-out-quad) forwards',
         shimmer: 'shimmer 1.8s linear infinite',
-        'gradient-x': 'gradient-x 3s ease infinite'
+        'gradient-x': 'gradient-x 3s ease infinite',
+        'hero-word-1': 'heroWordCycle1 8s cubic-bezier(0.65, 0, 0.35, 1) infinite',
+        'hero-word-2': 'heroWordCycle2 8s cubic-bezier(0.65, 0, 0.35, 1) infinite 4s'
       },
       keyframes: {
         fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },
