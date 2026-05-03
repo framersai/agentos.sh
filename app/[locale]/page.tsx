@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic'
 import { HeroSection } from '../../components/sections/hero-section'
 import { BenchmarkBanner } from '../../components/sections/benchmark-banner'
 import { DiscordCTA } from '../../components/sections/discord-cta'
+import { ParacosmBanner } from '../../components/sections/paracosm-banner'
+import { SchemaMarkup } from '../../components/seo/seo-metadata'
 
 // Enable static generation for faster initial loads
 export const dynamicParams = false
@@ -41,11 +43,6 @@ const CodeExamplesSectionLazy = dynamic(
   { ssr: false, loading: () => <div className="min-h-[400px]" /> }
 )
 
-const ParacosmBannerLazy = dynamic(
-  () => import('../../components/sections/paracosm-banner').then(m => m.ParacosmBanner),
-  { ssr: false }
-)
-
 const BenchmarksSectionLazy = dynamic(
   () => import('../../components/sections/benchmarks-section').then(m => m.BenchmarksSection),
   { ssr: false, loading: () => <div className="min-h-[600px]" /> }
@@ -64,6 +61,11 @@ const WhitepaperCTALazy = dynamic(
 export default function LandingPageRedesigned() {
   return (
     <>
+      {/* JSON-LD structured data: Organization, SoftwareApplication, FAQPage,
+          BreadcrumbList. Rendered server-side so search-engine crawlers and
+          rich-result generators see the same markup as users. */}
+      <SchemaMarkup />
+
       {/* Animated Background - deferred client-side */}
       <AnimatedBackgroundLazy />
 
@@ -78,8 +80,9 @@ export default function LandingPageRedesigned() {
         {/* Discord CTA — official Wilds AI community for AgentOS + Paracosm support */}
         <DiscordCTA />
 
-        {/* Paracosm — AI Agent Swarm Simulation */}
-        <ParacosmBannerLazy />
+        {/* Paracosm — AI Agent Swarm Simulation. SSR'd directly so the banner
+            renders on first paint instead of fading in after JS hydrates. */}
+        <ParacosmBanner />
 
         {/* Live Demo Videos with Captions — SSR shell wraps client-only video player */}
         <section className="lazy-section">
