@@ -26,9 +26,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticPages = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
+    { path: '/features', priority: 0.95, changeFrequency: 'weekly' as const },
     { path: '/about', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/blog', priority: 0.9, changeFrequency: 'weekly' as const },
     { path: '/docs', priority: 0.9, changeFrequency: 'weekly' as const },
+    { path: '/contact', priority: 0.5, changeFrequency: 'monthly' as const },
     { path: '/faq', priority: 0.7, changeFrequency: 'monthly' as const },
     { path: '/careers', priority: 0.6, changeFrequency: 'weekly' as const },
     { path: '/legal/terms', priority: 0.3, changeFrequency: 'yearly' as const },
