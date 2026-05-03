@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Cookie, X, Settings, Check, Shield } from 'lucide-react';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
@@ -138,16 +137,16 @@ export function CookieConsent() {
 
   const privacyHref = `/${locale}/legal/privacy`;
 
+  // Slide-up animation on mount via plain CSS keeps framer-motion out of
+  // the layout bundle (saves ~50KB across every page). The exit animation
+  // is replaced with an immediate unmount; consent banners don't need a
+  // graceful fade-out for the once-per-visitor flow.
+  if (!isVisible) return null;
+
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6"
-        >
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 motion-safe:animate-[slide-up_0.4s_cubic-bezier(0.4,0,0.2,1)_both]"
+    >
           <div className="mx-auto max-w-4xl">
             <div className="holographic-card p-6 shadow-2xl border border-[var(--color-border-primary)]" role="dialog" aria-label="Cookie consent" aria-modal="false">
               {!showSettings ? (
@@ -285,9 +284,7 @@ export function CookieConsent() {
               )}
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    </div>
   );
 }
 

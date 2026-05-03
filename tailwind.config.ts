@@ -61,6 +61,10 @@ const config: Config = {
       },
       keyframes: {
         fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },
+        'slide-up': {
+          from: { transform: 'translateY(100%)', opacity: '0' },
+          to: { transform: 'translateY(0)', opacity: '1' }
+        },
         shimmer: {
           '0%': { backgroundPosition: '-100% 0' },
           '100%': { backgroundPosition: '200% 0' }
