@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { Github, MessageCircle, Sparkles } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -11,12 +10,7 @@ export function CTASection() {
       <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_15%_10%,var(--color-accent-warm-soft),transparent_60%),radial-gradient(circle_at_85%_20%,hsla(260,90%,65%,0.25),transparent_70%)]" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-10"
-        >
+        <div className="text-center mb-10">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)] bg-clip-text text-transparent">
               {t('title')}
@@ -26,15 +20,10 @@ export function CTASection() {
           <p className="text-base sm:text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto">
             {t('description')}
           </p>
-        </motion.div>
+        </div>
 
         {/* Main CTA Links */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="max-w-xl mx-auto"
-        >
+        <div className="max-w-xl mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
             <a
               href="https://wilds.ai/discord"
@@ -82,16 +71,10 @@ export function CTASection() {
               <span className="text-xs font-medium">{t('tryVoiceChat')}</span>
             </a>
           </div>
-        </motion.div>
+        </div>
 
         {/* We are the Framers - Typographic Effect */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="mt-16 text-center"
-        >
+        <div className="mt-16 text-center">
           <a 
             href="https://frame.dev" 
             target="_blank" 
@@ -112,7 +95,7 @@ export function CTASection() {
               <span>@framersai</span>
             </div>
           </a>
-        </motion.div>
+        </div>
 
         {/* Minimal Wave Divider */}
         <div className="mt-12 h-px bg-gradient-to-r from-transparent via-[var(--color-border-subtle)] to-transparent" />

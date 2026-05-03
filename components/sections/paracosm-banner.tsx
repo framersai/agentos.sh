@@ -1,11 +1,8 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 
 /**
- * Paracosm promotional banner for the AgentOS landing page.
- * Animated swarm logo, tagline, and CTA links.
+ * Paracosm promotional banner. Server component; the swarm-logo
+ * rotation is CSS-only so no framer-motion lands in the client bundle.
  */
 export function ParacosmBanner() {
   return (
@@ -20,11 +17,7 @@ export function ParacosmBanner() {
       />
 
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
+        <div
           className="rounded-2xl border p-6 sm:p-10 backdrop-blur-xl"
           style={{
             borderColor: 'color-mix(in oklab, var(--color-accent-primary) 25%, transparent)',
@@ -35,11 +28,9 @@ export function ParacosmBanner() {
           }}
         >
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:gap-10">
-            {/* Paracosm swarm logo */}
-            <motion.div
-              className="flex-shrink-0"
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+            {/* Paracosm swarm logo — CSS-only 60s rotation, no JS animation */}
+            <div
+              className="flex-shrink-0 motion-safe:animate-[spin_60s_linear_infinite]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +64,7 @@ export function ParacosmBanner() {
                 <circle cx="10.98" cy="37.63" r="3.52" fill="#4ca8a8" />
                 <circle cx="16.61" cy="16.61" r="3.52" fill="#e8b44a" />
               </svg>
-            </motion.div>
+            </div>
 
             {/* Content */}
             <div className="flex-1 text-center sm:text-left">
@@ -151,7 +142,7 @@ export function ParacosmBanner() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
