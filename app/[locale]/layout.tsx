@@ -360,7 +360,7 @@ export default async function LocaleLayout({
                 <ul className="space-y-2 text-sm">
                   <li><a href="https://docs.agentos.sh" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('docsGuides')}</a></li>
                   <li><a href="https://docs.agentos.sh/api" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('apiReferenceTSDoc')}</a></li>
-                  <li><a href={locale === 'en' ? '/#code' : `/${locale}/#code`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('examples')}</a></li>
+                  <li><a href={`/${locale}/#code`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('examples')}</a></li>
                   <li><a href="https://github.com/framersai/agentos/releases" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('releaseNotes')}</a></li>
                   <li><a href="https://github.com/framersai/agentos" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('github')}</a></li>
                   <li><a href="https://discord.gg/usEkfCeQxs" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('discord')}</a></li>
@@ -372,18 +372,18 @@ export default async function LocaleLayout({
                   <li><a href="https://manic.agency" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Manic Agency</a></li>
                   <li><a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Frame.dev</a></li>
                   <li><a href="https://wilds.ai" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Wilds.ai</a></li>
-                  <li><a href={locale === 'en' ? '/about' : `/${locale}/about`} className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('about')}</a></li>
-                  <li><a href={locale === 'en' ? '/faq' : `/${locale}/faq`} className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('faq')}</a></li>
+                  <li><a href={`/${locale}/about`} className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('about')}</a></li>
+                  <li><a href={`/${locale}/faq`} className="text-text-secondary hover:text-accent-primary transition-colors">{tNav('faq')}</a></li>
                   <li><a href="mailto:team@frame.dev" className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('contact')}</a></li>
                 </ul>
               </div>
               <div>
                 <h3 className="font-bold text-text-primary mb-3">{tFooter('legal')}</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><a href={locale === 'en' ? '/legal/terms' : `/${locale}/legal/terms`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('terms')}</a></li>
-                  <li><a href={locale === 'en' ? '/legal/privacy' : `/${locale}/legal/privacy`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('privacy')}</a></li>
-                  <li><a href={locale === 'en' ? '/legal/security' : `/${locale}/legal/security`} className="text-text-secondary hover:text-accent-primary transition-colors">Security</a></li>
-                  <li><a href={locale === 'en' ? '/legal/cookies' : `/${locale}/legal/cookies`} className="text-text-secondary hover:text-accent-primary transition-colors">Cookies</a></li>
+                  <li><a href={`/${locale}/legal/terms`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('terms')}</a></li>
+                  <li><a href={`/${locale}/legal/privacy`} className="text-text-secondary hover:text-accent-primary transition-colors">{tFooter('privacy')}</a></li>
+                  <li><a href={`/${locale}/legal/security`} className="text-text-secondary hover:text-accent-primary transition-colors">Security</a></li>
+                  <li><a href={`/${locale}/legal/cookies`} className="text-text-secondary hover:text-accent-primary transition-colors">Cookies</a></li>
                   <li><span className="text-text-secondary">{tFooter('license')}</span></li>
                 </ul>
               </div>

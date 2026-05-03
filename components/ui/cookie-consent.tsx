@@ -136,7 +136,7 @@ export function CookieConsent() {
     setIsVisible(false);
   }, [consent]);
 
-  const privacyHref = `/${locale === 'en' ? '' : locale + '/'}legal/privacy`;
+  const privacyHref = `/${locale}/legal/privacy`;
 
   return (
     <AnimatePresence>

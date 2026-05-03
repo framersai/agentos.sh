@@ -20,7 +20,7 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
-  const localePrefix = locale === 'en' ? '' : `/${locale}`;
+  const localePrefix = `/${locale}`;
   const NAV_LINKS = useMemo(() => [
     { href: `${localePrefix}/features`, label: t('features') },
     { href: `${localePrefix}/about`, label: t('about') },
@@ -32,36 +32,23 @@ export function SiteHeader() {
   ], [t, localePrefix]);
 
   const localizeHref = useCallback((href: string) => {
-    // Handle empty/root paths – always prefix locale for consistency
     if (!href || href === '/') {
       return `/${locale}`;
     }
-    // Handle external links
     if (href.startsWith('http') || href.startsWith('mailto:')) {
       return href;
     }
-    // Handle anchors ("#section" links)
     if (href.startsWith('#')) {
       return `/${locale}${href}`;
     }
-
-    // Normalize path (ensure it starts with /)
     const path = href.startsWith('/') ? href : `/${href}`;
-    
-    // If path is already prefixed with locale, return as-is
     if (path === `/${locale}` || path.startsWith(`/${locale}/`)) {
       return path;
     }
-
-    // For hash links, append to current locale path properly
-    if (path.startsWith('/#')) {
-      return locale === 'en' ? path : `/${locale}${path}`;
-    }
-
     return `/${locale}${path}`;
   }, [locale]);
 
-  const homeHref = useMemo(() => (locale === 'en' ? '/' : `/${locale}`), [locale]);
+  const homeHref = useMemo(() => `/${locale}`, [locale]);
 
   // Debug i18n logs (development only)
   useEffect(() => {

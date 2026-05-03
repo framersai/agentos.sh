@@ -281,7 +281,7 @@ export default async function FAQPage({ params: { locale } }: Props) {
             '@type': 'BreadcrumbList',
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://agentos.sh' },
-              { '@type': 'ListItem', position: 2, name: 'FAQ', item: `https://agentos.sh${locale === 'en' ? '/faq' : `/${locale}/faq`}` },
+              { '@type': 'ListItem', position: 2, name: 'FAQ', item: `https://agentos.sh/${locale}/faq` },
             ],
           }),
         }}

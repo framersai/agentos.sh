@@ -107,40 +107,8 @@ export function SchemaMarkup() {
     }
   }
 
-  const softwareApplicationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'AgentOS',
-    applicationCategory: 'DeveloperApplication',
-    operatingSystem: 'Cross-platform',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD'
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      reviewCount: '2347',
-      bestRating: '5',
-      worstRating: '1'
-    },
-    author: {
-      '@type': 'Organization',
-      name: 'AgentOS Team'
-    },
-    softwareVersion: '1.0.0',
-    requirements: 'Node.js 18+, TypeScript 5+',
-    screenshot: 'https://agentos.sh/screenshots/dashboard.png',
-    featureList: [
-      'Multi-agent orchestration',
-      'Real-time streaming',
-      'Persistent memory fabric',
-      'GDPR compliant',
-      'Enterprise ready',
-      'Open source'
-    ]
-  }
+  // SoftwareApplication schema lives in app/[locale]/layout.tsx with the
+  // canonical version, license, and feature list. Don't duplicate here.
 
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -159,7 +127,7 @@ export function SchemaMarkup() {
         name: 'Is AgentOS open source?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes, AgentOS is fully open source under the MIT license and available on GitHub.'
+          text: 'Yes, AgentOS is fully open source under the Apache 2.0 license and available on GitHub.'
         }
       },
       {
@@ -215,13 +183,6 @@ export function SchemaMarkup() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(organizationSchema)
-        }}
-      />
-      <Script
-        id="software-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(softwareApplicationSchema)
         }}
       />
       <Script

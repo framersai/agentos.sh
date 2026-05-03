@@ -69,7 +69,7 @@ export async function generateMetadata({ params: { locale } }: Props) {
 
 export default async function AboutPage({ params: { locale } }: Props) {
   const t = await getTranslations({ locale: locale as Locale, namespace: 'about' });
-  const homeHref = locale === 'en' ? '/' : `/${locale}`;
+  const homeHref = `/${locale}`;
 
   /** Reusable rich-text component map for next-intl's t.rich() */
   const richLinks = {
@@ -132,7 +132,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
             '@type': 'BreadcrumbList',
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://agentos.sh' },
-              { '@type': 'ListItem', position: 2, name: 'About', item: `https://agentos.sh${locale === 'en' ? '/about' : `/${locale}/about`}` },
+              { '@type': 'ListItem', position: 2, name: 'About', item: `https://agentos.sh/${locale}/about` },
             ],
           }),
         }}

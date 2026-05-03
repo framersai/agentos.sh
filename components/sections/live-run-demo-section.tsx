@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark, oneLight } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import { useTheme } from 'next-themes'
+import { useLocale } from 'next-intl'
 import { Github, Copy, Check } from 'lucide-react'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 
@@ -809,12 +810,13 @@ function OutputPanel({ demo }: { demo: DemoData }) {
 
 export function LiveRunDemoSection() {
   const { resolvedTheme } = useTheme()
+  const locale = useLocale()
   const [activeId, setActiveId] = useState(demos[0].id)
   const active = demos.find((d) => d.id === activeId) ?? demos[0]
   const codeStyle = useMemo(() => (resolvedTheme === 'light' ? oneLight : atomDark), [resolvedTheme])
 
   return (
-    <section className="relative mx-auto max-w-7xl px-4 py-16 sm:py-20">
+    <section className="relative mx-auto max-w-7xl px-6 py-24 md:py-32">
       <div className="mb-8 max-w-3xl">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--color-text-primary)]">
           Real output from real scripts
@@ -925,7 +927,7 @@ export function LiveRunDemoSection() {
           npm install @framers/agentos
         </a>
         <a
-          href="/blog/agentos-memory-sota-longmemeval"
+          href={`/${locale}/blog/agentos-memory-sota-longmemeval`}
           className="inline-flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
         >
           85.6% on LongMemEval-S →

@@ -214,7 +214,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               hierarchy reads as one lead + three supporting facts. */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2" role="group" aria-label="Key features">
             {highlights.map((h, i) => {
-              const featuresHref = locale === 'en' ? '/features' : `/${locale}/features`;
+              const featuresHref = `/${locale}/features`;
               return (
                 <a key={h.title}
                     href={featuresHref}
