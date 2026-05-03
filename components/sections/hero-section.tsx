@@ -115,11 +115,9 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2] min-h-[72px] sm:min-h-[92px] lg:min-h-[120px]"
             itemProp="name"
           >
-            {/* Static gradient title — renders correctly on SSR + first paint
-                with no canvas hydration delay. Replaces an earlier
-                ParticleMorphText canvas effect that animated the words but
-                rendered as blank space until JS hydrated, producing a
-                visible flash on every page load. */}
+            {/* Static gradient title — server-rendered so the H1 is visible
+                on first paint. A canvas-animated variant rendered as blank
+                space until JS hydrated, producing a flash on every load. */}
             <span className="sr-only">Emergent intelligence for adaptive agents</span>
             <span aria-hidden="true">
               <span className="brand-gradient-text">Emergent</span>
