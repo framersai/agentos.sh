@@ -15,7 +15,7 @@ keywords: "typescript ai agent framework, langgraph alternative, crewai alternat
 
 A confession before the table: I have built production agents on three of the frameworks in this post. Each one was the right choice at the time. Each one was wrong in a different way once the workload changed. The honest truth about agent frameworks in 2026 is that none of them are bad and none of them are universal. The job-to-be-done determines the right pick more than any feature checklist. Most comparison posts pretend otherwise. This one will try not to.
 
-This is the consumer-facing version of the comparison. The deep-dive engineering version (with reader-matched benchmark numbers and per-feature provenance) lives at [docs.agentos.sh](https://docs.agentos.sh/blog/2026/02/20/agentos-vs-langgraph-vs-crewai). If you're choosing a framework today, both posts agree on the answer; this one is shorter.
+For reader-matched benchmark numbers behind the AgentOS column in the table below, see [LongMemEval SOTA at gpt-4o reader](/en/blog/agentos-memory-sota-longmemeval/).
 
 A few rules I tried to follow:
 

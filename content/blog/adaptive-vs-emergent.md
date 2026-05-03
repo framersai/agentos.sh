@@ -13,7 +13,6 @@ keywords: "adaptive ai agents, emergent ai behavior, ai agent intelligence, mult
 >
 > — Roy Batty, *Blade Runner*, 1982
 
-> *Note:* This is the consumer-facing essay version of the topic. For the engineering deep-dive with research citations and per-mechanism methodology, see the [longer version on docs.agentos.sh](https://docs.agentos.sh/blog/2025/11/15/adaptive-vs-emergent).
 
 The hardest question I've been asked about AgentOS is whether the agents are "really" intelligent. The honest answer is that the question is malformed. There are two different things people are asking about when they say intelligence in the context of AI agents, and the runtime treats them differently because they require different machinery. Mixing them up is the source of most of the confusion in the space.
 

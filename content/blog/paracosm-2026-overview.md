@@ -209,7 +209,7 @@ Same data is on `RunArtifact.finalSwarm` directly, available via `WorldModel.swa
 
 **Not a replacement for real-world data.** A counterfactual simulator is a tool for thinking, not for forecasting in the strong sense. Every decision has a `confidence` score, every metric has a `derivedFrom` trace, every citation has a DOI when one exists. Treat a Paracosm run as ground truth at your own risk; the artifact is structured to make that harder than it would otherwise be.
 
-**A top-down agent swarm, not a bottom-up emergent one.** [OASIS](https://openreview.net/forum?id=JBzTculaVV) [^11] and [MiroFish](https://github.com/666ghj/MiroFish) [^12] operate at 1k to 1M agents and do bottom-up emergent prediction; the swarm dynamics are the output. Paracosm runs a directed agent swarm: 1 commander, 5 specialist departments, ~100 personality-typed cells, and the trajectory is deterministic per seed. The cell population is rich (HEXACO traits, mood, family edges, persistent memory), but the cells react to leader decisions rather than acting autonomously. Both shapes are valid agent swarm architectures; paracosm's lane is the directed, replayable, decision-support side. The [head-to-head comparison post](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation) has the engineering breakdown.
+**A top-down agent swarm, not a bottom-up emergent one.** [OASIS](https://openreview.net/forum?id=JBzTculaVV) [^11] and [MiroFish](https://github.com/666ghj/MiroFish) [^12] operate at 1k to 1M agents and do bottom-up emergent prediction; the swarm dynamics are the output. Paracosm runs a directed agent swarm: 1 commander, 5 specialist departments, ~100 personality-typed cells, and the trajectory is deterministic per seed. The cell population is rich (HEXACO traits, mood, family edges, persistent memory), but the cells react to leader decisions rather than acting autonomously. Both shapes are valid agent swarm architectures; paracosm's lane is the directed, replayable, decision-support side. The [Inside Mars Genesis](/en/blog/inside-mars-genesis-ai-colony-simulation/) has the engineering breakdown.
 
 **Not a multi-agent task framework.** LangGraph, AutoGen, CrewAI, OpenAI Agents SDK, Mastra: those execute real tasks against real APIs. Their output reaches the world. Paracosm's output stays inside the simulation. Zero overlap on user job-to-be-done.
 
@@ -235,7 +235,7 @@ The [LLM Agents Papers tracker](https://github.com/AGI-Edgerunners/LLM-Agents-Pa
 - The package: `npm install paracosm`. Engine, compiler, dashboard, Mars Genesis + Lunar Outpost as built-in scenarios.
 - The full API reference at [paracosm.agentos.sh/docs](https://paracosm.agentos.sh/docs).
 - The Mars Genesis case study at [Inside Mars Genesis](/blog/inside-mars-genesis-ai-colony-simulation) for the per-turn narrative breakdown.
-- The MiroFish comparison at [docs.agentos.sh](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation) for the head-to-head with bottom-up swarms.
+- The Mars Genesis case study at [Inside Mars Genesis](/en/blog/inside-mars-genesis-ai-colony-simulation/) for the head-to-head against bottom-up swarms.
 - The repo at [github.com/framersai/paracosm](https://github.com/framersai/paracosm).
 - The benchmark methodology at [framersai/agentos-bench](https://github.com/framersai/agentos-bench).
 
@@ -249,7 +249,7 @@ The [LLM Agents Papers tracker](https://github.com/AGI-Edgerunners/LLM-Agents-Pa
 
 **Is Paracosm a physics simulator?** No. The kernel applies symbolic state transitions. No fluid dynamics, no rigid-body mechanics, no chemistry engine. If you need physics, use a physics simulator and feed Paracosm the resulting state through `ScenarioPackage` updates.
 
-**What's different about Paracosm vs MiroFish or OASIS?** Direction (top-down vs bottom-up), scale (~100 vs 1k–1M agents), determinism (seeded vs emergent). Useful for different jobs. The full table is in the [comparison post](https://docs.agentos.sh/blog/2026/04/13/mars-genesis-vs-mirofish-multi-agent-simulation).
+**What's different about Paracosm vs MiroFish or OASIS?** Direction (top-down vs bottom-up), scale (~100 vs 1k–1M agents), determinism (seeded vs emergent). Useful for different jobs.
 
 **What's the cost of a typical run?** A six-turn `turn-loop` run on a small scenario with default settings runs in the low tens of cents. The artifact records every token spend. Reuse of forged tools after turn three is the largest cost lever.
 
