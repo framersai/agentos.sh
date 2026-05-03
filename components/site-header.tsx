@@ -22,14 +22,14 @@ export function SiteHeader() {
 
   const localePrefix = locale === 'en' ? '' : `/${locale}`;
   const NAV_LINKS = useMemo(() => [
+    { href: `${localePrefix}/features`, label: t('features') },
     { href: `${localePrefix}/about`, label: t('about') },
-    { href: `/${locale}/#capabilities`, label: t('features') },
     { href: 'https://paracosm.agentos.sh', label: 'Paracosm' },
     { href: 'https://docs.agentos.sh/', label: 'Docs' },
     { href: `${localePrefix}/blog`, label: 'Blog' },
     { href: `${localePrefix}/faq`, label: t('faq') },
     { href: `${localePrefix}/contact`, label: 'Contact' },
-  ], [t, localePrefix, locale]);
+  ], [t, localePrefix]);
 
   const localizeHref = useCallback((href: string) => {
     // Handle empty/root paths – always prefix locale for consistency

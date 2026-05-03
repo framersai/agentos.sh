@@ -32,6 +32,13 @@
   --accent-secondary: hsl(280 85% 65%);
   --accent-tertiary: hsl(320 85% 65%);
   --accent-warm: hsl(20 90% 58%);
+
+  /* Brand gradient — single canonical 3-stop gradient that flows across
+   * accents. Composed from the accent vars above so it tracks every
+   * theme override (twilight-neo, light/dark) automatically. Use as a
+   * background, text-clip, or SVG fill via `var(--brand-gradient)`. */
+  --brand-gradient: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-tertiary) 100%);
+  --brand-gradient-soft: linear-gradient(135deg, var(--accent-primary) / 12% 0%, var(--accent-secondary) / 8% 50%, var(--accent-tertiary) / 12% 100%);
   
   /* Borders */
   --border-primary: hsl(220 15% 88%);

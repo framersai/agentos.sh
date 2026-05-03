@@ -526,13 +526,30 @@
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
-  
+
   /* High quality blurs */
   .backdrop-blur-xl { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-  
+
   /* Glow Utilities */
   .glow-text { text-shadow: 0 0 20px var(--color-accent-primary); }
   .glow-box { box-shadow: 0 0 30px var(--color-glow-primary); }
+
+  /* Brand gradient utilities — single canonical 3-stop gradient that
+   * flows through the active theme's accent palette. Use sparingly on
+   * stat pills, hero accents, or named-action buttons. Avoid overuse. */
+  .brand-gradient-bg {
+    background: var(--brand-gradient);
+  }
+  .brand-gradient-text {
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .brand-gradient-border {
+    border-image: var(--brand-gradient) 1;
+  }
   
   /* Text color utilities with important flag for consistency */
   .text-primary { color: var(--color-text-primary) !important; }

@@ -1,12 +1,38 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import type { Route } from 'next';
+import dynamic from 'next/dynamic';
 import { ArrowLeft, ArrowRight, Github, Linkedin, Twitter, Globe, Mail } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { Locale } from '../../../i18n';
 import { canonical } from '@/lib/seo/canonical';
 import { hreflangAlternates } from '@/lib/seo/hreflang';
 import { DiscordCTA } from '@/components/sections/discord-cta';
+
+/**
+ * Product, ecosystem, and social-proof sections — moved here from the
+ * homepage to focus the landing flow on conversion. These are the
+ * "what we are" sections that deserve their own page.
+ */
+const GMISectionLazy = dynamic(
+  () => import('@/components/sections/gmi-section').then((m) => m.GMISection),
+  { ssr: false, loading: () => <div className="min-h-[600px]" /> },
+);
+
+const ProductCardsLazy = dynamic(
+  () => import('@/components/sections/product-cards').then((m) => m.ProductCards),
+  { ssr: false, loading: () => <div className="min-h-[400px]" /> },
+);
+
+const EcosystemSectionLazy = dynamic(
+  () => import('@/components/sections/ecosystem-section').then((m) => m.EcosystemSection),
+  { ssr: false },
+);
+
+const SocialProofSectionLazy = dynamic(
+  () => import('@/components/sections/social-proof-section').then((m) => m.SocialProofSection),
+  { ssr: false },
+);
 
 type Props = {
   params: {
@@ -234,6 +260,23 @@ export default async function AboutPage({ params: { locale } }: Props) {
             })}
           </p>
         </section>
+      </div>
+
+      {/* Product surface — Generalized Mind Instances, what teams build, ecosystem packages, social proof */}
+      <div className="lazy-section-lg">
+        <GMISectionLazy />
+      </div>
+
+      <div className="lazy-section">
+        <ProductCardsLazy />
+      </div>
+
+      <div className="lazy-section">
+        <EcosystemSectionLazy />
+      </div>
+
+      <div className="lazy-section">
+        <SocialProofSectionLazy />
       </div>
     </main>
   );
