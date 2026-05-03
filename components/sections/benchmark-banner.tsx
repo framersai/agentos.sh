@@ -26,12 +26,17 @@ export function BenchmarkBanner() {
     <aside
       role="region"
       aria-label="Latest benchmark result"
-      className="relative mt-[64px] w-full border-b text-sm sm:mt-[68px]"
+      className="relative mt-[64px] w-full text-sm sm:mt-[68px]"
       style={{
-        borderColor: 'color-mix(in oklab, var(--color-accent-primary) 22%, transparent)',
         background:
-          'linear-gradient(90deg, color-mix(in oklab, var(--color-background-primary) 92%, transparent), color-mix(in oklab, var(--color-accent-primary) 8%, transparent) 50%, color-mix(in oklab, var(--color-background-primary) 92%, transparent))',
+          'linear-gradient(90deg, color-mix(in oklab, var(--color-background-primary) 92%, transparent), color-mix(in oklab, var(--color-accent-primary) 6%, transparent) 33%, color-mix(in oklab, var(--color-accent-secondary) 6%, transparent) 66%, color-mix(in oklab, var(--color-background-primary) 92%, transparent))',
         color: 'var(--color-text-primary)',
+        boxShadow: 'inset 0 -1px 0 0 transparent',
+        backgroundImage:
+          'linear-gradient(90deg, color-mix(in oklab, var(--color-background-primary) 92%, transparent), color-mix(in oklab, var(--color-accent-primary) 6%, transparent) 33%, color-mix(in oklab, var(--color-accent-secondary) 6%, transparent) 66%, color-mix(in oklab, var(--color-background-primary) 92%, transparent)), linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary), var(--color-accent-tertiary))',
+        backgroundOrigin: 'border-box',
+        backgroundClip: 'padding-box, border-box',
+        borderBottom: '1px solid transparent',
       }}
     >
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-1.5 px-10 py-2.5 sm:flex-row sm:justify-center sm:gap-4 sm:px-4">

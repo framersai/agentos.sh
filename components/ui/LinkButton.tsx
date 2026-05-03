@@ -19,7 +19,7 @@ interface LinkButtonProps extends React.ComponentProps<typeof Link> {
 const variantStyles: Record<LinkButtonVariant, string> = {
   primary: `
     relative overflow-hidden
-    bg-gradient-to-r from-[var(--color-accent-primary)] to-[var(--color-accent-secondary)]
+    bg-gradient-to-r from-[var(--color-accent-primary)] via-[var(--color-accent-secondary)] to-[var(--color-accent-tertiary)]
     text-white
     shadow-lg shadow-[var(--color-accent-primary)]/20
     hover:shadow-xl hover:shadow-[var(--color-accent-primary)]/30
