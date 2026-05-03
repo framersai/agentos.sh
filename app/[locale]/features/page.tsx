@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { getTranslations } from 'next-intl/server';
-import type { Locale } from '../../../i18n';
 import { canonical } from '@/lib/seo/canonical';
 import { hreflangAlternates } from '@/lib/seo/hreflang';
 import { CTASection } from '@/components/sections/cta-section';
@@ -50,7 +48,6 @@ type Props = {
 };
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
-  const t = await getTranslations({ locale: locale as Locale, namespace: 'meta' });
   const title = `Features — AgentOS`;
   const description =
     'Multi-agent orchestration, cognitive memory, runtime tool generation, specialist spawning, enterprise infrastructure, and the extension catalog. The mechanism behind every AgentOS capability.';
