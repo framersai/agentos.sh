@@ -148,7 +148,7 @@ export function CookieConsent() {
       className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 motion-safe:animate-[slide-up_0.4s_cubic-bezier(0.4,0,0.2,1)_both]"
     >
           <div className="mx-auto max-w-4xl">
-            <div className="holographic-card p-6 shadow-2xl border border-[var(--color-border-primary)]" role="dialog" aria-label="Cookie consent" aria-modal="false">
+            <div className="rounded-2xl bg-white text-slate-900 shadow-2xl border border-slate-200 p-6 dark:bg-slate-950 dark:text-slate-100 dark:border-slate-800" role="dialog" aria-label="Cookie consent" aria-modal="false">
               {!showSettings ? (
                 /* Main Banner */
                 <div className="flex flex-col md:flex-row md:items-center gap-4">

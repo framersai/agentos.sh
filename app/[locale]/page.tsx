@@ -4,6 +4,7 @@ import { HeroSection } from '../../components/sections/hero-section'
 import { BenchmarkBanner } from '../../components/sections/benchmark-banner'
 import { DiscordCTA } from '../../components/sections/discord-cta'
 import { ParacosmBanner } from '../../components/sections/paracosm-banner'
+import { WorkbenchCTA } from '../../components/sections/workbench-cta'
 import { SchemaMarkup } from '../../components/seo/seo-metadata'
 import { SectionSkeleton } from '../../components/ui/section-skeleton'
 
@@ -105,6 +106,11 @@ export default function LandingPageRedesigned() {
           </p>
           <DemoVideoPlayerLazy />
         </section>
+
+        {/* Workbench CTA — the demos above are recorded inside Workbench.
+            MIT-licensed companion to the Apache 2.0 runtime; visitors can
+            grab it from GitHub or the latest release. */}
+        <WorkbenchCTA />
 
         {/* Memory Benchmarks SOTA — matched gpt-4o reader on LongMemEval-S/M */}
         <div className="lazy-section-lg">
