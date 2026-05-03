@@ -13,11 +13,18 @@ const BLOG_URL =
   'https://docs.agentos.sh/blog/2026/04/29/longmemeval-m-70-with-topk5'
 
 export function BenchmarkBanner() {
-  const [hidden, setHidden] = useState(true)
+  // Default to VISIBLE so the banner renders on first paint instead of
+  // flashing in after hydration. The `useEffect` below hides it for
+  // users who previously dismissed it. The brief render-then-hide
+  // flicker for dismissed users is preferable to the much longer
+  // hidden-then-show flash every fresh visitor was seeing.
+  const [hidden, setHidden] = useState(false)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    setHidden(window.localStorage.getItem(STORAGE_KEY) === 'dismissed')
+    if (window.localStorage.getItem(STORAGE_KEY) === 'dismissed') {
+      setHidden(true)
+    }
   }, [])
 
   if (hidden) return null

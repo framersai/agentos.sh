@@ -18,11 +18,6 @@ const ResponsiveNeuralConstellation = dynamic(() => import('../hero/neural-const
   loading: () => null
 });
 
-const ParticleMorphText = dynamic(() => import('../hero/particle-morph-text').then(m => ({ default: m.ParticleMorphText })), {
-  ssr: false,
-  loading: () => null
-});
-
 const HeroSectionInner = memo(function HeroSectionInner() {
   const t = useTranslations('hero');
   const locale = useLocale();
@@ -31,26 +26,12 @@ const HeroSectionInner = memo(function HeroSectionInner() {
   const [githubStars, setGithubStars] = useState<number | null>(null);
   const [githubForks, setGithubForks] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
-  const [morphFontSize, setMorphFontSize] = useState(40);
   const isDark = resolvedTheme === 'dark';
 
   // Mark as mounted after hydration
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // Match ParticleMorphText font size to the CSS clamp breakpoints
-  useEffect(() => {
-    if (!mounted) return;
-    const update = () => {
-      const w = window.innerWidth;
-      // Match CSS text sizes exactly — canvas fills the invisible text box
-      setMorphFontSize(w >= 1024 ? 48 : w >= 640 ? 36 : 28);
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, [mounted]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -134,18 +115,19 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2] min-h-[72px] sm:min-h-[92px] lg:min-h-[120px]"
             itemProp="name"
           >
-            {/* Visually-hidden full-text H1 for search engines and screen readers.
-                The canvas siblings below render the visual particle-morph effect;
-                this sr-only span ensures the full string is in the DOM regardless
-                of canvas hydration state. */}
+            {/* Static gradient title — renders correctly on SSR + first paint
+                with no canvas hydration delay. Replaces an earlier
+                ParticleMorphText canvas effect that animated the words but
+                rendered as blank space until JS hydrated, producing a
+                visible flash on every page load. */}
             <span className="sr-only">Emergent intelligence for adaptive agents</span>
             <span aria-hidden="true">
-              <ParticleMorphText words={['Emergent', 'Adaptive']} interval={4000} fontSize={morphFontSize} gradientFrom={isDark ? '#7b66ff' : '#6024f3'} gradientTo={isDark ? '#d27bfc' : '#a538e5'} startIndex={0} />
-              <span className="text-[var(--color-text-primary)]">intelligence</span>
+              <span className="brand-gradient-text">Emergent</span>
+              <span className="text-[var(--color-text-primary)]"> intelligence</span>
               <br />
               <span className="text-[var(--color-text-secondary)]">for </span>
-              <ParticleMorphText words={['adaptive', 'emergent']} interval={5200} fontSize={morphFontSize} gradientFrom={isDark ? '#d27bfc' : '#a538e5'} gradientTo={isDark ? '#f87bb8' : '#f25b8c'} startIndex={0} nudgeY={0.04} />
-              <span className="text-[var(--color-text-primary)]">agents</span>
+              <span className="brand-gradient-text">adaptive</span>
+              <span className="text-[var(--color-text-primary)]"> agents</span>
             </span>
           </h1>
 
