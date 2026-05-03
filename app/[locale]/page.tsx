@@ -5,6 +5,7 @@ import { BenchmarkBanner } from '../../components/sections/benchmark-banner'
 import { DiscordCTA } from '../../components/sections/discord-cta'
 import { ParacosmBanner } from '../../components/sections/paracosm-banner'
 import { SchemaMarkup } from '../../components/seo/seo-metadata'
+import { SectionSkeleton } from '../../components/ui/section-skeleton'
 
 // Enable static generation for faster initial loads
 export const dynamicParams = false
@@ -38,24 +39,37 @@ const DemoVideoPlayerLazy = dynamic(
 // sections (GMISection, ProductCards, EcosystemSection, SocialProofSection)
 // live on /about. The homepage stays focused on the conversion path:
 // hero → demo → benchmarks → live run gallery → code → CTAs.
+
 const CodeExamplesSectionLazy = dynamic(
   () => import('../../components/sections/code-examples-section').then(m => m.CodeExamplesSection),
-  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
+  {
+    ssr: false,
+    loading: () => <SectionSkeleton minHeight={400} contentHeightClass="h-64" />,
+  }
 )
 
 const BenchmarksSectionLazy = dynamic(
   () => import('../../components/sections/benchmarks-section').then(m => m.BenchmarksSection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
+  {
+    ssr: false,
+    loading: () => <SectionSkeleton minHeight={600} contentHeightClass="h-96" />,
+  }
 )
 
 const LiveRunDemoSectionLazy = dynamic(
   () => import('../../components/sections/live-run-demo-section').then(m => m.LiveRunDemoSection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> }
+  {
+    ssr: false,
+    loading: () => <SectionSkeleton minHeight={600} contentHeightClass="h-96" />,
+  }
 )
 
 const WhitepaperCTALazy = dynamic(
   () => import('../../components/sections/whitepaper-cta').then(m => m.WhitepaperCTA),
-  { ssr: false, loading: () => <div className="min-h-[400px]" /> }
+  {
+    ssr: false,
+    loading: () => <SectionSkeleton minHeight={400} contentHeightClass="h-48" />,
+  }
 )
 
 export default function LandingPageRedesigned() {

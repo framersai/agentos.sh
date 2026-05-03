@@ -8,6 +8,7 @@ import type { Locale } from '../../../i18n';
 import { canonical } from '@/lib/seo/canonical';
 import { hreflangAlternates } from '@/lib/seo/hreflang';
 import { DiscordCTA } from '@/components/sections/discord-cta';
+import { SectionSkeleton } from '@/components/ui/section-skeleton';
 
 /**
  * Product, ecosystem, and social-proof sections — moved here from the
@@ -16,22 +17,22 @@ import { DiscordCTA } from '@/components/sections/discord-cta';
  */
 const GMISectionLazy = dynamic(
   () => import('@/components/sections/gmi-section').then((m) => m.GMISection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={600} contentHeightClass="h-96" /> },
 );
 
 const ProductCardsLazy = dynamic(
   () => import('@/components/sections/product-cards').then((m) => m.ProductCards),
-  { ssr: false, loading: () => <div className="min-h-[400px]" /> },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={400} contentHeightClass="h-64" /> },
 );
 
 const EcosystemSectionLazy = dynamic(
   () => import('@/components/sections/ecosystem-section').then((m) => m.EcosystemSection),
-  { ssr: false },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={500} contentHeightClass="h-80" /> },
 );
 
 const SocialProofSectionLazy = dynamic(
   () => import('@/components/sections/social-proof-section').then((m) => m.SocialProofSection),
-  { ssr: false },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={400} contentHeightClass="h-64" /> },
 );
 
 type Props = {

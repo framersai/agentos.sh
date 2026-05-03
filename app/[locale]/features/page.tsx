@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { canonical } from '@/lib/seo/canonical';
 import { hreflangAlternates } from '@/lib/seo/hreflang';
 import { CTASection } from '@/components/sections/cta-section';
+import { SectionSkeleton } from '@/components/ui/section-skeleton';
 
 /**
  * Features page — the mechanism deep-dives that previously crowded the
@@ -15,32 +16,32 @@ import { CTASection } from '@/components/sections/cta-section';
  */
 const AgencySectionLazy = dynamic(
   () => import('@/components/sections/agency-section').then((m) => m.AgencySection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={600} contentHeightClass="h-96" /> },
 );
 
 const EmergentSectionLazy = dynamic(
   () => import('@/components/sections/emergent-section').then((m) => m.EmergentSection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={600} contentHeightClass="h-96" /> },
 );
 
 const CognitiveSectionLazy = dynamic(
   () => import('@/components/sections/cognitive-section').then((m) => m.CognitiveSection),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={600} contentHeightClass="h-96" /> },
 );
 
 const FeaturesGridClientLazy = dynamic(
   () => import('@/components/sections/features-grid-client'),
-  { ssr: false, loading: () => <div className="min-h-[600px]" /> },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={600} contentHeightClass="h-96" /> },
 );
 
 const SkylineSectionLazy = dynamic(
   () => import('@/components/sections/skyline-section').then((m) => m.SkylineSection),
-  { ssr: false },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={500} contentHeightClass="h-80" /> },
 );
 
 const WorkbenchCTALazy = dynamic(
   () => import('@/components/sections/workbench-cta').then((m) => m.WorkbenchCTA),
-  { ssr: false },
+  { ssr: false, loading: () => <SectionSkeleton minHeight={400} contentHeightClass="h-48" /> },
 );
 
 type Props = {
