@@ -101,7 +101,7 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
       { title: "Deep Research", url: "/features/deep-research", content: "deep research query classification multi-source investigation analysis" },
       { title: "Speech Providers", url: "/features/speech-providers", content: "deepgram whisper elevenlabs speech provider catalog stt tts voice recognition synthesis" },
       { title: "Telephony Providers", url: "/features/telephony-providers", content: "twilio telnyx plivo telephony call webhook phone inbound outbound" },
-      { title: "Extensions Overview", url: "/extensions/overview", content: "extension catalog registry channel adapter plugin integration ecosystem" },
+      { title: "Extensions Overview", url: "/extensions", content: "extension catalog registry channel adapter plugin integration ecosystem" },
       { title: "Evaluation Framework", url: "/features/evaluation-framework", content: "eval benchmark grader candidate experiment evaluation testing quality metrics" },
       { title: "LLM Providers", url: "/features/llm-providers", content: "openai anthropic google groq together ollama deepseek provider model llm" },
       { title: "Tool Calling", url: "/architecture/tool-calling-and-loading", content: "tool calling function tools loading registration use call invoke schema" },
