@@ -186,7 +186,7 @@ export function SiteHeader() {
                     key={link.href}
                     href={localizedHref}
                     onClick={hasHash && !isExternal ? (e) => handleHashClick(e, localizedHref) : undefined}
-                    className="nav-link group relative inline-block py-2 px-1 text-[var(--color-text-primary)] font-semibold transition-all duration-300 ease-out hover:text-[var(--color-accent-primary)]"
+                    className="nav-link group relative inline-block whitespace-nowrap py-2 px-1 text-[var(--color-text-primary)] font-semibold transition-all duration-300 ease-out hover:text-[var(--color-accent-primary)]"
                   >
                     <span className="relative z-10 transition-all duration-300 ease-out">
                       {link.label}
@@ -199,7 +199,7 @@ export function SiteHeader() {
                 <Link
                   key={link.href}
                   href={localizedHref as Route}
-                  className="nav-link group relative inline-block py-2 px-1 text-[var(--color-text-primary)] font-semibold transition-all duration-300 ease-out hover:text-[var(--color-accent-primary)]"
+                  className="nav-link group relative inline-block whitespace-nowrap py-2 px-1 text-[var(--color-text-primary)] font-semibold transition-all duration-300 ease-out hover:text-[var(--color-accent-primary)]"
                 >
                   <span className="relative z-10 transition-all duration-300 ease-out">
                     {link.label}
