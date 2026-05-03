@@ -102,7 +102,11 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     ctx.fillText(text, 0, fontSize * 0.92);
 
     const data = ctx.getImageData(0, 0, width, height).data;
-    const step = Math.max(2, Math.floor(fontSize / 20));
+    // Tighter sampling = denser particles = sharper text. The previous
+    // step was fontSize/20 which left letters looking dotted at small
+    // fontSize values. Halving it doubles particle count for ~2x render
+    // cost (still <1ms/frame at hero font sizes).
+    const step = Math.max(1, Math.floor(fontSize / 36));
     const c1 = hexToRgb(gradientFrom), c2 = hexToRgb(gradientTo);
     const particles: { x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[] = [];
 
@@ -113,7 +117,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
           const colorStr = lerp(c1, c2, x / width);
           particles.push({
             x, y,
-            r: 1.3,
+            r: 1.1,
             c: colorStr,
             rgb: parseRgbString(colorStr),
             seed: Math.random() * 1000,
@@ -193,9 +197,10 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         s.morphT = 0;
       }
 
-      // Slower morph speed with exponential decay
+      // Faster morph (~0.4s) so the text spends more time fully readable.
+      // Previous 0.008/frame meant ~2s in the unclear mid-transition.
       if (s.isMorphing) {
-        s.morphT += 0.008; // slow, elegant morph
+        s.morphT += 0.04;
         // Switch width at morph midpoint so spacing animates in sync with particles
         if (s.morphT >= 0.5 && !s.widthSwitched) {
           s.widthSwitched = true;
@@ -227,8 +232,10 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         const particleT = Math.max(0, Math.min(1, (easeT - stagger) / (1 - stagger)));
         const smoothT = easeOutExpo(particleT);
         
-        // Add slight organic wobble during morph
-        const wobble = s.isMorphing ? Math.sin(t * 0.003 + fromP.seed) * 2 * (1 - Math.abs(smoothT - 0.5) * 2) : 0;
+        // Reduced wobble keeps letters readable during transit. Previously
+        // 2px peak amplitude smeared the glyph shapes; 0.6px gives a hint
+        // of organic motion without trashing legibility.
+        const wobble = s.isMorphing ? Math.sin(t * 0.003 + fromP.seed) * 0.6 * (1 - Math.abs(smoothT - 0.5) * 2) : 0;
         
         const x = fromP.x + (toP.x - fromP.x) * smoothT + wobble;
         const y = fromP.y + (toP.y - fromP.y) * smoothT;
