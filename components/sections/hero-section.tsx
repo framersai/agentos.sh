@@ -115,30 +115,23 @@ const HeroSectionInner = memo(function HeroSectionInner() {
             className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2] min-h-[72px] sm:min-h-[92px] lg:min-h-[120px]"
             itemProp="name"
           >
-            {/* Word 1 cycles Emergent <-> Autonomous via CSS keyframe.
-                Hidden placeholder reserves the wider word's width so the
-                rest of the line never reflows when the visible word swaps. */}
-            <span className="relative inline-block align-baseline">
-              <span aria-hidden="true" className="invisible">Autonomous</span>
-              <span className="absolute inset-0 overflow-hidden leading-[1.2]">
-                <span className="block motion-safe:animate-hero-word-1">
-                  <span className="block brand-gradient-text">Emergent</span>
-                  <span className="block brand-gradient-text">Autonomous</span>
-                </span>
-              </span>
+            {/* Two gradient slots dissolve between "Emergent" and "adaptive"
+                in opposite phases, so the H1 reads "Emergent intelligence
+                for adaptive agents" half the time and "adaptive intelligence
+                for Emergent agents" the other half. Cross-fade with blur
+                gives the morph feel; inline-grid stacks the two words in
+                the same cell so the slot width auto-sizes to the wider one
+                and the rest of the line never reflows. */}
+            <span className="relative inline-grid grid-cols-1 grid-rows-1 align-baseline">
+              <span className="row-start-1 col-start-1 brand-gradient-text motion-safe:animate-hero-word-front [will-change:opacity,filter,transform]">Emergent</span>
+              <span aria-hidden="true" className="row-start-1 col-start-1 brand-gradient-text motion-safe:animate-hero-word-back [will-change:opacity,filter,transform]">adaptive</span>
             </span>
             <span className="text-[var(--color-text-primary)]"> intelligence</span>
             <br />
             <span className="text-[var(--color-text-secondary)]">for </span>
-            {/* Word 2 cycles adaptive <-> intelligent, staggered by 4s. */}
-            <span className="relative inline-block align-baseline">
-              <span aria-hidden="true" className="invisible">intelligent</span>
-              <span className="absolute inset-0 overflow-hidden leading-[1.2]">
-                <span className="block motion-safe:animate-hero-word-2">
-                  <span className="block brand-gradient-text">adaptive</span>
-                  <span className="block brand-gradient-text">intelligent</span>
-                </span>
-              </span>
+            <span className="relative inline-grid grid-cols-1 grid-rows-1 align-baseline">
+              <span className="row-start-1 col-start-1 brand-gradient-text motion-safe:animate-hero-word-front [will-change:opacity,filter,transform]">adaptive</span>
+              <span aria-hidden="true" className="row-start-1 col-start-1 brand-gradient-text motion-safe:animate-hero-word-back [will-change:opacity,filter,transform]">Emergent</span>
             </span>
             <span className="text-[var(--color-text-primary)]"> agents</span>
           </h1>
