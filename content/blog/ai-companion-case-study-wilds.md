@@ -2,7 +2,7 @@
 title: "The AI That Remembers Your Name, Sends You Memes, and Knows When You're Lying"
 date: "2026-04-14"
 excerpt: "A user asks their AI companion to describe a GIF it just sent. The companion calls a vision tool, looks at the image, and responds with what it sees. None of this is scripted. Here's how AgentOS makes it possible."
-author: "AgentOS Team"
+author: "Johnny Dunn"
 category: "Case Study"
 audience: "general"
 image: "/img/blog/og/ai-companion-case-study-wilds.png"
