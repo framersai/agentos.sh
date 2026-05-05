@@ -11,7 +11,7 @@ keywords: "typescript ai agent framework, langgraph alternative, crewai alternat
 
 > "I don't want a comparison; I want a verdict. Tell me what to use."
 >
-> — every developer in every framework-comparison blog post, paraphrased
+> every developer in every framework-comparison blog post, paraphrased
 
 A confession before the table: I have built production agents on three of the frameworks in this post. Each one was the right choice at the time. Each one was wrong in a different way once the workload changed. The honest truth about agent frameworks in 2026 is that none of them are bad and none of them are universal. The job-to-be-done determines the right pick more than any feature checklist. Most comparison posts pretend otherwise. This one will try not to.
 
@@ -231,8 +231,30 @@ console.log(result.text);
 - [npm](https://www.npmjs.com/package/@framers/agentos)
 - [Discord](https://discord.gg/usEkfCeQxs)
 
+## FAQ
+
+### Which framework should I pick if I'm starting from zero?
+
+If your job is "build a deterministic LLM workflow with a graph of nodes," LangGraph fits. If it's "TypeScript-first orchestration with growing memory primitives," Mastra fits. If it's "agents with measurable personality, cognitive memory, runtime tool forging, and guardrails as first-class primitives," AgentOS fits. The job-to-be-done picks the framework. The wrong question is which framework is "best."
+
+### Are the benchmark numbers in this post matched-reader?
+
+Where AgentOS numbers appear in this post, the reader model and retrieval config are named in the LongMemEval SOTA post. For competitor numbers cited from their own marketing, the reader is whatever they ship. If two systems claim a different score on the same benchmark with different reader configs, that's a pricing observation, not a quality claim. We flag those distinctions inline rather than burying them.
+
+### Can I migrate from LangGraph to AgentOS without rewriting my graph?
+
+Partially. AgentOS has a `workflow()` API and an `AgentGraph` primitive that handle DAG orchestration. The translation maps cleanly for graphs whose nodes are LLM calls or tool calls. Custom Python state-graph nodes don't translate; you'd rewrite those as TypeScript handlers. Most migrations take less than a day for graphs under 20 nodes.
+
+### Why does AgentOS support more LLM providers than the others?
+
+Not strategy, just scope: provider integrations are cheap to maintain when the runtime treats every provider as a thin adapter over the same `generateText` shape. We add providers when users ask. Framework competitors that lock to one or two providers tend to do it because their orchestration layer makes assumptions about token-stream shape that aren't portable.
+
+### Where does AgentOS lose to a competitor?
+
+If you need a battle-tested Python ecosystem with mature LangChain integrations, LangGraph wins. If you need a hosted control plane and a UI for non-engineers to author flows, Mastra Cloud is ahead. If you only need a simple wrap around the OpenAI Responses API, the OpenAI Agents SDK is fewer lines. We don't pretend otherwise. AgentOS wins when memory, personality, tool forging, and guardrails are first-class needs.
+
 ---
 
-**AgentOS** is built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). See [Wilds.ai](https://wilds.ai) for AI game worlds powered by AgentOS.
+**AgentOS** is built by [Frame](https://frame.dev). See [Wilds.ai](https://wilds.ai) for AI game worlds powered by AgentOS.
 
 *Last updated: April 2026. Star counts verified via GitHub API. Framework features change rapidly. Check each project's documentation for the latest.*
