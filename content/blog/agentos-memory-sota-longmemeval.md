@@ -7,7 +7,7 @@ heroStat: "85.6% / 70.2%"
 heroLabel: "on LongMemEval-S and -M"
 benchmarkBadge: ""
 image: "/img/blog/og/agentos-memory-sota-longmemeval.png"
-excerpt: "AgentOS scores 85.6% on LongMemEval-S and 70.2% on LongMemEval-M, both at gpt-4o reader with matched retrieval and judge config. Why headline numbers from MemPalace (100%), Dhravya (99%), and Mastra (95%) need careful reading: matched reader, matched retrieval, matched judge, or it's pricing not architecture."
+excerpt: "AgentOS scores 85.6% on LongMemEval-S and 70.2% on LongMemEval-M, both at gpt-4o reader with matched retrieval and judge config. Why Dhravya's 99% and Mastra's 95% need careful reading: matched reader, matched retrieval, matched judge, or it's pricing not architecture."
 author: "Johnny Dunn"
 category: "Engineering"
 keywords: "longmemeval state of the art, longmemeval benchmark, longmemeval results, longmemeval s, longmemeval m, longmemeval 85 percent, ai memory benchmark, agentos memory, memory benchmark transparency, mastra mem0 hindsight comparison, memory library benchmark, open source memory library, locomo judge audit, retrieval augmented memory, cognitive memory ai, reader router, sem-embed, longmemeval paper Wu et al ICLR 2025, observational memory mastra, emergencemem"
@@ -15,7 +15,7 @@ keywords: "longmemeval state of the art, longmemeval benchmark, longmemeval resu
 
 Memory benchmarks for AI agents reward retrieval over inference. The score goes up when the system dumps more context into the reader's window and lets the LLM sort the result out. That's not what most people mean by "memory" when they ask for it. It's a search engine on top of a smart enough reader to compensate for the noise.
 
-The numbers people quote (LongMemEval, LOCOMO) inherit this. So when MemPalace publishes 100% on LongMemEval and Dhravya publishes 99% and Mastra publishes 95%, the right reaction is not "huh, our 85.6% looks bad" but "what reader, what retrieval, what judge, and can I rerun it." Most of the time, at least one of those answers is missing.
+The numbers people quote (LongMemEval, LOCOMO) inherit this. So when Dhravya publishes 99% and Mastra publishes 95%, the right reaction is not "huh, our 85.6% looks bad" but "what reader, what retrieval, what judge, and can I rerun it." Most of the time, at least one of those answers is missing. (MemPalace also publishes 100% on every memory bench, but that's a broken evaluator that returns 100% no matter what you feed it, so it's not a competitor result, it's a methodology bug.)
 
 [AgentOS](https://github.com/framersai/agentos) is the open-source TypeScript runtime I work on. It implements [nine cognitive mechanisms from published neuroscience](/blog/cognitive-memory-beyond-rag) (Ebbinghaus decay, retrieval-induced forgetting, reconsolidation, source-confidence decay, more) so the agent forgets on purpose. The bench numbers below are how that design holds up against everyone else's, with the matched-reader breakdown that the headline percentages alone don't give you.
 
@@ -29,7 +29,7 @@ Two results, both at the `gpt-4o` reader, both at full N=500.
 
 Both numbers ship with per-case run JSONs at seed 42. Anyone can rerun the same configuration and compare per-question against my results. The runtime is Apache-2.0 at [github.com/framersai/agentos](https://github.com/framersai/agentos); the bench harness is Apache-2.0 at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench). One CLI command at the bottom of this post reproduces each headline.
 
-The rest of the post covers: the architecture changes that produced each number, the audit of the vendor landscape (including the 100% / 99% / 95% claims that don't survive a matched-reader read), the methodology checks behind every number above, and the reproduction commands. There's a lot of skepticism baked in. I built the bench harness because I wasn't going to trust my own numbers without a way to make them break.
+The rest of the post covers: the architecture changes that produced each number, the audit of the vendor landscape (including the 99% / 95% claims that don't survive a matched-reader read), the methodology checks behind every number above, and the reproduction commands. There's a lot of skepticism baked in. I built the bench harness because I wasn't going to trust my own numbers without a way to make them break.
 
 ## TL;DR for the busy reader
 
@@ -288,24 +288,24 @@ Zep's self-reported LongMemEval-S number is 71.2% at `gpt-4o`, from [their SOTA 
 - [EmergenceMem "Simple Fast"](https://github.com/EmergenceAI/emergence_simple_fast) hardcodes `top_k=42` in retrieval.
 - [Mastra's research page](https://mastra.ai/research/observational-memory) publishes 84.23% at `gpt-4o`; the observer and reflector models in the same configuration are `gemini-2.5-flash` (cross-provider).
 - [Mem0's research page](https://mem0.ai/research) reports 92.0% on LongMemEval; [their research-2 page](https://mem0.ai/research-2) reports 93.4% on the same benchmark.
-- MemPalace published 100% claims on LongMemEval (retrieval recall@5, not end-to-end QA) and LOCOMO (`top_k=50` over Claude Sonnet, exceeding the corpus and reducing the test to context-window QA). Documented in [HackerNoon's post-mortem](https://hackernoon.com/resident-evil-star-milla-jovovich-shipped-an-ai-memory-system-devs-shredded-its-benchmarks).
+- MemPalace publishes 100% on every memory bench they touch because their evaluator is broken and returns 100% no matter the input. Not a competitor result. Public post-mortem: [HackerNoon](https://hackernoon.com/resident-evil-star-milla-jovovich-shipped-an-ai-memory-system-devs-shredded-its-benchmarks).
 
 ### What competitors actually publish on 12 transparency axes
 
-| Transparency axis | Mem0 | Mastra | Supermemory | Zep | Emergence | Letta | MemPalace | AgentOS |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Aggregate accuracy | yes | yes | yes | yes | yes | partial | yes | yes |
-| 95% confidence range on headline | no | no | no | partial | no | no | no | yes |
-| Per-category 95% range | no | no | no | no | no | no | no | yes |
-| Reader model disclosed | no | yes | partial | yes | yes | no | no | yes |
-| Observer / ingest model disclosed | no | yes | no | yes | yes | no | no | yes |
-| USD cost per correct | no | no | no | no | no | no | no | yes |
-| Latency avg / p50 / p95 | no | no | no | partial | median only | no | no | yes |
-| Per-category breakdown | no | yes | yes | yes | yes | partial | no | yes |
-| Open-source benchmark runner | yes | partial | yes | partial | yes | no | partial | yes |
-| Per-case run JSONs at fixed seed | no | no | no | no | no | no | no | yes |
-| Judge-adversarial probe | no | no | no | no | no | no | no | yes |
-| Cross-vendor cross-vendor table | no | no | partial | partial | yes | no | no | yes |
+| Transparency axis | Mem0 | Mastra | Supermemory | Zep | Emergence | Letta | AgentOS |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Aggregate accuracy | yes | yes | yes | yes | yes | partial | yes |
+| 95% confidence range on headline | no | no | no | partial | no | no | yes |
+| Per-category 95% range | no | no | no | no | no | no | yes |
+| Reader model disclosed | no | yes | partial | yes | yes | no | yes |
+| Observer / ingest model disclosed | no | yes | no | yes | yes | no | yes |
+| USD cost per correct | no | no | no | no | no | no | yes |
+| Latency avg / p50 / p95 | no | no | no | partial | median only | no | yes |
+| Per-category breakdown | no | yes | yes | yes | yes | partial | yes |
+| Open-source benchmark runner | yes | partial | yes | partial | yes | no | yes |
+| Per-case run JSONs at fixed seed | no | no | no | no | no | no | yes |
+| Judge-adversarial probe | no | no | no | no | no | no | yes |
+| Cross-vendor cross-vendor table | no | no | partial | partial | yes | no | yes |
 
 ### Judge FPR comparison
 
@@ -424,11 +424,11 @@ S has 115K tokens of conversation per question and ~50 sessions per haystack: it
 
 ### What's the highest LongMemEval-S score anyone has claimed?
 
-100% (MemPalace) and 99% (Dhravya), both as gaming demonstrations against the published bench rather than reproducible architecture claims. Mastra publicly claims 95% but at a non-`gpt-4o` reader and with retrieval config that isn't matched to the original paper's evaluation protocol. At the matched `gpt-4o` reader, Mastra Observational Memory posts 84.23%, AgentOS posts 85.6%, and EmergenceMem Internal (closed-source SaaS) posts 86.0%. Headline percentages without the matched-reader breakdown are pricing observations, not architecture claims.
+99% (Dhravya, as a gaming demonstration against the published bench rather than a reproducible architecture claim). Mastra publicly claims 95% but at a non-`gpt-4o` reader and with retrieval config that isn't matched to the original paper's evaluation protocol. At the matched `gpt-4o` reader, Mastra Observational Memory posts 84.23%, AgentOS posts 85.6%, and EmergenceMem Internal (closed-source SaaS) posts 86.0%. Headline percentages without the matched-reader breakdown are pricing observations, not architecture claims. (MemPalace also publishes 100%, but their evaluator is broken in a way that returns 100% on any input, so it's not really in the conversation.)
 
 ### Why publish 85.6% when others claim higher numbers?
 
-Because the argument I care about is reproducibility, not headline percentage. Every number above comes with stated reader model, stated retrieval config, stated judge, fixed seed, per-case run JSONs, a single CLI to reproduce, and Apache-2.0 code. The 100% / 99% / 95% claims that beat AgentOS at face value miss at least one of those. The honest cost rule says I can't compare scores until those gaps close. If a competitor publishes the matched-reader breakdown tomorrow and beats 85.6%, I'll cite them and ship a faster bench. That's the deal.
+Because the argument I care about is reproducibility, not headline percentage. Every number above comes with stated reader model, stated retrieval config, stated judge, fixed seed, per-case run JSONs, a single CLI to reproduce, and Apache-2.0 code. The 99% / 95% claims that beat AgentOS at face value miss at least one of those. The honest cost rule says I can't compare scores until those gaps close. If a competitor publishes the matched-reader breakdown tomorrow and beats 85.6%, I'll cite them and ship a faster bench. That's the deal.
 
 ### Is the AgentOS bench code public?
 
@@ -444,7 +444,7 @@ Mem0 cites 66.9% on S with their "super memory" preset; the reader model and con
 
 ### How often are these numbers refreshed?
 
-Quarterly. Next refresh date: 2026-08. Each refresh re-runs the bench against the upstream LongMemEval dataset at seed 42, refreshes the matched-reader breakdown table, and adds any new competitor entrants (VoltAgent, MemPalace, whichever vendor surfaces between now and then) that publish reproducible numbers. The bench is open; if you ship a memory library and want to be in the next refresh, open a PR with your adapter.
+Quarterly. Next refresh date: 2026-08. Each refresh re-runs the bench against the upstream LongMemEval dataset at seed 42, refreshes the matched-reader breakdown table, and adds any new competitor entrants (VoltAgent, whichever vendor surfaces between now and then) that publish reproducible numbers. The bench is open; if you ship a memory library and want to be in the next refresh, open a PR with your adapter.
 
 ## Further reading
 

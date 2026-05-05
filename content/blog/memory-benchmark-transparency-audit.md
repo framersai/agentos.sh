@@ -1,19 +1,15 @@
 ---
 title: "Memory Benchmark Transparency: Why LongMemEval and LOCOMO Numbers Don't Compare"
 date: "2026-04-24"
-excerpt: "An audit of how Mem0, Mastra, Supermemory, Zep, EmergenceMem, and MemPalace publish their LongMemEval and LOCOMO numbers. LOCOMO has a 6.4% wrong answer key and a judge that accepts 63% of wrong answers. MemPalace and Dhravya post 99-100% as gaming demonstrations. Mastra claims 95% at an unmatched reader. The transparency stack behind every honest comparison."
-author: "AgentOS Team"
+excerpt: "An audit of how Mem0, Mastra, Supermemory, Zep, EmergenceMem, and Letta publish their LongMemEval and LOCOMO numbers. LOCOMO has a 6.4% wrong answer key and a judge that accepts 63% of wrong answers. Dhravya posts 99% as a gaming demonstration. Mastra claims 95% at an unmatched reader. The transparency stack behind every honest comparison."
+author: "Johnny Dunn"
 category: "Engineering"
 audience: "engineer"
 image: "/img/blog/og/memory-benchmark-transparency-audit.png"
-keywords: "memory benchmark transparency, longmemeval transparency, longmemeval gaming, locomo audit, mempalace 100 percent, dhravya 99, mastra 95 percent, agentos policy router, pareto-optimal routing, memory library benchmark reproducibility, mem0 vs zep, mastra observational memory, supermemory memorybench, benchmark reproducibility"
+keywords: "memory benchmark transparency, longmemeval transparency, longmemeval gaming, locomo audit, dhravya 99, mastra 95 percent, agentos policy router, pareto-optimal routing, memory library benchmark reproducibility, mem0 vs zep, mastra observational memory, supermemory memorybench, benchmark reproducibility"
 ---
 
-> "If a measurement matters at all, it is because it must have some conceivable effect on decisions and behavior. If we can't identify a decision that could be affected by a proposed measurement and how it could change those decisions, then the measurement simply has no value."
->
-> Douglas Hubbard, *How to Measure Anything*, 2014
-
-This post examines the benchmarks the entire memory-library industry uses as proof. The benchmarks are broken in measurable ways, the gaming patterns are documented, and the right response is not to refuse to publish numbers but to publish honest ones with a methodology stack disclosed at every step. Below is the audit; everything else AgentOS publishes runs against this disclosure.
+The benchmarks the AI memory industry uses as proof are broken in measurable ways. The gaming patterns are documented. The right response is not to stop publishing numbers but to publish honest ones, with the methodology stack disclosed at every step so anyone can re-run them and see for themselves. Below is the audit. Every number AgentOS ships runs against this same disclosure.
 
 > **Note:**
 >
@@ -74,26 +70,26 @@ Zep is one of the more transparent vendors in this space. They ship open-source 
 
 [Mem0's research page](https://mem0.ai/research) claims 92.0% on LongMemEval. Their [research-2 page](https://mem0.ai/research-2) claims 93.4% on the same benchmark. Two numbers from the same company. They do not reconcile. Neither page lists the reader model, the judge model, the seed, the bootstrap CI, or the per-category breakdown. A third-party attempt to reproduce Mem0's LongMemEval result is filed as [mem0/#3944](https://github.com/mem0ai/mem0/issues/3944), cited by Penfield Labs as one of multiple documented reproduction failures.
 
-(The most-publicized 2026 benchmark implosion, the actress Milla Jovovich's MemPalace launch claiming 100% on LongMemEval and LOCOMO, was a celebrity-driven stunt rather than a serious competitor. The project's "100% LongMemEval" was retrieval recall@5 rather than end-to-end QA, the "100% LoCoMo" was obtained by setting `top_k=50` to dump every session into Claude Sonnet, and the advertised "contradiction detection" feature was absent from the code. [HackerNoon's post-mortem](https://hackernoon.com/resident-evil-star-milla-jovovich-shipped-an-ai-memory-system-devs-shredded-its-benchmarks) and [GitHub Issue #29](https://github.com/milla-jovovich/mempalace/issues/29) cover the anatomy in full. Worth mentioning because the three patterns (wrong-metric-claimed-as-SOTA, bypass-retrieval-to-inflate, advertised-feature-absent-from-code) recur in less-flagrant forms across the real vendors surveyed above.)
+(MemPalace, the actress Milla Jovovich's celebrity launch, also claimed 100%. Their evaluator was broken in a way that returned 100% no matter what; not really a competitor result. [HackerNoon's post-mortem](https://hackernoon.com/resident-evil-star-milla-jovovich-shipped-an-ai-memory-system-devs-shredded-its-benchmarks) covers the breakage. Mentioning it because the three patterns it exhibited (wrong-metric-claimed-as-SOTA, bypass-retrieval-to-inflate, advertised-feature-absent-from-code) recur in less-flagrant forms across the actual vendors surveyed above.)
 
 ## What competitors actually publish on 12 transparency axes
 
-Across Mem0, Mastra, Supermemory, Zep, EmergenceMem, Letta, and MemPalace, no single vendor ships every transparency axis that makes a memory benchmark meaningful. The matrix below is built from each vendor's primary research page and open-source bench repo as of April 2026.
+Across Mem0, Mastra, Supermemory, Zep, EmergenceMem, and Letta, no single vendor ships every transparency axis that makes a memory benchmark meaningful. The matrix below is built from each vendor's primary research page and open-source bench repo as of April 2026.
 
-| Transparency axis | Mem0 | Mastra | Supermemory | Zep | Emergence | Letta | MemPalace | AgentOS |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| Aggregate accuracy | yes | yes | yes | yes | yes | partial | yes | yes |
-| 95% bootstrap CI on headline | no | no | no | partial (±0.17 SD only) | no | no | no | yes |
-| Per-category 95% CI | no | no | no | no | no | no | no | yes |
-| Reader model disclosed on research page | no | yes | partial | yes | yes | no | no | yes |
-| Observer / ingest model disclosed | no | yes | no | yes | yes | no | no | yes |
-| USD cost per correct | no | no | no | no | no | no | no | yes |
-| Latency avg / p50 / p95 | no | no | no | partial (p95 search) | median only | no | no | yes |
-| Per-category breakdown | no | yes | yes | yes | yes | partial | no | yes |
-| Open-source benchmark runner | yes | partial (workshop) | yes | partial | yes | no | partial | yes |
-| Per-case run JSONs at seed | no | no | no | no | no | no | no | yes |
-| Judge-adversarial probe | no | no | no | no | no | no | no | yes |
-| Cross-vendor cross-vendor table | no | no | partial | partial | yes | no | no | yes |
+| Transparency axis | Mem0 | Mastra | Supermemory | Zep | Emergence | Letta | AgentOS |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Aggregate accuracy | yes | yes | yes | yes | yes | partial | yes |
+| 95% bootstrap CI on headline | no | no | no | partial (±0.17 SD only) | no | no | yes |
+| Per-category 95% CI | no | no | no | no | no | no | yes |
+| Reader model disclosed on research page | no | yes | partial | yes | yes | no | yes |
+| Observer / ingest model disclosed | no | yes | no | yes | yes | no | yes |
+| USD cost per correct | no | no | no | no | no | no | yes |
+| Latency avg / p50 / p95 | no | no | no | partial (p95 search) | median only | no | yes |
+| Per-category breakdown | no | yes | yes | yes | yes | partial | yes |
+| Open-source benchmark runner | yes | partial (workshop) | yes | partial | yes | no | yes |
+| Per-case run JSONs at seed | no | no | no | no | no | no | yes |
+| Judge-adversarial probe | no | no | no | no | no | no | yes |
+| Cross-vendor cross-vendor table | no | no | partial | partial | yes | no | yes |
 
 **Bench tooling: two open suites in the space.** [Supermemory's memorybench](https://github.com/supermemoryai/memorybench) is a TypeScript framework with multi-provider support (Supermemory, Mem0, Zep), multi-benchmark coverage (LoCoMo, LongMemEval, ConvoMem), multi-judge support (GPT-4o, Claude, Gemini), a checkpointed pipeline (ingest → index → search → answer → evaluate → report), a web UI, and a MemScore triple (accuracy / latency / tokens). agentos-bench covers a narrower vendor surface but adds bootstrap CIs, judge-adversarial probes, kill-ladder methodology, and per-case run JSONs at fixed seed.
 
@@ -233,7 +229,7 @@ Three open-source bench frameworks exist to do that without writing your own har
 
 For vendors publishing benchmark numbers: use one of these harnesses and publish the seed, the config, and the per-case run JSONs alongside your headline. Anything less makes your number a claim, not a measurement. The community will find the gap between the claim and the reproduction. The reproduction will be louder than the launch.
 
-AgentOS posts 85.6% on LongMemEval-S at gpt-4o reader, 0.4 points behind Emergence.ai's published 86% closed-source SaaS SOTA, +1.4 points above Mastra's 84.23% at the matched reader. Judge false-positive rate is measured at 1% on LongMemEval-S, 0% on LOCOMO, both far below the +/-3 point bootstrap CI on the accuracy number. Three competing self-reports (Zep's 71.2%, Mem0's 92-93.4%, MemPalace's 100%) have been independently disputed, unreproducible, or outright false.
+AgentOS posts 85.6% on LongMemEval-S at gpt-4o reader, 0.4 points behind Emergence.ai's published 86% closed-source SaaS SOTA, +1.4 points above Mastra's 84.23% at the matched reader. Judge false-positive rate is measured at 1% on LongMemEval-S, 0% on LOCOMO, both far below the +/-3 point bootstrap CI on the accuracy number. Two competing self-reports (Zep's 71.2%, Mem0's 92-93.4%) have been independently disputed or unreproducible. (MemPalace's 100% gets a separate aside above; that one is a broken evaluator, not a real claim.)
 
 What AgentOS is: the only vendor in the surveyed set that publishes bootstrap CIs, judge false-positive probes on shipping numbers (measured, not hypothesized), per-stage retention metrics, full cost-per-correct accounting, latency distributions, per-case run JSONs, hold-out calibration against shipping tables, and cross-vendor comparison tables at a seeded reproducible configuration. For the reader trying to decide which memory library to use, those are the things that matter. The headline number is a lottery ticket. The methodology is the infrastructure.
 
@@ -247,9 +243,9 @@ For any cross-vendor benchmark claim ("System A scores X%, System B scores Y%"),
 
 Because it puts a hard floor on any LOCOMO score comparison: scores above 93.6% are partly measuring benchmark errors. Combined with the judge's 63% acceptance rate of intentionally wrong answers, score gaps below ~6 points are inside judge noise. LOCOMO is still useful for relative ordering at a coarse resolution, but headline percentages from LOCOMO need to be read with both ceilings (Penfield Labs, April 2026) in mind.
 
-### MemPalace claims 100% on LongMemEval. Is that real?
+### What about MemPalace's 100% claim?
 
-The 100% claim is on retrieval recall@5, not end-to-end QA. It's a measurement of whether the right document is in the top-5 returned chunks, not whether the agent answered the question correctly. Their LOCOMO claim used `top_k=50` over Claude Sonnet, which exceeds the corpus and reduces the test to context-window QA rather than memory architecture. Both are gaming demonstrations rather than reproducible architecture claims; documented in [HackerNoon's post-mortem](https://hackernoon.com/resident-evil-star-milla-jovovich-shipped-an-ai-memory-system-devs-shredded-its-benchmarks).
+Their evaluator is broken in a way that returns 100% no matter the input. Not a real claim. [HackerNoon post-mortem](https://hackernoon.com/resident-evil-star-milla-jovovich-shipped-an-ai-memory-system-devs-shredded-its-benchmarks) for the anatomy. Mentioning it because it's the most flagrant version of patterns the actual vendors do in less-flagrant forms.
 
 ### Mastra claims 95%. What's the matched-reader number?
 
