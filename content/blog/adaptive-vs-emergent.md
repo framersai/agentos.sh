@@ -11,7 +11,7 @@ keywords: "adaptive ai agents, emergent ai behavior, ai agent intelligence, mult
 
 > "All these moments will be lost in time, like tears in rain. Time to die."
 >
-> — Roy Batty, *Blade Runner*, 1982
+> Roy Batty, *Blade Runner*, 1982
 
 
 The hardest question I've been asked about AgentOS is whether the agents are "really" intelligent. The honest answer is that the question is malformed. There are two different things people are asking about when they say intelligence in the context of AI agents, and the runtime treats them differently because they require different machinery. Mixing them up is the source of most of the confusion in the space.
@@ -92,10 +92,32 @@ AgentOS layers both:
 
 The constraint is the enabler. Agents can forge tools freely because the judge gate, sandbox isolation, and tiered promotion ensure that only safe, correct tools persist. Agents can adapt their personality because Ebbinghaus decay prevents permanent drift from baseline.
 
+## FAQ
+
+### Is "adaptive" just another word for fine-tuning?
+
+No. Fine-tuning rewrites model weights. Adaptive AgentOS behavior runs entirely at the runtime layer: HEXACO trait values, system prompt rewrites, retrieval reweighting, and cost-guard thresholds. The underlying LLM weights are untouched. You get behavior change without re-training.
+
+### How do I know whether a tool was forged or hand-authored?
+
+The `EmergentToolRegistry` tags every tool with `origin: 'forged' | 'authored'` and tracks creation mode (`compose` vs `sandbox`), the judge verdict, and a confidence score. The agent dashboard surfaces the same metadata so you can audit which capabilities the runtime invented.
+
+### Can emergent behavior happen without multiple agents?
+
+Some forms can. Runtime tool forging fires inside a single agent when no existing capability fits. But the collective behaviors people usually mean by "emergent" (debate, review loops, division of labor) require the multi-agent coordination strategies in the Agency API. Single-agent emergence is real but bounded.
+
+### How do you keep emergent tools from doing something unsafe?
+
+Three layers. Compose-mode forging restricts new tools to chains over already-vetted tools (safe by construction). Sandbox-mode forging runs generated code under memory and time limits with no network or filesystem access by default. An LLM judge reviews every forged tool before it's added to the registry, and promotion to broader scope requires dual-judge approval.
+
+### Is HEXACO required, or can I disable personality entirely?
+
+Opt-in. Omit the `personality` block and the agent runs without trait shaping. When traits are present, omitted dimensions default to the neutral midpoint (0.5).
+
 ## Further Reading
 
 - [Getting Started with AgentOS](https://docs.agentos.sh/getting-started)
-- [How to Build a TypeScript AI Agent in 5 Minutes](/blog/build-typescript-ai-agent-5-minutes)
+- [Build a TypeScript AI Agent Runtime in 5 Minutes](/blog/build-typescript-ai-agent-5-minutes)
 - [Emergent Capabilities Guide](https://docs.agentos.sh/features/emergent-capabilities)
 - [AgentOS vs LangGraph vs CrewAI vs Mastra vs VoltAgent](/blog/agentos-vs-langgraph-vs-crewai)
 - [GitHub](https://github.com/framersai/agentos) | [Discord](https://discord.gg/usEkfCeQxs) | [npm](https://www.npmjs.com/package/@framers/agentos)
