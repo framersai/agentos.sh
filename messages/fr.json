@@ -1222,7 +1222,8 @@
     "feature2": "Outils de test et débogage en temps réel",
     "feature3": "Déploiement en un clic vers le cloud ou en local",
     "viewGithub": "Voir sur GitHub",
-    "downloadLatest": "Télécharger la dernière version"
+    "downloadLatest": "Télécharger la dernière version",
+    "downloadComingSoon": "Téléchargement (bientôt disponible)"
   },
   "cognitive": {
     "badge": "Fondé sur les neurosciences",

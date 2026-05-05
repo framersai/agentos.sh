@@ -1230,7 +1230,8 @@
     "feature2": "Real-time testing and debugging tools",
     "feature3": "One-click deployment to cloud or local",
     "viewGithub": "View on GitHub",
-    "downloadLatest": "Download Latest"
+    "downloadLatest": "Download Latest",
+    "downloadComingSoon": "Download (coming soon)"
   },
   "cognitive": {
     "badge": "Neuroscience-Backed",

@@ -1232,7 +1232,8 @@
     "feature2": "Herramientas de prueba y depuración en tiempo real",
     "feature3": "Despliegue en un clic a la nube o local",
     "viewGithub": "Ver en GitHub",
-    "downloadLatest": "Descargar Última Versión"
+    "downloadLatest": "Descargar Última Versión",
+    "downloadComingSoon": "Descargar (próximamente)"
   },
   "cognitive": {
     "badge": "Respaldado por neurociencia",

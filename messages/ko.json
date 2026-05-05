@@ -1222,7 +1222,8 @@
     "feature2": "실시간 테스트 및 디버깅 도구",
     "feature3": "원클릭으로 클라우드 또는 로컬에 배포",
     "viewGithub": "GitHub에서 보기",
-    "downloadLatest": "최신 버전 다운로드"
+    "downloadLatest": "최신 버전 다운로드",
+    "downloadComingSoon": "다운로드 (곧 제공)"
   },
   "cognitive": {
     "badge": "신경과학 기반",

@@ -1222,7 +1222,8 @@
     "feature2": "リアルタイムテスト＆デバッグツール",
     "feature3": "ワンクリックでクラウドまたはローカルにデプロイ",
     "viewGithub": "GitHubで表示",
-    "downloadLatest": "最新版をダウンロード"
+    "downloadLatest": "最新版をダウンロード",
+    "downloadComingSoon": "ダウンロード (近日公開)"
   },
   "cognitive": {
     "badge": "神経科学に基づく",

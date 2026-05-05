@@ -1222,7 +1222,8 @@
     "feature2": "实时测试和调试工具",
     "feature3": "一键部署到云端或本地",
     "viewGithub": "在 GitHub 上查看",
-    "downloadLatest": "下载最新版本"
+    "downloadLatest": "下载最新版本",
+    "downloadComingSoon": "下载 (即将推出)"
   },
   "cognitive": {
     "badge": "神经科学支撑",

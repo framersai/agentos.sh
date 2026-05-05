@@ -63,15 +63,15 @@ export function WorkbenchCTA() {
                 <GitBranch className="w-5 h-5" />
                 {t('viewGithub')}
               </a>
-              <a
-                href="https://github.com/framersai/agentos-workbench/releases/latest"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold border-2 border-[var(--color-accent-primary)]/50 text-[var(--color-accent-primary)] hover:bg-[var(--color-accent-primary)]/10 transition-all"
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold border-2 border-[var(--color-border-subtle)] text-[var(--color-text-tertiary)] bg-transparent cursor-not-allowed opacity-70"
               >
                 <Download className="w-5 h-5" />
-                {t('downloadLatest')}
-              </a>
+                {t('downloadComingSoon')}
+              </button>
             </div>
           </div>
         </div>
