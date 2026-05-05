@@ -2,17 +2,12 @@
 title: "Adaptive vs. Emergent Intelligence: Two Types of AI Agent Behavior"
 date: "2026-04-12"
 excerpt: "Adaptive intelligence modifies behavior from feedback. Emergent intelligence produces complex behavior from multi-agent interaction. AgentOS implements both with distinct runtime primitives and neuroscience-grounded memory."
-author: "AgentOS Team"
+author: "Johnny Dunn"
 category: "Engineering"
 audience: "evaluator"
 image: "/img/blog/og/adaptive-vs-emergent.png"
 keywords: "adaptive ai agents, emergent ai behavior, ai agent intelligence, multi-agent emergence, runtime tool forging, self-improving agents, autonomous ai agents, agentos framework, agent personality model, HEXACO AI, cognitive memory AI, Ebbinghaus forgetting curve AI, agent simulation"
 ---
-
-> "All these moments will be lost in time, like tears in rain. Time to die."
->
-> Roy Batty, *Blade Runner*, 1982
-
 
 The hardest question I've been asked about AgentOS is whether the agents are "really" intelligent. The honest answer is that the question is malformed. There are two different things people are asking about when they say intelligence in the context of AI agents, and the runtime treats them differently because they require different machinery. Mixing them up is the source of most of the confusion in the space.
 
