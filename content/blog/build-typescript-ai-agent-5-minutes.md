@@ -1,21 +1,21 @@
 ---
-title: "How to Build a TypeScript AI Agent in 5 Minutes"
+title: "Build a TypeScript AI Agent Runtime in 5 Minutes (AgentOS Quickstart)"
 date: "2026-04-12"
-excerpt: "From npm install to a working agent with personality, memory, tools, and guardrails. Five steps, under 50 lines of TypeScript code. Complete tutorial with inline citations."
+excerpt: "From npm install to a working agent with cognitive memory, HEXACO personality, tools, and guardrails. Five steps, under 50 lines of TypeScript. Runtime-anchored quickstart with inline citations."
 author: "AgentOS Team"
 category: "Tutorial"
 audience: "engineer"
 image: "/img/blog/og/build-typescript-ai-agent-5-minutes.png"
-keywords: "build ai agent typescript, typescript ai tutorial, ai agent quickstart, how to build ai agent, agentos tutorial, AI agent SDK TypeScript, typescript ai agent framework, production AI agents, cognitive memory tutorial, HEXACO personality AI"
+keywords: "typescript ai agent runtime, build ai agent typescript, typescript ai agent framework, ai agent quickstart, agentos tutorial, AI agent SDK TypeScript, cognitive memory tutorial, HEXACO personality AI"
 ---
 
 > "Begin at the beginning, the King said gravely, and go on till you come to the end: then stop."
 >
-> — *Alice in Wonderland*, 1865
+> *Alice in Wonderland*, 1865
 
-Five-minute tutorials are usually a lie. They omit the API key setup, they assume your network and your `node_modules` cooperate, and they end at "hello world" instead of at something you can use. This one tries not to be that. By the end of these five minutes you'll have an agent with persistent memory, an opt-in HEXACO personality, web search, and a guardrail pack. The whole thing is under fifty lines of TypeScript. None of those lines are placeholder code.
+Five-minute tutorials are usually a lie. They omit the API key setup, they assume your network and your `node_modules` cooperate, and they end at "hello world" instead of at something you can use. This one tries not to be that. By the end of these five minutes you'll have a TypeScript AI agent runtime with persistent cognitive memory, an opt-in HEXACO personality, web search, and a guardrail pack. The whole thing is under fifty lines of TypeScript. None of those lines are placeholder code.
 
-If you are setting up your first AgentOS agent and run into trouble at any step, the [Discord](https://discord.gg/usEkfCeQxs) is the fastest way to unblock yourself; we monitor it. The full source for this tutorial is at [github.com/framersai/agentos/tree/master/examples/quickstart](https://github.com/framersai/agentos/tree/master/examples/quickstart).
+If you are setting up your first AgentOS agent and run into trouble at any step, the [Discord](https://discord.gg/usEkfCeQxs) is the fastest way to unblock yourself; we monitor it. Runnable examples live at [github.com/framersai/agentos/tree/master/packages/agentos/examples](https://github.com/framersai/agentos/tree/master/packages/agentos/examples). `high-level-api.mjs` is the closest match to this tutorial.
 
 Zero to a working AI agent with personality, cognitive memory, web search, and guardrails. Five steps, under 50 lines of TypeScript.
 
@@ -233,6 +233,32 @@ npm install @framers/agentos
 - [Documentation](https://docs.agentos.sh)
 - [Discord](https://discord.gg/usEkfCeQxs)
 
+## FAQ
+
+### What's the minimum Node version?
+
+Node 22 LTS or later. AgentOS uses native fetch, top-level await, and the structured-clone-friendly Worker APIs that all stabilized by 22.
+
+### Can I use this without an OpenAI API key?
+
+Yes. AgentOS auto-detects whichever provider key you set. Set `ANTHROPIC_API_KEY` for Claude, `GEMINI_API_KEY` for Gemini, or run [Ollama](https://ollama.ai/) locally with no key at all. The runtime resolves models the same way regardless of source.
+
+### How does cognitive memory persist between sessions?
+
+Cognitive memory writes to a backing store (SQLite by default, or your chosen Postgres instance) keyed by an agent ID. When the same agent ID is rehydrated in a new session, prior episodic memories load automatically and Ebbinghaus decay continues from where it left off. See the [memory persistence guide](https://docs.agentos.sh/features/cognitive-memory) for swap-out instructions.
+
+### Is HEXACO required, or opt-in?
+
+Opt-in. Omit the `personality` block entirely and the agent runs with no trait shaping. When provided, every trait defaults to 0.5 (neutral) so partial profiles work too.
+
+### Can I run this fully local with Ollama?
+
+Yes. Set `provider: 'ollama'`, `model: 'llama3'` (or any pulled tag), and skip the API key entirely. The full feature set (memory, HEXACO, tools, guardrails) works against local models. Latency depends on your hardware.
+
+### What's the difference between AgentOS and other TypeScript agent frameworks?
+
+The runtime ships cognitive memory, HEXACO personality, emergent tool forging, and guardrails as first-class primitives, not bolt-ons. Most TypeScript agent frameworks expose graph orchestration over an LLM and stop there. AgentOS treats the agent as a stateful runtime with measured memory and personality behavior. Comparisons against specific frameworks live in `/blog/agentos-vs-mastra` and `/blog/ai-agent-framework-comparison-2026` once those land.
+
 ---
 
-**AgentOS** is built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). See [Wilds.ai](https://wilds.ai) for AI game worlds powered by AgentOS.
+**AgentOS** is built by [Frame](https://frame.dev). See [Wilds.ai](https://wilds.ai) for AI game worlds powered by AgentOS.
