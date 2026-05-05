@@ -2,16 +2,12 @@
 title: "Cognitive Memory for AI Agents: Beyond RAG"
 date: "2026-03-31"
 excerpt: "RAG retrieves documents, it does not remember. AgentOS implements 9 cognitive mechanisms from published neuroscience: Ebbinghaus decay, reconsolidation, retrieval-induced forgetting, emotion regulation, and more. Each mechanism is independently configurable and grounded in primary literature."
-author: "AgentOS Team"
+author: "Johnny Dunn"
 category: "Engineering"
 audience: "evaluator"
 image: "/img/blog/og/cognitive-memory-beyond-rag.png"
 keywords: "ai agent memory, cognitive memory ai, rag alternatives, ebbinghaus decay ai, ai agent long term memory, reconsolidation, retrieval-induced forgetting, coala framework, memgpt, generative agents, hexaco personality, agentos memory"
 ---
-
-> "Memory is the diary that we all carry about with us."
->
-> Oscar Wilde, *The Importance of Being Earnest*, 1895
 
 The first time I built a RAG system that "remembered" something it hadn't been told, I went looking for the bug. There wasn't one. The system had retrieved a document chunk that had been re-embedded under a slightly different surrounding context after the user's earlier query, and the embedding-shift made the chunk match the new query in a way it wouldn't have matched the same query a week earlier. The retrieval was correct. The behavior felt like memory. It wasn't.
 
