@@ -85,7 +85,7 @@ The turn loop is the only piece of Paracosm that's interesting at the engineerin
 
 The clever parts (research grounding, tool forging, personality drift) exist because the simulation without them tells boring stories.
 
-<video controls poster="/img/blog/paracosm/branches-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
+<video autoplay loop muted playsinline controls preload="metadata" poster="/img/blog/paracosm/branches-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
   <source src="/img/blog/paracosm/branches.mp4" type="video/mp4">
 </video>
 
@@ -101,8 +101,8 @@ By turn three the runs diverge. Atlas builds a redundant water reclamation pipel
 
 This isn't an if-then ruleset. The kernel doesn't know the difference between Atlas and Maria. The LLM events are seeded but not predetermined. The divergence emerges because the leaders' HEXACO profiles bias which specialists they listen to, which forged tools their specialists propose, and which decisions they sign off on. Personality is a real variable. The kernel measures what diverges.
 
-<video controls poster="/img/blog/paracosm/digital-twin-atlas-lab-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
-  <source src="/img/blog/paracosm/digital-twin-atlas-lab.mp4" type="video/mp4">
+<video autoplay loop muted playsinline controls preload="metadata" poster="/img/blog/paracosm/digital-twin-atlas-lab-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
+  <source src="/img/blog/paracosm/digital-twin-atlas-lab-hero.mp4" type="video/mp4">
 </video>
 
 The full Atlas walkthrough is the video above. The case-study post, [Inside Mars Genesis](/blog/inside-mars-genesis-ai-colony-simulation), has the per-turn breakdown.
@@ -140,8 +140,8 @@ The economics matter more than the mechanism. Forging is expensive: full LLM tok
 
 Reuse turned out to be the largest cost lever in the system, which we didn't predict. We designed for forge-on-demand and assumed reuse would be a nice-to-have.
 
-<video controls poster="/img/blog/paracosm/digital-twin-maria-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
-  <source src="/img/blog/paracosm/digital-twin-maria.mp4" type="video/mp4">
+<video autoplay loop muted playsinline controls preload="metadata" poster="/img/blog/paracosm/digital-twin-maria-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
+  <source src="/img/blog/paracosm/digital-twin-maria-hero.mp4" type="video/mp4">
 </video>
 
 The Maria scenario above shows the discovery-bias path. She forges more tools because she takes more risks; she also discovers more reusable patterns, so her per-turn cost falls faster than Atlas's after turn four. The artifact records this. The dashboard renders it. The economics are visible to the user, not hidden in a metering API.

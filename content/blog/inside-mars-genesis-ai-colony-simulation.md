@@ -15,8 +15,8 @@ A representative moment from a recent run: turn three, year 2051. Dietrich Voss'
 
 This post is the case study companion to [the long-form Paracosm 2026 overview](/blog/paracosm-2026-overview). The overview is the structured-world-model framing; this is the autopsy.
 
-<video controls poster="/img/blog/paracosm/digital-twin-atlas-lab-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
-  <source src="/img/blog/paracosm/digital-twin-atlas-lab.mp4" type="video/mp4">
+<video autoplay loop muted playsinline controls preload="metadata" poster="/img/blog/paracosm/digital-twin-atlas-lab-poster.jpg" style="width:100%;border-radius:8px;margin:1.5rem 0;">
+  <source src="/img/blog/paracosm/digital-twin-atlas-lab-hero.mp4" type="video/mp4">
 </video>
 
 The video above is Atlas's lab walkthrough: the Engineer commander's path through the same six turns, captured from the dashboard. Pause it on turn three and you'll see the same radiation event resolve very differently than Maria's version.
