@@ -172,10 +172,30 @@ function ImageLightbox({
       onWheel={onWheel}
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 sm:p-8 animate-in fade-in duration-150 select-none overflow-hidden"
     >
-      {/* Toolbar */}
+      {/* Close button — stays in the top-right where users always look
+          for it, with its own high-contrast background so it doesn't
+          disappear into the backdrop. */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        aria-label="Close image preview (Esc)"
+        title="Close (Esc)"
+        className="absolute top-4 right-4 z-10 flex items-center justify-center w-11 h-11 rounded-full border border-white/15 bg-black/60 text-white hover:bg-black/80 hover:border-white/30 backdrop-blur-md shadow-lg transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+      >
+        <X className="w-5 h-5" strokeWidth={2.25} />
+      </button>
+
+      {/* Zoom toolbar — bottom-center floating bar, the conventional
+          place for image-viewer controls (Apple Photos, Google Photos,
+          Lightroom). High-contrast dark glass background so the
+          buttons read as a discrete UI cluster, not part of the image
+          background. */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="absolute top-4 right-4 z-10 flex items-center gap-0.5 rounded-xl border border-white/10 bg-white/5 p-1 backdrop-blur-md shadow-lg"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1 rounded-2xl border border-white/15 bg-black/65 px-2 py-1.5 backdrop-blur-md shadow-2xl"
       >
         <button
           type="button"
@@ -183,16 +203,16 @@ function ImageLightbox({
           disabled={scale <= ZOOM_MIN + 0.001}
           aria-label="Zoom out (−)"
           title="Zoom out (−)"
-          className="p-2 rounded-lg text-white hover:bg-white/15 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+          className="flex items-center justify-center w-10 h-10 rounded-xl text-white hover:bg-white/15 disabled:opacity-30 disabled:cursor-not-allowed transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
         >
-          <ZoomOut className="w-4 h-4" />
+          <ZoomOut className="w-5 h-5" strokeWidth={2.25} />
         </button>
         <button
           type="button"
           onClick={reset}
-          aria-label={`Zoom level ${Math.round(scale * 100)} percent — click to reset`}
+          aria-label={`Zoom level ${Math.round(scale * 100)} percent — click to reset to 100 percent`}
           title="Click to reset (0)"
-          className="px-2 min-w-[3.5rem] rounded-lg text-white hover:bg-white/15 transition-colors text-xs font-medium tabular-nums focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+          className="flex items-center justify-center min-w-[4rem] h-10 px-3 rounded-xl text-white hover:bg-white/15 transition text-sm font-semibold tabular-nums focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
         >
           {Math.round(scale * 100)}%
         </button>
@@ -202,31 +222,19 @@ function ImageLightbox({
           disabled={scale >= ZOOM_MAX - 0.001}
           aria-label="Zoom in (+)"
           title="Zoom in (+)"
-          className="p-2 rounded-lg text-white hover:bg-white/15 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+          className="flex items-center justify-center w-10 h-10 rounded-xl text-white hover:bg-white/15 disabled:opacity-30 disabled:cursor-not-allowed transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
         >
-          <ZoomIn className="w-4 h-4" />
+          <ZoomIn className="w-5 h-5" strokeWidth={2.25} />
         </button>
-        <span aria-hidden className="mx-1 h-5 w-px bg-white/15" />
+        <span aria-hidden className="mx-1 h-6 w-px bg-white/20" />
         <button
           type="button"
           onClick={reset}
           aria-label="Fit image to screen"
           title="Fit to screen (0)"
-          className="p-2 rounded-lg text-white hover:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+          className="flex items-center justify-center w-10 h-10 rounded-xl text-white hover:bg-white/15 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
         >
-          <Maximize2 className="w-4 h-4" />
-        </button>
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onClose();
-          }}
-          aria-label="Close image preview (Esc)"
-          title="Close (Esc)"
-          className="p-2 rounded-lg text-white hover:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-        >
-          <X className="w-5 h-5" />
+          <Maximize2 className="w-5 h-5" strokeWidth={2.25} />
         </button>
       </div>
 
@@ -254,20 +262,24 @@ function ImageLightbox({
         className="object-contain rounded-lg shadow-2xl"
       />
 
-      {/* Caption (alt text). Sits above the keyboard hint. */}
+      {/* Caption (alt text). Sits above the bottom toolbar — caps at
+          ~5rem from bottom so the toolbar always has clear space
+          below the caption text. */}
       {alt ? (
         <p
           onClick={(e) => e.stopPropagation()}
-          className="pointer-events-none absolute bottom-12 left-1/2 -translate-x-1/2 max-w-[90vw] sm:max-w-[70vw] text-center text-sm text-white/85 bg-black/60 px-4 py-2 rounded-lg backdrop-blur-sm"
+          className="pointer-events-none absolute bottom-24 left-1/2 -translate-x-1/2 max-w-[90vw] sm:max-w-[70vw] text-center text-sm text-white/90 bg-black/65 px-4 py-2 rounded-lg backdrop-blur-sm"
         >
           {alt}
         </p>
       ) : null}
 
-      {/* Keyboard hint */}
+      {/* Keyboard-shortcut hint, top-left so it doesn't compete with
+          the bottom toolbar. Permanently faded so it documents the
+          shortcuts without competing for attention. */}
       <p
         aria-hidden
-        className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] text-white/40 select-none whitespace-nowrap"
+        className="pointer-events-none absolute top-4 left-4 text-[11px] text-white/45 select-none hidden sm:block"
       >
         Esc close · scroll zoom · drag pan · double-click toggle · 0 reset · +/− zoom
       </p>
