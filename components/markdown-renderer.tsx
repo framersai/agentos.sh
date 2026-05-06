@@ -4,9 +4,18 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Copy, Check, X } from 'lucide-react';
-import { useCallback, useEffect, useState, type CSSProperties, type KeyboardEvent } from 'react';
+import { vscDarkPlus, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Copy, Check, X, ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
+  type WheelEvent as ReactWheelEvent,
+} from 'react';
 import { useTheme } from 'next-themes';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 
@@ -14,12 +23,33 @@ interface MarkdownRendererProps {
   content: string;
 }
 
+const ZOOM_MIN = 0.5;
+const ZOOM_MAX = 6;
+const ZOOM_STEP = 1.25;
+
+function clamp(n: number, min: number, max: number): number {
+  return Math.min(Math.max(n, min), max);
+}
+
 /**
- * Lightbox modal for clicked images. Click the backdrop or press Escape
- * to close; clicking the image itself does nothing so the user can
- * actually look at it. Body scroll is locked while the lightbox is
- * open so the underlying article can't scroll out from under the
- * preview on touch devices.
+ * Full-feature image lightbox with zoom controls, pan, keyboard shortcuts,
+ * and a dimmed dismissable backdrop.
+ *
+ * Controls:
+ *  - toolbar buttons: zoom out, percent (click to reset), zoom in, fit-to-screen, close
+ *  - mouse wheel:    zoom in/out (centered on image)
+ *  - click + drag:   pan (only enabled while zoomed in)
+ *  - double click:   toggle 1x ↔ 2x at the click point
+ *  - keyboard:       Esc closes, + / = zooms in, - / _ zooms out, 0 resets
+ *  - backdrop click: closes
+ *  - body scroll is locked while the lightbox is open
+ *
+ * Accessibility:
+ *  - role="dialog" aria-modal="true" with aria-label from alt text
+ *  - every control button has an aria-label
+ *  - keyboard-driven zoom + close, no mouse required
+ *  - the wrapping <span> in the article is itself keyboard-focusable
+ *    (handled in the img component override below)
  */
 function ImageLightbox({
   src,
@@ -30,9 +60,46 @@ function ImageLightbox({
   alt: string;
   onClose: () => void;
 }) {
+  const [scale, setScale] = useState(1);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const dragStart = useRef<{ x: number; y: number; px: number; py: number } | null>(null);
+
+  const reset = useCallback(() => {
+    setScale(1);
+    setPos({ x: 0, y: 0 });
+  }, []);
+
+  const zoomBy = useCallback((factor: number) => {
+    setScale((prev) => {
+      const next = clamp(prev * factor, ZOOM_MIN, ZOOM_MAX);
+      // When zooming back out to 1x or below, recenter the image so it
+      // doesn't sit awkwardly off-axis after the user has been panning.
+      if (next <= 1) setPos({ x: 0, y: 0 });
+      return next;
+    });
+  }, []);
+
+  const zoomIn = useCallback(() => zoomBy(ZOOM_STEP), [zoomBy]);
+  const zoomOut = useCallback(() => zoomBy(1 / ZOOM_STEP), [zoomBy]);
+
+  // Keyboard + body-scroll lock.
   useEffect(() => {
     const onKey = (e: globalThis.KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key === '+' || e.key === '=') {
+        e.preventDefault();
+        zoomIn();
+      } else if (e.key === '-' || e.key === '_') {
+        e.preventDefault();
+        zoomOut();
+      } else if (e.key === '0') {
+        e.preventDefault();
+        reset();
+      }
     };
     window.addEventListener('keydown', onKey);
     const prevOverflow = document.body.style.overflow;
@@ -41,7 +108,60 @@ function ImageLightbox({
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = prevOverflow;
     };
-  }, [onClose]);
+  }, [onClose, zoomIn, zoomOut, reset]);
+
+  // Wheel-to-zoom on the dialog surface.
+  const onWheel = useCallback(
+    (e: ReactWheelEvent<HTMLDivElement>) => {
+      // preventDefault won't fire here under React's passive listener,
+      // but the body-scroll lock means there's nothing else to scroll.
+      const factor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
+      zoomBy(factor);
+    },
+    [zoomBy],
+  );
+
+  // Drag-to-pan. Only enabled when zoomed in (scale > 1) so a single
+  // click on a 1x image just closes the lightbox via the backdrop.
+  const onPointerDown = (e: ReactPointerEvent<HTMLImageElement>) => {
+    if (scale <= 1) return;
+    e.preventDefault();
+    e.stopPropagation();
+    dragStart.current = { x: e.clientX, y: e.clientY, px: pos.x, py: pos.y };
+    setDragging(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: ReactPointerEvent<HTMLImageElement>) => {
+    if (!dragStart.current) return;
+    setPos({
+      x: dragStart.current.px + (e.clientX - dragStart.current.x),
+      y: dragStart.current.py + (e.clientY - dragStart.current.y),
+    });
+  };
+
+  const onPointerUp = (e: ReactPointerEvent<HTMLImageElement>) => {
+    if (dragStart.current) {
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch {
+        /* pointer was already released — ignore */
+      }
+    }
+    dragStart.current = null;
+    setDragging(false);
+  };
+
+  // Double-click toggles 1x ↔ 2x. Stop propagation so the backdrop's
+  // single-click-to-close handler doesn't fire after the second click.
+  const onDoubleClick = (e: React.MouseEvent<HTMLImageElement>) => {
+    e.stopPropagation();
+    setScale((prev) => (prev > 1 ? 1 : 2));
+    if (scale > 1) setPos({ x: 0, y: 0 });
+  };
+
+  const cursor = scale > 1 ? (dragging ? 'grabbing' : 'grab') : 'zoom-in';
+  const imgTransform = `translate(${pos.x}px, ${pos.y}px) scale(${scale})`;
 
   return (
     <div
@@ -49,34 +169,108 @@ function ImageLightbox({
       aria-modal="true"
       aria-label={alt || 'Image preview'}
       onClick={onClose}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm cursor-zoom-out p-4 sm:p-8 animate-in fade-in duration-150"
+      onWheel={onWheel}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 sm:p-8 animate-in fade-in duration-150 select-none overflow-hidden"
     >
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          onClose();
-        }}
-        aria-label="Close image preview"
-        className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition"
+      {/* Toolbar */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="absolute top-4 right-4 z-10 flex items-center gap-0.5 rounded-xl border border-white/10 bg-white/5 p-1 backdrop-blur-md shadow-lg"
       >
-        <X className="w-5 h-5" />
-      </button>
+        <button
+          type="button"
+          onClick={zoomOut}
+          disabled={scale <= ZOOM_MIN + 0.001}
+          aria-label="Zoom out (−)"
+          title="Zoom out (−)"
+          className="p-2 rounded-lg text-white hover:bg-white/15 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        >
+          <ZoomOut className="w-4 h-4" />
+        </button>
+        <button
+          type="button"
+          onClick={reset}
+          aria-label={`Zoom level ${Math.round(scale * 100)} percent — click to reset`}
+          title="Click to reset (0)"
+          className="px-2 min-w-[3.5rem] rounded-lg text-white hover:bg-white/15 transition-colors text-xs font-medium tabular-nums focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        >
+          {Math.round(scale * 100)}%
+        </button>
+        <button
+          type="button"
+          onClick={zoomIn}
+          disabled={scale >= ZOOM_MAX - 0.001}
+          aria-label="Zoom in (+)"
+          title="Zoom in (+)"
+          className="p-2 rounded-lg text-white hover:bg-white/15 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        >
+          <ZoomIn className="w-4 h-4" />
+        </button>
+        <span aria-hidden className="mx-1 h-5 w-px bg-white/15" />
+        <button
+          type="button"
+          onClick={reset}
+          aria-label="Fit image to screen"
+          title="Fit to screen (0)"
+          className="p-2 rounded-lg text-white hover:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        >
+          <Maximize2 className="w-4 h-4" />
+        </button>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+          aria-label="Close image preview (Esc)"
+          title="Close (Esc)"
+          className="p-2 rounded-lg text-white hover:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt={alt}
         onClick={(e) => e.stopPropagation()}
-        className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl cursor-default"
+        onDoubleClick={onDoubleClick}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        draggable={false}
+        style={{
+          transform: imgTransform,
+          cursor,
+          transition: dragging ? 'none' : 'transform 0.15s ease',
+          touchAction: 'none',
+          willChange: 'transform',
+          maxWidth: '100%',
+          maxHeight: '90vh',
+        }}
+        className="object-contain rounded-lg shadow-2xl"
       />
+
+      {/* Caption (alt text). Sits above the keyboard hint. */}
       {alt ? (
         <p
           onClick={(e) => e.stopPropagation()}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 max-w-[90vw] sm:max-w-[70vw] text-sm text-white/85 bg-black/60 px-4 py-2 rounded-lg backdrop-blur-sm"
+          className="pointer-events-none absolute bottom-12 left-1/2 -translate-x-1/2 max-w-[90vw] sm:max-w-[70vw] text-center text-sm text-white/85 bg-black/60 px-4 py-2 rounded-lg backdrop-blur-sm"
         >
           {alt}
         </p>
       ) : null}
+
+      {/* Keyboard hint */}
+      <p
+        aria-hidden
+        className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] text-white/40 select-none whitespace-nowrap"
+      >
+        Esc close · scroll zoom · drag pan · double-click toggle · 0 reset · +/− zoom
+      </p>
     </div>
   );
 }
@@ -107,7 +301,7 @@ function CodeBlock({ language, children }: { language: string; children: string 
       </div>
       <SyntaxHighlighter
         language={language || 'text'}
-        style={isDark ? oneDark : oneLight}
+        style={isDark ? vscDarkPlus : oneLight}
         customStyle={{
           margin: 0,
           borderRadius: '0.75rem',
