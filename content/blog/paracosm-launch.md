@@ -58,7 +58,7 @@ Language is what gives rise to legible thinking (Sapir and Whorf), though it may
 
 If you want an agent to imagine a future state and a human to learn from that imagination, the substrate has to be something both can read. Pixels are not that substrate. Typed JSON with named departments, decision logs, and citations is that substrate. The visual world models will absolutely matter for embodied robotics and film, but they may not be the right primitive for creating worlds and scenarios like a human for humans. Two columns, both legitimate, mostly disjoint customers.
 
-<aside style="border:1px solid var(--border,#3a3225); border-radius:12px; padding:1.5rem 1.75rem; margin:2.5rem 0; background:var(--bg-card,rgba(40,32,24,0.55));">
+<aside style="border:1px solid var(--color-border-subtle); border-left:3px solid transparent; border-image:linear-gradient(180deg, hsl(180, 95%, 60%), hsl(270, 85%, 65%)) 1; border-radius:12px; padding:1.5rem 1.75rem; margin:2.5rem 0; background:var(--color-background-secondary); box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 4px 14px rgba(0,0,0,0.06);">
 
 **Paracosm, in one card.**
 
