@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 480" role="img" aria-labelledby="paracosm-wm-title paracosm-wm-desc" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title id="paracosm-wm-title">Two world-model paths: visual vs structured</title>
+  <desc id="paracosm-wm-desc">A side-by-side diagram comparing native or visual world models (which output pixels) with structured or LLM-based world models (which output typed JSON state). Examples on the visual side: Sora, Genie 3, World Labs Marble. Examples on the structured side: Paracosm, Yang et al 2026.</desc>
+
+  <defs>
+    <style>
+      .text { fill: #1e293b; font-size: 13px; }
+      .title { fill: #0f172a; font-size: 18px; font-weight: 700; }
+      .panel-title { fill: #0f172a; font-size: 15px; font-weight: 700; }
+      .small { fill: #475569; font-size: 12px; }
+      .tag { fill: #64748b; font-size: 11px; font-style: italic; }
+      .examples { fill: #475569; font-size: 11px; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #475569; }
+      .input-card { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.5; }
+      .visual-process { fill: #fef2f2; stroke: #f43f5e; stroke-width: 2; }
+      .structured-process { fill: #f5f3ff; stroke: #7c3aed; stroke-width: 2; }
+      .visual-output { fill: #fee2e2; stroke: #f43f5e; stroke-width: 1.5; }
+      .structured-output { fill: #ede9fe; stroke: #7c3aed; stroke-width: 1.5; }
+      .divider { stroke: #cbd5e1; stroke-width: 1; stroke-dasharray: 4 4; }
+      .arrow { stroke: #94a3b8; stroke-width: 1.5; fill: none; }
+      .arrow-head { fill: #94a3b8; }
+      .pixel-bar { fill: #f43f5e; opacity: 0.6; }
+      @media (prefers-color-scheme: dark) {
+        .text { fill: #e2e8f0; }
+        .title { fill: #f1f5f9; }
+        .panel-title { fill: #f1f5f9; }
+        .small { fill: #94a3b8; }
+        .tag { fill: #64748b; }
+        .examples { fill: #94a3b8; }
+        .code { fill: #94a3b8; }
+        .input-card { fill: #0f172a; stroke: #475569; }
+        .visual-process { fill: #2a0e14; stroke: #f87171; }
+        .structured-process { fill: #1e1b4b; stroke: #a78bfa; }
+        .visual-output { fill: #2a0e14; stroke: #f87171; }
+        .structured-output { fill: #1e1b4b; stroke: #a78bfa; }
+        .arrow { stroke: #475569; }
+        .arrow-head { fill: #475569; }
+      }
+    </style>
+    <marker id="wm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="460" y="34" class="title" text-anchor="middle">Two ways to model a world</text>
+  <text x="460" y="56" class="small" text-anchor="middle">The literature has converged on a clean split (Xing 2025, ACM CSUR 2025, Yang et al 2026)</text>
+
+  <!-- Vertical divider -->
+  <line class="divider" x1="460" y1="100" x2="460" y2="450"/>
+
+  <!-- LEFT: Native / Visual -->
+  <text x="230" y="100" class="panel-title" text-anchor="middle">1. Native / Visual world models</text>
+  <text x="230" y="120" class="tag" text-anchor="middle">output is pixels or spatial latents</text>
+
+  <!-- Input -->
+  <rect x="80" y="158" width="140" height="50" rx="8" class="input-card"/>
+  <text x="150" y="180" class="small" text-anchor="middle">video, sensor</text>
+  <text x="150" y="196" class="small" text-anchor="middle">data, simulator</text>
+
+  <!-- Process box -->
+  <rect x="80" y="240" width="300" height="80" rx="10" class="visual-process"/>
+  <text x="230" y="266" class="panel-title" text-anchor="middle">Predict next frame</text>
+  <text x="230" y="286" class="small" text-anchor="middle">opaque latent rolled forward</text>
+  <text x="230" y="304" class="small" text-anchor="middle">no typed handle on what changed</text>
+
+  <!-- Output: pixel bars -->
+  <rect x="80" y="350" width="300" height="50" rx="8" class="visual-output"/>
+  <text x="230" y="370" class="panel-title" text-anchor="middle">pixels you watch</text>
+  <g transform="translate(96, 380)">
+    <rect class="pixel-bar" x="0"  y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="11" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="22" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="33" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="44" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="55" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="66" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="77" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="88" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="99" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="110" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="121" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="132" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="143" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="154" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="165" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="176" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="187" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="198" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="209" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="220" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="231" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="242" y="0" width="8" height="14"/>
+    <rect class="pixel-bar" x="253" y="0" width="8" height="14"/>
+  </g>
+
+  <!-- Examples -->
+  <text x="230" y="430" class="examples" text-anchor="middle">Sora · Genie 3 · World Labs Marble</text>
+  <text x="230" y="448" class="examples" text-anchor="middle">JEPA · AMI Labs (predictive-representation)</text>
+
+  <!-- Arrows on left side -->
+  <line class="arrow" x1="150" y1="208" x2="150" y2="240" marker-end="url(#wm-arrow)"/>
+  <line class="arrow" x1="230" y1="320" x2="230" y2="350" marker-end="url(#wm-arrow)"/>
+
+  <!-- RIGHT: Structured / LLM-based -->
+  <text x="690" y="100" class="panel-title" text-anchor="middle">2. Structured / LLM-based world models</text>
+  <text x="690" y="120" class="tag" text-anchor="middle">output is typed JSON state plus structured deltas</text>
+
+  <!-- Input -->
+  <rect x="540" y="158" width="140" height="50" rx="8" class="input-card"/>
+  <text x="610" y="180" class="small" text-anchor="middle">prompt, doc,</text>
+  <text x="610" y="196" class="small" text-anchor="middle">URL, scenario JSON</text>
+
+  <!-- Process box -->
+  <rect x="540" y="240" width="300" height="80" rx="10" class="structured-process"/>
+  <text x="690" y="266" class="panel-title" text-anchor="middle">Reason about contract</text>
+  <text x="690" y="286" class="small" text-anchor="middle">LLM emits next state symbolically</text>
+  <text x="690" y="304" class="small" text-anchor="middle">deterministic kernel underneath</text>
+
+  <!-- Output: typed state -->
+  <rect x="540" y="350" width="300" height="50" rx="8" class="structured-output"/>
+  <text x="690" y="370" class="panel-title" text-anchor="middle">state agents reason inside</text>
+  <text x="610" y="392" class="code">{ turn: 3, pop: 87,</text>
+  <text x="700" y="392" class="code">events: [...],</text>
+  <text x="780" y="392" class="code">delta: -3 }</text>
+
+  <!-- Examples -->
+  <text x="690" y="430" class="examples" text-anchor="middle">Paracosm (this) · Yang et al 2026</text>
+  <text x="690" y="448" class="examples" text-anchor="middle">queryable · forkable · replayable</text>
+
+  <!-- Arrows on right side -->
+  <line class="arrow" x1="610" y1="208" x2="610" y2="240" marker-end="url(#wm-arrow)"/>
+  <line class="arrow" x1="690" y1="320" x2="690" y2="350" marker-end="url(#wm-arrow)"/>
+</svg>

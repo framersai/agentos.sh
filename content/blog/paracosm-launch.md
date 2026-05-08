@@ -52,6 +52,10 @@ The first meaning is generative and visual. [Sora](https://openai.com/sora) gene
 
 The second meaning is older, more academic, and its commercial moment is just starting. [Ha and Schmidhuber's 2018 paper](https://arxiv.org/abs/1803.10122), the earliest publication referencing the subject, called a world model an internal simulator an agent uses to imagine future states before acting. No pixels. The job is to enumerate actionable possibilities so a decision can be made. Eric Xing's [*Critiques of World Models*](https://arxiv.org/abs/2507.05169) reframes it the same way. The Tsinghua FIB Lab's [*Understanding World or Predicting Future?*](https://dl.acm.org/doi/full/10.1145/3746449) (ACM Computing Surveys, 2025) formalizes the split: *understanding-world* models simulate counterfactuals for planning, *predicting-future* models generate perceptual continuations. Different jobs, different customers, same name.
 
+<img src="/img/diagrams/paracosm-world-model-split.svg" alt="Two world-model paths: native/visual outputs pixels (Sora, Genie 3, World Labs Marble); structured/LLM-based outputs typed JSON state (Paracosm, Yang et al 2026)." style="width:100%;border-radius:8px;margin:1.5rem 0;" />
+
+*The clean split: pixels are what humans watch, typed state is what agents reason inside. Both lanes are legitimate, mostly disjoint customers.*
+
 Paracosm is the second kind. The engine does not generate pixels. It generates a typed scenario contract, a deterministic kernel, research-grounded events that an LLM-as-judge coordinates, and the responses of AI agents with optional HEXACO personality vectors or specific directives that affect what those agents, referred to as `actors`, decide what to do, how to lead the subagents and swarms spawned. The output is JSON, not video. It is reproducible, forkable, replayable, and comparable across actors (leader agents).
 
 Language is what gives rise to legible thinking (Sapir and Whorf), though it may not always involve text and words as we and LLMs know of it.
@@ -88,6 +92,10 @@ The HEXACO model ([Ashton & Lee, 2007](https://doi.org/10.1177/1088868306294907)
 
 Same world, same kernel, same seed, divergent events, divergent futures.
 
+<img src="/img/diagrams/paracosm-divergence.svg" alt="Same Mars Genesis seed routed through two HEXACO profiles produces divergent trajectories and different final-state metrics: The Visionary ends with a wider toolbox and bolder population growth; The Engineer ends with fewer casualties, fewer tools, and a higher reuse ratio." style="width:100%;border-radius:8px;margin:1.5rem 0;" />
+
+*Mars Genesis on seed 950: the Visionary (high openness, low conscientiousness) and the Engineer (the inverse) start from identical state and produce measurably different colonies. Final population, casualty count, forged-tool count, and reuse ratio all diverge — and the gap compounds turn-over-turn.*
+
 ## Why a game designer wrote it
 
 I am a game designer in addition to working as an applied AI engineer. I have spent enough hours inside [Crusader Kings](https://www.paradoxinteractive.com/games/crusader-kings-iii/about), [RimWorld](https://rimworldgame.com/), and [Dwarf Fortress](https://www.bay12games.com/dwarves/) to know what watching simulated agents make decisions feels like at its best, which is somewhere between voyeurism and revelation. The interesting moment in those games is never the win. It is when the simulation tells you what your decision actually meant. The ironman run that ends because your overzealous knight murdered the wrong courtier. The colonist who quietly starves because your stockpile priorities were three steps out of date. The fortress that collapses because of a cat. Game designers have been building structured, replayable, decision-driven simulators for forty years. The interesting bit is what you can read in the trajectory after.
@@ -109,6 +117,10 @@ Paracosm is the replay button.
 ## How a turn runs
 
 The turn loop is the only piece of Paracosm interesting at the engineering level. Everything else is plumbing.
+
+<img src="/img/diagrams/paracosm-turn-flow.svg" alt="Per-turn 9-stage flow with two lanes: LLM stages (Event Director, Department Analysis, Commander Decision, Agent Reactions) and deterministic stages (Kernel Advance, Outcome, Effects, Memory, Personality Drift)." style="width:100%;border-radius:8px;margin:1.5rem 0;" />
+
+*Nine stages, two lanes. The deterministic stages replay byte-equal on the same seed; the LLM stages diverge because every prompt carries the leader's HEXACO profile and the accumulated state it shaped.*
 
 1. **State snapshot.** The kernel reads the current `ScenarioPackage` state: five JSON bags called `metrics`, `capacities`, `statuses`, `politics`, `environment`. No hidden fields. The shape is the API.
 2. **Event generation.** An LLM is prompted with the state and the leader's HEXACO profile and proposes plausible events for this turn. The LLM does not just imagine; it consults research via AgentOS's `WebSearchService` (Firecrawl, Tavily, Serper, Brave in parallel, Cohere `rerank-v3.5` reranking on top). DOI-linked citations propagate into the artifact. Without research grounding, events drift toward LLM cliché.

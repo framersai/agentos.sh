@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" role="img" aria-labelledby="hexaco-radar-title hexaco-radar-desc" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title id="hexaco-radar-title">HEXACO trait radar for three sample personas</title>
+  <desc id="hexaco-radar-desc">A hexagonal radar chart showing six HEXACO traits (Honesty, Emotionality, eXtraversion, Agreeableness, Conscientiousness, Openness) with three overlapping persona vectors: Meticulous Analyst, Empathetic Listener, Creative Provocateur.</desc>
+
+  <defs>
+    <style>
+      .axis { stroke: #94a3b8; stroke-width: 1; fill: none; opacity: 0.6; }
+      .grid { stroke: #cbd5e1; stroke-width: 1; fill: none; opacity: 0.45; }
+      .axis-label { fill: #475569; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .tick { fill: #94a3b8; font-size: 10px; text-anchor: middle; }
+      .legend-text { fill: #334155; font-size: 13px; font-weight: 500; }
+      .heading { fill: #0f172a; font-size: 14px; font-weight: 700; }
+      .persona-a { fill: #7c3aed; fill-opacity: 0.18; stroke: #7c3aed; stroke-width: 2; }
+      .persona-a-dot { fill: #7c3aed; }
+      .persona-b { fill: #0891b2; fill-opacity: 0.18; stroke: #0891b2; stroke-width: 2; }
+      .persona-b-dot { fill: #0891b2; }
+      .persona-c { fill: #f59e0b; fill-opacity: 0.18; stroke: #f59e0b; stroke-width: 2; }
+      .persona-c-dot { fill: #f59e0b; }
+      @media (prefers-color-scheme: dark) {
+        .axis { stroke: #475569; }
+        .grid { stroke: #334155; }
+        .axis-label { fill: #cbd5e1; }
+        .tick { fill: #64748b; }
+        .legend-text { fill: #cbd5e1; }
+        .heading { fill: #f1f5f9; }
+      }
+    </style>
+  </defs>
+
+  <!-- Center the chart at (260, 240) with radius 175 -->
+  <!-- Hexagon vertices (clockwise from top): H, E, X, A, C, O -->
+  <!-- Vertex angle θ = -90° + i*60° for i=0..5 -->
+  <!-- Pre-computed unit vectors:
+       i=0  H: (0, -1)         top
+       i=1  E: (0.866, -0.5)   upper-right
+       i=2  X: (0.866, 0.5)    lower-right
+       i=3  A: (0, 1)          bottom
+       i=4  C: (-0.866, 0.5)   lower-left
+       i=5  O: (-0.866, -0.5)  upper-left
+  -->
+
+  <!-- Radial grid (5 concentric hexagons at r=35, 70, 105, 140, 175) -->
+  <g transform="translate(260,240)">
+    <polygon class="grid" points="0,-35 30.31,-17.5 30.31,17.5 0,35 -30.31,17.5 -30.31,-17.5"/>
+    <polygon class="grid" points="0,-70 60.62,-35 60.62,35 0,70 -60.62,35 -60.62,-35"/>
+    <polygon class="grid" points="0,-105 90.93,-52.5 90.93,52.5 0,105 -90.93,52.5 -90.93,-52.5"/>
+    <polygon class="grid" points="0,-140 121.24,-70 121.24,70 0,140 -121.24,70 -121.24,-70"/>
+    <polygon class="axis" points="0,-175 151.55,-87.5 151.55,87.5 0,175 -151.55,87.5 -151.55,-87.5"/>
+
+    <!-- Axis lines -->
+    <line class="axis" x1="0" y1="0" x2="0" y2="-175"/>
+    <line class="axis" x1="0" y1="0" x2="151.55" y2="-87.5"/>
+    <line class="axis" x1="0" y1="0" x2="151.55" y2="87.5"/>
+    <line class="axis" x1="0" y1="0" x2="0" y2="175"/>
+    <line class="axis" x1="0" y1="0" x2="-151.55" y2="87.5"/>
+    <line class="axis" x1="0" y1="0" x2="-151.55" y2="-87.5"/>
+
+    <!-- Tick labels at 0.5 along the top axis -->
+    <text class="tick" x="-12" y="-87">0.5</text>
+    <text class="tick" x="-12" y="-172">1.0</text>
+
+    <!-- Persona A: Meticulous Analyst (violet)
+         H 0.85, E 0.30, X 0.40, A 0.55, C 0.90, O 0.50
+         Radii in px: H=148.75, E=52.5, X=70, A=96.25, C=157.5, O=87.5
+         H point: (0, -148.75)
+         E point: (0.866*52.5, -0.5*52.5) = (45.47, -26.25)
+         X point: (0.866*70, 0.5*70) = (60.62, 35)
+         A point: (0, 96.25)
+         C point: (-0.866*157.5, 0.5*157.5) = (-136.40, 78.75)
+         O point: (-0.866*87.5, -0.5*87.5) = (-75.78, -43.75) -->
+    <polygon class="persona-a" points="0,-148.75 45.47,-26.25 60.62,35 0,96.25 -136.40,78.75 -75.78,-43.75"/>
+    <circle class="persona-a-dot" cx="0" cy="-148.75" r="3"/>
+    <circle class="persona-a-dot" cx="45.47" cy="-26.25" r="3"/>
+    <circle class="persona-a-dot" cx="60.62" cy="35" r="3"/>
+    <circle class="persona-a-dot" cx="0" cy="96.25" r="3"/>
+    <circle class="persona-a-dot" cx="-136.40" cy="78.75" r="3"/>
+    <circle class="persona-a-dot" cx="-75.78" cy="-43.75" r="3"/>
+
+    <!-- Persona B: Empathetic Listener (cyan)
+         H 0.75, E 0.85, X 0.55, A 0.85, C 0.60, O 0.65
+         Radii: H=131.25, E=148.75, X=96.25, A=148.75, C=105, O=113.75
+         H: (0, -131.25)
+         E: (0.866*148.75, -0.5*148.75) = (128.82, -74.375)
+         X: (0.866*96.25, 0.5*96.25) = (83.35, 48.125)
+         A: (0, 148.75)
+         C: (-0.866*105, 0.5*105) = (-90.93, 52.5)
+         O: (-0.866*113.75, -0.5*113.75) = (-98.51, -56.875) -->
+    <polygon class="persona-b" points="0,-131.25 128.82,-74.375 83.35,48.125 0,148.75 -90.93,52.5 -98.51,-56.875"/>
+    <circle class="persona-b-dot" cx="0" cy="-131.25" r="3"/>
+    <circle class="persona-b-dot" cx="128.82" cy="-74.375" r="3"/>
+    <circle class="persona-b-dot" cx="83.35" cy="48.125" r="3"/>
+    <circle class="persona-b-dot" cx="0" cy="148.75" r="3"/>
+    <circle class="persona-b-dot" cx="-90.93" cy="52.5" r="3"/>
+    <circle class="persona-b-dot" cx="-98.51" cy="-56.875" r="3"/>
+
+    <!-- Persona C: Creative Provocateur (amber)
+         H 0.65, E 0.50, X 0.75, A 0.30, C 0.35, O 0.95
+         Radii: H=113.75, E=87.5, X=131.25, A=52.5, C=61.25, O=166.25
+         H: (0, -113.75)
+         E: (0.866*87.5, -0.5*87.5) = (75.78, -43.75)
+         X: (0.866*131.25, 0.5*131.25) = (113.66, 65.625)
+         A: (0, 52.5)
+         C: (-0.866*61.25, 0.5*61.25) = (-53.04, 30.625)
+         O: (-0.866*166.25, -0.5*166.25) = (-143.97, -83.125) -->
+    <polygon class="persona-c" points="0,-113.75 75.78,-43.75 113.66,65.625 0,52.5 -53.04,30.625 -143.97,-83.125"/>
+    <circle class="persona-c-dot" cx="0" cy="-113.75" r="3"/>
+    <circle class="persona-c-dot" cx="75.78" cy="-43.75" r="3"/>
+    <circle class="persona-c-dot" cx="113.66" cy="65.625" r="3"/>
+    <circle class="persona-c-dot" cx="0" cy="52.5" r="3"/>
+    <circle class="persona-c-dot" cx="-53.04" cy="30.625" r="3"/>
+    <circle class="persona-c-dot" cx="-143.97" cy="-83.125" r="3"/>
+
+    <!-- Axis labels (positioned just past the outer hexagon) -->
+    <text class="axis-label" x="0" y="-192">Honesty</text>
+    <text class="axis-label" x="172" y="-95">Emotionality</text>
+    <text class="axis-label" x="172" y="100">eXtraversion</text>
+    <text class="axis-label" x="0" y="195">Agreeableness</text>
+    <text class="axis-label" x="-178" y="100">Conscientiousness</text>
+    <text class="axis-label" x="-172" y="-95">Openness</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(540, 110)">
+    <text class="heading" x="0" y="0">Sample personas</text>
+
+    <rect x="0" y="20" width="14" height="14" class="persona-a"/>
+    <text class="legend-text" x="22" y="32">Meticulous Analyst</text>
+    <text class="tick" x="22" y="48">H 0.85 · C 0.90 · E 0.30</text>
+
+    <rect x="0" y="76" width="14" height="14" class="persona-b"/>
+    <text class="legend-text" x="22" y="88">Empathetic Listener</text>
+    <text class="tick" x="22" y="104">E 0.85 · A 0.85 · H 0.75</text>
+
+    <rect x="0" y="132" width="14" height="14" class="persona-c"/>
+    <text class="legend-text" x="22" y="144">Creative Provocateur</text>
+    <text class="tick" x="22" y="160">O 0.95 · X 0.75 · A 0.30</text>
+
+    <text class="tick" x="0" y="200">Outer ring = 1.0, midring = 0.5.</text>
+    <text class="tick" x="0" y="216">Trait combinations matter more</text>
+    <text class="tick" x="0" y="232">than individual extremes.</text>
+  </g>
+</svg>

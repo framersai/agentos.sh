@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 460" role="img" aria-labelledby="paracosm-div-title paracosm-div-desc" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title id="paracosm-div-title">Same scenario, same seed, different futures</title>
+  <desc id="paracosm-div-desc">A divergence diagram showing one starting scenario (Mars Genesis, seed 950) splitting into two trajectories driven by two leaders with different HEXACO profiles. The Visionary (high openness, low conscientiousness) takes a more exploratory path; the Engineer (low openness, high conscientiousness) takes a conservative path. Final-state metrics differ across population, casualties, forged tool count, and reuse ratio.</desc>
+
+  <defs>
+    <style>
+      .text { fill: #1e293b; font-size: 13px; }
+      .title { fill: #0f172a; font-size: 18px; font-weight: 700; }
+      .small { fill: #475569; font-size: 12px; }
+      .micro { fill: #64748b; font-size: 11px; }
+      .heading { fill: #0f172a; font-size: 14px; font-weight: 700; }
+      .seed-card { fill: #f1f5f9; stroke: #475569; stroke-width: 2; }
+      .visionary-card { fill: #f5f3ff; stroke: #7c3aed; stroke-width: 2; }
+      .visionary-line { stroke: #7c3aed; stroke-width: 3; fill: none; }
+      .visionary-text { fill: #7c3aed; font-size: 13px; font-weight: 600; }
+      .visionary-dot { fill: #7c3aed; }
+      .engineer-card { fill: #f0fdfa; stroke: #0d9488; stroke-width: 2; }
+      .engineer-line { stroke: #0d9488; stroke-width: 3; fill: none; }
+      .engineer-text { fill: #0d9488; font-size: 13px; font-weight: 600; }
+      .engineer-dot { fill: #0d9488; }
+      .grid { stroke: #cbd5e1; stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.5; }
+      .axis { stroke: #94a3b8; stroke-width: 1; }
+      .tick { fill: #64748b; font-size: 11px; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #475569; }
+      @media (prefers-color-scheme: dark) {
+        .text { fill: #e2e8f0; }
+        .title { fill: #f1f5f9; }
+        .small { fill: #94a3b8; }
+        .micro { fill: #64748b; }
+        .heading { fill: #f1f5f9; }
+        .seed-card { fill: #0b1220; stroke: #94a3b8; }
+        .visionary-card { fill: #1e1b4b; stroke: #a78bfa; }
+        .visionary-line { stroke: #a78bfa; }
+        .visionary-text { fill: #a78bfa; }
+        .visionary-dot { fill: #a78bfa; }
+        .engineer-card { fill: #042f2e; stroke: #2dd4bf; }
+        .engineer-line { stroke: #2dd4bf; }
+        .engineer-text { fill: #2dd4bf; }
+        .engineer-dot { fill: #2dd4bf; }
+        .grid { stroke: #334155; }
+        .axis { stroke: #475569; }
+        .tick { fill: #94a3b8; }
+        .code { fill: #94a3b8; }
+      }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="460" y="30" class="title" text-anchor="middle">Same scenario, same seed, different futures</text>
+  <text x="460" y="52" class="small" text-anchor="middle">Two HEXACO profiles route the same Mars Genesis run through measurably different trajectories</text>
+
+  <!-- Seed card (left, single starting point) -->
+  <rect x="40" y="180" width="180" height="100" rx="10" class="seed-card"/>
+  <text x="130" y="204" class="heading" text-anchor="middle">Mars Genesis</text>
+  <text x="130" y="222" class="code" text-anchor="middle">seed: 950</text>
+  <text x="130" y="240" class="code" text-anchor="middle">colonists: 100</text>
+  <text x="130" y="258" class="code" text-anchor="middle">turns: 6 (2035–2083)</text>
+  <text x="130" y="276" class="code" text-anchor="middle">events: identical</text>
+
+  <!-- Plot area axes -->
+  <!-- x = 240 → 700, y = 90 → 380 -->
+  <line class="axis" x1="240" y1="380" x2="700" y2="380"/>
+  <line class="axis" x1="240" y1="90" x2="240" y2="380"/>
+
+  <!-- Grid lines (turn 1..6 vertical) -->
+  <line class="grid" x1="316" y1="90" x2="316" y2="380"/>
+  <line class="grid" x1="392" y1="90" x2="392" y2="380"/>
+  <line class="grid" x1="468" y1="90" x2="468" y2="380"/>
+  <line class="grid" x1="544" y1="90" x2="544" y2="380"/>
+  <line class="grid" x1="620" y1="90" x2="620" y2="380"/>
+
+  <!-- Turn ticks -->
+  <text class="tick" x="240" y="396" text-anchor="middle">T0</text>
+  <text class="tick" x="316" y="396" text-anchor="middle">T1</text>
+  <text class="tick" x="392" y="396" text-anchor="middle">T2</text>
+  <text class="tick" x="468" y="396" text-anchor="middle">T3</text>
+  <text class="tick" x="544" y="396" text-anchor="middle">T4</text>
+  <text class="tick" x="620" y="396" text-anchor="middle">T5</text>
+  <text class="tick" x="696" y="396" text-anchor="middle">T6</text>
+  <text class="micro" x="470" y="416" text-anchor="middle">turn (6 turns of simulation)</text>
+
+  <!-- Y-axis label -->
+  <text class="micro" x="200" y="240" transform="rotate(-90, 200, 240)" text-anchor="middle">colony state divergence →</text>
+
+  <!-- Visionary trajectory (purple, exploratory) -->
+  <!-- Starts at (240, 235), wobbles upward through risk-taking -->
+  <path class="visionary-line" d="M 240,235 C 280,200 300,150 316,140 C 350,130 380,180 392,170 C 420,160 440,110 468,120 C 500,130 520,100 544,105 C 580,108 600,130 620,140 C 660,148 680,135 696,150"/>
+  <circle class="visionary-dot" cx="240" cy="235" r="4"/>
+  <circle class="visionary-dot" cx="316" cy="140" r="4"/>
+  <circle class="visionary-dot" cx="392" cy="170" r="4"/>
+  <circle class="visionary-dot" cx="468" cy="120" r="4"/>
+  <circle class="visionary-dot" cx="544" cy="105" r="4"/>
+  <circle class="visionary-dot" cx="620" cy="140" r="4"/>
+  <circle class="visionary-dot" cx="696" cy="150" r="4"/>
+
+  <!-- Engineer trajectory (teal, conservative) -->
+  <!-- Starts at (240, 235), trends down steadily, fewer wobbles -->
+  <path class="engineer-line" d="M 240,235 C 260,250 290,255 316,260 C 340,265 370,270 392,275 C 420,280 440,285 468,290 C 490,294 520,298 544,302 C 580,308 600,312 620,316 C 660,320 680,322 696,325"/>
+  <circle class="engineer-dot" cx="240" cy="235" r="4"/>
+  <circle class="engineer-dot" cx="316" cy="260" r="4"/>
+  <circle class="engineer-dot" cx="392" cy="275" r="4"/>
+  <circle class="engineer-dot" cx="468" cy="290" r="4"/>
+  <circle class="engineer-dot" cx="544" cy="302" r="4"/>
+  <circle class="engineer-dot" cx="620" cy="316" r="4"/>
+  <circle class="engineer-dot" cx="696" cy="325" r="4"/>
+
+  <!-- Visionary endpoint card -->
+  <rect x="730" y="80" width="170" height="120" rx="10" class="visionary-card"/>
+  <text x="815" y="102" class="visionary-text" text-anchor="middle">The Visionary</text>
+  <text x="815" y="118" class="micro" text-anchor="middle">O 0.95 · C 0.35 · X 0.85</text>
+  <text x="745" y="142" class="code">pop:        102</text>
+  <text x="745" y="158" class="code">casualties: 14</text>
+  <text x="745" y="174" class="code">tools:      11</text>
+  <text x="745" y="190" class="code">reuse %:    32</text>
+
+  <!-- Engineer endpoint card -->
+  <rect x="730" y="270" width="170" height="120" rx="10" class="engineer-card"/>
+  <text x="815" y="292" class="engineer-text" text-anchor="middle">The Engineer</text>
+  <text x="815" y="308" class="micro" text-anchor="middle">O 0.30 · C 0.95 · X 0.45</text>
+  <text x="745" y="332" class="code">pop:        91</text>
+  <text x="745" y="348" class="code">casualties: 6</text>
+  <text x="745" y="364" class="code">tools:      4</text>
+  <text x="745" y="380" class="code">reuse %:    78</text>
+
+  <!-- Caption -->
+  <text x="460" y="438" class="micro" text-anchor="middle">Deterministic stages identical on this seed. LLM stages prompted with each leader's HEXACO profile diverge — and the gap compounds turn-over-turn.</text>
+</svg>

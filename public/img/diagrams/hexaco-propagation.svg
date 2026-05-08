@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" role="img" aria-labelledby="hexaco-prop-title hexaco-prop-desc" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title id="hexaco-prop-title">How HEXACO traits propagate through AgentOS</title>
+  <desc id="hexaco-prop-desc">A flow diagram showing the personality vector input on the left fanning out through five system surfaces on the right: system prompt, encoding strength, working-memory capacity, prompt formatting, and observer/reflector bias.</desc>
+
+  <defs>
+    <style>
+      .text { fill: #1e293b; font-size: 13px; }
+      .heading { fill: #0f172a; font-size: 14px; font-weight: 700; }
+      .source-label { fill: #475569; font-size: 11px; font-style: italic; }
+      .accent { fill: #7c3aed; }
+      .arrow-line { stroke: #94a3b8; stroke-width: 1.5; fill: none; }
+      .arrow-head { fill: #94a3b8; }
+      .source-card { fill: #f5f3ff; stroke: #7c3aed; stroke-width: 2; }
+      .surface-card { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+      .surface-card-1 { stroke: #ec4899; }
+      .surface-card-2 { stroke: #f59e0b; }
+      .surface-card-3 { stroke: #10b981; }
+      .surface-card-4 { stroke: #0891b2; }
+      .surface-card-5 { stroke: #8b5cf6; }
+      .surface-num { font-size: 11px; font-weight: 700; }
+      .surface-num-1 { fill: #ec4899; }
+      .surface-num-2 { fill: #f59e0b; }
+      .surface-num-3 { fill: #10b981; }
+      .surface-num-4 { fill: #0891b2; }
+      .surface-num-5 { fill: #8b5cf6; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #475569; }
+      @media (prefers-color-scheme: dark) {
+        .text { fill: #e2e8f0; }
+        .heading { fill: #f1f5f9; }
+        .source-label { fill: #94a3b8; }
+        .arrow-line { stroke: #475569; }
+        .arrow-head { fill: #475569; }
+        .source-card { fill: #1e1b4b; stroke: #a78bfa; }
+        .surface-card { fill: #0f172a; stroke: #475569; }
+        .code { fill: #94a3b8; }
+      }
+    </style>
+    <marker id="prop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"/>
+    </marker>
+  </defs>
+
+  <!-- Source card on the left -->
+  <g>
+    <rect x="40" y="155" width="220" height="150" rx="10" class="source-card"/>
+    <text x="150" y="180" class="heading" text-anchor="middle">personality: { ... }</text>
+    <text x="60" y="208" class="code">honesty:           0–1</text>
+    <text x="60" y="226" class="code">emotionality:      0–1</text>
+    <text x="60" y="244" class="code">extraversion:      0–1</text>
+    <text x="60" y="262" class="code">agreeableness:     0–1</text>
+    <text x="60" y="280" class="code">conscientiousness: 0–1</text>
+    <text x="60" y="298" class="code">openness:          0–1</text>
+  </g>
+
+  <!-- 5 surfaces fanning to the right -->
+  <!-- Card layout: 5 cards, each 360x60, x=460, ys = 30, 110, 190, 270, 350 -->
+
+  <!-- Surface 1: System Prompt -->
+  <g>
+    <rect x="460" y="30" width="380" height="60" rx="8" class="surface-card surface-card-1"/>
+    <text x="476" y="52" class="surface-num surface-num-1">1</text>
+    <text x="498" y="52" class="heading">System prompt directives</text>
+    <text x="498" y="74" class="text">Each trait at &gt; 0.65 or &lt; 0.35 emits behavioral instructions.</text>
+  </g>
+
+  <!-- Surface 2: Encoding -->
+  <g>
+    <rect x="460" y="110" width="380" height="60" rx="8" class="surface-card surface-card-2"/>
+    <text x="476" y="132" class="surface-num surface-num-2">2</text>
+    <text x="498" y="132" class="heading">Memory encoding strength</text>
+    <text x="498" y="154" class="text">Six attention weights: 0.3 + o*0.7 (O,C) and 0.2 + e*0.8 (H,E,X,A).</text>
+  </g>
+
+  <!-- Surface 3: Working Memory -->
+  <g>
+    <rect x="460" y="190" width="380" height="60" rx="8" class="surface-card surface-card-3"/>
+    <text x="476" y="212" class="surface-num surface-num-3">3</text>
+    <text x="498" y="212" class="heading">Working-memory capacity</text>
+    <text x="498" y="234" class="text">High openness +1 slot, high conscientiousness −1, clamped to [5, 9].</text>
+  </g>
+
+  <!-- Surface 4: Prompt Format -->
+  <g>
+    <rect x="460" y="270" width="380" height="60" rx="8" class="surface-card surface-card-4"/>
+    <text x="476" y="292" class="surface-num surface-num-4">4</text>
+    <text x="498" y="292" class="heading">Memory prompt format</text>
+    <text x="498" y="314" class="text">structured (C dom) · narrative (O dom) · emotional (E dom)</text>
+  </g>
+
+  <!-- Surface 5: Observer/Reflector -->
+  <g>
+    <rect x="460" y="350" width="380" height="60" rx="8" class="surface-card surface-card-5"/>
+    <text x="476" y="372" class="surface-num surface-num-5">5</text>
+    <text x="498" y="372" class="heading">Observer + Reflector bias</text>
+    <text x="498" y="394" class="text">Honesty ↑ updates old beliefs; agreeableness ↑ keeps both versions.</text>
+  </g>
+
+  <!-- Curved arrows from source card to each surface -->
+  <!-- Source card right edge: x=260, y=230 (vertical center) -->
+  <!-- Surface card left edge: x=460, target ys = 60, 140, 220, 300, 380 -->
+  <path class="arrow-line" d="M 260,230 C 360,230 360,60 460,60" marker-end="url(#prop-arrow)"/>
+  <path class="arrow-line" d="M 260,230 C 360,230 360,140 460,140" marker-end="url(#prop-arrow)"/>
+  <path class="arrow-line" d="M 260,230 L 460,220" marker-end="url(#prop-arrow)"/>
+  <path class="arrow-line" d="M 260,230 C 360,230 360,300 460,300" marker-end="url(#prop-arrow)"/>
+  <path class="arrow-line" d="M 260,230 C 360,230 360,380 460,380" marker-end="url(#prop-arrow)"/>
+
+  <!-- Footer -->
+  <text x="40" y="350" class="source-label">Single config</text>
+  <text x="40" y="368" class="source-label">propagates to</text>
+  <text x="40" y="386" class="source-label">five surfaces</text>
+  <text x="40" y="404" class="source-label">simultaneously.</text>
+</svg>
