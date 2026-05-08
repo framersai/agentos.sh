@@ -207,7 +207,7 @@ const assistant = agent({
 
 RAG gives agents access to information. Cognitive memory gives them the ability to selectively remember, naturally forget, and honestly report when they are unsure. For agents that run for days, weeks, or months, the difference between "retrieves everything equally" and "remembers what matters, forgets what does not" determines whether the agent remains useful or drowns in noise.
 
-The benchmark numbers backing this claim: **70.2% on [LongMemEval-M](/blog/longmemeval-m-70-with-topk5)** (first open-source library above 65% on the 1.5M-token variant) and **85.6% on [LongMemEval-S](/blog/longmemeval-s-85-pareto-win)**, 0.4 points behind Emergence.ai's published 86% closed-source SaaS SOTA and +1.4 points above Mastra OM gpt-4o (84.23%) at matched reader. Methodology, per-case run JSONs at fixed seed, judge-FPR probes, and a single-CLI reproduction recipe are open at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench).
+The benchmark numbers backing this claim: **70.2% on [LongMemEval-M](/blog/longmemeval-m-70-with-topk5)** (first open-source library above 65% on the 1.5M-token variant) and **85.6% on [LongMemEval-S](/blog/longmemeval-s-85-pareto-win)**, 0.4 points behind Emergence.ai's published 86% closed-source SaaS SOTA and +1.4 points above Mastra OM at the same `gpt-4o` answer LLM (84.23%). Methodology, per-case run JSONs at fixed seed, judge-FPR probes, and a single-CLI reproduction recipe are open at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench).
 
 ## FAQ
 
@@ -215,9 +215,9 @@ The benchmark numbers backing this claim: **70.2% on [LongMemEval-M](/blog/longm
 
 No. RAG is a retriever, not a memory. Cognitive memory uses RAG as one of several composable retrieval strategies alongside semantic decay-aware recall, episodic graph traversal, and reconsolidation rewrites. The argument in this post is "RAG alone is insufficient when you need actual memory behavior," not "stop using RAG."
 
-### Why is matched-reader the right honesty bar for memory benchmarks?
+### Why does the answer LLM matter when comparing memory benchmarks?
 
-Because the reader model is the dominant cost AND quality lever. Two systems claiming the same LongMemEval score with different reader models are reporting different things: one might be measuring memory architecture, the other might be measuring how good gpt-4o is at fielding chunks under any prompting strategy. Without naming the reader for both, the score is a pricing observation, not a quality claim. The transparency post linked in section 5 walks through 6+ competitor numbers under this rule.
+Because the answer LLM is the dominant cost AND quality lever. Two systems claiming the same LongMemEval score with different answer LLMs are reporting different things: one might be measuring memory architecture, the other might be measuring how good gpt-5-mini is at fielding chunks under any prompting strategy. Without naming the answer LLM for both, the score is a pricing observation, not a quality claim. The transparency post linked in section 5 walks through 6+ competitor numbers under this rule.
 
 ### Can I use AgentOS cognitive memory without the rest of the runtime?
 

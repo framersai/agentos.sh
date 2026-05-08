@@ -1,7 +1,7 @@
 ---
 title: "Memory Benchmark Transparency: Why LongMemEval and LOCOMO Numbers Don't Compare"
 date: "2026-04-24"
-excerpt: "An audit of how Mem0, Mastra, Supermemory, Zep, EmergenceMem, and Letta publish their LongMemEval and LOCOMO numbers. LOCOMO has a 6.4% wrong answer key and a judge that accepts 63% of wrong answers. Dhravya posts 99% as a gaming demonstration. Mastra claims 95% at an unmatched reader. The transparency stack behind every honest comparison."
+excerpt: "An audit of how Mem0, Mastra, Supermemory, Zep, EmergenceMem, and Letta publish their LongMemEval and LOCOMO numbers. LOCOMO has a 6.4% wrong answer key and a judge that accepts 63% of wrong answers. Dhravya posts 99% as a gaming demonstration. Mastra claims 95% at a different (cheaper) answer LLM than the paper specifies. The transparency stack behind every honest comparison."
 author: "AgentOS Team"
 category: "Engineering"
 audience: "engineer"
@@ -233,15 +233,15 @@ Three open-source bench frameworks exist to do that without writing your own har
 
 For vendors publishing benchmark numbers: use one of these harnesses and publish the seed, the config, and the per-case run JSONs alongside your headline. Anything less makes your number a claim, not a measurement. The community will find the gap between the claim and the reproduction. The reproduction will be louder than the launch.
 
-AgentOS posts 85.6% on LongMemEval-S at gpt-4o reader, 0.4 points behind Emergence.ai's published 86% closed-source SaaS SOTA, +1.4 points above Mastra's 84.23% at the matched reader. Judge false-positive rate is measured at 1% on LongMemEval-S, 0% on LOCOMO, both far below the +/-3 point bootstrap CI on the accuracy number. Two competing self-reports (Zep's 71.2%, Mem0's 92-93.4%) have been independently disputed or unreproducible. (MemPalace's 100% gets a separate aside above; that one is a broken evaluator, not a real claim.)
+AgentOS posts 85.6% on LongMemEval-S at gpt-4o reader, 0.4 points behind Emergence.ai's published 86% closed-source SaaS SOTA, +1.4 points above Mastra's 84.23% at the same gpt-4o answer LLM. Judge false-positive rate is measured at 1% on LongMemEval-S, 0% on LOCOMO, both far below the +/-3 point bootstrap CI on the accuracy number. Two competing self-reports (Zep's 71.2%, Mem0's 92-93.4%) have been independently disputed or unreproducible. (MemPalace's 100% gets a separate aside above; that one is a broken evaluator, not a real claim.)
 
 What AgentOS is: the only vendor in the surveyed set that publishes bootstrap CIs, judge false-positive probes on shipping numbers (measured, not hypothesized), per-stage retention metrics, full cost-per-correct accounting, latency distributions, per-case run JSONs, hold-out calibration against shipping tables, and cross-vendor comparison tables at a seeded reproducible configuration. For the reader trying to decide which memory library to use, those are the things that matter. The headline number is a lottery ticket. The methodology is the infrastructure.
 
 ## FAQ
 
-### What's the matched-reader rule?
+### What's the same-answer-LLM rule?
 
-For any cross-vendor benchmark claim ("System A scores X%, System B scores Y%"), name the reader model, retrieval config, and judge config used by both systems. If any differ, the comparison is a pricing observation, not an architecture or quality claim. Surface the difference in the same paragraph. Never bury it in a footnote.
+For any cross-vendor benchmark claim ("System A scores X%, System B scores Y%"), name the answer LLM, retrieval config, and judge config used by both systems. If any differ, the comparison is a pricing observation, not an architecture or quality claim. Surface the difference in the same paragraph. Never bury it in a footnote.
 
 ### Why does the LOCOMO 6.4% answer-key error rate matter?
 
@@ -251,9 +251,9 @@ Because it puts a hard floor on any LOCOMO score comparison: scores above 93.6% 
 
 Their evaluator is broken in a way that returns 100% no matter the input. Not a real claim. [HackerNoon post-mortem](https://hackernoon.com/resident-evil-star-milla-jovovich-shipped-an-ai-memory-system-devs-shredded-its-benchmarks) for the anatomy. Mentioning it because it's the most flagrant version of patterns the actual vendors do in less-flagrant forms.
 
-### Mastra claims 95%. What's the matched-reader number?
+### Mastra claims 95%. What's the same-answer-LLM number?
 
-Mastra's 95% is at a non-`gpt-4o` reader configuration that the paper's evaluation protocol doesn't match. At the matched `gpt-4o` reader, Mastra Observational Memory (their Apache-2.0 release) posts 84.23%. AgentOS posts 85.6% at the same matched reader. Mastra's 95% is best read as a configuration-specific result, not a like-for-like comparison.
+Mastra's 95% is at a different answer LLM than the LongMemEval paper's evaluation protocol uses. At the same `gpt-4o` answer LLM, Mastra Observational Memory (their Apache-2.0 release) posts 84.23%. AgentOS posts 85.6% at the same answer LLM. Mastra's 95% is best read as a configuration-specific result, not a like-for-like comparison.
 
 ### Is the AgentOS bench reproducible?
 

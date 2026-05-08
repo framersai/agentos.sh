@@ -17,7 +17,7 @@ Memory benchmarks for AI agents reward retrieval over inference. The score goes 
 
 The numbers people quote (LongMemEval, LOCOMO) inherit this. So when Dhravya publishes 99% and Mastra publishes 95%, the right reaction is not "huh, our 85.6% looks bad" but "what reader, what retrieval, what judge, and can I rerun it." Most of the time, at least one of those answers is missing. (MemPalace also publishes 100% on every memory bench, but that's a broken evaluator that returns 100% no matter what you feed it, so it's not a competitor result, it's a methodology bug.)
 
-[AgentOS](https://github.com/framersai/agentos) is the open-source TypeScript runtime I work on. It implements [nine cognitive mechanisms from published neuroscience](/blog/cognitive-memory-beyond-rag) (Ebbinghaus decay, retrieval-induced forgetting, reconsolidation, source-confidence decay, more) so the agent forgets on purpose. The bench numbers below are how that design holds up against everyone else's, with the matched-reader breakdown that the headline percentages alone don't give you.
+[AgentOS](https://github.com/framersai/agentos) is the open-source TypeScript runtime I work on. It implements [nine cognitive mechanisms from published neuroscience](/blog/cognitive-memory-beyond-rag) (Ebbinghaus decay, retrieval-induced forgetting, reconsolidation, source-confidence decay, more) so the agent forgets on purpose. The bench numbers below are how that design holds up against everyone else's at the same `gpt-4o` answer model — the comparison the headline percentages alone don't give you.
 
 Two results, both at the `gpt-4o` reader, both at full N=500.
 
@@ -29,7 +29,7 @@ Two results, both at the `gpt-4o` reader, both at full N=500.
 
 Both numbers ship with per-case run JSONs at seed 42. Anyone can rerun the same configuration and compare per-question against my results. The runtime is Apache-2.0 at [github.com/framersai/agentos](https://github.com/framersai/agentos); the bench harness is Apache-2.0 at [github.com/framersai/agentos-bench](https://github.com/framersai/agentos-bench). One CLI command at the bottom of this post reproduces each headline.
 
-The rest of the post covers: the architecture changes that produced each number, the audit of the vendor landscape (including the 99% / 95% claims that don't survive a matched-reader read), the methodology checks behind every number above, and the reproduction commands. There's a lot of skepticism baked in. I built the bench harness because I wasn't going to trust my own numbers without a way to make them break.
+The rest of the post covers: the architecture changes that produced each number, the audit of the vendor landscape (including the 99% / 95% claims that fall apart once you check what answer LLM the competitor used), the methodology checks behind every number above, and the reproduction commands. There's a lot of skepticism baked in. I built the bench harness because I wasn't going to trust my own numbers without a way to make them break.
 
 ## TL;DR for the busy reader
 
@@ -410,7 +410,7 @@ Reproducible memory benchmarks require a published seed, configuration, and per-
 
 ## Closing
 
-Two numbers end up here. **85.6% on LongMemEval-S** at $0.0090 per correct, +1.4 points above the strongest matched-reader competitor. **70.2% on LongMemEval-M** at $0.0078 per correct, the only open-source library on the public record above 65% on the variant whose haystacks no production context window can absorb.
+Two numbers end up here. **85.6% on LongMemEval-S** at $0.0090 per correct, +1.4 points above the strongest competitor at the same `gpt-4o` answer model. **70.2% on LongMemEval-M** at $0.0078 per correct, the only open-source library on the public record above 65% on the variant whose haystacks no production context window can absorb.
 
 The intent of the design behind both numbers is not perfect recall. AgentOS implements [Ebbinghaus decay](https://docs.agentos.sh/features/cognitive-memory), [retrieval-induced forgetting](https://docs.agentos.sh/features/cognitive-memory), [reconsolidation](https://docs.agentos.sh/features/cognitive-memory), and seven other cognitive-science mechanisms precisely so the agent generalizes from what it has seen rather than drowns in it. The benchmark numbers are the measurable part of that argument. The rest of the [whitepaper](https://github.com/framersai/agentos-bench) covers the part that can't be reduced to a percentage.
 
@@ -424,11 +424,11 @@ S has 115K tokens of conversation per question and ~50 sessions per haystack: it
 
 ### What's the highest LongMemEval-S score anyone has claimed?
 
-99% (Dhravya, as a gaming demonstration against the published bench rather than a reproducible architecture claim). Mastra publicly claims 95% but at a non-`gpt-4o` reader and with retrieval config that isn't matched to the original paper's evaluation protocol. At the matched `gpt-4o` reader, Mastra Observational Memory posts 84.23%, AgentOS posts 85.6%, and EmergenceMem Internal (closed-source SaaS) posts 86.0%. Headline percentages without the matched-reader breakdown are pricing observations, not architecture claims. (MemPalace also publishes 100%, but their evaluator is broken in a way that returns 100% on any input, so it's not really in the conversation.)
+99% (Dhravya, as a gaming demonstration against the published bench rather than a reproducible architecture claim). Mastra publicly claims 95% but at a different (cheaper) answer LLM and with retrieval config that doesn't match the original paper's evaluation protocol. At the same `gpt-4o` answer LLM, Mastra Observational Memory posts 84.23%, AgentOS posts 85.6%, and EmergenceMem Internal (closed-source SaaS) posts 86.0%. Headline percentages that don't say which answer LLM produced them are pricing observations, not architecture claims. (MemPalace also publishes 100%, but their evaluator is broken in a way that returns 100% on any input, so it's not really in the conversation.)
 
 ### Why publish 85.6% when others claim higher numbers?
 
-Because the argument I care about is reproducibility, not headline percentage. Every number above comes with stated reader model, stated retrieval config, stated judge, fixed seed, per-case run JSONs, a single CLI to reproduce, and Apache-2.0 code. The 99% / 95% claims that beat AgentOS at face value miss at least one of those. The honest cost rule says I can't compare scores until those gaps close. If a competitor publishes the matched-reader breakdown tomorrow and beats 85.6%, I'll cite them and ship a faster bench. That's the deal.
+Because the argument I care about is reproducibility, not headline percentage. Every number above comes with stated answer LLM, stated retrieval config, stated judge, fixed seed, per-case run JSONs, a single CLI to reproduce, and Apache-2.0 code. The 99% / 95% claims that beat AgentOS at face value miss at least one of those. The honest cost rule says I can't compare scores until those gaps close. If a competitor publishes their numbers at the same `gpt-4o` answer LLM tomorrow and beats 85.6%, I'll cite them and ship a faster bench. That's the deal.
 
 ### Is the AgentOS bench code public?
 
@@ -444,7 +444,7 @@ Mem0 cites 66.9% on S with their "super memory" preset; the reader model and con
 
 ### How often are these numbers refreshed?
 
-Quarterly. Next refresh date: 2026-08. Each refresh re-runs the bench against the upstream LongMemEval dataset at seed 42, refreshes the matched-reader breakdown table, and adds any new competitor entrants (VoltAgent, whichever vendor surfaces between now and then) that publish reproducible numbers. The bench is open; if you ship a memory library and want to be in the next refresh, open a PR with your adapter.
+Quarterly. Next refresh date: 2026-08. Each refresh re-runs the bench against the upstream LongMemEval dataset at seed 42, refreshes the same-answer-LLM comparison table, and adds any new competitor entrants (VoltAgent, whichever vendor surfaces between now and then) that publish reproducible numbers. The bench is open; if you ship a memory library and want to be in the next refresh, open a PR with your adapter.
 
 ## Further reading
 

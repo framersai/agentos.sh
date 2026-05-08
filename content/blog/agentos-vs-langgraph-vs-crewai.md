@@ -233,9 +233,9 @@ console.log(result.text);
 
 If your job is "build a deterministic LLM workflow with a graph of nodes," LangGraph fits. If it's "TypeScript-first orchestration with growing memory primitives," Mastra fits. If it's "agents with measurable personality, cognitive memory, runtime tool forging, and guardrails as first-class primitives," AgentOS fits. The job-to-be-done picks the framework. The wrong question is which framework is "best."
 
-### Are the benchmark numbers in this post matched-reader?
+### Are the benchmark numbers in this post compared at the same answer LLM?
 
-Where AgentOS numbers appear in this post, the reader model and retrieval config are named in the LongMemEval SOTA post. For competitor numbers cited from their own marketing, the reader is whatever they ship. If two systems claim a different score on the same benchmark with different reader configs, that's a pricing observation, not a quality claim. We flag those distinctions inline rather than burying them.
+Where AgentOS numbers appear in this post, the answer LLM and retrieval config are named in the LongMemEval SOTA post. For competitor numbers cited from their own marketing, the answer LLM is whatever they ship. If two systems claim a different score on the same benchmark with different answer LLMs, that's a pricing observation, not a quality claim. We flag those distinctions inline rather than burying them.
 
 ### Can I migrate from LangGraph to AgentOS without rewriting my graph?
 
