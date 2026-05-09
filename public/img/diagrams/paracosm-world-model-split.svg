@@ -120,9 +120,7 @@
   <!-- Output: typed state -->
   <rect x="540" y="350" width="300" height="50" rx="8" class="structured-output"/>
   <text x="690" y="370" class="panel-title" text-anchor="middle">state agents reason inside</text>
-  <text x="610" y="392" class="code">{ turn: 3, pop: 87,</text>
-  <text x="700" y="392" class="code">events: [...],</text>
-  <text x="780" y="392" class="code">delta: -3 }</text>
+  <text x="690" y="392" class="code" text-anchor="middle">{ turn: 3, pop: 87, events: [...], delta: -3 }</text>
 
   <!-- Examples -->
   <text x="690" y="430" class="examples" text-anchor="middle">Paracosm (this) · Yang et al 2026</text>
