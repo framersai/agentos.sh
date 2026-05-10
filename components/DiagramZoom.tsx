@@ -18,7 +18,7 @@ export default function DiagramZoom() {
     if (typeof window === "undefined") return;
 
     let modal: HTMLDivElement | null = null;
-    let currentZoom = 150;
+    let currentZoom = 100;
     let panX = 0;
     let panY = 0;
     let isPanning = false;
@@ -27,7 +27,7 @@ export default function DiagramZoom() {
 
     const MIN_ZOOM = 50;
     const MAX_ZOOM = 400;
-    const DEFAULT_ZOOM = 150;
+    const DEFAULT_ZOOM = 100;
     const ZOOM_STEP = 10;
 
     const applyTransform = () => {
@@ -114,7 +114,7 @@ export default function DiagramZoom() {
         textAlign: "center",
         fontFamily: "monospace",
       } as Partial<CSSStyleDeclaration>);
-      zoomLabel.textContent = "150%";
+      zoomLabel.textContent = "100%";
 
       const zoomIn = document.createElement("button");
       zoomIn.textContent = "+";
@@ -125,7 +125,7 @@ export default function DiagramZoom() {
 
       const resetBtn = document.createElement("button");
       resetBtn.textContent = "Reset";
-      resetBtn.title = "Reset to 150%";
+      resetBtn.title = "Reset to 100%";
       Object.assign(resetBtn.style, { ...btnStyle, marginLeft: "0.25rem" });
       resetBtn.addEventListener("click", () => {
         setZoom(DEFAULT_ZOOM);
