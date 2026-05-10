@@ -112,7 +112,7 @@ const answer2 = await assistant.text('What topics would interest me?');
 - **[Ebbinghaus decay](https://en.wikipedia.org/wiki/Forgetting_curve)**: memories fade exponentially over time (R = e^(-t/S)), [replicated and validated by Murre & Dros (2015)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4492928/). High-importance events resist decay (flashbulb memories).
 - **[Reconsolidation](https://doi.org/10.1038/35021052)**: retrieved memories drift toward the agent's current emotional context ([Nader et al., 2000](https://doi.org/10.1038/35021052)).
 - **[Retrieval-induced forgetting](https://doi.org/10.1037/0096-3445.123.2.178)**: retrieving one memory suppresses competing memories ([Anderson et al., 1994](https://doi.org/10.1037/0096-3445.123.2.178)).
-- **[4-tier hierarchy](https://docs.agentos.sh/features/memory-architecture)**: working memory, episodic, semantic, observational. Memories consolidate upward automatically.
+- **[4-tier hierarchy](https://docs.agentos.sh/features/memory-system-overview)**: working memory, episodic, semantic, observational. Memories consolidate upward automatically.
 
 This approach mirrors the [ACT-R cognitive architecture](https://arxiv.org/html/2512.20651) used by recent AI memory systems like [Memory Bear](https://arxiv.org/html/2512.20651) and [CortexGraph](https://github.com/prefrontal-systems/cortexgraph), which also integrate Ebbinghaus decay with activation scheduling.
 

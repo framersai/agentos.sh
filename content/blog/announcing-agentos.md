@@ -53,7 +53,7 @@ console.log(reply.text);
 - **[Ebbinghaus decay](https://docs.agentos.sh/api/classes/CognitiveMechanismsEngine)**: exponential memory decay following the [forgetting curve](https://en.wikipedia.org/wiki/Forgetting_curve), [replicated and validated by Murre & Dros (2015)](https://pmc.ncbi.nlm.nih.gov/articles/PMC4492928/).
 - **Feeling-of-knowing, temporal gist extraction, schema encoding, source confidence decay**: each mechanism implemented in the [`CognitiveMechanismsEngine`](https://docs.agentos.sh/api/classes/CognitiveMechanismsEngine), with trait modulation controlled by [HEXACO personality dimensions](https://hexaco.org/hexaco-inventory).
 
-Memory follows a [4-tier hierarchy](https://docs.agentos.sh/features/memory-architecture) (working memory, episodic, semantic, observational) that consolidates upward automatically. This approach is grounded in the same [ACT-R cognitive architecture](https://arxiv.org/html/2512.20651) principles used by recent systems like [Memory Bear](https://arxiv.org/html/2512.20651) and [CortexGraph](https://github.com/prefrontal-systems/cortexgraph).
+Memory follows a [4-tier hierarchy](https://docs.agentos.sh/features/memory-system-overview) (working memory, episodic, semantic, observational) that consolidates upward automatically. This approach is grounded in the same [ACT-R cognitive architecture](https://arxiv.org/html/2512.20651) principles used by recent systems like [Memory Bear](https://arxiv.org/html/2512.20651) and [CortexGraph](https://github.com/prefrontal-systems/cortexgraph).
 
 ### Multi-Agent Orchestration
 

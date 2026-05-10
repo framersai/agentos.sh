@@ -38,7 +38,7 @@ Adaptive intelligence is behavioral modification driven by explicit signals: fee
 | Schema encoding | Constructive memory | New information assimilated to existing knowledge structures |
 | Source confidence decay | Source monitoring framework | Confidence in memory source degrades faster than content |
 
-Memory follows a [4-tier hierarchy](https://docs.agentos.sh/features/memory-architecture) (working memory, episodic, semantic, observational) that consolidates upward automatically. This mirrors the [ACT-R cognitive architecture](https://arxiv.org/html/2512.20651) approach used by systems like [Memory Bear](https://arxiv.org/html/2512.20651) and [SuperLocalMemory](https://arxiv.org/html/2604.04514), which also integrate Ebbinghaus decay with activation scheduling.
+Memory follows a [4-tier hierarchy](https://docs.agentos.sh/features/memory-system-overview) (working memory, episodic, semantic, observational) that consolidates upward automatically. This mirrors the [ACT-R cognitive architecture](https://arxiv.org/html/2512.20651) approach used by systems like [Memory Bear](https://arxiv.org/html/2512.20651) and [SuperLocalMemory](https://arxiv.org/html/2604.04514), which also integrate Ebbinghaus decay with activation scheduling.
 
 **System prompt rewriting.** The `MetapromptExecutor` detects conversational patterns (user frustration, confusion, disengagement) and rewrites the agent's system prompt mid-session. This is bounded adaptation: the rewrite targets specific failure modes, not open-ended self-modification. Architecture details are in the [system architecture docs](https://docs.agentos.sh/architecture/system-architecture).
 
