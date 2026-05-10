@@ -291,20 +291,29 @@ const result = await team.generate(
     exampleSlug: 'examples/mission-api.mjs',
     language: 'typescript',
     code: `import { mission } from '@framers/agentos';
+import { z } from 'zod';
 
-// Mission auto-generates a step plan from the goal. Each step is either
-// a 'gmi' (LLM agent) or 'tool' (deterministic function), wired via Zod
-// schemas so artifacts flow typed between steps.
-const m = mission({
-  provider: 'openai',
-  goal: 'Explain unified orchestration in AgentOS, with citations.',
-  tools: { factCheck: factCheckTool },
+// mission() builds a goal-driven graph from typed input/output schemas.
+// The planner emits the step DAG; the kernel runs it on the same runtime
+// as workflow() and AgentGraph. Steps are either LLM agents or
+// deterministic tools, wired so artifacts flow typed between them.
+const research = mission('explain-orchestration')
+  .input(z.object({ topic: z.string() }))
+  .goal('Explain {{topic}}, with citations.')
+  .returns(z.object({
+    summary: z.string(),
+    citations: z.array(z.string()),
+  }))
+  .planner({ strategy: 'linear', maxSteps: 6 })
+  .policy({ guardrails: ['content-safety'] })
+  .compile();
+
+const result = await research.invoke({
+  topic: 'unified orchestration in AgentOS',
 });
 
-const result = await m.run();
-
-console.log(result.steps);     // generated step plan
-console.log(result.artifacts); // typed outputs per step`,
+console.log(result.summary);
+console.log(result.citations);`,
     output: {
       missionSteps: [
         { id: 'gather-info', type: 'gmi', executor: 'gmi' },
@@ -336,22 +345,33 @@ console.log(result.artifacts); // typed outputs per step`,
     code: `import { AgentCommunicationBus } from '@framers/agentos';
 
 const bus = new AgentCommunicationBus();
-bus.register({ id: 'researcher-gmi', role: 'researcher' });
-bus.register({ id: 'writer-gmi', role: 'writer' });
 
-// Role-routed delegation
-const response = await bus.delegate({
-  toRole: 'researcher',
-  task: 'Review the orchestration rollout',
-  output: 'top risks',
+// Register agents into an agency with role IDs the bus can route on.
+bus.registerAgent('researcher-gmi', 'research-team', 'researcher');
+bus.registerAgent('writer-gmi',     'research-team', 'writer');
+
+// Role-routed delivery: the bus picks an agent currently holding the
+// 'researcher' role inside the 'research-team' agency.
+await bus.sendToRole('research-team', 'researcher', {
+  type: 'task_delegation',
+  fromAgentId: 'caller',
+  content: { task: 'Review the orchestration rollout' },
+  priority: 'normal',
 });
 
-// Hand off ownership of a task to another agent
-const handoff = await bus.handoff({
-  fromAgentId: 'researcher-gmi',
-  toAgentId: 'writer-gmi',
-  payload: response.content,
-});`,
+// Hand off ownership of a task between agents — the bus issues an
+// internal request_response, awaits acceptance, and notifies the sender.
+const handoff = await bus.handoff('researcher-gmi', 'writer-gmi', {
+  taskId: 'task-42',
+  taskDescription: 'Turn the rollout review into a 4-bullet brief',
+  progress: 0.6,
+  completedWork: ['gathered findings'],
+  remainingWork: ['draft', 'tighten copy'],
+  context: { findings: ['…'] },
+  reason: 'specialization',
+});
+
+console.log(handoff.accepted, handoff.newOwnerId);`,
     output: {
       busMessages: [
         {
