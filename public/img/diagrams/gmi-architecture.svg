@@ -1,137 +1,161 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-labelledby="gmi-title gmi-desc" font-family="Inter, system-ui, -apple-system, sans-serif">
-  <title id="gmi-title">GMI architecture · coordinator with delegated collaborators</title>
-  <desc id="gmi-desc">A three-tier diagram of a Generalized Mind Instance. The GMI core at the top owns the persona, working state (current mood, user context, task context, reasoning trace), and acts as a coordinator. Below it sit four close collaborators: ConversationHistoryManager, CognitiveMemoryBridge, SentimentTracker, and MetapromptExecutor. The bottom layer is the injected services the GMI delegates to: WorkingMemory, PromptEngine, ToolOrchestrator, LLMProviderManager, UtilityAI, CognitiveMemoryManager, and the optional RetrievalAugmentor.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 720" role="img" aria-labelledby="gmi-title gmi-desc" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <title id="gmi-title">GMI architecture · seven concentric layers around the LLM core</title>
+  <desc id="gmi-desc">A Generalized Mind Instance is rendered as seven concentric layers wrapping a central LLM core. From outermost to innermost: Channels (messaging adapters and external surfaces), Guardrails (PII, toxicity, grounding, circuit breakers), Tools (ToolOrchestrator, runtime forging, capability discovery), Orchestration (workflow, mission, AgentGraph, HITL, planning), Memory (cognitive memory with Ebbinghaus decay and 8 mechanisms, working memory, RAG, GraphRAG, citation verifier), Personality (HEXACO trait vector and PAD mood that biases encoding and retrieval), and the LLM core (model dispatch, fallback chains, streaming).</desc>
 
   <defs>
     <style>
       .heading      { fill: #0f172a; font-size: 18px; font-weight: 700; }
       .subtitle     { fill: #475569; font-size: 12px; }
-      .lane-label   { fill: #64748b; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
-      .core-title   { fill: #0f172a; font-size: 17px; font-weight: 800; }
-      .stage-title  { fill: #0f172a; font-size: 13px; font-weight: 700; }
-      .stage-text   { fill: #475569; font-size: 11px; }
-      .stage-tag    { fill: #64748b; font-size: 10px; font-style: italic; }
-      .core-card    { fill: #ede9fe; stroke: #7c3aed; stroke-width: 2.5; }
-      .collab       { fill: #ffffff; stroke-width: 1.75; }
-      .service      { fill: #ffffff; stroke-width: 1.5; }
-      .arrow-line   { stroke: #94a3b8; stroke-width: 1.5; fill: none; }
-      .arrow-head   { fill: #94a3b8; }
-      .acc-collab-1 { stroke: #ec4899; }
-      .acc-collab-2 { stroke: #f59e0b; }
-      .acc-collab-3 { stroke: #10b981; }
-      .acc-collab-4 { stroke: #0891b2; }
-      .acc-svc-1    { stroke: #6366f1; }
-      .acc-svc-2    { stroke: #8b5cf6; }
-      .acc-svc-3    { stroke: #f43f5e; }
-      .acc-svc-4    { stroke: #14b8a6; }
-      .acc-svc-5    { stroke: #ec4899; }
-      .acc-svc-6    { stroke: #f59e0b; }
-      .acc-svc-7    { stroke: #10b981; }
-      .code         { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #475569; }
+      .ring-label   { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      .core-text    { font-size: 12px; font-weight: 800; fill: #92400e; letter-spacing: 0.05em; }
+      .core-tag     { font-size: 9px; fill: #92400e; }
+      .legend-title { fill: #0f172a; font-size: 13px; font-weight: 700; }
+      .legend-text  { fill: #475569; font-size: 11px; }
+      .legend-tag   { fill: #64748b; font-size: 10px; font-style: italic; }
+
+      /* Light defaults */
+      .ring-channels      { fill: none; stroke: #60a5fa; stroke-width: 28; opacity: 0.32; }
+      .ring-guardrails    { fill: none; stroke: #f59e0b; stroke-width: 26; opacity: 0.32; }
+      .ring-tools         { fill: none; stroke: #34d399; stroke-width: 24; opacity: 0.32; }
+      .ring-orchestration { fill: none; stroke: #a78bfa; stroke-width: 22; opacity: 0.34; }
+      .ring-memory        { fill: none; stroke: #22d3ee; stroke-width: 20; opacity: 0.34; }
+      .ring-personality   { fill: none; stroke: #f472b6; stroke-width: 18; opacity: 0.34; }
+      .core-glow          { fill: #fbbf24; opacity: 0.18; }
+      .core-fill          { fill: #fbbf24; opacity: 0.7; }
+
+      .label-channels      { fill: #1d4ed8; }
+      .label-guardrails    { fill: #b45309; }
+      .label-tools         { fill: #047857; }
+      .label-orchestration { fill: #6d28d9; }
+      .label-memory        { fill: #0e7490; }
+      .label-personality   { fill: #be185d; }
+
+      .swatch-channels      { fill: #60a5fa; }
+      .swatch-guardrails    { fill: #f59e0b; }
+      .swatch-tools         { fill: #34d399; }
+      .swatch-orchestration { fill: #a78bfa; }
+      .swatch-memory        { fill: #22d3ee; }
+      .swatch-personality   { fill: #f472b6; }
+      .swatch-core          { fill: #fbbf24; }
+
       @media (prefers-color-scheme: dark) {
         .heading      { fill: #f1f5f9; }
         .subtitle     { fill: #94a3b8; }
-        .lane-label   { fill: #64748b; }
-        .core-title   { fill: #f1f5f9; }
-        .stage-title  { fill: #f1f5f9; }
-        .stage-text   { fill: #94a3b8; }
-        .stage-tag    { fill: #64748b; }
-        .core-card    { fill: #1e1b4b; stroke: #a78bfa; }
-        .collab       { fill: #0f172a; }
-        .service      { fill: #0f172a; }
-        .arrow-line   { stroke: #475569; }
-        .arrow-head   { fill: #475569; }
-        .code         { fill: #94a3b8; }
+        .legend-title { fill: #f1f5f9; }
+        .legend-text  { fill: #cbd5e1; }
+        .legend-tag   { fill: #94a3b8; }
+
+        .ring-channels      { opacity: 0.42; }
+        .ring-guardrails    { opacity: 0.42; }
+        .ring-tools         { opacity: 0.42; }
+        .ring-orchestration { opacity: 0.44; }
+        .ring-memory        { opacity: 0.44; }
+        .ring-personality   { opacity: 0.44; }
+
+        .label-channels      { fill: #93c5fd; }
+        .label-guardrails    { fill: #fcd34d; }
+        .label-tools         { fill: #6ee7b7; }
+        .label-orchestration { fill: #c4b5fd; }
+        .label-memory        { fill: #67e8f9; }
+        .label-personality   { fill: #f9a8d4; }
+
+        .core-text    { fill: #fde68a; }
+        .core-tag     { fill: #fde68a; }
       }
     </style>
-    <marker id="gmi-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"/>
-    </marker>
+    <filter id="gmi-core-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
 
   <!-- Header -->
-  <text x="500" y="32" text-anchor="middle" class="heading">GMI · Generalized Mind Instance</text>
-  <text x="500" y="54" text-anchor="middle" class="subtitle">A coordinator class with a dozen specialized collaborators · the cognitive substrate behind <tspan class="code">agent()</tspan></text>
+  <text x="570" y="32" text-anchor="middle" class="heading">GMI · Seven layers around an LLM core</text>
+  <text x="570" y="54" text-anchor="middle" class="subtitle">A Generalized Mind Instance is the persona, memory, and behavior surface that wraps a single LLM call.</text>
 
-  <!-- GMI core -->
-  <rect x="220" y="80" width="560" height="120" rx="14" class="core-card"/>
-  <text x="500" y="110" text-anchor="middle" class="core-title">GMI</text>
-  <text x="500" y="132" text-anchor="middle" class="stage-text">Persona · GMIPrimeState · current mood · user context · task context · reasoning trace</text>
-  <text x="500" y="152" text-anchor="middle" class="stage-tag">delegates per-turn work to its collaborators; never does retrieval, generation, or tool dispatch itself</text>
-  <text x="500" y="174" text-anchor="middle" class="stage-tag"><tspan class="code">processTurnStream(input) → AsyncIterable&lt;TurnEvent&gt;</tspan></text>
+  <!-- Concentric rings centered at (340, 380) -->
+  <!-- Outermost: channels (r=300, stroke 28) -->
+  <circle cx="340" cy="380" r="300" class="ring-channels"/>
+  <text x="340" y="64" text-anchor="middle" class="ring-label label-channels">Channels</text>
 
-  <!-- Lane label -->
-  <text x="40" y="226" class="lane-label">CLOSE COLLABORATORS · own per-turn flow</text>
+  <!-- Guardrails (r=268, stroke 26) -->
+  <circle cx="340" cy="380" r="268" class="ring-guardrails"/>
+  <text x="340" y="98" text-anchor="middle" class="ring-label label-guardrails">Guardrails</text>
 
-  <!-- Arrows from GMI to close collaborators -->
-  <line class="arrow-line" x1="280" y1="200" x2="160" y2="234" marker-end="url(#gmi-arrow)"/>
-  <line class="arrow-line" x1="420" y1="200" x2="380" y2="234" marker-end="url(#gmi-arrow)"/>
-  <line class="arrow-line" x1="580" y1="200" x2="600" y2="234" marker-end="url(#gmi-arrow)"/>
-  <line class="arrow-line" x1="720" y1="200" x2="820" y2="234" marker-end="url(#gmi-arrow)"/>
+  <!-- Tools (r=238, stroke 24) -->
+  <circle cx="340" cy="380" r="238" class="ring-tools"/>
+  <text x="340" y="130" text-anchor="middle" class="ring-label label-tools">Tools</text>
 
-  <!-- Close collaborators (4) -->
-  <rect x="40" y="234" width="220" height="78" rx="10" class="collab acc-collab-1"/>
-  <text x="150" y="258" text-anchor="middle" class="stage-title">ConversationHistoryManager</text>
-  <text x="150" y="276" text-anchor="middle" class="stage-text">trims, persists, and rehydrates</text>
-  <text x="150" y="292" text-anchor="middle" class="stage-text">the message log per session</text>
+  <!-- Orchestration (r=210, stroke 22) -->
+  <circle cx="340" cy="380" r="210" class="ring-orchestration"/>
+  <text x="340" y="160" text-anchor="middle" class="ring-label label-orchestration">Orchestration</text>
 
-  <rect x="270" y="234" width="220" height="78" rx="10" class="collab acc-collab-2"/>
-  <text x="380" y="258" text-anchor="middle" class="stage-title">CognitiveMemoryBridge</text>
-  <text x="380" y="276" text-anchor="middle" class="stage-text">connects the GMI to the</text>
-  <text x="380" y="292" text-anchor="middle" class="stage-text">cognitive memory system</text>
+  <!-- Memory (r=184, stroke 20) -->
+  <circle cx="340" cy="380" r="184" class="ring-memory"/>
+  <text x="340" y="188" text-anchor="middle" class="ring-label label-memory">Memory</text>
 
-  <rect x="500" y="234" width="220" height="78" rx="10" class="collab acc-collab-3"/>
-  <text x="610" y="258" text-anchor="middle" class="stage-title">SentimentTracker</text>
-  <text x="610" y="276" text-anchor="middle" class="stage-text">follows the user's mood</text>
-  <text x="610" y="292" text-anchor="middle" class="stage-text">across turns</text>
+  <!-- Personality (r=160, stroke 18) -->
+  <circle cx="340" cy="380" r="160" class="ring-personality"/>
+  <text x="340" y="214" text-anchor="middle" class="ring-label label-personality">Personality</text>
 
-  <rect x="730" y="234" width="220" height="78" rx="10" class="collab acc-collab-4"/>
-  <text x="840" y="258" text-anchor="middle" class="stage-title">MetapromptExecutor</text>
-  <text x="840" y="276" text-anchor="middle" class="stage-text">assembles the system prompt</text>
-  <text x="840" y="292" text-anchor="middle" class="stage-text">fresh from current state</text>
+  <!-- LLM Core (filled center) -->
+  <circle cx="340" cy="380" r="130" class="core-glow"/>
+  <circle cx="340" cy="380" r="92" class="core-fill" filter="url(#gmi-core-glow)"/>
+  <text x="340" y="376" text-anchor="middle" class="core-text">LLM CORE</text>
+  <text x="340" y="394" text-anchor="middle" class="core-tag">model · prompt assembly</text>
+  <text x="340" y="408" text-anchor="middle" class="core-tag">streaming · fallback chains</text>
 
-  <!-- Lane label for services -->
-  <text x="40" y="346" class="lane-label">INJECTED SERVICES · constructor-supplied, swappable</text>
+  <!-- Legend column on the right -->
+  <g transform="translate(700, 80)">
+    <text x="0" y="0" class="legend-title">Layers</text>
+    <text x="0" y="20" class="legend-tag">Outermost (faces the world) → innermost (the model itself)</text>
 
-  <!-- Arrows from collaborators down to services -->
-  <line class="arrow-line" x1="500" y1="320" x2="500" y2="356" marker-end="url(#gmi-arrow)"/>
+    <!-- Channels -->
+    <circle cx="10" cy="50" r="6" class="swatch-channels"/>
+    <text x="28" y="54" class="legend-title">Channels</text>
+    <text x="28" y="70" class="legend-text">12 messaging adapters · web, Discord, Slack,</text>
+    <text x="28" y="84" class="legend-text">Telegram, voice (Twilio · Telnyx · Plivo).</text>
 
-  <!-- Services row 1 (4 services) -->
-  <rect x="40" y="362" width="220" height="68" rx="10" class="service acc-svc-1"/>
-  <text x="150" y="384" text-anchor="middle" class="stage-title">WorkingMemory</text>
-  <text x="150" y="402" text-anchor="middle" class="stage-text">Baddeley slot model · 7±2</text>
-  <text x="150" y="418" text-anchor="middle" class="stage-tag">trait-modulated capacity</text>
+    <!-- Guardrails -->
+    <circle cx="10" cy="118" r="6" class="swatch-guardrails"/>
+    <text x="28" y="122" class="legend-title">Guardrails</text>
+    <text x="28" y="138" class="legend-text">5-tier security · PII · toxicity · grounding</text>
+    <text x="28" y="152" class="legend-text">guard · CircuitBreaker · CostGuard.</text>
 
-  <rect x="270" y="362" width="220" height="68" rx="10" class="service acc-svc-2"/>
-  <text x="380" y="384" text-anchor="middle" class="stage-title">PromptEngine</text>
-  <text x="380" y="402" text-anchor="middle" class="stage-text">composes per-turn prompt</text>
-  <text x="380" y="418" text-anchor="middle" class="stage-tag">token-budgeted sections</text>
+    <!-- Tools -->
+    <circle cx="10" cy="186" r="6" class="swatch-tools"/>
+    <text x="28" y="190" class="legend-title">Tools</text>
+    <text x="28" y="206" class="legend-text">ToolOrchestrator · runtime forging via</text>
+    <text x="28" y="220" class="legend-text">forge_tool · 110 extensions · 88 skills.</text>
 
-  <rect x="500" y="362" width="220" height="68" rx="10" class="service acc-svc-3"/>
-  <text x="610" y="384" text-anchor="middle" class="stage-title">ToolOrchestrator</text>
-  <text x="610" y="402" text-anchor="middle" class="stage-text">tool calling · forging · routing</text>
-  <text x="610" y="418" text-anchor="middle" class="stage-tag">sandboxed execution</text>
+    <!-- Orchestration -->
+    <circle cx="10" cy="254" r="6" class="swatch-orchestration"/>
+    <text x="28" y="258" class="legend-title">Orchestration</text>
+    <text x="28" y="274" class="legend-text">workflow() · mission() · AgentGraph · HITL ·</text>
+    <text x="28" y="288" class="legend-text">PlanningEngine · checkpointing.</text>
 
-  <rect x="730" y="362" width="220" height="68" rx="10" class="service acc-svc-4"/>
-  <text x="840" y="384" text-anchor="middle" class="stage-title">LLMProviderManager</text>
-  <text x="840" y="402" text-anchor="middle" class="stage-text">11 providers + OpenRouter</text>
-  <text x="840" y="418" text-anchor="middle" class="stage-tag">automatic fallback chains</text>
+    <!-- Memory -->
+    <circle cx="10" cy="322" r="6" class="swatch-memory"/>
+    <text x="28" y="326" class="legend-title">Memory</text>
+    <text x="28" y="342" class="legend-text">Cognitive memory · Ebbinghaus decay ·</text>
+    <text x="28" y="356" class="legend-text">8 mechanisms · RAG · GraphRAG · citations.</text>
 
-  <!-- Services row 2 (3 services + 1 optional) -->
-  <rect x="40" y="438" width="220" height="68" rx="10" class="service acc-svc-5"/>
-  <text x="150" y="460" text-anchor="middle" class="stage-title">UtilityAI</text>
-  <text x="150" y="478" text-anchor="middle" class="stage-text">small/cheap LLM calls</text>
-  <text x="150" y="494" text-anchor="middle" class="stage-tag">classifier · summarizer · judge</text>
+    <!-- Personality -->
+    <circle cx="10" cy="390" r="6" class="swatch-personality"/>
+    <text x="28" y="394" class="legend-title">Personality</text>
+    <text x="28" y="410" class="legend-text">HEXACO trait vector + PAD mood that biases</text>
+    <text x="28" y="424" class="legend-text">encoding, retrieval, prompt format. Optional.</text>
 
-  <rect x="270" y="438" width="220" height="68" rx="10" class="service acc-svc-6"/>
-  <text x="380" y="460" text-anchor="middle" class="stage-title">CognitiveMemoryManager</text>
-  <text x="380" y="478" text-anchor="middle" class="stage-text">Ebbinghaus decay · 8 mechanisms</text>
-  <text x="380" y="494" text-anchor="middle" class="stage-tag">HEXACO-modulated encoding</text>
+    <!-- Core -->
+    <circle cx="10" cy="458" r="6" class="swatch-core"/>
+    <text x="28" y="462" class="legend-title">LLM core</text>
+    <text x="28" y="478" class="legend-text">21 providers + OpenRouter fan-out · automatic</text>
+    <text x="28" y="492" class="legend-text">fallback chains · streaming dispatch.</text>
 
-  <rect x="500" y="438" width="450" height="68" rx="10" class="service acc-svc-7"/>
-  <text x="725" y="460" text-anchor="middle" class="stage-title">RetrievalAugmentor (optional)</text>
-  <text x="725" y="478" text-anchor="middle" class="stage-text">RAG · vector search · GraphRAG · CitationVerifier</text>
-  <text x="725" y="494" text-anchor="middle" class="stage-tag">absent when the agent doesn't need retrieval</text>
-
-  <text x="500" y="540" text-anchor="middle" class="stage-tag">Each collaborator owns one concern. The GMI itself is a thin coordinator — it never does retrieval, generation, or tool dispatch directly.</text>
+    <text x="0" y="544" class="legend-tag">All seven layers compose; the GMI itself is a thin coordinator</text>
+    <text x="0" y="558" class="legend-tag">that delegates each turn to its specialized collaborators.</text>
+  </g>
 </svg>
