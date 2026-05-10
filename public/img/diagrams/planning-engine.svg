@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" role="img" aria-labelledby="pe-title pe-desc" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <title id="pe-title">PlanningEngine architecture</title>
+  <desc id="pe-desc">PlanningEngine has two layers. The top layer holds three planning collaborators: Plan Generator (ReAct, Tree-of-Thoughts), Task Decomposer (Least-to-Most), and Self-Reflector (Reflexion). They all feed the bottom-layer Execution Engine, which runs Step Executor, Checkpoint Manager, Rollback Handler, and Autonomous Loop. The Execution Engine reaches out to three external systems below: the LLM Provider Manager, Tools, and the RAG System.</desc>
+
+  <defs>
+    <style>
+      .heading      { fill: #0f172a; font-size: 18px; font-weight: 700; }
+      .subtitle     { fill: #475569; font-size: 12px; }
+      .layer-title  { fill: #0f172a; font-size: 14px; font-weight: 700; }
+      .layer-text   { fill: #475569; font-size: 11px; }
+      .lane-label   { fill: #64748b; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
+      .container    { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; }
+      .layer        { fill: #ffffff; stroke-width: 1.75; }
+      .mini         { fill: #ffffff; stroke-width: 1.25; }
+      .mini-text    { fill: #0f172a; font-size: 11px; font-weight: 600; }
+      .mini-tag     { fill: #64748b; font-size: 10px; font-style: italic; }
+      .substrate    { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1; stroke-dasharray: 4 4; }
+      .arrow-line   { stroke: #94a3b8; stroke-width: 1.75; fill: none; }
+      .arrow-head   { fill: #94a3b8; }
+      .acc-plan     { stroke: #ec4899; }
+      .acc-decomp   { stroke: #f59e0b; }
+      .acc-reflect  { stroke: #8b5cf6; }
+      .acc-exec     { stroke: #6366f1; }
+      .acc-ext      { stroke: #94a3b8; }
+      @media (prefers-color-scheme: dark) {
+        .heading      { fill: #f1f5f9; }
+        .subtitle     { fill: #94a3b8; }
+        .layer-title  { fill: #f1f5f9; }
+        .layer-text   { fill: #94a3b8; }
+        .container    { fill: #0b1220; stroke: #475569; }
+        .layer        { fill: #0f172a; }
+        .mini         { fill: #0f172a; }
+        .mini-text    { fill: #f1f5f9; }
+        .substrate    { fill: #0b1220; stroke: #475569; }
+        .arrow-line   { stroke: #475569; }
+        .arrow-head   { fill: #475569; }
+      }
+    </style>
+    <marker id="pe-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"/>
+    </marker>
+  </defs>
+
+  <!-- Header -->
+  <text x="500" y="32" text-anchor="middle" class="heading">PlanningEngine</text>
+  <text x="500" y="54" text-anchor="middle" class="subtitle">Three planning collaborators · one execution engine · pluggable external systems.</text>
+
+  <!-- Outer container -->
+  <rect x="40" y="80" width="920" height="280" rx="14" class="container"/>
+
+  <!-- Layer 1: 3 planning collaborators -->
+  <rect x="80" y="106" width="260" height="80" rx="10" class="layer acc-plan"/>
+  <text x="210" y="132" text-anchor="middle" class="layer-title">Plan Generator</text>
+  <text x="210" y="152" text-anchor="middle" class="layer-text">multi-step plan synthesis</text>
+  <text x="210" y="170" text-anchor="middle" class="mini-tag">ReAct · Tree-of-Thoughts</text>
+
+  <rect x="370" y="106" width="260" height="80" rx="10" class="layer acc-decomp"/>
+  <text x="500" y="132" text-anchor="middle" class="layer-title">Task Decomposer</text>
+  <text x="500" y="152" text-anchor="middle" class="layer-text">break the goal into steps</text>
+  <text x="500" y="170" text-anchor="middle" class="mini-tag">Least-to-Most prompting</text>
+
+  <rect x="660" y="106" width="260" height="80" rx="10" class="layer acc-reflect"/>
+  <text x="790" y="132" text-anchor="middle" class="layer-title">Self-Reflector</text>
+  <text x="790" y="152" text-anchor="middle" class="layer-text">verbal critique → revise plan</text>
+  <text x="790" y="170" text-anchor="middle" class="mini-tag">Reflexion</text>
+
+  <!-- Arrows down to Execution Engine -->
+  <line class="arrow-line" x1="210" y1="186" x2="500" y2="226" marker-end="url(#pe-arrow)"/>
+  <line class="arrow-line" x1="500" y1="186" x2="500" y2="226" marker-end="url(#pe-arrow)"/>
+  <line class="arrow-line" x1="790" y1="186" x2="500" y2="226" marker-end="url(#pe-arrow)"/>
+
+  <!-- Layer 2: Execution Engine -->
+  <rect x="80" y="226" width="840" height="116" rx="10" class="layer acc-exec"/>
+  <text x="100" y="248" class="layer-title">Execution Engine</text>
+  <text x="100" y="266" class="layer-text">runs the chosen plan with checkpoint, rollback, and autonomous loops</text>
+
+  <rect x="100" y="278" width="190" height="48" rx="6" class="mini acc-exec"/>
+  <text x="195" y="298" text-anchor="middle" class="mini-text">Step Executor</text>
+  <text x="195" y="315" text-anchor="middle" class="layer-text">runs one plan step</text>
+
+  <rect x="306" y="278" width="190" height="48" rx="6" class="mini acc-exec"/>
+  <text x="401" y="298" text-anchor="middle" class="mini-text">Checkpoint Manager</text>
+  <text x="401" y="315" text-anchor="middle" class="layer-text">snapshot + resume</text>
+
+  <rect x="512" y="278" width="190" height="48" rx="6" class="mini acc-exec"/>
+  <text x="607" y="298" text-anchor="middle" class="mini-text">Rollback Handler</text>
+  <text x="607" y="315" text-anchor="middle" class="layer-text">undo on failure</text>
+
+  <rect x="718" y="278" width="190" height="48" rx="6" class="mini acc-exec"/>
+  <text x="813" y="298" text-anchor="middle" class="mini-text">Autonomous Loop</text>
+  <text x="813" y="315" text-anchor="middle" class="layer-text">replan + retry</text>
+
+  <!-- Arrow down to externals -->
+  <line class="arrow-line" x1="500" y1="360" x2="500" y2="392" marker-end="url(#pe-arrow)"/>
+
+  <!-- External dependencies (substrate row) -->
+  <text x="80" y="386" class="lane-label">EXTERNAL SYSTEMS</text>
+  <rect x="120" y="392" width="220" height="62" rx="8" class="substrate"/>
+  <text x="230" y="416" text-anchor="middle" class="layer-title">LLM Provider Manager</text>
+  <text x="230" y="434" text-anchor="middle" class="layer-text">11 direct + OpenRouter · fallback chains</text>
+
+  <rect x="390" y="392" width="220" height="62" rx="8" class="substrate"/>
+  <text x="500" y="416" text-anchor="middle" class="layer-title">Tools</text>
+  <text x="500" y="434" text-anchor="middle" class="layer-text">110 extensions · 88 skills</text>
+
+  <rect x="660" y="392" width="220" height="62" rx="8" class="substrate"/>
+  <text x="770" y="416" text-anchor="middle" class="layer-title">RAG System</text>
+  <text x="770" y="434" text-anchor="middle" class="layer-text">memory · vector search · GraphRAG</text>
+</svg>
