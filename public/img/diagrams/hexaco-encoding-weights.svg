@@ -79,22 +79,18 @@
        At x=1: weight=1.0 → y = 80 -->
   <line class="ramp-hexa" x1="80" y1="304" x2="580" y2="80"/>
 
-  <!-- Endpoint dots and inline labels -->
+  <!-- Endpoint dots -->
   <circle cx="80" cy="276" r="4" fill="#7c3aed"/>
-  <text class="ramp-oc-label" x="64" y="270" text-anchor="end">0.30</text>
-
   <circle cx="80" cy="304" r="4" fill="#f59e0b"/>
-  <text class="ramp-hexa-label" x="64" y="320" text-anchor="end">0.20</text>
-
   <circle cx="580" cy="80" r="4" fill="#7c3aed"/>
   <text class="ramp-oc-label" x="596" y="84">1.00</text>
 
-  <!-- Curve labels mid-line -->
-  <text class="ramp-oc-label" x="380" y="172" text-anchor="middle">Openness, Conscientiousness</text>
-  <text class="formula" x="380" y="190" text-anchor="middle">noveltyAttention = 0.3 + o * 0.7</text>
+  <!-- Curve labels (placed off the lines, above for violet, below for orange) -->
+  <text class="ramp-oc-label" x="380" y="142" text-anchor="middle">Openness, Conscientiousness</text>
+  <text class="formula" x="380" y="160" text-anchor="middle">noveltyAttention = 0.3 + o * 0.7</text>
 
-  <text class="ramp-hexa-label" x="220" y="280" text-anchor="middle">Honesty · Emotionality · eXtraversion · Agreeableness</text>
-  <text class="formula" x="220" y="298" text-anchor="middle">emotionalSensitivity = 0.2 + e * 0.8</text>
+  <text class="ramp-hexa-label" x="220" y="296" text-anchor="middle">Honesty · Emotionality · eXtraversion · Agreeableness</text>
+  <text class="formula" x="220" y="314" text-anchor="middle">emotionalSensitivity = 0.2 + e * 0.8</text>
 
   <!-- Right-side annotation -->
   <g>

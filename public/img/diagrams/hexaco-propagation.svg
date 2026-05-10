@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" role="img" aria-labelledby="hexaco-prop-title hexaco-prop-desc" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 460" role="img" aria-labelledby="hexaco-prop-title hexaco-prop-desc" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
   <title id="hexaco-prop-title">How HEXACO traits propagate through AgentOS</title>
   <desc id="hexaco-prop-desc">A flow diagram showing the personality vector input on the left fanning out through five system surfaces on the right: system prompt, encoding strength, working-memory capacity, prompt formatting, and observer/reflector bias.</desc>
 
@@ -57,7 +57,7 @@
 
   <!-- Surface 1: System Prompt -->
   <g>
-    <rect x="460" y="30" width="380" height="60" rx="8" class="surface-card surface-card-1"/>
+    <rect x="460" y="30" width="540" height="60" rx="8" class="surface-card surface-card-1"/>
     <text x="476" y="52" class="surface-num surface-num-1">1</text>
     <text x="498" y="52" class="heading">System prompt directives</text>
     <text x="498" y="74" class="text">Each trait at &gt; 0.65 or &lt; 0.35 emits behavioral instructions.</text>
@@ -65,7 +65,7 @@
 
   <!-- Surface 2: Encoding -->
   <g>
-    <rect x="460" y="110" width="380" height="60" rx="8" class="surface-card surface-card-2"/>
+    <rect x="460" y="110" width="540" height="60" rx="8" class="surface-card surface-card-2"/>
     <text x="476" y="132" class="surface-num surface-num-2">2</text>
     <text x="498" y="132" class="heading">Memory encoding strength</text>
     <text x="498" y="154" class="text">Six attention weights: 0.3 + o*0.7 (O,C) and 0.2 + e*0.8 (H,E,X,A).</text>
@@ -73,7 +73,7 @@
 
   <!-- Surface 3: Working Memory -->
   <g>
-    <rect x="460" y="190" width="380" height="60" rx="8" class="surface-card surface-card-3"/>
+    <rect x="460" y="190" width="540" height="60" rx="8" class="surface-card surface-card-3"/>
     <text x="476" y="212" class="surface-num surface-num-3">3</text>
     <text x="498" y="212" class="heading">Working-memory capacity</text>
     <text x="498" y="234" class="text">High openness +1 slot, high conscientiousness −1, clamped to [5, 9].</text>
@@ -81,7 +81,7 @@
 
   <!-- Surface 4: Prompt Format -->
   <g>
-    <rect x="460" y="270" width="380" height="60" rx="8" class="surface-card surface-card-4"/>
+    <rect x="460" y="270" width="540" height="60" rx="8" class="surface-card surface-card-4"/>
     <text x="476" y="292" class="surface-num surface-num-4">4</text>
     <text x="498" y="292" class="heading">Memory prompt format</text>
     <text x="498" y="314" class="text">structured (C dom) · narrative (O dom) · emotional (E dom)</text>
@@ -89,7 +89,7 @@
 
   <!-- Surface 5: Observer/Reflector -->
   <g>
-    <rect x="460" y="350" width="380" height="60" rx="8" class="surface-card surface-card-5"/>
+    <rect x="460" y="350" width="540" height="60" rx="8" class="surface-card surface-card-5"/>
     <text x="476" y="372" class="surface-num surface-num-5">5</text>
     <text x="498" y="372" class="heading">Observer + Reflector bias</text>
     <text x="498" y="394" class="text">Honesty ↑ updates old beliefs; agreeableness ↑ keeps both versions.</text>
