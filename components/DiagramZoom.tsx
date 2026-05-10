@@ -152,12 +152,13 @@ export default function DiagramZoom() {
 
       toolbar.append(zoomOut, zoomLabel, zoomIn, resetBtn, sep, closeBtn);
 
+      // Background is pinned to prefers-color-scheme via the injected stylesheet
+      // so it always matches the SVG's own @media (prefers-color-scheme) rules.
       const container = document.createElement("div");
       container.id = "agentos-zoom-container";
       Object.assign(container.style, {
         overflow: "hidden",
         borderRadius: "12px",
-        background: "var(--background-surface, #1b1b1d)",
         maxWidth: "95vw",
         maxHeight: "calc(90vh - 4rem)",
         width: "100%",
@@ -282,6 +283,16 @@ export default function DiagramZoom() {
       img[src*="/img/diagrams/"]:hover {
         opacity: 0.88;
         box-shadow: 0 0 0 2px var(--accent-primary, #6366f1);
+      }
+
+      /* Modal canvas background: matches the SVG's own prefers-color-scheme */
+      #agentos-zoom-container {
+        background: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        #agentos-zoom-container {
+          background: #0f172a;
+        }
       }
     `;
     document.head.appendChild(styleEl);
