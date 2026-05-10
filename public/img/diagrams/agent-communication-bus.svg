@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-labelledby="ac-title ac-desc" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <title id="ac-title">AgentCommunicationBus architecture</title>
+  <desc id="ac-desc">Three-layer architecture inside the AgentCommunicationBus. The top Message Router layer dispatches messages via four strategies: point-to-point, role-based, topic router, and load balancer. The middle Subscription Manager layer handles agent subscriptions, topic subscriptions, and message filters. The bottom Delivery Manager layer runs queue management, retry handling, ACK tracking, and a history store.</desc>
+
+  <defs>
+    <style>
+      .heading      { fill: #0f172a; font-size: 18px; font-weight: 700; }
+      .subtitle     { fill: #475569; font-size: 12px; }
+      .layer-title  { fill: #0f172a; font-size: 14px; font-weight: 700; }
+      .layer-text   { fill: #475569; font-size: 11px; }
+      .lane-label   { fill: #64748b; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
+      .container    { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; }
+      .layer        { fill: #ffffff; stroke-width: 1.75; }
+      .mini         { fill: #ffffff; stroke-width: 1.25; }
+      .mini-text    { fill: #0f172a; font-size: 11px; font-weight: 600; }
+      .arrow-line   { stroke: #94a3b8; stroke-width: 1.75; fill: none; }
+      .arrow-head   { fill: #94a3b8; }
+      .acc-route    { stroke: #ec4899; }
+      .acc-sub      { stroke: #6366f1; }
+      .acc-deliver  { stroke: #10b981; }
+      @media (prefers-color-scheme: dark) {
+        .heading      { fill: #f1f5f9; }
+        .subtitle     { fill: #94a3b8; }
+        .layer-title  { fill: #f1f5f9; }
+        .layer-text   { fill: #94a3b8; }
+        .lane-label   { fill: #64748b; }
+        .container    { fill: #0b1220; stroke: #475569; }
+        .layer        { fill: #0f172a; }
+        .mini         { fill: #0f172a; }
+        .mini-text    { fill: #f1f5f9; }
+        .arrow-line   { stroke: #475569; }
+        .arrow-head   { fill: #475569; }
+      }
+    </style>
+    <marker id="ac-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"/>
+    </marker>
+  </defs>
+
+  <!-- Header -->
+  <text x="500" y="32" text-anchor="middle" class="heading">AgentCommunicationBus</text>
+  <text x="500" y="54" text-anchor="middle" class="subtitle">Pub/sub · request/response · broadcast · handoff · threading. Three layers, one bus.</text>
+
+  <!-- Outer container -->
+  <rect x="40" y="80" width="920" height="420" rx="14" class="container"/>
+
+  <!-- Layer 1: Message Router -->
+  <rect x="70" y="110" width="860" height="110" rx="10" class="layer acc-route"/>
+  <text x="90" y="132" class="layer-title">1 · Message Router</text>
+  <text x="90" y="150" class="layer-text">Dispatch strategy per-message · supports four routing modes</text>
+
+  <rect x="100" y="160" width="180" height="48" rx="6" class="mini acc-route"/>
+  <text x="190" y="178" text-anchor="middle" class="mini-text">Point-to-Point</text>
+  <text x="190" y="195" text-anchor="middle" class="layer-text">addressed to one agent</text>
+
+  <rect x="300" y="160" width="180" height="48" rx="6" class="mini acc-route"/>
+  <text x="390" y="178" text-anchor="middle" class="mini-text">Role-Based</text>
+  <text x="390" y="195" text-anchor="middle" class="layer-text">all agents with role X</text>
+
+  <rect x="500" y="160" width="180" height="48" rx="6" class="mini acc-route"/>
+  <text x="590" y="178" text-anchor="middle" class="mini-text">Topic Router</text>
+  <text x="590" y="195" text-anchor="middle" class="layer-text">subscribers of topic T</text>
+
+  <rect x="700" y="160" width="200" height="48" rx="6" class="mini acc-route"/>
+  <text x="800" y="178" text-anchor="middle" class="mini-text">Load Balancer</text>
+  <text x="800" y="195" text-anchor="middle" class="layer-text">round-robin across pool</text>
+
+  <line class="arrow-line" x1="500" y1="220" x2="500" y2="248" marker-end="url(#ac-arrow)"/>
+
+  <!-- Layer 2: Subscription Manager -->
+  <rect x="70" y="248" width="860" height="100" rx="10" class="layer acc-sub"/>
+  <text x="90" y="270" class="layer-title">2 · Subscription Manager</text>
+  <text x="90" y="288" class="layer-text">Routes resolved messages to interested handlers</text>
+
+  <rect x="120" y="298" width="220" height="40" rx="6" class="mini acc-sub"/>
+  <text x="230" y="324" text-anchor="middle" class="mini-text">Agent subscriptions</text>
+
+  <rect x="380" y="298" width="220" height="40" rx="6" class="mini acc-sub"/>
+  <text x="490" y="324" text-anchor="middle" class="mini-text">Topic subscriptions</text>
+
+  <rect x="640" y="298" width="220" height="40" rx="6" class="mini acc-sub"/>
+  <text x="750" y="324" text-anchor="middle" class="mini-text">Filters</text>
+
+  <line class="arrow-line" x1="500" y1="348" x2="500" y2="376" marker-end="url(#ac-arrow)"/>
+
+  <!-- Layer 3: Delivery Manager -->
+  <rect x="70" y="376" width="860" height="110" rx="10" class="layer acc-deliver"/>
+  <text x="90" y="398" class="layer-title">3 · Delivery Manager</text>
+  <text x="90" y="416" class="layer-text">Reliable transport · in-order, retried, ACK-tracked, audit-logged</text>
+
+  <rect x="100" y="426" width="180" height="48" rx="6" class="mini acc-deliver"/>
+  <text x="190" y="444" text-anchor="middle" class="mini-text">Queue Manager</text>
+  <text x="190" y="461" text-anchor="middle" class="layer-text">per-agent inbox</text>
+
+  <rect x="300" y="426" width="180" height="48" rx="6" class="mini acc-deliver"/>
+  <text x="390" y="444" text-anchor="middle" class="mini-text">Retry Handler</text>
+  <text x="390" y="461" text-anchor="middle" class="layer-text">backoff + dead-letter</text>
+
+  <rect x="500" y="426" width="180" height="48" rx="6" class="mini acc-deliver"/>
+  <text x="590" y="444" text-anchor="middle" class="mini-text">ACK Tracker</text>
+  <text x="590" y="461" text-anchor="middle" class="layer-text">at-least-once delivery</text>
+
+  <rect x="700" y="426" width="200" height="48" rx="6" class="mini acc-deliver"/>
+  <text x="800" y="444" text-anchor="middle" class="mini-text">History Store</text>
+  <text x="800" y="461" text-anchor="middle" class="layer-text">replay + audit log</text>
+</svg>
