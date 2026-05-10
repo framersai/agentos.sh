@@ -116,7 +116,7 @@ for await (const chunk of stream.textStream) {
 const finalText = await stream.text;
 console.log('\\n--- approved final ---\\n' + finalText);`
 
-const CITATION_CODE = `import { CitationVerifier } from '@framers/agentos';
+const CITATION_CODE = `import { CitationVerifier, formatVerifiedResponse } from '@framers/agentos';
 
 const verifier = new CitationVerifier({
   embedFn: yourEmbeddings,
@@ -124,23 +124,19 @@ const verifier = new CitationVerifier({
   unverifiableThreshold: 0.3, // cosine <  0.3 = unverifiable
 });
 
+// One source per claim. The third claim has no matching source — the
+// verifier flags it as "unverifiable" so the caller knows not to quote it.
 const result = await verifier.verify(
-  'Tokyo has a population of approximately 14 million people. ' +
-  'It is the capital of Japan. The city was founded in 1457.',
+  'Tokyo is the capital of Japan. ' +
+  'Tokyo proper has roughly 14 million residents. ' +
+  'Tokyo hosted the 2020 Summer Olympics in 1457.',
   [
-    {
-      content: 'Tokyo, the capital of Japan, has a population of about ' +
-               '14 million in the city proper.',
-      title: 'Tokyo Demographics',
-    },
-    {
-      content: 'Tokyo is the capital and most populous city of Japan.',
-      title: 'Japan Overview',
-    },
+    { content: 'Tokyo is the capital and seat of government of Japan.', title: 'Japan Overview' },
+    { content: 'The population of Tokyo proper is approximately 14 million.', title: 'Tokyo Demographics' },
   ],
 );
 
-console.log(\`Summary: \${result.summary}\`);
+console.log(formatVerifiedResponse(result));
 for (const claim of result.claims) {
   console.log(\`  [\${claim.verdict}] (\${claim.confidence}) \${claim.text}\`);
 }`
@@ -207,21 +203,20 @@ const demos: DemoData[] = [
       claims: [
         {
           verdict: 'supported',
-          confidence: 0.86,
-          text: 'Tokyo has a population of approximately 14 million people.',
-          source: 'Tokyo, the capital of Japan, has a population of about 14 million in the city proper.',
+          confidence: 0.87,
+          text: 'Tokyo is the capital of Japan.',
+          source: 'Tokyo is the capital and seat of government of Japan.',
         },
         {
           verdict: 'supported',
-          confidence: 0.75,
-          text: 'It is the capital of Japan.',
-          source: 'Tokyo is the capital and most populous city of Japan.',
+          confidence: 0.83,
+          text: 'Tokyo proper has roughly 14 million residents.',
+          source: 'The population of Tokyo proper is approximately 14 million.',
         },
         {
-          verdict: 'supported',
-          confidence: 0.77,
-          text: 'The city was founded in 1457.',
-          source: 'Tokyo, the capital of Japan, has a population of about 14 million in the city proper.',
+          verdict: 'unverifiable',
+          confidence: 0.12,
+          text: 'Tokyo hosted the 2020 Summer Olympics in 1457.',
         },
       ],
       usage: {},
