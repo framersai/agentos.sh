@@ -17,7 +17,7 @@ Memory benchmarks for AI agents reward retrieval over inference. The score goes 
 
 The numbers people quote (LongMemEval, LOCOMO) inherit this. So when Dhravya publishes 99% and Mastra publishes 95%, the right reaction is not "huh, our 85.6% looks bad" but "what reader, what retrieval, what judge, and can I rerun it." Most of the time, at least one of those answers is missing. (MemPalace also publishes 100% on every memory bench, but that's a broken evaluator that returns 100% no matter what you feed it, so it's not a competitor result, it's a methodology bug.)
 
-[AgentOS](https://github.com/framersai/agentos) is the open-source TypeScript runtime I work on. It implements [nine cognitive mechanisms from published neuroscience](/blog/cognitive-memory-beyond-rag) (Ebbinghaus decay, retrieval-induced forgetting, reconsolidation, source-confidence decay, more) so the agent forgets on purpose. The bench numbers below are how that design holds up against everyone else's at the same `gpt-4o` answer model — the comparison the headline percentages alone don't give you.
+[AgentOS](https://github.com/framersai/agentos) is the open-source TypeScript runtime I work on. It implements [nine cognitive mechanisms from published neuroscience](https://docs.agentos.sh/features/cognitive-memory) (Ebbinghaus decay, retrieval-induced forgetting, reconsolidation, source-confidence decay, more) so the agent forgets on purpose. The bench numbers below are how that design holds up against everyone else's at the same `gpt-4o` answer model — the comparison the headline percentages alone don't give you.
 
 Two results, both at the `gpt-4o` reader, both at full N=500.
 
@@ -366,7 +366,7 @@ The AgentOS memory decomposition follows the [CoALA framework (Sumers et al., 20
 
 The closest comparable architecture in the published record is [Letta](https://www.letta.com/blog/memgpt-and-letta) (formerly MemGPT, [Packer et al., 2023](https://arxiv.org/pdf/2310.08560)), which models the LLM as a virtual operating system with paged memory. Letta has not published a LongMemEval number under the post-MemGPT branding.
 
-Eight cognitive-memory mechanisms underlie the architecture (Ebbinghaus decay, reconsolidation, retrieval-induced forgetting, feeling-of-knowing, gist extraction, schema encoding, source confidence decay, emotion regulation) and are documented with primary-source citations in [Cognitive Memory for AI Agents](/blog/cognitive-memory-beyond-rag).
+Eight cognitive-memory mechanisms underlie the architecture (Ebbinghaus decay, reconsolidation, retrieval-induced forgetting, feeling-of-knowing, gist extraction, schema encoding, source confidence decay, emotion regulation) and are documented with primary-source citations in the [AgentOS Cognitive Memory docs](https://docs.agentos.sh/features/cognitive-memory).
 
 ## Remaining headroom
 
@@ -450,7 +450,7 @@ Quarterly. Next refresh date: 2026-08. Each refresh re-runs the bench against th
 
 - [Full benchmarks reference](https://github.com/framersai/agentos-bench/blob/master/results/LEADERBOARD.md): canonical comparison tables, methodology disclosure matrix, LOCOMO judge-FPR data.
 - [Memory Benchmark Transparency Audit](/blog/memory-benchmark-transparency-audit): the broader transparency framework behind every number above.
-- [Cognitive Memory for AI Agents: Beyond RAG](/blog/cognitive-memory-beyond-rag): the nine cognitive-memory mechanisms behind AgentOS, with primary-source citations.
+- [Cognitive Memory architecture (docs)](https://docs.agentos.sh/features/cognitive-memory): the nine cognitive-memory mechanisms behind AgentOS, with primary-source citations.
 - [agentos-bench v1 evaluation matrix](https://github.com/framersai/agentos-bench/blob/master/results/eval-matrix-v1/comparison-table.md): per-cell run JSONs.
 - [agentos-bench docs](https://github.com/framersai/agentos-bench/tree/master/docs): engineering writeups including M-series intermediate stages (45.4%, 57.6%), Stage L/I negative findings, ingest-router executor design, and memory archive rehydration.
 

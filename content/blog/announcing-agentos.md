@@ -144,7 +144,7 @@ This is what an honest benchmark looks like. If something on this list is wrong,
 
 **What's the deal with HEXACO personality?** It's optional. Pass `personality` and the runtime biases retrieval, decision routing, and tool selection by the trait vector. Don't pass it and the runtime acts personality-neutral. We don't make HEXACO the centerpiece because not every agent needs it; we just make it work cleanly when you want it.
 
-**Is the cognitive memory feature the same as RAG?** No. RAG retrieves documents. Cognitive memory is a layered system covering short-term context, episodic memory (events with time and emotion encoding), semantic memory (facts and relationships), and a Ebbinghaus-style decay model for forgetting. RAG is one of the retrievers cognitive memory composes with. Read [Cognitive Memory Beyond RAG](/blog/cognitive-memory-beyond-rag) for the deeper version.
+**Is the cognitive memory feature the same as RAG?** No. RAG retrieves documents. Cognitive memory is a layered system covering short-term context, episodic memory (events with time and emotion encoding), semantic memory (facts and relationships), and a Ebbinghaus-style decay model for forgetting. RAG is one of the retrievers cognitive memory composes with. The [Cognitive Memory docs](https://docs.agentos.sh/features/cognitive-memory) walk through every mechanism with primary-source citations.
 
 **Can AgentOS run agents that talk on the phone?** Yes. The voice pipeline (12 STT providers, 12 TTS providers) plus telephony adapters in the channels system gets you a voice agent that runs as a phone call. We have [a case study with Wilds.ai](/blog/ai-companion-case-study-wilds) on the companion side of the same stack.
 
