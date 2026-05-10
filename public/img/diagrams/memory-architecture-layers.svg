@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-labelledby="memarch-title memarch-desc" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <title id="memarch-title">AgentOS memory — three concentric API tiers</title>
+  <desc id="memarch-desc">A vertical stack of three concentric API layers. The top CLI / Host layer wraps the middle AgentCognitiveMemory layer, which wraps the bottom Memory Facade layer. Each tier adds its own concerns on top of the one below. CLI handles export, consolidate, health and agent.config.json auto-wiring. AgentCognitiveMemory adds HEXACO encoding, PAD mood, Ebbinghaus decay, observer/reflector, Baddeley working memory, spreading activation, prospective memory. The Memory Facade composes Brain, SqlKnowledgeGraph, SqlMemoryGraph, LoaderRegistry, FolderScanner, ChunkingEngine, RetrievalFeedbackSignal, ConsolidationLoop, and I/O exporters.</desc>
+
+  <defs>
+    <style>
+      .heading      { fill: #0f172a; font-size: 18px; font-weight: 700; }
+      .subtitle     { fill: #475569; font-size: 12px; }
+      .lane-label   { fill: #64748b; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
+      .layer-title  { fill: #0f172a; font-size: 15px; font-weight: 700; }
+      .layer-text   { fill: #475569; font-size: 11px; }
+      .layer-tag    { fill: #64748b; font-size: 10px; font-style: italic; }
+      .stage        { fill: #ffffff; stroke-width: 2; }
+      .arrow-line   { stroke: #94a3b8; stroke-width: 1.75; fill: none; }
+      .arrow-head   { fill: #94a3b8; }
+      .acc-cli      { stroke: #ec4899; }
+      .acc-cog      { stroke: #6366f1; }
+      .acc-facade   { stroke: #10b981; }
+      .num-cli      { fill: #ec4899; font-weight: 800; font-size: 13px; }
+      .num-cog      { fill: #6366f1; font-weight: 800; font-size: 13px; }
+      .num-facade   { fill: #10b981; font-weight: 800; font-size: 13px; }
+      .code         { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; fill: #475569; }
+      @media (prefers-color-scheme: dark) {
+        .heading      { fill: #f1f5f9; }
+        .subtitle     { fill: #94a3b8; }
+        .layer-title  { fill: #f1f5f9; }
+        .layer-text   { fill: #94a3b8; }
+        .layer-tag    { fill: #64748b; }
+        .stage        { fill: #0f172a; }
+        .arrow-line   { stroke: #475569; }
+        .arrow-head   { fill: #475569; }
+        .code         { fill: #94a3b8; }
+      }
+    </style>
+    <marker id="memarch-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"/>
+    </marker>
+  </defs>
+
+  <!-- Header -->
+  <text x="500" y="32" text-anchor="middle" class="heading">AgentOS memory · three concentric API tiers</text>
+  <text x="500" y="54" text-anchor="middle" class="subtitle">Each tier wraps the one below it and adds its own concerns. Pick the abstraction you need.</text>
+
+  <!-- Layer 1: CLI / Host -->
+  <rect x="60" y="80" width="880" height="100" rx="10" class="stage acc-cli"/>
+  <text x="80" y="106" class="num-cli">1</text>
+  <text x="100" y="106" class="layer-title">CLI / Host layer</text>
+  <text x="100" y="126" class="layer-text"><tspan class="code">Memory.export()</tspan> · <tspan class="code">Memory.consolidate()</tspan> · <tspan class="code">Memory.health()</tspan></text>
+  <text x="100" y="146" class="layer-tag">Programmatic surface for end-user CLIs, shell scripts, CI · agent.config.json auto-wiring · preset skills</text>
+  <text x="100" y="164" class="layer-tag">No LLM required. Best for: pipelines, ingestion jobs, ops tooling.</text>
+  <line class="arrow-line" x1="500" y1="180" x2="500" y2="200" marker-end="url(#memarch-arrow)"/>
+
+  <!-- Layer 2: AgentCognitiveMemory -->
+  <rect x="60" y="200" width="880" height="100" rx="10" class="stage acc-cog"/>
+  <text x="80" y="226" class="num-cog">2</text>
+  <text x="100" y="226" class="layer-title">AgentCognitiveMemory layer</text>
+  <text x="100" y="246" class="layer-text"><tspan class="code">CognitiveMemoryManager</tspan> · <tspan class="code">AgentMemory.wrap()</tspan></text>
+  <text x="100" y="266" class="layer-tag">HEXACO encoding · PAD mood · Ebbinghaus decay · observer/reflector · Baddeley working memory</text>
+  <text x="100" y="284" class="layer-tag">Spreading activation · prospective memory · 8 cognitive mechanisms · LLM optional (Batch 2 features).</text>
+  <line class="arrow-line" x1="500" y1="300" x2="500" y2="320" marker-end="url(#memarch-arrow)"/>
+
+  <!-- Layer 3: Memory Facade -->
+  <rect x="60" y="320" width="880" height="140" rx="10" class="stage acc-facade"/>
+  <text x="80" y="346" class="num-facade">3</text>
+  <text x="100" y="346" class="layer-title">Memory Facade layer</text>
+  <text x="100" y="366" class="layer-text"><tspan class="code">await Memory.createSqlite({ path: './brain.sqlite' })</tspan></text>
+  <text x="100" y="384" class="layer-tag">remember · recall · ingest · export · import · consolidate · tools — single SQLite-first brain</text>
+  <text x="100" y="406" class="lane-label">COMPOSES</text>
+  <text x="100" y="424" class="layer-text">Brain → SqlKnowledgeGraph → SqlMemoryGraph · LoaderRegistry → FolderScanner → ChunkingEngine</text>
+  <text x="100" y="442" class="layer-text">RetrievalFeedbackSignal → ConsolidationLoop · I/O exporters (JSON, Markdown, Obsidian, SQLite, …)</text>
+</svg>
