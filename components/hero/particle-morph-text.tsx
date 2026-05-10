@@ -12,6 +12,14 @@ interface ParticleMorphTextProps {
   startIndex?: number;
   /** Extra vertical offset in em units (e.g. 0.03 to nudge down) */
   nudgeY?: number;
+  /**
+   * When true, disables the ±400-500ms random offset on `nextInterval` so
+   * paired morph instances stay phase-locked. Use this for hero pairs that
+   * must morph in unison (e.g. "Emergent intelligence for adaptive agents"
+   * crossing over to "Adaptive intelligence for emergent agents"). Default
+   * `false` keeps the legacy organic-jitter behavior for standalone uses.
+   */
+  synchronized?: boolean;
 }
 
 /**
@@ -26,6 +34,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
   gradientTo = '#06b6d4',
   startIndex = 0,
   nudgeY = 0,
+  synchronized = false,
 }: ParticleMorphTextProps) {
   const [wordA, wordB] = words;
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -36,7 +45,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     lastSwitch: 0,
     isMorphing: false,
     widthSwitched: false,
-    nextInterval: interval + (Math.random() - 0.5) * 800
+    nextInterval: synchronized ? interval : interval + (Math.random() - 0.5) * 800
   });
   const particlesARef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
@@ -212,7 +221,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
           s.widthSwitched = false;
           s.wordIdx = 1 - s.wordIdx;
           s.lastSwitch = t;
-          s.nextInterval = interval + (Math.random() - 0.5) * 1000;
+          s.nextInterval = synchronized ? interval : interval + (Math.random() - 0.5) * 1000;
         }
       }
 

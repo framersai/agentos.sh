@@ -145,11 +145,11 @@ const HeroSectionInner = memo(function HeroSectionInner() {
                 to screen readers (the morph is decorative). */}
             <span className="sr-only">Emergent intelligence for adaptive agents</span>
             <span aria-hidden="true">
-              <ParticleMorphText words={['Emergent', 'Adaptive']} interval={4000} fontSize={morphFontSize} gradientFrom={isDark ? '#7b66ff' : '#6024f3'} gradientTo={isDark ? '#d27bfc' : '#a538e5'} startIndex={0} />
+              <ParticleMorphText words={['Emergent', 'Adaptive']} interval={7000} fontSize={morphFontSize} gradientFrom={isDark ? '#7b66ff' : '#6024f3'} gradientTo={isDark ? '#d27bfc' : '#a538e5'} startIndex={0} synchronized />
               <span className="text-[var(--color-text-primary)]">intelligence</span>
               <br />
               <span className="text-[var(--color-text-secondary)]">for </span>
-              <ParticleMorphText words={['adaptive', 'emergent']} interval={5200} fontSize={morphFontSize} gradientFrom={isDark ? '#d27bfc' : '#a538e5'} gradientTo={isDark ? '#f87bb8' : '#f25b8c'} startIndex={0} nudgeY={0.04} />
+              <ParticleMorphText words={['adaptive', 'emergent']} interval={7000} fontSize={morphFontSize} gradientFrom={isDark ? '#d27bfc' : '#a538e5'} gradientTo={isDark ? '#f87bb8' : '#f25b8c'} startIndex={0} nudgeY={0.04} synchronized />
               <span className="text-[var(--color-text-primary)]">agents</span>
             </span>
           </h1>
