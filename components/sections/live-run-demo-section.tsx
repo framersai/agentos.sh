@@ -378,46 +378,62 @@ const handoff = await bus.handoff({
   },
   {
     id: 'router',
-    title: 'Route queries through a knowledge corpus',
+    title: 'One call: question in, grounded answer + sources out',
     exampleSlug: 'examples/query-router.mjs',
     language: 'typescript',
     code: `import { QueryRouter } from '@framers/agentos';
 
-// QueryRouter ingests structured platform knowledge (docs, tools, skills,
-// FAQs, API references) plus arbitrary chunked content into a vector store
-// and routes incoming queries to the matching slice. Used by the cognitive
-// pipeline as the T0/T1 retrieval gate.
+// QueryRouter is the one-call grounded-Q&A pipeline:
+//   classify the question → retrieve the right amount of context →
+//   generate a cited answer. You point it at markdown directories
+//   (and the bundled platform knowledge tags along automatically) and
+//   call route(). Use it instead of hand-rolling chunker + vector store
+//   + retrieval logic + LLM call + citation collection for every Q&A
+//   surface in your app.
 const router = new QueryRouter({
-  embedder: 'text-embedding-3-small',
-  vectorStore: 'mem',           // in-memory, swap to Postgres / Qdrant
-  paths: [
-    './docs',                   // chunks markdown + code blocks
-    './platform-knowledge.json',// structured knowledge entries
-  ],
+  knowledgeCorpus: ['./docs', './packages/agentos/docs'],
+  availableTools: ['web_search', 'deep_research'],
+  verifyCitations: true,
 });
 
-await router.initialize();
-console.log(router.stats());
+await router.init();
 
-const hits = await router.route('how do I configure a guardrail?');`,
+const result = await router.route('how do I configure a guardrail?');
+
+console.log(result.answer);
+console.log(result.sources);
+console.log(result.classification.tier);  // 0 / 1 / 2 / 3
+console.log(result.tiersUsed);             // which tiers actually ran
+console.log(result.fallbacksUsed);         // e.g. ['keyword-fallback']`,
     output: {
+      classification: { tier: 1, strategy: 'simple', confidence: 0.92 },
+      tiersUsed: [1],
+      fallbacksUsed: [],
+      answer:
+        'Pass `guardrails: [...]` to `agent()` or `agency()`. Each guardrail is a function that runs on input or output and can block, mutate, or annotate the message. AgentOS ships built-in guardrails for PII redaction, ML-classifier scoring, content policy, citation grounding, and topicality — register them as input/output hooks on the agent config.',
+      sources: [
+        {
+          title: 'Guardrails Configuration',
+          uri: 'docs/safety/GUARDRAILS.md',
+          snippet: 'Register guardrails on `agent({ guardrails: [...] })`. Each guardrail is invoked …',
+        },
+        {
+          title: 'Built-in Guardrails',
+          uri: 'docs/safety/BUILTIN_GUARDRAILS.md',
+          snippet: 'PII redaction, ML classifiers, content policy, citation grounding, topicality …',
+        },
+      ],
       corpusStats: {
         chunks: 1720,
         topics: 50,
         sources: 333,
-        platform: {
-          tools: 110,
-          skills: 82,
-          faq: 38,
-          api: 15,
-          troubleshooting: 15,
-        },
+        platform: { tools: 110, skills: 82, faq: 38, api: 15, troubleshooting: 15 },
       },
       usage: {},
     },
     caption: (
       <>
-        260 platform-knowledge entries plus 1,720 chunked content fragments embedded into a vector store at 1,536 dimensions. Used internally by the cognitive pipeline&apos;s Stage 1 classifier to decide whether a query needs retrieval at all and which corpus slice to draw from. Swap <code className="font-mono text-[var(--color-accent-primary)]">vectorStore: &apos;mem&apos;</code> for Postgres pgvector or Qdrant in production.
+        One call replaces chunker + vector store + classifier + retrieval + LLM call + citation collection. Returns the answer, the sources it pulled from, the tier path it took (0–3), and any fallback strategies activated. Set <code className="font-mono text-[var(--color-accent-primary)]">verifyCitations: true</code> and the result also carries a per-claim verdict from <code className="font-mono text-[var(--color-accent-primary)]">CitationVerifier</code>. Swap the in-memory vector store for Postgres pgvector or Qdrant in production.
       </>
     ),
   },
