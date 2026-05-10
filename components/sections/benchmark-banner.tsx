@@ -51,7 +51,7 @@ export function BenchmarkBanner() {
           'linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary), var(--color-accent-tertiary)) 1',
       }}
     >
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-1.5 px-10 py-2.5 sm:flex-row sm:justify-center sm:gap-4 sm:px-4">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-1.5 px-4 py-2.5 sm:flex-row sm:justify-center sm:gap-4">
         <span className="text-center text-[13px] font-semibold leading-snug text-white sm:text-sm sm:text-left">
           New benchmarks: 85.6% on LongMemEval-S, 0.4 points behind{' '}
           <a
@@ -73,27 +73,29 @@ export function BenchmarkBanner() {
           </a>
           &apos;s Observational Memory at gpt-4o (84.23%). 70.2% on M.
         </span>
-        <a
-          href={`/${locale}/blog/${BLOG_SLUG}/`}
-          className="rounded-md bg-white/15 px-3 py-1 font-bold text-white underline-offset-4 ring-1 ring-white/30 transition-colors hover:bg-white/25"
-        >
-          Read the post →
-        </a>
-        <button
-          type="button"
-          aria-label="Dismiss benchmark banner"
-          onClick={() => {
-            try {
-              window.localStorage.setItem(STORAGE_KEY, 'dismissed')
-            } catch {
-              // localStorage unavailable; still hide the banner for this session
-            }
-            setHidden(true)
-          }}
-          className="absolute right-2 top-2 px-2 py-0.5 text-base leading-none text-white opacity-80 hover:opacity-100 sm:right-3 sm:top-1/2 sm:-translate-y-1/2"
-        >
-          ×
-        </button>
+        <div className="inline-flex items-stretch overflow-hidden rounded-md bg-white/15 ring-1 ring-white/30 transition-colors hover:bg-white/20">
+          <a
+            href={`/${locale}/blog/${BLOG_SLUG}/`}
+            className="px-3 py-1 font-bold text-white"
+          >
+            Read the post →
+          </a>
+          <button
+            type="button"
+            aria-label="Dismiss benchmark banner"
+            onClick={() => {
+              try {
+                window.localStorage.setItem(STORAGE_KEY, 'dismissed')
+              } catch {
+                // localStorage unavailable; still hide the banner for this session
+              }
+              setHidden(true)
+            }}
+            className="flex items-center justify-center border-l border-white/30 px-2.5 text-base leading-none text-white/80 transition-colors hover:bg-white/15 hover:text-white"
+          >
+            ×
+          </button>
+        </div>
       </div>
     </aside>
   )
