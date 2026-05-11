@@ -200,23 +200,29 @@ const demos: DemoData[] = [
     language: 'typescript',
     code: CITATION_CODE,
     output: {
+      // Captured from a real run with text-embedding-3-small:
+      //   $ OPENAI_API_KEY=... node examples/citation-verification.mjs
+      // 2/3 supported, 1/3 weak (the 1457 Olympics claim shares the Tokyo
+      // token with the source but the date contradicts factually — the
+      // verifier scores partial overlap as weak rather than supported).
       claims: [
         {
           verdict: 'supported',
-          confidence: 0.87,
+          confidence: 0.84,
           text: 'Tokyo is the capital of Japan.',
           source: 'Tokyo is the capital and seat of government of Japan.',
         },
         {
           verdict: 'supported',
-          confidence: 0.83,
+          confidence: 0.89,
           text: 'Tokyo proper has roughly 14 million residents.',
           source: 'The population of Tokyo proper is approximately 14 million.',
         },
         {
-          verdict: 'unverifiable',
-          confidence: 0.12,
+          verdict: 'weak',
+          confidence: 0.45,
           text: 'Tokyo hosted the 2020 Summer Olympics in 1457.',
+          source: 'Tokyo is the capital and seat of government of Japan.',
         },
       ],
       usage: {},
