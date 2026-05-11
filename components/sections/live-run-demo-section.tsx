@@ -129,17 +129,35 @@ const verifier = new CitationVerifier({
   unverifiableThreshold: 0.3, // cosine <  0.3 = unverifiable
 });
 
-// One source per claim. The third claim has no matching source — the
-// verifier flags it as "unverifiable" so the caller knows not to quote it.
+const sources = [
+  { content: 'Tokyo is the capital and seat of government of Japan.', title: 'Japan Overview' },
+  { content: 'The population of Tokyo proper is approximately 14 million.', title: 'Tokyo Demographics' },
+];
+
+// Pattern A: pass raw LLM text — verifier decomposes into atomic claims.
+// Use when the input is one block of model-generated prose.
 const result = await verifier.verify(
   'Tokyo is the capital of Japan. ' +
   'Tokyo proper has roughly 14 million residents. ' +
   'Tokyo hosted the 2020 Summer Olympics in 1457.',
-  [
-    { content: 'Tokyo is the capital and seat of government of Japan.', title: 'Japan Overview' },
-    { content: 'The population of Tokyo proper is approximately 14 million.', title: 'Tokyo Demographics' },
-  ],
+  sources,
 );
+
+// Pattern B: pass a pre-decomposed claim array — verifier scores each as-is.
+// Use when you've already split prose with your own parser / NER / curated list.
+//
+// const result = await verifier.verify(
+//   [
+//     'Tokyo is the capital of Japan.',
+//     'Tokyo proper has roughly 14 million residents.',
+//     'Tokyo hosted the 2020 Summer Olympics in 1457.',
+//   ],
+//   sources,
+// );
+
+// Or extract first, filter, then verify:
+//   const claims = await verifier.extractClaims(llmText);
+//   const result = await verifier.verify(claims.filter(c => c.length > 20), sources);
 
 console.log(formatVerifiedResponse(result));
 for (const claim of result.claims) {
