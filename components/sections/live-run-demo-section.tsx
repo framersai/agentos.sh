@@ -38,6 +38,11 @@ interface DemoOutput {
   missionConfidence?: number
   busMessages?: { from: string; to: string; status: 'success' | 'error'; preview: string }[]
   corpusStats?: { chunks: number; topics: number; sources: number; platform: Record<string, number> }
+  classification?: { tier: number; strategy: string; confidence: number }
+  tiersUsed?: number[]
+  fallbacksUsed?: string[]
+  answer?: string
+  sources?: { title: string; uri: string; snippet: string }[]
   agentCalls?: AgentCall[]
   usage: { tokens?: number; cost?: string; latency?: string }
 }
