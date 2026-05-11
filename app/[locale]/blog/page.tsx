@@ -27,7 +27,7 @@ export async function generateMetadata({ params: { locale } }: Props) {
       description: 'Technical articles, framework comparisons, tutorials, and engineering insights from the AgentOS team.',
       url,
       siteName: 'AgentOS',
-      images: [{ url: '/og-image.png' }],
+      images: [{ url: '/og-image-v2.png' }],
       type: 'website',
     },
     twitter: {

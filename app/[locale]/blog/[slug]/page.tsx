@@ -45,7 +45,7 @@ export async function generateMetadata({ params: { locale, slug } }: Props) {
   //   2. The frontmatter `image` field (an in-content screenshot the
   //      author chose) — used when the OG generator hasn't run for
   //      this slug yet.
-  //   3. The site default at /og-image.png.
+  //   3. The site default at /og-image-v2.png.
   const SITE_ORIGIN = 'https://agentos.sh';
   const generatedOgPath = `/img/blog/og/${slug}.png`;
   const ogPath = post.image && post.image.startsWith('/img/blog/og/')
@@ -56,7 +56,7 @@ export async function generateMetadata({ params: { locale, slug } }: Props) {
   // thing we have. (post.image is always relative.)
   const fallbackImageUrl = post.image
     ? `${SITE_ORIGIN}${post.image}`
-    : `${SITE_ORIGIN}/og-image.png`;
+    : `${SITE_ORIGIN}/og-image-v2.png`;
 
   return {
     title: `${post.title} — AgentOS Blog`,
@@ -132,10 +132,10 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
               '@type': 'Organization',
               name: 'Manic Agency LLC',
               url: 'https://manic.agency',
-              logo: { '@type': 'ImageObject', url: 'https://agentos.sh/og-image.png' },
+              logo: { '@type': 'ImageObject', url: 'https://agentos.sh/og-image-v2.png' },
             },
             mainEntityOfPage: canonical,
-            image: post.image ? `https://agentos.sh${post.image}` : 'https://agentos.sh/og-image.png',
+            image: post.image ? `https://agentos.sh${post.image}` : 'https://agentos.sh/og-image-v2.png',
           }),
         }}
       />

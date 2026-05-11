@@ -155,7 +155,7 @@ export async function resolveLocaleMetadata(locale: Locale) {
       siteName: 'AgentOS',
       images: [
         {
-          url: '/og-image.png',
+          url: '/og-image-v2.png',
           width: 1200,
           height: 630,
           alt: 'AgentOS - Build Autonomous AI Agents with Adaptive Intelligence'
@@ -170,7 +170,7 @@ export async function resolveLocaleMetadata(locale: Locale) {
       description: t('twitterDescription'),
       creator: '@framersai',
       site: '@framersai',
-      images: ['/og-image.png']
+      images: ['/og-image-v2.png']
     },
     // TODO: Add real verification codes when obtained
     // verification: {
@@ -237,8 +237,8 @@ export default async function LocaleLayout({
               installUrl: 'https://www.npmjs.com/package/@framers/agentos',
               softwareVersion: '0.1.x',
               license: 'https://opensource.org/licenses/Apache-2.0',
-              image: 'https://agentos.sh/og-image.png',
-              screenshot: 'https://agentos.sh/og-image.png',
+              image: 'https://agentos.sh/og-image-v2.png',
+              screenshot: 'https://agentos.sh/og-image-v2.png',
               featureList: [
                 'TypeScript-first AI agent framework',
                 'Multi-agent orchestration with 6 collaboration strategies',

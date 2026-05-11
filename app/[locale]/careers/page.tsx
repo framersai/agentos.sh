@@ -22,7 +22,7 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
       description: 'Join the team building the world’s first adaptive AI agent runtime. Remote-first, open source, and high impact.',
       url,
       siteName: 'AgentOS',
-      images: [{ url: '/og-image.png' }],
+      images: [{ url: '/og-image-v2.png' }],
       type: 'website',
     },
   };

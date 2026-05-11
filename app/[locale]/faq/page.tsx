@@ -85,7 +85,7 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
       description: t('subtitle'),
       url,
       siteName: 'AgentOS',
-      images: [{ url: '/og-image.png' }],
+      images: [{ url: '/og-image-v2.png' }],
       type: 'website',
     },
     twitter: {
