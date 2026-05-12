@@ -14,6 +14,8 @@ import {
   Zap,
   GitBranch,
   Search,
+  Sparkles,
+  Brain,
   type LucideIcon
 } from 'lucide-react'
 import { CodePopover } from '../ui/code-popover'
@@ -120,6 +122,80 @@ const guarded = agency({
 })
 
 // Full HITL guide: https://docs.agentos.sh/features/human-in-the-loop`,
+      }
+    },
+    {
+      icon: Sparkles,
+      title: 'Emergent Tool Forging',
+      body: 'Hierarchical agencies can forge new tools and spawn specialist agents mid-run when the static roster falls short. Bounded by per-session budgets and provenance-tracked for every mutation.',
+      pill: 'forgeTool · spawn_specialist · adapt_personality',
+      gradient: 'from-fuchsia-500 to-pink-500',
+      bullets: [
+        'Manager-tier agent decides at runtime when to synthesize capability',
+        'Mutation store records every forge with reasoning + delta',
+      ],
+      codeExample: {
+        title: 'Emergent capabilities',
+        language: 'typescript',
+        code: `import { agency } from '@framers/agentos'
+
+// Hierarchical + emergent: manager can forge tools and spawn specialists
+// as gaps in the static roster surface mid-run.
+const team = agency({
+  strategy: 'hierarchical',
+  manager: { instructions: 'Plan and delegate to specialists.' },
+  agents: {
+    researcher: { instructions: 'Gather information from the web.' },
+    analyst:    { instructions: 'Synthesize findings into a report.' },
+  },
+  emergent: {
+    enabled: true,
+    forgeTool: { maxPerSession: 3 },
+    spawnSpecialist: { maxPerSession: 2 },
+    adaptPersonality: { maxDeltaPerSession: 0.3 },
+  },
+})
+const result = await team.generate('Investigate a novel domain')
+
+// Full guide: https://docs.agentos.sh/features/emergent-capabilities`,
+      }
+    },
+    {
+      icon: Brain,
+      title: 'Adaptive Prompt Intelligence',
+      body: 'Three trigger types (periodic, sentiment-event, manual) drive metaprompts that re-tune mood, user-skill inference, task complexity, and HEXACO traits between turns. Default sentiment is lexicon-based and free; everything else is opt-in.',
+      pill: '3 triggers · 5 presets · ~$0.12 / 1k turns',
+      gradient: 'from-indigo-500 to-violet-500',
+      bullets: [
+        'turn_interval · event_based · manual triggers, all opt-in',
+        'SentimentTracker emits frustrated / confused / satisfied / low-engagement events',
+      ],
+      codeExample: {
+        title: 'Adaptive metaprompts',
+        language: 'typescript',
+        code: `import { agent } from '@framers/agentos'
+
+// Sentiment events drive recovery presets; periodic self-reflection
+// re-tunes inferred user skill + task complexity every 5 turns.
+const tutor = agent({
+  provider: 'openai',
+  model: 'gpt-4o-mini',
+  instructions: 'You are a patient programming tutor.',
+  personality: { conscientiousness: 0.85, agreeableness: 0.75 },
+  sentimentTracking: {
+    enabled: true,
+    method: 'lexicon_based', // free; ~10-50ms per turn
+    presets: ['frustration_recovery', 'confusion_clarification', 'satisfaction_reinforcement'],
+  },
+  metaPrompts: [{
+    id: 'gmi_self_trait_adjustment',
+    promptTemplate: 'Review {{evidence}}. Adjust mood, user_skill, task_complexity if warranted.',
+    trigger: { type: 'turn_interval', intervalTurns: 5 },
+    temperature: 0.3,
+  }],
+})
+
+// Full guide: https://docs.agentos.sh/features/adaptive-prompt-intelligence`,
       }
     },
     {
