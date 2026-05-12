@@ -125,17 +125,17 @@ export default function LandingPageRedesigned() {
           <BenchmarksSectionLazy />
         </div>
 
+        {/* Runtime intelligence pillars — emergent tools + adaptive prompt
+            intelligence side-by-side. Placed directly after benchmarks so the
+            "what makes AgentOS distinct" answer lands while the proof-of-quality
+            is still on the reader's screen. */}
+        <div id="runtime-intelligence-pillar" style={{ scrollMarginTop: '80px' }}>
+          <RuntimeIntelligenceSectionLazy />
+        </div>
+
         {/* Live run demo — real script + captured output side-by-side */}
         <div id="live-demo" style={{ scrollMarginTop: '80px' }}>
           <LiveRunDemoSectionLazy />
-        </div>
-
-        {/* Runtime intelligence pillars — emergent tools + adaptive prompt
-            intelligence side-by-side. The two adaptation surfaces the
-            framework leans on most are the only ones that get a dedicated
-            section on the homepage; everything else lives on /features. */}
-        <div id="runtime-intelligence-pillar" style={{ scrollMarginTop: '80px' }}>
-          <RuntimeIntelligenceSectionLazy />
         </div>
 
         {/* Code Examples — production-ready code patterns. Hoisted up the page next

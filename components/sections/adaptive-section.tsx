@@ -395,7 +395,7 @@ function StateSurfacesDiagram() {
       })}
 
       <text x={400} y={266} textAnchor="middle" fontSize="10" fill="var(--color-text-muted)">
-        Mutations flow back through callbacks · all reflected in next turn's prompt
+        Mutations flow back through callbacks · all reflected in next turn&apos;s prompt
       </text>
     </svg>
   )

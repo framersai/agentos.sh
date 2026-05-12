@@ -309,7 +309,7 @@ export function RuntimeIntelligenceSection() {
               className="text-base mb-5 leading-relaxed"
               style={{ color: 'var(--color-text-secondary)' }}
             >
-              Between turns, metaprompts re-tune the GMI's mood, inferred user skill, task
+              Between turns, metaprompts re-tune the GMI&apos;s mood, inferred user skill, task
               complexity, working-memory imprints, and HEXACO traits. Three trigger types
               (periodic, sentiment events, host flags) decide when. Default sentiment is
               lexicon-based and free; everything else is opt-in.
