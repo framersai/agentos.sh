@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import {
@@ -135,7 +135,7 @@ const team = agency({
     },
   },
   strategy: 'graph',
-  memory: { shared: true },
+  memory: { shared: true }, // scope: this generate() call
 });`,
 }
 
@@ -667,6 +667,38 @@ export function AgencySection() {
               )
             })}
           </div>
+          <p
+            className="text-xs mt-5 leading-relaxed"
+            style={{ color: 'var(--color-text-muted)' }}
+          >
+            <strong style={{ color: 'var(--color-text-secondary)' }}>
+              {t('sharedCapabilitiesScopeNoteLabel')}
+            </strong>{' '}
+            {t.rich('sharedCapabilitiesScopeNote', {
+              code: (chunks: ReactNode) => (
+                <code
+                  className="font-mono"
+                  style={{
+                    color: 'var(--color-accent-primary)',
+                    background: 'var(--color-background-glass)',
+                    padding: '0 4px',
+                    borderRadius: '3px',
+                  }}
+                >
+                  {chunks}
+                </code>
+              ),
+              link: (chunks: ReactNode) => (
+                <a
+                  href="https://docs.agentos.sh/features/agency-api#shared-conversation-memory"
+                  style={{ color: 'var(--color-accent-primary)' }}
+                  className="underline-offset-2 hover:underline"
+                >
+                  {chunks}
+                </a>
+              ),
+            })}
+          </p>
         </motion.div>
 
         {/* ---- CTA ---- */}

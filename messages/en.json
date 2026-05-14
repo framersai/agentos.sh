@@ -1525,6 +1525,8 @@
       "resourceControls": "Resource Controls",
       "perAgentGuardrails": "Per-Agent Guardrails"
     },
+    "sharedCapabilitiesScopeNoteLabel": "Scope:",
+    "sharedCapabilitiesScopeNote": "Shared memory and roster apply within one <code>generate()</code> call. Across <code>session().send()</code> turns only message history persists. See the <link>agency API docs</link> for cross-turn memory patterns.",
     "ctaExploreDocs": "Explore Agency API"
   },
   "benchmarks": {

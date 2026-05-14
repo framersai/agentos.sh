@@ -1525,6 +1525,8 @@
       "resourceControls": "リソース制御",
       "perAgentGuardrails": "エージェントごとのガードレール"
     },
+    "sharedCapabilitiesScopeNoteLabel": "スコープ：",
+    "sharedCapabilitiesScopeNote": "共有メモリとロスターは1回の <code>generate()</code> 呼び出し内で適用されます。<code>session().send()</code> のターン間ではメッセージ履歴のみが保持されます。ターン間メモリのパターンについては <link>Agency API ドキュメント</link>を参照してください。",
     "ctaExploreDocs": "Agency API を探索"
   },
   "benchmarks": {

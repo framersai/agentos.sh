@@ -1525,6 +1525,8 @@
       "resourceControls": "Ressourcen-Kontrollen",
       "perAgentGuardrails": "Guardrails pro Agent"
     },
+    "sharedCapabilitiesScopeNoteLabel": "Geltungsbereich:",
+    "sharedCapabilitiesScopeNote": "Gemeinsamer Speicher und Roster gelten innerhalb eines einzigen <code>generate()</code>-Aufrufs. Über <code>session().send()</code>-Runden hinweg bleibt nur der Nachrichtenverlauf erhalten. Siehe die <link>Agency-API-Dokumentation</link> für Muster zur turn-übergreifenden Speicherung.",
     "ctaExploreDocs": "Agency-API erkunden"
   },
   "benchmarks": {

@@ -1525,6 +1525,8 @@
       "resourceControls": "Controles de Recursos",
       "perAgentGuardrails": "Guardrails por Agente"
     },
+    "sharedCapabilitiesScopeNoteLabel": "Alcance:",
+    "sharedCapabilitiesScopeNote": "La memoria compartida y el roster se aplican dentro de una sola llamada a <code>generate()</code>. A lo largo de los turnos de <code>session().send()</code> solo persiste el historial de mensajes. Consulta la <link>documentación de la API de Agency</link> para patrones de memoria entre turnos.",
     "ctaExploreDocs": "Explorar API de Agency"
   },
   "benchmarks": {
