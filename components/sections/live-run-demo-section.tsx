@@ -582,6 +582,134 @@ console.log(result.fallbacksUsed);         // e.g. ['keyword-fallback']`,
       </>
     ),
   },
+  {
+    id: 'high-level-api',
+    title: 'Provider-first primitives — one shape, four wrappers',
+    exampleSlug: 'examples/high-level-api.mjs',
+    language: 'typescript',
+    code: `import { generateText, streamText, generateImage, agent } from '@framers/agentos';
+
+// Provider-first style: pick a provider, AgentOS picks the default model.
+// Reads OPENAI_API_KEY / ANTHROPIC_API_KEY / etc. from env.
+const quick = await generateText({
+  provider: 'openai',
+  prompt: 'Explain what QUIC is in 3 concise bullet points.',
+});
+console.log(quick.text);
+
+// Legacy 'provider:model' format still works.
+const legacy = await generateText({
+  model: 'openai:gpt-4o',
+  prompt: 'What is TCP in one sentence?',
+});
+
+// Same shape for streaming.
+const stream = await streamText({
+  provider: 'openai',
+  prompt: 'Compare QUIC vs TCP.',
+});
+for await (const chunk of stream.textStream) process.stdout.write(chunk);
+
+// Same shape for image generation.
+const img = await generateImage({
+  provider: 'openai',
+  prompt: 'Diagram of QUIC vs TCP, infographic style',
+});
+
+// Same shape for agents.
+const researcher = agent({
+  provider: 'openai',
+  instructions: 'You are a network protocols researcher.',
+});
+const result = await researcher.generate('What problems was QUIC designed to solve?');`,
+    output: {
+      finalAnswerLabel: 'generateText() — provider=openai, default model',
+      finalAnswer: `- Transport Protocol: QUIC (Quick UDP Internet Connections) is a modern transport protocol developed by Google, designed to improve performance and security of internet connections by operating over UDP instead of TCP.
+
+- Reduced Latency: It reduces latency by integrating features such as connection multiplexing, 0-RTT connection establishment, and forward error correction, which enhance speed and reliability for web and mobile applications.
+
+- Enhanced Security: QUIC incorporates built-in encryption similar to TLS/SSL, ensuring secure data transmission over the network, with minimal latency incurred from cryptographic handshakes.`,
+      usage: {},
+    },
+    caption: (
+      <>
+        Provider-first wrappers around the LLM call. <code className="font-mono text-[var(--color-accent-primary)]">generateText()</code>, <code className="font-mono text-[var(--color-accent-primary)]">streamText()</code>, <code className="font-mono text-[var(--color-accent-primary)]">generateImage()</code>, and <code className="font-mono text-[var(--color-accent-primary)]">agent()</code> all accept the same <code className="font-mono text-[var(--color-accent-primary)]">{`{ provider, model?, prompt, ... }`}</code> shape. Pick a provider and AgentOS picks the default model; override with <code className="font-mono text-[var(--color-accent-primary)]">model:</code> when you need a specific one. Drop-in for ad-hoc calls without spinning up a full agent.
+      </>
+    ),
+  },
+  {
+    id: 'workflow-dsl',
+    title: 'Type-safe workflow DSL with checkpoints + replay',
+    exampleSlug: 'examples/workflow-dsl.mjs',
+    language: 'typescript',
+    code: `import { GraphRuntime, InMemoryCheckpointStore, workflow } from '@framers/agentos';
+import { z } from 'zod';
+
+// workflow() builds a typed step DAG. Inputs and outputs validated by Zod.
+// .branch() routes by a state predicate; .parallel() fans out a stage;
+// .then() can run an LLM call (gmi:) instead of a tool.
+const onboarding = workflow('user-onboarding')
+  .input(z.object({
+    email: z.string().email(),
+    name: z.string(),
+    desiredPlan: z.enum(['free', 'pro']),
+  }))
+  .returns(z.object({
+    userId: z.string().optional(),
+    plan: z.enum(['free', 'pro']).optional(),
+    summary: z.string().optional(),
+  }))
+  .step('validate-email', { tool: 'email_validator' })
+  .branch((state) => state.input.desiredPlan, {
+    pro:  { tool: 'activate_pro_plan' },
+    free: { tool: 'create_free_account' },
+  })
+  .parallel(
+    [{ tool: 'send_welcome_email' }, { tool: 'notify_crm' }],
+    { strategy: 'all', merge: { 'scratch.completedTasks': 'concat' } },
+  )
+  .then('summarize', {
+    gmi: { instructions: 'Summarize the onboarding result for the caller.' },
+  })
+  .compile();
+
+// GraphRuntime executes the compiled DAG, persists checkpoints between
+// steps, and emits a typed event stream you can subscribe to.
+const runtime = new GraphRuntime({
+  checkpointStore: new InMemoryCheckpointStore(),
+  nodeExecutor,  // tool dispatcher; see source for the full switch
+});
+
+const { artifacts } = await runtime.run(onboarding, {
+  email: 'john@example.com',
+  name: 'John',
+  desiredPlan: 'pro',
+});`,
+    output: {
+      missionSteps: [
+        { id: 'validate-email', type: 'tool', executor: 'tool' },
+        { id: 'router-2', type: 'tool', executor: 'branch' },
+        { id: 'branch-pro-4', type: 'tool', executor: 'tool' },
+        { id: 'parallel-0-8', type: 'tool', executor: 'parallel' },
+        { id: 'parallel-1-11', type: 'tool', executor: 'parallel' },
+        { id: 'summarize', type: 'gmi', executor: 'gmi' },
+      ],
+      missionArtifacts: {
+        'validate-email': { valid: true },
+        'router-2': 'pro',
+        userId: 'usr_pro_001',
+        plan: 'pro',
+        summary: 'Created a pro account for John. Completed tasks: validated email, queued welcome email, updated CRM.',
+      },
+      missionConfidence: 1.0,
+      usage: {},
+    },
+    caption: (
+      <>
+        Workflow-as-code in TypeScript. Define steps with <code className="font-mono text-[var(--color-accent-primary)]">.step()</code>, branches with <code className="font-mono text-[var(--color-accent-primary)]">.branch()</code>, parallel stages with <code className="font-mono text-[var(--color-accent-primary)]">.parallel()</code>, LLM steps with <code className="font-mono text-[var(--color-accent-primary)]">.then(name, {`{ gmi: ... }`})</code>; attach Zod schemas for input + output. <code className="font-mono text-[var(--color-accent-primary)]">GraphRuntime</code> compiles to a node DAG, persists a checkpoint between every step, and emits a typed event stream (<code className="font-mono text-[var(--color-accent-primary)]">node_start</code>, <code className="font-mono text-[var(--color-accent-primary)]">edge_transition</code>, <code className="font-mono text-[var(--color-accent-primary)]">checkpoint_saved</code>, <code className="font-mono text-[var(--color-accent-primary)]">run_end</code>). Replay from any checkpoint, fork mid-run, audit every transition.
+      </>
+    ),
+  },
 ]
 
 function CopyCodeButton({ code }: { code: string }) {
@@ -1096,7 +1224,7 @@ export function LiveRunDemoSection() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
         >
-          Browse all 15 examples →
+          Browse all 18 examples →
         </a>
       </div>
     </section>
