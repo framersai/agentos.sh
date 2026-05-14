@@ -151,13 +151,11 @@ The reason this is worth its API spend: a Paracosm run with grounding generates 
 
 ## What the LLM actually reads each turn
 
-I want to show the actual prompts. Most posts in this lane describe their architecture and gesture at "the prompt is carefully tuned" and call it done. That is not useful. The actual strings going to the model are the part that took months and they're all auditable from the repo. Five LLM calls happen on every turn — Director, Department, Commander, Judge (conditional, fires inside Department analysis on a forge), Reactions. Four of them have stable templates; the judge has a separate rubric I'll cover in the forging section because it conceptually belongs there. Here are the four turn-loop prompts trimmed to the structural skeleton with the dynamic interpolations called out.
+Five LLM calls per turn: Director, Department, Commander, Judge, Reactions. Skeletons below with the variable interpolations called out and a GitHub line link to each builder. Judge prompt sits down in the forging section since it fires inside the department call, not as its own stage.
 
 ### The Event Director
 
-Source: [`src/runtime/orchestrator/director.ts`](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/director.ts), function `buildDirectorPrompt` at [line 142](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/director.ts#L142).
-
-The Director decides what happens this turn. Reads kernel state, the leader's HEXACO profile, recent decision history, the agent mood roll-up, and the research-bundle topics, returns one to three events with options the commander will pick from. The actual prompt:
+[`src/runtime/orchestrator/director.ts:142`](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/director.ts#L142). Decides what happens this turn. Reads kernel state, the leader's HEXACO profile, recent decision history, the agent mood roll-up, the research-bundle topics. Returns one to three events with options.
 
 ```text
 GENERATE EVENT FOR TURN {turn}, YEAR {time}
@@ -212,17 +210,15 @@ Generate 1 to 3 events for this turn. Each event should feel like a consequence
 of what happened before. Return JSON with an "events" array.
 ```
 
-Two phrases in there earned their place after embarrassing failures.
+Two lines in there cost runs to get right.
 
-**"Use this profile to colour (not determine) the next event."** Without that line the Director just rigged every Visionary run with high-Openness-friendly events ("a creative breakthrough opportunity arrives") and the Engineer with the inverse, which felt patronizing and produced caricature instead of divergence. Coloring instead of determining means the event picks SHOULD be biased but the leader is still tested against pressures the colony would face anyway.
+`Use this profile to colour (not determine) the next event` — without it the Director rigged Visionary runs with high-Openness-friendly events ("a creative breakthrough opportunity arrives") and Engineer with the inverse. Read as caricature, not divergence. Colour-not-determine kept the bias and dropped the rigging.
 
-**"MUST be exactly one of these"** for the category. Earlier I had "prefer", and the model would pick generic narrative categories ("founding", "legacy") that didn't exist in the scenario's effects map, silently bypassing every metric update. Three runs in a row produced unchanged metrics over six turns until I traced it to the off-list categories. The constraint is now hard.
+`MUST be exactly one of these` for the category. Earlier said "prefer". Model picked "founding" and "legacy", which don't exist in the scenario's effects map, silently bypassing every metric update. Three runs of unchanged metrics over six turns before I traced it.
 
 ### The Department Analysis
 
-Source: [`src/runtime/orchestrator/departments.ts`](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/departments.ts), function `buildDepartmentContext` at [line 17](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/departments.ts#L17).
-
-Every active department gets its own prompt. The dept head's CURRENT (drift-adjusted) HEXACO profile lives at the top, followed by **conditional behavioral cues that only fire when a trait is on a pole**. A dept head with Openness 0.45 doesn't get any forge-vs-reuse advice; one with Openness 0.95 reads:
+[`src/runtime/orchestrator/departments.ts:17`](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/departments.ts#L17). Every active department gets its own prompt. Dept head's drift-adjusted HEXACO profile at the top, then conditional behavioral cues that fire only when a trait is on a pole. Openness 0.45 gets no forge-vs-reuse cue; Openness 0.95 gets:
 
 ```text
 Your high openness invites exploration. When this event involves any analysis
@@ -239,15 +235,13 @@ tools whenever their scope overlaps the current analysis. Forge a new tool
 only when an existing one would clearly mislead you on this specific event.
 ```
 
-Six axes × pole-conditional cues = up to six firing cues per dept head per turn. The exact phrasing for each pole on each axis is in [`departments.ts:38-94`](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/departments.ts#L38-L94). Earlier I tried listing every axis's high-low guidance unconditionally and asking the model to weight them. The dept heads converged on the same forge counts. Conditional firing is sharper, and a dept head with mostly-mid HEXACO produces baseline-neutral reports, which is exactly the right behavior for the personality model the dept head has.
+Six axes × pole-conditional cues = up to six firing cues per dept head per turn. Full phrasing for each pole at [`departments.ts:38-94`](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/departments.ts#L38-L94). Earlier version listed every axis's high-low guidance unconditionally and asked the model to weight them; dept heads converged on the same forge counts across leaders. Conditional firing is sharper, and a mid-HEXACO dept head produces baseline-neutral reports, which is the right behaviour for that profile.
 
-The full department prompt also carries the prior-turn memory ("YOUR PREVIOUS ANALYSES"), the research-grounded canonical facts and counterpoints from the citation bundle, the current colony state line, and a domain-specific block from the scenario's `departmentPromptHook`. None of this is a prompt-engineering parlor trick. It's the difference between a dept head that reads as a generic AI assistant and one that reads as a department under the influence of a leader they've worked with for three turns.
+The full prompt also carries the prior-turn memory (`YOUR PREVIOUS ANALYSES`), the research-grounded canonical facts + counterpoints from the citation bundle, the current colony state line, and a domain-specific block from the scenario's `departmentPromptHook`.
 
 ### The Commander Decision
 
-Source: [`src/runtime/orchestrator/index.ts:1598-1615`](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/index.ts#L1598-L1615) for the prompt template, [`src/runtime/validators/commander.ts:14-54`](https://github.com/framersai/paracosm/blob/master/src/runtime/validators/commander.ts#L14-L54) for the response Zod schema.
-
-The commander gets the event, the dept reports, the forged toolbox, the kernel state, and a five-step REASONING block they're instructed to populate in the JSON response BEFORE choosing an option:
+Prompt at [`orchestrator/index.ts:1598`](https://github.com/framersai/paracosm/blob/master/src/runtime/orchestrator/index.ts#L1598-L1615), response schema at [`validators/commander.ts:14`](https://github.com/framersai/paracosm/blob/master/src/runtime/validators/commander.ts#L14-L54). Commander gets the event, dept reports, forged toolbox, kernel state, and a five-step REASONING block to populate in the JSON response before choosing:
 
 ```text
 TURN {turn} (Event {ei+1}/{total}) — {time}: {event.title}
@@ -285,17 +279,15 @@ the reasoning into a single paragraph for default UI display; the "reasoning"
 field stores the full working.
 ```
 
-This is where chain-of-thought scaffolding is most explicit. Nothing about CoT here is novel — explicit step-by-step reasoning has been standard since [Wei et al. 2022](https://arxiv.org/abs/2201.11903). What earned its keep is the **BEFORE**: the Zod schema places `reasoning` as a populated-first field on the response, so the model writes the deliberation before choosing the option, not after. That's the difference between CoT-as-thinking and CoT-as-rationalization that [Turpin et al. 2023](https://arxiv.org/abs/2305.04388) flagged as a real failure mode of post-hoc CoT — where the model picks an answer for unrelated reasons and then writes a CoT chain that makes the answer look principled. Schema-ordered CoT closes that loophole at the structural level: the model has to commit ink to step (5) "Final choice" only after step (1) through (4) are filled.
+Explicit step-by-step CoT isn't novel — standard since [Wei et al. 2022](https://arxiv.org/abs/2201.11903). The lever here is the **ORDER**: `reasoning` is a populated-first Zod field, so the model writes the deliberation before committing to `selectedOptionId`. Closes the post-hoc-rationalization failure mode [Turpin et al. 2023](https://arxiv.org/abs/2305.04388) flagged — model picks an answer for unrelated reasons, then writes a CoT chain that makes it look principled. Schema-ordered CoT forces ink on steps (1)–(4) before step (5).
 
-The commander's `reasoning` field threads into the artifact. The dashboard renders it behind a "Show full analysis" expand on the decision card. A reader can audit not just what the commander decided but the full ordered deliberation that led there, including which forged-tool output they cited, which dept they overrode, and which trait pole they referenced.
+`reasoning` threads into the artifact. Dashboard renders it behind a "Show full analysis" expand on the decision card, so the audit covers which forged-tool output the commander cited, which dept they overrode, which trait pole they referenced.
 
-There's a second CoT lever I lean on: **schema-guided retry**. The framework's `generateValidatedObject` ([packages/agentos/src/api/generateObject.ts](https://github.com/framersai/agentos/blob/master/packages/agentos/src/api/generateObject.ts)) runs the response through the Zod schema; on validation failure the original response and the validation error get appended to the conversation and the model gets a second shot. The model sees its own structural mistake and self-corrects. Up to 3 attempts per call before the configured fallback fires. This is CoT-adjacent in that the second attempt is meaningfully different from the first — the model has new information (its own error) to reason over.
+Second CoT lever: **schema-guided retry**. The framework's `generateValidatedObject` ([`agentos/src/api/generateObject.ts`](https://github.com/framersai/agentos/blob/master/packages/agentos/src/api/generateObject.ts)) runs the response through the Zod schema; on validation failure the response and the error get appended to the conversation, model gets a second shot at the same call. Up to 3 attempts before the configured fallback fires. Second attempt has new information — its own error — so it's meaningfully different reasoning, not a re-roll.
 
 ### The Reactions
 
-Source: [`src/runtime/agents/agent-reactions.ts:82-95`](https://github.com/framersai/paracosm/blob/master/src/runtime/agents/agent-reactions.ts#L82-L95) for the system prompt, [`buildBatchSituationContext`](https://github.com/framersai/paracosm/blob/master/src/runtime/agents/agent-reactions.ts#L104) for the dynamic per-turn block.
-
-Last LLM stage of the turn. Runs in parallel batches of ~10 colonists per call (so a 100-agent colony fires roughly 10 reaction calls per turn after dedupe and inactive-skip filtering). Static system prompt — cached once, reused across every batch in the run:
+[`agent-reactions.ts:82`](https://github.com/framersai/paracosm/blob/master/src/runtime/agents/agent-reactions.ts#L82-L95) for the system prompt, [`buildBatchSituationContext`](https://github.com/framersai/paracosm/blob/master/src/runtime/agents/agent-reactions.ts#L104) for the per-turn dynamic block. Last LLM stage. Runs in parallel batches of ~10 colonists per call — a 100-agent colony fires roughly 10 reaction calls per turn after dedupe and inactive-skip filtering. Static system prompt cached once across the run:
 
 ```text
 You are each of several colony members reacting to what just happened at your
@@ -317,9 +309,9 @@ SITUATION block. Return ONLY a JSON object matching this shape:
 }
 ```
 
-The "Do NOT start any reaction with I can't believe" line is in the prompt because every model in 2025 had a trained reflex to start emotional reactions with that exact phrase. I banned it after a run produced 30 colonists all opening with "I can't believe", which read as a Greek chorus instead of 30 individuals. Now each reaction goes through the personality + memory block in the user prompt and the model has to produce something that doesn't sound like a stock LLM reaction. It mostly works. Sometimes a Visionary leader's reactions still sound a little Hallmark-card. That's a tuning problem, not an architectural one.
+The `Do NOT start any reaction with "I can't believe"` line is in there because every model in 2025 had a trained reflex to open emotional reactions with that exact phrase. Banned it after a run produced 30 colonists all starting with "I can't believe", reading as a Greek chorus instead of 30 individuals. Mostly works now. Visionary reactions still drift Hallmark-card sometimes. Tuning problem, not architectural.
 
-The split between **static system prompt** (cached on the provider) and **dynamic situation context** (in the user prompt) is deliberate. AgentOS's prompt-cache integration means the system block hits cache on every reaction call after the first batch in a run. On a 100-agent colony × 6 turns × 10 batches per turn, that's 599 cache hits and 1 cache miss for the static block, which on Anthropic's pricing brings the reaction-stage cost down by roughly 75% versus running the same prompt without the split.
+Split between cached system prompt and dynamic situation context isn't aesthetic. The system block hits Anthropic's prompt cache on every reaction call after the first batch. On a 100-agent × 6-turn × 10-batch run, that's 599 cache hits and 1 cache miss for the static block, ~75% cheaper than firing the same prompt unsplit.
 
 ## HEXACO is the leverage
 
@@ -333,22 +325,20 @@ The microbenchmark for this lives in agentos-bench: [`HexacoEncodingBias`](https
 
 ## Where the agents come from
 
-A scenario starts with a roster — the key personnel the user (or the compiler) seeded — and the engine fills in the rest of the population from a deterministic generator with a fixed name pool, a department distribution weighted toward life-critical roles, and a HEXACO profile sampled in the [0.2, 0.8] range so no agent starts pinned to a pole. The generator lives in [`src/engine/core/agent-generator.ts`](https://github.com/framersai/paracosm/blob/master/src/engine/core/agent-generator.ts), function `generateInitialPopulation` at [line 63](https://github.com/framersai/paracosm/blob/master/src/engine/core/agent-generator.ts#L63). It is intentionally boring: pull a name, pull a department, pull a specialization, pull an age, pull a HEXACO. The interesting part happens after.
+A scenario starts with a roster — key personnel the user or compiler seeded — and the engine fills the rest from [`agent-generator.ts:63`](https://github.com/framersai/paracosm/blob/master/src/engine/core/agent-generator.ts#L63): fixed name pool, department distribution weighted toward life-critical roles, HEXACO sampled in [0.2, 0.8] so no agent starts pinned to a pole. Boring on purpose. The interesting part is the per-turn loop in [`progression.ts`](https://github.com/framersai/paracosm/blob/master/src/engine/core/progression.ts):
 
-What turns ~100 boring colonists into a colony with internal lifecycle dynamics is [`src/engine/core/progression.ts`](https://github.com/framersai/paracosm/blob/master/src/engine/core/progression.ts), which runs every turn and does the following in order:
+1. **Aging.** Birthdays accumulate. Over 60 hits an age-stepped natural-causes probability.
+2. **Cause-attributed mortality.** Six independent causes — natural, radiation cancer, starvation, despair, fatal fracture, accident — each fire on their own conditions. Death carries the cause as a string. Stats card shows `DEATHS 8 (3 radiation · 2 accident · 1 despair / 5 age)`; the verdict reads the same breakdown.
+3. **Partnership formation.** Unpartnered adults aged 20–60, HEXACO compatibility above 0.4 (six-axis distance scaled by age delta, Extraversion boost on initiator), morale-gated probability. ([`progression.ts:344`](https://github.com/framersai/paracosm/blob/master/src/engine/core/progression.ts#L344-L378))
+4. **Births.** Partnered couples reproduce at 3× the unpartnered base rate when morale > 40% and food reserves > 6 months. Child HEXACO is mid-parent + `±0.05` jitter per trait, Mars-born, clamped [0.05, 0.95]. Heritability with mutation. ([`progression.ts:419`](https://github.com/framersai/paracosm/blob/master/src/engine/core/progression.ts#L419-L446))
+5. **Career progression.** Junior → Senior at 5 years, Senior → Lead at 12, both behind a low-probability roll. Promotion events fire on the SSE stream.
+6. **Psych effects.** Partner death costs 0.25 psych, child death 0.35, friend 0.08 each. Partnered colonists regenerate slowly. Isolation (no partner, no friends, no Earth contacts) drains.
 
-1. **Aging.** Birthdays accumulate. Agents over 60 face natural-causes mortality at an age-stepped probability.
-2. **Cause-attributed mortality.** Six independent causes — natural, radiation cancer, starvation, despair, fatal fracture, accident — each fire on their own conditions. Every death carries the cause as a string, threaded into the artifact and the dashboard's stats card. `DEATHS 8 (3 radiation · 2 accident · 1 despair / 5 age)` is the rendering; the LLM verdict at end-of-run sees the same per-leader breakdown and writes about the specific pattern.
-3. **Partnership formation.** Unpartnered adults aged 20-60 with HEXACO compatibility above 0.4 — six-axis distance scaled by age delta, with an Extraversion boost on the initiator — form partnerships at a morale-gated probability. ([`progression.ts:344-378`](https://github.com/framersai/paracosm/blob/master/src/engine/core/progression.ts#L344-L378))
-4. **Births.** Partnered couples reproduce at 3× the unpartnered base rate when morale > 40% and food reserves > 6 months. The child inherits HEXACO at the **mid-parent value plus a small jitter** (`±0.05` per trait), Mars-born and clamped to [0.05, 0.95]. That's the heritability model — boring but explicit, documented at [`progression.ts:419-446`](https://github.com/framersai/paracosm/blob/master/src/engine/core/progression.ts#L419-L446).
-5. **Career progression.** Junior → Senior at 5 years experience, Senior → Lead at 12 years, both behind a low-probability roll. Promotion events fire on the SSE stream so the dashboard renders the badges live.
-6. **Relationship-driven psych effects.** Partner deaths cost 0.25 psych score, child deaths cost 0.35, friend deaths cost 0.08 each. Having a partner provides a slow positive psych regeneration. Isolation — no partner, no friends, no Earth contacts — costs psych over time.
+Every coefficient came from a failure of the previous version. 0.4 compatibility floor came from runs producing partnerships between Honesty-Humility 0.95 and Honesty-Humility 0.10 colonists. Mid-parent + jitter heritability came from runs where Mars-born kids all converged on the population mean by generation three. Fatal-fracture exists because Mars-born crew over 40 with bone density under 60% were dying generic deaths and the stats card couldn't tell you low-G childhood was the killer.
 
-That is the spawn-and-evolve loop in one sweep. The reason it's not behind a generic "population dynamics" knob is that every coefficient in there came from a specific failure of the previous version. The 0.4 HEXACO compatibility floor came from runs producing partnerships between Honesty-Humility 0.95 colonists and Honesty-Humility 0.10 colonists who would never have spoken to each other. The mid-parent + jitter heritability came from runs where Mars-born children all converged on the population mean by generation three, eliminating divergence. The fatal-fracture cause exists because Mars-born crew over 40 with bone density under 60% were dying generic deaths in the artifact and the stats card couldn't tell you that low-G childhood was the killer. Each coefficient is documented in the source comments at the line they fire, with the failure mode they fix.
+**Promotion from cell to dept head.** Turn 0 fires one commander LLM call per department: pick who runs medical, engineering, agriculture, science, administration. Chosen colonist gets `agent.promotion = { department, role, reason }` and inherits the dept-head prompt path. One-way per session unless they die. Leader-pull targets dept heads specifically, so by turn six a Visionary's chief medical officer has measurably higher Openness than the same role on the Engineer's side.
 
-The other lifecycle lever is **promotion from cell to dept head**. Turn 0 of a Mars Genesis run runs one extra LLM call per department: the commander reads the candidate roster and picks who runs medical, engineering, agriculture, science, administration. The chosen colonist gets `agent.promotion = { department, role, reason }` set in their state and inherits the dept-head prompt path on every subsequent turn. Promotion is one-way per session — a dept head doesn't get demoted unless they die — but **HEXACO drift on dept heads is faster than on regular cells** because leader-pull specifically targets agents in the commander's reporting chain. By turn six a Visionary's chief medical officer has measurably higher Openness than the same role on the Engineer's side, even when both started at the population mean.
-
-The full pool of ~100 cells matters for two reasons that aren't obvious until you watch a run. First, the chat panel against any individual colonist after the run is a chat against a fully-instantiated AgentOS agent with the cell's HEXACO, their event-encoded memory traces, their relationship graph, their mood. A user who asks "what happened during the storm" gets a different answer from a sergeant in engineering than from a junior in agriculture, because the encoding strength on each input depended on each cell's traits and the mood they were in when the storm landed. Second, the kernel's roll-up effects (mortality probability, morale propagation, knowledge transfer) reads from the full cohort statistics, not from the dept heads only — so a colony that loses six unfeatured cells to despair on turn three sees a measurable morale drop on the dept reports of turn four, and the Director picks the next event accordingly. The cells aren't background props. They're the substrate the dept heads and the commander are governing.
+The other ~95 cells aren't props. Chat panel against any colonist post-run is a fully-instantiated AgentOS agent — that cell's HEXACO, their event-encoded memory traces, their relationships, their mood. Ask "what happened during the storm" and a sergeant in engineering answers differently than a junior in agriculture, because encoding strength depended on each cell's traits and mood when the storm landed. The kernel's roll-up effects (morale propagation, mortality probability, knowledge transfer) read from the full cohort, not the dept heads. A colony that loses six unfeatured cells to despair on turn three sees a morale drop on turn four's dept reports, and the Director picks the next event from there.
 
 ## Tool forging at runtime
 
@@ -375,7 +365,7 @@ Reuse turned out to be the largest cost lever in the system, which I did not pre
 
 ### What the judge actually checks
 
-The forge-time judge is a single LLM call with a stable system prompt that runs once per forged tool and returns a JSON verdict. The prompt lives in [`packages/agentos/src/cognition/emergent/EmergentJudge.ts:435-475`](https://github.com/framersai/agentos/blob/master/packages/agentos/src/cognition/emergent/EmergentJudge.ts#L435-L475) (Paracosm wires the forge loop, AgentOS owns the judge). The system block:
+One LLM call per forged tool, stable system prompt, JSON verdict. Lives in [`agentos/src/cognition/emergent/EmergentJudge.ts:435`](https://github.com/framersai/agentos/blob/master/packages/agentos/src/cognition/emergent/EmergentJudge.ts#L435-L475) (Paracosm wires the forge loop, AgentOS owns the judge):
 
 ```text
 You are a security auditor reviewing a tool an AI agent created at runtime.
@@ -426,9 +416,9 @@ Respond ONLY with JSON:
  "confidence":0.0-1.0,"approved":true,"reasoning":""}
 ```
 
-The "Do NOT reject because" rules look defensive because they are. The first version of this prompt ran rejection rates over 60% on Mars Genesis runs even when the forged tools were objectively fine — the judge would reject for "I can't fully verify the calculation under all edge cases", "would prefer additional test coverage", "stylistic concerns about error handling". Those aren't safety violations. Those are wishes. Naming each rejection anti-pattern explicitly cut the false-reject rate to roughly 5-15% depending on model. The rejections that survive are the ones with a concrete cause the prompt asks the judge to point at.
+The `Do NOT reject because` rules are there because the first version ran ~60% rejection on Mars Genesis even when the forged tools were fine. Judge would reject for "I can't fully verify the calculation under all edge cases", "would prefer additional test coverage", "stylistic concerns about error handling". Not safety violations. Wishes. Naming each anti-pattern explicitly dropped false-reject to 5–15% depending on model.
 
-A real verdict from a recent Mars Genesis run on seed 950 — Dietrich's chief medical officer forged `radiation_dose_calculator` on turn three:
+A real verdict from a Mars Genesis run on seed 950 — Dietrich's chief medical officer forged `radiation_dose_calculator` on turn three:
 
 ```json
 {
@@ -448,9 +438,9 @@ A real verdict from a recent Mars Genesis run on seed 950 — Dietrich's chief m
 }
 ```
 
-Approved at confidence 0.87, comfortably above the promotion threshold of 0.8. The tool became reusable by every other dept on turn four for tens of tokens of dispatch. After five reuses at that confidence the tool moves from `session` tier to `agent` tier via the separate two-judge promotion panel (one safety, one correctness, both must approve — different prompt in the same file at [line 478](https://github.com/framersai/agentos/blob/master/packages/agentos/src/cognition/emergent/EmergentJudge.ts#L478) and [line 502](https://github.com/framersai/agentos/blob/master/packages/agentos/src/cognition/emergent/EmergentJudge.ts#L502)) and survives beyond the run.
+0.87 confidence, above the 0.8 promotion threshold. Tool became callable by every other dept on turn four for tens of tokens of dispatch. After five reuses at ≥ 0.8 it moves from `session` tier to `agent` tier through a two-judge promotion panel — separate prompts at [line 478](https://github.com/framersai/agentos/blob/master/packages/agentos/src/cognition/emergent/EmergentJudge.ts#L478) (safety) and [line 502](https://github.com/framersai/agentos/blob/master/packages/agentos/src/cognition/emergent/EmergentJudge.ts#L502) (correctness), both must approve.
 
-A failed verdict from the same run, two turns later, when a different dept tried to forge a tool that called `Math.random` inside its return value:
+Failed verdict from the same run, two turns later — different dept forged a tool that called `Math.random` inside its return value:
 
 ```json
 {
@@ -467,7 +457,7 @@ A failed verdict from the same run, two turns later, when a different dept tried
 }
 ```
 
-That's the kind of rejection the prompt is designed to surface. The forge attempt lands in the artifact's `forgeAttempts` array including the failed reasoning, so the user can see in the dashboard exactly which tool failed and why. The cost-modal counts the judge spend toward the run total even on rejections; reforging counts again. Engineer profiles produce more of these because their dept heads hold tools to a stricter evidence bar. The asymmetry is the entire reason HEXACO is wired this deep.
+Forge attempt lands in `forgeAttempts` with the failed reasoning attached, so the dashboard can show which tool failed and why. Cost modal counts judge spend on rejections too. Reforging counts again. Engineer profiles produce more of these because their dept heads hold tools to a stricter evidence bar — that's the asymmetry HEXACO is supposed to encode, and it shows up in the cost line, not just the prose.
 
 ## Run a simulation in five minutes
 
