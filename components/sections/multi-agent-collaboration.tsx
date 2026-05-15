@@ -109,7 +109,7 @@ export function MultiAgentCollaboration() {
 
 // Debate strategy: agents propose, then a synthesizer picks the best
 const team = agency({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   strategy: 'debate',
   agents: {
     researcher: { instructions: 'Gather evidence and propose a decision.' },
@@ -145,7 +145,7 @@ console.log(result.agentCalls)     // Trace of each agent's contribution`
 
 // Sequential strategy: each agent runs in order, passing context forward
 const pipeline = agency({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   strategy: 'sequential',
   agents: {
     researcher: { instructions: 'Gather context on the topic.' },
@@ -181,7 +181,7 @@ console.log(result.agentCalls)       // Trace: researcher -> analyst -> ... -> e
 
 // Parallel strategy: all agents run concurrently, results are synthesized
 const team = agency({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   strategy: 'parallel',
   agents: {
     researcher: { instructions: 'Gather market data for the US region.' },

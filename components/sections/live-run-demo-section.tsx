@@ -589,7 +589,7 @@ console.log(result.fallbacksUsed);         // e.g. ['keyword-fallback']`,
     language: 'typescript',
     code: `import { generateText, streamText, generateImage, agent } from '@framers/agentos';
 
-// Provider-first style: pick a provider, AgentOS picks the default model.
+// Pick a provider and AgentOS picks the default model.
 // Reads OPENAI_API_KEY / ANTHROPIC_API_KEY / etc. from env.
 const quick = await generateText({
   provider: 'openai',
@@ -597,9 +597,10 @@ const quick = await generateText({
 });
 console.log(quick.text);
 
-// Legacy 'provider:model' format still works.
-const legacy = await generateText({
-  model: 'openai:gpt-4o',
+// Pin a specific model when you need it.
+const pinned = await generateText({
+  provider: 'openai',
+  model: 'gpt-4o',
   prompt: 'What is TCP in one sentence?',
 });
 
@@ -619,6 +620,7 @@ const img = await generateImage({
 // Same shape for agents.
 const researcher = agent({
   provider: 'openai',
+  model: 'gpt-4o',
   instructions: 'You are a network protocols researcher.',
 });
 const result = await researcher.generate('What problems was QUIC designed to solve?');`,

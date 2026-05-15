@@ -56,9 +56,9 @@ export default function FeaturesGridClient() {
 const team = agency({
   strategy: 'parallel',
   agents: {
-    researcher: { model: 'openai:gpt-4o', instructions: 'Research the topic.' },
-    analyst:    { model: 'anthropic:claude-sonnet-4-20250514', instructions: 'Analyze findings.' },
-    executor:   { model: 'ollama:llama3', instructions: 'Execute the plan.' },
+    researcher: { provider: 'openai', model: 'gpt-4o', instructions: 'Research the topic.' },
+    analyst:    { provider: 'anthropic', model: 'claude-sonnet-4-20250514', instructions: 'Analyze findings.' },
+    executor:   { provider: 'ollama', model: 'llama3', instructions: 'Execute the plan.' },
   },
 })
 const result = await team.generate('Plan a product launch')`
@@ -78,7 +78,7 @@ const result = await team.generate('Plan a product launch')`
 
 // Guardrails are built into agent configuration
 const safeAgent = agent({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   instructions: 'You are a helpful assistant.',
   guardrails: ['pii-redaction', 'prompt-injection-defense'],
   maxSteps: 5,           // limits runaway tool loops
@@ -211,7 +211,7 @@ const tutor = agent({
         code: `import { streamText } from '@framers/agentos'
 
 const stream = streamText({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   prompt: userInput,
 })
 for await (const chunk of stream.textStream) {
@@ -239,7 +239,7 @@ const manifest = await createCuratedManifest({
 })
 
 const myAgent = agent({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   instructions: 'Research assistant with web access.',
   tools: manifest.tools,
 })`
@@ -259,7 +259,7 @@ const myAgent = agent({
 
 // Use 'graph' strategy with dependsOn for DAG workflows
 const pipeline = agency({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   strategy: 'graph',
   agents: {
     fetcher:     { instructions: 'Fetch raw data.', dependsOn: [] },
@@ -284,7 +284,7 @@ const result = await pipeline.generate('Run the data pipeline')`
 
 // The model handles language natively — just prompt in any language
 const result = await generateText({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   system: 'Always reply in the same language the user writes in.',
   prompt: 'AIの最新動向を教えてください',  // Japanese
 })
@@ -305,7 +305,7 @@ console.log(result.text)  // Responds in Japanese`
 
 // Agents have built-in session memory (enabled by default)
 const myAgent = agent({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   instructions: 'You are a persistent assistant.',
 })
 const session = myAgent.session('user-42')

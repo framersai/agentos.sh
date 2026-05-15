@@ -76,7 +76,7 @@ const { text } = await pipeline.generate('Write about quantum computing.');`,
   parallel: `import { agency } from '@framers/agentos';
 
 const panel = agency({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   agents: {
     optimist:  { instructions: 'Argue in favour.' },
     pessimist: { instructions: 'Argue against.' },
@@ -90,7 +90,7 @@ const { text } = await panel.generate('Should AI have legal rights?');`,
   debate: `import { agency } from '@framers/agentos';
 
 const debaters = agency({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   agents: {
     proponent: { instructions: 'Defend your position.' },
     critic:    { instructions: 'Challenge every claim.' },
@@ -104,7 +104,7 @@ const { text } = await debaters.generate('Remote vs. in-office work?');`,
   'review-loop': `import { agency } from '@framers/agentos';
 
 const loop = agency({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   agents: {
     drafter:  { instructions: 'Draft a press release.' },
     reviewer: { instructions: 'Review for brand voice.' },
@@ -118,7 +118,7 @@ const { text } = await loop.generate('Announce our product launch.');`,
   hierarchical: `import { agency } from '@framers/agentos';
 
 const team = agency({
-  model: 'openai:gpt-4o',
+  provider: 'openai', model: 'gpt-4o',
   agents: {
     manager:    { instructions: 'Coordinate the team.' },
     researcher: { instructions: 'Find information.' },
