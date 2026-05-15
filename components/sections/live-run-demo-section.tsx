@@ -1052,13 +1052,22 @@ function UsageBlock({ usage }: { usage: DemoOutput['usage'] }) {
 function OutputPanel({ demo }: { demo: DemoData }) {
   const { output, exampleSlug } = demo
   return (
-    <div className="overflow-hidden rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-background-elevated)]">
-      <div className="flex items-center justify-between border-b border-[var(--color-border-subtle)] bg-[var(--color-background-tertiary)] px-4 py-2.5">
+    <div className="group/panel relative overflow-hidden rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-background-elevated)]/70 backdrop-blur-xl shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.6)] ring-1 ring-[var(--color-accent-primary)]/5 transition-all duration-300 hover:ring-[var(--color-accent-primary)]/15 hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.25)] dark:hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)]">
+      {/* Top accent gradient line — subtle but signals "this is the live
+          surface" without screaming. Stronger on the right where the
+          status badge sits. */}
+      <div
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent-primary)]/40 to-emerald-400/60"
+        aria-hidden="true"
+      />
+      <div className="flex items-center justify-between border-b border-[var(--color-border-subtle)] bg-[var(--color-background-tertiary)]/50 backdrop-blur-sm px-4 py-2.5">
         <div className="flex items-center gap-3">
+          {/* Real macOS traffic-light dots — subtle nostalgia, evokes
+              "this is a terminal session" without the gray-pellet look. */}
           <div className="flex gap-1.5">
-            <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-border-subtle)]" />
-            <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-border-subtle)]" />
-            <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-border-subtle)]" />
+            <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f57] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.15)]" />
+            <div className="h-2.5 w-2.5 rounded-full bg-[#febc2e] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.15)]" />
+            <div className="h-2.5 w-2.5 rounded-full bg-[#28c840] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.15)]" />
           </div>
           <span className="font-mono text-xs text-[var(--color-text-secondary)]">
             $ node {exampleSlug}
@@ -1107,11 +1116,23 @@ export function LiveRunDemoSection() {
 
   return (
     <section className="relative mx-auto max-w-7xl px-6 py-24 md:py-32">
+      {/* Ambient backdrop — soft accent-tinted radial behind the panels +
+          a faint dot grid that catches the light without competing for
+          attention. Both layers fade into the section background; nothing
+          sits in front of content. */}
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+        aria-hidden="true"
+      >
+        <div className="absolute left-1/2 top-1/3 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,_var(--color-accent-primary)_0%,_transparent_60%)] opacity-[0.06] blur-3xl" />
+        <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(circle,_var(--color-text-muted)_1px,_transparent_1px)] bg-[length:24px_24px]" />
+      </div>
+
       <div className="mb-8 max-w-3xl">
         {/* Verified-runs badge with pulsing indicator — signals the section is
             live captures, not synthetic snippets. Sets the credibility tone
             before the heading lands. */}
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1">
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 backdrop-blur-md shadow-[0_0_20px_-8px_rgba(16,185,129,0.4)]">
           <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
@@ -1120,8 +1141,11 @@ export function LiveRunDemoSection() {
             Verified runs · Captured stdout
           </span>
         </div>
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--color-text-primary)]">
-          Real output from real scripts
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-[var(--color-text-primary)]">
+          Real output from{' '}
+          <span className="bg-gradient-to-r from-[var(--color-text-primary)] via-[var(--color-accent-primary)] to-[var(--color-text-primary)] bg-clip-text text-transparent">
+            real scripts
+          </span>
         </h2>
         <p className="mt-3 text-base text-[var(--color-text-secondary)]">
           Examples captured from <code className="font-mono text-[var(--color-text-primary)]">node examples/&hellip;.mjs</code> against the OpenAI API. The full source is committed at{' '}
@@ -1183,21 +1207,27 @@ export function LiveRunDemoSection() {
 
       {/* Side-by-side panels */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {/* Code panel */}
-        <div className="overflow-hidden rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-background-elevated)]">
-          <div className="flex items-center justify-between border-b border-[var(--color-border-subtle)] bg-[var(--color-background-tertiary)] px-4 py-2.5">
+        {/* Code panel — matches the output panel's chrome (glass, accent
+            top line, real macOS dots, hover ring) so the pair reads as
+            one composed surface, not two stacked rectangles. */}
+        <div className="group/panel relative overflow-hidden rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-background-elevated)]/70 backdrop-blur-xl shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.6)] ring-1 ring-[var(--color-accent-primary)]/5 transition-all duration-300 hover:ring-[var(--color-accent-primary)]/15 hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.25)] dark:hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)]">
+          <div
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[var(--color-accent-primary)]/60 via-[var(--color-accent-primary)]/30 to-transparent"
+            aria-hidden="true"
+          />
+          <div className="flex items-center justify-between border-b border-[var(--color-border-subtle)] bg-[var(--color-background-tertiary)]/50 backdrop-blur-sm px-4 py-2.5">
             <div className="flex items-center gap-3 min-w-0">
               <div className="flex gap-1.5 shrink-0">
-                <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-border-subtle)]" />
-                <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-border-subtle)]" />
-                <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-border-subtle)]" />
+                <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f57] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.15)]" />
+                <div className="h-2.5 w-2.5 rounded-full bg-[#febc2e] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.15)]" />
+                <div className="h-2.5 w-2.5 rounded-full bg-[#28c840] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.15)]" />
               </div>
               <span className="font-mono text-xs text-[var(--color-text-secondary)] truncate">
                 {active.exampleSlug}
               </span>
             </div>
             <div className="flex items-center gap-3 shrink-0">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
+              <span className="rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-background-secondary)]/60 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
                 TypeScript
               </span>
               <CopyCodeButton code={active.code} />
