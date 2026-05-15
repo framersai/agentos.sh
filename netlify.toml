@@ -1,3 +1,28 @@
+# Renamed-slug redirects (blog post URLs that changed)
+[[redirects]]
+  from = "/blog/paracosm-2026-overview"
+  to = "/en/blog/paracosm-launch/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/paracosm-2026-overview/"
+  to = "/en/blog/paracosm-launch/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/blog/paracosm-2026-overview"
+  to = "/en/blog/paracosm-launch/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en/blog/paracosm-2026-overview/"
+  to = "/en/blog/paracosm-launch/"
+  status = 301
+  force = true
+
 # Redirects for non-locale paths to default English locale
 [[redirects]]
   from = "/docs"

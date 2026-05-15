@@ -1,6 +1,16 @@
 {
   "redirects": [
     {
+      "source": "/blog/paracosm-2026-overview",
+      "destination": "/en/blog/paracosm-launch/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/paracosm-2026-overview",
+      "destination": "/en/blog/paracosm-launch/",
+      "permanent": true
+    },
+    {
       "source": "/docs",
       "destination": "/en/docs/",
       "permanent": true

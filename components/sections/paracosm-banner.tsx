@@ -117,7 +117,7 @@ export function ParacosmBanner() {
                   <ExternalLink className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                 </a>
                 <a
-                  href="https://agentos.sh/en/blog/paracosm-2026-overview/"
+                  href="https://agentos.sh/en/blog/paracosm-launch/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 font-semibold transition-all duration-300 hover:-translate-y-0.5"
