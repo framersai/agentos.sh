@@ -88,7 +88,7 @@ export async function generateMetadata({ params: { locale, slug } }: Props) {
       ],
       type: 'article',
       publishedTime: post.date,
-      authors: [post.author || 'AgentOS Team'],
+      authors: [post.author || 'Frame'],
     },
     twitter: {
       card: 'summary_large_image' as const,
@@ -125,13 +125,13 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
             dateModified: post.date,
             author: {
               '@type': 'Organization',
-              name: post.author || 'AgentOS Team',
-              url: 'https://agentos.sh',
+              name: post.author || 'Frame',
+              url: 'https://frame.dev',
             },
             publisher: {
               '@type': 'Organization',
-              name: 'Manic Agency LLC',
-              url: 'https://manic.agency',
+              name: 'Frame',
+              url: 'https://frame.dev',
               logo: { '@type': 'ImageObject', url: 'https://agentos.sh/og-image-v2.png' },
             },
             mainEntityOfPage: canonical,

@@ -1,115 +1,10 @@
-import { Metadata } from 'next'
 import Script from 'next/script'
 
-export const seoMetadata: Metadata = {
-  title: {
-    default: 'AgentOS - Adaptive Intelligence for Emergent Agents | AI Orchestration Platform',
-    template: '%s | AgentOS'
-  },
-  description: 'Enterprise-grade AI agent orchestration platform with multi-agent collaboration, real-time streaming, and persistent memory. Open source TypeScript framework for building adaptive AI systems.',
-  keywords: [
-    'agentos',
-    'frame ai',
-    'agency ai',
-    'ai agents',
-    'rag',
-    'multi-agent systems',
-    'ai orchestration',
-    'typescript ai',
-    'open source ai',
-    'agent framework',
-    'llm orchestration',
-    'adaptive intelligence',
-    'emergent agents',
-    'ai collaboration',
-    'enterprise ai'
-  ],
-  authors: [{ name: 'AgentOS Team' }],
-  creator: 'AgentOS',
-  publisher: 'AgentOS',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://agentos.sh'),
-  alternates: {
-    canonical: '/',
-    languages: {
-      'en': '/en',
-      'es': '/es',
-      'fr': '/fr',
-      'de': '/de',
-      'pt': '/pt',
-      'ja': '/ja',
-      'ko': '/ko',
-      'zh': '/zh'
-    }
-  },
-  openGraph: {
-    title: 'AgentOS - Adaptive Intelligence for Emergent Agents',
-    description: 'Enterprise-grade AI agent orchestration with multi-agent collaboration, real-time streaming, and persistent memory.',
-    url: 'https://agentos.sh',
-    siteName: 'AgentOS',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'AgentOS - AI Agent Orchestration Platform'
-      }
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'AgentOS - Adaptive Intelligence for Emergent Agents',
-    description: 'Enterprise-grade AI agent orchestration platform. Open source, TypeScript, production-ready.',
-    creator: '@framersai',
-    images: ['/og-image.png'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'google-site-verification-code',
-    yandex: 'yandex-verification-code',
-  },
-}
-
-// Schema.org structured data for better SEO
+// Per-page JSON-LD for the home / index. The SoftwareApplication and
+// Organization schemas (canonical entity = "Frame" publishing AgentOS) live
+// in app/[locale]/layout.tsx so every page emits them; this component adds
+// FAQ + BreadcrumbList on the surfaces that include it.
 export function SchemaMarkup() {
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'AgentOS',
-    url: 'https://agentos.sh',
-    logo: 'https://agentos.sh/logo.png',
-    description: 'Enterprise-grade AI agent orchestration platform',
-    sameAs: [
-      'https://github.com/framersai/agentos',
-      'https://twitter.com/framersai'
-    ],
-    contactPoint: {
-      '@type': 'ContactPoint',
-      email: 'team@frame.dev',
-      contactType: 'technical support',
-      availableLanguage: ['English', 'Spanish', 'French', 'German', 'Portuguese', 'Japanese', 'Korean', 'Chinese']
-    }
-  }
-
-  // SoftwareApplication schema lives in app/[locale]/layout.tsx with the
-  // canonical version, license, and feature list. Don't duplicate here.
-
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -178,13 +73,6 @@ export function SchemaMarkup() {
 
   return (
     <>
-      <Script
-        id="organization-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema)
-        }}
-      />
       <Script
         id="faq-schema"
         type="application/ld+json"

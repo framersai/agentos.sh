@@ -133,17 +133,23 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               text at leading-1.2: 28px*2.4=68px mobile, 36px*2.4=87px,
               48px*2.4=116px desktop. Slight overshoot is intentional —
               undershoot causes CLS, overshoot is just whitespace. */}
+          {/* `aria-label` is the single source of truth for both
+              accessibility and crawler entity recognition. The visible
+              children render the particle-morph animation alongside
+              static labels ("intelligence", "for", "agents"); they are
+              aria-hidden so screen readers ignore them and read the
+              aria-label instead. Earlier revisions stacked a sr-only
+              <span> with the full phrase inside the H1 alongside the
+              static visible labels — Googlebot then extracted both,
+              producing the keyword-stuffed text
+              "Emergent intelligence for adaptive agents intelligence for
+              agents". The aria-label-only approach removes the
+              duplicate. */}
           <h1
+            aria-label="Emergent intelligence for adaptive agents"
             className="font-bold tracking-tight mb-3 text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.2] min-h-[72px] sm:min-h-[92px] lg:min-h-[120px]"
             itemProp="name"
           >
-            {/* Visually-hidden full-text H1 for crawlers and screen readers.
-                The aria-hidden canvas siblings render the visual particle
-                morph between "Emergent" and "Adaptive"; this sr-only span
-                guarantees the full string is in the DOM regardless of
-                canvas hydration state, and keeps the H1 text accessible
-                to screen readers (the morph is decorative). */}
-            <span className="sr-only">Emergent intelligence for adaptive agents</span>
             <span aria-hidden="true">
               <ParticleMorphText words={['Emergent', 'Adaptive']} interval={7000} fontSize={morphFontSize} gradientFrom={isDark ? '#7b66ff' : '#6024f3'} gradientTo={isDark ? '#d27bfc' : '#a538e5'} startIndex={0} synchronized />
               <span className="text-[var(--color-text-primary)]">intelligence</span>
