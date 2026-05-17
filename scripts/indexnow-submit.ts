@@ -13,17 +13,18 @@
  *   2. KEY constant below must match that file's content.
  *
  * What this submits:
- *   - All locale-prefixed homepages
- *   - All static pages across all 8 locales (about/blog/docs/faq/etc.)
- *   - All blog post pages across all 8 locales
- *   - All career listing pages across all 8 locales
+ *   - The default-locale homepage and all default-locale static pages
+ *   - All blog post pages on the default locale
+ *   - All career listing pages on the default locale
  *
  * URL list shape mirrors app/sitemap.ts so what gets submitted matches
- * what gets indexed via the sitemap.
+ * what gets indexed via the sitemap. Non-default locales are still
+ * reachable but intentionally not pushed to indexers — Google was
+ * dropping them as "Discovered – currently not indexed."
  *
  * Limits per IndexNow spec: ≤10,000 URLs per call, ≤10 MB body.
- * agentos.sh ships ~200 URLs (12 posts × 8 locales + ~12 static × 8
- * locales + a handful of careers), well under both limits.
+ * agentos.sh ships ~25 URLs (the default-locale homepage + ~12 static
+ * pages + ~12 posts + a handful of careers), well under both limits.
  *
  * Google does NOT participate in IndexNow (they deprecated their
  * sitemap ping endpoint in 2023). Use Search Console for Google.
@@ -39,9 +40,9 @@ const BASE = `https://${HOST}`;
 const KEY_LOCATION = `${BASE}/${KEY}.txt`;
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
 
-// Locales mirror the i18n config; keep manually in sync since this
-// script runs outside the Next.js bundle.
-const LOCALES = ['en', 'es', 'fr', 'de', 'pt', 'ja', 'ko', 'zh'];
+// Default locale mirrors `defaultLocale` from i18n.ts. Kept inline since
+// this script runs outside the Next.js bundle.
+const DEFAULT_LOCALE = 'en';
 
 const STATIC_PATHS = [
   '',
@@ -77,16 +78,14 @@ function buildUrlList(): string[] {
 
   const urls: string[] = [];
 
-  for (const locale of LOCALES) {
-    for (const path of STATIC_PATHS) {
-      urls.push(`${BASE}/${locale}${path}`);
-    }
-    for (const slug of blogSlugs) {
-      urls.push(`${BASE}/${locale}/blog/${slug}`);
-    }
-    for (const slug of jobSlugs) {
-      urls.push(`${BASE}/${locale}/careers/${slug}`);
-    }
+  for (const path of STATIC_PATHS) {
+    urls.push(`${BASE}/${DEFAULT_LOCALE}${path}`);
+  }
+  for (const slug of blogSlugs) {
+    urls.push(`${BASE}/${DEFAULT_LOCALE}/blog/${slug}`);
+  }
+  for (const slug of jobSlugs) {
+    urls.push(`${BASE}/${DEFAULT_LOCALE}/careers/${slug}`);
   }
 
   // Deduplicate just in case anything overlaps.

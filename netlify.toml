@@ -1,3 +1,14 @@
+# ============================================================================
+# INACTIVE on production. agentos.sh is served by GitHub Pages behind
+# Cloudflare — Netlify never sees these rules and none of them fire.
+#
+# Canonical redirect rules live in Cloudflare → Rules → Redirect Rules
+# (https://dash.cloudflare.com → agentos.sh zone). See cloudflare-redirects.md
+# in this directory for the rule list. This file is kept so that if the site
+# ever moves back to Netlify the rules are recoverable, but do NOT add new
+# redirect rules here expecting them to take effect.
+# ============================================================================
+
 # Renamed-slug redirects (blog post URLs that changed)
 [[redirects]]
   from = "/blog/paracosm-2026-overview"
