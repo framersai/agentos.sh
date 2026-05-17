@@ -73,6 +73,14 @@ redirect = lambda url: {
     }
 }
 
+dynamic_redirect = lambda expr: {
+    "from_value": {
+        "status_code": 301,
+        "target_url": {"expression": expr},
+        "preserve_query_string": True,
+    }
+}
+
 print(json.dumps({
     "name": "agentos.sh redirects",
     "description": "Managed by scripts/cf-deploy-redirects.sh",
@@ -83,13 +91,13 @@ print(json.dumps({
             "action": "redirect",
             "description": "paracosm-2026-overview rename",
             "expression": ends_with_clause(["paracosm-2026-overview"]),
-            "action_parameters": redirect("https://agentos.sh/en/blog/paracosm-launch/"),
+            "action_parameters": redirect("https://agentos.sh/blog/paracosm-launch/"),
         },
         {
             "action": "redirect",
             "description": "deleted blog posts",
             "expression": ends_with_clause(deleted_slugs),
-            "action_parameters": redirect("https://agentos.sh/en/blog/"),
+            "action_parameters": redirect("https://agentos.sh/blog/"),
         },
         {
             "action": "redirect",
@@ -108,6 +116,24 @@ print(json.dumps({
             "description": "/docs-generated/* to api docs",
             "expression": '(starts_with(http.request.uri.path, "/docs-generated/"))',
             "action_parameters": redirect("https://docs.agentos.sh/api/"),
+        },
+        # /en/... → /... so the default-locale prefix collapses into the
+        # canonical bare path. lib/seo/canonical.ts emits English URLs
+        # without the locale prefix; the static export still writes
+        # /en/<page>/ HTML files (and post-export.mjs mirrors them to
+        # bare paths). This rule makes any inbound link to /en/<page>/
+        # 301 to /<page>/ so Google consolidates them. Non-default
+        # locales (/es/, /fr/, ...) keep their prefix and are not
+        # affected. substring(path, 3) strips the leading "/en"
+        # (length 3); concat() prepends the host.
+        {
+            "action": "redirect",
+            "description": "/en/* collapse to canonical bare path",
+            "expression": '(starts_with(http.request.uri.path, "/en/") or http.request.uri.path eq "/en")',
+            "action_parameters": dynamic_redirect(
+                'concat("https://agentos.sh", '
+                'substring(http.request.uri.path, 3))'
+            ),
         },
     ],
 }))
@@ -164,14 +190,17 @@ verify() {
     fails=$((fails + 1))
   fi
 }
-verify "https://agentos.sh/blog/paracosm-2026-overview"                            "paracosm-launch"
-verify "https://agentos.sh/en/blog/paracosm-2026-overview/"                        "paracosm-launch"
-verify "https://agentos.sh/en/blog/cognitive-memory-beyond-rag"                    "/en/blog/"
-verify "https://agentos.sh/blog/longmemeval-s-85-pareto-win/"                      "/en/blog/"
+verify "https://agentos.sh/blog/paracosm-2026-overview"                            "agentos.sh/blog/paracosm-launch"
+verify "https://agentos.sh/en/blog/paracosm-2026-overview/"                        "agentos.sh/blog/paracosm-launch"
+verify "https://agentos.sh/blog/cognitive-memory-beyond-rag"                       "agentos.sh/blog/"
+verify "https://agentos.sh/blog/longmemeval-s-85-pareto-win/"                      "agentos.sh/blog/"
 verify "https://agentos.sh/blog/mars-genesis-vs-mirofish-multi-agent-simulation"   "docs.agentos.sh"
 verify "https://agentos.sh/docs/getting-started"                                   "docs.agentos.sh"
 verify "https://agentos.sh/en/docs/install"                                        "docs.agentos.sh"
 verify "https://agentos.sh/docs-generated/library/index.html"                      "docs.agentos.sh/api"
+verify "https://agentos.sh/en/about"                                               "agentos.sh/about"
+verify "https://agentos.sh/en/features/"                                           "agentos.sh/features/"
+verify "https://agentos.sh/en/"                                                    "agentos.sh/"
 
 if [[ "$fails" -gt 0 ]]; then
   echo "✗ $fails verification(s) failed" >&2

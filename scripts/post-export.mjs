@@ -4,8 +4,12 @@ import path from 'node:path';
 const locales = ['en', 'zh', 'ko', 'ja', 'es', 'de', 'fr', 'pt'];
 const outDir = path.resolve(process.cwd(), 'out');
 
-// Pages that need locale redirects (redirect /docs → /en/docs/, etc.)
-const localizedPages = ['docs', 'about', 'faq', 'blog', 'careers', 'legal'];
+// Default-locale top-level page directories. Each one in out/en/<page>/ is
+// copied recursively to out/<page>/ so the bare-path URL serves the real
+// English content directly. Cloudflare 301s /en/<page>/ → /<page>/ so the
+// /en/ form collapses into the canonical bare path. See
+// lib/seo/canonical.ts for the canonical strategy.
+const localizedPages = ['about', 'blog', 'careers', 'contact', 'docs', 'faq', 'features', 'guides', 'legal'];
 
 async function copyIfExists(src, dest) {
   try {
@@ -19,11 +23,24 @@ async function copyIfExists(src, dest) {
   }
 }
 
-async function ensureDir(dirPath) {
-  try {
-    await fs.mkdir(dirPath, { recursive: true });
-  } catch (error) {
-    if (error.code !== 'EEXIST') throw error;
+async function copyRecursive(src, dest) {
+  // Node 16+ supports fs.cp; use it when available, fall back to manual walk.
+  if (typeof fs.cp === 'function') {
+    await fs.cp(src, dest, { recursive: true, force: true });
+    return;
+  }
+  const stat = await fs.stat(src);
+  if (stat.isDirectory()) {
+    await fs.mkdir(dest, { recursive: true });
+    const entries = await fs.readdir(src, { withFileTypes: true });
+    await Promise.all(
+      entries.map((entry) =>
+        copyRecursive(path.join(src, entry.name), path.join(dest, entry.name))
+      )
+    );
+  } else if (stat.isFile()) {
+    await fs.mkdir(path.dirname(dest), { recursive: true });
+    await fs.copyFile(src, dest);
   }
 }
 
@@ -60,37 +77,17 @@ async function walkHtmlFiles(dir) {
   return out;
 }
 
-async function createRedirectHTML(targetPath) {
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=${targetPath}">
-  <link rel="canonical" href="${targetPath}">
-  <script>window.location.href="${targetPath}"</script>
-  <title>Redirecting...</title>
-</head>
-<body>
-  <p>Redirecting to <a href="${targetPath}">${targetPath}</a>...</p>
-</body>
-</html>`;
-}
-
 async function run() {
   // Serve the English homepage HTML directly at `/` instead of the
   // 64-byte meta-refresh stub from `public/index.html`. The stub
-  // imposes a ~750ms PageSpeed penalty (`redirects` opportunity) and
-  // there is no functional reason for the redirect: internal links go
-  // to `/en/...`, the in-HTML canonical points to `/en/`, and locale
-  // detection happens via middleware/links, not the URL of `/`.
-  //
+  // imposes a ~750ms PageSpeed penalty (`redirects` opportunity).
   // We overwrite `out/index.html` (which Next.js copied from
   // `public/index.html`) with the rendered `out/en/index.html`.
   try {
     const enHtmlSrc = path.join(outDir, 'en', 'index.html');
     const rootHtmlDest = path.join(outDir, 'index.html');
     await fs.copyFile(enHtmlSrc, rootHtmlDest);
-    console.log('[post-export] Replaced root index.html with /en/ homepage (kills redirect stub)');
+    console.log('[post-export] Replaced root index.html with /en/ homepage');
   } catch (error) {
     console.warn('[post-export] Failed to overwrite root index.html:', error.message);
   }
@@ -112,17 +109,26 @@ async function run() {
     })
   );
 
-  // Create redirect HTML files for non-locale paths
+  // Mirror the English page trees to bare paths so /<page>/ serves real
+  // content (matching the canonical URL emitted by lib/seo/canonical.ts).
+  // Earlier revisions wrote a meta-refresh stub at /<page>/ pointing to
+  // /en/<page>/; that was correct when the canonical was the /en/-
+  // prefixed URL. The canonical now is the bare path, so /<page>/ must
+  // serve content directly.
   await Promise.all(
     localizedPages.map(async (page) => {
-      const pageDir = path.join(outDir, page);
-      const indexFile = path.join(pageDir, 'index.html');
-      const targetPath = `/en/${page}/`;
-
-      await ensureDir(pageDir);
-      const redirectHtml = await createRedirectHTML(targetPath);
-      await fs.writeFile(indexFile, redirectHtml, 'utf-8');
-      console.log(`[post-export] Created redirect: /${page}/ → ${targetPath}`);
+      const src = path.join(outDir, 'en', page);
+      const dest = path.join(outDir, page);
+      try {
+        await copyRecursive(src, dest);
+        console.log(`[post-export] Mirrored /en/${page}/ → /${page}/`);
+      } catch (error) {
+        if (error.code === 'ENOENT') {
+          console.warn(`[post-export] Skipped /${page}/: /en/${page}/ missing`);
+        } else {
+          console.warn(`[post-export] Mirror /${page}/ failed:`, error.message);
+        }
+      }
     })
   );
 
@@ -161,4 +167,3 @@ run().catch((error) => {
   console.error('[post-export] Fatal error:', error);
   process.exit(1);
 });
-

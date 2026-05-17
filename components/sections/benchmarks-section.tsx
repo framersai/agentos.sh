@@ -400,7 +400,7 @@ export function BenchmarksSection() {
             <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
           <a
-            href="https://agentos.sh/en/blog/agentos-memory-sota-longmemeval/"
+            href="https://agentos.sh/blog/agentos-memory-sota-longmemeval/"
             className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-subtle)] px-6 py-3 text-sm font-medium text-[var(--color-text-primary)] transition-all hover:border-[var(--color-border-primary)] hover:bg-[var(--color-background-secondary)]"
           >
             {t('ctaReadAudit')}

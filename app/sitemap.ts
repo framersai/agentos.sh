@@ -2,36 +2,38 @@ import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/markdown';
 import { getAllJobs } from '@/lib/markdown';
 import { locales, defaultLocale } from '@/i18n';
-
-const baseUrl = 'https://agentos.sh';
+import { canonical } from '@/lib/seo/canonical';
 
 /**
- * The sitemap emits only the default-locale (`/en/...`) URL for each page,
- * with `alternates.languages` pointing to every locale variant. Earlier
- * revisions emitted all 8 locales as top-level sitemap entries; that
- * produced 192 URLs, of which Google Search Console flagged 333 as
- * "Discovered – currently not indexed" because the non-English translations
- * are largely auto-translated UI chrome wrapping the same English content,
- * and Google decided indexing them wasn't worth the crawl budget.
+ * The sitemap emits the canonical (bare-path, no locale prefix for the
+ * default locale) URL per page, with `alternates.languages` pointing to
+ * every locale variant. Earlier revisions emitted all 8 locales as
+ * top-level sitemap entries; that produced 192 URLs, of which Google
+ * Search Console flagged 333 as "Discovered – currently not indexed"
+ * because the non-English translations are largely auto-translated UI
+ * chrome wrapping the same English content, and Google decided
+ * indexing them wasn't worth the crawl budget.
  *
  * The current strategy:
- *   - Sitemap emits the canonical English URL per page (~24 URLs total).
- *   - `alternates.languages` still lists all 8 locales so Google knows the
- *     translations exist and can serve them to users in matching regions.
- *   - The locale-prefixed HTML files (`/es/`, `/fr/`, ...) still ship in
- *     the static export and remain reachable; we just stop pushing Google
- *     to index them.
- *
- * The app router still uses `/[locale]/...` for every public route, so the
- * sitemap continues to emit `/en/...` (not bare `/...`). Switching to
- * `localePrefix: 'as-needed'` is a separate change.
+ *   - Sitemap emits the default-locale URL at the bare path (no
+ *     `/en/` prefix), matching the `canonical()` helper's output.
+ *     Google was already overriding the user-declared `/en/`
+ *     canonical with the bare-path version anyway (~19 pages in the
+ *     "Duplicate, Google chose different canonical" bucket).
+ *   - `alternates.languages` still lists all 8 locales so Google
+ *     knows the translations exist and can serve them to users in
+ *     matching regions.
+ *   - The locale-prefixed HTML files (`/en/`, `/es/`, …) still ship
+ *     in the static export and remain reachable; Cloudflare 301s
+ *     `/en/...` to the bare path so any inbound link to `/en/...`
+ *     collapses into the canonical URL.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
   const jobs = getAllJobs();
 
   const staticPages = [
-    { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
+    { path: '/', priority: 1.0, changeFrequency: 'weekly' as const },
     { path: '/features', priority: 0.95, changeFrequency: 'weekly' as const },
     { path: '/about', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/blog', priority: 0.9, changeFrequency: 'weekly' as const },
@@ -48,12 +50,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const alternatesFor = (path: string) => ({
     languages: Object.fromEntries(
-      locales.map((alt) => [alt, `${baseUrl}/${alt}${path}`]),
+      locales.map((alt) => [alt, canonical(alt, path)]),
     ),
   });
 
   const staticUrls: MetadataRoute.Sitemap = staticPages.map((page) => ({
-    url: `${baseUrl}/${defaultLocale}${page.path}`,
+    url: canonical(defaultLocale, page.path),
     lastModified: new Date(),
     changeFrequency: page.changeFrequency,
     priority: page.priority,
@@ -61,7 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const blogUrls: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${baseUrl}/${defaultLocale}/blog/${post.slug}`,
+    url: canonical(defaultLocale, `/blog/${post.slug}`),
     lastModified: new Date(post.date),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
@@ -69,7 +71,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const careerUrls: MetadataRoute.Sitemap = jobs.map((job) => ({
-    url: `${baseUrl}/${defaultLocale}/careers/${job.slug}`,
+    url: canonical(defaultLocale, `/careers/${job.slug}`),
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.6,

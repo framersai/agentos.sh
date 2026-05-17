@@ -78,14 +78,19 @@ function buildUrlList(): string[] {
 
   const urls: string[] = [];
 
+  // Default-locale URLs are emitted without the locale prefix to match
+  // the canonical form in app/sitemap.ts and lib/seo/canonical.ts. The
+  // DEFAULT_LOCALE constant is retained only to make this comment
+  // legible — it is intentionally not concatenated into the URLs.
+  void DEFAULT_LOCALE;
   for (const path of STATIC_PATHS) {
-    urls.push(`${BASE}/${DEFAULT_LOCALE}${path}`);
+    urls.push(`${BASE}${path || '/'}`);
   }
   for (const slug of blogSlugs) {
-    urls.push(`${BASE}/${DEFAULT_LOCALE}/blog/${slug}`);
+    urls.push(`${BASE}/blog/${slug}/`);
   }
   for (const slug of jobSlugs) {
-    urls.push(`${BASE}/${DEFAULT_LOCALE}/careers/${slug}`);
+    urls.push(`${BASE}/careers/${slug}/`);
   }
 
   // Deduplicate just in case anything overlaps.
