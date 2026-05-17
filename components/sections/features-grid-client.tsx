@@ -82,7 +82,7 @@ const safeAgent = agent({
   instructions: 'You are a helpful assistant.',
   guardrails: ['pii-redaction', 'prompt-injection-defense'],
   maxSteps: 5,           // limits runaway tool loops
-  maxTokens: 4096,       // caps output length
+  maxTokens: 8000,       // caps output length (Anthropic default: 16000)
 })
 const result = await safeAgent.generate('Summarize this document')`
       }
