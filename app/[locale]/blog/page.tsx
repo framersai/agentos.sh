@@ -106,10 +106,15 @@ export default async function BlogPage({ params: { locale } }: Props) {
                     >
                       {post.image && (
                         <div className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--color-background-tertiary)]">
+                          {/* `aria-hidden` keeps screen readers from
+                              double-reading the image alongside the
+                              link title above; `alt` is still populated
+                              so Google Image Search can index the post
+                              thumbnail with the post title as context. */}
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={post.image}
-                            alt=""
+                            alt={post.title}
                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                             aria-hidden
                           />
