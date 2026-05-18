@@ -67,6 +67,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
                   var theme = localStorage.getItem(themeKey) || 'twilight-neo';
                   document.documentElement.setAttribute('data-theme', theme);
+
+                  // BenchmarkBanner dismissal — sync-check before paint so
+                  // returning visitors don't see the banner flash in then
+                  // out (the React useState/useEffect path renders visible
+                  // → measures localStorage → hides, producing a ~70px CLS
+                  // shift Lighthouse attributed 0.16 to on mobile). Keep
+                  // the storage key in sync with the BenchmarkBanner
+                  // STORAGE_KEY constant.
+                  if (localStorage.getItem('agentos-banner-2026-04-29') === 'dismissed') {
+                    document.documentElement.setAttribute('data-banner-dismissed', 'true');
+                  }
                 } catch (e) { /* swallow: localStorage may be unavailable in some embeds */ }
               })();
             `,
@@ -88,6 +99,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
           .hero-critical { display: flex; flex-direction: column; justify-content: center; position: relative; min-height: 100vh; overflow: hidden; }
           .hero-critical > * { position: relative; z-index: 1; }
+
+          /* Banner dismissal — paired with the bootstrap script that sets
+             data-banner-dismissed before paint. The banner's own
+             useState(false) default would otherwise render visible then
+             vanish on hydration, shifting the hero down by ~70px. */
+          html[data-banner-dismissed="true"] [aria-label="Latest benchmark result"] { display: none; }
 
           @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
