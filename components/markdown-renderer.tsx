@@ -466,6 +466,16 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             if (!src) {
               return <img src={src} alt={alt} style={style} {...props} />;
             }
+            // /img/diagrams/*.svg files are owned by the global
+            // DiagramZoom component, which renders them on a
+            // prefers-color-scheme-matched canvas (the SVGs themselves
+            // use @media (prefers-color-scheme) for their fills, so a
+            // dark backdrop would clash in light mode). Wrapping them
+            // here would open both modals on a single click and force
+            // the user to dismiss twice.
+            if (String(src).includes('/img/diagrams/')) {
+              return <img src={src} alt={alt} style={style} {...props} />;
+            }
             const handleOpen = () => openZoom(String(src), String(alt ?? ''));
             const handleKey = (e: KeyboardEvent<HTMLSpanElement>) => {
               if (e.key === 'Enter' || e.key === ' ') {
