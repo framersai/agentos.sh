@@ -26,6 +26,7 @@ interface AgentCall {
 }
 
 interface DemoOutput {
+  demoGif?: { src: string; webpSrc?: string; alt: string; width: number; height: number }
   forge?: { agent: string; approved: boolean; comment?: string }
   finalAnswer?: string
   finalAnswerLabel?: string
@@ -268,6 +269,13 @@ const demos: DemoData[] = [
     language: 'typescript',
     code: EMERGENT_CODE,
     output: {
+      demoGif: {
+        src: '/img/blog/og/agentos-forge-demo.gif',
+        webpSrc: '/img/blog/og/agentos-forge-demo.webp',
+        alt: 'Three AgentOS agents with distinct HEXACO personalities collaborate on a code review, forge a new tool at runtime, the LLM judge approves the spec, and all three invoke it on the next turn.',
+        width: 1600,
+        height: 920,
+      },
       forge: {
         agent: 'security_auditor',
         approved: true,
@@ -1084,6 +1092,25 @@ function OutputPanel({ demo }: { demo: DemoData }) {
         </span>
       </div>
       <div className="px-5 py-4">
+        {output.demoGif && (
+          <figure className="mb-4 -mx-1 overflow-hidden rounded-lg border border-[var(--color-border-subtle)] bg-black/40">
+            <picture>
+              {output.demoGif.webpSrc && (
+                <source srcSet={output.demoGif.webpSrc} type="image/webp" />
+              )}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={output.demoGif.src}
+                alt={output.demoGif.alt}
+                width={output.demoGif.width}
+                height={output.demoGif.height}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-auto block"
+              />
+            </picture>
+          </figure>
+        )}
         {output.forge && <ForgeBadge {...output.forge} />}
         {output.dagTiers && <DagTiersBlock tiers={output.dagTiers} />}
         {output.missionSteps && output.missionArtifacts && (

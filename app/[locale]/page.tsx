@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import { HeroSection } from '../../components/sections/hero-section'
 import { BenchmarkBanner } from '../../components/sections/benchmark-banner'
 import { DiscordCTA } from '../../components/sections/discord-cta'
+import { ForgeDemoSection } from '../../components/sections/forge-demo-section'
 import { ParacosmBanner } from '../../components/sections/paracosm-banner'
 import { WorkbenchCTA } from '../../components/sections/workbench-cta'
 import { SchemaMarkup } from '../../components/seo/seo-metadata'
@@ -90,6 +91,13 @@ export default function LandingPageRedesigned() {
 
         {/* Hero Section - SSR enabled for faster LCP */}
         <HeroSection />
+
+        {/* Forge demo. Animated WebP + GIF fallback. Lazy-loaded so it
+            sits below the LCP element. This is the launch-day visual peak
+            that the Reddit/HN posts point at; it lands directly under the
+            hero so visitors see proof of the spawn_specialist+judge loop
+            before they scroll to anything else. */}
+        <ForgeDemoSection />
 
         {/* Discord CTA — official Wilds AI community for AgentOS + Paracosm support */}
         <DiscordCTA />
