@@ -120,7 +120,7 @@ export function DocSearch({ triggerClassName, triggerLabel }: DocSearchProps) {
       { title: "Telephony Providers", url: "/features/telephony-providers", content: "twilio telnyx plivo telephony call webhook phone inbound outbound" },
       { title: "Extensions Overview", url: "/extensions", content: "extension catalog registry channel adapter plugin integration ecosystem" },
       { title: "Evaluation Framework", url: "/features/evaluation-framework", content: "eval benchmark grader candidate experiment evaluation testing quality metrics" },
-      { title: "LLM Providers", url: "/features/llm-providers", content: "openai anthropic google groq together ollama deepseek provider model llm" },
+      { title: "LLM Providers", url: "/features/llm-providers", content: "openai anthropic google groq together ollama mistral xai openrouter provider model llm" },
       { title: "Tool Calling", url: "/architecture/tool-calling-and-loading", content: "tool calling function tools loading registration use call invoke schema" },
       { title: "Skills", url: "/skills/skills-extension", content: "skill skills extension registry curated prompt instruction behavior" },
       { title: "API Reference", url: "/api/", content: "typedoc api reference class interface types sdk typescript" },

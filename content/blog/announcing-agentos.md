@@ -1,7 +1,7 @@
 ---
 title: "Announcing AgentOS: Open-Source TypeScript AI Agent Runtime"
 date: "2026-04-12"
-excerpt: "AgentOS is an open-source TypeScript runtime for building AI agents with cognitive memory, HEXACO personality, multi-agent orchestration, runtime tool forging, 37 channel adapters, and 21 LLM providers. Apache 2.0 licensed."
+excerpt: "AgentOS is an open-source TypeScript runtime for building AI agents with cognitive memory, HEXACO personality, multi-agent orchestration, runtime tool forging, 37 channel adapters, and 11 LLM providers. Apache 2.0 licensed."
 author: "AgentOS Team"
 category: "Announcements"
 audience: "evaluator"
@@ -87,7 +87,7 @@ An [`EmergentJudge`](https://docs.agentos.sh/api/classes/EmergentJudge) reviews 
 
 ### Production Infrastructure
 
-- **[21 LLM providers](https://docs.agentos.sh/features/llm-output-validation)** with automatic fallback chains: OpenAI, Anthropic, Gemini, Ollama, OpenRouter, Groq, Together, Fireworks, Perplexity, Mistral, Cohere, DeepSeek, xAI, Bedrock, Qwen, Moonshot, plus [CLI bridges](https://docs.agentos.sh/features/cli-providers) for Claude Code and Gemini CLI
+- **[11 LLM providers](https://docs.agentos.sh/features/llm-output-validation)** with automatic fallback chains: OpenAI, Anthropic, Gemini, Ollama, OpenRouter, Groq, Together, Mistral, xAI, plus [CLI bridges](https://docs.agentos.sh/features/cli-providers) for Claude Code and Gemini CLI
 - **[37 channel adapters](https://docs.agentos.sh/features/channels)**: Telegram, Discord, Slack, WhatsApp, email, webchat, Twitter/X, Instagram, Reddit, Bluesky, Mastodon, and [26 more](https://docs.agentos.sh/features/channels)
 - **[6 guardrail packs](https://docs.agentos.sh/features/guardrails)** across [5 security tiers](https://docs.agentos.sh/features/guardrails) from `permissive` to `paranoid`: [PII redaction](https://docs.agentos.sh/features/safety-primitives) (4-tier detection: regex + NLP + NER + LLM), [prompt injection defense](https://docs.agentos.sh/features/guardrails-architecture), [grounding guards](https://docs.agentos.sh/features/citation-verification), [code safety scanning](https://docs.agentos.sh/features/guardrails), topicality enforcement, content policy
 - **[Multimodal RAG](https://docs.agentos.sh/features/multimodal-rag)**: [7 vector backends](https://docs.agentos.sh/features/rag-memory) (SQLite to Qdrant), [4 retrieval strategies](https://docs.agentos.sh/features/rag-memory), [GraphRAG](https://docs.agentos.sh/features/rag-memory) with [Louvain community detection](https://doi.org/10.1088/1742-5468/2008/10/P10008) ([Blondel et al., 2008](https://doi.org/10.1088/1742-5468/2008/10/P10008)), [10 document loaders](https://docs.agentos.sh/features/multimodal-rag)
@@ -140,7 +140,7 @@ This is what an honest benchmark looks like. If something on this list is wrong,
 
 **Is AgentOS a LangGraph alternative?** It's an alternative if your job is "build an AI agent with memory and personality and tools." It is not an alternative if your job is "compose Python research code into a workflow." Different jobs. We have a [head-to-head comparison post](/blog/agentos-vs-langgraph-vs-crewai) with honest-cost-rule applied.
 
-**Does AgentOS lock me into a specific LLM?** No. 21 provider adapters ship; you can add yours in ~50 lines if it's not in the list. The provider abstraction is decoupled from the agent abstraction.
+**Does AgentOS lock me into a specific LLM?** No. 11 provider adapters ship; you can add yours in ~50 lines if it's not in the list. The provider abstraction is decoupled from the agent abstraction.
 
 **What's the deal with HEXACO personality?** It's optional. Pass `personality` and the runtime biases retrieval, decision routing, and tool selection by the trait vector. Don't pass it and the runtime acts personality-neutral. We don't make HEXACO the centerpiece because not every agent needs it; we just make it work cleanly when you want it.
 

@@ -1,11 +1,11 @@
 {
   "metadata": {
     "title": "AgentOS — 適応型インテリジェンスを備えた自律AIエージェントの構築",
-    "description": "適応型インテリジェンスと創発的行動を備えた自律AIエージェントを構築。マルチモーダルRAG、認知メモリ、ストリーミングガードレール、音声パイプライン、21のLLMプロバイダー。オープンソースTypeScriptランタイム。",
+    "description": "適応型インテリジェンスと創発的行動を備えた自律AIエージェントを構築。マルチモーダルRAG、認知メモリ、ストリーミングガードレール、音声パイプライン、11のLLMプロバイダー。オープンソースTypeScriptランタイム。",
     "ogTitle": "AgentOS — 適応型インテリジェンスを備えた自律AIエージェントの構築",
-    "ogDescription": "適応型インテリジェンスと創発的行動を備えた自律AIエージェントを構築。マルチモーダルRAG、認知メモリ、ストリーミングガードレール、音声パイプライン、21のLLMプロバイダー。オープンソースTypeScriptランタイム。",
+    "ogDescription": "適応型インテリジェンスと創発的行動を備えた自律AIエージェントを構築。マルチモーダルRAG、認知メモリ、ストリーミングガードレール、音声パイプライン、11のLLMプロバイダー。オープンソースTypeScriptランタイム。",
     "twitterTitle": "AgentOS — 適応型インテリジェンスを備えた自律AIエージェントの構築",
-    "twitterDescription": "適応型インテリジェンスと創発的行動を備えた自律AIエージェントを構築。認知メモリ、マルチモーダルRAG、ストリーミングガードレール、21のLLMプロバイダー。オープンソースTypeScriptランタイム。"
+    "twitterDescription": "適応型インテリジェンスと創発的行動を備えた自律AIエージェントを構築。認知メモリ、マルチモーダルRAG、ストリーミングガードレール、11のLLMプロバイダー。オープンソースTypeScriptランタイム。"
   },
   "nav": {
     "features": "機能",
@@ -255,7 +255,7 @@
   "skipToMain": "メインコンテンツにスキップ",
   "enterprise": {
     "title": "エンタープライズ対応インフラストラクチャ",
-    "subtitle": "5段階セキュリティ、6つのガードレール拡張、21のLLMプロバイダー、37チャネル、認知メモリ — 初日から本番対応",
+    "subtitle": "5段階セキュリティ、6つのガードレール拡張、11のLLMプロバイダー、37チャネル、認知メモリ — 初日から本番対応",
     "features": {
       "security": {
         "title": "5段階セキュリティ",
@@ -305,7 +305,7 @@
         "title": "本番スケール",
         "items": [
           "105以上の拡張機能、80のキュレーション済みスキル",
-          "21のLLMプロバイダー、37のチャネルアダプター",
+          "11のLLMプロバイダー、37のチャネルアダプター",
           "動画、音声、画像生成",
           "ツールフォージングによる自己改善エージェント"
         ]
@@ -671,7 +671,7 @@
       },
       "llmCore": {
         "name": "LLM コア",
-        "description": "自動フォールバックチェーンを備えた 21 種の LLM プロバイダ。プロバイダーファーストの API 設計。各 GMI の中核をなす思考エンジン。"
+        "description": "自動フォールバックチェーンを備えた 11 種の LLM プロバイダ。プロバイダーファーストの API 設計。各 GMI の中核をなす思考エンジン。"
       }
     },
     "comparison": {
@@ -689,7 +689,7 @@
       },
       "providers": {
         "traditional": "単一モデル",
-        "gmi": "自動フォールバックを備えた 21 プロバイダ"
+        "gmi": "自動フォールバックを備えた 11 プロバイダ"
       },
       "tools": {
         "traditional": "手動でのツール接続",
@@ -872,7 +872,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "AgentOS とは?",
-        "answer": "AgentOS は本番運用 AI エージェントを構築するためのオープンソースの TypeScript ランタイムで、Manic Agency LLC(manic.agency)と Frame.dev によって開発されています。マルチエージェント・オーケストレーション、認知メモリ、マルチモーダル RAG、組み込みの安全ガードレール(PII 編集、プロンプトインジェクション防御、コンテンツモデレーション)、音声パイプライン、37 のチャネルアダプタ、21 の LLM プロバイダ統合を提供します。AgentOS は AI ネイティブのゲーミングプラットフォーム Wilds.ai の AI システムも支えています。セルフホスト可能で無料です。"
+        "answer": "AgentOS は本番運用 AI エージェントを構築するためのオープンソースの TypeScript ランタイムで、Manic Agency LLC(manic.agency)と Frame.dev によって開発されています。マルチエージェント・オーケストレーション、認知メモリ、マルチモーダル RAG、組み込みの安全ガードレール(PII 編集、プロンプトインジェクション防御、コンテンツモデレーション)、音声パイプライン、37 のチャネルアダプタ、11 の LLM プロバイダ統合を提供します。AgentOS は AI ネイティブのゲーミングプラットフォーム Wilds.ai の AI システムも支えています。セルフホスト可能で無料です。"
       },
       "isOpenSource": {
         "question": "AgentOS は無料でオープンソースですか?",
@@ -880,7 +880,7 @@
       },
       "llmProviders": {
         "question": "どの LLM プロバイダーがサポートされていますか?",
-        "answer": "AgentOS は OpenAI、Anthropic、Google Gemini、Mistral、Cohere、Ollama、OpenRouter、Together AI、Fireworks AI、Groq、Perplexity、DeepSeek、xAI(Grok)、Replicate、Anyscale、AI21 Labs、Aleph Alpha、AWS Bedrock、Azure OpenAI、Cloudflare Workers AI、HuggingFace Inference を含む 21 種の LLM プロバイダをサポートしています。プロバイダのフォールバックチェーンにより自動フェイルオーバーが可能です。"
+        "answer": "AgentOS は OpenAI、Anthropic、Google Gemini、Groq、Together AI、Mistral、xAI(Grok)、OpenRouter、Ollama、Claude Code CLI、Gemini CLI を含む 11 種の LLM プロバイダをサポートしています。プロバイダのフォールバックチェーンにより自動フェイルオーバーが可能です。"
       },
       "language": {
         "question": "AgentOS はどのプログラミング言語で構築されていますか?",
@@ -1209,7 +1209,7 @@
         ]
       },
       "providers": {
-        "title": "21 種の LLM プロバイダ",
+        "title": "11 種の LLM プロバイダ",
         "description": "OpenAI、Anthropic、Gemini、Ollama、Groq他16以上、自動フォールバックチェーンとプロバイダーファーストAPI",
         "features": [
           "自動フォールバック (402/429/5xx)",

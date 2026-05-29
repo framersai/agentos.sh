@@ -1,11 +1,11 @@
 {
   "metadata": {
     "title": "AgentOS — Construire des Agents IA Autonomes avec Intelligence Adaptative",
-    "description": "Construisez des agents IA autonomes avec intelligence adaptative et comportements émergents. RAG multimodal, mémoire cognitive, garde-fous en streaming, pipeline vocal et 21 fournisseurs LLM. Runtime TypeScript open source.",
+    "description": "Construisez des agents IA autonomes avec intelligence adaptative et comportements émergents. RAG multimodal, mémoire cognitive, garde-fous en streaming, pipeline vocal et 11 fournisseurs LLM. Runtime TypeScript open source.",
     "ogTitle": "AgentOS — Construire des Agents IA Autonomes avec Intelligence Adaptative",
-    "ogDescription": "Construisez des agents IA autonomes avec intelligence adaptative et comportements émergents. RAG multimodal, mémoire cognitive, garde-fous en streaming, pipeline vocal et 21 fournisseurs LLM. Runtime TypeScript open source.",
+    "ogDescription": "Construisez des agents IA autonomes avec intelligence adaptative et comportements émergents. RAG multimodal, mémoire cognitive, garde-fous en streaming, pipeline vocal et 11 fournisseurs LLM. Runtime TypeScript open source.",
     "twitterTitle": "AgentOS — Construire des Agents IA Autonomes avec Intelligence Adaptative",
-    "twitterDescription": "Construisez des agents IA autonomes avec intelligence adaptative et comportements émergents. Mémoire cognitive, RAG multimodal, garde-fous en streaming et 21 fournisseurs LLM. Runtime TypeScript open source."
+    "twitterDescription": "Construisez des agents IA autonomes avec intelligence adaptative et comportements émergents. Mémoire cognitive, RAG multimodal, garde-fous en streaming et 11 fournisseurs LLM. Runtime TypeScript open source."
   },
   "nav": {
     "features": "Fonctionnalités",
@@ -389,8 +389,8 @@
         ]
       },
       "providers": {
-        "title": "21 Fournisseurs LLM",
-        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq et 16 autres avec chaines de repli automatiques et API provider-first",
+        "title": "11 Fournisseurs LLM",
+        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq et 6 autres avec chaines de repli automatiques et API provider-first",
         "features": [
           "Auto fallback (402/429/5xx)",
           "Provider-first API",
@@ -407,7 +407,7 @@
   },
   "enterprise": {
     "title": "Infrastructure Prête pour l'Entreprise",
-    "subtitle": "Sécurité à 5 niveaux, 6 extensions de guardrails, 21 fournisseurs LLM, 37 canaux et mémoire cognitive — prêt pour la production dès le premier jour",
+    "subtitle": "Sécurité à 5 niveaux, 6 extensions de guardrails, 11 fournisseurs LLM, 37 canaux et mémoire cognitive — prêt pour la production dès le premier jour",
     "features": {
       "security": {
         "title": "Sécurité à 5 Niveaux",
@@ -457,7 +457,7 @@
         "title": "Échelle de Production",
         "items": [
           "115 extensions, 88 skills curés",
-          "21 fournisseurs LLM, 37 adaptateurs de canal",
+          "11 fournisseurs LLM, 37 adaptateurs de canal",
           "Génération vidéo, audio et image",
           "Agents auto-améliorants avec forge d'outils"
         ]
@@ -823,7 +823,7 @@
       },
       "llmCore": {
         "name": "Noyau LLM",
-        "description": "21 fournisseurs LLM avec chaînes de fallback automatiques. Conception d’API provider-first. Le moteur de pensée au cœur de chaque GMI."
+        "description": "11 fournisseurs LLM avec chaînes de fallback automatiques. Conception d’API provider-first. Le moteur de pensée au cœur de chaque GMI."
       }
     },
     "comparison": {
@@ -841,7 +841,7 @@
       },
       "providers": {
         "traditional": "Modèle unique",
-        "gmi": "21 fournisseurs avec fallback automatique"
+        "gmi": "11 fournisseurs avec fallback automatique"
       },
       "tools": {
         "traditional": "Câblage manuel des outils",
@@ -1024,7 +1024,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "Qu’est-ce qu’AgentOS ?",
-        "answer": "AgentOS est un runtime TypeScript open source pour construire des agents IA en production, développé par Manic Agency LLC (manic.agency) et Frame.dev. Il fournit une orchestration multi-agents, une mémoire cognitive, du RAG multimodal, des guardrails de sécurité intégrés (rédaction de PII, défense contre l’injection de prompt, modération de contenu), des pipelines vocaux, 37 adaptateurs de canal et 21 intégrations de fournisseurs LLM. AgentOS alimente également les systèmes IA derrière Wilds.ai, une plateforme de jeu AI-native. Auto-hébergeable et gratuit."
+        "answer": "AgentOS est un runtime TypeScript open source pour construire des agents IA en production, développé par Manic Agency LLC (manic.agency) et Frame.dev. Il fournit une orchestration multi-agents, une mémoire cognitive, du RAG multimodal, des guardrails de sécurité intégrés (rédaction de PII, défense contre l’injection de prompt, modération de contenu), des pipelines vocaux, 37 adaptateurs de canal et 11 intégrations de fournisseurs LLM. AgentOS alimente également les systèmes IA derrière Wilds.ai, une plateforme de jeu AI-native. Auto-hébergeable et gratuit."
       },
       "isOpenSource": {
         "question": "AgentOS est-il gratuit et open source ?",
@@ -1032,7 +1032,7 @@
       },
       "llmProviders": {
         "question": "Quels fournisseurs LLM sont pris en charge ?",
-        "answer": "AgentOS prend en charge 21 fournisseurs LLM, dont OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Ollama, OpenRouter, Together AI, Fireworks AI, Groq, Perplexity, DeepSeek, xAI (Grok), Replicate, Anyscale, AI21 Labs, Aleph Alpha, AWS Bedrock, Azure OpenAI, Cloudflare Workers AI et HuggingFace Inference. Les chaînes de fallback de fournisseur permettent un basculement automatique."
+        "answer": "AgentOS prend en charge 11 fournisseurs LLM, dont OpenAI, Anthropic, Google Gemini, Groq, Together AI, Mistral, xAI (Grok), OpenRouter, Ollama, Claude Code CLI, Gemini CLI. Les chaînes de fallback de fournisseur permettent un basculement automatique."
       },
       "language": {
         "question": "Dans quel langage de programmation AgentOS est-il construit ?",

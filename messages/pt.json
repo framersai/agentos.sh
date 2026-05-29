@@ -1,11 +1,11 @@
 {
   "metadata": {
     "title": "AgentOS — Construa Agentes de IA Autônomos com Inteligência Adaptativa",
-    "description": "Construa agentes de IA autônomos com inteligência adaptativa e comportamentos emergentes. RAG multimodal, memória cognitiva, guardrails em streaming, pipeline de voz e 21 provedores LLM. Runtime TypeScript open source.",
+    "description": "Construa agentes de IA autônomos com inteligência adaptativa e comportamentos emergentes. RAG multimodal, memória cognitiva, guardrails em streaming, pipeline de voz e 11 provedores LLM. Runtime TypeScript open source.",
     "ogTitle": "AgentOS — Construa Agentes de IA Autônomos com Inteligência Adaptativa",
-    "ogDescription": "Construa agentes de IA autônomos com inteligência adaptativa e comportamentos emergentes. RAG multimodal, memória cognitiva, guardrails em streaming, pipeline de voz e 21 provedores LLM. Runtime TypeScript open source.",
+    "ogDescription": "Construa agentes de IA autônomos com inteligência adaptativa e comportamentos emergentes. RAG multimodal, memória cognitiva, guardrails em streaming, pipeline de voz e 11 provedores LLM. Runtime TypeScript open source.",
     "twitterTitle": "AgentOS — Construa Agentes de IA Autônomos com Inteligência Adaptativa",
-    "twitterDescription": "Construa agentes de IA autônomos com inteligência adaptativa e comportamentos emergentes. Memória cognitiva, RAG multimodal, guardrails em streaming e 21 provedores LLM. Runtime TypeScript open source."
+    "twitterDescription": "Construa agentes de IA autônomos com inteligência adaptativa e comportamentos emergentes. Memória cognitiva, RAG multimodal, guardrails em streaming e 11 provedores LLM. Runtime TypeScript open source."
   },
   "nav": {
     "features": "Recursos",
@@ -255,7 +255,7 @@
   "skipToMain": "Ir para o conteúdo principal",
   "enterprise": {
     "title": "Infraestrutura Pronta para Empresas",
-    "subtitle": "Segurança de 5 níveis, 6 extensões de guardrails, 21 provedores LLM, 37 canais e memória cognitiva — pronto para produção desde o primeiro dia",
+    "subtitle": "Segurança de 5 níveis, 6 extensões de guardrails, 11 provedores LLM, 37 canais e memória cognitiva — pronto para produção desde o primeiro dia",
     "features": {
       "security": {
         "title": "Segurança de 5 Níveis",
@@ -305,7 +305,7 @@
         "title": "Escala de Produção",
         "items": [
           "115 extensões, 88 skills curados",
-          "21 provedores LLM, 37 adaptadores de canal",
+          "11 provedores LLM, 37 adaptadores de canal",
           "Geração de vídeo, áudio e imagem",
           "Agentes auto-aperfeiçoantes com forja de ferramentas"
         ]
@@ -671,7 +671,7 @@
       },
       "llmCore": {
         "name": "Núcleo LLM",
-        "description": "21 provedores de LLM com cadeias de fallback automáticas. Design de API provider-first. O motor de pensamento no coração de cada GMI."
+        "description": "11 provedores de LLM com cadeias de fallback automáticas. Design de API provider-first. O motor de pensamento no coração de cada GMI."
       }
     },
     "comparison": {
@@ -689,7 +689,7 @@
       },
       "providers": {
         "traditional": "Modelo único",
-        "gmi": "21 provedores com fallback automático"
+        "gmi": "11 provedores com fallback automático"
       },
       "tools": {
         "traditional": "Conexão manual de ferramentas",
@@ -872,7 +872,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "O que é AgentOS?",
-        "answer": "AgentOS é um runtime TypeScript open-source para construir agentes de IA em produção, desenvolvido pela Manic Agency LLC (manic.agency) e Frame.dev. Oferece orquestração multi-agente, memória cognitiva, RAG multimodal, guardrails de segurança integrados (redação de PII, defesa contra prompt injection, moderação de conteúdo), pipelines de voz, 37 adaptadores de canal e 21 integrações de provedores de LLM. AgentOS também alimenta os sistemas de IA por trás do Wilds.ai, uma plataforma de jogos AI-native. Self-hostable e gratuito."
+        "answer": "AgentOS é um runtime TypeScript open-source para construir agentes de IA em produção, desenvolvido pela Manic Agency LLC (manic.agency) e Frame.dev. Oferece orquestração multi-agente, memória cognitiva, RAG multimodal, guardrails de segurança integrados (redação de PII, defesa contra prompt injection, moderação de conteúdo), pipelines de voz, 37 adaptadores de canal e 11 integrações de provedores de LLM. AgentOS também alimenta os sistemas de IA por trás do Wilds.ai, uma plataforma de jogos AI-native. Self-hostable e gratuito."
       },
       "isOpenSource": {
         "question": "AgentOS é gratuito e open source?",
@@ -880,7 +880,7 @@
       },
       "llmProviders": {
         "question": "Quais provedores de LLM são suportados?",
-        "answer": "AgentOS suporta 21 provedores de LLM, incluindo OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Ollama, OpenRouter, Together AI, Fireworks AI, Groq, Perplexity, DeepSeek, xAI (Grok), Replicate, Anyscale, AI21 Labs, Aleph Alpha, AWS Bedrock, Azure OpenAI, Cloudflare Workers AI e HuggingFace Inference. Cadeias de fallback de provedor permitem failover automático."
+        "answer": "AgentOS suporta 11 provedores de LLM, incluindo OpenAI, Anthropic, Google Gemini, Groq, Together AI, Mistral, xAI (Grok), OpenRouter, Ollama, Claude Code CLI, Gemini CLI. Cadeias de fallback de provedor permitem failover automático."
       },
       "language": {
         "question": "Em que linguagem de programação AgentOS é construído?",
@@ -1209,8 +1209,8 @@
         ]
       },
       "providers": {
-        "title": "21 Provedores de LLM",
-        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq e mais 16 com cadeias de fallback automaticas e API provider-first",
+        "title": "11 Provedores de LLM",
+        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq e mais 6 com cadeias de fallback automaticas e API provider-first",
         "features": [
           "Auto fallback (402/429/5xx)",
           "Provider-first API",

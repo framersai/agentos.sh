@@ -32,7 +32,7 @@ export OPENAI_API_KEY=sk-your-key
 # or ANTHROPIC_API_KEY, GEMINI_API_KEY, GROQ_API_KEY, etc.
 ```
 
-AgentOS auto-detects which provider you have configured. Supports [21 LLM providers](https://docs.agentos.sh/features/llm-output-validation) out of the box:
+AgentOS auto-detects which provider you have configured. Supports [11 LLM providers](https://docs.agentos.sh/features/llm-output-validation) out of the box:
 
 | Provider | API Key Variable | Models |
 |----------|-----------------|--------|
@@ -43,9 +43,10 @@ AgentOS auto-detects which provider you have configured. Supports [21 LLM provid
 | [Groq](https://groq.com/) | `GROQ_API_KEY` | Llama 3, Mixtral |
 | [OpenRouter](https://openrouter.ai/) | `OPENROUTER_API_KEY` | 200+ models |
 | [Together](https://www.together.ai/) | `TOGETHER_API_KEY` | Open-source models |
-| [Fireworks](https://fireworks.ai/) | `FIREWORKS_API_KEY` | Llama 3, Mixtral |
-| [DeepSeek](https://www.deepseek.com/) | `DEEPSEEK_API_KEY` | DeepSeek V3, R1 |
-| + [12 more](https://docs.agentos.sh/getting-started) | Various | Perplexity, Mistral, Cohere, xAI, Bedrock, Qwen, Moonshot, CLI bridges |
+| [Mistral](https://mistral.ai/) | `MISTRAL_API_KEY` | Mistral Large, Small |
+| [xAI](https://x.ai/) | `XAI_API_KEY` | Grok 2 |
+| [Claude Code CLI](https://docs.agentos.sh/features/cli-providers) | PATH detection | Sonnet / Opus via subscription |
+| [Gemini CLI](https://docs.agentos.sh/features/cli-providers) | PATH detection | Gemini via subscription |
 
 ## Step 2: Generate Text
 

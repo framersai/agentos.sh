@@ -7,7 +7,7 @@
 
 <p align="center">
   <strong><a href="https://agentos.sh">agentos.sh</a></strong> —
-  the marketing site for <strong>AgentOS</strong>, an open-source TypeScript AI agent framework with cognitive memory, runtime tool generation, multi-agent orchestration, multimodal RAG, voice pipelines, and 21 LLM providers.
+  the marketing site for <strong>AgentOS</strong>, an open-source TypeScript AI agent framework with cognitive memory, runtime tool generation, multi-agent orchestration, multimodal RAG, voice pipelines, and 11 LLM providers.
 </p>
 
 <p align="center">
@@ -32,7 +32,7 @@ AgentOS is the open-source TypeScript runtime that powers production AI agents a
 - **HEXACO personality system** that modulates retrieval, response style, and memory consolidation per agent
 - **5 security tiers** + 6 guardrail packs: PII redaction, ML classifiers, topicality, code safety, grounding, content policy
 - **Runtime tool forging**: agents write their own functions mid-task; tiered promotion across the swarm
-- **21 LLM providers** including Ollama for offline / self-hosted; **37 channel adapters** (Telegram, Discord, Slack, WhatsApp, webchat)
+- **11 LLM providers** including Ollama for offline / self-hosted; **37 channel adapters** (Telegram, Discord, Slack, WhatsApp, webchat)
 - **Apache-2.0**, self-hostable, production-ready
 
 Get started:

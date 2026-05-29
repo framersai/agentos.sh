@@ -1,11 +1,11 @@
 {
   "metadata": {
     "title": "AgentOS — 적응형 지능을 갖춘 자율 AI 에이전트 구축",
-    "description": "적응형 지능과 창발적 행동을 갖춘 자율 AI 에이전트를 구축하세요. 멀티모달 RAG, 인지 메모리, 스트리밍 가드레일, 음성 파이프라인 및 21개 LLM 제공자. 오픈소스 TypeScript 런타임.",
+    "description": "적응형 지능과 창발적 행동을 갖춘 자율 AI 에이전트를 구축하세요. 멀티모달 RAG, 인지 메모리, 스트리밍 가드레일, 음성 파이프라인 및 11개 LLM 제공자. 오픈소스 TypeScript 런타임.",
     "ogTitle": "AgentOS — 적응형 지능을 갖춘 자율 AI 에이전트 구축",
-    "ogDescription": "적응형 지능과 창발적 행동을 갖춘 자율 AI 에이전트를 구축하세요. 멀티모달 RAG, 인지 메모리, 스트리밍 가드레일, 음성 파이프라인 및 21개 LLM 제공자. 오픈소스 TypeScript 런타임.",
+    "ogDescription": "적응형 지능과 창발적 행동을 갖춘 자율 AI 에이전트를 구축하세요. 멀티모달 RAG, 인지 메모리, 스트리밍 가드레일, 음성 파이프라인 및 11개 LLM 제공자. 오픈소스 TypeScript 런타임.",
     "twitterTitle": "AgentOS — 적응형 지능을 갖춘 자율 AI 에이전트 구축",
-    "twitterDescription": "적응형 지능과 창발적 행동을 갖춘 자율 AI 에이전트를 구축하세요. 인지 메모리, 멀티모달 RAG, 스트리밍 가드레일 및 21개 LLM 제공자. 오픈소스 TypeScript 런타임."
+    "twitterDescription": "적응형 지능과 창발적 행동을 갖춘 자율 AI 에이전트를 구축하세요. 인지 메모리, 멀티모달 RAG, 스트리밍 가드레일 및 11개 LLM 제공자. 오픈소스 TypeScript 런타임."
   },
   "nav": {
     "features": "기능",
@@ -389,8 +389,8 @@
         ]
       },
       "providers": {
-        "title": "21개 LLM 프로바이더",
-        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq 외 16개 더, 자동 폴백 체인 및 provider-first API",
+        "title": "11개 LLM 프로바이더",
+        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq 외 6개 더, 자동 폴백 체인 및 provider-first API",
         "features": [
           "자동 폴백 (402/429/5xx)",
           "Provider-first API",
@@ -407,7 +407,7 @@
   },
   "enterprise": {
     "title": "엔터프라이즈 대응 인프라",
-    "subtitle": "5단계 보안, 6개 가드레일 확장, 21개 LLM 제공자, 37개 채널, 인지 메모리 — 첫날부터 프로덕션 준비",
+    "subtitle": "5단계 보안, 6개 가드레일 확장, 11개 LLM 제공자, 37개 채널, 인지 메모리 — 첫날부터 프로덕션 준비",
     "features": {
       "security": {
         "title": "5단계 보안",
@@ -457,7 +457,7 @@
         "title": "프로덕션 규모",
         "items": [
           "115개 확장, 88개 큐레이션 스킬",
-          "21개 LLM 제공자, 37개 채널 어댑터",
+          "11개 LLM 제공자, 37개 채널 어댑터",
           "비디오, 오디오, 이미지 생성",
           "도구 포징을 통한 자기 개선 에이전트"
         ]
@@ -823,7 +823,7 @@
       },
       "llmCore": {
         "name": "LLM 코어",
-        "description": "자동 폴백 체인을 갖춘 21개 LLM 프로바이더. 프로바이더 우선 API 설계. 모든 GMI의 핵심 사고 엔진."
+        "description": "자동 폴백 체인을 갖춘 11개 LLM 프로바이더. 프로바이더 우선 API 설계. 모든 GMI의 핵심 사고 엔진."
       }
     },
     "comparison": {
@@ -841,7 +841,7 @@
       },
       "providers": {
         "traditional": "단일 모델",
-        "gmi": "자동 폴백을 갖춘 21개 프로바이더"
+        "gmi": "자동 폴백을 갖춘 11개 프로바이더"
       },
       "tools": {
         "traditional": "수동 도구 연결",
@@ -908,7 +908,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "AgentOS란 무엇인가요?",
-        "answer": "AgentOS는 프로덕션 AI 에이전트를 구축하기 위한 오픈소스 TypeScript 런타임으로, Manic Agency LLC(manic.agency)와 Frame.dev가 개발했습니다. 멀티 에이전트 오케스트레이션, 인지 메모리, 멀티모달 RAG, 내장 안전 가드레일(PII 편집, 프롬프트 인젝션 방어, 콘텐츠 모더레이션), 음성 파이프라인, 37개 채널 어댑터, 21개 LLM 프로바이더 통합을 제공합니다. AgentOS는 또한 AI 네이티브 게이밍 플랫폼인 Wilds.ai 뒤의 AI 시스템도 구동합니다. 셀프 호스팅 가능하며 무료입니다."
+        "answer": "AgentOS는 프로덕션 AI 에이전트를 구축하기 위한 오픈소스 TypeScript 런타임으로, Manic Agency LLC(manic.agency)와 Frame.dev가 개발했습니다. 멀티 에이전트 오케스트레이션, 인지 메모리, 멀티모달 RAG, 내장 안전 가드레일(PII 편집, 프롬프트 인젝션 방어, 콘텐츠 모더레이션), 음성 파이프라인, 37개 채널 어댑터, 11개 LLM 프로바이더 통합을 제공합니다. AgentOS는 또한 AI 네이티브 게이밍 플랫폼인 Wilds.ai 뒤의 AI 시스템도 구동합니다. 셀프 호스팅 가능하며 무료입니다."
       },
       "isOpenSource": {
         "question": "AgentOS는 무료이며 오픈소스인가요?",
@@ -916,7 +916,7 @@
       },
       "llmProviders": {
         "question": "어떤 LLM 프로바이더가 지원되나요?",
-        "answer": "AgentOS는 OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Ollama, OpenRouter, Together AI, Fireworks AI, Groq, Perplexity, DeepSeek, xAI(Grok), Replicate, Anyscale, AI21 Labs, Aleph Alpha, AWS Bedrock, Azure OpenAI, Cloudflare Workers AI, HuggingFace Inference 등 21개 LLM 프로바이더를 지원합니다. 프로바이더 폴백 체인으로 자동 페일오버가 가능합니다."
+        "answer": "AgentOS는 OpenAI, Anthropic, Google Gemini, Groq, Together AI, Mistral, xAI (Grok), OpenRouter, Ollama, Claude Code CLI, Gemini CLI 등 11개 LLM 프로바이더를 지원합니다. 프로바이더 폴백 체인으로 자동 페일오버가 가능합니다."
       },
       "language": {
         "question": "AgentOS는 어떤 프로그래밍 언어로 만들어졌나요?",

@@ -1,11 +1,11 @@
 {
   "metadata": {
     "title": "AgentOS — 构建具有自适应智能的自主AI代理",
-    "description": "构建具有自适应智能和涌现行为的自主AI代理。多模态RAG、认知记忆、流式护栏、语音管道和21个LLM提供商。开源TypeScript运行时。",
+    "description": "构建具有自适应智能和涌现行为的自主AI代理。多模态RAG、认知记忆、流式护栏、语音管道和11个LLM提供商。开源TypeScript运行时。",
     "ogTitle": "AgentOS — 构建具有自适应智能的自主AI代理",
-    "ogDescription": "构建具有自适应智能和涌现行为的自主AI代理。多模态RAG、认知记忆、流式护栏、语音管道和21个LLM提供商。开源TypeScript运行时。",
+    "ogDescription": "构建具有自适应智能和涌现行为的自主AI代理。多模态RAG、认知记忆、流式护栏、语音管道和11个LLM提供商。开源TypeScript运行时。",
     "twitterTitle": "AgentOS — 构建具有自适应智能的自主AI代理",
-    "twitterDescription": "构建具有自适应智能和涌现行为的自主AI代理。认知记忆、多模态RAG、流式护栏和21个LLM提供商。开源TypeScript运行时。"
+    "twitterDescription": "构建具有自适应智能和涌现行为的自主AI代理。认知记忆、多模态RAG、流式护栏和11个LLM提供商。开源TypeScript运行时。"
   },
   "nav": {
     "features": "功能",
@@ -213,7 +213,7 @@
   },
   "enterprise": {
     "title": "企业级基础设施",
-    "subtitle": "5级安全、6个护栏扩展、21个LLM提供商、37个通道和认知记忆 — 从第一天起就可用于生产环境",
+    "subtitle": "5级安全、6个护栏扩展、11个LLM提供商、37个通道和认知记忆 — 从第一天起就可用于生产环境",
     "features": {
       "security": {
         "title": "5级安全体系",
@@ -263,7 +263,7 @@
         "title": "生产规模",
         "items": [
           "115个扩展，88个精选技能",
-          "21个LLM提供商，37个通道适配器",
+          "11个LLM提供商，37个通道适配器",
           "视频、音频和图像生成",
           "通过工具锻造实现自我改进的代理"
         ]
@@ -671,7 +671,7 @@
       },
       "llmCore": {
         "name": "LLM 核心",
-        "description": "21 个 LLM 提供商,具备自动回退链。Provider-first API 设计。每个 GMI 核心的思考引擎。"
+        "description": "11 个 LLM 提供商,具备自动回退链。Provider-first API 设计。每个 GMI 核心的思考引擎。"
       }
     },
     "comparison": {
@@ -689,7 +689,7 @@
       },
       "providers": {
         "traditional": "单一模型",
-        "gmi": "21 个提供商,自动回退"
+        "gmi": "11 个提供商,自动回退"
       },
       "tools": {
         "traditional": "手动工具接线",
@@ -756,7 +756,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "AgentOS 是什么?",
-        "answer": "AgentOS 是一个用于构建生产级 AI 智能体的开源 TypeScript 运行时,由 Manic Agency LLC (manic.agency) 和 Frame.dev 开发。它提供多智能体编排、认知记忆、多模态 RAG、内置安全护栏(PII 编辑、提示注入防御、内容审核)、语音管道、37 个通道适配器和 21 个 LLM 提供商集成。AgentOS 还为 AI 原生游戏平台 Wilds.ai 提供 AI 系统支持。可自托管且免费。"
+        "answer": "AgentOS 是一个用于构建生产级 AI 智能体的开源 TypeScript 运行时,由 Manic Agency LLC (manic.agency) 和 Frame.dev 开发。它提供多智能体编排、认知记忆、多模态 RAG、内置安全护栏(PII 编辑、提示注入防御、内容审核)、语音管道、37 个通道适配器和 11 个 LLM 提供商集成。AgentOS 还为 AI 原生游戏平台 Wilds.ai 提供 AI 系统支持。可自托管且免费。"
       },
       "isOpenSource": {
         "question": "AgentOS 是免费且开源的吗?",
@@ -764,7 +764,7 @@
       },
       "llmProviders": {
         "question": "支持哪些 LLM 提供商?",
-        "answer": "AgentOS 支持 21 个 LLM 提供商,包括 OpenAI、Anthropic、Google Gemini、Mistral、Cohere、Ollama、OpenRouter、Together AI、Fireworks AI、Groq、Perplexity、DeepSeek、xAI (Grok)、Replicate、Anyscale、AI21 Labs、Aleph Alpha、AWS Bedrock、Azure OpenAI、Cloudflare Workers AI 和 HuggingFace Inference。提供商回退链支持自动故障转移。"
+        "answer": "AgentOS 支持 11 个 LLM 提供商,包括 OpenAI、Anthropic、Google Gemini、Groq、Together AI、Mistral、xAI (Grok)、OpenRouter、Ollama、Claude Code CLI、Gemini CLI。提供商回退链支持自动故障转移。"
       },
       "language": {
         "question": "AgentOS 是用什么编程语言构建的?",
@@ -1093,7 +1093,7 @@
         ]
       },
       "providers": {
-        "title": "21 个 LLM 提供商",
+        "title": "11 个 LLM 提供商",
         "description": "OpenAI、Anthropic、Gemini、Ollama、Groq及16个以上，具有自动回退链和provider-first API",
         "features": [
           "自动回退 (402/429/5xx)",

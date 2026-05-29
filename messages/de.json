@@ -1,11 +1,11 @@
 {
   "metadata": {
     "title": "AgentOS — Autonome KI-Agenten mit Adaptiver Intelligenz bauen",
-    "description": "Autonome KI-Agenten mit adaptiver Intelligenz und emergenten Verhaltensweisen bauen. Multimodaler RAG, kognitives Gedächtnis, Streaming-Leitplanken, Sprach-Pipeline und 21 LLM-Anbieter. Open-Source TypeScript-Laufzeit.",
+    "description": "Autonome KI-Agenten mit adaptiver Intelligenz und emergenten Verhaltensweisen bauen. Multimodaler RAG, kognitives Gedächtnis, Streaming-Leitplanken, Sprach-Pipeline und 11 LLM-Anbieter. Open-Source TypeScript-Laufzeit.",
     "ogTitle": "AgentOS — Autonome KI-Agenten mit Adaptiver Intelligenz bauen",
-    "ogDescription": "Autonome KI-Agenten mit adaptiver Intelligenz und emergenten Verhaltensweisen bauen. Multimodaler RAG, kognitives Gedächtnis, Streaming-Leitplanken, Sprach-Pipeline und 21 LLM-Anbieter. Open-Source TypeScript-Laufzeit.",
+    "ogDescription": "Autonome KI-Agenten mit adaptiver Intelligenz und emergenten Verhaltensweisen bauen. Multimodaler RAG, kognitives Gedächtnis, Streaming-Leitplanken, Sprach-Pipeline und 11 LLM-Anbieter. Open-Source TypeScript-Laufzeit.",
     "twitterTitle": "AgentOS — Autonome KI-Agenten mit Adaptiver Intelligenz bauen",
-    "twitterDescription": "Autonome KI-Agenten mit adaptiver Intelligenz und emergenten Verhaltensweisen bauen. Kognitives Gedächtnis, multimodaler RAG, Streaming-Leitplanken und 21 LLM-Anbieter. Open-Source TypeScript-Laufzeit."
+    "twitterDescription": "Autonome KI-Agenten mit adaptiver Intelligenz und emergenten Verhaltensweisen bauen. Kognitives Gedächtnis, multimodaler RAG, Streaming-Leitplanken und 11 LLM-Anbieter. Open-Source TypeScript-Laufzeit."
   },
   "nav": {
     "features": "Funktionen",
@@ -389,8 +389,8 @@
         ]
       },
       "providers": {
-        "title": "21 LLM-Anbieter",
-        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq und 16 weitere mit automatischen Fallback-Ketten und Provider-First-API",
+        "title": "11 LLM-Anbieter",
+        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq und 6 weitere mit automatischen Fallback-Ketten und Provider-First-API",
         "features": [
           "Auto Fallback (402/429/5xx)",
           "Provider-First API",
@@ -407,7 +407,7 @@
   },
   "enterprise": {
     "title": "Enterprise-fähige Infrastruktur",
-    "subtitle": "5-stufige Sicherheit, 6 Guardrail-Erweiterungen, 21 LLM-Anbieter, 37 Kanäle und kognitives Gedächtnis — produktionsreif ab dem ersten Tag",
+    "subtitle": "5-stufige Sicherheit, 6 Guardrail-Erweiterungen, 11 LLM-Anbieter, 37 Kanäle und kognitives Gedächtnis — produktionsreif ab dem ersten Tag",
     "features": {
       "security": {
         "title": "5-Stufen-Sicherheit",
@@ -457,7 +457,7 @@
         "title": "Produktions-Skalierung",
         "items": [
           "115 Erweiterungen, 88 kuratierte Skills",
-          "21 LLM-Anbieter, 37 Kanal-Adapter",
+          "11 LLM-Anbieter, 37 Kanal-Adapter",
           "Video-, Audio- und Bildgenerierung",
           "Selbstverbessernde Agenten mit Tool Forging"
         ]
@@ -823,7 +823,7 @@
       },
       "llmCore": {
         "name": "LLM-Kern",
-        "description": "21 LLM-Anbieter mit automatischen Fallback-Ketten. Provider-First-API-Design. Die denkende Engine im Herzen jedes GMI."
+        "description": "11 LLM-Anbieter mit automatischen Fallback-Ketten. Provider-First-API-Design. Die denkende Engine im Herzen jedes GMI."
       }
     },
     "comparison": {
@@ -841,7 +841,7 @@
       },
       "providers": {
         "traditional": "Einzelnes Modell",
-        "gmi": "21 Anbieter mit automatischem Fallback"
+        "gmi": "11 Anbieter mit automatischem Fallback"
       },
       "tools": {
         "traditional": "Manuelle Tool-Verdrahtung",
@@ -908,7 +908,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "Was ist AgentOS?",
-        "answer": "AgentOS ist eine Open-Source-TypeScript-Runtime zum Bauen produktiver KI-Agenten, entwickelt von Manic Agency LLC (manic.agency) und Frame.dev. Sie bietet Multi-Agenten-Orchestrierung, kognitives Gedächtnis, multimodales RAG, integrierte Sicherheits-Guardrails (PII-Redaktion, Prompt-Injection-Abwehr, Content-Moderation), Sprach-Pipelines, 37 Kanal-Adapter und 21 LLM-Anbieter-Integrationen. AgentOS treibt zudem die KI-Systeme hinter Wilds.ai an, einer KI-nativen Gaming-Plattform. Selbst-hostbar und kostenlos."
+        "answer": "AgentOS ist eine Open-Source-TypeScript-Runtime zum Bauen produktiver KI-Agenten, entwickelt von Manic Agency LLC (manic.agency) und Frame.dev. Sie bietet Multi-Agenten-Orchestrierung, kognitives Gedächtnis, multimodales RAG, integrierte Sicherheits-Guardrails (PII-Redaktion, Prompt-Injection-Abwehr, Content-Moderation), Sprach-Pipelines, 37 Kanal-Adapter und 11 LLM-Anbieter-Integrationen. AgentOS treibt zudem die KI-Systeme hinter Wilds.ai an, einer KI-nativen Gaming-Plattform. Selbst-hostbar und kostenlos."
       },
       "isOpenSource": {
         "question": "Ist AgentOS kostenlos und Open Source?",
@@ -916,7 +916,7 @@
       },
       "llmProviders": {
         "question": "Welche LLM-Anbieter werden unterstützt?",
-        "answer": "AgentOS unterstützt 21 LLM-Anbieter, darunter OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Ollama, OpenRouter, Together AI, Fireworks AI, Groq, Perplexity, DeepSeek, xAI (Grok), Replicate, Anyscale, AI21 Labs, Aleph Alpha, AWS Bedrock, Azure OpenAI, Cloudflare Workers AI und HuggingFace Inference. Provider-Fallback-Ketten ermöglichen automatisches Failover."
+        "answer": "AgentOS unterstützt 11 LLM-Anbieter, darunter OpenAI, Anthropic, Google Gemini, Groq, Together AI, Mistral, xAI (Grok), OpenRouter, Ollama, Claude Code CLI, Gemini CLI. Provider-Fallback-Ketten ermöglichen automatisches Failover."
       },
       "language": {
         "question": "In welcher Programmiersprache ist AgentOS geschrieben?",

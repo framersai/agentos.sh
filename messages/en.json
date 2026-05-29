@@ -1,11 +1,11 @@
 {
   "metadata": {
     "title": "AgentOS (agentos.sh): Open Source TypeScript AI Agent Framework",
-    "description": "AgentOS at agentos.sh is an open-source TypeScript AI agent framework. Build autonomous agents with cognitive memory, runtime tool generation, multi-agent orchestration, and 21 LLM providers. 85.6% on LongMemEval-S. Apache 2.0. By Frame.dev.",
+    "description": "AgentOS at agentos.sh is an open-source TypeScript AI agent framework. Build autonomous agents with cognitive memory, runtime tool generation, multi-agent orchestration, and 11 LLM providers. 85.6% on LongMemEval-S. Apache 2.0. By Frame.dev.",
     "ogTitle": "AgentOS (agentos.sh): Open Source TypeScript AI Agent Framework",
-    "ogDescription": "AgentOS at agentos.sh: open-source TypeScript AI agent framework. Cognitive memory, runtime tool generation, multi-agent orchestration, voice pipelines, and 21 LLM providers. 85.6% on LongMemEval-S. Apache 2.0.",
+    "ogDescription": "AgentOS at agentos.sh: open-source TypeScript AI agent framework. Cognitive memory, runtime tool generation, multi-agent orchestration, voice pipelines, and 11 LLM providers. 85.6% on LongMemEval-S. Apache 2.0.",
     "twitterTitle": "AgentOS (agentos.sh): Open Source TypeScript AI Agent Framework",
-    "twitterDescription": "AgentOS at agentos.sh: open-source TypeScript AI agent framework. Cognitive memory, runtime tool generation, multi-agent orchestration, and 21 LLM providers. 85.6% LongMemEval-S. Apache 2.0."
+    "twitterDescription": "AgentOS at agentos.sh: open-source TypeScript AI agent framework. Cognitive memory, runtime tool generation, multi-agent orchestration, and 11 LLM providers. 85.6% LongMemEval-S. Apache 2.0."
   },
   "nav": {
     "features": "Features",
@@ -45,7 +45,7 @@
         "bottom": "PII Redaction & Injection Defense"
       },
       {
-        "top": "21 LLM Providers",
+        "top": "11 LLM Providers",
         "bottom": "with 72 Curated Skills"
       }
     ],
@@ -389,8 +389,8 @@
         ]
       },
       "providers": {
-        "title": "21 LLM Providers",
-        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq, and 16 more with automatic fallback chains and provider-first API",
+        "title": "11 LLM Providers",
+        "description": "OpenAI, Anthropic, Gemini, Ollama, Groq, and 6 more with automatic fallback chains and provider-first API",
         "features": [
           "Auto fallback (402/429/5xx)",
           "Provider-first API",
@@ -407,7 +407,7 @@
   },
   "enterprise": {
     "title": "Enterprise-Ready Infrastructure",
-    "subtitle": "Safety guardrails, 21 LLM providers, 37 channels, and cognitive memory — production-grade from day one",
+    "subtitle": "Safety guardrails, 11 LLM providers, 37 channels, and cognitive memory — production-grade from day one",
     "features": {
       "security": {
         "title": "Agent Safety",
@@ -457,7 +457,7 @@
         "title": "Production Scale",
         "items": [
           "115 extensions, 88 curated skills",
-          "21 LLM providers, 37 channel adapters",
+          "11 LLM providers, 37 channel adapters",
           "Video, audio, and image generation",
           "Self-improving agents with tool forging"
         ]
@@ -773,7 +773,7 @@
   },
   "ecosystem": {
     "title": "The AgentOS Ecosystem",
-    "subtitle": "Explore the open-source AgentOS ecosystem — multimodal RAG, multi-agent orchestration, 37 channel adapters, 21 LLM providers, and deployment kits for production AI teams.",
+    "subtitle": "Explore the open-source AgentOS ecosystem — multimodal RAG, multi-agent orchestration, 37 channel adapters, 11 LLM providers, and deployment kits for production AI teams.",
     "stats": {
       "repositories": "Repositories",
       "weeklyDownloads": "Weekly Downloads",
@@ -939,7 +939,7 @@
       },
       "llmCore": {
         "name": "LLM Core",
-        "description": "21 LLM providers with automatic fallback chains. Provider-first API design. The thinking engine at the heart of every GMI."
+        "description": "11 LLM providers with automatic fallback chains. Provider-first API design. The thinking engine at the heart of every GMI."
       }
     },
     "comparison": {
@@ -957,7 +957,7 @@
       },
       "providers": {
         "traditional": "Single model",
-        "gmi": "21 providers with automatic fallback"
+        "gmi": "11 providers with automatic fallback"
       },
       "tools": {
         "traditional": "Manual tool wiring",
@@ -982,7 +982,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "What is AgentOS?",
-        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents, developed by Manic Agency LLC (manic.agency) and Frame.dev. It provides multi-agent orchestration, cognitive memory, multimodal RAG, built-in safety guardrails (PII redaction, prompt injection defense, content moderation), voice pipelines, 37 channel adapters, and 21 LLM provider integrations. AgentOS also powers the AI systems behind Wilds.ai, an AI-native gaming platform. Self-hostable and free."
+        "answer": "AgentOS is an open-source TypeScript runtime for building production AI agents, developed by Manic Agency LLC (manic.agency) and Frame.dev. It provides multi-agent orchestration, cognitive memory, multimodal RAG, built-in safety guardrails (PII redaction, prompt injection defense, content moderation), voice pipelines, 37 channel adapters, and 11 LLM provider integrations. AgentOS also powers the AI systems behind Wilds.ai, an AI-native gaming platform. Self-hostable and free."
       },
       "isOpenSource": {
         "question": "Is AgentOS free and open source?",
@@ -990,7 +990,7 @@
       },
       "llmProviders": {
         "question": "What LLM providers are supported?",
-        "answer": "AgentOS supports 21 LLM providers including OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Ollama, OpenRouter, Together AI, Fireworks AI, Groq, Perplexity, DeepSeek, xAI (Grok), Replicate, Anyscale, AI21 Labs, Aleph Alpha, AWS Bedrock, Azure OpenAI, Cloudflare Workers AI, and HuggingFace Inference. Provider fallback chains allow automatic failover."
+        "answer": "AgentOS supports 11 LLM providers including OpenAI, Anthropic, Google Gemini, Groq, Together AI, Mistral, xAI (Grok), OpenRouter, Ollama, Claude Code CLI, Gemini CLI. Provider fallback chains allow automatic failover."
       },
       "language": {
         "question": "What programming language is AgentOS built in?",
