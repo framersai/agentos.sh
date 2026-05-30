@@ -857,7 +857,7 @@
     "hero": {
       "weAreFramers": "우리는 framers입니다",
       "title": "AgentOS 소개",
-      "description": "AgentOS는 적응적이고 창발적인 AI 에이전트 시스템을 구축하기 위한 오픈소스 TypeScript 런타임입니다. <manicLink>Manic Agency LLC</manicLink>와 <frameLink>Frame.dev</frameLink>가 만들었으며, GMI 오케스트레이션, 영속 메모리, 엔터프라이즈급 가드레일로 지능형 애플리케이션을 구동합니다. <wildsLink>Wilds.ai</wildsLink> 뒤의 AI 시스템도 구동합니다."
+      "description": "AgentOS는 적응적이고 창발적인 AI 에이전트 시스템을 구축하기 위한 오픈소스 TypeScript 런타임입니다. <frameLink>Frame</frameLink>가 만들었으며, GMI 오케스트레이션, 영속 메모리, 엔터프라이즈급 가드레일로 지능형 애플리케이션을 구동합니다. <wildsLink>Wilds.ai</wildsLink> 뒤의 AI 시스템도 구동합니다."
     },
     "mission": {
       "title": "우리의 미션",
@@ -866,7 +866,7 @@
     },
     "team": {
       "title": "팀",
-      "description": "AgentOS는 <manicLink>Manic Agency LLC</manicLink>와 <frameLink>Frame.dev</frameLink> 팀이 개발합니다. 또한 AgentOS로 구동되는 AI 네이티브 게이밍 플랫폼인 <wildsLink>Wilds.ai</wildsLink>도 만들고 있습니다. 우리는 엔지니어, 디자이너, AI 연구자로 구성된 분산 팀이며, 모든 개발자가 고급 AI에 접근할 수 있도록 만드는 데 열정을 쏟고 있습니다.",
+      "description": "AgentOS는 <frameLink>Frame</frameLink> 팀이 개발합니다. 또한 AgentOS로 구동되는 AI 네이티브 게이밍 플랫폼인 <wildsLink>Wilds.ai</wildsLink>도 만들고 있습니다. 우리는 엔지니어, 디자이너, AI 연구자로 구성된 분산 팀이며, 모든 개발자가 고급 AI에 접근할 수 있도록 만드는 데 열정을 쏟고 있습니다.",
       "generalInquiries": "일반 문의",
       "enterpriseSupport": "엔터프라이즈 및 지원",
       "enterpriseSupportDesc": "프로덕션 배포, 엔터프라이즈 라이선싱, 전담 지원용",
@@ -908,7 +908,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "AgentOS란 무엇인가요?",
-        "answer": "AgentOS는 프로덕션 AI 에이전트를 구축하기 위한 오픈소스 TypeScript 런타임으로, Manic Agency LLC(manic.agency)와 Frame.dev가 개발했습니다. 멀티 에이전트 오케스트레이션, 인지 메모리, 멀티모달 RAG, 내장 안전 가드레일(PII 편집, 프롬프트 인젝션 방어, 콘텐츠 모더레이션), 음성 파이프라인, 37개 채널 어댑터, 11개 LLM 프로바이더 통합을 제공합니다. AgentOS는 또한 AI 네이티브 게이밍 플랫폼인 Wilds.ai 뒤의 AI 시스템도 구동합니다. 셀프 호스팅 가능하며 무료입니다."
+        "answer": "AgentOS는 프로덕션 AI 에이전트를 구축하기 위한 오픈소스 TypeScript 런타임으로, Frame.dev가 개발했습니다. 멀티 에이전트 오케스트레이션, 인지 메모리, 멀티모달 RAG, 내장 안전 가드레일(PII 편집, 프롬프트 인젝션 방어, 콘텐츠 모더레이션), 음성 파이프라인, 37개 채널 어댑터, 11개 LLM 프로바이더 통합을 제공합니다. AgentOS는 또한 AI 네이티브 게이밍 플랫폼인 Wilds.ai 뒤의 AI 시스템도 구동합니다. 셀프 호스팅 가능하며 무료입니다."
       },
       "isOpenSource": {
         "question": "AgentOS는 무료이며 오픈소스인가요?",

@@ -821,7 +821,7 @@
     "hero": {
       "weAreFramers": "私たちは framers です",
       "title": "AgentOS について",
-      "description": "AgentOS は適応的で創発的な AI エージェントシステムを構築するためのオープンソースの TypeScript ランタイムです。<manicLink>Manic Agency LLC</manicLink> と <frameLink>Frame.dev</frameLink> が開発し、GMI オーケストレーション、永続的なメモリ、エンタープライズグレードのガードレールでインテリジェントなアプリケーションを支えます。<wildsLink>Wilds.ai</wildsLink> の背後にある AI システムも支えています。"
+      "description": "AgentOS は適応的で創発的な AI エージェントシステムを構築するためのオープンソースの TypeScript ランタイムです。<frameLink>Frame</frameLink> が開発し、GMI オーケストレーション、永続的なメモリ、エンタープライズグレードのガードレールでインテリジェントなアプリケーションを支えます。<wildsLink>Wilds.ai</wildsLink> の背後にある AI システムも支えています。"
     },
     "mission": {
       "title": "私たちのミッション",
@@ -830,7 +830,7 @@
     },
     "team": {
       "title": "チーム",
-      "description": "AgentOS は <manicLink>Manic Agency LLC</manicLink> と <frameLink>Frame.dev</frameLink> のチームによって開発されています。また、AgentOS を活用した AI ネイティブなゲーミングプラットフォームである <wildsLink>Wilds.ai</wildsLink> も構築しています。私たちはエンジニア、デザイナー、AI 研究者からなる分散チームで、先進的な AI をすべての開発者がアクセスできるものにすることに情熱を注いでいます。",
+      "description": "AgentOS は <frameLink>Frame</frameLink> のチームによって開発されています。また、AgentOS を活用した AI ネイティブなゲーミングプラットフォームである <wildsLink>Wilds.ai</wildsLink> も構築しています。私たちはエンジニア、デザイナー、AI 研究者からなる分散チームで、先進的な AI をすべての開発者がアクセスできるものにすることに情熱を注いでいます。",
       "generalInquiries": "一般的なお問い合わせ",
       "enterpriseSupport": "エンタープライズ & サポート",
       "enterpriseSupportDesc": "本番デプロイ、エンタープライズライセンス、専任サポート向け",
@@ -872,7 +872,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "AgentOS とは?",
-        "answer": "AgentOS は本番運用 AI エージェントを構築するためのオープンソースの TypeScript ランタイムで、Manic Agency LLC(manic.agency)と Frame.dev によって開発されています。マルチエージェント・オーケストレーション、認知メモリ、マルチモーダル RAG、組み込みの安全ガードレール(PII 編集、プロンプトインジェクション防御、コンテンツモデレーション)、音声パイプライン、37 のチャネルアダプタ、11 の LLM プロバイダ統合を提供します。AgentOS は AI ネイティブのゲーミングプラットフォーム Wilds.ai の AI システムも支えています。セルフホスト可能で無料です。"
+        "answer": "AgentOS は本番運用 AI エージェントを構築するためのオープンソースの TypeScript ランタイムで、Frame.dev によって開発されています。マルチエージェント・オーケストレーション、認知メモリ、マルチモーダル RAG、組み込みの安全ガードレール(PII 編集、プロンプトインジェクション防御、コンテンツモデレーション)、音声パイプライン、37 のチャネルアダプタ、11 の LLM プロバイダ統合を提供します。AgentOS は AI ネイティブのゲーミングプラットフォーム Wilds.ai の AI システムも支えています。セルフホスト可能で無料です。"
       },
       "isOpenSource": {
         "question": "AgentOS は無料でオープンソースですか?",

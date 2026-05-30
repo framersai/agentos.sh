@@ -239,4 +239,4 @@ Source: [github.com/framersai/agentos](https://github.com/framersai/agentos) (Ap
 
 ---
 
-**[AgentOS](https://agentos.sh)** is built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). See [wilds.ai](https://wilds.ai) for AI companions and game worlds powered by AgentOS.
+**[AgentOS](https://agentos.sh)** is built by [Frame](https://frame.dev). See [wilds.ai](https://wilds.ai) for AI companions and game worlds powered by AgentOS.

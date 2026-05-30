@@ -821,7 +821,7 @@
     "hero": {
       "weAreFramers": "somos os framers",
       "title": "Sobre AgentOS",
-      "description": "AgentOS é um runtime TypeScript open-source para construir sistemas de agentes IA adaptativos e emergentes. Construído por <manicLink>Manic Agency LLC</manicLink> e <frameLink>Frame.dev</frameLink>, AgentOS impulsiona aplicações inteligentes com orquestração GMI, memória persistente e guardrails de nível empresarial. Também impulsiona os sistemas de IA por trás de <wildsLink>Wilds.ai</wildsLink>."
+      "description": "AgentOS é um runtime TypeScript open-source para construir sistemas de agentes IA adaptativos e emergentes. Construído por <frameLink>Frame</frameLink>, AgentOS impulsiona aplicações inteligentes com orquestração GMI, memória persistente e guardrails de nível empresarial. Também impulsiona os sistemas de IA por trás de <wildsLink>Wilds.ai</wildsLink>."
     },
     "mission": {
       "title": "Nossa Missão",
@@ -830,7 +830,7 @@
     },
     "team": {
       "title": "A Equipe",
-      "description": "AgentOS é desenvolvido pela <manicLink>Manic Agency LLC</manicLink> e pela equipe da <frameLink>Frame.dev</frameLink>. Também construímos a <wildsLink>Wilds.ai</wildsLink>, uma plataforma de jogos AI-native alimentada por AgentOS. Somos uma equipe distribuída de engenheiros, designers e pesquisadores de IA apaixonados por tornar a IA avançada acessível a todos os desenvolvedores.",
+      "description": "AgentOS é desenvolvido pela <frameLink>Frame</frameLink>. Também construímos a <wildsLink>Wilds.ai</wildsLink>, uma plataforma de jogos AI-native alimentada por AgentOS. Somos uma equipe distribuída de engenheiros, designers e pesquisadores de IA apaixonados por tornar a IA avançada acessível a todos os desenvolvedores.",
       "generalInquiries": "Consultas Gerais",
       "enterpriseSupport": "Empresarial e Suporte",
       "enterpriseSupportDesc": "Para deployments de produção, licenciamento empresarial e suporte dedicado",
@@ -872,7 +872,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "O que é AgentOS?",
-        "answer": "AgentOS é um runtime TypeScript open-source para construir agentes de IA em produção, desenvolvido pela Manic Agency LLC (manic.agency) e Frame.dev. Oferece orquestração multi-agente, memória cognitiva, RAG multimodal, guardrails de segurança integrados (redação de PII, defesa contra prompt injection, moderação de conteúdo), pipelines de voz, 37 adaptadores de canal e 11 integrações de provedores de LLM. AgentOS também alimenta os sistemas de IA por trás do Wilds.ai, uma plataforma de jogos AI-native. Self-hostable e gratuito."
+        "answer": "AgentOS é um runtime TypeScript open-source para construir agentes de IA em produção, desenvolvido pela Frame.dev. Oferece orquestração multi-agente, memória cognitiva, RAG multimodal, guardrails de segurança integrados (redação de PII, defesa contra prompt injection, moderação de conteúdo), pipelines de voz, 37 adaptadores de canal e 11 integrações de provedores de LLM. AgentOS também alimenta os sistemas de IA por trás do Wilds.ai, uma plataforma de jogos AI-native. Self-hostable e gratuito."
       },
       "isOpenSource": {
         "question": "AgentOS é gratuito e open source?",

@@ -152,4 +152,4 @@ This is what an honest benchmark looks like. If something on this list is wrong,
 
 **Is this production-ready for X?** Define X. We don't publish a generic "production-ready" label because the answer depends on what you're shipping. We do publish concrete benchmark numbers, concrete safety posture, and concrete provider compatibility. Read those, judge for yourself, file issues when we miss.
 
-[Apache 2.0 licensed](https://github.com/framersai/agentos/blob/master/LICENSE). Built by [Manic Agency](https://manic.agency) / [Frame.dev](https://frame.dev).
+[Apache 2.0 licensed](https://github.com/framersai/agentos/blob/master/LICENSE). Built by [Frame](https://frame.dev).

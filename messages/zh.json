@@ -705,7 +705,7 @@
     "hero": {
       "weAreFramers": "我们是 framers",
       "title": "关于 AgentOS",
-      "description": "AgentOS 是用于构建自适应、涌现式 AI 智能体系统的开源 TypeScript 运行时。由 <manicLink>Manic Agency LLC</manicLink> 与 <frameLink>Frame.dev</frameLink> 开发,AgentOS 通过 GMI 编排、持久化记忆与企业级护栏驱动智能应用。它还驱动着 <wildsLink>Wilds.ai</wildsLink> 背后的 AI 系统。"
+      "description": "AgentOS 是用于构建自适应、涌现式 AI 智能体系统的开源 TypeScript 运行时。由 <frameLink>Frame</frameLink> 开发,AgentOS 通过 GMI 编排、持久化记忆与企业级护栏驱动智能应用。它还驱动着 <wildsLink>Wilds.ai</wildsLink> 背后的 AI 系统。"
     },
     "mission": {
       "title": "我们的使命",
@@ -714,7 +714,7 @@
     },
     "team": {
       "title": "团队",
-      "description": "AgentOS 由 <manicLink>Manic Agency LLC</manicLink> 和 <frameLink>Frame.dev</frameLink> 团队开发。我们还构建了由 AgentOS 提供支持的 AI 原生游戏平台 <wildsLink>Wilds.ai</wildsLink>。我们是一支由工程师、设计师和 AI 研究人员组成的分布式团队,致力于让先进的 AI 对所有开发者都触手可及。",
+      "description": "AgentOS 由 <frameLink>Frame</frameLink> 团队开发。我们还构建了由 AgentOS 提供支持的 AI 原生游戏平台 <wildsLink>Wilds.ai</wildsLink>。我们是一支由工程师、设计师和 AI 研究人员组成的分布式团队,致力于让先进的 AI 对所有开发者都触手可及。",
       "generalInquiries": "一般咨询",
       "enterpriseSupport": "企业与支持",
       "enterpriseSupportDesc": "面向生产部署、企业许可和专属支持",
@@ -756,7 +756,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "AgentOS 是什么?",
-        "answer": "AgentOS 是一个用于构建生产级 AI 智能体的开源 TypeScript 运行时,由 Manic Agency LLC (manic.agency) 和 Frame.dev 开发。它提供多智能体编排、认知记忆、多模态 RAG、内置安全护栏(PII 编辑、提示注入防御、内容审核)、语音管道、37 个通道适配器和 11 个 LLM 提供商集成。AgentOS 还为 AI 原生游戏平台 Wilds.ai 提供 AI 系统支持。可自托管且免费。"
+        "answer": "AgentOS 是一个用于构建生产级 AI 智能体的开源 TypeScript 运行时,由 Frame.dev 开发。它提供多智能体编排、认知记忆、多模态 RAG、内置安全护栏(PII 编辑、提示注入防御、内容审核)、语音管道、37 个通道适配器和 11 个 LLM 提供商集成。AgentOS 还为 AI 原生游戏平台 Wilds.ai 提供 AI 系统支持。可自托管且免费。"
       },
       "isOpenSource": {
         "question": "AgentOS 是免费且开源的吗?",

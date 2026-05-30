@@ -73,11 +73,6 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
   /** Reusable rich-text component map for next-intl's t.rich() */
   const richLinks = {
-    manicLink: (chunks: ReactNode) => (
-      <a href="https://manic.agency" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline font-semibold">
-        {chunks}
-      </a>
-    ),
     frameLink: (chunks: ReactNode) => (
       <a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline font-semibold">
         {chunks}
@@ -97,7 +92,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
   const connectLinks = [
     { label: t('connect.github'), href: 'https://github.com/framersai/agentos', icon: Github },
-    { label: 'Manic Agency', href: 'https://manic.agency', icon: Globe },
+    { label: 'Frame', href: 'https://frame.dev', icon: Globe },
     { label: 'Paracosm', href: 'https://paracosm.agentos.sh', icon: Globe },
     { label: 'Wilds.ai', href: 'https://wilds.ai', icon: Globe },
     { label: 'Wunderland', href: 'https://wunderland.sh', icon: Globe },

@@ -174,4 +174,4 @@ Start with the [5-minute quickstart](https://agentos.sh/blog/build-typescript-ai
 
 ---
 
-**[AgentOS](https://agentos.sh)** is built by [Manic Agency LLC](https://manic.agency) / [Frame.dev](https://frame.dev). See [wilds.ai](https://wilds.ai) for AI companions and game worlds powered by AgentOS.
+**[AgentOS](https://agentos.sh)** is built by [Frame](https://frame.dev). See [wilds.ai](https://wilds.ai) for AI companions and game worlds powered by AgentOS.

@@ -375,7 +375,6 @@ export default async function LocaleLayout({
               <div>
                 <h3 className="font-bold text-text-primary mb-3">{tFooter('company')}</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><a href="https://manic.agency" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Manic Agency</a></li>
                   <li><a href="https://frame.dev" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Frame.dev</a></li>
                   <li><a href="https://wilds.ai" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Wilds.ai</a></li>
                   <li><a href="https://paracosm.agentos.sh" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent-primary transition-colors">Paracosm</a></li>

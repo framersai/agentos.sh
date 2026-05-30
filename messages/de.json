@@ -857,7 +857,7 @@
     "hero": {
       "weAreFramers": "wir sind die framers",
       "title": "Über AgentOS",
-      "description": "AgentOS ist eine Open-Source-TypeScript-Runtime zum Bauen adaptiver, emergenter KI-Agenten-Systeme. Entwickelt von <manicLink>Manic Agency LLC</manicLink> und <frameLink>Frame.dev</frameLink>, treibt AgentOS intelligente Anwendungen mit GMI-Orchestrierung, persistentem Gedächtnis und Enterprise-Grade-Guardrails an. Es betreibt auch die KI-Systeme hinter <wildsLink>Wilds.ai</wildsLink>."
+      "description": "AgentOS ist eine Open-Source-TypeScript-Runtime zum Bauen adaptiver, emergenter KI-Agenten-Systeme. Entwickelt von <frameLink>Frame</frameLink>, treibt AgentOS intelligente Anwendungen mit GMI-Orchestrierung, persistentem Gedächtnis und Enterprise-Grade-Guardrails an. Es betreibt auch die KI-Systeme hinter <wildsLink>Wilds.ai</wildsLink>."
     },
     "mission": {
       "title": "Unsere Mission",
@@ -866,7 +866,7 @@
     },
     "team": {
       "title": "Das Team",
-      "description": "AgentOS wird von <manicLink>Manic Agency LLC</manicLink> und dem Team von <frameLink>Frame.dev</frameLink> entwickelt. Wir bauen außerdem <wildsLink>Wilds.ai</wildsLink>, eine KI-native Gaming-Plattform, die von AgentOS angetrieben wird. Wir sind ein verteiltes Team aus Ingenieuren, Designern und KI-Forschern, mit der Mission, fortgeschrittene KI für alle Entwickler zugänglich zu machen.",
+      "description": "AgentOS wird von <frameLink>Frame</frameLink> entwickelt. Wir bauen außerdem <wildsLink>Wilds.ai</wildsLink>, eine KI-native Gaming-Plattform, die von AgentOS angetrieben wird. Wir sind ein verteiltes Team aus Ingenieuren, Designern und KI-Forschern, mit der Mission, fortgeschrittene KI für alle Entwickler zugänglich zu machen.",
       "generalInquiries": "Allgemeine Anfragen",
       "enterpriseSupport": "Enterprise & Support",
       "enterpriseSupportDesc": "Für Produktions-Deployments, Enterprise-Lizenzierung und dedizierten Support",
@@ -908,7 +908,7 @@
     "general": {
       "whatIsAgentOS": {
         "question": "Was ist AgentOS?",
-        "answer": "AgentOS ist eine Open-Source-TypeScript-Runtime zum Bauen produktiver KI-Agenten, entwickelt von Manic Agency LLC (manic.agency) und Frame.dev. Sie bietet Multi-Agenten-Orchestrierung, kognitives Gedächtnis, multimodales RAG, integrierte Sicherheits-Guardrails (PII-Redaktion, Prompt-Injection-Abwehr, Content-Moderation), Sprach-Pipelines, 37 Kanal-Adapter und 11 LLM-Anbieter-Integrationen. AgentOS treibt zudem die KI-Systeme hinter Wilds.ai an, einer KI-nativen Gaming-Plattform. Selbst-hostbar und kostenlos."
+        "answer": "AgentOS ist eine Open-Source-TypeScript-Runtime zum Bauen produktiver KI-Agenten, entwickelt von Frame.dev. Sie bietet Multi-Agenten-Orchestrierung, kognitives Gedächtnis, multimodales RAG, integrierte Sicherheits-Guardrails (PII-Redaktion, Prompt-Injection-Abwehr, Content-Moderation), Sprach-Pipelines, 37 Kanal-Adapter und 11 LLM-Anbieter-Integrationen. AgentOS treibt zudem die KI-Systeme hinter Wilds.ai an, einer KI-nativen Gaming-Plattform. Selbst-hostbar und kostenlos."
       },
       "isOpenSource": {
         "question": "Ist AgentOS kostenlos und Open Source?",
