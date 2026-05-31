@@ -35,8 +35,25 @@ export function ForgeDemoSection() {
           className="rounded-2xl overflow-hidden border shadow-2xl shadow-violet-500/10"
           style={{ borderColor: 'var(--color-border-primary)' }}
         >
-          <picture>
-            <source srcSet="/img/blog/og/agentos-forge-demo.webp" type="image/webp" />
+          {/* Was a 1.93 MB lossless animated WebP (+ 2.5 MB GIF fallback).
+              Re-encoded to a 742 KB H.264 MP4, served as an autoplaying,
+              looping, muted, inline <video>. preload="none" defers the load
+              until it scrolls into view so it never competes with first paint.
+              Same 1600x920 box + classes; PNG poster, GIF kept only as the
+              ancient-browser fallback inside <video>. */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="none"
+            poster="/img/blog/og/agentos-emergent-demo.png"
+            width={1600}
+            height={920}
+            aria-label="Three AgentOS agents with distinct HEXACO personalities collaborate on a code review, forge a new tool at runtime, the LLM judge approves the spec, and all three invoke it on the next turn."
+            className="w-full h-auto block"
+          >
+            <source src="/img/blog/og/agentos-forge-demo.mp4" type="video/mp4" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/img/blog/og/agentos-forge-demo.gif"
@@ -47,7 +64,7 @@ export function ForgeDemoSection() {
               decoding="async"
               className="w-full h-auto block"
             />
-          </picture>
+          </video>
           <figcaption
             className="px-4 py-3 text-xs sm:text-sm flex flex-wrap items-center justify-between gap-2"
             style={{

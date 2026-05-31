@@ -26,7 +26,7 @@ interface AgentCall {
 }
 
 interface DemoOutput {
-  demoGif?: { src: string; webpSrc?: string; alt: string; width: number; height: number }
+  demoGif?: { src: string; webpSrc?: string; mp4Src?: string; poster?: string; alt: string; width: number; height: number }
   forge?: { agent: string; approved: boolean; comment?: string }
   finalAnswer?: string
   finalAnswerLabel?: string
@@ -272,6 +272,8 @@ const demos: DemoData[] = [
       demoGif: {
         src: '/img/blog/og/agentos-forge-demo.gif',
         webpSrc: '/img/blog/og/agentos-forge-demo.webp',
+        mp4Src: '/img/blog/og/agentos-forge-demo.mp4',
+        poster: '/img/blog/og/agentos-emergent-demo.png',
         alt: 'Three AgentOS agents with distinct HEXACO personalities collaborate on a code review, forge a new tool at runtime, the LLM judge approves the spec, and all three invoke it on the next turn.',
         width: 1600,
         height: 920,
@@ -1094,21 +1096,51 @@ function OutputPanel({ demo }: { demo: DemoData }) {
       <div className="px-5 py-4">
         {output.demoGif && (
           <figure className="mb-4 -mx-1 overflow-hidden rounded-lg border border-[var(--color-border-subtle)] bg-black/40">
-            <picture>
-              {output.demoGif.webpSrc && (
-                <source srcSet={output.demoGif.webpSrc} type="image/webp" />
-              )}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={output.demoGif.src}
-                alt={output.demoGif.alt}
+            {output.demoGif.mp4Src ? (
+              // Heavy animated demos ship as a muted, looping, inline <video>
+              // (H.264 MP4, ~60% smaller than the old animated WebP/GIF).
+              // preload="none" keeps it off the initial-load critical path.
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="none"
+                poster={output.demoGif.poster}
                 width={output.demoGif.width}
                 height={output.demoGif.height}
-                loading="lazy"
-                decoding="async"
+                aria-label={output.demoGif.alt}
                 className="w-full h-auto block"
-              />
-            </picture>
+              >
+                <source src={output.demoGif.mp4Src} type="video/mp4" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={output.demoGif.src}
+                  alt={output.demoGif.alt}
+                  width={output.demoGif.width}
+                  height={output.demoGif.height}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-auto block"
+                />
+              </video>
+            ) : (
+              <picture>
+                {output.demoGif.webpSrc && (
+                  <source srcSet={output.demoGif.webpSrc} type="image/webp" />
+                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={output.demoGif.src}
+                  alt={output.demoGif.alt}
+                  width={output.demoGif.width}
+                  height={output.demoGif.height}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-auto block"
+                />
+              </picture>
+            )}
           </figure>
         )}
         {output.forge && <ForgeBadge {...output.forge} />}
