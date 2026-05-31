@@ -146,7 +146,7 @@ export default function BlogPostPage({ params: { locale, slug } }: Props) {
                   },
             publisher: {
               '@type': 'Organization',
-              name: 'Frame',
+              name: 'Framers Lab, Inc.',
               url: 'https://frame.dev',
               logo: {
                 '@type': 'ImageObject',

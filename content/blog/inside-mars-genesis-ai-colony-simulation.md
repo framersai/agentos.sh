@@ -9,6 +9,10 @@ image: "/img/blog/og/inside-mars-genesis-ai-colony-simulation.png"
 keywords: "mars colony ai simulation, agent swarm simulation, multi-agent simulation, structured world model, hexaco ai agents, cognitive memory ai agents, emergent tool forging llm, call forged tool reuse, typescript ai agent framework, personality driven llm agents, llm as judge, v8 isolate sandbox ai, runtime tool generation llm, agent based simulation, two leader one seed"
 ---
 
+> "Mars is there, waiting to be reached."
+>
+> — Buzz Aldrin
+
 Mars Genesis is a six-turn, thirty-colonist civilization simulation that runs on AgentOS and Paracosm. Two AI commanders with opposing HEXACO personality profiles share an identical seed, an identical agent roster, and identical starting resources, and produce measurably different colonies by turn six. This post is the end-to-end case study: turn-by-turn, what the Engineer commander did, what the Visionary commander did, why their colonies diverged, and how to read the run artifact. A shorter comparison against the other major open-source multi-agent simulation framework (MiroFish) is appended at the end.
 
 A representative moment from a recent run: turn three, year 2051. Dietrich Voss's chief medical officer faces a solar-storm radiation event that her existing toolbox doesn't cover. She doesn't pick an option from a menu. She writes a tool. The function is reviewed by an LLM judge, approved, executed in a sandbox, and returns a projected exposure number. Her commander reads that number three seconds later. By turn four every other department in the session can call the same tool for tens of tokens of dispatch. The runtime didn't script the path; it made the tool discoverable and the agents found it.

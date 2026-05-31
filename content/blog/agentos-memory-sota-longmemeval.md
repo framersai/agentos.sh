@@ -13,6 +13,10 @@ category: "Engineering"
 keywords: "longmemeval state of the art, longmemeval benchmark, longmemeval results, longmemeval s, longmemeval m, longmemeval 85 percent, ai memory benchmark, agentos memory, memory benchmark transparency, mastra mem0 hindsight comparison, memory library benchmark, open source memory library, locomo judge audit, retrieval augmented memory, cognitive memory ai, reader router, sem-embed, longmemeval paper Wu et al ICLR 2025, observational memory mastra, emergencemem"
 ---
 
+> "Not everything that can be counted counts, and not everything that counts can be counted."
+>
+> — William Bruce Cameron, *Informal Sociology*, 1963
+
 Memory benchmarks for AI agents reward retrieval over inference. The score goes up when the system dumps more context into the reader's window and lets the LLM sort the result out. That's not what most people mean by "memory" when they ask for it. It's a search engine on top of a smart enough reader to compensate for the noise.
 
 The numbers people quote (LongMemEval, LOCOMO) inherit this. So when Dhravya publishes 99% and Mastra publishes 95%, the right reaction is not "huh, our 85.6% looks bad" but "what reader, what retrieval, what judge, and can I rerun it." Most of the time, at least one of those answers is missing. (MemPalace also publishes 100% on every memory bench, but that's a broken evaluator that returns 100% no matter what you feed it, so it's not a competitor result, it's a methodology bug.)
