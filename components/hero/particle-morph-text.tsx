@@ -231,47 +231,22 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     particlesBRef.current = sampleText(wordB);
     stateRef.current.lastSwitch = performance.now();
 
-    const draw = (t: number) => {
-      // Keep the loop alive but skip heavy work while scrolled offscreen.
-      if (!isVisibleRef.current) {
-        animRef.current = requestAnimationFrame(draw);
-        return;
-      }
+    let idleId = 0;
+    let morphTimer: ReturnType<typeof setTimeout> | null = null;
+
+    // Paint a single frame. `mt` is the morph progress 0..1 (0 = the word at
+    // rest). Pulled out of the rAF loop so the IDLE state between morphs costs
+    // exactly one draw, not 60 redraws/sec. This is the optimization: the loop
+    // only runs during the ~0.4s morph; the other ~6.6s of every cycle the
+    // canvas holds a single static frame with zero CPU.
+    const paintFrame = (mt: number, t: number) => {
       const s = stateRef.current;
-      const elapsed = t - s.lastSwitch;
-
       ctx.clearRect(0, 0, width, height);
-
-      // Trigger morph with randomized interval
-      if (!s.isMorphing && elapsed > s.nextInterval) {
-        s.isMorphing = true;
-        s.morphT = 0;
-      }
-
-      // Faster morph (~0.4s) so the text spends more time fully readable.
-      // Previous 0.008/frame meant ~2s in the unclear mid-transition.
-      if (s.isMorphing) {
-        s.morphT += 0.04;
-        // Switch width at morph midpoint so spacing animates in sync with particles
-        if (s.morphT >= 0.5 && !s.widthSwitched) {
-          s.widthSwitched = true;
-          setActiveWordIndex(1 - s.wordIdx);
-        }
-        if (s.morphT >= 1) {
-          s.morphT = 0;
-          s.isMorphing = false;
-          s.widthSwitched = false;
-          s.wordIdx = 1 - s.wordIdx;
-          s.lastSwitch = t;
-          s.nextInterval = synchronized ? interval : interval + (Math.random() - 0.5) * 1000;
-        }
-      }
 
       const fromParticles = s.wordIdx === 0 ? particlesARef.current : particlesBRef.current;
       const toParticles = s.wordIdx === 0 ? particlesBRef.current : particlesARef.current;
-
-      // Use exponential easing for smooth organic motion
-      const easeT = s.isMorphing ? easeInOutExpo(s.morphT) : 0;
+      const morphing = mt > 0 && mt < 1;
+      const easeT = morphing ? easeInOutExpo(mt) : 0;
       const maxLen = Math.max(fromParticles.length, toParticles.length);
 
       for (let i = 0; i < maxLen; i++) {
@@ -283,27 +258,21 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         const particleT = Math.max(0, Math.min(1, (easeT - stagger) / (1 - stagger)));
         const smoothT = easeOutExpo(particleT);
 
-        // Reduced wobble keeps letters readable during transit. Previously
-        // 2px peak amplitude smeared the glyph shapes; 0.6px gives a hint
-        // of organic motion without trashing legibility.
-        const wobble = s.isMorphing ? Math.sin(t * 0.003 + fromP.seed) * 0.6 * (1 - Math.abs(smoothT - 0.5) * 2) : 0;
+        // Reduced wobble keeps letters readable during transit.
+        const wobble = morphing ? Math.sin(t * 0.003 + fromP.seed) * 0.6 * (1 - Math.abs(smoothT - 0.5) * 2) : 0;
 
         const x = fromP.x + (toP.x - fromP.x) * smoothT + wobble;
         const y = fromP.y + (toP.y - fromP.y) * smoothT;
 
-        // Use pre-cached RGB values instead of regex parsing per frame
         const fRgb = fromP.rgb;
         const tRgb = toP.rgb;
         const r = Math.round(fRgb[0] + (tRgb[0] - fRgb[0]) * smoothT);
         const g = Math.round(fRgb[1] + (tRgb[1] - fRgb[1]) * smoothT);
         const b = Math.round(fRgb[2] + (tRgb[2] - fRgb[2]) * smoothT);
 
-        // Smoother alpha transition
-        const alpha = s.isMorphing ? 0.85 + 0.15 * Math.cos(s.morphT * Math.PI * 2) : 1;
+        const alpha = morphing ? 0.85 + 0.15 * Math.cos(mt * Math.PI * 2) : 1;
 
-        // Soft radial glow — colored per-particle gradient is the original
-        // look (violet→magenta melt). Kept verbatim; the idle-start gate
-        // above is what recovered the load-time perf, not cheapening this.
+        // Soft radial glow — colored per-particle gradient (violet→magenta melt).
         const grad = ctx.createRadialGradient(x, y, 0, x, y, fromP.r * 2.5);
         grad.addColorStop(0, `rgba(${r},${g},${b},${alpha})`);
         grad.addColorStop(0.5, `rgba(${r},${g},${b},${alpha * 0.5})`);
@@ -311,24 +280,64 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         ctx.fillStyle = grad;
         ctx.fillRect(x - fromP.r * 2.5, y - fromP.r * 2.5, fromP.r * 5, fromP.r * 5);
       }
-
-      animRef.current = requestAnimationFrame(draw);
     };
 
-    // Defer the first frame to idle so the morph loop does not compete with
-    // hydration / LCP. This is the change that recovered load-time perf while
-    // keeping the original visuals intact. Falls back to a short timeout.
-    let idleId = 0;
-    let timer: ReturnType<typeof setTimeout> | null = null;
-    const begin = () => { animRef.current = requestAnimationFrame(draw); };
+    // rAF loop that runs ONLY during a morph, then stops and schedules the next.
+    const animateMorph = (t: number) => {
+      const s = stateRef.current;
+      s.morphT += 0.04; // ~0.4s morph at 60fps
+
+      // Switch width at morph midpoint so spacing animates in sync.
+      if (s.morphT >= 0.5 && !s.widthSwitched) {
+        s.widthSwitched = true;
+        setActiveWordIndex(1 - s.wordIdx);
+      }
+
+      if (s.morphT >= 1) {
+        // Morph complete: settle on the target word, draw one static frame,
+        // and idle until the next morph (no rAF in between).
+        s.morphT = 0;
+        s.isMorphing = false;
+        s.widthSwitched = false;
+        s.wordIdx = 1 - s.wordIdx;
+        paintFrame(0, t);
+        scheduleNext();
+        return;
+      }
+
+      paintFrame(s.morphT, t);
+      animRef.current = requestAnimationFrame(animateMorph);
+    };
+
+    // Wait `nextInterval` (cheap timer, no rAF), then kick off one morph.
+    const scheduleNext = () => {
+      const s = stateRef.current;
+      const wait = synchronized ? interval : interval + (Math.random() - 0.5) * 1000;
+      morphTimer = setTimeout(() => {
+        // Skip the morph entirely while scrolled offscreen; re-check later.
+        if (!isVisibleRef.current) { scheduleNext(); return; }
+        s.isMorphing = true;
+        s.morphT = 0;
+        s.widthSwitched = false;
+        animRef.current = requestAnimationFrame(animateMorph);
+      }, wait);
+    };
+
+    // First paint: draw the resting word once, then start the idle→morph cycle.
+    // Deferred to idle so it never competes with hydration / LCP.
+    const begin = () => {
+      paintFrame(0, performance.now());
+      scheduleNext();
+    };
     if (typeof window.requestIdleCallback === 'function') {
       idleId = window.requestIdleCallback(begin, { timeout: 1500 });
     } else {
-      timer = setTimeout(begin, 200);
+      morphTimer = setTimeout(begin, 200);
     }
+
     return () => {
       cancelAnimationFrame(animRef.current);
-      if (timer) clearTimeout(timer);
+      if (morphTimer) clearTimeout(morphTimer);
       if (idleId && typeof window.cancelIdleCallback === 'function') window.cancelIdleCallback(idleId);
     };
   }, [mounted, width, height, wordA, wordB, interval, synchronized, sampleText, easeOutExpo, easeInOutExpo]);
@@ -352,13 +361,20 @@ export const ParticleMorphText = memo(function ParticleMorphText({
       {mounted ? (
         <canvas ref={canvasRef} style={{ width, height, display: 'block' }} aria-hidden="true" />
       ) : (
+        // Pre-hydration / SSR: the resting word as gradient text. Sized with
+        // the same responsive classes as the H1 (28/36/48px) so it matches
+        // the surrounding copy in the server HTML before JS sets canvas sizing.
+        // This is what's in the initial paint — no empty slot, no jump.
         <span
+          className="text-[28px] sm:text-[36px] lg:text-[48px]"
           style={{
             background: `linear-gradient(90deg, ${gradientFrom}, ${gradientTo})`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
-            fontSize, fontWeight: 700,
+            fontWeight: 700,
+            lineHeight: 1,
+            whiteSpace: 'nowrap',
           }}
         >
           {words[startIndex]}

@@ -18,9 +18,12 @@ const ResponsiveNeuralConstellation = dynamic(() => import('../hero/neural-const
   loading: () => null
 });
 
+// SSR enabled: the component's pre-hydration branch renders the static
+// gradient word (no canvas, no browser APIs), so the full headline is in the
+// server HTML from first paint — no empty-slot flash. The canvas swaps in
+// silently after hydration.
 const ParticleMorphText = dynamic(() => import('../hero/particle-morph-text').then(m => ({ default: m.ParticleMorphText })), {
-  ssr: false,
-  loading: () => null
+  ssr: true,
 });
 
 const HeroSectionInner = memo(function HeroSectionInner() {
