@@ -219,6 +219,24 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     canvas.height = height * dpr;
     ctx.scale(dpr, dpr);
 
+    // Pre-render a soft white radial-glow sprite ONCE. The previous hot path
+    // created a fresh createRadialGradient per particle per frame (~1.4s of
+    // script exec in PSI). Now we stamp this cached sprite via drawImage and
+    // tint with a solid arc underneath. SPRITE_R covers the old r*2.5 extent.
+    const SPRITE_R = 3; // device-independent px
+    const sprite = document.createElement('canvas');
+    sprite.width = sprite.height = Math.ceil(SPRITE_R * 2 * dpr);
+    const sctx = sprite.getContext('2d');
+    if (sctx) {
+      sctx.scale(dpr, dpr);
+      const sg = sctx.createRadialGradient(SPRITE_R, SPRITE_R, 0, SPRITE_R, SPRITE_R, SPRITE_R);
+      sg.addColorStop(0, 'rgba(255,255,255,1)');
+      sg.addColorStop(0.5, 'rgba(255,255,255,0.5)');
+      sg.addColorStop(1, 'rgba(255,255,255,0)');
+      sctx.fillStyle = sg;
+      sctx.fillRect(0, 0, SPRITE_R * 2, SPRITE_R * 2);
+    }
+
     particlesARef.current = sampleText(wordA);
     particlesBRef.current = sampleText(wordB);
     stateRef.current.lastSwitch = performance.now();
@@ -293,13 +311,16 @@ export const ParticleMorphText = memo(function ParticleMorphText({
         // Smoother alpha transition
         const alpha = s.isMorphing ? 0.85 + 0.15 * Math.cos(s.morphT * Math.PI * 2) : 1;
         
-        // Soft radial glow
-        const grad = ctx.createRadialGradient(x, y, 0, x, y, fromP.r * 2.5);
-        grad.addColorStop(0, `rgba(${r},${g},${b},${alpha})`);
-        grad.addColorStop(0.5, `rgba(${r},${g},${b},${alpha * 0.5})`);
-        grad.addColorStop(1, 'transparent');
-        ctx.fillStyle = grad;
-        ctx.fillRect(x - fromP.r * 2.5, y - fromP.r * 2.5, fromP.r * 5, fromP.r * 5);
+        // Soft glow: solid tinted dot + cached white sprite at the particle's
+        // alpha. Replaces the per-particle createRadialGradient (the old hot
+        // path). Same visual: colored core under a soft white halo.
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.beginPath();
+        ctx.arc(x, y, fromP.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.drawImage(sprite, x - SPRITE_R, y - SPRITE_R, SPRITE_R * 2, SPRITE_R * 2);
+        ctx.globalAlpha = 1;
       }
 
       animRef.current = requestAnimationFrame(draw);
