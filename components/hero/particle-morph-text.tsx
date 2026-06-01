@@ -56,11 +56,16 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     lastSwitch: 0,
     isMorphing: false,
     widthSwitched: false,
-    nextInterval: synchronized ? interval : interval + (Math.random() - 0.5) * 800
+    cycle: 0,
+    nextInterval: interval
   });
   const particlesARef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const particlesBRef = useRef<{ x: number; y: number; r: number; c: string; rgb: [number, number, number]; seed: number }[]>([]);
   const [mounted, setMounted] = useState(false);
+  // True only AFTER the canvas has drawn its first frame. Until then the static
+  // gradient word stays visible, so there's never an empty-slot flash in the
+  // window between hydration (mounted=true) and the idle-deferred first paint.
+  const [painted, setPainted] = useState(false);
   const [activeWordIndex, setActiveWordIndex] = useState(startIndex);
   const [_fontsReady, setFontsReady] = useState(false);
 
@@ -296,7 +301,7 @@ export const ParticleMorphText = memo(function ParticleMorphText({
     // rAF loop that runs ONLY during a morph, then stops and schedules the next.
     const animateMorph = (t: number) => {
       const s = stateRef.current;
-      s.morphT += 0.018; // ~0.9s morph at 60fps — slower, more graceful than the old 0.4s
+      s.morphT += 0.05; // ~0.33s morph at 60fps — a quick flit, not a slow melt
 
       // Switch width at morph midpoint so spacing animates in sync.
       if (s.morphT >= 0.5 && !s.widthSwitched) {
@@ -320,10 +325,19 @@ export const ParticleMorphText = memo(function ParticleMorphText({
       animRef.current = requestAnimationFrame(animateMorph);
     };
 
-    // Wait `nextInterval` (cheap timer, no rAF), then kick off one morph.
+    // Wait a VARYING interval, then kick off one morph. The wait is a
+    // deterministic function of the cycle counter (a sine hash), not Math.random:
+    // synchronized instances share `interval` and step `cycle` in lockstep, so
+    // they compute the SAME wait every cycle — the word pair stays coherent
+    // ("Emergent…adaptive" ⇄ "Adaptive…emergent") while the gap between morphs
+    // varies (~7s ± 2.5s) so it never feels like a fixed metronome.
     const scheduleNext = () => {
       const s = stateRef.current;
-      const wait = synchronized ? interval : interval + (Math.random() - 0.5) * 1000;
+      s.cycle += 1;
+      // pseudo-random in [-1, 1] from the cycle index; same for both instances.
+      const jitter = Math.sin(s.cycle * 12.9898) * 43758.5453;
+      const frac = jitter - Math.floor(jitter); // [0,1)
+      const wait = interval + (frac - 0.5) * 5000; // interval ± 2.5s
       morphTimer = setTimeout(() => {
         // Skip the morph entirely while scrolled offscreen; re-check later.
         if (!isVisibleRef.current) { scheduleNext(); return; }
@@ -334,10 +348,12 @@ export const ParticleMorphText = memo(function ParticleMorphText({
       }, wait);
     };
 
-    // First paint: draw the resting word once, then start the idle→morph cycle.
-    // Deferred to idle so it never competes with hydration / LCP.
+    // First paint: draw the resting word once, reveal the canvas (it now has
+    // content, so swapping out the static word can't flash), then start the
+    // idle→morph cycle. Deferred to idle so it never competes with hydration.
     const begin = () => {
       paintFrame(0, performance.now());
+      setPainted(true);
       scheduleNext();
     };
     if (typeof window.requestIdleCallback === 'function') {
@@ -369,27 +385,40 @@ export const ParticleMorphText = memo(function ParticleMorphText({
       }}
     >
       <span className="sr-only">{wordA} / {wordB}</span>
-      {mounted ? (
-        <canvas ref={canvasRef} style={{ width, height, display: 'block' }} aria-hidden="true" />
-      ) : (
-        // Pre-hydration / SSR: the resting word as gradient text. Sized with
-        // the same responsive classes as the H1 (28/36/48px) so it matches
-        // the surrounding copy in the server HTML before JS sets canvas sizing.
-        // This is what's in the initial paint — no empty slot, no jump.
-        <span
-          className="text-[28px] sm:text-[36px] lg:text-[48px]"
+      {/* The static gradient word is ALWAYS rendered — it's the SSR content,
+          it holds the inline box, and it stays visible until the canvas has
+          actually drawn (painted=true). Crossfades out once the canvas is up,
+          so there is never an empty slot between hydration and first paint. */}
+      <span
+        className="text-[28px] sm:text-[36px] lg:text-[48px]"
+        aria-hidden="true"
+        style={{
+          background: `linear-gradient(90deg, ${gradientFrom}, ${gradientTo})`,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          fontWeight: 700,
+          lineHeight: 1,
+          whiteSpace: 'nowrap',
+          opacity: painted ? 0 : 1,
+          transition: 'opacity 200ms ease-out',
+        }}
+      >
+        {words[activeWordIndex]}
+      </span>
+      {/* Canvas is layered ON TOP of the static word once mounted, revealed
+          only after its first frame is drawn — so the swap never flashes. */}
+      {mounted && (
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
           style={{
-            background: `linear-gradient(90deg, ${gradientFrom}, ${gradientTo})`,
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            fontWeight: 700,
-            lineHeight: 1,
-            whiteSpace: 'nowrap',
+            width, height, display: 'block',
+            position: 'absolute', top: 0, left: 0,
+            opacity: painted ? 1 : 0,
+            transition: 'opacity 200ms ease-out',
           }}
-        >
-          {words[startIndex]}
-        </span>
+        />
       )}
     </span>
   );
