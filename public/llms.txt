@@ -87,7 +87,7 @@ await team.generate('Compare TCP vs UDP.');
 
 - [Wilds.ai](https://wilds.ai) — AI game worlds powered by AgentOS
 - [Frame.dev](https://frame.dev) — Developer tools
-- [Manic Agency](https://manic.agency) — The company behind AgentOS
+- [Framers Lab, Inc.](https://frame.dev) — The company behind AgentOS
 
 ## Policy
 
