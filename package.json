@@ -1,5 +1,5 @@
 {
-  "name": "@framers/agentos.sh",
+  "name": "@framers/agentos-sh",
   "version": "0.1.0",
   "private": true,
   "description": "Marketing site for AgentOS (agentos.sh) built with Next.js, React, and Tailwind CSS.",

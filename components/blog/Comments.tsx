@@ -8,7 +8,7 @@ import { MessageSquare } from 'lucide-react';
  * Giscus configuration. Set these via env vars in `.env.local` /
  * `.env.production`:
  *
- *   NEXT_PUBLIC_GISCUS_REPO        e.g. "framersai/agentos.sh"
+ *   NEXT_PUBLIC_GISCUS_REPO        e.g. "framerslab/agentos.sh"
  *   NEXT_PUBLIC_GISCUS_REPO_ID     from giscus.app configurator
  *   NEXT_PUBLIC_GISCUS_CATEGORY    e.g. "General"
  *   NEXT_PUBLIC_GISCUS_CATEGORY_ID from giscus.app configurator

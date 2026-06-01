@@ -84,7 +84,7 @@ This engine builds one — but for AI agents to inhabit instead of children to d
 - **Tools.** Specialists forge new TypeScript functions at runtime inside a hardened `node:vm` sandbox; an LLM judge approves; reuse costs tens of tokens.
 - **Output.** A `RunArtifact` you can fork from any captured turn, replay byte-equal, diff against another actor's run, or feed into any JSON pipeline.
 
-`npm install paracosm` · [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim) · [`framersai/paracosm`](https://github.com/framerslab/paracosm) · [API docs](https://paracosm.agentos.sh/docs)
+`npm install paracosm` · [paracosm.agentos.sh/sim](https://paracosm.agentos.sh/sim) · [`framerslab/paracosm`](https://github.com/framerslab/paracosm) · [API docs](https://paracosm.agentos.sh/docs)
 
 </aside>
 
@@ -636,7 +636,7 @@ If you make something interesting, [send us a thought](https://agentos.sh/contac
 - API reference: [paracosm.agentos.sh/docs](https://paracosm.agentos.sh/docs)
 - Mars Genesis case study: [Inside Mars Genesis](/en/blog/inside-mars-genesis-ai-colony-simulation/)
 - Underlying runtime: [github.com/framerslab/agentos](https://github.com/framerslab/agentos) (Apache-2.0)
-- Benchmark methodology: [framersai/agentos-bench](https://github.com/framerslab/agentos-bench)
+- Benchmark methodology: [framerslab/agentos-bench](https://github.com/framerslab/agentos-bench)
 - wilds.ai (the AI companion product where the NPCs locked themselves in a vault): [wilds.ai](https://wilds.ai)
 
 ## References

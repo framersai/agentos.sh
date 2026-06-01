@@ -86,11 +86,11 @@
     },
     {
       "source": "/docs-generated/library/:path*",
-      "destination": "https://framersai.github.io/agentos/api/:path*"
+      "destination": "https://framerslab.github.io/agentos/api/:path*"
     },
     {
       "source": "/docs-generated/api/:path*",
-      "destination": "https://framersai.github.io/agentos/api/:path*"
+      "destination": "https://framerslab.github.io/agentos/api/:path*"
     }
   ],
   "headers": [

@@ -486,7 +486,7 @@ Quarterly. Next refresh date: 2026-08. Each refresh re-runs the bench against th
 
 [^4]: Wu, D., et al. *LongMemEval: Open dataset, evaluation harness, and rubric.* GitHub. <https://github.com/xiaowu0162/LongMemEval>
 
-[^5]: framersai. *agentos-bench: Open benchmark harness for AgentOS memory and retrieval.* GitHub (Apache-2.0). <https://github.com/framerslab/agentos-bench>
+[^5]: framerslab. *agentos-bench: Open benchmark harness for AgentOS memory and retrieval.* GitHub (Apache-2.0). <https://github.com/framerslab/agentos-bench>
 
 [^6]: Supermemory. *memorybench: Multi-judge benchmarking harness for LoCoMo, LongMemEval, and ConvoMem.* GitHub. <https://github.com/supermemoryai/memorybench>
 

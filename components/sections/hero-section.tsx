@@ -82,7 +82,7 @@ const HeroSectionInner = memo(function HeroSectionInner() {
     let cancelled = false;
     loadPublicStats().then(blob => {
       if (cancelled) return;
-      const repo = blob?.repos?.['framersai/agentos'];
+      const repo = blob?.repos?.['framerslab/agentos'];
       if (repo && typeof repo.stars === 'number') {
         setGithubStars(repo.stars);
         setGithubForks(repo.forks ?? null);
@@ -236,13 +236,13 @@ const HeroSectionInner = memo(function HeroSectionInner() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="https://img.shields.io/npm/v/@framers/agentos?logo=npm&color=cb3837" alt="npm version" width={106} height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
             </a>
-            <a href="https://codecov.io/gh/framersai/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+            <a href="https://codecov.io/gh/framerslab/agentos" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/codecov/c/github/framersai/agentos?logo=codecov" alt="test coverage" width={120} height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
+              <img src="https://img.shields.io/codecov/c/github/framerslab/agentos?logo=codecov" alt="test coverage" width={120} height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
             </a>
             <a href="https://github.com/framerslab/agentos/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://img.shields.io/github/actions/workflow/status/framersai/agentos/ci.yml?logo=github" alt="CI status" width={100} height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
+              <img src="https://img.shields.io/github/actions/workflow/status/framerslab/agentos/ci.yml?logo=github" alt="CI status" width={100} height={20} className="h-5 w-auto" loading="lazy" decoding="async" />
             </a>
             <a href="https://github.com/framerslab/agentos/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
               {/* eslint-disable-next-line @next/next/no-img-element */}

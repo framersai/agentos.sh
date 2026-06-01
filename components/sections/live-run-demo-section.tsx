@@ -1219,7 +1219,7 @@ export function LiveRunDemoSection() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            framersai/agentos/examples
+            framerslab/agentos/examples
           </a>
           . Pick one.
         </p>

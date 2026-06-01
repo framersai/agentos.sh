@@ -30,17 +30,17 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || '';
 
 // Repos to fetch top-level stats for (used by hero + ecosystem grids).
 const REPOS = [
-  'framersai/agentos',
-  'framersai/agentos.sh',
-  'framersai/agentos-live-docs',
-  'framersai/agentos-extensions',
-  'framersai/agentos-skills',
-  'framersai/agentos-skills-registry',
-  'framersai/agentos-extensions-registry',
-  'framersai/agentos-workbench',
-  'framersai/sql-storage-adapter',
-  'framersai/paracosm',
-  'framersai/discussions',
+  'framerslab/agentos',
+  'framerslab/agentos.sh',
+  'framerslab/agentos-live-docs',
+  'framerslab/agentos-extensions',
+  'framerslab/agentos-skills',
+  'framerslab/agentos-skills-registry',
+  'framerslab/agentos-extensions-registry',
+  'framerslab/agentos-workbench',
+  'framerslab/sql-storage-adapter',
+  'framerslab/paracosm',
+  'framerslab/discussions',
 ];
 
 // npm packages whose weekly download counts feed real-stats / ecosystem.
@@ -129,8 +129,8 @@ async function main() {
 
   const [repoEntries, orgRepos, contribAgentos, ...npmDownloads] = await Promise.all([
     Promise.all(REPOS.map(fetchRepo)),
-    fetchOrgRepos('framersai'),
-    fetchContributors('framersai/agentos'),
+    fetchOrgRepos('framerslab'),
+    fetchContributors('framerslab/agentos'),
     ...NPM_PACKAGES.map(fetchNpmDownloads),
   ]);
 
@@ -147,8 +147,8 @@ async function main() {
     repos,
     orgRepos: orgRepos ?? [],
     aggregate: {
-      agentosStars: repos['framersai/agentos']?.stars ?? null,
-      agentosOpenIssues: repos['framersai/agentos']?.openIssues ?? null,
+      agentosStars: repos['framerslab/agentos']?.stars ?? null,
+      agentosOpenIssues: repos['framerslab/agentos']?.openIssues ?? null,
       agentosContributors: contribAgentos,
     },
     npm,

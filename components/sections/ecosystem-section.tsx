@@ -216,7 +216,7 @@ export function EcosystemSection() {
     const slugs = Array.from(
       new Set(
         repositories
-          .map((repo) => repo.url.match(/github.com\/framersai\/([^/]+)/)?.[1])
+          .map((repo) => repo.url.match(/github.com\/framerslab\/([^/]+)/)?.[1])
           .filter((slug): slug is string => Boolean(slug))
       )
     )
@@ -401,7 +401,7 @@ export function EcosystemSection() {
                             </span>
                           )}
                           {(() => {
-                            const slug = repo.url.match(/github.com\/framersai\/([^/]+)/)?.[1]
+                            const slug = repo.url.match(/github.com\/framerslab\/([^/]+)/)?.[1]
                             const live = slug ? repoStats[slug] : undefined
                             const starsDisplay = live?.stars != null ? formatNumber(live.stars) : null
                             const updatedDisplay = live?.updatedAt

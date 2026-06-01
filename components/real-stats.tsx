@@ -19,7 +19,7 @@ export function RealStats() {
     let cancelled = false
     loadPublicStats().then((blob) => {
       if (cancelled) return
-      const agentos = blob?.repos?.['framersai/agentos']
+      const agentos = blob?.repos?.['framerslab/agentos']
       setStats({
         githubStars: agentos?.stars,
         npmDownloads: blob?.npm?.['@framers/agentos'] ?? undefined,

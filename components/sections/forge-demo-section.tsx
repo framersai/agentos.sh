@@ -1,14 +1,16 @@
 /**
  * ForgeDemoSection. Full-width animated demo of runtime tool forging,
  * positioned directly under the hero. Server component, zero client JS:
- * the only dynamic element is the animated WebP/GIF, both lazy-loaded.
+ * the only dynamic element is an autoplaying inline <video>.
  *
  * Asset trail:
- *  - WebP (1.93 MB, lossless from GIF). Modern browsers pick this up.
- *  - GIF fallback (2.49 MB). Used by anything that can't parse <picture>
- *    or animated WebP. Both files live in public/img/blog/og/.
- *  - Section sits below the LCP element so neither file blocks first
- *    paint, even at full size.
+ *  - MP4 (742 KB, H.264). The animated source; universally supported, so
+ *    this is what every visitor actually sees.
+ *  - WebP poster (91 KB). Shown before the MP4 plays AND used as the static
+ *    <video> fallback for the (essentially nonexistent) browsers that can't
+ *    play H.264. The 2.5 MB animated GIF is no longer referenced — fetching
+ *    it as fallback content was costing ~2.5 MB on some renders.
+ *  - preload="none" + below the LCP element, so neither file blocks paint.
  */
 export function ForgeDemoSection() {
   return (
@@ -39,8 +41,9 @@ export function ForgeDemoSection() {
               Re-encoded to a 742 KB H.264 MP4, served as an autoplaying,
               looping, muted, inline <video>. preload="none" defers the load
               until it scrolls into view so it never competes with first paint.
-              Same 1600x920 box + classes; WebP poster, GIF kept only as the
-              ancient-browser fallback inside <video>. */}
+              Same 1600x920 box + classes; the 91 KB WebP serves as both the
+              poster and the static fallback inside <video> for browsers that
+              can't play H.264 (the 2.5 MB GIF is no longer referenced). */}
           <video
             autoPlay
             loop

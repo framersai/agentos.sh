@@ -46,7 +46,7 @@ npm install @framers/agentos
 
 ## About this repository
 
-This repo is the **marketing site** at [agentos.sh](https://agentos.sh) — Next.js + Tailwind, statically exported, served from GitHub Pages behind Cloudflare. It is intentionally decoupled from the runtime (`framersai/agentos`) so the marketing surface can ship independently.
+This repo is the **marketing site** at [agentos.sh](https://agentos.sh) — Next.js + Tailwind, statically exported, served from GitHub Pages behind Cloudflare. It is intentionally decoupled from the runtime (`framerslab/agentos`) so the marketing surface can ship independently.
 
 ### Stack
 
@@ -98,12 +98,12 @@ Some sections render optional media. When files are missing, a placeholder appea
 
 ## Other AgentOS surfaces
 
-- [`framersai/agentos`](https://github.com/framerslab/agentos) — the runtime
-- [`framersai/agentos-live-docs`](https://github.com/framerslab/agentos-live-docs) → [docs.agentos.sh](https://docs.agentos.sh)
-- [`framersai/agentos-bench`](https://github.com/framerslab/agentos-bench) → published benchmarks + leaderboards
-- [`framersai/agentos-extensions`](https://github.com/framerslab/agentos-extensions) — extension registry
-- [`framersai/agentos-skills`](https://github.com/framerslab/agentos-skills) — SKILL.md community registry
-- [`framersai/paracosm`](https://github.com/framerslab/paracosm) → [paracosm.agentos.sh](https://paracosm.agentos.sh) — agent-swarm world simulation
+- [`framerslab/agentos`](https://github.com/framerslab/agentos) — the runtime
+- [`framerslab/agentos-live-docs`](https://github.com/framerslab/agentos-live-docs) → [docs.agentos.sh](https://docs.agentos.sh)
+- [`framerslab/agentos-bench`](https://github.com/framerslab/agentos-bench) → published benchmarks + leaderboards
+- [`framerslab/agentos-extensions`](https://github.com/framerslab/agentos-extensions) — extension registry
+- [`framerslab/agentos-skills`](https://github.com/framerslab/agentos-skills) — SKILL.md community registry
+- [`framerslab/paracosm`](https://github.com/framerslab/paracosm) → [paracosm.agentos.sh](https://paracosm.agentos.sh) — agent-swarm world simulation
 
 ## Contributing & Security
 
