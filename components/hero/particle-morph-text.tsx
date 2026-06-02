@@ -84,7 +84,14 @@ export function ParticleMorphTextImpl({
 
   const resolveFont = useCallback(() => {
     const el = canvasRef.current;
-    const fam = el ? getComputedStyle(el).fontFamily : 'ui-sans-serif, system-ui, sans-serif';
+    let fam = el ? getComputedStyle(el).fontFamily : 'system-ui, sans-serif';
+    // CRITICAL: <canvas> resolves the `ui-sans-serif` generic to a DIFFERENT
+    // concrete font than the DOM does (measured: DOM renders the system UI font
+    // at one width, canvas's ui-sans-serif resolves to Inter/SF at a narrower
+    // one). So the sampled particles traced the wrong typeface. Drop the leading
+    // `ui-sans-serif` token so canvas falls through to `system-ui`, which it
+    // resolves identically to the DOM — the dots then form the exact headline font.
+    fam = fam.replace(/^\s*ui-sans-serif\s*,\s*/i, '');
     return `700 ${fontSize}px ${fam}`;
   }, [fontSize]);
 
