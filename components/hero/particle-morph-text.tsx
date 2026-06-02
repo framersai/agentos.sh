@@ -70,6 +70,9 @@ export function ParticleMorphTextImpl({
   // the box and always visible (the word is always shown as dots).
   const canvasW = useMemo(() => Math.ceil(Math.max(wordA.length, wordB.length) * fontSize * 0.66) + 8, [wordA, wordB, fontSize]);
   const height = useMemo(() => Math.ceil(fontSize * 1.18), [fontSize]);
+  // Stable, instance-unique id for the SVG dot pattern (two morph instances on
+  // the page must not share <defs> ids). Deterministic so SSR and client match.
+  const dotPatternId = useMemo(() => `morphdots-${wordA}-${wordB}`.replace(/[^a-z0-9-]/gi, ''), [wordA, wordB]);
 
   const hexToRgb = useCallback((hex: string): [number, number, number] => {
     const v = parseInt(hex.slice(1), 16);
@@ -234,25 +237,47 @@ export function ParticleMorphTextImpl({
       style={{ verticalAlign: 'baseline', marginRight: '0.25em', top: nudgeY ? `${nudgeY}em` : undefined }}
       aria-label={`${wordA} / ${wordB}`}
     >
-      {/* Width-definer AND load fallback: the real DOM gradient word sizes the
-          inline box exactly (correct spacing) AND is VISIBLE from first paint so
-          the slot is never blank during the ~1.5s before the canvas idle-paints.
-          Once the canvas has drawn its dots (painted), this fades out and the
-          dotted canvas takes over. So: instant crisp word → dotted word, no gap. */}
-      <span
-        aria-hidden="true"
-        style={{
-          fontWeight: 700,
-          whiteSpace: 'nowrap',
-          background: `linear-gradient(90deg, ${gradientFrom}, ${gradientTo})`,
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          opacity: painted ? 0 : 1,
-          transition: 'opacity 200ms ease-out',
-        }}
-      >
-        {words[activeWordIndex]}
+      {/* PRE-HYDRATION fallback rendered as DOTS — not crisp text. This is an
+          inline SVG <text> filled with a tiling circle pattern: real font glyphs
+          (system-ui, matching the headline) stippled into dots, as pure static
+          markup that paints at t=0 (no JS/canvas/hydration needed). So the word
+          is dots from the very first pixel. Sized via an invisible real-text
+          sizer so width/spacing is exact. Once the canvas paints (post-hydration)
+          this fades out and the animated canvas dots take over. */}
+      <span style={{ position: 'relative', display: 'inline-block', whiteSpace: 'nowrap', opacity: painted ? 0 : 1, transition: 'opacity 200ms ease-out' }}>
+        {/* invisible sizer: real text sets the exact box width */}
+        <span aria-hidden="true" style={{ fontWeight: 700, visibility: 'hidden', whiteSpace: 'nowrap' }}>
+          {words[activeWordIndex]}
+        </span>
+        {/* dotted glyphs overlaid at the same size/position */}
+        <svg
+          aria-hidden="true"
+          width="100%"
+          height={height}
+          viewBox={`0 0 ${canvasW} ${height}`}
+          preserveAspectRatio="xMinYMid meet"
+          style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', overflow: 'visible' }}
+        >
+          <defs>
+            <pattern id={`${dotPatternId}-${activeWordIndex}`} width="3.4" height="3.4" patternUnits="userSpaceOnUse">
+              <circle cx="1.7" cy="1.7" r="1.05" fill={gradientFrom} />
+            </pattern>
+            <linearGradient id={`${dotPatternId}-grad`} x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor={gradientFrom} />
+              <stop offset="100%" stopColor={gradientTo} />
+            </linearGradient>
+          </defs>
+          <text
+            x="0"
+            y={fontSize * 0.94}
+            fontFamily="system-ui, sans-serif"
+            fontWeight={700}
+            fontSize={fontSize}
+            fill={`url(#${dotPatternId}-${activeWordIndex})`}
+          >
+            {words[activeWordIndex]}
+          </text>
+        </svg>
       </span>
       {/* The word is ALWAYS rendered as particles/dots (matching font). At rest
           it's a still dotted word; during a morph the dots flow to the next
