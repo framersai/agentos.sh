@@ -221,7 +221,9 @@ export function ParticleMorphTextImpl({
   return (
     <span
       className={`relative inline-block align-baseline ${className}`}
-      style={{ verticalAlign: 'baseline', top: nudgeY ? `${nudgeY}em` : undefined }}
+      // Box is exactly the word width, so add ONE normal word-space before the
+      // next word (JSX collapses the source whitespace). 0.25em ≈ a space glyph.
+      style={{ verticalAlign: 'baseline', marginRight: '0.25em', top: nudgeY ? `${nudgeY}em` : undefined }}
       aria-label={`${wordA} / ${wordB}`}
     >
       {/* REST: real DOM gradient word — defines the inline box (exact width,
