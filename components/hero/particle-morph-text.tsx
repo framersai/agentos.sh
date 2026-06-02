@@ -210,16 +210,14 @@ export function ParticleMorphTextImpl({
       }, wait);
     };
 
-    // First paint: draw the resting word AS DOTS immediately (the word is always
-    // particles), reveal the canvas, then start the idle→morph cycle. Deferred
-    // to idle so it doesn't compete with LCP.
-    const begin = () => {
-      drawParticles(0, performance.now());
-      setPainted(true);
-      scheduleNext();
-    };
-    if (typeof window.requestIdleCallback === 'function') idleId = window.requestIdleCallback(begin, { timeout: 1500 });
-    else morphTimer = setTimeout(begin, 400);
+    // Draw the dotted word IMMEDIATELY on hydration (synchronously in this
+    // effect) and reveal the canvas right away, so the crisp DOM fallback is
+    // shown for only the brief hydration window — not a deferred ~1.5s. Only the
+    // recurring morph CYCLE is idle-deferred so it never competes with LCP.
+    drawParticles(0, performance.now());
+    setPainted(true);
+    if (typeof window.requestIdleCallback === 'function') idleId = window.requestIdleCallback(scheduleNext, { timeout: 1500 });
+    else morphTimer = setTimeout(scheduleNext, 400);
 
     return () => {
       cancelAnimationFrame(animRef.current);
