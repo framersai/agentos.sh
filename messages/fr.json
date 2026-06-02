@@ -220,6 +220,7 @@
     "description": "Déploiements AgentOS réels et applications en production"
   },
   "footer": {
+    "backedBy": "Frame est membre du <deepgramLink>Deepgram Startup Program</deepgramLink>",
     "tagline": "Runtime TypeScript pour agents IA adaptatifs par Frame.dev",
     "resources": "Ressources",
     "docsGuides": "Docs (Guides)",

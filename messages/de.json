@@ -220,6 +220,7 @@
     "description": "Reale AgentOS-Implementierungen und Produktionsbereitstellungen"
   },
   "footer": {
+    "backedBy": "Frame ist Mitglied des <deepgramLink>Deepgram Startup Program</deepgramLink>",
     "tagline": "TypeScript-Laufzeit für adaptive KI-Agenten von Frame.dev",
     "resources": "Ressourcen",
     "docsGuides": "Dokumentation (Anleitungen)",

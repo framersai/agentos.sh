@@ -399,6 +399,15 @@ export default async function LocaleLayout({
               <p className="text-text-secondary">{tFooter('copyright', { 
                 year: new Date().getFullYear() 
               })}</p>
+              <p className="text-text-secondary text-sm mt-2">
+                {tFooter.rich('backedBy', {
+                  deepgramLink: (chunks: ReactNode) => (
+                    <a href="https://deepgram.com/startups" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:underline">
+                      {chunks}
+                    </a>
+                  ),
+                })}
+              </p>
             </div>
           </div>
         </footer>

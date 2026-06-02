@@ -220,6 +220,7 @@
     "description": "実世界のAgentOS実装とプロダクションデプロイ"
   },
   "footer": {
+    "backedBy": "Frame は <deepgramLink>Deepgram Startup Program</deepgramLink> のメンバーです",
     "tagline": "Frame.devによる適応型AIエージェントのためのTypeScriptランタイム",
     "resources": "リソース",
     "docsGuides": "ドキュメント（ガイド）",
