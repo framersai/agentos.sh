@@ -236,16 +236,22 @@ export function ParticleMorphTextImpl({
       style={{ verticalAlign: 'baseline', marginRight: '0.25em', top: nudgeY ? `${nudgeY}em` : undefined }}
       aria-label={`${wordA} / ${wordB}`}
     >
-      {/* INVISIBLE width-definer: the real DOM word sizes the inline box exactly
-          (so spacing is correct) but is never shown — the visible rendering is
-          ALWAYS the canvas dots. Also carries no a11y (the wrapper has the
-          aria-label). visibility:hidden keeps layout but paints nothing. */}
+      {/* Width-definer AND load fallback: the real DOM gradient word sizes the
+          inline box exactly (correct spacing) AND is VISIBLE from first paint so
+          the slot is never blank during the ~1.5s before the canvas idle-paints.
+          Once the canvas has drawn its dots (painted), this fades out and the
+          dotted canvas takes over. So: instant crisp word → dotted word, no gap. */}
       <span
         aria-hidden="true"
         style={{
           fontWeight: 700,
           whiteSpace: 'nowrap',
-          visibility: 'hidden',
+          background: `linear-gradient(90deg, ${gradientFrom}, ${gradientTo})`,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          opacity: painted ? 0 : 1,
+          transition: 'opacity 200ms ease-out',
         }}
       >
         {words[activeWordIndex]}
