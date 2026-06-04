@@ -1294,6 +1294,7 @@
     },
     "ebbinghausAnnotation": "Sin repaso, el 80% de la información se pierde en 24 horas. La memoria cognitiva de AgentOS aplica repetición espaciada y consolidación para aplanar la curva.",
     "ctaLearnMore": "Explorar Memoria Cognitiva",
+    "ctaSoulWiki": "Wiki de memoria en Markdown",
     "memoryTypes": {
       "title": "Jerarquia de Memoria de 4 Niveles",
       "subtitle": "Desde memorias volatiles hasta grafos de conocimiento permanentes — cada nivel se consolida automaticamente.",

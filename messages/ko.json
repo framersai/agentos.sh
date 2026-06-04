@@ -1294,6 +1294,7 @@
     },
     "ebbinghausAnnotation": "복습 없이는 24시간 이내에 정보의 80%가 손실됩니다. AgentOS의 인지 기억은 간격 반복과 고정화를 적용하여 곡선을 평탄화합니다.",
     "ctaLearnMore": "인지 기억 탐색",
+    "ctaSoulWiki": "Markdown 기억 위키",
     "memoryTypes": {
       "title": "4계층 메모리 아키텍처",
       "subtitle": "휘발성 작업 메모리에서 영구 지식 그래프까지 — 각 계층이 자동으로 통합됩니다.",

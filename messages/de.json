@@ -1294,6 +1294,7 @@
     },
     "ebbinghausAnnotation": "Ohne Wiederholung gehen 80% der Informationen innerhalb von 24 Stunden verloren. Das kognitive Gedächtnis von AgentOS nutzt verteilte Wiederholung und Konsolidierung, um die Kurve abzuflachen.",
     "ctaLearnMore": "Kognitives Gedächtnis erkunden",
+    "ctaSoulWiki": "Markdown-Gedächtnis-Wiki",
     "memoryTypes": {
       "title": "4-stufige Speicherhierarchie",
       "subtitle": "Von fluechtigem Arbeitsspeicher bis zu permanenten Wissensgraphen — jede Stufe konsolidiert automatisch nach oben.",

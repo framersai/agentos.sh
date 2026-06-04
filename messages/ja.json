@@ -1294,6 +1294,7 @@
     },
     "ebbinghausAnnotation": "復習なしでは、24時間以内に情報の80%が失われます。AgentOSの認知記憶は間隔反復と固定化を適用して曲線を平坦化します。",
     "ctaLearnMore": "認知記憶を探索",
+    "ctaSoulWiki": "Markdown 記憶ウィキ",
     "memoryTypes": {
       "title": "4階層メモリアーキテクチャ",
       "subtitle": "揮発性の作業メモリから永続的なナレッジグラフまで—各階層が自動的に統合されます。",

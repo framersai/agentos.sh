@@ -1294,6 +1294,7 @@
     },
     "ebbinghausAnnotation": "Sans révision, 80% des informations sont perdues en 24 heures. La mémoire cognitive d'AgentOS applique la répétition espacée et la consolidation pour aplatir la courbe.",
     "ctaLearnMore": "Explorer la Mémoire Cognitive",
+    "ctaSoulWiki": "Wiki mémoire en Markdown",
     "memoryTypes": {
       "title": "Hierarchie de Memoire a 4 Niveaux",
       "subtitle": "Des tampons volatils aux graphes de connaissances permanents — chaque niveau se consolide automatiquement.",

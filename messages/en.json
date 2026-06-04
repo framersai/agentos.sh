@@ -1294,6 +1294,7 @@
     },
     "ebbinghausAnnotation": "Without rehearsal, 80% of information is lost within 24 hours. AgentOS cognitive memory applies spaced repetition and consolidation to flatten the curve.",
     "ctaLearnMore": "Explore Cognitive Memory",
+    "ctaSoulWiki": "Markdown Memory Wiki",
     "memoryTypes": {
       "title": "4-Tier Memory Hierarchy",
       "subtitle": "From volatile scratchpads to permanent knowledge graphs — each tier consolidates upward automatically.",

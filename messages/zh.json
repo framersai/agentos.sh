@@ -1294,6 +1294,7 @@
     },
     "ebbinghausAnnotation": "没有复习，80%的信息会在24小时内丢失。AgentOS的认知记忆应用间隔重复和巩固来拉平曲线。",
     "ctaLearnMore": "探索认知记忆",
+    "ctaSoulWiki": "Markdown 记忆维基",
     "memoryTypes": {
       "title": "4层记忆架构",
       "subtitle": "从易失的工作记忆到永久知识图谱——每层自动向上合并。",

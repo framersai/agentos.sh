@@ -964,13 +964,20 @@ export function CognitiveSection() {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
           variants={{ ...fadeUp, visible: { ...fadeUp.visible, transition: { ...fadeUp.visible.transition, delay: 0.7 } } }}
-          className="text-center mt-10"
+          className="text-center mt-10 flex flex-wrap items-center justify-center gap-3"
         >
           <a
             href="https://docs.agentos.sh/features/cognitive-memory"
             className="btn-primary inline-flex items-center gap-2"
           >
             {t('ctaLearnMore')}
+            <ArrowRight className="w-4 h-4" />
+          </a>
+          <a
+            href="https://docs.agentos.sh/features/soul-files"
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            {t('ctaSoulWiki')}
             <ArrowRight className="w-4 h-4" />
           </a>
         </motion.div>
