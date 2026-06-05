@@ -5,7 +5,7 @@ import { hreflangAlternates } from '@/lib/seo/hreflang';
 
 type Props = { params: { locale: string } };
 
-const TITLE = 'Partners & Sponsors — AgentOS';
+const TITLE = 'Partners & Sponsors | AgentOS';
 const DESCRIPTION =
   'Partner with AgentOS: sponsor development, ship your model as a featured provider, or bring your startup and credit programs to an open-source agent runtime running in production.';
 
