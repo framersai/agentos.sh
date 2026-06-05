@@ -9,7 +9,7 @@ const outDir = path.resolve(process.cwd(), 'out');
 // English content directly. Cloudflare 301s /en/<page>/ → /<page>/ so the
 // /en/ form collapses into the canonical bare path. See
 // lib/seo/canonical.ts for the canonical strategy.
-const localizedPages = ['about', 'blog', 'careers', 'contact', 'docs', 'faq', 'features', 'guides', 'legal'];
+const localizedPages = ['about', 'blog', 'careers', 'contact', 'docs', 'faq', 'features', 'guides', 'legal', 'partners'];
 
 async function copyIfExists(src, dest) {
   try {
