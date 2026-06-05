@@ -28,7 +28,6 @@ export function SiteHeader() {
     { href: 'https://docs.agentos.sh/', label: 'Docs' },
     { href: `${localePrefix}/blog`, label: 'Blog' },
     { href: `${localePrefix}/faq`, label: t('faq') },
-    { href: `${localePrefix}/partners`, label: 'Partners' },
     { href: `${localePrefix}/contact`, label: 'Contact' },
   ], [t, localePrefix]);
 

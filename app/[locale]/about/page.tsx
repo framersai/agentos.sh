@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import type { Route } from 'next';
 import dynamic from 'next/dynamic';
-import { ArrowLeft, ArrowRight, Github, Linkedin, Twitter, Globe, Mail } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Github, Linkedin, Twitter, Globe, Mail, Handshake } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { Locale } from '../../../i18n';
 import { canonical } from '@/lib/seo/canonical';
@@ -232,6 +232,14 @@ export default async function AboutPage({ params: { locale } }: Props) {
                 <ArrowRight className="w-4 h-4 ml-auto text-[var(--color-text-secondary)]" />
               </a>
             ))}
+            <Link
+              href={`/${locale}/partners` as Route}
+              className="flex items-center gap-4 rounded-2xl border border-border-subtle/60 bg-[var(--color-background-secondary)] dark:bg-white/5 px-5 py-4 hover:border-accent-primary hover:bg-[var(--color-accent-primary)]/5 transition-colors"
+            >
+              <Handshake className="w-5 h-5 text-accent-primary" />
+              <span className="text-lg font-semibold text-[var(--color-text-primary)]">Partners &amp; Sponsors</span>
+              <ArrowRight className="w-4 h-4 ml-auto text-[var(--color-text-secondary)]" />
+            </Link>
           </div>
         </section>
 
